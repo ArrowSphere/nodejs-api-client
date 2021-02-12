@@ -1,0 +1,51 @@
+{
+  "allowJS": true,
+  "compileOnSave": true,
+  "compilerOptions": {
+    // Output options
+    "lib": ["ES2020"],
+    "target": "ES2020",
+    "sourceMap": true,
+    "outDir": "./build",
+
+    // Input options
+    "rootDir": "./src",
+    "types": [
+      "node",
+      "mocha"
+    ],
+
+    // Feature options
+    "emitDecoratorMetadata": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "alwaysStrict": true,
+    "experimentalDecorators": true,
+    "resolveJsonModule": true,
+
+    // Style options
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "strict": true,
+    "strictFunctionTypes": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true
+
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "tests",
+    "node_modules",
+    "build",
+    ".nyc_output",
+    ".github"
+  ]
+}

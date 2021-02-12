@@ -1,0 +1,35 @@
+# ArrowSphere nodejs-api-client package
+
+[![npm version](https://badgen.net/npm/%40arrowsphere/api-client)](https://badgen.net/npm/%40arrowpshere/api-client)
+[![node version](https://badgen.net/badge/node/>=%2014.15.4/green?icon=terminal)](https://badgen.net/badge/node/>=%2014.15.4/green?icon=terminal)
+[![Build Status](https://github.com/ArrowSphere/public-api-client/workflows/CI/badge.svg)](https://github.com/ArrowSphere/public-api-client/actions)
+
+This package provides a Node.js for ArrowSphere's public API.
+It should be the only way to make calls to ArrowSphere's API with Node.js code.
+
+To use this package, you need valid access to ArrowSphere, with a valid API key.
+
+## Installation
+
+Install the latest version with
+
+```bash
+$ npm install @arrowpshere/api-client
+```
+
+## Basic usage
+```js
+const ArrowSphereClient = require('@arrowsphere/api-client')
+
+const URL = 'https://your-url-to-arrowsphere.example.com';
+const API_KEY = 'your API key in ArrowSphere';
+
+const client = (new ArrowSphereClient())
+  .setUrl(URL)
+  .setApiKey(API_KEY);
+```
+
+## Specific API clients
+
+### Licenses clients
+- [Licenses](doc/licenses.md)

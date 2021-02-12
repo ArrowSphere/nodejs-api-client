@@ -1,0 +1,9 @@
+# Output directories
+build/
+.nyc_output/
+
+# Node files
+node_modules/
+
+# IDE files
+.idea
