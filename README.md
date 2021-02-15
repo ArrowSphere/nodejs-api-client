@@ -2,7 +2,7 @@
 
 [![npm version](https://badgen.net/npm/v/@arrowsphere/api-client)](https://badgen.net/npm/v/@arrowsphere/api-client)
 [![node version](https://badgen.net/badge/node/>=%2014.15.4/green?icon=terminal)](https://badgen.net/badge/node/>=%2014.15.4/green?icon=terminal)
-[![Build Status](https://github.com/ArrowSphere/public-api-client/workflows/CI/badge.svg)](https://github.com/ArrowSphere/public-api-client/actions)
+![Lint, Build, Test](https://github.com/ArrowSphere/nodejs-api-client/workflows/Lint,%20Build,%20Test/badge.svg)
 
 This package provides a Node.js for ArrowSphere's public API.
 It should be the only way to make calls to ArrowSphere's API with Node.js code.
