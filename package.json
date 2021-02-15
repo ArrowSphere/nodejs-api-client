@@ -59,5 +59,8 @@
   "homepage": "https://github.com/ArrowSphere/nodejs-api-client#readme",
   "directories": {
     "test": "tests"
+  },
+  "dependencies": {
+    "axios": "^0.21.1"
   }
 }
