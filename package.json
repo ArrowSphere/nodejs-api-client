@@ -1,5 +1,9 @@
 {
   "name": "@arrowsphere/api-client",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ArrowSphere/nodejs-api-client.git"
+  },
   "version": "1.0.0",
   "description": "Node.js client for ArrowSphere's public API",
   "main": "index.js",
@@ -17,7 +21,7 @@
     "client",
     "nodejs"
   ],
-  "author": "ArrowSphere",
+  "author": "ArrowSphere <support@arrowsphereconnect.com>",
   "license": "MIT",
   "devDependencies": {
     "@types/chai": "4.2.15",
@@ -48,5 +52,13 @@
       "eslint --fix",
       "prettier --write"
     ]
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/ArrowSphere/nodejs-api-client/issues"
+  },
+  "homepage": "https://github.com/ArrowSphere/nodejs-api-client#readme",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {}
 }
