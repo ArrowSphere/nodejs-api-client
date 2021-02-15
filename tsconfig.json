@@ -23,6 +23,7 @@
     "alwaysStrict": true,
     "experimentalDecorators": true,
     "resolveJsonModule": true,
+    "declaration": true,
 
     // Style options
     "forceConsistentCasingInFileNames": true,
@@ -36,7 +37,6 @@
     "strictFunctionTypes": true,
     "strictNullChecks": true,
     "strictPropertyInitialization": true
-
   },
   "include": [
     "src"
