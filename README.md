@@ -1,6 +1,6 @@
 # ArrowSphere nodejs-api-client package
 
-[![npm version](https://badgen.net/npm/%40arrowsphere/api-client)](https://badgen.net/npm/%40arrowpshere/api-client)
+[![npm version](https://badgen.net/npm/v/@arrowsphere/api-client)](https://badgen.net/npm/v/@arrowsphere/api-client)
 [![node version](https://badgen.net/badge/node/>=%2014.15.4/green?icon=terminal)](https://badgen.net/badge/node/>=%2014.15.4/green?icon=terminal)
 [![Build Status](https://github.com/ArrowSphere/public-api-client/workflows/CI/badge.svg)](https://github.com/ArrowSphere/public-api-client/actions)
 
