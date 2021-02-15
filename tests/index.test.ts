@@ -1,10 +1,10 @@
 import { expect } from 'chai'
-import main from '../src'
+import { PublicApiClient } from '../src'
 
 describe('index', () => {
-  describe('main', () => {
-    it('should return "main" as a result', () => {
-      expect(main()).to.equal('main')
+  describe('PublicApiClient', () => {
+    it('constructor should be callable', () => {
+      expect(new PublicApiClient()).to.exist
     })
   })
 })
