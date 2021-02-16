@@ -19,14 +19,16 @@ $ npm install @arrowsphere/api-client
 
 ## Basic usage
 ```js
-const ArrowSphereClient = require('@arrowsphere/api-client')
+const { PublicApiClient } = require('@arrowsphere/api-client')
 
 const URL = 'https://your-url-to-arrowsphere.example.com';
 const API_KEY = 'your API key in ArrowSphere';
 
-const client = (new ArrowSphereClient())
+const client = (new PublicApiClient())
   .setUrl(URL)
   .setApiKey(API_KEY);
+
+client.getWhoamiClient().getWhoami().then(result => console.log(result))
 ```
 
 ## Specific API clients
