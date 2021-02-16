@@ -1,4 +1,4 @@
-export default class NotFoundException extends Error {
+export class PublicApiClientException extends Error {
   constructor(message: string) {
     super(message)
   }

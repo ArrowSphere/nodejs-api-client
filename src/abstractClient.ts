@@ -1,62 +1,61 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios'
-import NotFoundException from './exceptions/notFoundException'
-import PublicApiClientException from './exceptions/publicApiClientException'
+import { NotFoundException, PublicApiClientException } from './exception'
 import { URLSearchParams } from 'url'
 
-enum ParameterKeys {
+/**
+ * Lists of available query parameters for the API call
+ */
+export enum ParameterKeys {
   API_KEY = 'apiKey',
   PAGE = 'page',
   PER_PAGE = 'per_page',
 }
 
-type Parameters = Record<string, string | undefined>
+export type Parameters = Record<string, string | undefined>
 
-export default abstract class AbstractClient {
+export type Headers = Record<string, string>
+
+export type Payload = Record<string, unknown>
+
+export abstract class AbstractClient {
   /**
    * Base path for HTTP calls
-   * @protected {string}
    */
   protected basePath = ''
 
   /**
    * Current path for HTTP calls
-   * @protected {string}
    */
   protected path = ''
 
   /**
    * Axios instance for client
-   * @protected {AxiosInstance}
    */
   protected client: AxiosInstance
 
   /**
    * ArrowSphere API URL
-   * @protected {url}
    */
   protected url = ''
 
   /**
    * ArrowSphere API key
-   * @protected {string}
    */
   protected apiKey = ''
 
   /**
    * Current pagination page number
-   * @protected {number}
    */
   protected page = 1
 
   /**
    * Pagination's per page result limit
-   * @protected {number}
    */
   protected perPage = 1
 
   /**
    * AbstractClient constructor.
-   * @param {AxiosInstance|null} client Pre-existing Axios instance that will be used for calls
+   * @param client - Pre-existing Axios instance that will be used for calls
    * @returns AbstractClient
    */
   protected constructor(client: AxiosInstance | null = null) {
@@ -65,7 +64,7 @@ export default abstract class AbstractClient {
 
   /**
    * Sets the Client ArrowSphere API key
-   * @param {string} key ArrowSphere API key
+   * @param key - ArrowSphere API key
    * @returns this
    */
   public setApiKey(key: string): this {
@@ -76,8 +75,8 @@ export default abstract class AbstractClient {
 
   /**
    * Sets the client ArrowSphere API url
-   * @param {string} url API url
-   * @return this
+   * @param url - API url
+   * @returns this
    */
   public setUrl(url: string): this {
     this.url = url
@@ -87,7 +86,7 @@ export default abstract class AbstractClient {
 
   /**
    * Returns the API url.
-   * @return {string}
+   * @returns string
    */
   public getUrl(): string {
     return this.url
@@ -95,8 +94,8 @@ export default abstract class AbstractClient {
 
   /**
    * Sets number of results per page
-   * @param {number} perPage
-   * @return this
+   * @param perPage - Number of results per page
+   * @returns this
    */
   public setPerPage(perPage: number): this {
     this.perPage = perPage
@@ -106,8 +105,8 @@ export default abstract class AbstractClient {
 
   /**
    * Sets the page number
-   * @param {number} page
-   * @return AbstractClient
+   * @param page - Page number
+   * @returns AbstractClient
    */
   public setPage(page: number): this {
     this.page = page
@@ -117,16 +116,13 @@ export default abstract class AbstractClient {
 
   /**
    * Sends a GET request and returns the response
-   * @param {Parameters} parameters
-   * @param {Array} headers
-   * @return string
-   * @throws AxiosError
-   * @throws NotFoundException
-   * @throws PublicApiClientException
+   * @param parameters - Query parameters to send
+   * @param headers - Headers to send
+   * @returns string
    */
   protected async get(
     parameters: Parameters = {},
-    headers: Record<string, string> = {},
+    headers: Headers = {},
   ): Promise<AxiosResponse['data']> {
     const response = await this.client.get(this.generateUrl(parameters), {
       headers: this.prepareHeaders(headers),
@@ -137,12 +133,10 @@ export default abstract class AbstractClient {
 
   /**
    * Processes and returns the Axios response data
-   * @param {AxiosResponse} response
-   * @return StreamInterface
-   * @throws NotFoundException
-   * @throws PublicApiClientException
+   * @param response - The AxiosResponse
+   * @returns StreamInterface
    */
-  private getResponse(response: AxiosResponse): AxiosResponse['data'] {
+  private getResponse<T = AxiosResponse['data']>(response: AxiosResponse): T {
     const statusCode = response.status
     if (statusCode === 404) {
       throw new NotFoundException(`Resource not found on URL ${this.getUrl()}`)
@@ -159,32 +153,24 @@ export default abstract class AbstractClient {
 
   /**
    * Prepare headers before sending
-   * @param {Record<string, string>} headers
-   * @return Record<string, string>
+   * @param headers - Headers to include
+   * @returns Headers
    */
-  private prepareHeaders(
-    headers: Record<string, string>,
-  ): Record<string, string> {
+  private prepareHeaders(headers: Headers): Headers {
     return { ...headers, [ParameterKeys.API_KEY]: this.apiKey }
   }
 
   /**
    * Sends a POST request and returns the response
-   *
-   *
-   * @return AxiosResponse
-   *
-   * @throws AxiosResponse
-   * @throws NotFoundException
-   * @throws PublicApiClientException
-   * @param {Record<string, unknown>} payload
-   * @param {Parameters} parameters
-   * @param {Record<string, string>} headers
+   * @returns AxiosResponse
+   * @param payload - Payload to be sent in the POST body
+   * @param parameters - Query parameters to be sent in the request
+   * @param headers - Headers to be sent in the request
    */
   protected async post(
-    payload: Record<string, unknown> = {},
+    payload: Payload = {},
     parameters: Parameters = {},
-    headers: Record<string, string> = {},
+    headers: Headers = {},
   ): Promise<AxiosResponse> {
     const response = await this.client.post(
       this.generateUrl(parameters),
@@ -199,8 +185,8 @@ export default abstract class AbstractClient {
 
   /**
    * Generates the full url for request
-   * @param {Record<string, string>} parameters
-   * @return string
+   * @param parameters - Parameters to serialize
+   * @returns string
    */
   protected generateUrl(parameters: Parameters = {}): string {
     const params = { ...parameters, ...this.generatePagination() }
@@ -216,7 +202,7 @@ export default abstract class AbstractClient {
 
   /**
    * Generates the pagination part of the url
-   * @return {Record<string, string>}
+   * @returns Parameters
    */
   private generatePagination(): Parameters {
     if (this.page === 1 && !this.perPage) {
