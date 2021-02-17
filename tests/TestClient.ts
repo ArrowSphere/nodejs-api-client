@@ -33,7 +33,7 @@ export class TestClient extends AbstractClient {
 
 export const axiosExpectInterceptor = (
   expectation: (params: ExpectFunctionParameters) => void,
-) => (config: AxiosRequestConfig) => {
+) => (config: AxiosRequestConfig): AxiosRequestConfig => {
   const urlObject = new URL(config.url || '')
   const queryParameters = urlObject.searchParams
 
