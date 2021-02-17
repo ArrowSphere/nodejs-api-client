@@ -9,7 +9,7 @@
     "outDir": "./build",
 
     // Input options
-    "rootDir": "./src",
+    "rootDir": ".",
     "types": [
       "node",
       "mocha"

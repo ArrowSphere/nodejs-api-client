@@ -51,7 +51,7 @@ export abstract class AbstractClient {
   /**
    * Pagination's per page result limit
    */
-  protected perPage = 1
+  protected perPage = 0
 
   /**
    * AbstractClient constructor.
@@ -60,6 +60,9 @@ export abstract class AbstractClient {
    */
   protected constructor(client: AxiosInstance | null = null) {
     this.client = client ?? axios.create()
+
+    // Prevent axios from throwing its own errors, let us do that
+    this.client.defaults.validateStatus = null
   }
 
   /**
@@ -188,7 +191,7 @@ export abstract class AbstractClient {
    * @param parameters - Parameters to serialize
    * @returns string
    */
-  protected generateUrl(parameters: Parameters = {}): string {
+  protected generateUrl(parameters: Parameters): string {
     const params = { ...parameters, ...this.generatePagination() }
 
     let paramsStr = ''
