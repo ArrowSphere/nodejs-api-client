@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - WhoAmI Client and Entity
 - validatorjs and axios dependencies
 - Type declarations to output
+- Unit tests
 
 ### Changed
 - Fix README.md badges (CI and NPM version)
