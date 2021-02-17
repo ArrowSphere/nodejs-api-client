@@ -1,6 +1,7 @@
 # Output directories
 build/
 .nyc_output/
+coverage/
 
 # Node files
 node_modules/

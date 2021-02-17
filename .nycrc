@@ -19,10 +19,10 @@
       "ts-node/register"
     ],
     "reporter": [
-      "text-summary",
-      "html"
+      "lcov"
     ],
     "sourceMap": true,
-    "instrument": true
+    "instrument": true,
+    "report-dir": "./coverage"
   }
 }
