@@ -31,6 +31,15 @@ const client = (new PublicApiClient())
 client.getWhoamiClient().getWhoami().then(result => console.log(result))
 ```
 
+## TypeDoc documentation
+
+To generate the [TypeDoc](https://typedoc.org/) documentation and explore it, use the following command
+```shell
+npm run doc
+```
+
+The output documentation should be located in the `docs/` folder, just open the index.html file in any local browser.
+
 ## Specific API clients
 
 WIP

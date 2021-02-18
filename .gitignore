@@ -2,6 +2,7 @@
 build/
 .nyc_output/
 coverage/
+docs/
 
 # Node files
 node_modules/
