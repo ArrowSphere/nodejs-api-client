@@ -1,28 +1,33 @@
 {
-  "nyc": {
-    "all": true,
-    "extension": [
-      ".ts"
-    ],
-    "include": [
-      "src/**/*.ts"
-    ],
-    "exclude": [
-      "tests/",
-      "build/",
-      "node_modules/",
-      ".nyc_output/",
-      ".github",
-      "**/*.d.ts"
-    ],
-    "require": [
-      "ts-node/register"
-    ],
-    "reporter": [
-      "lcov"
-    ],
-    "sourceMap": true,
-    "instrument": true,
-    "report-dir": "./coverage"
-  }
+  "all": true,
+  "extension": [
+    ".ts"
+  ],
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "tests/",
+    "build/",
+    "node_modules/",
+    ".nyc_output/",
+    ".github",
+    "**/*.d.ts",
+    "docs"
+  ],
+  "require": [
+    "ts-node/register"
+  ],
+  "reporter": [
+    "lcov",
+    "text",
+    "text-summary"
+  ],
+  "sourceMap": true,
+  "instrument": true,
+  "report-dir": "./coverage",
+  "branches": 90,
+  "lines": 90,
+  "functions": 90,
+  "statements": 90
 }
