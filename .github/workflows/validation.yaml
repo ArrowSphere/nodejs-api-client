@@ -6,6 +6,8 @@ on:
 
 jobs:
   lint-build-test:
+    env:
+      COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
     name: Lint, Build, Test
     runs-on: ubuntu-latest
     steps:
@@ -22,8 +24,6 @@ jobs:
         run: npm run build
       - name: Run tests
         run: npm run test:coverage
-      - name: Archive code coverage results
-        uses: actions/upload-artifact@v2
-        with:
-          name: code-coverage-report
-          path: coverage
+      - if: env.COVERALLS_REPO_TOKEN != null
+        name: Push coverage to coveralls
+        run: npm run test:coverage:report
