@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Fixed deps versions in package.json
 
+## [0.2.1] - 2021-02-19
+### Changed
+- Fixed main entry point for types and build
 
 ## [0.2.0] - 2021-02-17
 ### Added
