@@ -19,11 +19,11 @@ jobs:
       - name: Install Node.js dependencies
         uses: bahmutov/npm-install@v1
       - name: Run lint
-        run: npm run lint
+        run: yarn lint
       - name: Run build
-        run: npm run build
+        run: yarn build
       - name: Run tests
-        run: npm run test:coverage
+        run: yarn test:coverage
       - if: env.COVERALLS_REPO_TOKEN != null
         name: Push coverage to coveralls
-        run: npm run test:coverage:report
+        run: yarn test:coverage:report
