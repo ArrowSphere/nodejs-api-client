@@ -174,7 +174,7 @@ export abstract class AbstractClient {
     payload: Payload = {},
     parameters: Parameters = {},
     headers: Headers = {},
-  ): Promise<AxiosResponse> {
+  ): Promise<AxiosResponse['data']> {
     const response = await this.client.post(
       this.generateUrl(parameters),
       payload,
