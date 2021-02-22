@@ -9,3 +9,6 @@ node_modules/
 
 # IDE files
 .idea
+
+# Yarn
+yarn-error.log
