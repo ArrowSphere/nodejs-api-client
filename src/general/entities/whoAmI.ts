@@ -74,84 +74,21 @@ export class WhoAmI extends AbstractEntity<WhoAmIResponseData> {
     [WhoAmIResponseFields.COLUMN_INTERNAL_REFERENCE]: 'present',
   }
 
-  /**
-   * @readonly
-   */
   readonly #companyName: string
-
-  /**
-   * @readonly
-   */
   readonly #addressLine1: string
-
-  /**
-   * @readonly
-   */
   readonly #addressLine2: string
-
-  /**
-   * @readonly
-   */
   readonly #zip: string
-
-  /**
-   * @readonly
-   */
   readonly #city: string
-
-  /**
-   * @readonly
-   */
   readonly #countryCode: string
-
-  /**
-   * @readonly
-   */
   readonly #state: string
-
-  /**
-   * @readonly
-   */
   readonly #receptionPhone: string
-
-  /**
-   * @readonly
-   */
   readonly #websiteUrl: string
-
-  /**
-   * @readonly
-   */
   readonly #emailContact: string
-
-  /**
-   * @readonly
-   */
   readonly #headcount: string
-
-  /**
-   * @readonly
-   */
   readonly #taxNumber: string
-
-  /**
-   * @readonly
-   */
   readonly #reference: string
-
-  /**
-   * @readonly
-   */
   readonly #ref: string
-
-  /**
-   * @readonly
-   */
   readonly #billingId: string
-
-  /**
-   * @readonly
-   */
   readonly #internalReference: string
 
   public getCompanyName(): string {
