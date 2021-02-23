@@ -46,6 +46,11 @@ The output documentation should be located in the `docs/` folder, just open the 
 
 ## Specific API clients
 
+### General
+
+- [CheckDomain](./src/general/CHECKDOMAIN.md)
+- [WhoAmI](./src/general/WHOAMI.md)
+
 ### Licenses
 
 - [Licenses](./src/licenses/README.md)
