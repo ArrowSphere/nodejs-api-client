@@ -5,6 +5,9 @@ import { AbstractClient, Parameters } from '../abstractClient'
 import { FindData, FindResult } from './entities/findResult'
 import { LicenseFields } from './entities/abstractLicense'
 
+/**
+ * Parameters passable to the request for refining search.
+ */
 export enum LicenseFindParameters {
   /**
    * The key for keyword search query parameter (to search one string in all available search fields)
@@ -67,6 +70,9 @@ export enum LicenseFindParameters {
   OPERATOR_BETWEEN = 'BETWEEN',
 }
 
+/**
+ * List of keywords to search with.
+ */
 export type LicenseDataKeywords = {
   [LicenseFindParameters.KEYWORDS_OPERATOR]:
     | LicenseFindParameters.OPERATOR_AND
@@ -75,26 +81,38 @@ export type LicenseDataKeywords = {
   [LicenseFindParameters.KEYWORDS_VALUES]: string[]
 }
 
+/**
+ * Keywords parameters to pass to the request
+ */
 export type LicenseKeywordsParameters = {
   [field in LicenseFields]?: LicenseDataKeywords
 }
 
+/**
+ * Sort parameters to pass to the request
+ */
 export type LicenseSortParameters = {
   [field in LicenseFields]?:
     | LicenseFindParameters.SORT_ASCENDING
     | LicenseFindParameters.SORT_DESCENDING
 }
 
+/**
+ * Filter parameters to pass to the request.
+ */
 export type LicenseFiltersParameters = {
   [field in LicenseFields]?: unknown
 }
 
+/**
+ * Payload to pass the find request. Contains keyword(s), sort options, column filters and highlight option.
+ */
 export type LicenseFindPayload = {
   [LicenseFindParameters.DATA_KEYWORD]?: string
   [LicenseFindParameters.DATA_KEYWORDS]?: LicenseKeywordsParameters
   [LicenseFindParameters.DATA_FILTERS]?: LicenseFiltersParameters
   [LicenseFindParameters.DATA_SORT]?: LicenseSortParameters
-  [LicenseFindParameters.DATA_HIGHLIGHT]?: Record<string, unknown> | boolean
+  [LicenseFindParameters.DATA_HIGHLIGHT]?: boolean
 }
 
 export class LicensesClient extends AbstractClient {
@@ -119,7 +137,7 @@ export class LicensesClient extends AbstractClient {
    * @param postData - Find payload
    * @param parameters - Extra parameters to pass
    *
-   * @returns string
+   * @returns Promise\<{@link FindData}\>
    */
   public findRaw(
     postData: LicenseFindPayload = {},
@@ -131,14 +149,14 @@ export class LicensesClient extends AbstractClient {
   }
 
   /**
-   * Searches for licenses
+   * Searches for licenses and returns a FindResult to manipulate the results.
    *
    * @param postData - Find payload
    * @param perPage - Number of results per page
    * @param page - Page number to fetch
    * @param parameters - Extra parameters to pass
    *
-   * @returns FindResult
+   * @returns Promise\<{@link FindResult}\>
    *
    */
   public async find(

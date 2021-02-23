@@ -1,20 +1,32 @@
 import { AbstractEntity } from '../../abstractEntity'
 import { LicenseFields } from './abstractLicense'
 
+/**
+ * Filter data values
+ */
 export type FilterFindResultDataValues = {
   [field in LicenseFields]?: unknown
 }
 
+/**
+ * Filter data
+ */
 export type FilterFindResultData = {
   [FilterFindFields.COLUMN_NAME]: string
   [FilterFindFields.COLUMN_VALUES]: FilterFindResultDataValues
 }
 
+/**
+ * Filter data fields
+ */
 export enum FilterFindFields {
   COLUMN_NAME = 'name',
   COLUMN_VALUES = 'values',
 }
 
+/**
+ * Represents the result of the find response's filters part.
+ */
 export class FilterFindResult extends AbstractEntity<FilterFindResultData> {
   private readonly name: string
   private readonly values: FilterFindResultDataValues
@@ -29,7 +41,7 @@ export class FilterFindResult extends AbstractEntity<FilterFindResultData> {
   /**
    * FilterFindResult constructor.
    *
-   * @param data -
+   * @param data - Filter result data
    */
   public constructor(data: FilterFindResultData) {
     super(data)
@@ -46,6 +58,10 @@ export class FilterFindResult extends AbstractEntity<FilterFindResultData> {
     return this.values
   }
 
+  /**
+   * Plain JSON object representation of the filter entity.
+   * @returns {@link FilterFindResultData}
+   */
   public toJSON(): FilterFindResultData {
     return {
       [FilterFindFields.COLUMN_NAME]: this.getName(),

@@ -1,20 +1,33 @@
-import { AbstractLicense, LicenseData } from './abstractLicense'
+import { AbstractLicense, LicenseData, LicenseFields } from './abstractLicense'
 
+/**
+ * License result fields.
+ */
 export enum LicenseFindResultFields {
   COLUMN_HIGHLIGHT = 'highlight',
 }
 
+/**
+ * Highlight response object.
+ */
+export type Highlight = {
+  [key in LicenseFields]?: string[]
+}
+
+/**
+ * License result data. Combination of {@link LicenseData} and extra result specific fields.
+ */
 export type LicenseFindResultData = LicenseData & {
-  [LicenseFindResultFields.COLUMN_HIGHLIGHT]?: Record<string, unknown>
+  [LicenseFindResultFields.COLUMN_HIGHLIGHT]?: Highlight
 }
 
 export class LicenseFindResult extends AbstractLicense {
-  private readonly highlight: Record<string, unknown>
+  private readonly highlight: Highlight
 
   /**
-   * OfferFindResult constructor.
+   * LicenseFindResult constructor.
    *
-   * @param data -
+   * @param data - License find result data from the response.
    */
   public constructor(data: LicenseFindResultData) {
     super(data)
@@ -26,10 +39,14 @@ export class LicenseFindResult extends AbstractLicense {
     this.highlight = data[LicenseFindResultFields.COLUMN_HIGHLIGHT] ?? {}
   }
 
-  public getHighlight(): Record<string, unknown> {
+  public getHighlight(): Highlight {
     return this.highlight
   }
 
+  /**
+   * Plain JSON object representation of the License result entity.
+   * @returns {@link LicenseFindResultData}
+   */
   public toJSON(): LicenseFindResultData {
     return {
       ...super.toJSON(),

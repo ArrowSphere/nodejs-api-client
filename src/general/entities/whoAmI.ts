@@ -1,7 +1,7 @@
 import { AbstractEntity } from '../../abstractEntity'
 
 /**
- * Response data fields that can be present in WhoAmI requests.
+ * Response data fields that can be present in WhoAmI requests and responses.
  */
 export enum WhoAmIResponseFields {
   COLUMN_COMPANY_NAME = 'companyName',
@@ -157,6 +157,7 @@ export class WhoAmI extends AbstractEntity<WhoAmIResponseData> {
 
   /**
    * Returns the raw JSON properties
+   * @returns {@link WhoAmIResponseData}
    */
   public toJSON(): WhoAmIResponseData {
     return {

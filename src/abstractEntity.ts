@@ -23,8 +23,10 @@ export abstract class AbstractEntity<T> {
   }
 
   /**
+   * Checks whether or not the entity data passes the validation rules
    * @param data - Data to validate
-   *
+   * @returns void
+   * @throws
    */
   public validate(data: T): void {
     // If the validation has been disabled, stop
