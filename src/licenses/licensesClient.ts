@@ -3,6 +3,7 @@
  */
 import { AbstractClient, Parameters } from '../abstractClient'
 import { FindData, FindResult } from './entities/findResult'
+import { LicenseFields } from './entities/abstractLicense'
 
 export enum LicenseFindParameters {
   /**
@@ -66,13 +67,34 @@ export enum LicenseFindParameters {
   OPERATOR_BETWEEN = 'BETWEEN',
 }
 
+export type LicenseDataKeywords = {
+  [LicenseFindParameters.KEYWORDS_OPERATOR]:
+    | LicenseFindParameters.OPERATOR_AND
+    | LicenseFindParameters.OPERATOR_OR
+    | LicenseFindParameters.OPERATOR_BETWEEN
+  [LicenseFindParameters.KEYWORDS_VALUES]: string[]
+}
+
+export type LicenseKeywordsParameters = {
+  [field in LicenseFields]?: LicenseDataKeywords
+}
+
+export type LicenseSortParameters = {
+  [field in LicenseFields]?:
+    | LicenseFindParameters.SORT_ASCENDING
+    | LicenseFindParameters.SORT_DESCENDING
+}
+
+export type LicenseFiltersParameters = {
+  [field in LicenseFields]?: unknown
+}
+
 export type LicenseFindPayload = {
-  [LicenseFindParameters.DATA_KEYWORDS]: Array<
-    Record<string, Record<string, string>>
-  >
-  [LicenseFindParameters.DATA_FILTERS]: Array<
-    Record<string, unknown> | Array<unknown>
-  >
+  [LicenseFindParameters.DATA_KEYWORD]?: string
+  [LicenseFindParameters.DATA_KEYWORDS]?: LicenseKeywordsParameters
+  [LicenseFindParameters.DATA_FILTERS]?: LicenseFiltersParameters
+  [LicenseFindParameters.DATA_SORT]?: LicenseSortParameters
+  [LicenseFindParameters.DATA_HIGHLIGHT]?: Record<string, unknown> | boolean
 }
 
 export class LicensesClient extends AbstractClient {
@@ -98,26 +120,10 @@ export class LicensesClient extends AbstractClient {
    * @returns string
    */
   public findRaw(
-    postData: LicenseFindPayload,
+    postData: LicenseFindPayload = {},
     parameters: Parameters = {},
   ): Promise<FindData> {
     this.path = this.FIND_PATH
-
-    if (postData[LicenseFindParameters.DATA_KEYWORDS]) {
-      postData[LicenseFindParameters.DATA_KEYWORDS].forEach(
-        (row: Record<string, unknown>) => {
-          row[LicenseFindParameters.KEYWORDS_VALUES] = Object.values(row)
-        },
-      )
-    }
-
-    if (postData[LicenseFindParameters.DATA_FILTERS]) {
-      postData[LicenseFindParameters.DATA_FILTERS] = postData[
-        LicenseFindParameters.DATA_FILTERS
-      ].map((row) => {
-        return Array.isArray(row) ? row : Object.values(row)
-      })
-    }
 
     return this.post(postData, parameters)
   }
@@ -134,7 +140,7 @@ export class LicensesClient extends AbstractClient {
    *
    */
   public async find(
-    postData: LicenseFindPayload,
+    postData: LicenseFindPayload = {},
     perPage = 100,
     page = 1,
     parameters: Parameters = {},

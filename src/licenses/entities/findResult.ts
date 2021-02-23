@@ -42,10 +42,9 @@ export class FindResult extends AbstractEntity<FindData> {
   constructor(
     data: FindData,
     client: LicensesClient,
-    postData: LicenseFindPayload,
-    parameters: Parameters,
+    postData: LicenseFindPayload = {},
+    parameters: Parameters = {},
   ) {
-    console.log(data)
     super(data)
 
     this.client = client
@@ -92,7 +91,7 @@ export class FindResult extends AbstractEntity<FindData> {
 
     // Then parse the other pages... if there are more
     let currentPage = this.currentPage + 1
-    let lastPage = this.totalPage <= currentPage
+    let lastPage = this.totalPage < currentPage
 
     while (!lastPage) {
       this.client.setPage(currentPage)

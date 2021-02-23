@@ -1,8 +1,13 @@
 import { AbstractEntity } from '../../abstractEntity'
+import { LicenseFields } from './abstractLicense'
+
+export type FilterFindResultDataValues = {
+  [field in LicenseFields]?: unknown
+}
 
 export type FilterFindResultData = {
   [FilterFindFields.COLUMN_NAME]: string
-  [FilterFindFields.COLUMN_VALUES]: Record<string, string>
+  [FilterFindFields.COLUMN_VALUES]: FilterFindResultDataValues
 }
 
 export enum FilterFindFields {
@@ -12,7 +17,7 @@ export enum FilterFindFields {
 
 export class FilterFindResult extends AbstractEntity<FilterFindResultData> {
   private readonly name: string
-  private readonly values: Record<string, string>
+  private readonly values: FilterFindResultDataValues
 
   protected VALIDATION_RULES = {
     [FilterFindFields.COLUMN_NAME]: 'present',
@@ -37,7 +42,7 @@ export class FilterFindResult extends AbstractEntity<FilterFindResultData> {
     return this.name
   }
 
-  public getValues(): Record<string, string> {
+  public getValues(): FilterFindResultDataValues {
     return this.values
   }
 
