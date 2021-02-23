@@ -114,8 +114,10 @@ export class LicensesClient extends AbstractClient {
   private FIND_PATH = '/find'
 
   /**
-   * @param postData -
-   * @param parameters -
+   * Returns the raw result from the find endpoint call
+   *
+   * @param postData - Find payload
+   * @param parameters - Extra parameters to pass
    *
    * @returns string
    */
@@ -129,12 +131,12 @@ export class LicensesClient extends AbstractClient {
   }
 
   /**
-   * Test
+   * Searches for licenses
    *
-   * @param postData -
-   * @param perPage -
-   * @param page -
-   * @param parameters -
+   * @param postData - Find payload
+   * @param perPage - Number of results per page
+   * @param page - Page number to fetch
+   * @param parameters - Extra parameters to pass
    *
    * @returns FindResult
    *
