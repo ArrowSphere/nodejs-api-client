@@ -4,7 +4,7 @@
     "type": "git",
     "url": "https://github.com/ArrowSphere/nodejs-api-client.git"
   },
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Node.js client for ArrowSphere's public API",
   "main": "build/index.js",
   "types": "build/index.d.ts",
@@ -16,6 +16,7 @@
     "lint:fix": "eslint ./{src,tests}/**/*.ts --fix && prettier --write ./{src,tests}/**/*.ts",
     "prepublishOnly": "npm run clean && npm run build",
     "test": "mocha -r ts-node/register \"tests/**/*.ts\"",
+    "test:watch": "mocha --watch -r ts-node/register \"tests/**/*.ts\"",
     "test:coverage": "nyc --check-coverage npm run test",
     "test:coverage:report": "nyc report --reporter=text-lcov | coveralls"
   },
@@ -46,6 +47,7 @@
     "eslint-plugin-prettier": "3.3.1",
     "eslint-plugin-tsdoc": "0.2.11",
     "husky": "4.3.8",
+    "joi": "17.4.0",
     "lint-staged": "10.5.4",
     "mocha": "8.3.0",
     "nock": "13.0.7",
