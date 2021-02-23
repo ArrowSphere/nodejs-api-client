@@ -46,4 +46,6 @@ The output documentation should be located in the `docs/` folder, just open the 
 
 ## Specific API clients
 
-WIP
+### Licenses
+
+- [Licenses](./src/licenses/README.md)
