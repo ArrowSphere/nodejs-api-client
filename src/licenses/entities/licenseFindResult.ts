@@ -5,11 +5,11 @@ export enum LicenseFindResultFields {
 }
 
 export type LicenseFindResultData = LicenseData & {
-  [LicenseFindResultFields.COLUMN_HIGHLIGHT]: Record<string, string>
+  [LicenseFindResultFields.COLUMN_HIGHLIGHT]?: Record<string, unknown>
 }
 
 export class LicenseFindResult extends AbstractLicense {
-  private readonly highlight: Record<string, string>
+  private readonly highlight: Record<string, unknown>
 
   /**
    * OfferFindResult constructor.
@@ -23,10 +23,10 @@ export class LicenseFindResult extends AbstractLicense {
       [LicenseFindResultFields.COLUMN_HIGHLIGHT]: 'object',
     }
 
-    this.highlight = data[LicenseFindResultFields.COLUMN_HIGHLIGHT] ?? []
+    this.highlight = data[LicenseFindResultFields.COLUMN_HIGHLIGHT] ?? {}
   }
 
-  public getHighlight(): Record<string, string> {
+  public getHighlight(): Record<string, unknown> {
     return this.highlight
   }
 

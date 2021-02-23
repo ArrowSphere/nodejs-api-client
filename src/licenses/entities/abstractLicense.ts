@@ -62,7 +62,7 @@ export type LicenseData = {
   [LicenseFields.COLUMN_END_DATE]: string
   [LicenseFields.COLUMN_FRIENDLY_NAME]: string | null
   [LicenseFields.COLUMN_IS_ENABLED]: boolean
-  [LicenseFields.COLUMN_LAST_UPDATE]: string
+  [LicenseFields.COLUMN_LAST_UPDATE]: string | null
   [LicenseFields.COLUMN_MARKETPLACE]: string
   [LicenseFields.COLUMN_MESSAGE]: string
   [LicenseFields.COLUMN_OFFER]: string
@@ -133,7 +133,7 @@ export abstract class AbstractLicense extends AbstractEntity<LicenseData> {
   readonly #friendlyName: string | null
   readonly #id: number
   readonly #enabled: boolean
-  readonly #lastUpdate: string
+  readonly #lastUpdate: string | null
   readonly #listPrice: number
   readonly #marketplace: string
   readonly #message: string
@@ -385,51 +385,51 @@ export abstract class AbstractLicense extends AbstractEntity<LicenseData> {
 
   public toJSON(): LicenseData {
     return {
-      [LicenseFields.COLUMN_ID]: this.#id,
-      [LicenseFields.COLUMN_ACCEPT_EULA]: this.#acceptEula,
+      [LicenseFields.COLUMN_ID]: this.getId(),
+      [LicenseFields.COLUMN_ACCEPT_EULA]: this.isAcceptEula(),
       [LicenseFields.COLUMN_ACTIVE_SEATS]: {
-        [LicenseFields.ACTIVE_SEATS_NUMBER]: this.#activeSeatsNumber,
-        [LicenseFields.ACTIVE_SEATS_LAST_UPDATE]: this.#activeSeatsLastUpdate,
+        [LicenseFields.ACTIVE_SEATS_NUMBER]: this.getActiveSeatsNumber(),
+        [LicenseFields.ACTIVE_SEATS_LAST_UPDATE]: this.getActiveSeatsLastUpdate(),
       },
-      [LicenseFields.COLUMN_AUTO_RENEW]: this.#autoRenew,
-      [LicenseFields.COLUMN_BASE_SEAT]: this.#baseSeat,
-      [LicenseFields.COLUMN_CATEGORY]: this.#category,
-      [LicenseFields.COLUMN_CLOUD_TYPE]: this.#classification,
-      [LicenseFields.COLUMN_CUSTOMER_NAME]: this.#customerName,
-      [LicenseFields.COLUMN_CUSTOMER_REF]: this.#customerRef,
-      [LicenseFields.COLUMN_END_DATE]: this.#endDate,
-      [LicenseFields.COLUMN_FRIENDLY_NAME]: this.#friendlyName,
-      [LicenseFields.COLUMN_IS_ENABLED]: this.#enabled,
-      [LicenseFields.COLUMN_LAST_UPDATE]: this.#lastUpdate,
-      [LicenseFields.COLUMN_MARKETPLACE]: this.#marketplace,
-      [LicenseFields.COLUMN_MESSAGE]: this.#message,
-      [LicenseFields.COLUMN_OFFER]: this.#offer,
-      [LicenseFields.COLUMN_PARENT_LINE_ID]: this.#parentLineId,
-      [LicenseFields.COLUMN_PARENT_ORDER_REF]: this.#parentOrderRef,
-      [LicenseFields.COLUMN_PARTNER_REF]: this.#partnerRef,
-      [LicenseFields.COLUMN_PERIODICITY]: this.#periodicity,
+      [LicenseFields.COLUMN_AUTO_RENEW]: this.isAutoRenew(),
+      [LicenseFields.COLUMN_BASE_SEAT]: this.getBaseSeat(),
+      [LicenseFields.COLUMN_CATEGORY]: this.getCategory(),
+      [LicenseFields.COLUMN_CLOUD_TYPE]: this.getClassification(),
+      [LicenseFields.COLUMN_CUSTOMER_NAME]: this.getCustomerName(),
+      [LicenseFields.COLUMN_CUSTOMER_REF]: this.getCustomerRef(),
+      [LicenseFields.COLUMN_END_DATE]: this.getEndDate(),
+      [LicenseFields.COLUMN_FRIENDLY_NAME]: this.getFriendlyName(),
+      [LicenseFields.COLUMN_IS_ENABLED]: this.isEnabled(),
+      [LicenseFields.COLUMN_LAST_UPDATE]: this.getLastUpdate(),
+      [LicenseFields.COLUMN_MARKETPLACE]: this.getMarketplace(),
+      [LicenseFields.COLUMN_MESSAGE]: this.getMessage(),
+      [LicenseFields.COLUMN_OFFER]: this.getOffer(),
+      [LicenseFields.COLUMN_PARENT_LINE_ID]: this.getParentLineId(),
+      [LicenseFields.COLUMN_PARENT_ORDER_REF]: this.getParentOrderRef(),
+      [LicenseFields.COLUMN_PARTNER_REF]: this.getPartnerRef(),
+      [LicenseFields.COLUMN_PERIODICITY]: this.getPeriodicity(),
       [LicenseFields.COLUMN_PRICE]: {
-        [LicenseFields.PRICE_BUY_PRICE]: this.#buyPrice,
-        [LicenseFields.PRICE_LIST_PRICE]: this.#listPrice,
-        [LicenseFields.PRICE_CURRENCY]: this.#currency,
+        [LicenseFields.PRICE_BUY_PRICE]: this.getBuyPrice(),
+        [LicenseFields.PRICE_LIST_PRICE]: this.getListPrice(),
+        [LicenseFields.PRICE_CURRENCY]: this.getCurrency(),
       },
-      [LicenseFields.COLUMN_RESELLER_NAME]: this.#resellerName,
-      [LicenseFields.COLUMN_RESELLER_REF]: this.#resellerRef,
-      [LicenseFields.COLUMN_SEAT]: this.#seat,
-      [LicenseFields.COLUMN_SERVICE_REF]: this.#serviceRef,
-      [LicenseFields.COLUMN_SKU]: this.#sku,
-      [LicenseFields.COLUMN_START_DATE]: this.#startDate,
-      [LicenseFields.COLUMN_STATUS_CODE]: this.#statusCode,
-      [LicenseFields.COLUMN_STATUS_LABEL]: this.#statusLabel,
-      [LicenseFields.COLUMN_SUBSCRIPTION_ID]: this.#subscriptionId,
-      [LicenseFields.COLUMN_SUBSIDIARY_NAME]: this.#subsidiaryName,
-      [LicenseFields.COLUMN_TERM]: this.#term,
-      [LicenseFields.COLUMN_TRIAL]: this.#trial,
-      [LicenseFields.COLUMN_TYPE]: this.#type,
-      [LicenseFields.COLUMN_UOM]: this.#uom,
-      [LicenseFields.COLUMN_VENDOR_CODE]: this.#vendorCode,
-      [LicenseFields.COLUMN_VENDOR_NAME]: this.#vendorName,
-      [LicenseFields.COLUMN_VENDOR_SUBSCRIPTION_ID]: this.#vendorSubscriptionId,
+      [LicenseFields.COLUMN_RESELLER_NAME]: this.getResellerName(),
+      [LicenseFields.COLUMN_RESELLER_REF]: this.getResellerRef(),
+      [LicenseFields.COLUMN_SEAT]: this.getSeat(),
+      [LicenseFields.COLUMN_SERVICE_REF]: this.getServiceRef(),
+      [LicenseFields.COLUMN_SKU]: this.getSku(),
+      [LicenseFields.COLUMN_START_DATE]: this.getStartDate(),
+      [LicenseFields.COLUMN_STATUS_CODE]: this.getStatusCode(),
+      [LicenseFields.COLUMN_STATUS_LABEL]: this.getStatusLabel(),
+      [LicenseFields.COLUMN_SUBSCRIPTION_ID]: this.getSubscriptionId(),
+      [LicenseFields.COLUMN_SUBSIDIARY_NAME]: this.getSubsidiaryName(),
+      [LicenseFields.COLUMN_TERM]: this.getTerm(),
+      [LicenseFields.COLUMN_TRIAL]: this.isTrial(),
+      [LicenseFields.COLUMN_TYPE]: this.getType(),
+      [LicenseFields.COLUMN_UOM]: this.getUom(),
+      [LicenseFields.COLUMN_VENDOR_CODE]: this.getVendorCode(),
+      [LicenseFields.COLUMN_VENDOR_NAME]: this.getVendorName(),
+      [LicenseFields.COLUMN_VENDOR_SUBSCRIPTION_ID]: this.getVendorSubscriptionId(),
     }
   }
 }

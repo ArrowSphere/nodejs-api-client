@@ -6,26 +6,28 @@ import nock from 'nock'
 
 // Sources
 import { PublicApiClient } from '../../src'
-import { MOCK_URL } from '../TestClient'
 import { WhoAmI, WhoAmIResponseFields } from '../../src/general'
 
 chai.use(sinonChai)
+
+const WHOAMI_MOCK_URL = 'https://whoami.localhost'
+const WHOAMI_ENDPOINT = '/whoami'
 
 describe('WhoAmIClient', () => {
   describe('getWhoamiRaw', () => {
     const expectedData = { myData: true }
 
     it('calls /whoami with a get verb', async () => {
-      nock(MOCK_URL).get('/whoami').reply(200, expectedData)
-      const publicClient = new PublicApiClient().setUrl(MOCK_URL)
+      nock(WHOAMI_MOCK_URL).get(WHOAMI_ENDPOINT).reply(200, expectedData)
+      const publicClient = new PublicApiClient().setUrl(WHOAMI_MOCK_URL)
       const client = publicClient.getWhoamiClient()
       await client.getWhoamiRaw()
       expect(nock.isDone())
     })
 
     it('returns the raw response', async () => {
-      nock(MOCK_URL).get('/whoami').reply(200, expectedData)
-      const publicClient = new PublicApiClient().setUrl(MOCK_URL)
+      nock(WHOAMI_MOCK_URL).get(WHOAMI_ENDPOINT).reply(200, expectedData)
+      const publicClient = new PublicApiClient().setUrl(WHOAMI_MOCK_URL)
       const client = publicClient.getWhoamiClient()
       const result = await client.getWhoamiRaw()
       expect(result).to.eqls(expectedData)
@@ -52,8 +54,10 @@ describe('WhoAmIClient', () => {
     }
 
     it('calls whoAmIRaw', async () => {
-      nock(MOCK_URL).get('/whoami').reply(200, { data: expectedData })
-      const publicClient = new PublicApiClient().setUrl(MOCK_URL)
+      nock(WHOAMI_MOCK_URL)
+        .get(WHOAMI_ENDPOINT)
+        .reply(200, { data: expectedData })
+      const publicClient = new PublicApiClient().setUrl(WHOAMI_MOCK_URL)
       const client = publicClient.getWhoamiClient()
       const spy = sinon.spy(client, 'getWhoamiRaw')
       await client.getWhoami()
@@ -62,8 +66,10 @@ describe('WhoAmIClient', () => {
     })
 
     it('returns the formatted entity toJSON result', async () => {
-      nock(MOCK_URL).get('/whoami').reply(200, { data: expectedData })
-      const publicClient = new PublicApiClient().setUrl(MOCK_URL)
+      nock(WHOAMI_MOCK_URL)
+        .get(WHOAMI_ENDPOINT)
+        .reply(200, { data: expectedData })
+      const publicClient = new PublicApiClient().setUrl(WHOAMI_MOCK_URL)
       const client = publicClient.getWhoamiClient()
       const result = await client.getWhoami()
       expect(result).to.eql(new WhoAmI(expectedData).toJSON())
