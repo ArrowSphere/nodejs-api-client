@@ -123,11 +123,11 @@ export abstract class AbstractClient {
    * @param headers - Headers to send
    * @returns Promise\<AxiosResponse['data']\>
    */
-  protected async get(
+  protected async get<T = AxiosResponse['data']>(
     parameters: Parameters = {},
     headers: Headers = {},
   ): Promise<AxiosResponse['data']> {
-    const response = await this.client.get(this.generateUrl(parameters), {
+    const response = await this.client.get<T>(this.generateUrl(parameters), {
       headers: this.prepareHeaders(headers),
     })
 
