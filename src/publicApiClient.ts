@@ -11,14 +11,16 @@ export class PublicApiClient extends AbstractClient {
   }
 
   /**
-   * @returns WhoamiClient
+   * Creates a new {@link WhoAmIClient} instance and returns it
+   * @returns {@link WhoAmIClient}
    */
   public getWhoamiClient(): WhoAmIClient {
     return new WhoAmIClient(this.client).setUrl(this.url).setApiKey(this.apiKey)
   }
 
   /**
-   * @returns LicensesClient
+   * Creates a new {@link LicensesClient} instance and returns it
+   * @returns {@link LicensesClient}
    */
   public getLicensesClient(): LicensesClient {
     return new LicensesClient(this.client)

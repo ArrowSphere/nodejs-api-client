@@ -32,12 +32,12 @@ export class FindResult extends AbstractEntity<FindData> {
   private readonly nbResults: number
 
   /**
-   * FindResult constructor.
+   * FindResult constructor. Uses the client and request data to go through the pages.
    *
-   * @param data -
-   * @param client -
-   * @param postData -
-   * @param parameters -
+   * @param data - Find call result data
+   * @param client - Client used to make the request
+   * @param postData - Post data passed to the request
+   * @param parameters - Extra parameters passed to the request
    */
   constructor(
     data: FindData,
@@ -65,7 +65,8 @@ export class FindResult extends AbstractEntity<FindData> {
   }
 
   /**
-   * @returns Generator|LicenseFindResult[]
+   * Gets all the licenses for the current page
+   * @returns Generator|{@link LicenseFindResult}[]
    */
   public *getLicensesForCurrentPage(): Generator<
     LicenseFindResultData,
@@ -76,10 +77,9 @@ export class FindResult extends AbstractEntity<FindData> {
   }
 
   /**
-   * @returns Generator|LicenseFindResult[]
-   *
-   * @throws EntityValidationException
-   * @throws PublicApiClientException
+   * Gets all the licenses from the result, page per page.
+   * Follows the asybc interator implementation through the generator pattern.
+   * @returns Generator|{@link LicenseFindResult}[]
    */
   public async *getLicenses(): AsyncGenerator<
     LicenseFindResultData,
@@ -122,6 +122,10 @@ export class FindResult extends AbstractEntity<FindData> {
     return this.totalPage
   }
 
+  /**
+   * Plain JSON object representation of the result entity.
+   * @returns {@link FindResultData}
+   */
   public toJSON(): FindResultData {
     return {
       licenses: this.getLicenses(),

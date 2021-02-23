@@ -121,7 +121,7 @@ export abstract class AbstractClient {
    * Sends a GET request and returns the response
    * @param parameters - Query parameters to send
    * @param headers - Headers to send
-   * @returns string
+   * @returns Promise\<AxiosResponse['data']\>
    */
   protected async get(
     parameters: Parameters = {},
@@ -137,7 +137,7 @@ export abstract class AbstractClient {
   /**
    * Processes and returns the Axios response data
    * @param response - The AxiosResponse
-   * @returns StreamInterface
+   * @returns T
    */
   private getResponse<T = AxiosResponse['data']>(response: AxiosResponse): T {
     const statusCode = response.status
@@ -157,7 +157,7 @@ export abstract class AbstractClient {
   /**
    * Prepare headers before sending
    * @param headers - Headers to include
-   * @returns Headers
+   * @returns {@link Headers}
    */
   private prepareHeaders(headers: Headers): Headers {
     return { ...headers, [ParameterKeys.API_KEY]: this.apiKey }
@@ -165,7 +165,7 @@ export abstract class AbstractClient {
 
   /**
    * Sends a POST request and returns the response
-   * @returns AxiosResponse
+   * @returns Promise\<AxiosResponse['data']\>
    * @param payload - Payload to be sent in the POST body
    * @param parameters - Query parameters to be sent in the request
    * @param headers - Headers to be sent in the request
@@ -205,7 +205,7 @@ export abstract class AbstractClient {
 
   /**
    * Generates the pagination part of the url
-   * @returns Parameters
+   * @returns {@link Parameters}
    */
   private generatePagination(): Parameters {
     if (this.page === 1 && !this.perPage) {

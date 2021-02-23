@@ -1,5 +1,8 @@
 import { AbstractEntity } from '../../abstractEntity'
 
+/**
+ * Fields that can be present in License response and request data.
+ */
 export enum LicenseFields {
   COLUMN_ACCEPT_EULA = 'accept_eula',
   COLUMN_AUTO_RENEW = 'auto_renew',
@@ -46,6 +49,9 @@ export enum LicenseFields {
   ACTIVE_SEATS_NUMBER = 'number',
 }
 
+/**
+ * License data fields and their corresponding types
+ */
 export type LicenseData = {
   [LicenseFields.COLUMN_ID]: number
   [LicenseFields.COLUMN_ACCEPT_EULA]: boolean
@@ -94,6 +100,9 @@ export type LicenseData = {
   [LicenseFields.COLUMN_VENDOR_SUBSCRIPTION_ID]: string | null
 }
 
+/**
+ * Abstract class of a License entity. Can only be instantiated through a {@link LicenseFindResult} object class
+ */
 export abstract class AbstractLicense extends AbstractEntity<LicenseData> {
   protected VALIDATION_RULES = {
     [LicenseFields.COLUMN_ID]: 'required|numeric',
@@ -163,7 +172,7 @@ export abstract class AbstractLicense extends AbstractEntity<LicenseData> {
   /**
    * AbstractLicense constructor.
    *
-   * @param data - LicenseData
+   * @param data - License data to construct the entity with.
    */
   protected constructor(data: LicenseData) {
     super(data)
@@ -383,6 +392,10 @@ export abstract class AbstractLicense extends AbstractEntity<LicenseData> {
     return this.#vendorSubscriptionId
   }
 
+  /**
+   * Plain JSON object representation of the license entity.
+   * @returns {@link LicenseData}
+   */
   public toJSON(): LicenseData {
     return {
       [LicenseFields.COLUMN_ID]: this.getId(),

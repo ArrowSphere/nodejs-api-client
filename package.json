@@ -11,7 +11,7 @@
   "scripts": {
     "build": "tsc --build",
     "clean": "rimraf build/",
-    "doc": "typedoc ./src/**/index.ts",
+    "doc": "typedoc ./src/index.ts ./src/**/index.ts",
     "lint": "eslint ./{src,tests}/**/*.ts && prettier --list-different ./{src,tests}/**/*.ts",
     "lint:fix": "eslint ./{src,tests}/**/*.ts --fix && prettier --write ./{src,tests}/**/*.ts",
     "prepublishOnly": "npm run clean && npm run build",
