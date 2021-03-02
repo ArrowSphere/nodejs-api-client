@@ -3,6 +3,23 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [O.3.3] - 2021-03-02
+
+### Added
+
+- Node strategy matrix for 12.x and 14.x Lint, Build, Test jobs
+
+### Changed
+
+- Build for ES2018 instead of ES2020
+- Use setup-node@2 in actions
+
+## [0.3.2] - 2021-02-26
+
+### Changed
+
+- Validatorjs types in production bundle
+
 ## [0.3.1] - 2021-02-23
 
 ### Added
