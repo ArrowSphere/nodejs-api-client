@@ -43,7 +43,7 @@ export enum LicenseFields {
   COLUMN_PRICE = 'price',
   PRICE_BUY_PRICE = 'buy_price',
   PRICE_LIST_PRICE = 'list_price',
-  PRICE_CURRENCY = 'price.currency',
+  PRICE_CURRENCY = 'currency',
   COLUMN_ACTIVE_SEATS = 'active_seats',
   ACTIVE_SEATS_LAST_UPDATE = 'lastUpdate',
   ACTIVE_SEATS_NUMBER = 'number',
