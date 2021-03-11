@@ -117,7 +117,7 @@ export type LicenseFindPayload = {
 
 export class LicensesClient extends AbstractClient {
   /**
-   * The base path of the Catalog API
+   * The base path of the Licenses API
    */
   private ROOT_PATH = '/licenses'
 

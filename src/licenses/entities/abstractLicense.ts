@@ -228,143 +228,143 @@ export abstract class AbstractLicense extends AbstractEntity<LicenseData> {
       data[LicenseFields.COLUMN_VENDOR_SUBSCRIPTION_ID]
   }
 
-  public getId(): number {
+  public get id(): number {
     return this.#id
   }
 
-  public isAcceptEula(): boolean {
+  public get acceptEula(): boolean {
     return this.#acceptEula
   }
 
-  public getActiveSeatsLastUpdate(): string | null {
+  public get activeSeatsLastUpdate(): string | null {
     return this.#activeSeatsLastUpdate
   }
 
-  public getActiveSeatsNumber(): number | null {
+  public get activeSeatsNumber(): number | null {
     return this.#activeSeatsNumber
   }
 
-  public isAutoRenew(): boolean {
+  public get autoRenew(): boolean {
     return this.#autoRenew
   }
 
-  public getBaseSeat(): number {
+  public get baseSeat(): number {
     return this.#baseSeat
   }
 
-  public getBuyPrice(): number {
+  public get buyPrice(): number {
     return this.#buyPrice
   }
 
-  public getCategory(): string {
+  public get category(): string {
     return this.#category
   }
 
-  public getClassification(): string {
+  public get classification(): string {
     return this.#classification
   }
 
-  public getCurrency(): string | null {
+  public get currency(): string | null {
     return this.#currency
   }
 
-  public getCustomerName(): string {
+  public get customerName(): string {
     return this.#customerName
   }
 
-  public getCustomerRef(): string {
+  public get customerRef(): string {
     return this.#customerRef
   }
 
-  public getEndDate(): string {
+  public get endDate(): string {
     return this.#endDate
   }
 
-  public getFriendlyName(): string | null {
+  public get friendlyName(): string | null {
     return this.#friendlyName
   }
 
-  public isEnabled(): boolean {
+  public get enabled(): boolean {
     return this.#enabled
   }
 
-  public getLastUpdate(): string | null {
+  public get lastUpdate(): string | null {
     return this.#lastUpdate
   }
 
-  public getListPrice(): number {
+  public get listPrice(): number {
     return this.#listPrice
   }
 
-  public getMarketplace(): string {
+  public get marketplace(): string {
     return this.#marketplace
   }
 
-  public getMessage(): string {
+  public get message(): string {
     return this.#message
   }
 
-  public getOffer(): string {
+  public get offer(): string {
     return this.#offer
   }
 
-  public getParentLineId(): number | null {
+  public get parentLineId(): number | null {
     return this.#parentLineId
   }
 
-  public getParentOrderRef(): string | null {
+  public get parentOrderRef(): string | null {
     return this.#parentOrderRef
   }
 
-  public getPartnerRef(): string {
+  public get partnerRef(): string {
     return this.#partnerRef
   }
 
-  public getPeriodicity(): number {
+  public get periodicity(): number {
     return this.#periodicity
   }
 
-  public getResellerName(): string {
+  public get resellerName(): string {
     return this.#resellerName
   }
 
-  public getResellerRef(): string {
+  public get resellerRef(): string {
     return this.#resellerRef
   }
 
-  public getSeat(): number {
+  public get seat(): number {
     return this.#seat
   }
 
-  public getServiceRef(): string {
+  public get serviceRef(): string {
     return this.#serviceRef
   }
 
-  public getSku(): string {
+  public get sku(): string {
     return this.#sku
   }
 
-  public getStartDate(): string {
+  public get startDate(): string {
     return this.#startDate
   }
 
-  public getStatusCode(): number {
+  public get statusCode(): number {
     return this.#statusCode
   }
 
-  public getStatusLabel(): string {
+  public get statusLabel(): string {
     return this.#statusLabel
   }
 
-  public getSubscriptionId(): string {
+  public get subscriptionId(): string {
     return this.#subscriptionId
   }
 
-  public getSubsidiaryName(): string {
+  public get subsidiaryName(): string {
     return this.#subsidiaryName
   }
 
-  public getTerm(): number {
+  public get term(): number {
     return this.#term
   }
 
@@ -372,23 +372,23 @@ export abstract class AbstractLicense extends AbstractEntity<LicenseData> {
     return this.#trial
   }
 
-  public getType(): string {
+  public get type(): string {
     return this.#type
   }
 
-  public getUom(): string {
+  public get uom(): string {
     return this.#uom
   }
 
-  public getVendorCode(): string {
+  public get vendorCode(): string {
     return this.#vendorCode
   }
 
-  public getVendorName(): string {
+  public get vendorName(): string {
     return this.#vendorName
   }
 
-  public getVendorSubscriptionId(): string | null {
+  public get vendorSubscriptionId(): string | null {
     return this.#vendorSubscriptionId
   }
 
@@ -398,51 +398,51 @@ export abstract class AbstractLicense extends AbstractEntity<LicenseData> {
    */
   public toJSON(): LicenseData {
     return {
-      [LicenseFields.COLUMN_ID]: this.getId(),
-      [LicenseFields.COLUMN_ACCEPT_EULA]: this.isAcceptEula(),
+      [LicenseFields.COLUMN_ID]: this.id,
+      [LicenseFields.COLUMN_ACCEPT_EULA]: this.acceptEula,
       [LicenseFields.COLUMN_ACTIVE_SEATS]: {
-        [LicenseFields.ACTIVE_SEATS_NUMBER]: this.getActiveSeatsNumber(),
-        [LicenseFields.ACTIVE_SEATS_LAST_UPDATE]: this.getActiveSeatsLastUpdate(),
+        [LicenseFields.ACTIVE_SEATS_NUMBER]: this.activeSeatsNumber,
+        [LicenseFields.ACTIVE_SEATS_LAST_UPDATE]: this.activeSeatsLastUpdate,
       },
-      [LicenseFields.COLUMN_AUTO_RENEW]: this.isAutoRenew(),
-      [LicenseFields.COLUMN_BASE_SEAT]: this.getBaseSeat(),
-      [LicenseFields.COLUMN_CATEGORY]: this.getCategory(),
-      [LicenseFields.COLUMN_CLOUD_TYPE]: this.getClassification(),
-      [LicenseFields.COLUMN_CUSTOMER_NAME]: this.getCustomerName(),
-      [LicenseFields.COLUMN_CUSTOMER_REF]: this.getCustomerRef(),
-      [LicenseFields.COLUMN_END_DATE]: this.getEndDate(),
-      [LicenseFields.COLUMN_FRIENDLY_NAME]: this.getFriendlyName(),
-      [LicenseFields.COLUMN_IS_ENABLED]: this.isEnabled(),
-      [LicenseFields.COLUMN_LAST_UPDATE]: this.getLastUpdate(),
-      [LicenseFields.COLUMN_MARKETPLACE]: this.getMarketplace(),
-      [LicenseFields.COLUMN_MESSAGE]: this.getMessage(),
-      [LicenseFields.COLUMN_OFFER]: this.getOffer(),
-      [LicenseFields.COLUMN_PARENT_LINE_ID]: this.getParentLineId(),
-      [LicenseFields.COLUMN_PARENT_ORDER_REF]: this.getParentOrderRef(),
-      [LicenseFields.COLUMN_PARTNER_REF]: this.getPartnerRef(),
-      [LicenseFields.COLUMN_PERIODICITY]: this.getPeriodicity(),
+      [LicenseFields.COLUMN_AUTO_RENEW]: this.autoRenew,
+      [LicenseFields.COLUMN_BASE_SEAT]: this.baseSeat,
+      [LicenseFields.COLUMN_CATEGORY]: this.category,
+      [LicenseFields.COLUMN_CLOUD_TYPE]: this.classification,
+      [LicenseFields.COLUMN_CUSTOMER_NAME]: this.customerName,
+      [LicenseFields.COLUMN_CUSTOMER_REF]: this.customerRef,
+      [LicenseFields.COLUMN_END_DATE]: this.endDate,
+      [LicenseFields.COLUMN_FRIENDLY_NAME]: this.friendlyName,
+      [LicenseFields.COLUMN_IS_ENABLED]: this.enabled,
+      [LicenseFields.COLUMN_LAST_UPDATE]: this.lastUpdate,
+      [LicenseFields.COLUMN_MARKETPLACE]: this.marketplace,
+      [LicenseFields.COLUMN_MESSAGE]: this.message,
+      [LicenseFields.COLUMN_OFFER]: this.offer,
+      [LicenseFields.COLUMN_PARENT_LINE_ID]: this.parentLineId,
+      [LicenseFields.COLUMN_PARENT_ORDER_REF]: this.parentOrderRef,
+      [LicenseFields.COLUMN_PARTNER_REF]: this.partnerRef,
+      [LicenseFields.COLUMN_PERIODICITY]: this.periodicity,
       [LicenseFields.COLUMN_PRICE]: {
-        [LicenseFields.PRICE_BUY_PRICE]: this.getBuyPrice(),
-        [LicenseFields.PRICE_LIST_PRICE]: this.getListPrice(),
-        [LicenseFields.PRICE_CURRENCY]: this.getCurrency(),
+        [LicenseFields.PRICE_BUY_PRICE]: this.buyPrice,
+        [LicenseFields.PRICE_LIST_PRICE]: this.listPrice,
+        [LicenseFields.PRICE_CURRENCY]: this.currency,
       },
-      [LicenseFields.COLUMN_RESELLER_NAME]: this.getResellerName(),
-      [LicenseFields.COLUMN_RESELLER_REF]: this.getResellerRef(),
-      [LicenseFields.COLUMN_SEAT]: this.getSeat(),
-      [LicenseFields.COLUMN_SERVICE_REF]: this.getServiceRef(),
-      [LicenseFields.COLUMN_SKU]: this.getSku(),
-      [LicenseFields.COLUMN_START_DATE]: this.getStartDate(),
-      [LicenseFields.COLUMN_STATUS_CODE]: this.getStatusCode(),
-      [LicenseFields.COLUMN_STATUS_LABEL]: this.getStatusLabel(),
-      [LicenseFields.COLUMN_SUBSCRIPTION_ID]: this.getSubscriptionId(),
-      [LicenseFields.COLUMN_SUBSIDIARY_NAME]: this.getSubsidiaryName(),
-      [LicenseFields.COLUMN_TERM]: this.getTerm(),
+      [LicenseFields.COLUMN_RESELLER_NAME]: this.resellerName,
+      [LicenseFields.COLUMN_RESELLER_REF]: this.resellerRef,
+      [LicenseFields.COLUMN_SEAT]: this.seat,
+      [LicenseFields.COLUMN_SERVICE_REF]: this.serviceRef,
+      [LicenseFields.COLUMN_SKU]: this.sku,
+      [LicenseFields.COLUMN_START_DATE]: this.startDate,
+      [LicenseFields.COLUMN_STATUS_CODE]: this.statusCode,
+      [LicenseFields.COLUMN_STATUS_LABEL]: this.statusLabel,
+      [LicenseFields.COLUMN_SUBSCRIPTION_ID]: this.subscriptionId,
+      [LicenseFields.COLUMN_SUBSIDIARY_NAME]: this.subsidiaryName,
+      [LicenseFields.COLUMN_TERM]: this.term,
       [LicenseFields.COLUMN_TRIAL]: this.isTrial(),
-      [LicenseFields.COLUMN_TYPE]: this.getType(),
-      [LicenseFields.COLUMN_UOM]: this.getUom(),
-      [LicenseFields.COLUMN_VENDOR_CODE]: this.getVendorCode(),
-      [LicenseFields.COLUMN_VENDOR_NAME]: this.getVendorName(),
-      [LicenseFields.COLUMN_VENDOR_SUBSCRIPTION_ID]: this.getVendorSubscriptionId(),
+      [LicenseFields.COLUMN_TYPE]: this.type,
+      [LicenseFields.COLUMN_UOM]: this.uom,
+      [LicenseFields.COLUMN_VENDOR_CODE]: this.vendorCode,
+      [LicenseFields.COLUMN_VENDOR_NAME]: this.vendorName,
+      [LicenseFields.COLUMN_VENDOR_SUBSCRIPTION_ID]: this.vendorSubscriptionId,
     }
   }
 }

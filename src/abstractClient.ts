@@ -11,7 +11,7 @@ export enum ParameterKeys {
   PER_PAGE = 'per_page',
 }
 
-export type Parameters = Record<string, string | undefined>
+export type Parameters = Record<string, string | string[] | undefined>
 
 export type Headers = Record<string, string>
 
@@ -126,12 +126,12 @@ export abstract class AbstractClient {
   protected async get<T = AxiosResponse['data']>(
     parameters: Parameters = {},
     headers: Headers = {},
-  ): Promise<AxiosResponse['data']> {
+  ): Promise<T> {
     const response = await this.client.get<T>(this.generateUrl(parameters), {
       headers: this.prepareHeaders(headers),
     })
 
-    return this.getResponse(response)
+    return this.getResponse<T>(response)
   }
 
   /**

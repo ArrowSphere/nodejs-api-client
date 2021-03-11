@@ -78,7 +78,7 @@ describe('FindResult', () => {
   describe('getFilters', () => {
     it('returns the filter entity results', () => {
       const result = new FindResult(MOCK_FIND_DATA, licensesClient)
-      expect(result.getFilters()).to.eqls(
+      expect(result.filters).to.eqls(
         MOCK_FIND_DATA.filters.map((filter) =>
           new FilterFindResult(filter).toJSON(),
         ),
@@ -89,16 +89,14 @@ describe('FindResult', () => {
   describe('getNbResults', () => {
     it('returns this.nbResults', () => {
       const result = new FindResult(MOCK_FIND_DATA, licensesClient)
-      expect(result.getNbResults()).to.eqls(MOCK_FIND_DATA.pagination.total)
+      expect(result.nbResults).to.eqls(MOCK_FIND_DATA.pagination.total)
     })
   })
 
   describe('getTotalPages', () => {
     it('returns this.totalPage', () => {
       const result = new FindResult(MOCK_FIND_DATA, licensesClient)
-      expect(result.getTotalPages()).to.eqls(
-        MOCK_FIND_DATA.pagination.totalPage,
-      )
+      expect(result.totalPage).to.eqls(MOCK_FIND_DATA.pagination.totalPage)
     })
   })
 
@@ -108,8 +106,8 @@ describe('FindResult', () => {
       expect(result.toJSON()).to.eqls({
         totalPage: 2,
         nbResults: 2,
-        licenses: result.getLicenses(),
-        filters: result.getFilters(),
+        licenses: result.licenses,
+        filters: result.filters,
       })
     })
   })

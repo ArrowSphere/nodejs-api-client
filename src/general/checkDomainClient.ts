@@ -20,7 +20,7 @@ export class CheckDomainClient extends AbstractClient {
     parameters: Parameters = {},
   ): Promise<AxiosResponse<CheckDomainData>> {
     this.path = encodeURI(`/vendors/${vendorName}/checkDomain/${domainName}`)
-    return this.get<CheckDomainData>(parameters)
+    return this.get(parameters)
   }
 
   /**
