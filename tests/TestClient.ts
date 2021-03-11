@@ -16,7 +16,7 @@ export class TestClient extends AbstractClient {
     this.url = MOCK_URL
   }
 
-  get(): Promise<AxiosResponse> {
+  get(): Promise<AxiosResponse['data']> {
     return super.get()
   }
 
