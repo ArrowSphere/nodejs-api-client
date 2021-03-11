@@ -1,5 +1,5 @@
 import { AbstractClient } from './abstractClient'
-import { WhoAmIClient } from './general'
+import { CheckDomainClient, WhoAmIClient } from './general'
 import { LicensesClient } from './licenses/licensesClient'
 
 /**
@@ -24,6 +24,16 @@ export class PublicApiClient extends AbstractClient {
    */
   public getLicensesClient(): LicensesClient {
     return new LicensesClient(this.client)
+      .setUrl(this.url)
+      .setApiKey(this.apiKey)
+  }
+
+  /**
+   * Creates a new {@link CheckDomainClient} instance and returns it
+   * @returns {@link CheckDomainClient}
+   */
+  public getCheckDomainClient(): CheckDomainClient {
+    return new CheckDomainClient(this.client)
       .setUrl(this.url)
       .setApiKey(this.apiKey)
   }
