@@ -4,7 +4,7 @@ import { PublicApiClient } from '../../../src'
 import {
   SubscriptionsListData,
   SubscriptionsListResult,
-  ListResultData,
+  SubscriptionsListResultData,
 } from '../../../src/subscriptions'
 import {
   MOCK_LIST_RESPONSE,
@@ -181,7 +181,7 @@ describe('SubscriptionsListResult', () => {
         totalPage: 2,
         nbResults: 2,
         subscriptions: result.subscriptions,
-      } as ListResultData)
+      } as SubscriptionsListResultData)
     })
   })
 })

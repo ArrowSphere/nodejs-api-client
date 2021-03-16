@@ -9,7 +9,7 @@ import { Subscription, SubscriptionData } from './subscription'
 /**
  * Subscriptions list result plain data
  */
-export type ListResultData = {
+export type SubscriptionsListResultData = {
   subscriptions: AsyncGenerator<SubscriptionData, void, undefined>
   totalPage: number
   nbResults: number
@@ -135,9 +135,9 @@ export class SubscriptionsListResult extends AbstractEntity<SubscriptionsListDat
 
   /**
    * Plain JSON object representation of the result entity.
-   * @returns {@link ListResultData}
+   * @returns {@link SubscriptionsListResultData}
    */
-  public toJSON(): ListResultData {
+  public toJSON(): SubscriptionsListResultData {
     return {
       subscriptions: this.subscriptions,
       totalPage: this.totalPage,
