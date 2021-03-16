@@ -75,7 +75,7 @@ export const MOCK_LICENSE_DATA: LicenseFindResultData = {
 /**
  * Mocks a potential find call response data
  */
-export const MOCK_FIND_DATA: FindData = {
+export const MOCK_FIND_RESPONSE: FindData = {
   pagination: {
     currentPage: 1,
     total: 2,
@@ -234,7 +234,7 @@ describe('LicensesClient', () => {
     it('calls findRaw and feeds the response returns the FindResult entity', async () => {
       nock(LICENSES_MOCK_URL)
         .post(LICENSES_FIND_ENDPOINT)
-        .reply(200, (): FindData => MOCK_FIND_DATA)
+        .reply(200, (): FindData => MOCK_FIND_RESPONSE)
       const result = await client.find()
       expect(result).to.be.instanceOf(FindResult)
     })
