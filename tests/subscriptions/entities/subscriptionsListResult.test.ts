@@ -14,7 +14,7 @@ import {
 } from '../subscriptionsClient.test'
 
 const LIST_RESULT_SUBSCRIPTIONS_MOCK_URL =
-  'https://find.subscriptions.localhost'
+  'https://list.subscriptions.localhost'
 
 const subscriptionsClient = new PublicApiClient()
   .getSubscriptionsClient()
@@ -25,11 +25,11 @@ const result = new SubscriptionsListResult(
   subscriptionsClient,
 )
 
-describe('FindResult', () => {
+describe('SubscriptionsListResult', () => {
   describe('getSubscriptionsForCurrentPage', () => {
     it('yields the results subscriptions', () => {
-      for (const license of result.getSubscriptionsForCurrentPage()) {
-        expect(license).to.eqls(MOCK_SUBSCRIPTION_DATA)
+      for (const subscription of result.getSubscriptionsForCurrentPage()) {
+        expect(subscription).to.eqls(MOCK_SUBSCRIPTION_DATA)
       }
     })
   })
@@ -84,8 +84,8 @@ describe('FindResult', () => {
         subscriptionsClient,
       )
       let count = 0
-      for await (const license of mockResult.getSubscriptions()) {
-        expect(license).to.eqls(MOCK_SUBSCRIPTION_DATA)
+      for await (const subscription of mockResult.getSubscriptions()) {
+        expect(subscription).to.eqls(MOCK_SUBSCRIPTION_DATA)
         count++
       }
       // Assert we evaluated two subscriptions
