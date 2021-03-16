@@ -1,6 +1,6 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios'
 import { NotFoundException, PublicApiClientException } from './exception'
-import { URLSearchParams } from 'url'
+import querystring from 'querystring'
 
 /**
  * Lists of available query parameters for the API call
@@ -196,7 +196,7 @@ export abstract class AbstractClient {
 
     let paramsStr = ''
     if (Object.values(params).length) {
-      const query = new URLSearchParams(params)
+      const query = querystring.stringify(params)
       paramsStr = '?' + query
     }
 
