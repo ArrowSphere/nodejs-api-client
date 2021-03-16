@@ -21,7 +21,7 @@ export const SUBSCRIPTIONS_MOCK_URL = 'http://subscriptions.localhost'
 export const SUBSCRIPTIONS_LIST_ENDPOINT = /\/subscriptions\/admin\/subscriptions/
 
 /**
- * Mock license data to be used in tests and returned by mocks
+ * Mock subscription data to be used in tests and returned by mocks
  */
 export const MOCK_SUBSCRIPTION_DATA: SubscriptionData = {
   [SubscriptionFields.COLUMN_SUBSCRIPTION_ID]: 420,
