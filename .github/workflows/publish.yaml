@@ -1,7 +1,7 @@
 name: NPM Publish
 on:
   release:
-    types: [created, edited]
+    types: [released, edited]
 jobs:
   publish-gh:
     name: Publish GitHub package
