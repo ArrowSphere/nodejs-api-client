@@ -61,7 +61,7 @@ describe('AbstractClient', () => {
 
     it('prefixes with admin if the endpoint has the option', async () => {
       nock(MOCK_URL)
-        .get('/admin/' + TEST_ENDPOINT)
+        .get('/admin' + TEST_ENDPOINT)
         .reply(200, expectedData)
       const result = await client.getTestAdmin()
       expect(nock.isDone()).to.be.true

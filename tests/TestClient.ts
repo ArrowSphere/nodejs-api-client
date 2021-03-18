@@ -37,7 +37,7 @@ export class TestClient extends AbstractClient {
 
   postTestAdmin(): Promise<AxiosResponse> {
     this.path = TEST_ENDPOINT
-    return super.get({}, {}, { isAdmin: true })
+    return super.post({}, {}, {}, { isAdmin: true })
   }
 }
 
