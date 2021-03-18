@@ -44,7 +44,7 @@ export class SubscriptionsClient extends AbstractClient {
   /**
    * The path of the List endpoint
    */
-  private LIST_PATH = '/admin/subscriptions'
+  private LIST_PATH = ''
 
   /**
    * Calls the subscriptions API list endpoint
@@ -57,7 +57,7 @@ export class SubscriptionsClient extends AbstractClient {
     data: SubscriptionsListPayload = {},
   ): Promise<SubscriptionsListData> {
     this.path = this.LIST_PATH
-    return this.get<SubscriptionsListData>(data)
+    return this.get<SubscriptionsListData>(data, {}, { isAdmin: true })
   }
 
   /**
