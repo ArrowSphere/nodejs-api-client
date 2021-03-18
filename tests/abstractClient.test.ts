@@ -46,17 +46,24 @@ describe('AbstractClient', () => {
     const expectedData = { result: true }
     const client = new TestClient()
 
-    beforeEach(() => {
-      nock(MOCK_URL).get(TEST_ENDPOINT).reply(200, expectedData)
-    })
-
     it('makes a HTTP GET request on the specified URL', async () => {
+      nock(MOCK_URL).get(TEST_ENDPOINT).reply(200, expectedData)
       await client.getTest()
       expect(nock.isDone()).to.be.true
     })
 
     it('returns the endpoint response data', async () => {
+      nock(MOCK_URL).get(TEST_ENDPOINT).reply(200, expectedData)
       const result = await client.getTest()
+      expect(nock.isDone()).to.be.true
+      expect(result).to.eql(expectedData)
+    })
+
+    it('prefixes with admin if the endpoint has the option', async () => {
+      nock(MOCK_URL)
+        .get('/admin/' + TEST_ENDPOINT)
+        .reply(200, expectedData)
+      const result = await client.getTestAdmin()
       expect(nock.isDone()).to.be.true
       expect(result).to.eql(expectedData)
     })
@@ -66,17 +73,24 @@ describe('AbstractClient', () => {
     const expectedData = { result: true }
     const client = new TestClient()
 
-    beforeEach(() => {
-      nock(MOCK_URL).post(TEST_ENDPOINT).reply(200, expectedData)
-    })
-
     it('makes a HTTP POST request on the specified URL', async () => {
+      nock(MOCK_URL).post(TEST_ENDPOINT).reply(200, expectedData)
       await client.postTest()
       expect(nock.isDone()).to.be.true
     })
 
     it('returns the endpoint response data', async () => {
+      nock(MOCK_URL).post(TEST_ENDPOINT).reply(200, expectedData)
       const result = await client.postTest()
+      expect(nock.isDone()).to.be.true
+      expect(result).to.eql(expectedData)
+    })
+
+    it('prefixes with admin if the endpoint has the option', async () => {
+      nock(MOCK_URL + '/admin')
+        .post(TEST_ENDPOINT)
+        .reply(200, expectedData)
+      const result = await client.postTestAdmin()
       expect(nock.isDone()).to.be.true
       expect(result).to.eql(expectedData)
     })

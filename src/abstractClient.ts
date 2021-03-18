@@ -1,6 +1,8 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios'
 import { NotFoundException, PublicApiClientException } from './exception'
 import querystring from 'querystring'
+import { URL } from 'url'
+import path from 'path'
 
 /**
  * Lists of available query parameters for the API call
@@ -16,6 +18,10 @@ export type Parameters = Record<string, string | string[] | undefined>
 export type Headers = Record<string, string>
 
 export type Payload = Record<string, unknown>
+
+export type Options = {
+  isAdmin?: boolean
+}
 
 export abstract class AbstractClient {
   /**
@@ -126,10 +132,14 @@ export abstract class AbstractClient {
   protected async get<T = AxiosResponse['data']>(
     parameters: Parameters = {},
     headers: Headers = {},
+    options: Options = {},
   ): Promise<T> {
-    const response = await this.client.get<T>(this.generateUrl(parameters), {
-      headers: this.prepareHeaders(headers),
-    })
+    const response = await this.client.get<T>(
+      this.generateUrl(parameters, options),
+      {
+        headers: this.prepareHeaders(headers),
+      },
+    )
 
     return this.getResponse<T>(response)
   }
@@ -174,9 +184,10 @@ export abstract class AbstractClient {
     payload: Payload = {},
     parameters: Parameters = {},
     headers: Headers = {},
+    options: Options = {},
   ): Promise<AxiosResponse['data']> {
     const response = await this.client.post(
-      this.generateUrl(parameters),
+      this.generateUrl(parameters, options),
       payload,
       {
         headers: this.prepareHeaders(headers),
@@ -191,16 +202,19 @@ export abstract class AbstractClient {
    * @param parameters - Parameters to serialize
    * @returns string
    */
-  protected generateUrl(parameters: Parameters): string {
+  protected generateUrl(parameters: Parameters, options: Options = {}): string {
     const params = { ...parameters, ...this.generatePagination() }
 
-    let paramsStr = ''
+    const url = new URL(
+      `${options.isAdmin ? path.join('admin', this.basePath) : this.basePath}${
+        this.path
+      }`,
+      this.url,
+    )
     if (Object.values(params).length) {
-      const query = querystring.stringify(params)
-      paramsStr = '?' + query
+      url.search = querystring.stringify(params)
     }
-
-    return this.url + this.basePath + this.path + paramsStr
+    return url.toString()
   }
 
   /**
