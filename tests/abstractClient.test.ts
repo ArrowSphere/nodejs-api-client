@@ -234,5 +234,28 @@ describe('AbstractClient', () => {
       client.setPage(page)
       await client.getTest()
     })
+
+    it('uses camel case pagination if client specifies it', async () => {
+      nock(MOCK_URL)
+        .get(new RegExp(`${TEST_ENDPOINT}.*`))
+        .reply(200)
+
+      const apiKey = 'apiKey'
+      const axiosClient = axios.create()
+      const client = new TestClient(axiosClient).setApiKey(apiKey)
+      const perPage = 25
+
+      axiosClient.interceptors.request.use(
+        axiosExpectInterceptor(
+          ({ queryParameters }: ExpectFunctionParameters) => {
+            expect(queryParameters?.get(ParameterKeys.PER_PAGE_CAMEL)).to.exist
+            expect(queryParameters?.get(ParameterKeys.PER_PAGE)).not.to.exist
+          },
+        ),
+      )
+
+      client.setPerPage(perPage)
+      await client.getTestCamel()
+    })
   })
 })
