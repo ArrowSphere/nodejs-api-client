@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Pre-release workflow
 - CheckDomainClient
 - General clients specific documentation
+- GET/POST admin prefix option for abstract client
 - Unit testing
 
 ## [0.3.4] - 2021-03-02
