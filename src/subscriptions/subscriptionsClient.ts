@@ -47,6 +47,11 @@ export class SubscriptionsClient extends AbstractClient {
   private LIST_PATH = ''
 
   /**
+   * Pagination for these endpoints are camel cased (`&perPage=x` instead of `&per_page=x`)
+   */
+  protected isCamelPagination = true
+
+  /**
    * Calls the subscriptions API list endpoint
    *
    * @param data - List payload

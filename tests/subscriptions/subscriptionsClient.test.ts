@@ -149,7 +149,7 @@ describe('SubscriptionsClient', () => {
         .reply((uri) => {
           const urlParams = new URL(uri, SUBSCRIPTIONS_MOCK_URL)
           try {
-            expect(urlParams.searchParams.get('per_page')).to.equal('10')
+            expect(urlParams.searchParams.get('perPage')).to.equal('10')
           } catch (error) {
             done(error)
             return [500]
@@ -166,7 +166,7 @@ describe('SubscriptionsClient', () => {
         .reply((uri) => {
           const urlParams = new URL(uri, SUBSCRIPTIONS_MOCK_URL)
           try {
-            expect(urlParams.searchParams.get('per_page')).to.exist
+            expect(urlParams.searchParams.get('perPage')).to.exist
           } catch (error) {
             done(error)
             return [500]
