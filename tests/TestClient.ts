@@ -30,6 +30,15 @@ export class TestClient extends AbstractClient {
     return super.get({}, {}, { isAdmin: true })
   }
 
+  getTestCamel(): Promise<AxiosResponse> {
+    this.path = TEST_ENDPOINT
+    this.isCamelPagination = true
+    return super.get().then((res) => {
+      this.isCamelPagination = false
+      return res
+    })
+  }
+
   postTest(): Promise<AxiosResponse> {
     this.path = TEST_ENDPOINT
     return super.post()
