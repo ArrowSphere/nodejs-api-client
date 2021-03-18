@@ -202,7 +202,7 @@ export abstract class AbstractClient {
    * @param parameters - Parameters to serialize
    * @returns string
    */
-  protected generateUrl(parameters: Parameters, options: Options = {}): string {
+  protected generateUrl(parameters: Parameters, options: Options): string {
     const params = { ...parameters, ...this.generatePagination() }
 
     const url = new URL(
