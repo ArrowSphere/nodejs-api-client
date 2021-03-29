@@ -166,25 +166,25 @@ const searchResult = client.find({
   [LicenseFindParameters.DATA_HIGHLIGHT]: true,
 })
 
-console.log(`${searchResult.getNbResults()} results were found`)
-console.log(`${searchResult.getTotalPages()} pages`)
+console.log(`${searchResult.nbResults} results were found`)
+console.log(`${searchResult.totalPages} pages`)
 
-const filters = searchResult.getFilters()
+const filters = searchResult.filters
 for await (const filter of filters) {
-  console.log(`${filter.getName()}:  ${print_r(filter.getValues(), true)}`)
+  console.log(`${filter.name}:  ${filter.values}`)
 }
 
 // You can get the current page's results
 const licenses = searchResult.getLicensesForCurrentPage()
 for await (const license of licenses) {
-  console.log(license.getPartnerRef())
+  console.log(license.partnerRef)
 }
 
 // You can also browse directly through all the results
 // this will make the API call as many times as needed and traverse all the pages
 const licenses = searchResult.getLicenses()
 for await (const license of licenses) {
-  console.log(license.getPartnerRef())
+  console.log(license.partnerRef)
 }
 ```
 
