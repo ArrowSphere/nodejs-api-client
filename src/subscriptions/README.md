@@ -40,18 +40,20 @@ The List endpoint is deisgn to perform easy filtered listing of subscriptions.
 
 The query parameters are the following and match the table in [Subscription](#Subscription)
 
-| Name         | Type     | Subscription field |
-| ------------ | -------- | ------------------ |
-| subscription | string[] | -                  |
-| status       | string[] | -                  |
-| partnerTag   | string[] | partnerTagLabels   |
-| marketplace  | string[] | workgroupCode      |
-| company      | string[] | companyName        |
-| startDate    | string   | -                  |
-| endingDate   | string   | endDate            |
-| lastUpdate   | string   | -                  |
-| perPage      | string   | None               |
-| page         | string   | None               |
+| Name          | Type            | Subscription field |
+| ------------- | --------------- | ------------------ |
+| subscription  | string[]        | -                  |
+| status        | string[]        | -                  |
+| partnerTag    | string[]        | partnerTagLabels   |
+| marketplace   | string[]        | workgroupCode      |
+| company       | string[]        | companyName        |
+| startDate     | string          | -                  |
+| endingDate    | string          | endDate            |
+| lastUpdate    | string          | -                  |
+| perPage       | string          | None               |
+| page          | string          | None               |
+| sortBy        | string          | -                  |
+| sortDirection | 'ASC' or 'DESC' | -                  |
 
 Example implementation:
 
@@ -81,6 +83,8 @@ const searchResult = client.list({
   lastUpdate: '2021-03-24',
   perPage: '100',
   page: '1',
+  sortBy: 'subscription',
+  sortDirection: 'ASC'
 })
 
 console.log(`${searchResult.nbResults} results were found`)
@@ -98,7 +102,6 @@ const subscriptions = searchResult.getSubscriptions()
 for await (const subscription of subscriptions) {
   console.log(subscription.companyName)
 }
-
 ```
 
 ### SubscriptionsListResult

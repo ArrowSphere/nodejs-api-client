@@ -16,6 +16,8 @@ export type SubscriptionsListPayload = {
   lastUpdate?: string
   perPage?: string
   page?: string
+  sortBy?: string
+  sortDirection?: 'ASC' | 'DESC'
 }
 
 export type SubscriptionsListData = {
