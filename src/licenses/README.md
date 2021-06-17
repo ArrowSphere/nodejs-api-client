@@ -77,7 +77,7 @@ with how many results are available in each of them.
 
 ### LicenseFindResult
 
-This entity represents a search result.
+This entity represents a search result's license.
 All fields of the [License](#License) entity are available.
 This entity should be used to display search results or to make a listing of licenses.
 
@@ -88,6 +88,33 @@ In addition to the fields of the license entity, these fields are available:
 | highlight | `object` | { sku: '<strong>ABC</strong>' } | An associative array which shows which values are to be highlighted based on the search keywords |
 
 Please note that the `highlight` field is only available if the `DATA_HIGHLIGHT` option is set to `true` while searching.
+
+### LicenseOfferFindResult
+
+This entity represents a search result's offer object.
+The offer entity is not necessarily present.
+
+| Field                     | Type    | Example                         | Description                                                                          |
+| ------------------------- | ------- | ------------------------------- | ------------------------------------------------------------------------------------ |
+| isAutoRenew               | boolean | false                           | Indicates if the offer is auto-renewable or not                                      |
+| isManualProvisioning      | boolean | false                           | Indicates if the offer is provisioned manually or note                               |
+| isEnabled                 | boolean | false                           | A flag that indicates whether or not the license offer is enabled                    |
+| lastUpdate                | string  | 2021-06-18T14:07:12.668Z        | Last license offer update date                                                       |
+| name                      | string  | Microsoft 365 Apps for business | License offer name                                                                   |
+| priceBandCanIncreaseSeats | boolean | true                            | Indicates whether or not the number of seats for the price band can be increased     |
+| priceBandCanBeCancelled   | boolean | false                           | Indicates whether or not the price band can be cancelled                             |
+| priceBandCanBeReactivated | boolean | false                           | Indicates whether or not the price band can be reactivated                           |
+| priceBandCanDecreaseSeats | boolean | false                           | Indicates whether or not the number of seats for the price band can be decreased     |
+| priceBandCanBeSuspended   | boolean | true                            | Indicates whether or not the price band can be suspended                             |
+| priceBandMarketplace      | string  | FR                              | The price band's marketplace                                                         |
+| priceBandIsEnabled        | boolean | true                            | Indicates whether or not the price band is enabled                                   |
+| priceBandCurrency         | string  | EUR                             | The price band's currency                                                            |
+| priceBandPricePublic      | number  | 9.43                            | The price band's public price                                                        |
+| priceBandPriceBuy         | number  | 7.54                            | The price band's buy price                                                           |
+| priceBandPriceSell        | number  | 7.73                            | The price band's sell price                                                          |
+| priceBandBillingTerm      | number  | 8640                            | Billing term for the price band (See [Term and periodicity](#term-and-periodicity))  |
+| priceBandBillingType      | string  | PAYGO                           | Billing type for the price band (See [Term and periodicity](#term-and-periodicity))  |
+| priceBandBillingCycle     | number  | 720                             | Billing cycle for the price band (See [Term and periodicity](#term-and-periodicity)) |
 
 ## Usage
 
@@ -175,16 +202,18 @@ for await (const filter of filters) {
 }
 
 // You can get the current page's results
-const licenses = searchResult.getLicensesForCurrentPage()
-for await (const license of licenses) {
-  console.log(license.partnerRef)
+const results = searchResult.getResultsForCurrentPage()
+for await (const result of results) {
+  console.log(result.license.partnerRef)
+  console.log(result.offer.name)
 }
 
 // You can also browse directly through all the results
 // this will make the API call as many times as needed and traverse all the pages
-const licenses = searchResult.getLicenses()
-for await (const license of licenses) {
-  console.log(license.partnerRef)
+const results = searchResult.getResults()
+for await (const result of results) {
+  console.log(result.license.partnerRef)
+  console.log(result.offer.name)
 }
 ```
 
@@ -193,7 +222,7 @@ The `LicensesClient.find()` method returns a `FindResult` object that allows the
 - `getNbResults()`: returns the total number of results for this search
 - `getTotalPages()`: returns the total number of pages for this search
 - `getFilters()`: returns an array of `FilterFindResult` entities (see [FilterFindResult entity](#FilterFindResult))
-- `getLicensesForCurrentPage()`: returns a `Generator` and yields instances of the `LicenseFindResult` entity (see [LicenseFindResult entity](#LicenseFindResult))
-- `getLicenses()`: returns a `Generator` and yields instances of the `LicenseFindResult` entity
+- `getResultsForCurrentPage()`: returns a `Generator` and yields instances of the `LicenseFindResult` entity (see [LicenseFindResult entity](#LicenseFindResult))
+- `getResults()`: returns a `Generator` and yields instances of the `LicenseFindResult` entity
 
-The difference between `getLicensesForCurrentPage()` and `getLicenses()` is that `getLicensesForCurrentPage()` only shows the results for the current page, you have to perform a new `find()` passing another `page` to get more licenses. `getLicenses()` automatically calls the API as many times as needed and yields all the licenses for the search results.
+The difference between `getResultsForCurrentPage()` and `getResults()` is that `getResultsForCurrentPage()` only shows the results for the current page, you have to perform a new `find()` passing another `page` to get more licenses. `getResults()` automatically calls the API as many times as needed and yields all the licenses for the search results.

@@ -3,7 +3,7 @@
  */
 import { AbstractClient, Parameters } from '../abstractClient'
 import { FindData, FindResult } from './entities/findResult'
-import { LicenseFields } from './entities/abstractLicense'
+import { LicenseFields } from './entities/license/abstractLicense'
 
 /**
  * Parameters passable to the request for refining search.
@@ -119,7 +119,7 @@ export class LicensesClient extends AbstractClient {
   /**
    * The base path of the Licenses API
    */
-  private ROOT_PATH = '/licenses'
+  private ROOT_PATH = '/licenses/'
 
   /**
    * The base path of the API
@@ -129,7 +129,7 @@ export class LicensesClient extends AbstractClient {
   /**
    * The path of the Find endpoint
    */
-  private FIND_PATH = '/find'
+  private FIND_PATH = 'v2/find'
 
   /**
    * Returns the raw result from the find endpoint call

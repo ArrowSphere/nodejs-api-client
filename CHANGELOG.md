@@ -3,6 +3,19 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0] - 2021-06-18
+
+### Changed
+
+- Uses licenses/v2 endpoint for licenses client.
+- The license endpoint result now has an additional `result` top level object comprised of the previous `license` object alongside with a new `offer` one.
+- Updated documentation and changelog matching the changes.
+- Updated tests to reflect the new changes.
+
+### Breaking
+
+- `license` object is now one level below inside the find endpoint response result (i.e.: `license.partnerRef` -> `result.license.partnerRef`) leading to a major version update as per the semantic versioning rules.
+
 ## [0.4.0] - 2021-04-14
 
 ### Changed

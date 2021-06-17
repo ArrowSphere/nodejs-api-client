@@ -22,7 +22,7 @@ export type LicenseFindResultData = LicenseData & {
 }
 
 export class LicenseFindResult extends AbstractLicense {
-  private readonly highlight: Highlight
+  readonly #highlight: Highlight
 
   /**
    * LicenseFindResult constructor.
@@ -36,11 +36,11 @@ export class LicenseFindResult extends AbstractLicense {
       [LicenseFindResultFields.COLUMN_HIGHLIGHT]: 'object',
     }
 
-    this.highlight = data[LicenseFindResultFields.COLUMN_HIGHLIGHT] ?? {}
+    this.#highlight = data[LicenseFindResultFields.COLUMN_HIGHLIGHT] ?? {}
   }
 
-  public getHighlight(): Highlight {
-    return this.highlight
+  public get highlight(): Highlight {
+    return this.#highlight
   }
 
   /**
@@ -51,7 +51,7 @@ export class LicenseFindResult extends AbstractLicense {
     return {
       ...super.toJSON(),
       ...{
-        [LicenseFindResultFields.COLUMN_HIGHLIGHT]: this.getHighlight(),
+        [LicenseFindResultFields.COLUMN_HIGHLIGHT]: this.highlight,
       },
     }
   }
