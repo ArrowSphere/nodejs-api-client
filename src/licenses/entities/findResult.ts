@@ -1,8 +1,15 @@
 import { AbstractEntity } from '../../abstractEntity'
 import { LicenseFindPayload, LicensesClient } from '../licensesClient'
 import { Parameters } from '../../abstractClient'
-import { LicenseFindResultData, LicenseFindResult } from './licenseFindResult'
+import {
+  LicenseFindResultData,
+  LicenseFindResult,
+} from './license/licenseFindResult'
 import { FilterFindResult, FilterFindResultData } from './filterFindResult'
+import {
+  LicenseOfferFindResult,
+  LicenseOfferFindResultData,
+} from './offer/licenseOfferFindResult'
 
 export type FindData = {
   pagination: {
@@ -10,19 +17,29 @@ export type FindData = {
     totalPage: number
     total: number
   }
-  licenses: Array<LicenseFindResultData>
+  results: Array<{
+    license: LicenseFindResultData
+    offer?: LicenseOfferFindResultData
+  }>
   filters: Array<FilterFindResultData>
 }
 
 export type FindResultData = {
-  licenses: AsyncGenerator<LicenseFindResultData, void, undefined>
+  results: AsyncGenerator<
+    { license: LicenseFindResultData; offer?: LicenseOfferFindResultData },
+    void,
+    undefined
+  >
   filters: FilterFindResultData[]
   totalPage: number
   nbResults: number
 }
 
 export class FindResult extends AbstractEntity<FindData> {
-  readonly #licenses: Array<LicenseFindResultData>
+  readonly #results: Array<{
+    license: LicenseFindResultData
+    offer?: LicenseOfferFindResultData
+  }>
   readonly #filters: Array<FilterFindResultData>
   readonly #client: LicensesClient
   readonly #postData: LicenseFindPayload
@@ -55,9 +72,12 @@ export class FindResult extends AbstractEntity<FindData> {
     this.#totalPage = data.pagination.totalPage
     this.#nbResults = data.pagination.total
 
-    this.#licenses = data.licenses.map((license) =>
-      new LicenseFindResult(license).toJSON(),
-    )
+    this.#results = data.results.map((result) => ({
+      license: new LicenseFindResult(result.license).toJSON(),
+      offer: result.offer
+        ? new LicenseOfferFindResult(result.offer).toJSON()
+        : undefined,
+    }))
 
     this.#filters = data.filters.map((filter) =>
       new FilterFindResult(filter).toJSON(),
@@ -68,12 +88,12 @@ export class FindResult extends AbstractEntity<FindData> {
    * Gets all the licenses for the current page
    * @returns Generator|{@link LicenseFindResult}[]
    */
-  public *getLicensesForCurrentPage(): Generator<
-    LicenseFindResultData,
+  public *getResultsForCurrentPage(): Generator<
+    { license: LicenseFindResultData; offer?: LicenseOfferFindResultData },
     void,
     undefined
   > {
-    yield* this.#licenses
+    yield* this.#results
   }
 
   /**
@@ -81,13 +101,13 @@ export class FindResult extends AbstractEntity<FindData> {
    * Follows the asybc interator implementation through the generator pattern.
    * @returns Generator|{@link LicenseFindResult}[]
    */
-  public async *getLicenses(): AsyncGenerator<
-    LicenseFindResultData,
+  public async *getResults(): AsyncGenerator<
+    { license: LicenseFindResultData; offer?: LicenseOfferFindResultData },
     void,
     undefined
   > {
     // First yield the offers we already got in the response from the first page
-    yield* this.getLicensesForCurrentPage()
+    yield* this.getResultsForCurrentPage()
 
     // Then parse the other pages... if there are more
     let currentPage = this.#currentPage + 1
@@ -104,18 +124,23 @@ export class FindResult extends AbstractEntity<FindData> {
 
       currentPage++
 
-      for (const license of data.licenses) {
-        yield new LicenseFindResult(license).toJSON()
+      for (const result of data.results) {
+        yield {
+          license: new LicenseFindResult(result.license).toJSON(),
+          offer: result.offer
+            ? new LicenseOfferFindResult(result.offer).toJSON()
+            : undefined,
+        }
       }
     }
   }
 
-  public get licenses(): AsyncGenerator<
-    LicenseFindResultData,
+  public get results(): AsyncGenerator<
+    { license: LicenseFindResultData; offer?: LicenseOfferFindResultData },
     void,
     undefined
   > {
-    return this.getLicenses()
+    return this.getResults()
   }
 
   public get filters(): Array<FilterFindResultData> {
@@ -136,7 +161,7 @@ export class FindResult extends AbstractEntity<FindData> {
    */
   public toJSON(): FindResultData {
     return {
-      licenses: this.licenses,
+      results: this.results,
       filters: this.filters,
       totalPage: this.totalPage,
       nbResults: this.nbResults,

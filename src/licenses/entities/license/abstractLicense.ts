@@ -1,4 +1,4 @@
-import { AbstractEntity } from '../../abstractEntity'
+import { AbstractEntity } from '../../../abstractEntity'
 
 /**
  * Fields that can be present in License response and request data.

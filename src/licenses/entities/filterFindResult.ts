@@ -1,5 +1,5 @@
 import { AbstractEntity } from '../../abstractEntity'
-import { LicenseFields } from './abstractLicense'
+import { LicenseFields } from './license/abstractLicense'
 
 /**
  * Filter data values
@@ -28,8 +28,8 @@ export enum FilterFindFields {
  * Represents the result of the find response's filters part.
  */
 export class FilterFindResult extends AbstractEntity<FilterFindResultData> {
-  private readonly name: string
-  private readonly values: FilterFindResultDataValues
+  readonly #name: string
+  readonly #values: FilterFindResultDataValues
 
   protected VALIDATION_RULES = {
     [FilterFindFields.COLUMN_NAME]: 'present',
@@ -46,16 +46,16 @@ export class FilterFindResult extends AbstractEntity<FilterFindResultData> {
   public constructor(data: FilterFindResultData) {
     super(data)
 
-    this.name = data['name']
-    this.values = data['values']
+    this.#name = data['name']
+    this.#values = data['values']
   }
 
-  public getName(): string {
-    return this.name
+  public get name(): string {
+    return this.#name
   }
 
-  public getValues(): FilterFindResultDataValues {
-    return this.values
+  public get values(): FilterFindResultDataValues {
+    return this.#values
   }
 
   /**
@@ -64,8 +64,8 @@ export class FilterFindResult extends AbstractEntity<FilterFindResultData> {
    */
   public toJSON(): FilterFindResultData {
     return {
-      [FilterFindFields.COLUMN_NAME]: this.getName(),
-      [FilterFindFields.COLUMN_VALUES]: this.getValues(),
+      [FilterFindFields.COLUMN_NAME]: this.name,
+      [FilterFindFields.COLUMN_VALUES]: this.values,
     }
   }
 }

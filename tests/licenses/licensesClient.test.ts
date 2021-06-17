@@ -15,61 +15,99 @@ import {
   LicenseFindResultData,
   LicenseFindResultFields,
   FindResult,
+  LicenseOfferFindResultData,
+  LicenseOfferFields,
 } from '../../src/licenses'
 
 export const LICENSES_MOCK_URL = 'https://licenses.localhost'
-export const LICENSES_FIND_ENDPOINT = new RegExp('/licenses/find.*')
+export const LICENSES_FIND_ENDPOINT = new RegExp('/licenses/v2/find.*')
 
 /**
  * Mock license data to be used in tests and returned by mocks
  */
-export const MOCK_LICENSE_DATA: LicenseFindResultData = {
-  [LicenseFindResultFields.COLUMN_HIGHLIGHT]: {},
-  [LicenseFields.COLUMN_ID]: 1,
-  [LicenseFields.COLUMN_ACCEPT_EULA]: true,
-  [LicenseFields.COLUMN_ACTIVE_SEATS]: {
-    [LicenseFields.ACTIVE_SEATS_LAST_UPDATE]: new Date().toISOString(),
-    [LicenseFields.ACTIVE_SEATS_NUMBER]: 1,
+export const MOCK_RESULT_DATA: {
+  license: LicenseFindResultData
+  offer: LicenseOfferFindResultData
+} = {
+  license: {
+    [LicenseFindResultFields.COLUMN_HIGHLIGHT]: {},
+    [LicenseFields.COLUMN_ID]: 1,
+    [LicenseFields.COLUMN_ACCEPT_EULA]: true,
+    [LicenseFields.COLUMN_ACTIVE_SEATS]: {
+      [LicenseFields.ACTIVE_SEATS_LAST_UPDATE]: new Date().toISOString(),
+      [LicenseFields.ACTIVE_SEATS_NUMBER]: 1,
+    },
+    [LicenseFields.COLUMN_AUTO_RENEW]: true,
+    [LicenseFields.COLUMN_BASE_SEAT]: 1,
+    [LicenseFields.COLUMN_CATEGORY]: 'category',
+    [LicenseFields.COLUMN_CLOUD_TYPE]: 'cloud_type',
+    [LicenseFields.COLUMN_CUSTOMER_NAME]: 'customer_name',
+    [LicenseFields.COLUMN_CUSTOMER_REF]: 'ref',
+    [LicenseFields.COLUMN_END_DATE]: new Date().toISOString(),
+    [LicenseFields.COLUMN_FRIENDLY_NAME]: 'friendly_name',
+    [LicenseFields.COLUMN_IS_ENABLED]: true,
+    [LicenseFields.COLUMN_LAST_UPDATE]: new Date().toISOString(),
+    [LicenseFields.COLUMN_MARKETPLACE]: 'marketplace',
+    [LicenseFields.COLUMN_MESSAGE]: 'message',
+    [LicenseFields.COLUMN_OFFER]: 'offer',
+    [LicenseFields.COLUMN_PARENT_LINE_ID]: 2,
+    [LicenseFields.COLUMN_PARENT_ORDER_REF]: 'parent_order_ref',
+    [LicenseFields.COLUMN_PARTNER_REF]: 'partner_ref',
+    [LicenseFields.COLUMN_PERIODICITY]: 1,
+    [LicenseFields.COLUMN_PRICE]: {
+      [LicenseFields.PRICE_BUY_PRICE]: 1000,
+      [LicenseFields.PRICE_LIST_PRICE]: 1000,
+      [LicenseFields.PRICE_CURRENCY]: 'EUR',
+    },
+    [LicenseFields.COLUMN_RESELLER_NAME]: 'reseller_name',
+    [LicenseFields.COLUMN_RESELLER_REF]: 'reseller_ref',
+    [LicenseFields.COLUMN_SEAT]: 1,
+    [LicenseFields.COLUMN_SERVICE_REF]: 'service_ref',
+    [LicenseFields.COLUMN_SKU]: 'SKU',
+    [LicenseFields.COLUMN_START_DATE]: new Date().toISOString(),
+    [LicenseFields.COLUMN_STATUS_CODE]: 200,
+    [LicenseFields.COLUMN_STATUS_LABEL]: 'Success',
+    [LicenseFields.COLUMN_SUBSCRIPTION_ID]: 'subscription_id',
+    [LicenseFields.COLUMN_SUBSIDIARY_NAME]: 'subsidiary_name',
+    [LicenseFields.COLUMN_TERM]: 1,
+    [LicenseFields.COLUMN_TRIAL]: false,
+    [LicenseFields.COLUMN_TYPE]: 'string',
+    [LicenseFields.COLUMN_UOM]: 'uom',
+    [LicenseFields.COLUMN_VENDOR_CODE]: 'vendor_code',
+    [LicenseFields.COLUMN_VENDOR_NAME]: 'vendor_name',
+    [LicenseFields.COLUMN_VENDOR_SUBSCRIPTION_ID]: 'vendor_subscription_id',
   },
-  [LicenseFields.COLUMN_AUTO_RENEW]: true,
-  [LicenseFields.COLUMN_BASE_SEAT]: 1,
-  [LicenseFields.COLUMN_CATEGORY]: 'category',
-  [LicenseFields.COLUMN_CLOUD_TYPE]: 'cloud_type',
-  [LicenseFields.COLUMN_CUSTOMER_NAME]: 'customer_name',
-  [LicenseFields.COLUMN_CUSTOMER_REF]: 'ref',
-  [LicenseFields.COLUMN_END_DATE]: new Date().toISOString(),
-  [LicenseFields.COLUMN_FRIENDLY_NAME]: 'friendly_name',
-  [LicenseFields.COLUMN_IS_ENABLED]: true,
-  [LicenseFields.COLUMN_LAST_UPDATE]: new Date().toISOString(),
-  [LicenseFields.COLUMN_MARKETPLACE]: 'marketplace',
-  [LicenseFields.COLUMN_MESSAGE]: 'message',
-  [LicenseFields.COLUMN_OFFER]: 'offer',
-  [LicenseFields.COLUMN_PARENT_LINE_ID]: 2,
-  [LicenseFields.COLUMN_PARENT_ORDER_REF]: 'parent_order_ref',
-  [LicenseFields.COLUMN_PARTNER_REF]: 'partner_ref',
-  [LicenseFields.COLUMN_PERIODICITY]: 1,
-  [LicenseFields.COLUMN_PRICE]: {
-    [LicenseFields.PRICE_BUY_PRICE]: 1000,
-    [LicenseFields.PRICE_LIST_PRICE]: 1000,
-    [LicenseFields.PRICE_CURRENCY]: 'EUR',
+  offer: {
+    [LicenseOfferFields.COLUMN_ACTION_FLAGS]: {
+      [LicenseOfferFields.COLUMN_IS_AUTO_RENEW]: true,
+      [LicenseOfferFields.COLUMN_IS_MANUAL_PROVISIONING]: true,
+    },
+    [LicenseOfferFields.COLUMN_IS_ENABLED]: true,
+    [LicenseOfferFields.COLUMN_LAST_UPDATE]: new Date().toISOString(),
+    [LicenseOfferFields.COLUMN_NAME]: 'name',
+    [LicenseOfferFields.COLUMN_PRICE_BAND]: {
+      [LicenseOfferFields.COLUMN_ACTION_FLAGS]: {
+        [LicenseOfferFields.COLUMN_CAN_BE_CANCELLED]: true,
+        [LicenseOfferFields.COLUMN_CAN_BE_REACTIVATED]: true,
+        [LicenseOfferFields.COLUMN_CAN_BE_SUSPENDED]: true,
+        [LicenseOfferFields.COLUMN_CAN_DECREASE_SEATS]: true,
+        [LicenseOfferFields.COLUMN_CAN_INCREASE_SEATS]: true,
+      },
+      [LicenseOfferFields.COLUMN_MARKETPLACE]: 'priceBandMarketplace',
+      [LicenseOfferFields.COLUMN_IS_ENABLED]: true,
+      [LicenseOfferFields.COLUMN_CURRENCY]: 'priceBandCurrency',
+      [LicenseOfferFields.COLUMN_PRICES]: {
+        [LicenseOfferFields.COLUMN_PUBLIC]: 1000,
+        [LicenseOfferFields.COLUMN_BUY]: 1500,
+        [LicenseOfferFields.COLUMN_SELL]: 2000,
+      },
+      [LicenseOfferFields.COLUMN_BILLING]: {
+        [LicenseOfferFields.COLUMN_TERM]: 1,
+        [LicenseOfferFields.COLUMN_TYPE]: 'priceBandBillingType',
+        [LicenseOfferFields.COLUMN_CYCLE]: 1,
+      },
+    },
   },
-  [LicenseFields.COLUMN_RESELLER_NAME]: 'reseller_name',
-  [LicenseFields.COLUMN_RESELLER_REF]: 'reseller_ref',
-  [LicenseFields.COLUMN_SEAT]: 1,
-  [LicenseFields.COLUMN_SERVICE_REF]: 'service_ref',
-  [LicenseFields.COLUMN_SKU]: 'SKU',
-  [LicenseFields.COLUMN_START_DATE]: new Date().toISOString(),
-  [LicenseFields.COLUMN_STATUS_CODE]: 200,
-  [LicenseFields.COLUMN_STATUS_LABEL]: 'Success',
-  [LicenseFields.COLUMN_SUBSCRIPTION_ID]: 'subscription_id',
-  [LicenseFields.COLUMN_SUBSIDIARY_NAME]: 'subsidiary_name',
-  [LicenseFields.COLUMN_TERM]: 1,
-  [LicenseFields.COLUMN_TRIAL]: false,
-  [LicenseFields.COLUMN_TYPE]: 'string',
-  [LicenseFields.COLUMN_UOM]: 'uom',
-  [LicenseFields.COLUMN_VENDOR_CODE]: 'vendor_code',
-  [LicenseFields.COLUMN_VENDOR_NAME]: 'vendor_name',
-  [LicenseFields.COLUMN_VENDOR_SUBSCRIPTION_ID]: 'vendor_subscription_id',
 }
 
 /**
@@ -89,7 +127,7 @@ export const MOCK_FIND_RESPONSE: FindData = {
       },
     },
   ],
-  licenses: [MOCK_LICENSE_DATA],
+  results: [MOCK_RESULT_DATA],
 }
 
 /**
