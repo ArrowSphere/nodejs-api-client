@@ -1,5 +1,5 @@
 import { AbstractEntity } from '../../abstractEntity'
-import { LicenseFindPayload, LicensesClient } from '../licensesClient'
+import { LicenseFindRawPayload, LicensesClient } from '../licensesClient'
 import { Parameters } from '../../abstractClient'
 import {
   LicenseFindResultData,
@@ -42,7 +42,7 @@ export class FindResult extends AbstractEntity<FindData> {
   }>
   readonly #filters: Array<FilterFindResultData>
   readonly #client: LicensesClient
-  readonly #postData: LicenseFindPayload
+  readonly #postData: LicenseFindRawPayload
   readonly #parameters: Parameters
   readonly #currentPage: number
   readonly #totalPage: number
@@ -59,7 +59,7 @@ export class FindResult extends AbstractEntity<FindData> {
   constructor(
     data: FindData,
     client: LicensesClient,
-    postData: LicenseFindPayload = {},
+    postData: LicenseFindRawPayload = {},
     parameters: Parameters = {},
   ) {
     super(data)

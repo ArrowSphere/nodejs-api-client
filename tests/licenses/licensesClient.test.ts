@@ -17,6 +17,7 @@ import {
   FindResult,
   LicenseOfferFindResultData,
   LicenseOfferFields,
+  LicenseFindRawPayload,
 } from '../../src/licenses'
 
 export const LICENSES_MOCK_URL = 'https://licenses.localhost'
@@ -137,7 +138,10 @@ export const MOCK_FIND_RESPONSE: FindData = {
 const PAYLOAD_SCHEMA = Joi.object({
   [LicenseFindParameters.DATA_KEYWORD]: Joi.string(),
   [LicenseFindParameters.DATA_KEYWORDS]: Joi.object().pattern(
-    Joi.string().valid(...Object.values(LicenseFields)),
+    Joi.string().valid(
+      ...Object.values(LicenseFields).map((field) => `license.${field}`),
+      ...Object.values(LicenseOfferFields).map((field) => `offer.${field}`),
+    ),
     Joi.object({
       [LicenseFindParameters.KEYWORDS_VALUES]: Joi.array().items(Joi.string()),
       [LicenseFindParameters.KEYWORDS_OPERATOR]: Joi.string().valid(
@@ -172,10 +176,12 @@ describe('LicensesClient', () => {
   const standardPayload: LicenseFindPayload = {
     [LicenseFindParameters.DATA_KEYWORD]: 'test',
     [LicenseFindParameters.DATA_KEYWORDS]: {
-      [LicenseFields.COLUMN_CATEGORY]: {
-        [LicenseFindParameters.KEYWORDS_VALUES]: ['test'],
-        [LicenseFindParameters.KEYWORDS_OPERATOR]:
-          LicenseFindParameters.OPERATOR_OR,
+      license: {
+        [LicenseFields.COLUMN_CATEGORY]: {
+          [LicenseFindParameters.KEYWORDS_VALUES]: ['test'],
+          [LicenseFindParameters.KEYWORDS_OPERATOR]:
+            LicenseFindParameters.OPERATOR_OR,
+        },
       },
     },
     [LicenseFindParameters.DATA_FILTERS]: {
@@ -186,6 +192,17 @@ describe('LicensesClient', () => {
         LicenseFindParameters.SORT_DESCENDING,
     },
     [LicenseFindParameters.DATA_HIGHLIGHT]: true,
+  }
+
+  const standardRawPayload: LicenseFindRawPayload = {
+    ...standardPayload,
+    [LicenseFindParameters.DATA_KEYWORDS]: {
+      [`license.${LicenseFields.COLUMN_CATEGORY}`]: {
+        [LicenseFindParameters.KEYWORDS_VALUES]: ['test'],
+        [LicenseFindParameters.KEYWORDS_OPERATOR]:
+          LicenseFindParameters.OPERATOR_OR,
+      },
+    },
   }
 
   describe('findRaw', () => {
@@ -203,7 +220,7 @@ describe('LicensesClient', () => {
           return [204]
         })
 
-      client.findRaw(standardPayload)
+      client.findRaw(standardRawPayload)
     })
 
     it('calls the post method and returns its result', async () => {

@@ -4,6 +4,7 @@
 import { AbstractClient, Parameters } from '../abstractClient'
 import { FindData, FindResult } from './entities/findResult'
 import { LicenseFields } from './entities/license/abstractLicense'
+import { LicenseOfferFields } from './entities/offer/licenseOfferFindResult'
 
 /**
  * Parameters passable to the request for refining search.
@@ -85,7 +86,16 @@ export type LicenseDataKeywords = {
  * Keywords parameters to pass to the request
  */
 export type LicenseKeywordsParameters = {
-  [field in LicenseFields]?: LicenseDataKeywords
+  license?: {
+    [field in LicenseFields]?: LicenseDataKeywords
+  }
+  offer?: {
+    [field in LicenseOfferFields]?: LicenseDataKeywords
+  }
+}
+
+export type LicenseRawKeywordsParameters = {
+  [field: string]: LicenseDataKeywords | undefined
 }
 
 /**
@@ -110,6 +120,14 @@ export type LicenseFiltersParameters = {
 export type LicenseFindPayload = {
   [LicenseFindParameters.DATA_KEYWORD]?: string
   [LicenseFindParameters.DATA_KEYWORDS]?: LicenseKeywordsParameters
+  [LicenseFindParameters.DATA_FILTERS]?: LicenseFiltersParameters
+  [LicenseFindParameters.DATA_SORT]?: LicenseSortParameters
+  [LicenseFindParameters.DATA_HIGHLIGHT]?: boolean
+}
+
+export type LicenseFindRawPayload = {
+  [LicenseFindParameters.DATA_KEYWORD]?: string
+  [LicenseFindParameters.DATA_KEYWORDS]?: LicenseRawKeywordsParameters
   [LicenseFindParameters.DATA_FILTERS]?: LicenseFiltersParameters
   [LicenseFindParameters.DATA_SORT]?: LicenseSortParameters
   [LicenseFindParameters.DATA_HIGHLIGHT]?: boolean
@@ -140,7 +158,7 @@ export class LicensesClient extends AbstractClient {
    * @returns Promise\<{@link FindData}\>
    */
   public findRaw(
-    postData: LicenseFindPayload = {},
+    postData: LicenseFindRawPayload = {},
     parameters: Parameters = {},
   ): Promise<FindData> {
     this.path = this.FIND_PATH
@@ -168,8 +186,35 @@ export class LicensesClient extends AbstractClient {
     this.setPerPage(perPage)
     this.setPage(page)
 
-    const response = await this.findRaw(postData, parameters)
+    const rawLicensePayload: LicenseFindRawPayload = {
+      keyword: postData.keyword,
+      filters: postData.filters,
+      sort: postData.sort,
+      highlight: postData.highlight,
+    }
 
-    return new FindResult(response, this, postData, parameters)
+    if (postData.keywords) {
+      // Flatten with prefix for each type of keyword (license and offer)
+      rawLicensePayload.keywords = {
+        ...Object.entries(postData.keywords.license ?? {}).reduce(
+          (acc: LicenseRawKeywordsParameters, [keyword, value]) => {
+            acc[`license.${keyword}`] = value
+            return acc
+          },
+          {},
+        ),
+        ...Object.entries(postData.keywords.offer ?? {}).reduce(
+          (acc: LicenseRawKeywordsParameters, [keyword, value]) => {
+            acc[`offer.${keyword}`] = value
+            return acc
+          },
+          {},
+        ),
+      }
+    }
+
+    const response = await this.findRaw(rawLicensePayload, parameters)
+
+    return new FindResult(response, this, rawLicensePayload, parameters)
   }
 }
