@@ -148,7 +148,7 @@ This is the endpoint called by xSP on its search bar and on the listing pages
 The postData is supposed to contain the following keys:
 
 - `LicenseFields.DATA_KEYWORD`: a string to be searched in all the fields. Supports inexact matches (i.e. Ofice for Office)
-- `LicenseFields.DATA_KEYWORDS`: an array containing the fields to search on, and their possible values, as well as an operator to specify how to use them. This array is indexed by column name, then contains 2 keys with `LicenseFields.KEYWORDS_VALUES` containing the values and `LicenseFields.KEYWORDS_OPERATOR` containing an operator (use `LicenseFields.OPERATOR_*` for the operator)
+- `LicenseFields.DATA_KEYWORDS`: an object containing the fields to search on for each entity, and their possible field/values combinations, as well as an operator to specify how to compare them. This object is indexed by column name, then contains 2 keys with `LicenseFields.KEYWORDS_VALUES` containing the values and `LicenseFields.KEYWORDS_OPERATOR` containing an operator (use `LicenseFields.OPERATOR_*` for the operator)
 - `LicenseFields.DATA_FILTERS`: an array of strings containing exact matches for individual fields (field name as key and field value as value)
 - `LicenseFields.DATA_SORT`: an array of strings containing the order in which sort the data (field name as key and a `LicenseFields.SORT_*` const for the sort direction)
 - `LicenseFields.DATA_HIGHLIGHT`: a boolean value, search results will contain a field giving highlights if set to `true` (defaults to `false`)
@@ -173,13 +173,24 @@ const client = new PublicApiClient()
 const searchResult = client.find({
   [LicenseFindParameters.DATA_KEYWORD]: 'microsoft 365',
   [LicenseFindParameters.DATA_KEYWORDS]: {
-    [LicenseFields.COLUMN_END_DATE]: {
-      [LicenseFindParameters.KEYWORDS_VALUES]: [
-        '2021-03-01T00:00:00.000Z',
-        '2021-03-31T23:59:59.000Z',
-      ],
-      [LicenseFindParameters.KEYWORDS_OPERATOR]:
-        LicenseFindParameters.OPERATOR_BETWEEN,
+    license: {
+      [LicenseFields.COLUMN_END_DATE]: {
+        [LicenseFindParameters.KEYWORDS_VALUES]: [
+          '2021-03-01T00:00:00.000Z',
+          '2021-03-31T23:59:59.000Z',
+        ],
+        [LicenseFindParameters.KEYWORDS_OPERATOR]:
+          LicenseFindParameters.OPERATOR_BETWEEN,
+      },
+    },
+    offer: {
+      [LicenseOfferFields.NAME]: {
+        [LicenseFindParameters.KEYWORDS_VALUES]: [
+          'Microsoft Office 365'
+        ],
+        [LicenseFindParameters.KEYWORDS_OPERATOR]:
+          LicenseFindParameters.OPERATOR_AND,
+      },
     },
   },
   [LicenseFindParameters.DATA_FILTERS]: {
