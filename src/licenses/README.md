@@ -149,8 +149,8 @@ The postData is supposed to contain the following keys:
 
 - `LicenseFields.DATA_KEYWORD`: a string to be searched in all the fields. Supports inexact matches (i.e. Ofice for Office)
 - `LicenseFields.DATA_KEYWORDS`: an object containing the fields to search on for each entity, and their possible field/values combinations, as well as an operator to specify how to compare them. This object is indexed by column name, then contains 2 keys with `LicenseFields.KEYWORDS_VALUES` containing the values and `LicenseFields.KEYWORDS_OPERATOR` containing an operator (use `LicenseFields.OPERATOR_*` for the operator)
-- `LicenseFields.DATA_FILTERS`: an array of strings containing exact matches for individual fields (field name as key and field value as value)
-- `LicenseFields.DATA_SORT`: an array of strings containing the order in which sort the data (field name as key and a `LicenseFields.SORT_*` const for the sort direction)
+- `LicenseFields.DATA_FILTERS`: an object of strings containing exact matches for individual fields (field name as key and field value as value)
+- `LicenseFields.DATA_SORT`: an object of strings containing the order in which sort the data (field name as key and a `LicenseFields.SORT_*` const for the sort direction)
 - `LicenseFields.DATA_HIGHLIGHT`: a boolean value, search results will contain a field giving highlights if set to `true` (defaults to `false`)
 
 Please note that the field names must be used with the `LicenseFields.COLUMN_*` consts from the `License` entity class.
@@ -197,9 +197,11 @@ const searchResult = client.find({
     [LicenseFields.COLUMN_IS_ENABLED]: true,
   },
   [LicenseFindParameters.DATA_SORT]: {
-    [LicenseFields.COLUMN_CUSTOMER_NAME]: [
-      LicenseFindParameters.SORT_DESCENDING,
-    ],
+    license: {
+      [LicenseFields.COLUMN_CUSTOMER_NAME]: [
+        LicenseFindParameters.SORT_DESCENDING,
+      ],
+    }
   },
   [LicenseFindParameters.DATA_HIGHLIGHT]: true,
 })

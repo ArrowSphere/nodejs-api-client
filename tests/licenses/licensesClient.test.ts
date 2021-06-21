@@ -159,7 +159,10 @@ const PAYLOAD_SCHEMA = Joi.object({
     Joi.any(),
   ),
   [LicenseFindParameters.DATA_SORT]: Joi.object().pattern(
-    Joi.string().valid(...Object.values(LicenseFields)),
+    Joi.string().valid(
+      ...Object.values(LicenseFields).map((field) => `license.${field}`),
+      ...Object.values(LicenseOfferFields).map((field) => `offer.${field}`),
+    ),
     Joi.string().valid(
       LicenseFindParameters.SORT_ASCENDING,
       LicenseFindParameters.SORT_DESCENDING,
@@ -204,8 +207,14 @@ describe('LicensesClient', () => {
       },
     },
     [LicenseFindParameters.DATA_SORT]: {
-      [LicenseFields.COLUMN_CUSTOMER_NAME]:
-        LicenseFindParameters.SORT_DESCENDING,
+      license: {
+        [LicenseFields.COLUMN_CUSTOMER_NAME]:
+          LicenseFindParameters.SORT_DESCENDING,
+      },
+      offer: {
+        [LicenseOfferFields.COLUMN_CURRENCY]:
+          LicenseFindParameters.SORT_ASCENDING,
+      },
     },
     [LicenseFindParameters.DATA_HIGHLIGHT]: true,
   }
@@ -222,6 +231,10 @@ describe('LicensesClient', () => {
     [LicenseFindParameters.DATA_FILTERS]: {
       [`license.${LicenseFields.COLUMN_ACCEPT_EULA}`]: true,
       [`offer.${LicenseOfferFields.COLUMN_CAN_BE_CANCELLED}`]: true,
+    },
+    [LicenseFindParameters.DATA_SORT]: {
+      [`license.${LicenseFields.COLUMN_CUSTOMER_NAME}`]: LicenseFindParameters.SORT_DESCENDING,
+      [`offer.${LicenseOfferFields.COLUMN_CURRENCY}`]: LicenseFindParameters.SORT_ASCENDING,
     },
   }
 
@@ -367,6 +380,38 @@ describe('LicensesClient', () => {
           ...standardPayload,
           [LicenseFindParameters.DATA_FILTERS]: {
             offer: standardPayload[LicenseFindParameters.DATA_FILTERS]?.offer,
+          },
+        }),
+      ).not.to.be.rejected
+    })
+
+    it('works without license sort', () => {
+      nock(LICENSES_MOCK_URL)
+        .post(LICENSES_FIND_ENDPOINT)
+        .reply(() => {
+          return [204]
+        })
+      expect(
+        client.find({
+          ...standardPayload,
+          [LicenseFindParameters.DATA_SORT]: {
+            license: standardPayload[LicenseFindParameters.DATA_SORT]?.license,
+          },
+        }),
+      ).not.to.be.rejected
+    })
+
+    it('works without license sort', () => {
+      nock(LICENSES_MOCK_URL)
+        .post(LICENSES_FIND_ENDPOINT)
+        .reply(() => {
+          return [204]
+        })
+      expect(
+        client.find({
+          ...standardPayload,
+          [LicenseFindParameters.DATA_SORT]: {
+            offer: standardPayload[LicenseFindParameters.DATA_SORT]?.offer,
           },
         }),
       ).not.to.be.rejected

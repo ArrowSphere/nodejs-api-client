@@ -3,19 +3,25 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.0.2] - 2021-06-21
+## [1.0.3] - 2021-06-21
+
+### Changed
+
+- Fixed sort key for licenses v2
+
+## [1.0.2] - 2021-06-21 - BROKEN
 
 ### Changed
 
 - Fixed filters for licenses v2
 
-## [1.0.1] - 2021-06-21
+## [1.0.1] - 2021-06-21 - BROKEN
 
 ### Changed
 
 - Fixed keywords for licenses v2
 
-## [1.0.0] - 2021-06-18
+## [1.0.0] - 2021-06-18 - BROKEN
 
 ### Changed
 
