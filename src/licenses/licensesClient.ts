@@ -111,7 +111,16 @@ export type LicenseSortParameters = {
  * Filter parameters to pass to the request.
  */
 export type LicenseFiltersParameters = {
-  [field in LicenseFields]?: unknown
+  license?: {
+    [field in LicenseFields]?: unknown
+  }
+  offer?: {
+    [field in LicenseOfferFields]?: unknown
+  }
+}
+
+export type LicenseRawFiltersParameters = {
+  [field: string]: unknown
 }
 
 /**
@@ -128,7 +137,7 @@ export type LicenseFindPayload = {
 export type LicenseFindRawPayload = {
   [LicenseFindParameters.DATA_KEYWORD]?: string
   [LicenseFindParameters.DATA_KEYWORDS]?: LicenseRawKeywordsParameters
-  [LicenseFindParameters.DATA_FILTERS]?: LicenseFiltersParameters
+  [LicenseFindParameters.DATA_FILTERS]?: LicenseRawFiltersParameters
   [LicenseFindParameters.DATA_SORT]?: LicenseSortParameters
   [LicenseFindParameters.DATA_HIGHLIGHT]?: boolean
 }
@@ -188,7 +197,6 @@ export class LicensesClient extends AbstractClient {
 
     const rawLicensePayload: LicenseFindRawPayload = {
       keyword: postData.keyword,
-      filters: postData.filters,
       sort: postData.sort,
       highlight: postData.highlight,
     }
@@ -205,6 +213,26 @@ export class LicensesClient extends AbstractClient {
         ),
         ...Object.entries(postData.keywords.offer ?? {}).reduce(
           (acc: LicenseRawKeywordsParameters, [keyword, value]) => {
+            acc[`offer.${keyword}`] = value
+            return acc
+          },
+          {},
+        ),
+      }
+    }
+
+    if (postData.filters) {
+      // Flatten with prefix for each type of filter (license and offer)
+      rawLicensePayload.filters = {
+        ...Object.entries(postData.filters.license ?? {}).reduce(
+          (acc: LicenseRawFiltersParameters, [keyword, value]) => {
+            acc[`license.${keyword}`] = value
+            return acc
+          },
+          {},
+        ),
+        ...Object.entries(postData.filters.offer ?? {}).reduce(
+          (acc: LicenseRawFiltersParameters, [keyword, value]) => {
             acc[`offer.${keyword}`] = value
             return acc
           },

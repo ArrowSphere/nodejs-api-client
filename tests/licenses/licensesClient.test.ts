@@ -152,7 +152,10 @@ const PAYLOAD_SCHEMA = Joi.object({
     }),
   ),
   [LicenseFindParameters.DATA_FILTERS]: Joi.object().pattern(
-    Joi.string().valid(...Object.values(LicenseFields)),
+    Joi.string().valid(
+      ...Object.values(LicenseFields).map((field) => `license.${field}`),
+      ...Object.values(LicenseOfferFields).map((field) => `offer.${field}`),
+    ),
     Joi.any(),
   ),
   [LicenseFindParameters.DATA_SORT]: Joi.object().pattern(
@@ -193,7 +196,12 @@ describe('LicensesClient', () => {
       },
     },
     [LicenseFindParameters.DATA_FILTERS]: {
-      [LicenseFields.COLUMN_ACCEPT_EULA]: true,
+      license: {
+        [LicenseFields.COLUMN_ACCEPT_EULA]: true,
+      },
+      offer: {
+        [LicenseOfferFields.COLUMN_CAN_BE_CANCELLED]: true,
+      },
     },
     [LicenseFindParameters.DATA_SORT]: {
       [LicenseFields.COLUMN_CUSTOMER_NAME]:
@@ -210,6 +218,10 @@ describe('LicensesClient', () => {
         [LicenseFindParameters.KEYWORDS_OPERATOR]:
           LicenseFindParameters.OPERATOR_OR,
       },
+    },
+    [LicenseFindParameters.DATA_FILTERS]: {
+      [`license.${LicenseFields.COLUMN_ACCEPT_EULA}`]: true,
+      [`offer.${LicenseOfferFields.COLUMN_CAN_BE_CANCELLED}`]: true,
     },
   }
 
@@ -322,6 +334,39 @@ describe('LicensesClient', () => {
           ...standardPayload,
           [LicenseFindParameters.DATA_KEYWORDS]: {
             offer: standardPayload[LicenseFindParameters.DATA_KEYWORDS]?.offer,
+          },
+        }),
+      ).not.to.be.rejected
+    })
+
+    it('works without license filters', () => {
+      nock(LICENSES_MOCK_URL)
+        .post(LICENSES_FIND_ENDPOINT)
+        .reply(() => {
+          return [204]
+        })
+      expect(
+        client.find({
+          ...standardPayload,
+          [LicenseFindParameters.DATA_FILTERS]: {
+            license:
+              standardPayload[LicenseFindParameters.DATA_FILTERS]?.license,
+          },
+        }),
+      ).not.to.be.rejected
+    })
+
+    it('works without license filters', () => {
+      nock(LICENSES_MOCK_URL)
+        .post(LICENSES_FIND_ENDPOINT)
+        .reply(() => {
+          return [204]
+        })
+      expect(
+        client.find({
+          ...standardPayload,
+          [LicenseFindParameters.DATA_FILTERS]: {
+            offer: standardPayload[LicenseFindParameters.DATA_FILTERS]?.offer,
           },
         }),
       ).not.to.be.rejected
