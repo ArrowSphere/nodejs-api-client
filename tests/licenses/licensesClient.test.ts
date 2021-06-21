@@ -183,6 +183,14 @@ describe('LicensesClient', () => {
             LicenseFindParameters.OPERATOR_OR,
         },
       },
+
+      offer: {
+        [LicenseOfferFields.COLUMN_CURRENCY]: {
+          [LicenseFindParameters.KEYWORDS_VALUES]: ['EUR'],
+          [LicenseFindParameters.KEYWORDS_OPERATOR]:
+            LicenseFindParameters.OPERATOR_AND,
+        },
+      },
     },
     [LicenseFindParameters.DATA_FILTERS]: {
       [LicenseFields.COLUMN_ACCEPT_EULA]: true,
@@ -249,7 +257,7 @@ describe('LicensesClient', () => {
           done()
           return [204]
         })
-      client.find(undefined, undefined, 10)
+      client.find(standardPayload, undefined, 10)
     })
 
     it('sets the specified per page number', (done) => {
@@ -284,6 +292,39 @@ describe('LicensesClient', () => {
           return [204]
         })
       client.find()
+    })
+
+    it('works without offer keywords', () => {
+      nock(LICENSES_MOCK_URL)
+        .post(LICENSES_FIND_ENDPOINT)
+        .reply(() => {
+          return [204]
+        })
+      expect(
+        client.find({
+          ...standardPayload,
+          [LicenseFindParameters.DATA_KEYWORDS]: {
+            license:
+              standardPayload[LicenseFindParameters.DATA_KEYWORDS]?.license,
+          },
+        }),
+      ).not.to.be.rejected
+    })
+
+    it('works without license keywords', () => {
+      nock(LICENSES_MOCK_URL)
+        .post(LICENSES_FIND_ENDPOINT)
+        .reply(() => {
+          return [204]
+        })
+      expect(
+        client.find({
+          ...standardPayload,
+          [LicenseFindParameters.DATA_KEYWORDS]: {
+            offer: standardPayload[LicenseFindParameters.DATA_KEYWORDS]?.offer,
+          },
+        }),
+      ).not.to.be.rejected
     })
 
     it('calls findRaw and feeds the response returns the FindResult entity', async () => {
