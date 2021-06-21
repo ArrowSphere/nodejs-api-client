@@ -102,9 +102,20 @@ export type LicenseRawKeywordsParameters = {
  * Sort parameters to pass to the request
  */
 export type LicenseSortParameters = {
-  [field in LicenseFields]?:
-    | LicenseFindParameters.SORT_ASCENDING
-    | LicenseFindParameters.SORT_DESCENDING
+  license?: {
+    [field in LicenseFields]?:
+      | LicenseFindParameters.SORT_ASCENDING
+      | LicenseFindParameters.SORT_DESCENDING
+  }
+  offer?: {
+    [field in LicenseOfferFields]?:
+      | LicenseFindParameters.SORT_ASCENDING
+      | LicenseFindParameters.SORT_DESCENDING
+  }
+}
+
+export type LicenseRawSortParameters = {
+  [field: string]: string | undefined
 }
 
 /**
@@ -138,7 +149,7 @@ export type LicenseFindRawPayload = {
   [LicenseFindParameters.DATA_KEYWORD]?: string
   [LicenseFindParameters.DATA_KEYWORDS]?: LicenseRawKeywordsParameters
   [LicenseFindParameters.DATA_FILTERS]?: LicenseRawFiltersParameters
-  [LicenseFindParameters.DATA_SORT]?: LicenseSortParameters
+  [LicenseFindParameters.DATA_SORT]?: LicenseRawSortParameters
   [LicenseFindParameters.DATA_HIGHLIGHT]?: boolean
 }
 
@@ -197,7 +208,6 @@ export class LicensesClient extends AbstractClient {
 
     const rawLicensePayload: LicenseFindRawPayload = {
       keyword: postData.keyword,
-      sort: postData.sort,
       highlight: postData.highlight,
     }
 
@@ -225,15 +235,35 @@ export class LicensesClient extends AbstractClient {
       // Flatten with prefix for each type of filter (license and offer)
       rawLicensePayload.filters = {
         ...Object.entries(postData.filters.license ?? {}).reduce(
-          (acc: LicenseRawFiltersParameters, [keyword, value]) => {
-            acc[`license.${keyword}`] = value
+          (acc: LicenseRawFiltersParameters, [filter, value]) => {
+            acc[`license.${filter}`] = value
             return acc
           },
           {},
         ),
         ...Object.entries(postData.filters.offer ?? {}).reduce(
-          (acc: LicenseRawFiltersParameters, [keyword, value]) => {
-            acc[`offer.${keyword}`] = value
+          (acc: LicenseRawFiltersParameters, [filter, value]) => {
+            acc[`offer.${filter}`] = value
+            return acc
+          },
+          {},
+        ),
+      }
+    }
+
+    if (postData.sort) {
+      // Flatten with prefix for each type of sort keys (license and offer)
+      rawLicensePayload.sort = {
+        ...Object.entries(postData.sort.license ?? {}).reduce(
+          (acc: LicenseRawSortParameters, [sort, value]) => {
+            acc[`license.${sort}`] = value
+            return acc
+          },
+          {},
+        ),
+        ...Object.entries(postData.sort.offer ?? {}).reduce(
+          (acc: LicenseRawSortParameters, [sort, value]) => {
+            acc[`offer.${sort}`] = value
             return acc
           },
           {},
