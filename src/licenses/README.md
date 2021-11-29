@@ -106,7 +106,7 @@ Each entry in the `values` array looks like this:
 The focus of these filters is to allow to display them to the user as a list of checkboxes
 with how many results are available in each of them.
 
-### LicenseFindResult
+### LicensesFindResult
 
 This entity represents a search result's license.
 All fields of the [License](#License) entity are available.
@@ -320,7 +320,7 @@ The `LicensesClient.find()` method returns a `FindResult` object that allows the
 - `getNbResults()`: returns the total number of results for this search
 - `getTotalPages()`: returns the total number of pages for this search
 - `getFilters()`: returns an array of `FilterFindResult` entities (see [FilterFindResult entity](#FilterFindResult))
-- `getResultsForCurrentPage()`: returns a `Generator` and yields instances of the `LicenseFindResult` entity (see [LicenseFindResult entity](#LicenseFindResult))
-- `getResults()`: returns a `Generator` and yields instances of the `LicenseFindResult` entity
+- `getResultsForCurrentPage()`: returns a `Generator` and yields instances of the `LicensesFindResult` entity (see [LicensesFindResult entity](#LicenseFindResult))
+- `getResults()`: returns a `Generator` and yields instances of the `LicensesFindResult` entity
 
 The difference between `getResultsForCurrentPage()` and `getResults()` is that `getResultsForCurrentPage()` only shows the results for the current page, you have to perform a new `find()` passing another `page` to get more licenses. `getResults()` automatically calls the API as many times as needed and yields all the licenses for the search results.
