@@ -14,7 +14,7 @@
     "doc": "typedoc ./src/index.ts ./src/**/index.ts",
     "lint": "eslint ./{src,tests}/**/*.ts && prettier --list-different ./{src,tests}/**/*.ts",
     "lint:fix": "eslint ./{src,tests}/**/*.ts --fix && prettier --write ./{src,tests}/**/*.ts",
-    "prepublishOnly": "npm run clean && npm run build",
+    "prepare": "npm run clean && npm run build",
     "test": "mocha -r ts-node/register \"tests/**/*.ts\"",
     "test:watch": "mocha --watch -r ts-node/register \"tests/**/*.ts\"",
     "test:coverage": "nyc --check-coverage npm run test",

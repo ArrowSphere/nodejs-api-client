@@ -2,9 +2,44 @@
  * Class LicensesClient
  */
 import { AbstractClient, Parameters } from '../abstractClient';
-import { FindData, FindResult } from './entities/findResult';
-import { LicenseFields } from './entities/license/abstractLicense';
-import { LicenseOfferFields } from './entities/offer/licenseOfferFindResult';
+import { FindConfig, FindData, FindResult } from './entities/findResult';
+import {
+  ConfigFindResult,
+  ConfigFindResultData,
+  ConfigFindResultDataKeywords,
+  ConfigFindResultDataSortParameters,
+  ConfigFindResultFields,
+} from './entities/license/configFindResult';
+import {
+  LicenceFindDataFiltersParameters,
+  LicenceFindDataKeywords,
+  LicenceFindDataSortParameters,
+} from './entities/license/licenseFindResult';
+import {
+  ActiveSeatsFindResultDataKeywords,
+  ActiveSeatsFindResultDataSortParameters,
+} from './entities/license/activeSeatsFindResult';
+import {
+  WarningFindResultDataKeywords,
+  WarningFindResultDataSortParameters,
+} from './entities/license/warningFindResult';
+import {
+  PriceFindResultDataKeywords,
+  PriceFindResutDataSortParameters,
+} from './entities/license/priceFindResult';
+import {
+  OfferFindResultDataFiltersParameters,
+  OfferFindResultDataKeywords,
+  OfferFindResultDataSortParameters,
+} from './entities/offer/offerFindResult';
+import {
+  ActionFlagsFindResultDataKeywords,
+  ActionFlagsFindResultDataSortParameters,
+} from './entities/offer/actionFlagsFindResult';
+import {
+  PriceBandFindResultDataKeywords,
+  PriceBandFindResultDataSortParameters,
+} from './entities/offer/priceBandFindResult';
 
 /**
  * Parameters passable to the request for refining search.
@@ -74,7 +109,7 @@ export enum LicenseFindParameters {
 /**
  * List of keywords to search with.
  */
-export type LicenseDataKeywords = {
+export type DataKeywords = {
   [LicenseFindParameters.KEYWORDS_OPERATOR]:
     | LicenseFindParameters.OPERATOR_AND
     | LicenseFindParameters.OPERATOR_OR
@@ -86,48 +121,70 @@ export type LicenseDataKeywords = {
  * Keywords parameters to pass to the request
  */
 export type LicenseKeywordsParameters = {
-  license?: {
-    [field in LicenseFields]?: LicenseDataKeywords;
-  };
-  offer?: {
-    [field in LicenseOfferFields]?: LicenseDataKeywords;
-  };
+  license?: LicenceFindDataKeywords;
+  offer?: OfferFindResultDataKeywords;
 };
 
-export type LicenseRawKeywordsParameters = {
-  [field: string]: LicenseDataKeywords | undefined;
+export type LicenseRawKeywordsParametersLicence = {
+  [field: string]:
+    | DataKeywords
+    | ActiveSeatsFindResultDataKeywords
+    | ConfigFindResultDataKeywords
+    | WarningFindResultDataKeywords
+    | PriceFindResultDataKeywords
+    | undefined;
+};
+
+export type LicenseRawKeywordsParametersOffer = {
+  [field: string]:
+    | DataKeywords
+    | ActionFlagsFindResultDataKeywords
+    | PriceBandFindResultDataKeywords
+    | undefined;
+};
+
+export type SortParameters = {
+  [LicenseFindParameters.DATA_SORT]:
+    | LicenseFindParameters.SORT_ASCENDING
+    | LicenseFindParameters.SORT_DESCENDING;
 };
 
 /**
  * Sort parameters to pass to the request
  */
 export type LicenseSortParameters = {
-  license?: {
-    [field in LicenseFields]?:
-      | LicenseFindParameters.SORT_ASCENDING
-      | LicenseFindParameters.SORT_DESCENDING;
-  };
-  offer?: {
-    [field in LicenseOfferFields]?:
-      | LicenseFindParameters.SORT_ASCENDING
-      | LicenseFindParameters.SORT_DESCENDING;
-  };
+  license?: LicenceFindDataSortParameters;
+  offer?: OfferFindResultDataSortParameters;
 };
 
-export type LicenseRawSortParameters = {
-  [field: string]: string | undefined;
+export type LicenseRawSortParametersLicense = {
+  [field: string]:
+    | SortParameters
+    | ActiveSeatsFindResultDataSortParameters
+    | ConfigFindResultDataSortParameters
+    | WarningFindResultDataSortParameters
+    | PriceFindResutDataSortParameters
+    | undefined;
+};
+
+export type LicenseRawSortParametersOffer = {
+  [field: string]:
+    | SortParameters
+    | ActionFlagsFindResultDataSortParameters
+    | PriceBandFindResultDataSortParameters
+    | undefined;
+};
+
+export type FiltersParameters = {
+  [LicenseFindParameters.DATA_FILTERS]: unknown;
 };
 
 /**
  * Filter parameters to pass to the request.
  */
 export type LicenseFiltersParameters = {
-  license?: {
-    [field in LicenseFields]?: unknown;
-  };
-  offer?: {
-    [field in LicenseOfferFields]?: unknown;
-  };
+  license?: LicenceFindDataFiltersParameters;
+  offer?: OfferFindResultDataFiltersParameters;
 };
 
 export type LicenseRawFiltersParameters = {
@@ -147,9 +204,15 @@ export type LicenseFindPayload = {
 
 export type LicenseFindRawPayload = {
   [LicenseFindParameters.DATA_KEYWORD]?: string;
-  [LicenseFindParameters.DATA_KEYWORDS]?: LicenseRawKeywordsParameters;
+  [LicenseFindParameters.DATA_KEYWORDS]?: {
+    license?: LicenseRawKeywordsParametersLicence;
+    offer?: LicenseRawKeywordsParametersOffer;
+  };
   [LicenseFindParameters.DATA_FILTERS]?: LicenseRawFiltersParameters;
-  [LicenseFindParameters.DATA_SORT]?: LicenseRawSortParameters;
+  [LicenseFindParameters.DATA_SORT]?: {
+    license?: LicenseRawSortParametersLicense;
+    offer?: LicenseRawSortParametersOffer;
+  };
   [LicenseFindParameters.DATA_HIGHLIGHT]?: boolean;
 };
 
@@ -168,6 +231,11 @@ export class LicensesClient extends AbstractClient {
    * The path of the Find endpoint
    */
   private FIND_PATH = 'v2/find';
+
+  /**
+   * The path of the Configs endpoint
+   */
+  private CONFIGS_PATH = '/configs';
 
   /**
    * Returns the raw result from the find endpoint call
@@ -215,14 +283,14 @@ export class LicensesClient extends AbstractClient {
       // Flatten with prefix for each type of keyword (license and offer)
       rawLicensePayload.keywords = {
         ...Object.entries(postData.keywords.license ?? {}).reduce(
-          (acc: LicenseRawKeywordsParameters, [keyword, value]) => {
+          (acc: LicenseRawKeywordsParametersLicence, [keyword, value]) => {
             acc[`license.${keyword}`] = value;
             return acc;
           },
           {},
         ),
         ...Object.entries(postData.keywords.offer ?? {}).reduce(
-          (acc: LicenseRawKeywordsParameters, [keyword, value]) => {
+          (acc: LicenseRawKeywordsParametersOffer, [keyword, value]) => {
             acc[`offer.${keyword}`] = value;
             return acc;
           },
@@ -255,14 +323,14 @@ export class LicensesClient extends AbstractClient {
       // Flatten with prefix for each type of sort keys (license and offer)
       rawLicensePayload.sort = {
         ...Object.entries(postData.sort.license ?? {}).reduce(
-          (acc: LicenseRawSortParameters, [sort, value]) => {
+          (acc: LicenseRawSortParametersLicense, [sort, value]) => {
             acc[`license.${sort}`] = value;
             return acc;
           },
           {},
         ),
         ...Object.entries(postData.sort.offer ?? {}).reduce(
-          (acc: LicenseRawSortParameters, [sort, value]) => {
+          (acc: LicenseRawSortParametersOffer, [sort, value]) => {
             acc[`offer.${sort}`] = value;
             return acc;
           },
@@ -274,5 +342,44 @@ export class LicensesClient extends AbstractClient {
     const response = await this.findRaw(rawLicensePayload, parameters);
 
     return new FindResult(response, this, rawLicensePayload, parameters);
+  }
+
+  public getConfigsRaw(reference: string): Promise<FindConfig> {
+    this.path = reference + this.CONFIGS_PATH;
+
+    return this.get();
+  }
+
+  public async *getConfigs(
+    reference: string,
+  ): AsyncGenerator<ConfigFindResultData> {
+    const rawResponse = await this.getConfigsRaw(reference);
+
+    for (const response of rawResponse.data) {
+      yield new ConfigFindResult(response).toJSON();
+    }
+  }
+
+  public async updateConfigRaw(
+    reference: string,
+    config: ConfigFindResult,
+  ): Promise<ConfigFindResultData> {
+    this.path = reference + this.CONFIGS_PATH;
+    const postData: ConfigFindResultData = {
+      [ConfigFindResultFields.COLUMN_NAME]: config.name,
+      [ConfigFindResultFields.COLUMN_SCOPE]: config.scope,
+      [ConfigFindResultFields.COLUMN_STATE]: config.state,
+    };
+
+    return await this.post(postData);
+  }
+
+  public async updateConfig(
+    reference: string,
+    config: ConfigFindResult,
+  ): Promise<ConfigFindResult> {
+    const rawResponse = await this.updateConfigRaw(reference, config);
+
+    return new ConfigFindResult(rawResponse);
   }
 }
