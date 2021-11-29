@@ -9,51 +9,82 @@ A license is identified in ArrowSphere by its _partner ref_, which is typically 
 
 ### License
 
-A license is managed by the `License` entity.
+A license is managed by the `LicenseFind` entity.
 
-| Field                 | Type         | Example                                              | Description                                                                                           |
-|-----------------------|--------------|------------------------------------------------------|-------------------------------------------------------------------------------------------------------|
-| acceptEula            | ```bool```   | false                                                |                                                                                                       |
-| activeSeatsLastUpdate | ```string``` | null                                                 | The last time the assigned seats have been modified                                                   |
-| activeSeatsNumber     | ```float```  | null                                                 | The current number of assigned seats, if applicable                                                   |
-| autoRenew             | ```bool```   | true                                                 | True if the license is renewed automatically upon expiration                                          |
-| baseSeat              | ```int```    | 6                                                    | The number of seats at the time of the license purchase                                               |
-| buyPrice              | ```float```  | 10.4                                                 | The buy price at the time of the license purchase                                                     |
-| category              | ```string``` | BaseProduct                                          | Indicates if the offer is a BaseProduct or an Addon                                                   |
-| classification        | ```string``` | SaaS                                                 | The [classification](catalog-classification.md)                                                       |
-| currency              | ```string``` | USD                                                  | The currency used at the time of the license purchase                                                 |
-| customerName          | ```string``` | My customer                                          | The name of the end-customer                                                                          |
-| customerRef           | ```string``` | XSP123456789                                         | The reference of the end-customer                                                                     |
-| endDate               | ```string``` | 2021-11-18T17:48:43.000Z                             | The end date of the license                                                                           |
-| friendlyName          | ```string``` | XSP12345|MS-0B-O365-ENTERPRIS|XSP555555|XSP987654321 | The friendly name of the license                                                                      |
-| id                    | ```int```    | 123456                                               | The license identifier (an internal identifier)                                                       |
-| isEnabled             | ```bool```   | true                                                 | True if the license is active                                                                         |
-| lastUpdate            | ```string``` | 2020-12-08T15:42:30.069Z                             | The last time the license's data was updated (for any reason)                                         |
-| listPrice             | ```float```  | 15.52                                                | The list price at the time of the license purchase                                                    |
-| marketplace           | ```string``` | US                                                   | The [marketplace](general-marketPlace.md)                                                             |
-| message               | ```string``` |                                                      | If an action is currently performed on the license, this message will indicate it                     |
-| offer                 | ```string``` |                                                      | The name of the offer                                                                                 |
-| parentLineId          | ```int```    | null                                                 | An internal reference indicating a parent license for this license                                    |
-| parentOrderRef        | ```string``` | null                                                 | An internal reference indicating a parent order                                                       |
-| partnerRef            | ```string``` | XSP987654321                                         | The ArrowSphere identifier of the license, to be used as an identifier in other ArrowSphere endpoints |
-| periodicity           | ```int```    | 720                                                  | The license's billing cycle (See [Term ans periodicity](#term-and-periodicity))                       |
-| resellerName          | ```string``` | My reseller                                          | The name of the reseller                                                                              |
-| resellerRef           | ```string``` | XSP12345                                             | The reference of the reseller                                                                         |
-| seat                  | ```int```    | 6                                                    | The number of available seats                                                                         |
-| serviceRef            | ```string``` | MS-0B-O365-ENTERPRIS                                 | The family identifier for this SKU (See [services](catalog-service.md))                               |
-| sku                   | ```string``` | ABCDABCD-1234-5678-9876-ABCDEFABCDEF                 | The SKU of the license                                                                                |
-| startDate             | ```string``` | 2020-11-18T17:48:43.000Z                             | The start date of the license                                                                         |
-| statusCode            | ```int```    | 86                                                   | An internal code indicating the status of the license                                                 |
-| statusLabel           | ```float```  | activation_ok                                        | An internal label indicating the status of the license                                                |
-| subscriptionId        | ```string``` | 12345678-AAAA-CCCC-FFFF-987654321012                 | Another internal identifier for the license                                                           |
-| subsidiaryName        | ```string``` | Arrow ECS Denmark                                    | The arrow company that manages the license                                                            |
-| term                  | ```int```    | 8640                                                 | The license's term (See [Term ans periodicity](#term-and-periodicity)                                 |
-| trial                 | ```bool```   | false                                                | True if the license is a trial                                                                        |
-| type                  | ```string``` | recurring                                            |                                                                                                       |
-| uom                   | ```string``` | LICENSE                                              | The unit of measure, is the unit of what is billed for this offer                                     |
-| vendorCode            | ```string``` | Microsoft                                            | The vendor code of the offer                                                                          |
-| vendorName            | ```string``` | Microsoft                                            | The vendor of the offer                                                                               |
-| vendorSubscriptionId  | ```string``` | AABBCCDD-1111-2222-3333-ABCDEFABCDEF                 | An external identifier for the license                                                                |
+| Field                | Type                  | Example                              | Description                                                                                           |
+|----------------------|-----------------------|--------------------------------------|-------------------------------------------------------------------------------------------------------|
+| acceptEula           | ```bool```            | false                                |                                                                                                       |
+| activeSeats          | ```ActiveSeatsData``` |                                      | [ActiveSeats](#ActiveSeatsFindResult) object of active seat information                               |                                             |
+| autoRenew            | ```bool```            | true                                 | True if the license is renewed automatically upon expiration                                          |
+| baseSeat             | ```int```             | 6                                    | The number of seats at the time of the license purchase                                               |
+| category             | ```string```          | BaseProduct                          | Indicates if the offer is a BaseProduct or an Addon                                                   |
+| classification       | ```string```          | SaaS                                 | The [classification](catalog-classification.md)                                                       |
+| configs              | ```array```           |                                      | Array of ConfigsData Type of object [ConfigFindResult](#ConfigFindResult)                             |
+| warnings             | ```array```           |                                      | Array of WarningsData Type of object [WarningsFindResult](#WarningFindResult)                         |
+| customerName         | ```string```          | My customer                          | The name of the end-customer                                                                          |
+| customerRef          | ```string```          | XSP123456789                         | The reference of the end-customer                                                                     |
+| endDate              | ```string```          | 2021-11-18T17:48:43.000Z             | The end date of the license                                                                           |
+| friendlyName         | ```string```          | XSP12345                             | MS-0B-O365-ENTERPRIS                                                                                  |XSP555555|XSP987654321 | The friendly name of the license                                                                      |
+| id                   | ```int```             | 123456                               | The license identifier (an internal identifier)                                                       |
+| isEnabled            | ```bool```            | true                                 | True if the license is active                                                                         |
+| lastUpdate           | ```string```          | 2020-12-08T15:42:30.069Z             | The last time the license's data was updated (for any reason)                                         |
+| marketplace          | ```string```          | US                                   | The [marketplace](general-marketPlace.md)                                                             |
+| message              | ```string```          |                                      | If an action is currently performed on the license, this message will indicate it                     |
+| offer                | ```string```          |                                      | The name of the offer                                                                                 |
+| parentLineId         | ```int```             | null                                 | An internal reference indicating a parent license for this license                                    |
+| parentOrderRef       | ```string```          | null                                 | An internal reference indicating a parent order                                                       |
+| partnerRef           | ```string```          | XSP987654321                         | The ArrowSphere identifier of the license, to be used as an identifier in other ArrowSphere endpoints |
+| periodicity          | ```int```             | 720                                  | The license's billing cycle (See [Term ans periodicity](#term-and-periodicity))                       |
+| price                | ```PriceData```       |                                      | [Price](#PriceFindResult) object of price information                                                 |
+| resellerName         | ```string```          | My reseller                          | The name of the reseller                                                                              |
+| resellerRef          | ```string```          | XSP12345                             | The reference of the reseller                                                                         |
+| seat                 | ```int```             | 6                                    | The number of available seats                                                                         |
+| serviceRef           | ```string```          | MS-0B-O365-ENTERPRIS                 | The family identifier for this SKU (See [services](catalog-service.md))                               |
+| sku                  | ```string```          | ABCDABCD-1234-5678-9876-ABCDEFABCDEF | The SKU of the license                                                                                |
+| startDate            | ```string```          | 2020-11-18T17:48:43.000Z             | The start date of the license                                                                         |
+| statusCode           | ```int```             | 86                                   | An internal code indicating the status of the license                                                 |
+| statusLabel          | ```float```           | activation_ok                        | An internal label indicating the status of the license                                                |
+| subscriptionId       | ```string```          | 12345678-AAAA-CCCC-FFFF-987654321012 | Another internal identifier for the license                                                           |
+| subsidiaryName       | ```string```          | Arrow ECS Denmark                    | The arrow company that manages the license                                                            |
+| term                 | ```int```             | 8640                                 | The license's term (See [Term ans periodicity](#term-and-periodicity)                                 |
+| trial                | ```bool```            | false                                | True if the license is a trial                                                                        |
+| type                 | ```string```          | recurring                            |                                                                                                       |
+| uom                  | ```string```          | LICENSE                              | The unit of measure, is the unit of what is billed for this offer                                     |
+| vendorCode           | ```string```          | Microsoft                            | The vendor code of the offer                                                                          |
+| vendorName           | ```string```          | Microsoft                            | The vendor of the offer                                                                               |
+| vendorSubscriptionId | ```string```          | AABBCCDD-1111-2222-3333-ABCDEFABCDEF | An external identifier for the license                                                                |
+
+### ActiveSeatsFindResult
+
+| Field      | Type     | Example                  | Description                                         |
+|------------|----------|--------------------------|-----------------------------------------------------|
+| lastUpdate | `string` | 2021-11-18T17:48:43.000Z | The last time the assigned seats have been modified |
+| number     | `number` | null                     | The current number of assigned seats, if applicable |
+
+### ConfigFindResult
+
+| Field  | Type     | Example | Description      |
+|--------|----------|---------|------------------|
+| name   | `string` | null    | The config name  |
+| scope  | `string` | null    | The config scope |
+| state  | `string` | null    | The config state |
+
+### WarningFindResult
+
+| Field   | Type     | Example | Description         |
+|---------|----------|---------|---------------------|
+| key     | `string` | null    | The warning key     |
+| message | `string` | null    | The warning message |
+
+### PriceFindResult
+
+| Field                     | Type     | Example | Description                                           |
+|---------------------------|----------|---------|-------------------------------------------------------|
+| priceBandArrowsphereSku   | `string` | null    | The priceBandArrowsphereSku                           |
+| buy_price                 | `number` | 2       | The buy price at the time of the license purchase     |
+| sell_price                | `number` | 4       | The sell price at the time of the license purchase    |
+| list_price                | `number` | 7       | The list price at the time of the license purchase    |
+| currency                  | `string` | null    | The currency used at the time of the license purchase |
 
 ### FilterFindResult
 
@@ -61,14 +92,14 @@ This entity represents a filter returned by the [Find endpoint](#find-endpoint).
 It shows a number of possible filters in the search results and the count for each of them.
 
 | Field  | Type     | Example     | Description              |
-| ------ | -------- | ----------- | ------------------------ |
+|--------|----------|-------------|--------------------------|
 | name   | `string` | vendor      | The name of the filter   |
 | values | `object` | (see below) | The values of the filter |
 
 Each entry in the `values` array looks like this:
 
 | Field | Type     | Example   | Description                                   |
-| ----- | -------- | --------- | --------------------------------------------- |
+|-------|----------|-----------|-----------------------------------------------|
 | value | `string` | Microsoft | The value of the entry                        |
 | count | `int`    | 3         | How many results are available for this entry |
 
@@ -84,37 +115,91 @@ This entity should be used to display search results or to make a listing of lic
 In addition to the fields of the license entity, these fields are available:
 
 | Field     | Type     | Example                         | Description                                                                                      |
-| --------- | -------- | ------------------------------- | ------------------------------------------------------------------------------------------------ |
+|-----------|----------|---------------------------------|--------------------------------------------------------------------------------------------------|
 | highlight | `object` | { sku: '<strong>ABC</strong>' } | An associative array which shows which values are to be highlighted based on the search keywords |
 
 Please note that the `highlight` field is only available if the `DATA_HIGHLIGHT` option is set to `true` while searching.
 
-### LicenseOfferFindResult
+### OfferFindResult
 
 This entity represents a search result's offer object.
 The offer entity is not necessarily present.
 
-| Field                     | Type    | Example                         | Description                                                                          |
-| ------------------------- | ------- | ------------------------------- | ------------------------------------------------------------------------------------ |
-| isAutoRenew               | boolean | false                           | Indicates if the offer is auto-renewable or not                                      |
-| isManualProvisioning      | boolean | false                           | Indicates if the offer is provisioned manually or note                               |
-| isEnabled                 | boolean | false                           | A flag that indicates whether or not the license offer is enabled                    |
-| lastUpdate                | string  | 2021-06-18T14:07:12.668Z        | Last license offer update date                                                       |
-| name                      | string  | Microsoft 365 Apps for business | License offer name                                                                   |
-| priceBandCanIncreaseSeats | boolean | true                            | Indicates whether or not the number of seats for the price band can be increased     |
-| priceBandCanBeCancelled   | boolean | false                           | Indicates whether or not the price band can be cancelled                             |
-| priceBandCanBeReactivated | boolean | false                           | Indicates whether or not the price band can be reactivated                           |
-| priceBandCanDecreaseSeats | boolean | false                           | Indicates whether or not the number of seats for the price band can be decreased     |
-| priceBandCanBeSuspended   | boolean | true                            | Indicates whether or not the price band can be suspended                             |
-| priceBandMarketplace      | string  | FR                              | The price band's marketplace                                                         |
-| priceBandIsEnabled        | boolean | true                            | Indicates whether or not the price band is enabled                                   |
-| priceBandCurrency         | string  | EUR                             | The price band's currency                                                            |
-| priceBandPricePublic      | number  | 9.43                            | The price band's public price                                                        |
-| priceBandPriceBuy         | number  | 7.54                            | The price band's buy price                                                           |
-| priceBandPriceSell        | number  | 7.73                            | The price band's sell price                                                          |
-| priceBandBillingTerm      | number  | 8640                            | Billing term for the price band (See [Term and periodicity](#term-and-periodicity))  |
-| priceBandBillingType      | string  | PAYGO                           | Billing type for the price band (See [Term and periodicity](#term-and-periodicity))  |
-| priceBandBillingCycle     | number  | 720                             | Billing cycle for the price band (See [Term and periodicity](#term-and-periodicity)) |
+| Field              | Type              | Example                         | Description                                                       |
+|--------------------|-------------------|---------------------------------|-------------------------------------------------------------------|
+| actionFlags        | `ActionFlagsData` |                                 | [ActionFlags](#ActionFlagsFindResult) Object                      |
+| classification     | `string`          | false                           | Indicates if the offer is auto-renewable or not                   |
+| isEnabled          | `boolean`         | false                           | A flag that indicates whether or not the license offer is enabled |
+| lastUpdate         | `string`          | 2021-06-18T14:07:12.668Z        | Last license offer update date                                    |
+| name               | `string`          | Microsoft 365 Apps for business | License offer name                                                |
+| priceBand          | `PriceBandData`   |                                 | [PriceBand](#PriceBandFindResult) Object                          |
+| arrowSubCategories | `array`           | ['string']                      | Array of Arrowsphere sub categories                               |
+
+### ActionFlagsFindResult
+
+| Field                | Type      | Example | Description                                            |
+|----------------------|-----------|---------|--------------------------------------------------------|
+| isAutoRenew          | `boolean` | false   | Indicates if the offer is auto-renewable or not        |
+| isManualProvisioning | `boolean` | false   | Indicates if the offer is provisioned manually or note |
+| renewalSku           | `boolean` | false   | Indicates if the offer is renewalSku or note           |
+
+### PriceBandFindResult
+
+| Field           | Type                       | Example | Description                                                                  |
+|-----------------|----------------------------|---------|------------------------------------------------------------------------------|
+| actionFlags     | `PriceBandActionFlagsData` |         | The [PriceBandActionFlagsFindResult](#PriceBandActionFlagsFindResult) object |
+| billing         | `BillingData`              |         | The [BillingFindResult](#BillingFindResult) object                           |
+| currency        | `string`                   | EUR     | The price band's currency                                                    |
+| isEnabled       | `boolean`                  | true    | Indicates whether or not the price band is enabled                           |
+| marketplace     | `string`                   | FR      | The price band's marketplace                                                 |
+| prices          | `PricesData`               |         | The [PricesFindResult](#PricesFindResult) object                             |
+| saleConstraints | `SaleConstraintsData`      |         | The [SaleConstraintsFindResult](#SaleConstraintsResult) object               |
+| identifiers     | `IdentifiersData`          |         | The [IdentifiersFindResult](#IdentifiersFindResult) object                   |
+
+### PriceBandActionFlagsFindResult
+
+| Field            | Type      | Example | Description                                                                      |
+|------------------|-----------|---------|----------------------------------------------------------------------------------|
+| canBeCancelled   | `boolean` | false   | Indicates whether or not the price band can be cancelled                         |
+| canBeReactivated | `boolean` | false   | Indicates whether or not the price band can be reactivated                       |
+| canBeSuspended   | `boolean` | true    | Indicates whether or not the price band can be suspended                         |
+| canDecreaseSeats | `boolean` | false   | Indicates whether or not the number of seats for the price band can be decreased |
+| canIncreaseSeats | `boolean` | true    | Indicates whether or not the number of seats for the price band can be increased |
+
+### BillingFindResult
+
+| Field | Type     | Example | Description                                                                          |
+|-------|----------|---------|--------------------------------------------------------------------------------------|
+| cycle | `number` | 720     | Billing cycle for the price band (See [Term and periodicity](#term-and-periodicity)) |
+| term  | `number` | 8640    | Billing term for the price band (See [Term and periodicity](#term-and-periodicity))  |
+| type  | `string` | PAYGO   | Billing type for the price band (See [Term and periodicity](#term-and-periodicity))  |
+
+### PricesFindResult
+
+| Field  | Type     | Example | Description                   |
+|--------|----------|---------|-------------------------------|
+| buy    | `number` | 7.54    | The price band's buy price    |
+| sell   | `number` | 7.73    | The price band's sell price   |
+| public | `number` | 9.43    | The price band's public price |
+
+### SaleConstraintsResult
+
+| Field       | Type     | Example | Description                               |
+|-------------|----------|---------|-------------------------------------------|
+| minQuantity | `number` | 2       | The minimum quantity of sales constraints |
+| maxQuantity | `number` | 2       | The maximum quantity of sales constraints |
+
+### IdentifiersFindResult
+
+| Field       | Type              | Example | Description                                                |
+|-------------|-------------------|---------|------------------------------------------------------------|
+| arrowsphere | `ArrowsphereData` |         | The [arrowsphereFindResult](#ArrowsphereFindResult) object |
+
+### ArrowsphereFindResult
+
+| Field | Type     | Example | Description         |
+|-------|----------|---------|---------------------|
+| sku   | `string` | SKU     | The arrowsphere sku |
 
 ## Usage
 
@@ -133,7 +218,7 @@ For example, the typical license has a term of 8640 and a periodicity of 720, wh
 Here are some possible values for these values:
 
 | value | Term         | Periodicity                 |
-| ----- | ------------ | --------------------------- |
+|-------|--------------|-----------------------------|
 | 0     | No term      | one time (no billing cycle) |
 | 24    | One day      | Daily                       |
 | 720   | One month    | Monthly                     |

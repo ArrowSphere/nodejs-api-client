@@ -1,15 +1,12 @@
-import { AbstractEntity } from '../../abstractEntity';
-import { LicenseFindRawPayload, LicensesClient } from '../licensesClient';
-import { Parameters } from '../../abstractClient';
 import {
-  LicenseFindResultData,
   LicenseFindResult,
+  LicenseFindResultData,
 } from './license/licenseFindResult';
 import { FilterFindResult, FilterFindResultData } from './filterFindResult';
-import {
-  LicenseOfferFindResult,
-  LicenseOfferFindResultData,
-} from './offer/licenseOfferFindResult';
+import { AbstractEntity } from '../../abstractEntity';
+import { LicensesClient, LicenseFindRawPayload } from '../licensesClient';
+import { OfferFindResult, OfferFindResultData } from './offer/offerFindResult';
+import { Parameters } from '../../abstractClient';
 
 export type FindData = {
   pagination: {
@@ -19,14 +16,14 @@ export type FindData = {
   };
   results: Array<{
     license: LicenseFindResultData;
-    offer?: LicenseOfferFindResultData;
+    offer?: OfferFindResultData;
   }>;
   filters: Array<FilterFindResultData>;
 };
 
 export type FindResultData = {
   results: AsyncGenerator<
-    { license: LicenseFindResultData; offer?: LicenseOfferFindResultData },
+    { license: LicenseFindResultData; offer?: OfferFindResultData },
     void,
     undefined
   >;
@@ -35,10 +32,19 @@ export type FindResultData = {
   nbResults: number;
 };
 
+export type FindConfig = {
+  status: number;
+  data: Array<{
+    name: string;
+    scope: string;
+    state: string;
+  }>;
+};
+
 export class FindResult extends AbstractEntity<FindData> {
   readonly #results: Array<{
     license: LicenseFindResultData;
-    offer?: LicenseOfferFindResultData;
+    offer?: OfferFindResultData;
   }>;
   readonly #filters: Array<FilterFindResultData>;
   readonly #client: LicensesClient;
@@ -75,7 +81,7 @@ export class FindResult extends AbstractEntity<FindData> {
     this.#results = data.results.map((result) => ({
       license: new LicenseFindResult(result.license).toJSON(),
       offer: result.offer
-        ? new LicenseOfferFindResult(result.offer).toJSON()
+        ? new OfferFindResult(result.offer).toJSON()
         : undefined,
     }));
 
@@ -89,7 +95,7 @@ export class FindResult extends AbstractEntity<FindData> {
    * @returns Generator|{@link LicenseFindResult}[]
    */
   public *getResultsForCurrentPage(): Generator<
-    { license: LicenseFindResultData; offer?: LicenseOfferFindResultData },
+    { license: LicenseFindResultData; offer?: OfferFindResultData },
     void,
     undefined
   > {
@@ -102,7 +108,7 @@ export class FindResult extends AbstractEntity<FindData> {
    * @returns Generator|{@link LicenseFindResult}[]
    */
   public async *getResults(): AsyncGenerator<
-    { license: LicenseFindResultData; offer?: LicenseOfferFindResultData },
+    { license: LicenseFindResultData; offer?: OfferFindResultData },
     void,
     undefined
   > {
@@ -128,7 +134,7 @@ export class FindResult extends AbstractEntity<FindData> {
         yield {
           license: new LicenseFindResult(result.license).toJSON(),
           offer: result.offer
-            ? new LicenseOfferFindResult(result.offer).toJSON()
+            ? new OfferFindResult(result.offer).toJSON()
             : undefined,
         };
       }
@@ -136,7 +142,7 @@ export class FindResult extends AbstractEntity<FindData> {
   }
 
   public get results(): AsyncGenerator<
-    { license: LicenseFindResultData; offer?: LicenseOfferFindResultData },
+    { license: LicenseFindResultData; offer?: OfferFindResultData },
     void,
     undefined
   > {

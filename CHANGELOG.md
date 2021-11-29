@@ -3,9 +3,55 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] - 2022-01-06
+
 ### Changed
 
 - bad prettier library configuration, adding semicolon in file needed
+- Update Offer object and Licence object
+
+#### License
+- Add more objects to define a license:
+  - Add object Warning as "warnings" field:
+    - key
+    - message
+  - Add object Config as "configs" field :
+    - name
+    - scope
+    - state
+  - Update field active_seat, it's now an object of type ActiveSeatsData:
+    - ActiveSeatsData:
+      - lastUpdate
+      - number
+  - Update field price, it's now an object of type PriceData
+    - PriceData:
+      - priceBandArrowsphereSku
+      - buy_price
+      - sell_price
+      - list_price
+      - currency
+#### Offer
+- Add more objects to define an offer:
+  - Add field "classification"
+  - Add field "isEnabled"
+  - Add field "lastUpdate"
+  - Add field "name"
+  - Add field "arrowSubCategories"
+  - Add object ActionFlags as "actionFlags" field:
+    - ActionFlagsData:
+      - isAutoRenew
+      - isManualProvisioning
+      - renewalSku
+  - Add object PriceBand as "priceBand" field:
+    - PriceBandData:
+      - actionFlags
+      - billing
+      - currency
+      - isEnabled
+      - marketplace
+      - prices
+      - saleConstraints
+      - identifiers
 
 ## [1.0.3] - 2021-06-21
 

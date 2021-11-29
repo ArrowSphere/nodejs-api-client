@@ -1,11 +1,11 @@
 import { AbstractEntity } from '../../abstractEntity';
-import { LicenseFields } from './license/abstractLicense';
+import { LicenseFindResultFields } from './license/licenseFindResult';
 
 /**
  * Filter data values
  */
 export type FilterFindResultDataValues = {
-  [field in LicenseFields]?: unknown;
+  [field in LicenseFindResultFields]?: unknown;
 };
 
 /**
