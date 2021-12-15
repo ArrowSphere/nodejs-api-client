@@ -1,4 +1,4 @@
-import { AbstractEntity } from '../../../abstractEntity'
+import { AbstractEntity } from '../../../abstractEntity';
 
 /**
  * Fields that can be present in License response and request data.
@@ -53,52 +53,52 @@ export enum LicenseFields {
  * License data fields and their corresponding types
  */
 export type LicenseData = {
-  [LicenseFields.COLUMN_ID]: number
-  [LicenseFields.COLUMN_ACCEPT_EULA]: boolean
+  [LicenseFields.COLUMN_ID]: number;
+  [LicenseFields.COLUMN_ACCEPT_EULA]: boolean;
   [LicenseFields.COLUMN_ACTIVE_SEATS]: {
-    [LicenseFields.ACTIVE_SEATS_LAST_UPDATE]: string | null
-    [LicenseFields.ACTIVE_SEATS_NUMBER]: number | null
-  }
-  [LicenseFields.COLUMN_AUTO_RENEW]: boolean
-  [LicenseFields.COLUMN_BASE_SEAT]: number
-  [LicenseFields.COLUMN_CATEGORY]: string
-  [LicenseFields.COLUMN_CLOUD_TYPE]: string
-  [LicenseFields.COLUMN_CUSTOMER_NAME]: string
-  [LicenseFields.COLUMN_CUSTOMER_REF]: string
-  [LicenseFields.COLUMN_END_DATE]: string
-  [LicenseFields.COLUMN_FRIENDLY_NAME]: string | null
-  [LicenseFields.COLUMN_IS_ENABLED]: boolean
-  [LicenseFields.COLUMN_LAST_UPDATE]: string | null
-  [LicenseFields.COLUMN_MARKETPLACE]: string
-  [LicenseFields.COLUMN_MESSAGE]: string
-  [LicenseFields.COLUMN_OFFER]: string
-  [LicenseFields.COLUMN_PARENT_LINE_ID]: number | null
-  [LicenseFields.COLUMN_PARENT_ORDER_REF]: string | null
-  [LicenseFields.COLUMN_PARTNER_REF]: string
-  [LicenseFields.COLUMN_PERIODICITY]: number
+    [LicenseFields.ACTIVE_SEATS_LAST_UPDATE]: string | null;
+    [LicenseFields.ACTIVE_SEATS_NUMBER]: number | null;
+  };
+  [LicenseFields.COLUMN_AUTO_RENEW]: boolean;
+  [LicenseFields.COLUMN_BASE_SEAT]: number;
+  [LicenseFields.COLUMN_CATEGORY]: string;
+  [LicenseFields.COLUMN_CLOUD_TYPE]: string;
+  [LicenseFields.COLUMN_CUSTOMER_NAME]: string;
+  [LicenseFields.COLUMN_CUSTOMER_REF]: string;
+  [LicenseFields.COLUMN_END_DATE]: string;
+  [LicenseFields.COLUMN_FRIENDLY_NAME]: string | null;
+  [LicenseFields.COLUMN_IS_ENABLED]: boolean;
+  [LicenseFields.COLUMN_LAST_UPDATE]: string | null;
+  [LicenseFields.COLUMN_MARKETPLACE]: string;
+  [LicenseFields.COLUMN_MESSAGE]: string;
+  [LicenseFields.COLUMN_OFFER]: string;
+  [LicenseFields.COLUMN_PARENT_LINE_ID]: number | null;
+  [LicenseFields.COLUMN_PARENT_ORDER_REF]: string | null;
+  [LicenseFields.COLUMN_PARTNER_REF]: string;
+  [LicenseFields.COLUMN_PERIODICITY]: number;
   [LicenseFields.COLUMN_PRICE]: {
-    [LicenseFields.PRICE_BUY_PRICE]: number
-    [LicenseFields.PRICE_LIST_PRICE]: number
-    [LicenseFields.PRICE_CURRENCY]: string | null
-  }
-  [LicenseFields.COLUMN_RESELLER_NAME]: string
-  [LicenseFields.COLUMN_RESELLER_REF]: string
-  [LicenseFields.COLUMN_SEAT]: number
-  [LicenseFields.COLUMN_SERVICE_REF]: string
-  [LicenseFields.COLUMN_SKU]: string
-  [LicenseFields.COLUMN_START_DATE]: string
-  [LicenseFields.COLUMN_STATUS_CODE]: number
-  [LicenseFields.COLUMN_STATUS_LABEL]: string
-  [LicenseFields.COLUMN_SUBSCRIPTION_ID]: string
-  [LicenseFields.COLUMN_SUBSIDIARY_NAME]: string
-  [LicenseFields.COLUMN_TERM]: number
-  [LicenseFields.COLUMN_TRIAL]: boolean
-  [LicenseFields.COLUMN_TYPE]: string
-  [LicenseFields.COLUMN_UOM]: string
-  [LicenseFields.COLUMN_VENDOR_CODE]: string
-  [LicenseFields.COLUMN_VENDOR_NAME]: string
-  [LicenseFields.COLUMN_VENDOR_SUBSCRIPTION_ID]: string | null
-}
+    [LicenseFields.PRICE_BUY_PRICE]: number;
+    [LicenseFields.PRICE_LIST_PRICE]: number;
+    [LicenseFields.PRICE_CURRENCY]: string | null;
+  };
+  [LicenseFields.COLUMN_RESELLER_NAME]: string;
+  [LicenseFields.COLUMN_RESELLER_REF]: string;
+  [LicenseFields.COLUMN_SEAT]: number;
+  [LicenseFields.COLUMN_SERVICE_REF]: string;
+  [LicenseFields.COLUMN_SKU]: string;
+  [LicenseFields.COLUMN_START_DATE]: string;
+  [LicenseFields.COLUMN_STATUS_CODE]: number;
+  [LicenseFields.COLUMN_STATUS_LABEL]: string;
+  [LicenseFields.COLUMN_SUBSCRIPTION_ID]: string;
+  [LicenseFields.COLUMN_SUBSIDIARY_NAME]: string;
+  [LicenseFields.COLUMN_TERM]: number;
+  [LicenseFields.COLUMN_TRIAL]: boolean;
+  [LicenseFields.COLUMN_TYPE]: string;
+  [LicenseFields.COLUMN_UOM]: string;
+  [LicenseFields.COLUMN_VENDOR_CODE]: string;
+  [LicenseFields.COLUMN_VENDOR_NAME]: string;
+  [LicenseFields.COLUMN_VENDOR_SUBSCRIPTION_ID]: string | null;
+};
 
 /**
  * Abstract class of a License entity. Can only be instantiated through a {@link LicenseFindResult} object class
@@ -125,49 +125,49 @@ export abstract class AbstractLicense extends AbstractEntity<LicenseData> {
     [`${LicenseFields.COLUMN_PRICE}.${LicenseFields.PRICE_BUY_PRICE}`]: 'present|numeric',
     [`${LicenseFields.COLUMN_PRICE}.${LicenseFields.PRICE_LIST_PRICE}`]: 'present|numeric',
     [`${LicenseFields.COLUMN_PRICE}.${LicenseFields.PRICE_CURRENCY}`]: 'present',
-  }
+  };
 
-  readonly #acceptEula: boolean
-  readonly #activeSeatsLastUpdate: string | null
-  readonly #activeSeatsNumber: number | null
-  readonly #autoRenew: boolean
-  readonly #baseSeat: number
-  readonly #buyPrice: number
-  readonly #category: string
-  readonly #classification: string
-  readonly #currency: string | null
-  readonly #customerName: string
-  readonly #customerRef: string
-  readonly #endDate: string
-  readonly #friendlyName: string | null
-  readonly #id: number
-  readonly #enabled: boolean
-  readonly #lastUpdate: string | null
-  readonly #listPrice: number
-  readonly #marketplace: string
-  readonly #message: string
-  readonly #offer: string
-  readonly #parentLineId: number | null
-  readonly #parentOrderRef: string | null
-  readonly #partnerRef: string
-  readonly #periodicity: number
-  readonly #resellerName: string
-  readonly #resellerRef: string
-  readonly #seat: number
-  readonly #serviceRef: string
-  readonly #sku: string
-  readonly #startDate: string
-  readonly #statusCode: number
-  readonly #statusLabel: string
-  readonly #subscriptionId: string
-  readonly #subsidiaryName: string
-  readonly #term: number
-  readonly #trial: boolean
-  readonly #type: string
-  readonly #uom: string
-  readonly #vendorCode: string
-  readonly #vendorName: string
-  readonly #vendorSubscriptionId: string | null
+  readonly #acceptEula: boolean;
+  readonly #activeSeatsLastUpdate: string | null;
+  readonly #activeSeatsNumber: number | null;
+  readonly #autoRenew: boolean;
+  readonly #baseSeat: number;
+  readonly #buyPrice: number;
+  readonly #category: string;
+  readonly #classification: string;
+  readonly #currency: string | null;
+  readonly #customerName: string;
+  readonly #customerRef: string;
+  readonly #endDate: string;
+  readonly #friendlyName: string | null;
+  readonly #id: number;
+  readonly #enabled: boolean;
+  readonly #lastUpdate: string | null;
+  readonly #listPrice: number;
+  readonly #marketplace: string;
+  readonly #message: string;
+  readonly #offer: string;
+  readonly #parentLineId: number | null;
+  readonly #parentOrderRef: string | null;
+  readonly #partnerRef: string;
+  readonly #periodicity: number;
+  readonly #resellerName: string;
+  readonly #resellerRef: string;
+  readonly #seat: number;
+  readonly #serviceRef: string;
+  readonly #sku: string;
+  readonly #startDate: string;
+  readonly #statusCode: number;
+  readonly #statusLabel: string;
+  readonly #subscriptionId: string;
+  readonly #subsidiaryName: string;
+  readonly #term: number;
+  readonly #trial: boolean;
+  readonly #type: string;
+  readonly #uom: string;
+  readonly #vendorCode: string;
+  readonly #vendorName: string;
+  readonly #vendorSubscriptionId: string | null;
 
   /**
    * AbstractLicense constructor.
@@ -175,221 +175,223 @@ export abstract class AbstractLicense extends AbstractEntity<LicenseData> {
    * @param data - License data to construct the entity with.
    */
   protected constructor(data: LicenseData) {
-    super(data)
+    super(data);
 
-    this.#acceptEula = data[LicenseFields.COLUMN_ACCEPT_EULA]
+    this.#acceptEula = data[LicenseFields.COLUMN_ACCEPT_EULA];
     this.#activeSeatsLastUpdate =
       data[LicenseFields.COLUMN_ACTIVE_SEATS][
         LicenseFields.ACTIVE_SEATS_LAST_UPDATE
-      ]
+      ];
     this.#activeSeatsNumber =
-      data[LicenseFields.COLUMN_ACTIVE_SEATS][LicenseFields.ACTIVE_SEATS_NUMBER]
-    this.#autoRenew = data[LicenseFields.COLUMN_AUTO_RENEW]
-    this.#baseSeat = data[LicenseFields.COLUMN_BASE_SEAT]
+      data[LicenseFields.COLUMN_ACTIVE_SEATS][
+        LicenseFields.ACTIVE_SEATS_NUMBER
+      ];
+    this.#autoRenew = data[LicenseFields.COLUMN_AUTO_RENEW];
+    this.#baseSeat = data[LicenseFields.COLUMN_BASE_SEAT];
     this.#buyPrice =
-      data[LicenseFields.COLUMN_PRICE][LicenseFields.PRICE_BUY_PRICE]
-    this.#category = data[LicenseFields.COLUMN_CATEGORY]
-    this.#classification = data[LicenseFields.COLUMN_CLOUD_TYPE]
+      data[LicenseFields.COLUMN_PRICE][LicenseFields.PRICE_BUY_PRICE];
+    this.#category = data[LicenseFields.COLUMN_CATEGORY];
+    this.#classification = data[LicenseFields.COLUMN_CLOUD_TYPE];
     this.#currency =
-      data[LicenseFields.COLUMN_PRICE][LicenseFields.PRICE_CURRENCY]
-    this.#customerName = data[LicenseFields.COLUMN_CUSTOMER_NAME]
-    this.#customerRef = data[LicenseFields.COLUMN_CUSTOMER_REF]
-    this.#endDate = data[LicenseFields.COLUMN_END_DATE]
-    this.#friendlyName = data[LicenseFields.COLUMN_FRIENDLY_NAME]
-    this.#id = data[LicenseFields.COLUMN_ID]
-    this.#enabled = data[LicenseFields.COLUMN_IS_ENABLED]
-    this.#lastUpdate = data[LicenseFields.COLUMN_LAST_UPDATE]
+      data[LicenseFields.COLUMN_PRICE][LicenseFields.PRICE_CURRENCY];
+    this.#customerName = data[LicenseFields.COLUMN_CUSTOMER_NAME];
+    this.#customerRef = data[LicenseFields.COLUMN_CUSTOMER_REF];
+    this.#endDate = data[LicenseFields.COLUMN_END_DATE];
+    this.#friendlyName = data[LicenseFields.COLUMN_FRIENDLY_NAME];
+    this.#id = data[LicenseFields.COLUMN_ID];
+    this.#enabled = data[LicenseFields.COLUMN_IS_ENABLED];
+    this.#lastUpdate = data[LicenseFields.COLUMN_LAST_UPDATE];
     this.#listPrice =
-      data[LicenseFields.COLUMN_PRICE][LicenseFields.PRICE_LIST_PRICE]
-    this.#marketplace = data[LicenseFields.COLUMN_MARKETPLACE]
-    this.#message = data[LicenseFields.COLUMN_MESSAGE]
-    this.#offer = data[LicenseFields.COLUMN_OFFER]
-    this.#parentLineId = data[LicenseFields.COLUMN_PARENT_LINE_ID]
-    this.#parentOrderRef = data[LicenseFields.COLUMN_PARENT_ORDER_REF]
-    this.#partnerRef = data[LicenseFields.COLUMN_PARTNER_REF]
-    this.#periodicity = data[LicenseFields.COLUMN_PERIODICITY]
-    this.#resellerName = data[LicenseFields.COLUMN_RESELLER_NAME]
-    this.#resellerRef = data[LicenseFields.COLUMN_RESELLER_REF]
-    this.#seat = data[LicenseFields.COLUMN_SEAT]
-    this.#serviceRef = data[LicenseFields.COLUMN_SERVICE_REF]
-    this.#sku = data[LicenseFields.COLUMN_SKU]
-    this.#startDate = data[LicenseFields.COLUMN_START_DATE]
-    this.#statusCode = data[LicenseFields.COLUMN_STATUS_CODE]
-    this.#statusLabel = data[LicenseFields.COLUMN_STATUS_LABEL]
-    this.#subscriptionId = data[LicenseFields.COLUMN_SUBSCRIPTION_ID]
-    this.#subsidiaryName = data[LicenseFields.COLUMN_SUBSIDIARY_NAME]
-    this.#term = data[LicenseFields.COLUMN_TERM]
-    this.#trial = data[LicenseFields.COLUMN_TRIAL]
-    this.#type = data[LicenseFields.COLUMN_TYPE]
-    this.#uom = data[LicenseFields.COLUMN_UOM]
-    this.#vendorCode = data[LicenseFields.COLUMN_VENDOR_CODE]
-    this.#vendorName = data[LicenseFields.COLUMN_VENDOR_NAME]
+      data[LicenseFields.COLUMN_PRICE][LicenseFields.PRICE_LIST_PRICE];
+    this.#marketplace = data[LicenseFields.COLUMN_MARKETPLACE];
+    this.#message = data[LicenseFields.COLUMN_MESSAGE];
+    this.#offer = data[LicenseFields.COLUMN_OFFER];
+    this.#parentLineId = data[LicenseFields.COLUMN_PARENT_LINE_ID];
+    this.#parentOrderRef = data[LicenseFields.COLUMN_PARENT_ORDER_REF];
+    this.#partnerRef = data[LicenseFields.COLUMN_PARTNER_REF];
+    this.#periodicity = data[LicenseFields.COLUMN_PERIODICITY];
+    this.#resellerName = data[LicenseFields.COLUMN_RESELLER_NAME];
+    this.#resellerRef = data[LicenseFields.COLUMN_RESELLER_REF];
+    this.#seat = data[LicenseFields.COLUMN_SEAT];
+    this.#serviceRef = data[LicenseFields.COLUMN_SERVICE_REF];
+    this.#sku = data[LicenseFields.COLUMN_SKU];
+    this.#startDate = data[LicenseFields.COLUMN_START_DATE];
+    this.#statusCode = data[LicenseFields.COLUMN_STATUS_CODE];
+    this.#statusLabel = data[LicenseFields.COLUMN_STATUS_LABEL];
+    this.#subscriptionId = data[LicenseFields.COLUMN_SUBSCRIPTION_ID];
+    this.#subsidiaryName = data[LicenseFields.COLUMN_SUBSIDIARY_NAME];
+    this.#term = data[LicenseFields.COLUMN_TERM];
+    this.#trial = data[LicenseFields.COLUMN_TRIAL];
+    this.#type = data[LicenseFields.COLUMN_TYPE];
+    this.#uom = data[LicenseFields.COLUMN_UOM];
+    this.#vendorCode = data[LicenseFields.COLUMN_VENDOR_CODE];
+    this.#vendorName = data[LicenseFields.COLUMN_VENDOR_NAME];
     this.#vendorSubscriptionId =
-      data[LicenseFields.COLUMN_VENDOR_SUBSCRIPTION_ID]
+      data[LicenseFields.COLUMN_VENDOR_SUBSCRIPTION_ID];
   }
 
   public get id(): number {
-    return this.#id
+    return this.#id;
   }
 
   public get acceptEula(): boolean {
-    return this.#acceptEula
+    return this.#acceptEula;
   }
 
   public get activeSeatsLastUpdate(): string | null {
-    return this.#activeSeatsLastUpdate
+    return this.#activeSeatsLastUpdate;
   }
 
   public get activeSeatsNumber(): number | null {
-    return this.#activeSeatsNumber
+    return this.#activeSeatsNumber;
   }
 
   public get autoRenew(): boolean {
-    return this.#autoRenew
+    return this.#autoRenew;
   }
 
   public get baseSeat(): number {
-    return this.#baseSeat
+    return this.#baseSeat;
   }
 
   public get buyPrice(): number {
-    return this.#buyPrice
+    return this.#buyPrice;
   }
 
   public get category(): string {
-    return this.#category
+    return this.#category;
   }
 
   public get classification(): string {
-    return this.#classification
+    return this.#classification;
   }
 
   public get currency(): string | null {
-    return this.#currency
+    return this.#currency;
   }
 
   public get customerName(): string {
-    return this.#customerName
+    return this.#customerName;
   }
 
   public get customerRef(): string {
-    return this.#customerRef
+    return this.#customerRef;
   }
 
   public get endDate(): string {
-    return this.#endDate
+    return this.#endDate;
   }
 
   public get friendlyName(): string | null {
-    return this.#friendlyName
+    return this.#friendlyName;
   }
 
   public get enabled(): boolean {
-    return this.#enabled
+    return this.#enabled;
   }
 
   public get lastUpdate(): string | null {
-    return this.#lastUpdate
+    return this.#lastUpdate;
   }
 
   public get listPrice(): number {
-    return this.#listPrice
+    return this.#listPrice;
   }
 
   public get marketplace(): string {
-    return this.#marketplace
+    return this.#marketplace;
   }
 
   public get message(): string {
-    return this.#message
+    return this.#message;
   }
 
   public get offer(): string {
-    return this.#offer
+    return this.#offer;
   }
 
   public get parentLineId(): number | null {
-    return this.#parentLineId
+    return this.#parentLineId;
   }
 
   public get parentOrderRef(): string | null {
-    return this.#parentOrderRef
+    return this.#parentOrderRef;
   }
 
   public get partnerRef(): string {
-    return this.#partnerRef
+    return this.#partnerRef;
   }
 
   public get periodicity(): number {
-    return this.#periodicity
+    return this.#periodicity;
   }
 
   public get resellerName(): string {
-    return this.#resellerName
+    return this.#resellerName;
   }
 
   public get resellerRef(): string {
-    return this.#resellerRef
+    return this.#resellerRef;
   }
 
   public get seat(): number {
-    return this.#seat
+    return this.#seat;
   }
 
   public get serviceRef(): string {
-    return this.#serviceRef
+    return this.#serviceRef;
   }
 
   public get sku(): string {
-    return this.#sku
+    return this.#sku;
   }
 
   public get startDate(): string {
-    return this.#startDate
+    return this.#startDate;
   }
 
   public get statusCode(): number {
-    return this.#statusCode
+    return this.#statusCode;
   }
 
   public get statusLabel(): string {
-    return this.#statusLabel
+    return this.#statusLabel;
   }
 
   public get subscriptionId(): string {
-    return this.#subscriptionId
+    return this.#subscriptionId;
   }
 
   public get subsidiaryName(): string {
-    return this.#subsidiaryName
+    return this.#subsidiaryName;
   }
 
   public get term(): number {
-    return this.#term
+    return this.#term;
   }
 
   public isTrial(): boolean {
-    return this.#trial
+    return this.#trial;
   }
 
   public get type(): string {
-    return this.#type
+    return this.#type;
   }
 
   public get uom(): string {
-    return this.#uom
+    return this.#uom;
   }
 
   public get vendorCode(): string {
-    return this.#vendorCode
+    return this.#vendorCode;
   }
 
   public get vendorName(): string {
-    return this.#vendorName
+    return this.#vendorName;
   }
 
   public get vendorSubscriptionId(): string | null {
-    return this.#vendorSubscriptionId
+    return this.#vendorSubscriptionId;
   }
 
   /**
@@ -443,6 +445,6 @@ export abstract class AbstractLicense extends AbstractEntity<LicenseData> {
       [LicenseFields.COLUMN_VENDOR_CODE]: this.vendorCode,
       [LicenseFields.COLUMN_VENDOR_NAME]: this.vendorName,
       [LicenseFields.COLUMN_VENDOR_SUBSCRIPTION_ID]: this.vendorSubscriptionId,
-    }
+    };
   }
 }

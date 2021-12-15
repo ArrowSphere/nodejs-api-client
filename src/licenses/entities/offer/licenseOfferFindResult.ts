@@ -1,4 +1,4 @@
-import { AbstractEntity } from '../../../abstractEntity'
+import { AbstractEntity } from '../../../abstractEntity';
 
 /**
  * Fields that can be present in License offer response.
@@ -33,35 +33,35 @@ export enum LicenseOfferFields {
  */
 export type LicenseOfferFindResultData = {
   [LicenseOfferFields.COLUMN_ACTION_FLAGS]: {
-    [LicenseOfferFields.COLUMN_IS_AUTO_RENEW]: boolean
-    [LicenseOfferFields.COLUMN_IS_MANUAL_PROVISIONING]: boolean
-  }
-  [LicenseOfferFields.COLUMN_IS_ENABLED]: boolean
-  [LicenseOfferFields.COLUMN_LAST_UPDATE]: string
-  [LicenseOfferFields.COLUMN_NAME]: string
+    [LicenseOfferFields.COLUMN_IS_AUTO_RENEW]: boolean;
+    [LicenseOfferFields.COLUMN_IS_MANUAL_PROVISIONING]: boolean;
+  };
+  [LicenseOfferFields.COLUMN_IS_ENABLED]: boolean;
+  [LicenseOfferFields.COLUMN_LAST_UPDATE]: string;
+  [LicenseOfferFields.COLUMN_NAME]: string;
   [LicenseOfferFields.COLUMN_PRICE_BAND]: {
     [LicenseOfferFields.COLUMN_ACTION_FLAGS]: {
-      [LicenseOfferFields.COLUMN_CAN_BE_CANCELLED]: boolean
-      [LicenseOfferFields.COLUMN_CAN_BE_REACTIVATED]: boolean
-      [LicenseOfferFields.COLUMN_CAN_BE_SUSPENDED]: boolean
-      [LicenseOfferFields.COLUMN_CAN_DECREASE_SEATS]: boolean
-      [LicenseOfferFields.COLUMN_CAN_INCREASE_SEATS]: boolean
-    }
-    [LicenseOfferFields.COLUMN_MARKETPLACE]: string
-    [LicenseOfferFields.COLUMN_IS_ENABLED]: boolean
-    [LicenseOfferFields.COLUMN_CURRENCY]: string
+      [LicenseOfferFields.COLUMN_CAN_BE_CANCELLED]: boolean;
+      [LicenseOfferFields.COLUMN_CAN_BE_REACTIVATED]: boolean;
+      [LicenseOfferFields.COLUMN_CAN_BE_SUSPENDED]: boolean;
+      [LicenseOfferFields.COLUMN_CAN_DECREASE_SEATS]: boolean;
+      [LicenseOfferFields.COLUMN_CAN_INCREASE_SEATS]: boolean;
+    };
+    [LicenseOfferFields.COLUMN_MARKETPLACE]: string;
+    [LicenseOfferFields.COLUMN_IS_ENABLED]: boolean;
+    [LicenseOfferFields.COLUMN_CURRENCY]: string;
     [LicenseOfferFields.COLUMN_PRICES]: {
-      [LicenseOfferFields.COLUMN_PUBLIC]: number
-      [LicenseOfferFields.COLUMN_BUY]: number
-      [LicenseOfferFields.COLUMN_SELL]: number
-    }
+      [LicenseOfferFields.COLUMN_PUBLIC]: number;
+      [LicenseOfferFields.COLUMN_BUY]: number;
+      [LicenseOfferFields.COLUMN_SELL]: number;
+    };
     [LicenseOfferFields.COLUMN_BILLING]: {
-      [LicenseOfferFields.COLUMN_TERM]: number
-      [LicenseOfferFields.COLUMN_TYPE]: string
-      [LicenseOfferFields.COLUMN_CYCLE]: number
-    }
-  }
-}
+      [LicenseOfferFields.COLUMN_TERM]: number;
+      [LicenseOfferFields.COLUMN_TYPE]: string;
+      [LicenseOfferFields.COLUMN_CYCLE]: number;
+    };
+  };
+};
 
 /**
  * Class of a License Offer entity.
@@ -98,27 +98,27 @@ export class LicenseOfferFindResult extends AbstractEntity<LicenseOfferFindResul
     [`${LicenseOfferFields.COLUMN_PRICE_BAND}.${LicenseOfferFields.COLUMN_BILLING}.${LicenseOfferFields.COLUMN_TERM}`]: 'required|numeric',
     [`${LicenseOfferFields.COLUMN_PRICE_BAND}.${LicenseOfferFields.COLUMN_BILLING}.${LicenseOfferFields.COLUMN_TYPE}`]: 'required',
     [`${LicenseOfferFields.COLUMN_PRICE_BAND}.${LicenseOfferFields.COLUMN_BILLING}.${LicenseOfferFields.COLUMN_CYCLE}`]: 'required|numeric',
-  }
+  };
 
-  readonly #isAutoRenew: boolean
-  readonly #isManualProvisioning: boolean
-  readonly #isEnabled: boolean
-  readonly #lastUpdate: string
-  readonly #name: string
-  readonly #priceBandCanIncreaseSeats: boolean
-  readonly #priceBandCanBeCancelled: boolean
-  readonly #priceBandCanBeReactivated: boolean
-  readonly #priceBandCanDecreaseSeats: boolean
-  readonly #priceBandCanBeSuspended: boolean
-  readonly #priceBandMarketplace: string
-  readonly #priceBandIsEnabled: boolean
-  readonly #priceBandCurrency: string
-  readonly #priceBandPricePublic: number
-  readonly #priceBandPriceBuy: number
-  readonly #priceBandPriceSell: number
-  readonly #priceBandBillingTerm: number
-  readonly #priceBandBillingType: string
-  readonly #priceBandBillingCycle: number
+  readonly #isAutoRenew: boolean;
+  readonly #isManualProvisioning: boolean;
+  readonly #isEnabled: boolean;
+  readonly #lastUpdate: string;
+  readonly #name: string;
+  readonly #priceBandCanIncreaseSeats: boolean;
+  readonly #priceBandCanBeCancelled: boolean;
+  readonly #priceBandCanBeReactivated: boolean;
+  readonly #priceBandCanDecreaseSeats: boolean;
+  readonly #priceBandCanBeSuspended: boolean;
+  readonly #priceBandMarketplace: string;
+  readonly #priceBandIsEnabled: boolean;
+  readonly #priceBandCurrency: string;
+  readonly #priceBandPricePublic: number;
+  readonly #priceBandPriceBuy: number;
+  readonly #priceBandPriceSell: number;
+  readonly #priceBandBillingTerm: number;
+  readonly #priceBandBillingType: string;
+  readonly #priceBandBillingCycle: number;
 
   /**
    * LicenseOfferFindResult constructor.
@@ -126,151 +126,151 @@ export class LicenseOfferFindResult extends AbstractEntity<LicenseOfferFindResul
    * @param data - License offer data to construct the entity with.
    */
   constructor(data: LicenseOfferFindResultData) {
-    super(data)
+    super(data);
 
     this.#isAutoRenew =
       data[LicenseOfferFields.COLUMN_ACTION_FLAGS][
         LicenseOfferFields.COLUMN_IS_AUTO_RENEW
-      ]
+      ];
     this.#isManualProvisioning =
       data[LicenseOfferFields.COLUMN_ACTION_FLAGS][
         LicenseOfferFields.COLUMN_IS_MANUAL_PROVISIONING
-      ]
-    this.#isEnabled = data[LicenseOfferFields.COLUMN_IS_ENABLED]
-    this.#lastUpdate = data[LicenseOfferFields.COLUMN_LAST_UPDATE]
-    this.#name = data[LicenseOfferFields.COLUMN_NAME]
+      ];
+    this.#isEnabled = data[LicenseOfferFields.COLUMN_IS_ENABLED];
+    this.#lastUpdate = data[LicenseOfferFields.COLUMN_LAST_UPDATE];
+    this.#name = data[LicenseOfferFields.COLUMN_NAME];
     this.#priceBandCanIncreaseSeats =
       data[LicenseOfferFields.COLUMN_PRICE_BAND][
         LicenseOfferFields.COLUMN_ACTION_FLAGS
-      ][LicenseOfferFields.COLUMN_CAN_INCREASE_SEATS]
+      ][LicenseOfferFields.COLUMN_CAN_INCREASE_SEATS];
     this.#priceBandCanBeCancelled =
       data[LicenseOfferFields.COLUMN_PRICE_BAND][
         LicenseOfferFields.COLUMN_ACTION_FLAGS
-      ][LicenseOfferFields.COLUMN_CAN_BE_CANCELLED]
+      ][LicenseOfferFields.COLUMN_CAN_BE_CANCELLED];
     this.#priceBandCanBeReactivated =
       data[LicenseOfferFields.COLUMN_PRICE_BAND][
         LicenseOfferFields.COLUMN_ACTION_FLAGS
-      ][LicenseOfferFields.COLUMN_CAN_BE_REACTIVATED]
+      ][LicenseOfferFields.COLUMN_CAN_BE_REACTIVATED];
     this.#priceBandCanDecreaseSeats =
       data[LicenseOfferFields.COLUMN_PRICE_BAND][
         LicenseOfferFields.COLUMN_ACTION_FLAGS
-      ][LicenseOfferFields.COLUMN_CAN_DECREASE_SEATS]
+      ][LicenseOfferFields.COLUMN_CAN_DECREASE_SEATS];
     this.#priceBandCanBeSuspended =
       data[LicenseOfferFields.COLUMN_PRICE_BAND][
         LicenseOfferFields.COLUMN_ACTION_FLAGS
-      ][LicenseOfferFields.COLUMN_CAN_BE_SUSPENDED]
+      ][LicenseOfferFields.COLUMN_CAN_BE_SUSPENDED];
     this.#priceBandMarketplace =
       data[LicenseOfferFields.COLUMN_PRICE_BAND][
         LicenseOfferFields.COLUMN_MARKETPLACE
-      ]
+      ];
     this.#priceBandIsEnabled =
       data[LicenseOfferFields.COLUMN_PRICE_BAND][
         LicenseOfferFields.COLUMN_IS_ENABLED
-      ]
+      ];
     this.#priceBandCurrency =
       data[LicenseOfferFields.COLUMN_PRICE_BAND][
         LicenseOfferFields.COLUMN_CURRENCY
-      ]
+      ];
     this.#priceBandPricePublic =
       data[LicenseOfferFields.COLUMN_PRICE_BAND][
         LicenseOfferFields.COLUMN_PRICES
-      ][LicenseOfferFields.COLUMN_PUBLIC]
+      ][LicenseOfferFields.COLUMN_PUBLIC];
     this.#priceBandPriceBuy =
       data[LicenseOfferFields.COLUMN_PRICE_BAND][
         LicenseOfferFields.COLUMN_PRICES
-      ][LicenseOfferFields.COLUMN_BUY]
+      ][LicenseOfferFields.COLUMN_BUY];
     this.#priceBandPriceSell =
       data[LicenseOfferFields.COLUMN_PRICE_BAND][
         LicenseOfferFields.COLUMN_PRICES
-      ][LicenseOfferFields.COLUMN_SELL]
+      ][LicenseOfferFields.COLUMN_SELL];
     this.#priceBandBillingTerm =
       data[LicenseOfferFields.COLUMN_PRICE_BAND][
         LicenseOfferFields.COLUMN_BILLING
-      ][LicenseOfferFields.COLUMN_TERM]
+      ][LicenseOfferFields.COLUMN_TERM];
     this.#priceBandBillingType =
       data[LicenseOfferFields.COLUMN_PRICE_BAND][
         LicenseOfferFields.COLUMN_BILLING
-      ][LicenseOfferFields.COLUMN_TYPE]
+      ][LicenseOfferFields.COLUMN_TYPE];
     this.#priceBandBillingCycle =
       data[LicenseOfferFields.COLUMN_PRICE_BAND][
         LicenseOfferFields.COLUMN_BILLING
-      ][LicenseOfferFields.COLUMN_CYCLE]
+      ][LicenseOfferFields.COLUMN_CYCLE];
   }
 
   public get isAutoRenew(): boolean {
-    return this.#isAutoRenew
+    return this.#isAutoRenew;
   }
 
   public get isManualProvisioning(): boolean {
-    return this.#isManualProvisioning
+    return this.#isManualProvisioning;
   }
 
   public get isEnabled(): boolean {
-    return this.#isEnabled
+    return this.#isEnabled;
   }
 
   public get lastUpdate(): string {
-    return this.#lastUpdate
+    return this.#lastUpdate;
   }
 
   public get name(): string {
-    return this.#name
+    return this.#name;
   }
 
   public get priceBandCanIncreaseSeats(): boolean {
-    return this.#priceBandCanIncreaseSeats
+    return this.#priceBandCanIncreaseSeats;
   }
 
   public get priceBandCanBeCancelled(): boolean {
-    return this.#priceBandCanBeCancelled
+    return this.#priceBandCanBeCancelled;
   }
 
   public get priceBandCanBeReactivated(): boolean {
-    return this.#priceBandCanBeReactivated
+    return this.#priceBandCanBeReactivated;
   }
 
   public get priceBandCanDecreaseSeats(): boolean {
-    return this.#priceBandCanDecreaseSeats
+    return this.#priceBandCanDecreaseSeats;
   }
 
   public get priceBandCanBeSuspended(): boolean {
-    return this.#priceBandCanBeSuspended
+    return this.#priceBandCanBeSuspended;
   }
 
   public get priceBandMarketplace(): string {
-    return this.#priceBandMarketplace
+    return this.#priceBandMarketplace;
   }
 
   public get priceBandIsEnabled(): boolean {
-    return this.#priceBandIsEnabled
+    return this.#priceBandIsEnabled;
   }
 
   public get priceBandCurrency(): string {
-    return this.#priceBandCurrency
+    return this.#priceBandCurrency;
   }
 
   public get priceBandPricePublic(): number {
-    return this.#priceBandPricePublic
+    return this.#priceBandPricePublic;
   }
 
   public get priceBandPriceBuy(): number {
-    return this.#priceBandPriceBuy
+    return this.#priceBandPriceBuy;
   }
 
   public get priceBandPriceSell(): number {
-    return this.#priceBandPriceSell
+    return this.#priceBandPriceSell;
   }
 
   public get priceBandBillingTerm(): number {
-    return this.#priceBandBillingTerm
+    return this.#priceBandBillingTerm;
   }
 
   public get priceBandBillingType(): string {
-    return this.#priceBandBillingType
+    return this.#priceBandBillingType;
   }
 
   public get priceBandBillingCycle(): number {
-    return this.#priceBandBillingCycle
+    return this.#priceBandBillingCycle;
   }
 
   /**
@@ -314,6 +314,6 @@ export class LicenseOfferFindResult extends AbstractEntity<LicenseOfferFindResul
           [LicenseOfferFields.COLUMN_CYCLE]: this.priceBandBillingCycle,
         },
       },
-    }
+    };
   }
 }

@@ -1,4 +1,4 @@
-import { AbstractEntity } from '../../abstractEntity'
+import { AbstractEntity } from '../../abstractEntity';
 
 // Map subscription data fields to an enum value
 export enum SubscriptionFields {
@@ -21,22 +21,22 @@ export enum SubscriptionFields {
 
 // Subscription data returned by the endpoint
 export type SubscriptionData = {
-  [SubscriptionFields.COLUMN_SUBSCRIPTION_ID]: number
-  [SubscriptionFields.COLUMN_PARTNER_TAG_LABELS]: string
-  [SubscriptionFields.COLUMN_WORKGROUP_CODE]: string
-  [SubscriptionFields.COLUMN_COMPANY_NAME]: string
-  [SubscriptionFields.COLUMN_SUBSCRIPTION]: string
-  [SubscriptionFields.COLUMN_START_DATE]: string
-  [SubscriptionFields.COLUMN_END_DATE]: string
-  [SubscriptionFields.COLUMN_LAST_UPDATE]: string
-  [SubscriptionFields.COLUMN_STATUS]: string
-  [SubscriptionFields.COLUMN_SUBSCRIPTION_DATEVALIDATION]: string
-  [SubscriptionFields.COLUMN_SUBSCRIPTION_DATEDEMAND]: string
-  [SubscriptionFields.COLUMN_CLICK_TO_ACCEPT]: boolean
-  [SubscriptionFields.COLUMN_UNVALIDATED]: boolean
-  [SubscriptionFields.COLUMN_VERSION]: number
-  [SubscriptionFields.COLUMN_NUMBER]: number
-}
+  [SubscriptionFields.COLUMN_SUBSCRIPTION_ID]: number;
+  [SubscriptionFields.COLUMN_PARTNER_TAG_LABELS]: string;
+  [SubscriptionFields.COLUMN_WORKGROUP_CODE]: string;
+  [SubscriptionFields.COLUMN_COMPANY_NAME]: string;
+  [SubscriptionFields.COLUMN_SUBSCRIPTION]: string;
+  [SubscriptionFields.COLUMN_START_DATE]: string;
+  [SubscriptionFields.COLUMN_END_DATE]: string;
+  [SubscriptionFields.COLUMN_LAST_UPDATE]: string;
+  [SubscriptionFields.COLUMN_STATUS]: string;
+  [SubscriptionFields.COLUMN_SUBSCRIPTION_DATEVALIDATION]: string;
+  [SubscriptionFields.COLUMN_SUBSCRIPTION_DATEDEMAND]: string;
+  [SubscriptionFields.COLUMN_CLICK_TO_ACCEPT]: boolean;
+  [SubscriptionFields.COLUMN_UNVALIDATED]: boolean;
+  [SubscriptionFields.COLUMN_VERSION]: number;
+  [SubscriptionFields.COLUMN_NUMBER]: number;
+};
 
 /**
  * Subscription entity
@@ -58,108 +58,108 @@ export class Subscription extends AbstractEntity<SubscriptionData> {
     [SubscriptionFields.COLUMN_UNVALIDATED]: 'required|boolean',
     [SubscriptionFields.COLUMN_VERSION]: 'required|number',
     [SubscriptionFields.COLUMN_NUMBER]: 'required|number',
-  }
+  };
 
-  readonly #subscriptionId: number
-  readonly #partnerTagLabels: string
-  readonly #workgroupCode: string
-  readonly #companyName: string
-  readonly #subscription: string
-  readonly #startDate: string
-  readonly #endDate: string
-  readonly #lastUpdate: string
-  readonly #status: string
-  readonly #subscriptionDateValidation: string
-  readonly #subscriptionDateDemand: string
-  readonly #clickToAccept: boolean
-  readonly #unvalidated: boolean
-  readonly #version: number
-  readonly #number: number
+  readonly #subscriptionId: number;
+  readonly #partnerTagLabels: string;
+  readonly #workgroupCode: string;
+  readonly #companyName: string;
+  readonly #subscription: string;
+  readonly #startDate: string;
+  readonly #endDate: string;
+  readonly #lastUpdate: string;
+  readonly #status: string;
+  readonly #subscriptionDateValidation: string;
+  readonly #subscriptionDateDemand: string;
+  readonly #clickToAccept: boolean;
+  readonly #unvalidated: boolean;
+  readonly #version: number;
+  readonly #number: number;
 
   /**
    * Subscription entity constructor
    * @param data - Subscription data to validate and construct the entity from
    */
   constructor(data: SubscriptionData) {
-    super(data)
+    super(data);
 
-    this.#subscriptionId = data[SubscriptionFields.COLUMN_SUBSCRIPTION_ID]
-    this.#partnerTagLabels = data[SubscriptionFields.COLUMN_PARTNER_TAG_LABELS]
-    this.#workgroupCode = data[SubscriptionFields.COLUMN_WORKGROUP_CODE]
-    this.#companyName = data[SubscriptionFields.COLUMN_COMPANY_NAME]
-    this.#subscription = data[SubscriptionFields.COLUMN_SUBSCRIPTION]
-    this.#startDate = data[SubscriptionFields.COLUMN_START_DATE]
-    this.#endDate = data[SubscriptionFields.COLUMN_END_DATE]
-    this.#lastUpdate = data[SubscriptionFields.COLUMN_LAST_UPDATE]
-    this.#status = data[SubscriptionFields.COLUMN_STATUS]
+    this.#subscriptionId = data[SubscriptionFields.COLUMN_SUBSCRIPTION_ID];
+    this.#partnerTagLabels = data[SubscriptionFields.COLUMN_PARTNER_TAG_LABELS];
+    this.#workgroupCode = data[SubscriptionFields.COLUMN_WORKGROUP_CODE];
+    this.#companyName = data[SubscriptionFields.COLUMN_COMPANY_NAME];
+    this.#subscription = data[SubscriptionFields.COLUMN_SUBSCRIPTION];
+    this.#startDate = data[SubscriptionFields.COLUMN_START_DATE];
+    this.#endDate = data[SubscriptionFields.COLUMN_END_DATE];
+    this.#lastUpdate = data[SubscriptionFields.COLUMN_LAST_UPDATE];
+    this.#status = data[SubscriptionFields.COLUMN_STATUS];
     this.#subscriptionDateValidation =
-      data[SubscriptionFields.COLUMN_SUBSCRIPTION_DATEVALIDATION]
+      data[SubscriptionFields.COLUMN_SUBSCRIPTION_DATEVALIDATION];
     this.#subscriptionDateDemand =
-      data[SubscriptionFields.COLUMN_SUBSCRIPTION_DATEDEMAND]
-    this.#clickToAccept = data[SubscriptionFields.COLUMN_CLICK_TO_ACCEPT]
-    this.#unvalidated = data[SubscriptionFields.COLUMN_UNVALIDATED]
-    this.#version = data[SubscriptionFields.COLUMN_VERSION]
-    this.#number = data[SubscriptionFields.COLUMN_NUMBER]
+      data[SubscriptionFields.COLUMN_SUBSCRIPTION_DATEDEMAND];
+    this.#clickToAccept = data[SubscriptionFields.COLUMN_CLICK_TO_ACCEPT];
+    this.#unvalidated = data[SubscriptionFields.COLUMN_UNVALIDATED];
+    this.#version = data[SubscriptionFields.COLUMN_VERSION];
+    this.#number = data[SubscriptionFields.COLUMN_NUMBER];
   }
 
   public get subscriptionId(): number {
-    return this.#subscriptionId
+    return this.#subscriptionId;
   }
 
   public get partnerTagLabels(): string {
-    return this.#partnerTagLabels
+    return this.#partnerTagLabels;
   }
 
   public get workgroupCode(): string {
-    return this.#workgroupCode
+    return this.#workgroupCode;
   }
 
   public get companyName(): string {
-    return this.#companyName
+    return this.#companyName;
   }
 
   public get subscription(): string {
-    return this.#subscription
+    return this.#subscription;
   }
 
   public get startDate(): string {
-    return this.#startDate
+    return this.#startDate;
   }
 
   public get endDate(): string {
-    return this.#endDate
+    return this.#endDate;
   }
 
   public get lastUpdate(): string {
-    return this.#lastUpdate
+    return this.#lastUpdate;
   }
 
   public get status(): string {
-    return this.#status
+    return this.#status;
   }
 
   public get subscriptionDateValidation(): string {
-    return this.#subscriptionDateValidation
+    return this.#subscriptionDateValidation;
   }
 
   public get subscriptionDateDemand(): string {
-    return this.#subscriptionDateDemand
+    return this.#subscriptionDateDemand;
   }
 
   public get clickToAccept(): boolean {
-    return this.#clickToAccept
+    return this.#clickToAccept;
   }
 
   public get unvalidated(): boolean {
-    return this.#unvalidated
+    return this.#unvalidated;
   }
 
   public get version(): number {
-    return this.#version
+    return this.#version;
   }
 
   public get number(): number {
-    return this.#number
+    return this.#number;
   }
 
   /**
@@ -184,6 +184,6 @@ export class Subscription extends AbstractEntity<SubscriptionData> {
       [SubscriptionFields.COLUMN_UNVALIDATED]: this.unvalidated,
       [SubscriptionFields.COLUMN_VERSION]: this.version,
       [SubscriptionFields.COLUMN_NUMBER]: this.number,
-    }
+    };
   }
 }

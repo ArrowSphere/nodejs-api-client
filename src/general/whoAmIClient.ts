@@ -1,6 +1,6 @@
-import { AbstractClient } from '../abstractClient'
-import { AxiosResponse } from 'axios'
-import { WhoAmI, WhoAmIResponseData } from './entities/whoAmI'
+import { AbstractClient } from '../abstractClient';
+import { AxiosResponse } from 'axios';
+import { WhoAmI, WhoAmIResponseData } from './entities/whoAmI';
 
 export class WhoAmIClient extends AbstractClient {
   /**
@@ -8,9 +8,9 @@ export class WhoAmIClient extends AbstractClient {
    * @returns Promise\<AxiosResponse\<{@link WhoAmIResponseData}\>\>
    */
   public async getWhoamiRaw(): Promise<AxiosResponse<WhoAmIResponseData>> {
-    this.path = '/whoami'
+    this.path = '/whoami';
 
-    return this.get()
+    return this.get();
   }
 
   /**
@@ -18,8 +18,8 @@ export class WhoAmIClient extends AbstractClient {
    * @returns Promise\<{@link WhoAmIResponseData}\>
    */
   public async getWhoami(): Promise<WhoAmIResponseData> {
-    const response = await this.getWhoamiRaw()
+    const response = await this.getWhoamiRaw();
 
-    return new WhoAmI(response.data).toJSON()
+    return new WhoAmI(response.data).toJSON();
   }
 }

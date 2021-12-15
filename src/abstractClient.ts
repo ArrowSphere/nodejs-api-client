@@ -1,8 +1,8 @@
-import axios, { AxiosInstance, AxiosResponse } from 'axios'
-import { NotFoundException, PublicApiClientException } from './exception'
-import querystring from 'querystring'
-import { URL } from 'url'
-import path from 'path'
+import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import { NotFoundException, PublicApiClientException } from './exception';
+import querystring from 'querystring';
+import { URL } from 'url';
+import path from 'path';
 
 /**
  * Lists of available query parameters for the API call
@@ -14,56 +14,56 @@ export enum ParameterKeys {
   PER_PAGE_CAMEL = 'perPage',
 }
 
-export type Parameters = Record<string, string | string[] | undefined>
+export type Parameters = Record<string, string | string[] | undefined>;
 
-export type Headers = Record<string, string>
+export type Headers = Record<string, string>;
 
-export type Payload = Record<string, unknown>
+export type Payload = Record<string, unknown>;
 
 export type Options = {
-  isAdmin?: boolean
-}
+  isAdmin?: boolean;
+};
 
 export abstract class AbstractClient {
   /**
    * Base path for HTTP calls
    */
-  protected basePath = ''
+  protected basePath = '';
 
   /**
    * Current path for HTTP calls
    */
-  protected path = ''
+  protected path = '';
 
   /**
    * Axios instance for client
    */
-  protected client: AxiosInstance
+  protected client: AxiosInstance;
 
   /**
    * ArrowSphere API URL
    */
-  protected url = ''
+  protected url = '';
 
   /**
    * ArrowSphere API key
    */
-  protected apiKey = ''
+  protected apiKey = '';
 
   /**
    * Current pagination page number
    */
-  protected page = 1
+  protected page = 1;
 
   /**
    * Pagination's per page result limit
    */
-  protected perPage = 0
+  protected perPage = 0;
 
   /**
    * Defines whether the pagination options are camel cased or not
    */
-  protected isCamelPagination = false
+  protected isCamelPagination = false;
 
   /**
    * AbstractClient constructor.
@@ -71,10 +71,10 @@ export abstract class AbstractClient {
    * @returns AbstractClient
    */
   protected constructor(client: AxiosInstance | null = null) {
-    this.client = client ?? axios.create()
+    this.client = client ?? axios.create();
 
     // Prevent axios from throwing its own errors, let us do that
-    this.client.defaults.validateStatus = null
+    this.client.defaults.validateStatus = null;
   }
 
   /**
@@ -83,9 +83,9 @@ export abstract class AbstractClient {
    * @returns this
    */
   public setApiKey(key: string): this {
-    this.apiKey = key
+    this.apiKey = key;
 
-    return this
+    return this;
   }
 
   /**
@@ -94,9 +94,9 @@ export abstract class AbstractClient {
    * @returns this
    */
   public setUrl(url: string): this {
-    this.url = url
+    this.url = url;
 
-    return this
+    return this;
   }
 
   /**
@@ -104,7 +104,7 @@ export abstract class AbstractClient {
    * @returns string
    */
   public getUrl(): string {
-    return this.url
+    return this.url;
   }
 
   /**
@@ -113,9 +113,9 @@ export abstract class AbstractClient {
    * @returns this
    */
   public setPerPage(perPage: number): this {
-    this.perPage = perPage
+    this.perPage = perPage;
 
-    return this
+    return this;
   }
 
   /**
@@ -124,9 +124,9 @@ export abstract class AbstractClient {
    * @returns AbstractClient
    */
   public setPage(page: number): this {
-    this.page = page
+    this.page = page;
 
-    return this
+    return this;
   }
 
   /**
@@ -145,9 +145,9 @@ export abstract class AbstractClient {
       {
         headers: this.prepareHeaders(headers),
       },
-    )
+    );
 
-    return this.getResponse<T>(response)
+    return this.getResponse<T>(response);
   }
 
   /**
@@ -156,18 +156,18 @@ export abstract class AbstractClient {
    * @returns T
    */
   private getResponse<T = AxiosResponse['data']>(response: AxiosResponse): T {
-    const statusCode = response.status
+    const statusCode = response.status;
     if (statusCode === 404) {
-      throw new NotFoundException(`Resource not found on URL ${this.getUrl()}`)
+      throw new NotFoundException(`Resource not found on URL ${this.getUrl()}`);
     }
 
     if (statusCode >= 400 && statusCode <= 599) {
       throw new PublicApiClientException(
         `Error: status code: ${statusCode}. URL: ${this.getUrl()}`,
-      )
+      );
     }
 
-    return response.data
+    return response.data;
   }
 
   /**
@@ -176,7 +176,7 @@ export abstract class AbstractClient {
    * @returns {@link Headers}
    */
   private prepareHeaders(headers: Headers): Headers {
-    return { ...headers, [ParameterKeys.API_KEY]: this.apiKey }
+    return { ...headers, [ParameterKeys.API_KEY]: this.apiKey };
   }
 
   /**
@@ -198,9 +198,9 @@ export abstract class AbstractClient {
       {
         headers: this.prepareHeaders(headers),
       },
-    )
+    );
 
-    return this.getResponse(response)
+    return this.getResponse(response);
   }
 
   /**
@@ -209,18 +209,18 @@ export abstract class AbstractClient {
    * @returns string
    */
   protected generateUrl(parameters: Parameters, options: Options): string {
-    const params = { ...parameters, ...this.generatePagination() }
+    const params = { ...parameters, ...this.generatePagination() };
 
     const url = new URL(
       `${options.isAdmin ? path.join('admin', this.basePath) : this.basePath}${
         this.path
       }`,
       this.url,
-    )
+    );
     if (Object.values(params).length) {
-      url.search = querystring.stringify(params)
+      url.search = querystring.stringify(params);
     }
-    return url.toString()
+    return url.toString();
   }
 
   /**
@@ -229,13 +229,13 @@ export abstract class AbstractClient {
    */
   private generatePagination(): Parameters {
     if (this.page === 1 && !this.perPage) {
-      return {}
+      return {};
     }
 
-    const params: { [key in ParameterKeys]?: string } = {}
+    const params: { [key in ParameterKeys]?: string } = {};
 
     if (this.page > 1) {
-      params[ParameterKeys.PAGE] = `${this.page}`
+      params[ParameterKeys.PAGE] = `${this.page}`;
     }
 
     if (this.perPage > 0) {
@@ -243,9 +243,9 @@ export abstract class AbstractClient {
         this.isCamelPagination
           ? ParameterKeys.PER_PAGE_CAMEL
           : ParameterKeys.PER_PAGE
-      ] = `${this.perPage}`
+      ] = `${this.perPage}`;
     }
 
-    return params
+    return params;
   }
 }

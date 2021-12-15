@@ -1,10 +1,10 @@
 /**
  * Class LicensesClient
  */
-import { AbstractClient, Parameters } from '../abstractClient'
-import { FindData, FindResult } from './entities/findResult'
-import { LicenseFields } from './entities/license/abstractLicense'
-import { LicenseOfferFields } from './entities/offer/licenseOfferFindResult'
+import { AbstractClient, Parameters } from '../abstractClient';
+import { FindData, FindResult } from './entities/findResult';
+import { LicenseFields } from './entities/license/abstractLicense';
+import { LicenseOfferFields } from './entities/offer/licenseOfferFindResult';
 
 /**
  * Parameters passable to the request for refining search.
@@ -78,25 +78,25 @@ export type LicenseDataKeywords = {
   [LicenseFindParameters.KEYWORDS_OPERATOR]:
     | LicenseFindParameters.OPERATOR_AND
     | LicenseFindParameters.OPERATOR_OR
-    | LicenseFindParameters.OPERATOR_BETWEEN
-  [LicenseFindParameters.KEYWORDS_VALUES]: string[]
-}
+    | LicenseFindParameters.OPERATOR_BETWEEN;
+  [LicenseFindParameters.KEYWORDS_VALUES]: string[];
+};
 
 /**
  * Keywords parameters to pass to the request
  */
 export type LicenseKeywordsParameters = {
   license?: {
-    [field in LicenseFields]?: LicenseDataKeywords
-  }
+    [field in LicenseFields]?: LicenseDataKeywords;
+  };
   offer?: {
-    [field in LicenseOfferFields]?: LicenseDataKeywords
-  }
-}
+    [field in LicenseOfferFields]?: LicenseDataKeywords;
+  };
+};
 
 export type LicenseRawKeywordsParameters = {
-  [field: string]: LicenseDataKeywords | undefined
-}
+  [field: string]: LicenseDataKeywords | undefined;
+};
 
 /**
  * Sort parameters to pass to the request
@@ -105,69 +105,69 @@ export type LicenseSortParameters = {
   license?: {
     [field in LicenseFields]?:
       | LicenseFindParameters.SORT_ASCENDING
-      | LicenseFindParameters.SORT_DESCENDING
-  }
+      | LicenseFindParameters.SORT_DESCENDING;
+  };
   offer?: {
     [field in LicenseOfferFields]?:
       | LicenseFindParameters.SORT_ASCENDING
-      | LicenseFindParameters.SORT_DESCENDING
-  }
-}
+      | LicenseFindParameters.SORT_DESCENDING;
+  };
+};
 
 export type LicenseRawSortParameters = {
-  [field: string]: string | undefined
-}
+  [field: string]: string | undefined;
+};
 
 /**
  * Filter parameters to pass to the request.
  */
 export type LicenseFiltersParameters = {
   license?: {
-    [field in LicenseFields]?: unknown
-  }
+    [field in LicenseFields]?: unknown;
+  };
   offer?: {
-    [field in LicenseOfferFields]?: unknown
-  }
-}
+    [field in LicenseOfferFields]?: unknown;
+  };
+};
 
 export type LicenseRawFiltersParameters = {
-  [field: string]: unknown
-}
+  [field: string]: unknown;
+};
 
 /**
  * Payload to pass the find request. Contains keyword(s), sort options, column filters and highlight option.
  */
 export type LicenseFindPayload = {
-  [LicenseFindParameters.DATA_KEYWORD]?: string
-  [LicenseFindParameters.DATA_KEYWORDS]?: LicenseKeywordsParameters
-  [LicenseFindParameters.DATA_FILTERS]?: LicenseFiltersParameters
-  [LicenseFindParameters.DATA_SORT]?: LicenseSortParameters
-  [LicenseFindParameters.DATA_HIGHLIGHT]?: boolean
-}
+  [LicenseFindParameters.DATA_KEYWORD]?: string;
+  [LicenseFindParameters.DATA_KEYWORDS]?: LicenseKeywordsParameters;
+  [LicenseFindParameters.DATA_FILTERS]?: LicenseFiltersParameters;
+  [LicenseFindParameters.DATA_SORT]?: LicenseSortParameters;
+  [LicenseFindParameters.DATA_HIGHLIGHT]?: boolean;
+};
 
 export type LicenseFindRawPayload = {
-  [LicenseFindParameters.DATA_KEYWORD]?: string
-  [LicenseFindParameters.DATA_KEYWORDS]?: LicenseRawKeywordsParameters
-  [LicenseFindParameters.DATA_FILTERS]?: LicenseRawFiltersParameters
-  [LicenseFindParameters.DATA_SORT]?: LicenseRawSortParameters
-  [LicenseFindParameters.DATA_HIGHLIGHT]?: boolean
-}
+  [LicenseFindParameters.DATA_KEYWORD]?: string;
+  [LicenseFindParameters.DATA_KEYWORDS]?: LicenseRawKeywordsParameters;
+  [LicenseFindParameters.DATA_FILTERS]?: LicenseRawFiltersParameters;
+  [LicenseFindParameters.DATA_SORT]?: LicenseRawSortParameters;
+  [LicenseFindParameters.DATA_HIGHLIGHT]?: boolean;
+};
 
 export class LicensesClient extends AbstractClient {
   /**
    * The base path of the Licenses API
    */
-  private ROOT_PATH = '/licenses/'
+  private ROOT_PATH = '/licenses/';
 
   /**
    * The base path of the API
    */
-  protected basePath = this.ROOT_PATH
+  protected basePath = this.ROOT_PATH;
 
   /**
    * The path of the Find endpoint
    */
-  private FIND_PATH = 'v2/find'
+  private FIND_PATH = 'v2/find';
 
   /**
    * Returns the raw result from the find endpoint call
@@ -181,9 +181,9 @@ export class LicensesClient extends AbstractClient {
     postData: LicenseFindRawPayload = {},
     parameters: Parameters = {},
   ): Promise<FindData> {
-    this.path = this.FIND_PATH
+    this.path = this.FIND_PATH;
 
-    return this.post(postData, parameters)
+    return this.post(postData, parameters);
   }
 
   /**
@@ -203,32 +203,32 @@ export class LicensesClient extends AbstractClient {
     page = 1,
     parameters: Parameters = {},
   ): Promise<FindResult> {
-    this.setPerPage(perPage)
-    this.setPage(page)
+    this.setPerPage(perPage);
+    this.setPage(page);
 
     const rawLicensePayload: LicenseFindRawPayload = {
       keyword: postData.keyword,
       highlight: postData.highlight,
-    }
+    };
 
     if (postData.keywords) {
       // Flatten with prefix for each type of keyword (license and offer)
       rawLicensePayload.keywords = {
         ...Object.entries(postData.keywords.license ?? {}).reduce(
           (acc: LicenseRawKeywordsParameters, [keyword, value]) => {
-            acc[`license.${keyword}`] = value
-            return acc
+            acc[`license.${keyword}`] = value;
+            return acc;
           },
           {},
         ),
         ...Object.entries(postData.keywords.offer ?? {}).reduce(
           (acc: LicenseRawKeywordsParameters, [keyword, value]) => {
-            acc[`offer.${keyword}`] = value
-            return acc
+            acc[`offer.${keyword}`] = value;
+            return acc;
           },
           {},
         ),
-      }
+      };
     }
 
     if (postData.filters) {
@@ -236,19 +236,19 @@ export class LicensesClient extends AbstractClient {
       rawLicensePayload.filters = {
         ...Object.entries(postData.filters.license ?? {}).reduce(
           (acc: LicenseRawFiltersParameters, [filter, value]) => {
-            acc[`license.${filter}`] = value
-            return acc
+            acc[`license.${filter}`] = value;
+            return acc;
           },
           {},
         ),
         ...Object.entries(postData.filters.offer ?? {}).reduce(
           (acc: LicenseRawFiltersParameters, [filter, value]) => {
-            acc[`offer.${filter}`] = value
-            return acc
+            acc[`offer.${filter}`] = value;
+            return acc;
           },
           {},
         ),
-      }
+      };
     }
 
     if (postData.sort) {
@@ -256,23 +256,23 @@ export class LicensesClient extends AbstractClient {
       rawLicensePayload.sort = {
         ...Object.entries(postData.sort.license ?? {}).reduce(
           (acc: LicenseRawSortParameters, [sort, value]) => {
-            acc[`license.${sort}`] = value
-            return acc
+            acc[`license.${sort}`] = value;
+            return acc;
           },
           {},
         ),
         ...Object.entries(postData.sort.offer ?? {}).reduce(
           (acc: LicenseRawSortParameters, [sort, value]) => {
-            acc[`offer.${sort}`] = value
-            return acc
+            acc[`offer.${sort}`] = value;
+            return acc;
           },
           {},
         ),
-      }
+      };
     }
 
-    const response = await this.findRaw(rawLicensePayload, parameters)
+    const response = await this.findRaw(rawLicensePayload, parameters);
 
-    return new FindResult(response, this, rawLicensePayload, parameters)
+    return new FindResult(response, this, rawLicensePayload, parameters);
   }
 }

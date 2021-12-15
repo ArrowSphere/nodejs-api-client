@@ -1,67 +1,67 @@
-import { AbstractClient } from '../src'
-import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
-import { URL, URLSearchParams } from 'url'
+import { AbstractClient } from '../src';
+import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { URL, URLSearchParams } from 'url';
 
 export type ExpectFunctionParameters = {
-  queryParameters?: URLSearchParams
-  config?: AxiosRequestConfig
-}
+  queryParameters?: URLSearchParams;
+  config?: AxiosRequestConfig;
+};
 
-export const MOCK_URL = 'https://localhost'
-export const TEST_ENDPOINT = '/test'
+export const MOCK_URL = 'https://localhost';
+export const TEST_ENDPOINT = '/test';
 
 export class TestClient extends AbstractClient {
   constructor(client?: AxiosInstance) {
-    super(client)
-    this.url = MOCK_URL
+    super(client);
+    this.url = MOCK_URL;
   }
 
   get(): Promise<AxiosResponse['data']> {
-    return super.get()
+    return super.get();
   }
 
   getTest(): Promise<AxiosResponse> {
-    this.path = TEST_ENDPOINT
-    return super.get()
+    this.path = TEST_ENDPOINT;
+    return super.get();
   }
 
   getTestAdmin(): Promise<AxiosResponse> {
-    this.path = TEST_ENDPOINT
-    return super.get({}, {}, { isAdmin: true })
+    this.path = TEST_ENDPOINT;
+    return super.get({}, {}, { isAdmin: true });
   }
 
   getTestCamel(): Promise<AxiosResponse> {
-    this.path = TEST_ENDPOINT
-    this.isCamelPagination = true
+    this.path = TEST_ENDPOINT;
+    this.isCamelPagination = true;
     return super.get().then((res) => {
-      this.isCamelPagination = false
-      return res
-    })
+      this.isCamelPagination = false;
+      return res;
+    });
   }
 
   postTest(): Promise<AxiosResponse> {
-    this.path = TEST_ENDPOINT
-    return super.post()
+    this.path = TEST_ENDPOINT;
+    return super.post();
   }
 
   postTestAdmin(): Promise<AxiosResponse> {
-    this.path = TEST_ENDPOINT
-    return super.post({}, {}, {}, { isAdmin: true })
+    this.path = TEST_ENDPOINT;
+    return super.post({}, {}, {}, { isAdmin: true });
   }
 }
 
 export const axiosExpectInterceptor = (
   expectation: (params: ExpectFunctionParameters) => void,
 ) => (config: AxiosRequestConfig): AxiosRequestConfig => {
-  const urlObject = new URL(config.url || '')
-  const queryParameters = urlObject.searchParams
+  const urlObject = new URL(config.url || '');
+  const queryParameters = urlObject.searchParams;
 
   try {
-    expectation({ config, queryParameters })
+    expectation({ config, queryParameters });
   } catch (error) {
-    console.error(error)
-    throw error
+    console.error(error);
+    throw error;
   }
 
-  return config
-}
+  return config;
+};

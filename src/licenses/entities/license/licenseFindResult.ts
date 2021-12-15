@@ -1,4 +1,4 @@
-import { AbstractLicense, LicenseData, LicenseFields } from './abstractLicense'
+import { AbstractLicense, LicenseData, LicenseFields } from './abstractLicense';
 
 /**
  * License result fields.
@@ -11,18 +11,18 @@ export enum LicenseFindResultFields {
  * Highlight response object.
  */
 export type Highlight = {
-  [key in LicenseFields]?: string[]
-}
+  [key in LicenseFields]?: string[];
+};
 
 /**
  * License result data. Combination of {@link LicenseData} and extra result specific fields.
  */
 export type LicenseFindResultData = LicenseData & {
-  [LicenseFindResultFields.COLUMN_HIGHLIGHT]?: Highlight
-}
+  [LicenseFindResultFields.COLUMN_HIGHLIGHT]?: Highlight;
+};
 
 export class LicenseFindResult extends AbstractLicense {
-  readonly #highlight: Highlight
+  readonly #highlight: Highlight;
 
   /**
    * LicenseFindResult constructor.
@@ -30,17 +30,17 @@ export class LicenseFindResult extends AbstractLicense {
    * @param data - License find result data from the response.
    */
   public constructor(data: LicenseFindResultData) {
-    super(data)
+    super(data);
     this.VALIDATION_RULES = {
       ...super.VALIDATION_RULES,
       [LicenseFindResultFields.COLUMN_HIGHLIGHT]: 'object',
-    }
+    };
 
-    this.#highlight = data[LicenseFindResultFields.COLUMN_HIGHLIGHT] ?? {}
+    this.#highlight = data[LicenseFindResultFields.COLUMN_HIGHLIGHT] ?? {};
   }
 
   public get highlight(): Highlight {
-    return this.#highlight
+    return this.#highlight;
   }
 
   /**
@@ -53,6 +53,6 @@ export class LicenseFindResult extends AbstractLicense {
       ...{
         [LicenseFindResultFields.COLUMN_HIGHLIGHT]: this.highlight,
       },
-    }
+    };
   }
 }
