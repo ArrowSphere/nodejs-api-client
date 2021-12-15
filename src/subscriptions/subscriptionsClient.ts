@@ -1,57 +1,57 @@
 /**
  * Class SubscriptionsClient
  */
-import { AbstractClient } from '../abstractClient'
-import { SubscriptionData } from './entities/subscription'
-import { SubscriptionsListResult } from './entities/subscriptionsListResult'
+import { AbstractClient } from '../abstractClient';
+import { SubscriptionData } from './entities/subscription';
+import { SubscriptionsListResult } from './entities/subscriptionsListResult';
 
 export type SubscriptionsListPayload = {
-  subscription?: string[]
-  status?: string[]
-  partnerTag?: string[]
-  marketplace?: string[]
-  company?: string[]
-  startDate?: string
-  endingDate?: string
-  lastUpdate?: string
-  perPage?: string
-  page?: string
-  sortBy?: string
-  sortDirection?: 'ASC' | 'DESC'
-}
+  subscription?: string[];
+  status?: string[];
+  partnerTag?: string[];
+  marketplace?: string[];
+  company?: string[];
+  startDate?: string;
+  endingDate?: string;
+  lastUpdate?: string;
+  perPage?: string;
+  page?: string;
+  sortBy?: string;
+  sortDirection?: 'ASC' | 'DESC';
+};
 
 export type SubscriptionsListData = {
-  data: Array<SubscriptionData>
+  data: Array<SubscriptionData>;
   pagination: {
-    perPage: number
-    currentPage: number
-    totalPage: number
-    total: number
-    next: string
-    previous: string
-  }
-}
+    perPage: number;
+    currentPage: number;
+    totalPage: number;
+    total: number;
+    next: string;
+    previous: string;
+  };
+};
 
 export class SubscriptionsClient extends AbstractClient {
   /**
    * The base path of the Subscriptions API
    */
-  private ROOT_PATH = '/subscriptions'
+  private ROOT_PATH = '/subscriptions';
 
   /**
    * The base path of the API
    */
-  protected basePath = this.ROOT_PATH
+  protected basePath = this.ROOT_PATH;
 
   /**
    * The path of the List endpoint
    */
-  private LIST_PATH = ''
+  private LIST_PATH = '';
 
   /**
    * Pagination for these endpoints are camel cased (`&perPage=x` instead of `&per_page=x`)
    */
-  protected isCamelPagination = true
+  protected isCamelPagination = true;
 
   /**
    * Calls the subscriptions API list endpoint
@@ -63,8 +63,8 @@ export class SubscriptionsClient extends AbstractClient {
   public async listRaw(
     data: SubscriptionsListPayload = {},
   ): Promise<SubscriptionsListData> {
-    this.path = this.LIST_PATH
-    return this.get<SubscriptionsListData>(data, {}, { isAdmin: true })
+    this.path = this.LIST_PATH;
+    return this.get<SubscriptionsListData>(data, {}, { isAdmin: true });
   }
 
   /**
@@ -85,11 +85,11 @@ export class SubscriptionsClient extends AbstractClient {
     perPage = 100,
     page = 1,
   ): Promise<SubscriptionsListResult> {
-    this.setPerPage(perPage)
-    this.setPage(page)
+    this.setPerPage(perPage);
+    this.setPage(page);
 
-    const response = await this.listRaw(postData)
+    const response = await this.listRaw(postData);
 
-    return new SubscriptionsListResult(response, this, postData)
+    return new SubscriptionsListResult(response, this, postData);
   }
 }

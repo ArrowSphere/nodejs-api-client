@@ -1,11 +1,11 @@
 // Test tools
-import Joi from 'joi'
-import { URL } from 'url'
-import { expect } from 'chai'
-import nock from 'nock'
+import Joi from 'joi';
+import { URL } from 'url';
+import { expect } from 'chai';
+import nock from 'nock';
 
 // Sources
-import { PublicApiClient } from '../../src'
+import { PublicApiClient } from '../../src';
 import {
   FindData,
   LicenseFields,
@@ -18,17 +18,17 @@ import {
   LicenseOfferFindResultData,
   LicenseOfferFields,
   LicenseFindRawPayload,
-} from '../../src/licenses'
+} from '../../src/licenses';
 
-export const LICENSES_MOCK_URL = 'https://licenses.localhost'
-export const LICENSES_FIND_ENDPOINT = new RegExp('/licenses/v2/find.*')
+export const LICENSES_MOCK_URL = 'https://licenses.localhost';
+export const LICENSES_FIND_ENDPOINT = new RegExp('/licenses/v2/find.*');
 
 /**
  * Mock license data to be used in tests and returned by mocks
  */
 export const MOCK_RESULT_DATA: {
-  license: LicenseFindResultData
-  offer: LicenseOfferFindResultData
+  license: LicenseFindResultData;
+  offer: LicenseOfferFindResultData;
 } = {
   license: {
     [LicenseFindResultFields.COLUMN_HIGHLIGHT]: {},
@@ -109,7 +109,7 @@ export const MOCK_RESULT_DATA: {
       },
     },
   },
-}
+};
 
 /**
  * Mocks a potential find call response data
@@ -129,7 +129,7 @@ export const MOCK_FIND_RESPONSE: FindData = {
     },
   ],
   results: [MOCK_RESULT_DATA],
-}
+};
 
 /**
  * Joi representation of the payload schema to be sent to the find payload
@@ -172,12 +172,12 @@ const PAYLOAD_SCHEMA = Joi.object({
     Joi.object(),
     Joi.boolean(),
   ),
-})
+});
 
 describe('LicensesClient', () => {
   const client = new PublicApiClient()
     .getLicensesClient()
-    .setUrl(LICENSES_MOCK_URL)
+    .setUrl(LICENSES_MOCK_URL);
   // Standard payload as per described by types
   const standardPayload: LicenseFindPayload = {
     [LicenseFindParameters.DATA_KEYWORD]: 'test',
@@ -217,7 +217,7 @@ describe('LicensesClient', () => {
       },
     },
     [LicenseFindParameters.DATA_HIGHLIGHT]: true,
-  }
+  };
 
   const standardRawPayload: LicenseFindRawPayload = {
     ...standardPayload,
@@ -236,7 +236,7 @@ describe('LicensesClient', () => {
       [`license.${LicenseFields.COLUMN_CUSTOMER_NAME}`]: LicenseFindParameters.SORT_DESCENDING,
       [`offer.${LicenseOfferFields.COLUMN_CURRENCY}`]: LicenseFindParameters.SORT_ASCENDING,
     },
-  }
+  };
 
   describe('findRaw', () => {
     it('calls the post method with the right payload', (done) => {
@@ -244,87 +244,87 @@ describe('LicensesClient', () => {
         .post(LICENSES_FIND_ENDPOINT)
         .reply((_uri, body) => {
           try {
-            expect(() => Joi.assert(body, PAYLOAD_SCHEMA)).not.to.throw()
+            expect(() => Joi.assert(body, PAYLOAD_SCHEMA)).not.to.throw();
           } catch (error) {
-            done(error)
-            return [500]
+            done(error);
+            return [500];
           }
-          done()
-          return [204]
-        })
+          done();
+          return [204];
+        });
 
-      client.findRaw(standardRawPayload)
-    })
+      client.findRaw(standardRawPayload);
+    });
 
     it('calls the post method and returns its result', async () => {
-      const expectedData = { expected: true }
+      const expectedData = { expected: true };
       nock(LICENSES_MOCK_URL)
         .post(LICENSES_FIND_ENDPOINT)
-        .reply(200, expectedData)
+        .reply(200, expectedData);
 
-      const result = await client.findRaw()
-      expect(result).to.eqls(expectedData)
-    })
-  })
+      const result = await client.findRaw();
+      expect(result).to.eqls(expectedData);
+    });
+  });
 
   describe('find', () => {
     it('sets the specified page number', (done) => {
       nock(LICENSES_MOCK_URL)
         .post(LICENSES_FIND_ENDPOINT)
         .reply((uri) => {
-          const urlParams = new URL(uri, LICENSES_MOCK_URL)
+          const urlParams = new URL(uri, LICENSES_MOCK_URL);
           try {
-            expect(urlParams.searchParams.get('page')).to.equal('10')
+            expect(urlParams.searchParams.get('page')).to.equal('10');
           } catch (error) {
-            done(error)
-            return [500]
+            done(error);
+            return [500];
           }
-          done()
-          return [204]
-        })
-      client.find(standardPayload, undefined, 10)
-    })
+          done();
+          return [204];
+        });
+      client.find(standardPayload, undefined, 10);
+    });
 
     it('sets the specified per page number', (done) => {
       nock(LICENSES_MOCK_URL)
         .post(LICENSES_FIND_ENDPOINT)
         .reply((uri) => {
-          const urlParams = new URL(uri, LICENSES_MOCK_URL)
+          const urlParams = new URL(uri, LICENSES_MOCK_URL);
           try {
-            expect(urlParams.searchParams.get('per_page')).to.equal('10')
+            expect(urlParams.searchParams.get('per_page')).to.equal('10');
           } catch (error) {
-            done(error)
-            return [500]
+            done(error);
+            return [500];
           }
-          done()
-          return [204]
-        })
-      client.find(undefined, 10)
-    })
+          done();
+          return [204];
+        });
+      client.find(undefined, 10);
+    });
 
     it('sets the default per page number if required', (done) => {
       nock(LICENSES_MOCK_URL)
         .post(LICENSES_FIND_ENDPOINT)
         .reply((uri) => {
-          const urlParams = new URL(uri, LICENSES_MOCK_URL)
+          const urlParams = new URL(uri, LICENSES_MOCK_URL);
           try {
-            expect(urlParams.searchParams.get('per_page')).to.exist
+            expect(urlParams.searchParams.get('per_page')).to.exist;
           } catch (error) {
-            done(error)
-            return [500]
+            done(error);
+            return [500];
           }
-          done()
-          return [204]
-        })
-      client.find()
-    })
+          done();
+          return [204];
+        });
+      client.find();
+    });
 
     it('works without offer keywords', () => {
       nock(LICENSES_MOCK_URL)
         .post(LICENSES_FIND_ENDPOINT)
         .reply(() => {
-          return [204]
-        })
+          return [204];
+        });
       expect(
         client.find({
           ...standardPayload,
@@ -333,15 +333,15 @@ describe('LicensesClient', () => {
               standardPayload[LicenseFindParameters.DATA_KEYWORDS]?.license,
           },
         }),
-      ).not.to.be.rejected
-    })
+      ).not.to.be.rejected;
+    });
 
     it('works without license keywords', () => {
       nock(LICENSES_MOCK_URL)
         .post(LICENSES_FIND_ENDPOINT)
         .reply(() => {
-          return [204]
-        })
+          return [204];
+        });
       expect(
         client.find({
           ...standardPayload,
@@ -349,15 +349,15 @@ describe('LicensesClient', () => {
             offer: standardPayload[LicenseFindParameters.DATA_KEYWORDS]?.offer,
           },
         }),
-      ).not.to.be.rejected
-    })
+      ).not.to.be.rejected;
+    });
 
     it('works without license filters', () => {
       nock(LICENSES_MOCK_URL)
         .post(LICENSES_FIND_ENDPOINT)
         .reply(() => {
-          return [204]
-        })
+          return [204];
+        });
       expect(
         client.find({
           ...standardPayload,
@@ -366,15 +366,15 @@ describe('LicensesClient', () => {
               standardPayload[LicenseFindParameters.DATA_FILTERS]?.license,
           },
         }),
-      ).not.to.be.rejected
-    })
+      ).not.to.be.rejected;
+    });
 
     it('works without license filters', () => {
       nock(LICENSES_MOCK_URL)
         .post(LICENSES_FIND_ENDPOINT)
         .reply(() => {
-          return [204]
-        })
+          return [204];
+        });
       expect(
         client.find({
           ...standardPayload,
@@ -382,15 +382,15 @@ describe('LicensesClient', () => {
             offer: standardPayload[LicenseFindParameters.DATA_FILTERS]?.offer,
           },
         }),
-      ).not.to.be.rejected
-    })
+      ).not.to.be.rejected;
+    });
 
     it('works without license sort', () => {
       nock(LICENSES_MOCK_URL)
         .post(LICENSES_FIND_ENDPOINT)
         .reply(() => {
-          return [204]
-        })
+          return [204];
+        });
       expect(
         client.find({
           ...standardPayload,
@@ -398,15 +398,15 @@ describe('LicensesClient', () => {
             license: standardPayload[LicenseFindParameters.DATA_SORT]?.license,
           },
         }),
-      ).not.to.be.rejected
-    })
+      ).not.to.be.rejected;
+    });
 
     it('works without license sort', () => {
       nock(LICENSES_MOCK_URL)
         .post(LICENSES_FIND_ENDPOINT)
         .reply(() => {
-          return [204]
-        })
+          return [204];
+        });
       expect(
         client.find({
           ...standardPayload,
@@ -414,15 +414,15 @@ describe('LicensesClient', () => {
             offer: standardPayload[LicenseFindParameters.DATA_SORT]?.offer,
           },
         }),
-      ).not.to.be.rejected
-    })
+      ).not.to.be.rejected;
+    });
 
     it('calls findRaw and feeds the response returns the FindResult entity', async () => {
       nock(LICENSES_MOCK_URL)
         .post(LICENSES_FIND_ENDPOINT)
-        .reply(200, (): FindData => MOCK_FIND_RESPONSE)
-      const result = await client.find()
-      expect(result).to.be.instanceOf(FindResult)
-    })
-  })
-})
+        .reply(200, (): FindData => MOCK_FIND_RESPONSE);
+      const result = await client.find();
+      expect(result).to.be.instanceOf(FindResult);
+    });
+  });
+});

@@ -1,4 +1,4 @@
-import { AbstractEntity } from '../../abstractEntity'
+import { AbstractEntity } from '../../abstractEntity';
 
 /**
  * Response data fields that can be present in WhoAmI requests and responses.
@@ -26,33 +26,33 @@ export enum WhoAmIResponseFields {
  * Response data type for WhoAmI requests.
  */
 export type WhoAmIResponseData = {
-  [field in WhoAmIResponseFields]: string
-}
+  [field in WhoAmIResponseFields]: string;
+};
 
 /**
  * WhoAmI response Entity
  */
 export class WhoAmI extends AbstractEntity<WhoAmIResponseData> {
   constructor(data: WhoAmIResponseData) {
-    super(data)
+    super(data);
 
-    this.#companyName = data[WhoAmIResponseFields.COLUMN_COMPANY_NAME]
-    this.#addressLine1 = data[WhoAmIResponseFields.COLUMN_ADDRESS_LINE_1]
-    this.#addressLine2 = data[WhoAmIResponseFields.COLUMN_ADDRESS_LINE_2]
-    this.#zip = data[WhoAmIResponseFields.COLUMN_ZIP]
-    this.#city = data[WhoAmIResponseFields.COLUMN_CITY]
-    this.#countryCode = data[WhoAmIResponseFields.COLUMN_COUNTRY_CODE]
-    this.#state = data[WhoAmIResponseFields.COLUMN_STATE]
-    this.#receptionPhone = data[WhoAmIResponseFields.COLUMN_RECEPTION_PHONE]
-    this.#websiteUrl = data[WhoAmIResponseFields.COLUMN_WEBSITE_URL]
-    this.#emailContact = data[WhoAmIResponseFields.COLUMN_EMAIL_CONTACT]
-    this.#headcount = data[WhoAmIResponseFields.COLUMN_HEADCOUNT]
-    this.#taxNumber = data[WhoAmIResponseFields.COLUMN_TAX_NUMBER]
-    this.#reference = data[WhoAmIResponseFields.COLUMN_REFERENCE]
-    this.#ref = data[WhoAmIResponseFields.COLUMN_REF]
-    this.#billingId = data[WhoAmIResponseFields.COLUMN_BILLING_ID]
+    this.#companyName = data[WhoAmIResponseFields.COLUMN_COMPANY_NAME];
+    this.#addressLine1 = data[WhoAmIResponseFields.COLUMN_ADDRESS_LINE_1];
+    this.#addressLine2 = data[WhoAmIResponseFields.COLUMN_ADDRESS_LINE_2];
+    this.#zip = data[WhoAmIResponseFields.COLUMN_ZIP];
+    this.#city = data[WhoAmIResponseFields.COLUMN_CITY];
+    this.#countryCode = data[WhoAmIResponseFields.COLUMN_COUNTRY_CODE];
+    this.#state = data[WhoAmIResponseFields.COLUMN_STATE];
+    this.#receptionPhone = data[WhoAmIResponseFields.COLUMN_RECEPTION_PHONE];
+    this.#websiteUrl = data[WhoAmIResponseFields.COLUMN_WEBSITE_URL];
+    this.#emailContact = data[WhoAmIResponseFields.COLUMN_EMAIL_CONTACT];
+    this.#headcount = data[WhoAmIResponseFields.COLUMN_HEADCOUNT];
+    this.#taxNumber = data[WhoAmIResponseFields.COLUMN_TAX_NUMBER];
+    this.#reference = data[WhoAmIResponseFields.COLUMN_REFERENCE];
+    this.#ref = data[WhoAmIResponseFields.COLUMN_REF];
+    this.#billingId = data[WhoAmIResponseFields.COLUMN_BILLING_ID];
     this.#internalReference =
-      data[WhoAmIResponseFields.COLUMN_INTERNAL_REFERENCE]
+      data[WhoAmIResponseFields.COLUMN_INTERNAL_REFERENCE];
   }
 
   protected VALIDATION_RULES = {
@@ -72,87 +72,87 @@ export class WhoAmI extends AbstractEntity<WhoAmIResponseData> {
     [WhoAmIResponseFields.COLUMN_REF]: 'present',
     [WhoAmIResponseFields.COLUMN_BILLING_ID]: 'present',
     [WhoAmIResponseFields.COLUMN_INTERNAL_REFERENCE]: 'present',
-  }
+  };
 
-  readonly #companyName: string
-  readonly #addressLine1: string
-  readonly #addressLine2: string
-  readonly #zip: string
-  readonly #city: string
-  readonly #countryCode: string
-  readonly #state: string
-  readonly #receptionPhone: string
-  readonly #websiteUrl: string
-  readonly #emailContact: string
-  readonly #headcount: string
-  readonly #taxNumber: string
-  readonly #reference: string
-  readonly #ref: string
-  readonly #billingId: string
-  readonly #internalReference: string
+  readonly #companyName: string;
+  readonly #addressLine1: string;
+  readonly #addressLine2: string;
+  readonly #zip: string;
+  readonly #city: string;
+  readonly #countryCode: string;
+  readonly #state: string;
+  readonly #receptionPhone: string;
+  readonly #websiteUrl: string;
+  readonly #emailContact: string;
+  readonly #headcount: string;
+  readonly #taxNumber: string;
+  readonly #reference: string;
+  readonly #ref: string;
+  readonly #billingId: string;
+  readonly #internalReference: string;
 
   public getCompanyName(): string {
-    return this.#companyName
+    return this.#companyName;
   }
 
   public getAddressLine1(): string {
-    return this.#addressLine1
+    return this.#addressLine1;
   }
 
   public getAddressLine2(): string {
-    return this.#addressLine2
+    return this.#addressLine2;
   }
 
   public getZip(): string {
-    return this.#zip
+    return this.#zip;
   }
 
   public getCity(): string {
-    return this.#city
+    return this.#city;
   }
 
   public getCountryCode(): string {
-    return this.#countryCode
+    return this.#countryCode;
   }
 
   public getState(): string {
-    return this.#state
+    return this.#state;
   }
 
   public getReceptionPhone(): string {
-    return this.#receptionPhone
+    return this.#receptionPhone;
   }
 
   public getWebsiteUrl(): string {
-    return this.#websiteUrl
+    return this.#websiteUrl;
   }
 
   public getEmailContact(): string {
-    return this.#emailContact
+    return this.#emailContact;
   }
 
   public getHeadcount(): string {
-    return this.#headcount
+    return this.#headcount;
   }
 
   public getTaxNumber(): string {
-    return this.#taxNumber
+    return this.#taxNumber;
   }
 
   public getReference(): string {
-    return this.#reference
+    return this.#reference;
   }
 
   public getRef(): string {
-    return this.#ref
+    return this.#ref;
   }
 
   public getBillingId(): string {
-    return this.#billingId
+    return this.#billingId;
   }
 
   public getInternalReference(): string {
-    return this.#internalReference
+    return this.#internalReference;
   }
 
   /**
@@ -177,6 +177,6 @@ export class WhoAmI extends AbstractEntity<WhoAmIResponseData> {
       [WhoAmIResponseFields.COLUMN_REF]: this.getRef(),
       [WhoAmIResponseFields.COLUMN_BILLING_ID]: this.getBillingId(),
       [WhoAmIResponseFields.COLUMN_INTERNAL_REFERENCE]: this.getInternalReference(),
-    }
+    };
   }
 }

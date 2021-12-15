@@ -1,24 +1,24 @@
 // Test tools
-import Joi from 'joi'
-import { URL } from 'url'
-import { expect } from 'chai'
-import nock from 'nock'
+import Joi from 'joi';
+import { URL } from 'url';
+import { expect } from 'chai';
+import nock from 'nock';
 
 // Sources
-import { PublicApiClient } from '../../src'
+import { PublicApiClient } from '../../src';
 import {
   SubscriptionData,
   SubscriptionFields,
-} from '../../src/subscriptions/entities/subscription'
+} from '../../src/subscriptions/entities/subscription';
 import {
   SubscriptionsListData,
   SubscriptionsListPayload,
-} from '../../src/subscriptions/subscriptionsClient'
-import { SubscriptionsListResult } from '../../src/subscriptions/entities/subscriptionsListResult'
-import querystring from 'querystring'
+} from '../../src/subscriptions/subscriptionsClient';
+import { SubscriptionsListResult } from '../../src/subscriptions/entities/subscriptionsListResult';
+import querystring from 'querystring';
 
-export const SUBSCRIPTIONS_MOCK_URL = 'http://subscriptions.localhost'
-export const SUBSCRIPTIONS_LIST_ENDPOINT = /\/admin\/subscriptions/
+export const SUBSCRIPTIONS_MOCK_URL = 'http://subscriptions.localhost';
+export const SUBSCRIPTIONS_LIST_ENDPOINT = /\/admin\/subscriptions/;
 
 /**
  * Mock subscription data to be used in tests and returned by mocks
@@ -41,7 +41,7 @@ export const MOCK_SUBSCRIPTION_DATA: SubscriptionData = {
   [SubscriptionFields.COLUMN_UNVALIDATED]: false,
   [SubscriptionFields.COLUMN_VERSION]: 1,
   [SubscriptionFields.COLUMN_NUMBER]: 2,
-}
+};
 
 /**
  * Mocks a potential list call response data
@@ -56,7 +56,7 @@ export const MOCK_LIST_RESPONSE: SubscriptionsListData = {
     previous: '/admin/subscriptions?perPage=25&page=1',
   },
   data: [MOCK_SUBSCRIPTION_DATA],
-}
+};
 
 /**
  * Joi representation of the payload schema to be sent to the list payload
@@ -73,7 +73,7 @@ const PAYLOAD_SCHEMA = Joi.object({
   startDate: Joi.string(),
   status: Joi.alternatives(Joi.string(), Joi.array().items(Joi.string())),
   subscription: Joi.alternatives(Joi.string(), Joi.array().items(Joi.string())),
-})
+});
 
 // Standard payload as per described by types
 export const SUBSCRIPTIONS_LIST_PAYLOAD: SubscriptionsListPayload = {
@@ -87,12 +87,12 @@ export const SUBSCRIPTIONS_LIST_PAYLOAD: SubscriptionsListPayload = {
   startDate: '2021-01-01',
   status: ['Active', 'Disabled'],
   subscription: ['9852', '9853'],
-}
+};
 
 describe('SubscriptionsClient', () => {
   const client = new PublicApiClient()
     .getSubscriptionsClient()
-    .setUrl(SUBSCRIPTIONS_MOCK_URL)
+    .setUrl(SUBSCRIPTIONS_MOCK_URL);
 
   describe('listRaw', () => {
     it('calls the get method with the right payload', (done) => {
@@ -102,87 +102,87 @@ describe('SubscriptionsClient', () => {
           try {
             const query = querystring.decode(
               new URL(uri, SUBSCRIPTIONS_MOCK_URL).search.replace('?', ''),
-            )
-            expect(() => Joi.assert(query, PAYLOAD_SCHEMA)).not.to.throw()
+            );
+            expect(() => Joi.assert(query, PAYLOAD_SCHEMA)).not.to.throw();
           } catch (error) {
-            done(error)
-            return [500]
+            done(error);
+            return [500];
           }
-          done()
-          return [204]
-        })
-      client.listRaw(SUBSCRIPTIONS_LIST_PAYLOAD)
-    })
+          done();
+          return [204];
+        });
+      client.listRaw(SUBSCRIPTIONS_LIST_PAYLOAD);
+    });
 
     it('calls the get method and returns its result', async () => {
-      const expectedData = { expected: true }
+      const expectedData = { expected: true };
       nock(SUBSCRIPTIONS_MOCK_URL)
         .get(SUBSCRIPTIONS_LIST_ENDPOINT)
-        .reply(200, expectedData)
+        .reply(200, expectedData);
 
-      const result = await client.listRaw()
-      expect(result).to.eqls(expectedData)
-    })
-  })
+      const result = await client.listRaw();
+      expect(result).to.eqls(expectedData);
+    });
+  });
 
   describe('list', () => {
     it('sets the specified page number', (done) => {
       nock(SUBSCRIPTIONS_MOCK_URL)
         .get(SUBSCRIPTIONS_LIST_ENDPOINT)
         .reply((uri) => {
-          const urlParams = new URL(uri, SUBSCRIPTIONS_MOCK_URL)
+          const urlParams = new URL(uri, SUBSCRIPTIONS_MOCK_URL);
           try {
-            expect(urlParams.searchParams.get('page')).to.equal('10')
+            expect(urlParams.searchParams.get('page')).to.equal('10');
           } catch (error) {
-            done(error)
-            return [500]
+            done(error);
+            return [500];
           }
-          done()
-          return [204]
-        })
-      client.list(undefined, undefined, 10)
-    })
+          done();
+          return [204];
+        });
+      client.list(undefined, undefined, 10);
+    });
 
     it('sets the specified per page number', (done) => {
       nock(SUBSCRIPTIONS_MOCK_URL)
         .get(SUBSCRIPTIONS_LIST_ENDPOINT)
         .reply((uri) => {
-          const urlParams = new URL(uri, SUBSCRIPTIONS_MOCK_URL)
+          const urlParams = new URL(uri, SUBSCRIPTIONS_MOCK_URL);
           try {
-            expect(urlParams.searchParams.get('perPage')).to.equal('10')
+            expect(urlParams.searchParams.get('perPage')).to.equal('10');
           } catch (error) {
-            done(error)
-            return [500]
+            done(error);
+            return [500];
           }
-          done()
-          return [204]
-        })
-      client.list(undefined, 10)
-    })
+          done();
+          return [204];
+        });
+      client.list(undefined, 10);
+    });
 
     it('sets the default per page number if required', (done) => {
       nock(SUBSCRIPTIONS_MOCK_URL)
         .get(SUBSCRIPTIONS_LIST_ENDPOINT)
         .reply((uri) => {
-          const urlParams = new URL(uri, SUBSCRIPTIONS_MOCK_URL)
+          const urlParams = new URL(uri, SUBSCRIPTIONS_MOCK_URL);
           try {
-            expect(urlParams.searchParams.get('perPage')).to.exist
+            expect(urlParams.searchParams.get('perPage')).to.exist;
           } catch (error) {
-            done(error)
-            return [500]
+            done(error);
+            return [500];
           }
-          done()
-          return [204]
-        })
-      client.list()
-    })
+          done();
+          return [204];
+        });
+      client.list();
+    });
 
     it('calls listRaw and feeds the response returns the SubscriptionsListResult entity', async () => {
       nock(SUBSCRIPTIONS_MOCK_URL)
         .get(SUBSCRIPTIONS_LIST_ENDPOINT)
-        .reply(200, (): SubscriptionsListData => MOCK_LIST_RESPONSE)
-      const result = await client.list()
-      expect(result).to.be.instanceOf(SubscriptionsListResult)
-    })
-  })
-})
+        .reply(200, (): SubscriptionsListData => MOCK_LIST_RESPONSE);
+      const result = await client.list();
+      expect(result).to.be.instanceOf(SubscriptionsListResult);
+    });
+  });
+});

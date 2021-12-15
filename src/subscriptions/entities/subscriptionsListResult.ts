@@ -1,29 +1,29 @@
-import { AbstractEntity } from '../../abstractEntity'
+import { AbstractEntity } from '../../abstractEntity';
 import {
   SubscriptionsClient,
   SubscriptionsListData,
   SubscriptionsListPayload,
-} from '../subscriptionsClient'
-import { Subscription, SubscriptionData } from './subscription'
+} from '../subscriptionsClient';
+import { Subscription, SubscriptionData } from './subscription';
 
 /**
  * Subscriptions list result plain data
  */
 export type SubscriptionsListResultData = {
-  subscriptions: AsyncGenerator<SubscriptionData, void, undefined>
-  totalPage: number
-  nbResults: number
-}
+  subscriptions: AsyncGenerator<SubscriptionData, void, undefined>;
+  totalPage: number;
+  nbResults: number;
+};
 
 export class SubscriptionsListResult extends AbstractEntity<SubscriptionsListData> {
-  readonly #subscriptions: Array<SubscriptionData>
-  readonly #client: SubscriptionsClient
-  readonly #payload: SubscriptionsListPayload
-  readonly #currentPage: number
-  readonly #totalPage: number
-  readonly #nbResults: number
-  readonly #nextPageURL: string
-  readonly #previousPageURL: string
+  readonly #subscriptions: Array<SubscriptionData>;
+  readonly #client: SubscriptionsClient;
+  readonly #payload: SubscriptionsListPayload;
+  readonly #currentPage: number;
+  readonly #totalPage: number;
+  readonly #nbResults: number;
+  readonly #nextPageURL: string;
+  readonly #previousPageURL: string;
 
   /**
    * FindResult constructor. Uses the client and request data to go through the pages.
@@ -36,19 +36,19 @@ export class SubscriptionsListResult extends AbstractEntity<SubscriptionsListDat
     client: SubscriptionsClient,
     payload: SubscriptionsListPayload = {},
   ) {
-    super(response)
+    super(response);
 
-    this.#client = client
-    this.#payload = payload
+    this.#client = client;
+    this.#payload = payload;
 
-    this.#currentPage = response.pagination.currentPage
-    this.#totalPage = response.pagination.totalPage
-    this.#nbResults = response.pagination.total
-    this.#nextPageURL = response.pagination.next
-    this.#previousPageURL = response.pagination.previous
+    this.#currentPage = response.pagination.currentPage;
+    this.#totalPage = response.pagination.totalPage;
+    this.#nbResults = response.pagination.total;
+    this.#nextPageURL = response.pagination.next;
+    this.#previousPageURL = response.pagination.previous;
     this.#subscriptions = response.data.map((subscriptionData) =>
       new Subscription(subscriptionData).toJSON(),
-    )
+    );
   }
 
   public get subscriptions(): AsyncGenerator<
@@ -56,35 +56,35 @@ export class SubscriptionsListResult extends AbstractEntity<SubscriptionsListDat
     void,
     undefined
   > {
-    return this.getSubscriptions()
+    return this.getSubscriptions();
   }
 
   public get client(): SubscriptionsClient {
-    return this.#client
+    return this.#client;
   }
 
   public get payload(): SubscriptionsListPayload {
-    return this.#payload
+    return this.#payload;
   }
 
   public get currentPage(): number {
-    return this.#currentPage
+    return this.#currentPage;
   }
 
   public get totalPage(): number {
-    return this.#totalPage
+    return this.#totalPage;
   }
 
   public get nbResults(): number {
-    return this.#nbResults
+    return this.#nbResults;
   }
 
   public get nextPageURL(): string {
-    return this.#nextPageURL
+    return this.#nextPageURL;
   }
 
   public get previousPageURL(): string {
-    return this.#previousPageURL
+    return this.#previousPageURL;
   }
 
   /**
@@ -96,7 +96,7 @@ export class SubscriptionsListResult extends AbstractEntity<SubscriptionsListDat
     void,
     undefined
   > {
-    yield* this.#subscriptions
+    yield* this.#subscriptions;
   }
 
   /**
@@ -110,25 +110,25 @@ export class SubscriptionsListResult extends AbstractEntity<SubscriptionsListDat
     undefined
   > {
     // Yields the first page
-    yield* this.getSubscriptionsForCurrentPage()
+    yield* this.getSubscriptionsForCurrentPage();
 
     // Then parse the other pages
-    let currentPage = this.#currentPage + 1
-    let lastPage = this.#totalPage < currentPage
+    let currentPage = this.#currentPage + 1;
+    let lastPage = this.#totalPage < currentPage;
 
     while (!lastPage) {
-      this.#client.setPage(currentPage)
+      this.#client.setPage(currentPage);
 
-      const result = await this.#client.listRaw(this.#payload)
+      const result = await this.#client.listRaw(this.#payload);
 
       if (result.pagination.totalPage <= currentPage) {
-        lastPage = true
+        lastPage = true;
       }
 
-      currentPage++
+      currentPage++;
 
       for (const subscription of result.data) {
-        yield new Subscription(subscription).toJSON()
+        yield new Subscription(subscription).toJSON();
       }
     }
   }
@@ -142,6 +142,6 @@ export class SubscriptionsListResult extends AbstractEntity<SubscriptionsListDat
       subscriptions: this.subscriptions,
       totalPage: this.totalPage,
       nbResults: this.nbResults,
-    }
+    };
   }
 }

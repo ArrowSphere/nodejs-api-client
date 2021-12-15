@@ -1,14 +1,14 @@
-import { AbstractClient } from './abstractClient'
-import { CheckDomainClient, WhoAmIClient } from './general'
-import { LicensesClient } from './licenses/licensesClient'
-import { SubscriptionsClient } from './subscriptions/subscriptionsClient'
+import { AbstractClient } from './abstractClient';
+import { CheckDomainClient, WhoAmIClient } from './general';
+import { LicensesClient } from './licenses/licensesClient';
+import { SubscriptionsClient } from './subscriptions/subscriptionsClient';
 
 /**
  * Public API Client class, should be the main entry point for your calls
  */
 export class PublicApiClient extends AbstractClient {
   constructor() {
-    super()
+    super();
   }
 
   /**
@@ -16,7 +16,9 @@ export class PublicApiClient extends AbstractClient {
    * @returns {@link WhoAmIClient}
    */
   public getWhoamiClient(): WhoAmIClient {
-    return new WhoAmIClient(this.client).setUrl(this.url).setApiKey(this.apiKey)
+    return new WhoAmIClient(this.client)
+      .setUrl(this.url)
+      .setApiKey(this.apiKey);
   }
 
   /**
@@ -26,7 +28,7 @@ export class PublicApiClient extends AbstractClient {
   public getLicensesClient(): LicensesClient {
     return new LicensesClient(this.client)
       .setUrl(this.url)
-      .setApiKey(this.apiKey)
+      .setApiKey(this.apiKey);
   }
 
   /**
@@ -36,7 +38,7 @@ export class PublicApiClient extends AbstractClient {
   public getCheckDomainClient(): CheckDomainClient {
     return new CheckDomainClient(this.client)
       .setUrl(this.url)
-      .setApiKey(this.apiKey)
+      .setApiKey(this.apiKey);
   }
 
   /**
@@ -46,8 +48,8 @@ export class PublicApiClient extends AbstractClient {
   public getSubscriptionsClient(): SubscriptionsClient {
     return new SubscriptionsClient(this.client)
       .setUrl(this.url)
-      .setApiKey(this.apiKey)
+      .setApiKey(this.apiKey);
   }
 }
 
-export default PublicApiClient
+export default PublicApiClient;

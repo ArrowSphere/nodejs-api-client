@@ -1,7 +1,7 @@
-import { AxiosResponse } from 'axios'
-import { AbstractClient, Parameters } from '../abstractClient'
+import { AxiosResponse } from 'axios';
+import { AbstractClient, Parameters } from '../abstractClient';
 
-export type CheckDomainData = { isDomainAvailable: boolean }
+export type CheckDomainData = { isDomainAvailable: boolean };
 
 /**
  * Class CheckDomainClient
@@ -19,8 +19,8 @@ export class CheckDomainClient extends AbstractClient {
     domainName: string,
     parameters: Parameters = {},
   ): Promise<AxiosResponse<CheckDomainData>> {
-    this.path = encodeURI(`/vendors/${vendorName}/checkDomain/${domainName}`)
-    return this.get(parameters)
+    this.path = encodeURI(`/vendors/${vendorName}/checkDomain/${domainName}`);
+    return this.get(parameters);
   }
 
   /**
@@ -39,8 +39,8 @@ export class CheckDomainClient extends AbstractClient {
       vendorName,
       domainName,
       parameters,
-    )
+    );
 
-    return data.isDomainAvailable
+    return data.isDomainAvailable;
   }
 }
