@@ -1,9 +1,9 @@
-import { AbstractEntity } from '../../../abstractEntity';
+import { AbstractEntity } from '../../abstractEntity';
 import {
   DataKeywords,
   FiltersParameters,
   SortParameters,
-} from '../../licensesClient';
+} from '../../licenses/licensesClient';
 
 export enum ActiveSeatsFields {
   COLUMN_LAST_UPDATE = 'lastUpdate',

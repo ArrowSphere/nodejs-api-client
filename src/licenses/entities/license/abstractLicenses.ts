@@ -1,12 +1,12 @@
 import { AbstractEntity } from '../../../abstractEntity';
-import { ActiveSeatsFindResult } from './activeSeatsFindResult';
+import { ActiveSeatsFindResult } from '../../../common/entities/activeSeatsFindResult';
 import {
   ActiveSeatsData,
   ActiveSeatsDataFiltersParameters,
   ActiveSeatsDataKeywords,
   ActiveSeatsDataSortParameters,
   ActiveSeatsFields,
-} from './abstractActiveSeats';
+} from '../../../common/entities/abstractActiveSeats';
 import { ConfigFindResult } from './configFindResult';
 import {
   ConfigData,

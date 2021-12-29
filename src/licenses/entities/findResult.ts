@@ -7,6 +7,7 @@ import { AbstractEntity } from '../../abstractEntity';
 import { LicensesClient, LicenseFindRawPayload } from '../licensesClient';
 import { OfferFindResult, OfferFindResultData } from './offer/offerFindResult';
 import { Parameters } from '../../abstractClient';
+import { LicenseData } from '../../license/entities/license/abstractLicense';
 
 export type FindData = {
   pagination: {
@@ -19,6 +20,13 @@ export type FindData = {
     offer?: OfferFindResultData;
   }>;
   filters: Array<FilterFindResultData>;
+};
+
+export type FindLicenseData = {
+  status: number;
+  data: {
+    license: LicenseData;
+  };
 };
 
 export type FindResultData = {
