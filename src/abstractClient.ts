@@ -203,6 +203,23 @@ export abstract class AbstractClient {
     return this.getResponse(response);
   }
 
+  protected async put(
+    payload: Payload = {},
+    parameters: Parameters = {},
+    headers: Headers = {},
+    options: Options = {},
+  ): Promise<void> {
+    const response = await this.client.put(
+      this.generateUrl(parameters, options),
+      payload,
+      {
+        headers: this.prepareHeaders(headers),
+      },
+    );
+
+    this.getResponse(response);
+  }
+
   /**
    * Generates the full url for request
    * @param parameters - Parameters to serialize

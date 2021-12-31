@@ -40,6 +40,10 @@ export enum LicenseFields {
   COLUMN_ARROW_SUB_CATEGORIES = 'arrowSubCategories',
 }
 
+export enum seatsFields {
+  COLUMN_SEATS = 'seats',
+}
+
 export type LicenseData = {
   [LicenseFields.COLUMN_LICENSE_ID]: string;
   [LicenseFields.COLUMN_PARENT_LICENSE_ID]: string;
@@ -66,6 +70,10 @@ export type LicenseData = {
   [LicenseFields.COLUMN_ASSOCIATED_SUBSCRIPTION_PROGRAM]: string;
   [LicenseFields.COLUMN_PRICE]: LicensePriceData;
   [LicenseFields.COLUMN_ARROW_SUB_CATEGORIES]: Array<string>;
+};
+
+export type seatsData = {
+  [seatsFields.COLUMN_SEATS]: number;
 };
 
 export class AbstractLicense extends AbstractEntity<LicenseData> {
