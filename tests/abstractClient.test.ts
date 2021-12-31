@@ -151,7 +151,9 @@ describe('AbstractClient', () => {
 
       axiosClient.interceptors.request.use(
         axiosExpectInterceptor(({ config }: ExpectFunctionParameters) => {
-          expect(config?.headers[ParameterKeys.API_KEY]).to.equal(apiKey);
+          expect(
+            config?.headers ? config?.headers[ParameterKeys.API_KEY] : '',
+          ).to.equal(apiKey);
         }),
       );
 
