@@ -3,6 +3,13 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0] - 2022-01-25
+
+### Added
+
+- Add endpoint get license (warning, `LicenseGet` object is different `LicenseFind` Object)
+- `ActiveSeatsFindresultData` has been renamed to `ActiveSeatsFindResultData` and name `ActiveSeatsFindresultData` is marked deprecated
+
 ## [2.0.1] - 2022-01-19
 
 ### Changed
@@ -16,7 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - bad prettier library configuration, adding semicolon in file needed
 - Update Offer object and Licence object
 
-#### License
+#### LicenseFind
 - Add more objects to define a license:
   - Add object Warning as "warnings" field:
     - key
@@ -36,7 +43,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
       - sell_price
       - list_price
       - currency
-#### Offer
+#### OfferFind
 - Add more objects to define an offer:
   - Add field "classification"
   - Add field "isEnabled"

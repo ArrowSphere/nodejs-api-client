@@ -53,4 +53,5 @@ The output documentation should be located in the `docs/` folder, just open the 
 
 ### Licenses
 
-- [Licenses](./src/licenses/README.md)
+- Find [Licenses](./src/licenses/README.md#LicenseFind)
+- Get [License](./src/licenses/README.md#LicenseGet)
