@@ -203,8 +203,8 @@ The offer entity is not necessarily present.
 
 ## Usage
 
-The license client is simply called `LicenseClient`.
-You can get it through the main entry point `PublicApiClient` and its method `getLicenseClient()`, or instanciate it directly.
+The license client is simply called `LicensesClient`.
+You can get it through the main entry point `PublicApiClient` and its method `getLicensesClient()`, or instanciate it directly.
 
 ## Term and periodicity
 

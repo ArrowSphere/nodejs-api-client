@@ -1,0 +1,38 @@
+import { AbstractEntity } from '../../abstractEntity';
+
+export enum ActiveSeatsFields {
+  COLUMN_LAST_UPDATE = 'lastUpdate',
+  COLUMN_NUMBER = 'number',
+}
+
+export type ActiveSeatsData = {
+  [ActiveSeatsFields.COLUMN_LAST_UPDATE]?: string | null;
+  [ActiveSeatsFields.COLUMN_NUMBER]?: number | null;
+};
+
+export abstract class AbstractActiveSeats extends AbstractEntity<ActiveSeatsData> {
+  readonly #lastUpdate: string | null | undefined;
+  readonly #number: number | null | undefined;
+
+  protected constructor(data: ActiveSeatsData) {
+    super(data);
+
+    this.#lastUpdate = data[ActiveSeatsFields.COLUMN_LAST_UPDATE];
+    this.#number = data[ActiveSeatsFields.COLUMN_NUMBER];
+  }
+
+  public get lastUpdate(): string | null | undefined {
+    return this.#lastUpdate;
+  }
+
+  public get number(): number | null | undefined {
+    return this.#number;
+  }
+
+  public toJSON(): ActiveSeatsData {
+    return {
+      [ActiveSeatsFields.COLUMN_LAST_UPDATE]: this.lastUpdate,
+      [ActiveSeatsFields.COLUMN_NUMBER]: this.number,
+    };
+  }
+}
