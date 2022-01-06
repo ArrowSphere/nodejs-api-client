@@ -10,10 +10,15 @@ export enum ActiveSeatsFindResultFields {
   COLUMN_NUMBER = 'number',
 }
 
-export type ActiveSeatsFindresultData = {
+export type ActiveSeatsFindResultData = {
   [ActiveSeatsFindResultFields.COLUMN_LAST_UPDATE]?: string | null;
   [ActiveSeatsFindResultFields.COLUMN_NUMBER]?: number | null;
 };
+
+/**
+ * @deprecated type, please use ActiveSeatsFindResultData instead
+ */
+export type ActiveSeatsFindresultData = ActiveSeatsFindResultData;
 
 export type ActiveSeatsFindResultDataKeywords = {
   [ActiveSeatsFindResultFields.COLUMN_LAST_UPDATE]?: DataKeywords;
@@ -30,11 +35,11 @@ export type ActiveSeatsFindResultDataFiltersParameters = {
   [ActiveSeatsFindResultFields.COLUMN_NUMBER]?: FiltersParameters;
 };
 
-export class ActiveSeatsFindResult extends AbstractEntity<ActiveSeatsFindresultData> {
+export class ActiveSeatsFindResult extends AbstractEntity<ActiveSeatsFindResultData> {
   readonly #lastUpdate: string | null | undefined;
   readonly #number: number | null | undefined;
 
-  public constructor(data: ActiveSeatsFindresultData) {
+  public constructor(data: ActiveSeatsFindResultData) {
     super(data);
 
     this.#lastUpdate = data[ActiveSeatsFindResultFields.COLUMN_LAST_UPDATE];
@@ -49,7 +54,7 @@ export class ActiveSeatsFindResult extends AbstractEntity<ActiveSeatsFindresultD
     return this.#number;
   }
 
-  public toJSON(): ActiveSeatsFindresultData {
+  public toJSON(): ActiveSeatsFindResultData {
     return {
       [ActiveSeatsFindResultFields.COLUMN_LAST_UPDATE]: this.lastUpdate,
       [ActiveSeatsFindResultFields.COLUMN_NUMBER]: this.number,
