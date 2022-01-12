@@ -104,6 +104,56 @@ export enum LicenseFindParameters {
    * Use this operator to search for all keywords with values in the range specified (for date ranges)
    */
   OPERATOR_BETWEEN = 'BETWEEN',
+
+  /**
+   * Use this operator to search with a compare field Equal
+   */
+  OPERATOR_EQ = 'EQ',
+
+  /**
+   * Use this operator to search with a compare field Not Equal
+   */
+  OPERATOR_NEQ = 'NEQ',
+
+  /**
+   * Use this operator to search with a compare field Greater Than
+   */
+  OPERATOR_GT = 'GT',
+
+  /**
+   * Use this operator to search with a compare field Greater Than or Equal
+   */
+  OPERATOR_GTE = 'GTE',
+
+  /**
+   * Use this operator to search with a compare field Lower Than
+   */
+  OPERATOR_LT = 'LT',
+
+  /**
+   * Use this operator to search with a compare field Lower Than or Equal
+   */
+  OPERATOR_LTE = 'LTE',
+
+  /**
+   * Use this filter to compare 2 value with other filter like FILTERS_GTE / FILTERS_LT / FILTERS_LTE
+   */
+  FILTERS_GT = 'gt',
+
+  /**
+   * Use this filter to compare 2 value with other filter like FILTERS_GT / FILTERS_LT / FILTERS_LTE
+   */
+  FILTERS_GTE = 'gte',
+
+  /**
+   * Use this filter to compare 2 value with other filter like FILTERS_GT / FILTERS_GTE / FILTERS_LTE
+   */
+  FILTERS_LT = 'lt',
+
+  /**
+   * Use this filter to compare 2 value with other filter like FILTERS_GT / FILTERS_GTE / FILTERS_LT
+   */
+  FILTERS_LTE = 'lte',
 }
 
 /**
@@ -143,11 +193,9 @@ export type LicenseRawKeywordsParametersOffer = {
     | undefined;
 };
 
-export type SortParameters = {
-  [LicenseFindParameters.DATA_SORT]:
-    | LicenseFindParameters.SORT_ASCENDING
-    | LicenseFindParameters.SORT_DESCENDING;
-};
+export type SortParameters =
+  | LicenseFindParameters.SORT_ASCENDING
+  | LicenseFindParameters.SORT_DESCENDING;
 
 /**
  * Sort parameters to pass to the request
@@ -175,9 +223,20 @@ export type LicenseRawSortParametersOffer = {
     | undefined;
 };
 
-export type FiltersParameters = {
-  [LicenseFindParameters.DATA_FILTERS]: unknown;
+export type FiltersCompareValue = {
+  [LicenseFindParameters.FILTERS_GT]?: string | number;
+  [LicenseFindParameters.FILTERS_GTE]?: string | number;
+  [LicenseFindParameters.FILTERS_LT]?: string | number;
+  [LicenseFindParameters.FILTERS_LTE]?: string | number;
 };
+
+export type FiltersParameters =
+  | string
+  | string[]
+  | number
+  | number[]
+  | boolean
+  | FiltersCompareValue;
 
 /**
  * Filter parameters to pass to the request.

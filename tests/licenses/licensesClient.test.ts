@@ -259,33 +259,29 @@ describe('LicensesClient', () => {
     },
     [LicenseFindParameters.DATA_FILTERS]: {
       license: {
-        [LicenseFindResultFields.COLUMN_ACCEPT_EULA]: {
-          [LicenseFindParameters.DATA_FILTERS]: true,
+        [LicenseFindResultFields.COLUMN_ACCEPT_EULA]: true,
+        [LicenseFindResultFields.COLUMN_SEAT]: {
+          [LicenseFindParameters.FILTERS_GT]: 2,
+          [LicenseFindParameters.FILTERS_LT]: 10,
         },
       },
       offer: {
         [OfferFindResultFields.COLUMN_PRICE_BAND]: {
           [PriceBandFindResultFields.COLUMN_ACTION_FLAGS]: {
-            [PriceBandActionFlagsFindResultFields.COLUMN_CAN_BE_CANCELLED]: {
-              [LicenseFindParameters.DATA_FILTERS]: true,
-            },
+            [PriceBandActionFlagsFindResultFields.COLUMN_CAN_BE_CANCELLED]: true,
           },
         },
       },
     },
     [LicenseFindParameters.DATA_SORT]: {
       license: {
-        [LicenseFindResultFields.COLUMN_CUSTOMER_NAME]: {
-          [LicenseFindParameters.DATA_SORT]:
-            LicenseFindParameters.SORT_DESCENDING,
-        },
+        [LicenseFindResultFields.COLUMN_CUSTOMER_NAME]:
+          LicenseFindParameters.SORT_DESCENDING,
       },
       offer: {
         [OfferFindResultFields.COLUMN_PRICE_BAND]: {
-          [PriceBandFindResultFields.COLUMN_CURRENCY]: {
-            [LicenseFindParameters.DATA_SORT]:
-              LicenseFindParameters.SORT_ASCENDING,
-          },
+          [PriceBandFindResultFields.COLUMN_CURRENCY]:
+            LicenseFindParameters.SORT_ASCENDING,
         },
       },
     },
