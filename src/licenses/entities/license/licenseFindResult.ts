@@ -1,8 +1,7 @@
 import {
-  ActiveSeatsFindresultData,
+  ActiveSeatsFindResultData,
   ActiveSeatsFindResultDataKeywords,
   ActiveSeatsFindResultDataSortParameters,
-  ActiveSeatsFindResultFields,
   ActiveSeatsFindResult,
   ActiveSeatsFindResultDataFiltersParameters,
 } from './activeSeatsFindResult';
@@ -33,6 +32,7 @@ import {
   PriceFindResultFields,
   PriceFindResutDataSortParameters,
 } from './priceFindResult';
+import { ActiveSeatsFields } from '../../../common/abstract/abstractActiveSeats';
 
 /**
  * Highlight response object.
@@ -93,7 +93,7 @@ export enum LicenseFindResultFields {
  */
 export type LicenseFindResultData = {
   [LicenseFindResultFields.COLUMN_ACCEPT_EULA]: boolean;
-  [LicenseFindResultFields.COLUMN_ACTIVE_SEATS]: ActiveSeatsFindresultData;
+  [LicenseFindResultFields.COLUMN_ACTIVE_SEATS]: ActiveSeatsFindResultData;
   [LicenseFindResultFields.COLUMN_AUTO_RENEW]: boolean;
   [LicenseFindResultFields.COLUMN_BASE_SEAT]: number;
   [LicenseFindResultFields.COLUMN_CATEGORY]: string;
@@ -343,14 +343,14 @@ export class LicenseFindResult extends AbstractEntity<LicenseFindResultData> {
     super(data);
 
     this.#acceptEula = data[LicenseFindResultFields.COLUMN_ACCEPT_EULA];
-    const activeSeats: ActiveSeatsFindresultData = {
-      [ActiveSeatsFindResultFields.COLUMN_LAST_UPDATE]:
+    const activeSeats: ActiveSeatsFindResultData = {
+      [ActiveSeatsFields.COLUMN_LAST_UPDATE]:
         data[LicenseFindResultFields.COLUMN_ACTIVE_SEATS][
-          ActiveSeatsFindResultFields.COLUMN_LAST_UPDATE
+          ActiveSeatsFields.COLUMN_LAST_UPDATE
         ],
-      [ActiveSeatsFindResultFields.COLUMN_NUMBER]:
+      [ActiveSeatsFields.COLUMN_NUMBER]:
         data[LicenseFindResultFields.COLUMN_ACTIVE_SEATS][
-          ActiveSeatsFindResultFields.COLUMN_NUMBER
+          ActiveSeatsFields.COLUMN_NUMBER
         ],
     };
     this.#activeSeats = new ActiveSeatsFindResult(activeSeats);

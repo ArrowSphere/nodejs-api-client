@@ -39,7 +39,7 @@ export class WarningFindResult extends AbstractEntity<WarningFindResultData> {
   readonly #key: string | undefined;
   readonly #message: string | undefined;
 
-  protected constructor(data: WarningFindResultData) {
+  public constructor(data: WarningFindResultData) {
     super(data);
 
     this.#key = data[WarningFindResultFields.COLUMN_KEY];

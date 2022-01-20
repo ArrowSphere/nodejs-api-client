@@ -5,7 +5,7 @@ import { expect } from 'chai';
 import nock from 'nock';
 
 // Sources
-import { LicenseFindResultFields, PublicApiClient } from '../../src';
+import { PublicApiClient } from '../../src';
 import {
   FindData,
   LicenseFindParameters,
@@ -18,7 +18,7 @@ import {
   ConfigFindResult,
   FindConfig,
   ConfigFindResultData,
-  ActiveSeatsFindResultFields,
+  ActiveSeatsFields,
   PriceFindResultFields,
   WarningFindResultFields,
   OfferFindResultFields,
@@ -31,6 +31,7 @@ import {
   SaleConstraintsFindResultFields,
   IdentifiersFindResultFields,
   ArrowsphereFindResultFields,
+  LicenseFindResultFields,
 } from '../../src';
 
 export const LICENSES_MOCK_URL = 'https://licenses.localhost';
@@ -50,8 +51,8 @@ export const MOCK_RESULT_DATA: {
     [LicenseFindResultFields.COLUMN_HIGHLIGHT]: {},
     [LicenseFindResultFields.COLUMN_ACCEPT_EULA]: true,
     [LicenseFindResultFields.COLUMN_ACTIVE_SEATS]: {
-      [ActiveSeatsFindResultFields.COLUMN_LAST_UPDATE]: new Date().toISOString(),
-      [ActiveSeatsFindResultFields.COLUMN_NUMBER]: 1,
+      [ActiveSeatsFields.COLUMN_LAST_UPDATE]: new Date().toISOString(),
+      [ActiveSeatsFields.COLUMN_NUMBER]: 1,
     },
     [LicenseFindResultFields.COLUMN_AUTO_RENEW]: true,
     [LicenseFindResultFields.COLUMN_BASE_SEAT]: 1,

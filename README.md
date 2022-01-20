@@ -51,6 +51,10 @@ The output documentation should be located in the `docs/` folder, just open the 
 - [CheckDomain](./src/general/CHECKDOMAIN.md)
 - [WhoAmI](./src/general/WHOAMI.md)
 
+### License
+
+- [License](./src/license/README.md)
+
 ### Licenses
 
 - [Licenses](./src/licenses/README.md)
