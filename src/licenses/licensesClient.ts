@@ -41,6 +41,7 @@ import {
   PriceBandFindResultDataSortParameters,
 } from './entities/offer/priceBandFindResult';
 import { GetData, GetResult, LicenseGet } from './entities/getResult';
+import { LicenseGetFields } from './entities/getLicense/licenseGetResult';
 
 /**
  * Parameters passable to the request for refining search.
@@ -276,6 +277,10 @@ export type LicenseFindRawPayload = {
   [LicenseFindParameters.DATA_HIGHLIGHT]?: boolean;
 };
 
+export type UpdateSeatsData = {
+  [LicenseGetFields.COLUMN_SEATS]: number;
+};
+
 export class LicensesClient extends AbstractClient {
   /**
    * The base path of the Licenses API
@@ -296,6 +301,11 @@ export class LicensesClient extends AbstractClient {
    * The path of the Configs endpoint
    */
   private CONFIGS_PATH = '/configs';
+
+  /**
+   * The path of the Seats endpoint
+   */
+  private SEATS_PATH = '/seats';
 
   /**
    * Returns the raw result from the find endpoint call
@@ -450,5 +460,15 @@ export class LicensesClient extends AbstractClient {
     this.path = licenseReference;
 
     return new GetResult(await this.get(parameters)).toJSON();
+  }
+
+  public updateSeats(
+    licenseReference: string,
+    putData: UpdateSeatsData,
+    parameters: Parameters = {},
+  ): Promise<void> {
+    this.path = licenseReference + this.SEATS_PATH;
+
+    return this.put(putData, parameters);
   }
 }
