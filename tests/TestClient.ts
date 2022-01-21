@@ -48,6 +48,16 @@ export class TestClient extends AbstractClient {
     this.path = TEST_ENDPOINT;
     return super.post({}, {}, {}, { isAdmin: true });
   }
+
+  putTest(): Promise<void> {
+    this.path = TEST_ENDPOINT;
+    return super.put();
+  }
+
+  putTestAdmin(): Promise<void> {
+    this.path = TEST_ENDPOINT;
+    return super.put({}, {}, {}, { isAdmin: true });
+  }
 }
 
 export const axiosExpectInterceptor = (

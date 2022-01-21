@@ -49,6 +49,7 @@ export const LICENSES_CONFIG_FIND_ENDPOINT = new RegExp(
   '/licenses/XSP1234/configs',
 );
 export const LICENSE_MOCK_URL_GET_LICENSE = '/licenses/123456';
+export const LICENSE_MOCK_URL_UPDATE_SEATS = '/licenses/XSP123456/seats';
 
 /**
  * Mock license data to be used in tests and returned by mocks
@@ -427,6 +428,14 @@ const PAYLOAD_SCHEMA_LICENSE_JOI = Joi.object({
       ),
     }),
   }),
+});
+
+const PAYLOAD_UPDATE_SEATS = {
+  [LicenseGetFields.COLUMN_SEATS]: 3,
+};
+
+const PAYLOAD_UPDATE_SEATS_JOI = Joi.object({
+  [LicenseGetFields.COLUMN_SEATS]: Joi.number(),
 });
 
 describe('LicensesClient', () => {
@@ -828,6 +837,29 @@ describe('LicensesClient', () => {
         '123456',
       );
       expect(result).to.eql(PAYLOAD_SCHEMA_LICENSE_WITHOUT_OPTIONAL_FIELDS);
+    });
+  });
+
+  describe('updateSeats', () => {
+    const getLicenseClient = new PublicApiClient()
+      .getLicensesClient()
+      .setUrl(LICENSES_MOCK_URL);
+    it('calls the put method with the right payload', async () => {
+      nock(LICENSES_MOCK_URL)
+        .put(LICENSE_MOCK_URL_UPDATE_SEATS)
+        .reply((_uri, body) => {
+          try {
+            expect(() =>
+              Joi.assert(body, PAYLOAD_UPDATE_SEATS_JOI),
+            ).not.to.throw();
+          } catch (error) {
+            return [500];
+          }
+
+          return [204];
+        });
+
+      await getLicenseClient.updateSeats('XSP123456', PAYLOAD_UPDATE_SEATS);
     });
   });
 });

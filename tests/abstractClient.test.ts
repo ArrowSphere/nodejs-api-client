@@ -96,6 +96,24 @@ describe('AbstractClient', () => {
     });
   });
 
+  describe('put', () => {
+    const client = new TestClient();
+
+    it('makes a HTTP PUT request on the specified URL', async () => {
+      nock(MOCK_URL).put(TEST_ENDPOINT).reply(204);
+      await client.putTest();
+      expect(nock.isDone()).to.be.true;
+    });
+
+    it('prefixes with admin if the endpoint has the option', async () => {
+      nock(MOCK_URL + '/admin')
+        .put(TEST_ENDPOINT)
+        .reply(204);
+      await client.putTestAdmin();
+      expect(nock.isDone()).to.be.true;
+    });
+  });
+
   describe('getResponse', () => {
     it('throws a NotFoundException if the status code is 404', async () => {
       nock(MOCK_URL).get(TEST_ENDPOINT).reply(404);
