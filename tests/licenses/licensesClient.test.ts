@@ -5,7 +5,7 @@ import { expect } from 'chai';
 import nock from 'nock';
 
 // Sources
-import { ActiveSeatsFindResultFields, PublicApiClient } from '../../src';
+import { PublicApiClient } from '../../src';
 import {
   FindData,
   LicenseFindParameters,
@@ -37,6 +37,9 @@ import {
   LicenseGetFields,
   LicensePriceGetFields,
   OrderGetFields,
+  GetData,
+  ActiveSeatsFindResultFields,
+  LicenseGet,
 } from '../../src';
 import querystring from 'querystring';
 
@@ -240,7 +243,7 @@ const PAYLOAD_SCHEMA = Joi.object({
   ),
 });
 
-export const PAYLOAD_SCHEMA_LICENSE = {
+export const PAYLOAD_SCHEMA_LICENSE: GetData<LicenseGet> = {
   status: 200,
   data: {
     license: {
@@ -764,7 +767,9 @@ describe('LicensesClient', () => {
         .get(LICENSE_MOCK_URL_GET_LICENSE)
         .reply(200, PAYLOAD_SCHEMA_LICENSE);
 
-      const result = await getLicenseClient.getLicense('123456');
+      const result: GetData<LicenseGet> = await getLicenseClient.getLicense(
+        '123456',
+      );
       expect(result).to.eql(PAYLOAD_SCHEMA_LICENSE);
     });
   });
