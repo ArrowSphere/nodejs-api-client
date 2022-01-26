@@ -21,3 +21,4 @@ export * from '../licenses/entities/getLicense/licensePriceGetResult';
 export * from '../licenses/entities/getLicense/orderGetResult';
 export * from './entities/filterFindResult';
 export * from './entities/findResult';
+export * from './entities/getResult';
