@@ -1,20 +1,17 @@
+import { ActionsGetData, ActionsGetResult } from './actionsGetResult';
 import {
-  ActionsGetData,
-  ActionsGetFields,
-  ActionsGetResult,
-} from './actionsGetResult';
-import { ActionMessagesGetResultData } from './actionMessagesGetResult';
-import { OrderGetData, OrderGetFields, OrderGetResult } from './orderGetResult';
+  ActionMessagesGetResult,
+  ActionMessagesGetResultData,
+} from './actionMessagesGetResult';
+import { OrderGetData, OrderGetResult } from './orderGetResult';
 import {
   LicensePriceGetData,
-  LicensePriceGetFields,
   LicensePriceGetResult,
 } from './licensePriceGetResult';
 import { AbstractEntity } from '../../../abstractEntity';
 import {
   ActiveSeatsFindResult,
   ActiveSeatsFindResultData,
-  ActiveSeatsFindResultFields,
 } from '../license/activeSeatsFindResult';
 
 export enum LicenseGetFields {
@@ -48,8 +45,8 @@ export enum LicenseGetFields {
 
 export type LicenseGetData = {
   [LicenseGetFields.COLUMN_LICENSE_ID]: string;
-  [LicenseGetFields.COLUMN_PARENT_LICENSE_ID]: string;
-  [LicenseGetFields.COLUMN_FRIENDLY_NAME]: string;
+  [LicenseGetFields.COLUMN_PARENT_LICENSE_ID]: string | null;
+  [LicenseGetFields.COLUMN_FRIENDLY_NAME]: string | null;
   [LicenseGetFields.COLUMN_CUSTOMER_REF]: string;
   [LicenseGetFields.COLUMN_STATE]: string;
   [LicenseGetFields.COLUMN_SERVICE_REF]: string;
@@ -57,28 +54,28 @@ export type LicenseGetData = {
   [LicenseGetFields.COLUMN_NAME]: string;
   [LicenseGetFields.COLUMN_SEATS]: number;
   [LicenseGetFields.COLUMN_ACTIVE_SEATS]: ActiveSeatsFindResultData;
-  [LicenseGetFields.COLUMN_ACTIVATION_DATETIME]: string;
-  [LicenseGetFields.COLUMN_EXPIRY_DATETIME]: string;
-  [LicenseGetFields.COLUMN_AUTO_RENEW]: boolean;
+  [LicenseGetFields.COLUMN_ACTIVATION_DATETIME]: string | null;
+  [LicenseGetFields.COLUMN_EXPIRY_DATETIME]: string | null;
+  [LicenseGetFields.COLUMN_AUTO_RENEW]?: boolean;
   [LicenseGetFields.COLUMN_MESSAGE]: string;
-  [LicenseGetFields.COLUMN_ACTIONS]: ActionsGetData;
-  [LicenseGetFields.COLUMN_ACTION_MESSAGES]: Array<ActionMessagesGetResultData>;
+  [LicenseGetFields.COLUMN_ACTIONS]?: ActionsGetData;
+  [LicenseGetFields.COLUMN_ACTION_MESSAGES]?: Array<ActionMessagesGetResultData>;
   [LicenseGetFields.COLUMN_ORDER_REFERENCE]: string;
   [LicenseGetFields.COLUMN_ORDER]: OrderGetData;
-  [LicenseGetFields.COLUMN_VENDOR_LICENSE_ID]: string;
+  [LicenseGetFields.COLUMN_VENDOR_LICENSE_ID]: string | null;
   [LicenseGetFields.COLUMN_PERIODICITY]: string;
   [LicenseGetFields.COLUMN_TERM]: string;
   [LicenseGetFields.COLUMN_CATEGORY]: string;
   [LicenseGetFields.COLUMN_PROGRAM]: string;
   [LicenseGetFields.COLUMN_ASSOCIATED_SUBSCRIPTION_PROGRAM]: string;
   [LicenseGetFields.COLUMN_PRICE]: LicensePriceGetData;
-  [LicenseGetFields.COLUMN_ARROW_SUB_CATEGORIES]: Array<string>;
+  [LicenseGetFields.COLUMN_ARROW_SUB_CATEGORIES]?: Array<string> | null;
 };
 
 export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
   readonly #license_id: string;
-  readonly #parent_license_id: string;
-  readonly #friendlyName: string;
+  readonly #parent_license_id: string | null;
+  readonly #friendlyName: string | null;
   readonly #customer_ref: string;
   readonly #state: string;
   readonly #service_ref: string;
@@ -86,22 +83,22 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
   readonly #name: string;
   readonly #seats: number;
   readonly #activeSeats: ActiveSeatsFindResult;
-  readonly #activation_datetime: string;
-  readonly #expiry_datetime: string;
-  readonly #autoRenew: boolean;
+  readonly #activation_datetime: string | null;
+  readonly #expiry_datetime: string | null;
+  readonly #autoRenew?: boolean;
   readonly #message: string;
-  readonly #actions: ActionsGetResult;
-  readonly #actionMessages: Array<ActionMessagesGetResultData>;
+  readonly #actions?: ActionsGetResult;
+  readonly #actionMessages?: Array<ActionMessagesGetResult>;
   readonly #order_reference: string;
   readonly #order: OrderGetResult;
-  readonly #vendor_license_id: string;
+  readonly #vendor_license_id: string | null;
   readonly #periodicity: string;
   readonly #term: string;
   readonly #category: string;
   readonly #program: string;
   readonly #associatedSubscriptionProgram: string;
   readonly #price: LicensePriceGetResult;
-  readonly #arrowSubCategories: Array<string>;
+  readonly #arrowSubCategories?: Array<string> | null;
 
   public constructor(data: LicenseGetData) {
     super(data);
@@ -115,66 +112,24 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
     this.#sku = data[LicenseGetFields.COLUMN_SKU];
     this.#name = data[LicenseGetFields.COLUMN_NAME];
     this.#seats = data[LicenseGetFields.COLUMN_SEATS];
-    const activeSeats: ActiveSeatsFindResultData = {
-      [ActiveSeatsFindResultFields.COLUMN_NUMBER]:
-        data[LicenseGetFields.COLUMN_ACTIVE_SEATS][
-          ActiveSeatsFindResultFields.COLUMN_NUMBER
-        ],
-      [ActiveSeatsFindResultFields.COLUMN_LAST_UPDATE]:
-        data[LicenseGetFields.COLUMN_ACTIVE_SEATS][
-          ActiveSeatsFindResultFields.COLUMN_LAST_UPDATE
-        ],
-    };
-    this.#activeSeats = new ActiveSeatsFindResult(activeSeats);
+    this.#activeSeats = new ActiveSeatsFindResult(
+      data[LicenseGetFields.COLUMN_ACTIVE_SEATS],
+    );
     this.#activation_datetime =
       data[LicenseGetFields.COLUMN_ACTIVATION_DATETIME];
     this.#expiry_datetime = data[LicenseGetFields.COLUMN_EXPIRY_DATETIME];
     this.#autoRenew = data[LicenseGetFields.COLUMN_AUTO_RENEW];
     this.#message = data[LicenseGetFields.COLUMN_MESSAGE];
-    const actions: ActionsGetData = {
-      [ActionsGetFields.COLUMN_HISTORY]:
-        data[LicenseGetFields.COLUMN_ACTIONS][ActionsGetFields.COLUMN_HISTORY],
-      [ActionsGetFields.COLUMN_UPDATE]:
-        data[LicenseGetFields.COLUMN_ACTIONS][ActionsGetFields.COLUMN_UPDATE],
-      [ActionsGetFields.COLUMN_INCREASE_SEATS]:
-        data[LicenseGetFields.COLUMN_ACTIONS][
-          ActionsGetFields.COLUMN_INCREASE_SEATS
-        ],
-      [ActionsGetFields.COLUMN_DECREASE_SEATS]:
-        data[LicenseGetFields.COLUMN_ACTIONS][
-          ActionsGetFields.COLUMN_DECREASE_SEATS
-        ],
-      [ActionsGetFields.COLUMN_ADDONS_CATALOG]:
-        data[LicenseGetFields.COLUMN_ACTIONS][
-          ActionsGetFields.COLUMN_ADDONS_CATALOG
-        ],
-      [ActionsGetFields.COLUMN_SUSPEND]:
-        data[LicenseGetFields.COLUMN_ACTIONS][ActionsGetFields.COLUMN_SUSPEND],
-      [ActionsGetFields.COLUMN_REACTIVATE]:
-        data[LicenseGetFields.COLUMN_ACTIONS][
-          ActionsGetFields.COLUMN_REACTIVATE
-        ],
-      [ActionsGetFields.COLUMN_AUTO_RENEW_OFF]:
-        data[LicenseGetFields.COLUMN_ACTIONS][
-          ActionsGetFields.COLUMN_AUTO_RENEW_OFF
-        ],
-      [ActionsGetFields.COLUMN_AUTO_RENEW_ON]:
-        data[LicenseGetFields.COLUMN_ACTIONS][
-          ActionsGetFields.COLUMN_AUTO_RENEW_ON
-        ],
-      [ActionsGetFields.COLUMN_CANCEL]:
-        data[LicenseGetFields.COLUMN_ACTIONS][ActionsGetFields.COLUMN_CANCEL],
-    };
-    this.#actions = new ActionsGetResult(actions);
-    this.#actionMessages = data[LicenseGetFields.COLUMN_ACTION_MESSAGES];
-    const order: OrderGetData = {
-      [OrderGetFields.COLUMN_REFERENCE]:
-        data[LicenseGetFields.COLUMN_ORDER][OrderGetFields.COLUMN_REFERENCE],
-      [OrderGetFields.COLUMN_LINK]:
-        data[LicenseGetFields.COLUMN_ORDER][OrderGetFields.COLUMN_LINK],
-    };
+    this.#actions = data[LicenseGetFields.COLUMN_ACTIONS]
+      ? new ActionsGetResult(
+          data[LicenseGetFields.COLUMN_ACTIONS] as ActionsGetData,
+        )
+      : undefined;
+    this.#actionMessages = data[LicenseGetFields.COLUMN_ACTION_MESSAGES]?.map(
+      (result) => new ActionMessagesGetResult(result),
+    );
     this.#order_reference = data[LicenseGetFields.COLUMN_ORDER_REFERENCE];
-    this.#order = new OrderGetResult(order);
+    this.#order = new OrderGetResult(data[LicenseGetFields.COLUMN_ORDER]);
     this.#vendor_license_id = data[LicenseGetFields.COLUMN_VENDOR_LICENSE_ID];
     this.#periodicity = data[LicenseGetFields.COLUMN_PERIODICITY];
     this.#term = data[LicenseGetFields.COLUMN_TERM];
@@ -182,13 +137,9 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
     this.#program = data[LicenseGetFields.COLUMN_PROGRAM];
     this.#associatedSubscriptionProgram =
       data[LicenseGetFields.COLUMN_ASSOCIATED_SUBSCRIPTION_PROGRAM];
-    const price: LicensePriceGetData = {
-      [LicensePriceGetFields.COLUMN_UNIT]:
-        data[LicenseGetFields.COLUMN_PRICE][LicensePriceGetFields.COLUMN_UNIT],
-      [LicensePriceGetFields.COLUMN_TOTAL]:
-        data[LicenseGetFields.COLUMN_PRICE][LicensePriceGetFields.COLUMN_TOTAL],
-    };
-    this.#price = new LicensePriceGetResult(price);
+    this.#price = new LicensePriceGetResult(
+      data[LicenseGetFields.COLUMN_PRICE],
+    );
     this.#arrowSubCategories =
       data[LicenseGetFields.COLUMN_ARROW_SUB_CATEGORIES];
   }
@@ -197,11 +148,11 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
     return this.#license_id;
   }
 
-  public get parentLicenseId(): string {
+  public get parentLicenseId(): string | null {
     return this.#parent_license_id;
   }
 
-  public get friendlyName(): string {
+  public get friendlyName(): string | null {
     return this.#friendlyName;
   }
 
@@ -233,15 +184,15 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
     return this.#activeSeats;
   }
 
-  public get activationDatetime(): string {
+  public get activationDatetime(): string | null {
     return this.#activation_datetime;
   }
 
-  public get expiryDatetime(): string {
+  public get expiryDatetime(): string | null {
     return this.#expiry_datetime;
   }
 
-  public get autoRenew(): boolean {
+  public get autoRenew(): boolean | undefined {
     return this.#autoRenew;
   }
 
@@ -249,11 +200,11 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
     return this.#message;
   }
 
-  public get actions(): ActionsGetResult {
+  public get actions(): ActionsGetResult | undefined {
     return this.#actions;
   }
 
-  public get actionMessages(): Array<ActionMessagesGetResultData> {
+  public get actionMessages(): Array<ActionMessagesGetResult> | undefined {
     return this.#actionMessages;
   }
 
@@ -265,7 +216,7 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
     return this.#order;
   }
 
-  public get vendorLicenseId(): string {
+  public get vendorLicenseId(): string | null {
     return this.#vendor_license_id;
   }
 
@@ -293,7 +244,7 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
     return this.#price;
   }
 
-  public get arrowSubCategories(): Array<string> {
+  public get arrowSubCategories(): Array<string> | null | undefined {
     return this.#arrowSubCategories;
   }
 
@@ -313,8 +264,10 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
       [LicenseGetFields.COLUMN_EXPIRY_DATETIME]: this.expiryDatetime,
       [LicenseGetFields.COLUMN_AUTO_RENEW]: this.autoRenew,
       [LicenseGetFields.COLUMN_MESSAGE]: this.message,
-      [LicenseGetFields.COLUMN_ACTIONS]: this.actions.toJSON(),
-      [LicenseGetFields.COLUMN_ACTION_MESSAGES]: this.actionMessages,
+      [LicenseGetFields.COLUMN_ACTIONS]: this.actions?.toJSON(),
+      [LicenseGetFields.COLUMN_ACTION_MESSAGES]: this.actionMessages?.map(
+        (result) => result.toJSON(),
+      ),
       [LicenseGetFields.COLUMN_ORDER_REFERENCE]: this.orderReference,
       [LicenseGetFields.COLUMN_ORDER]: this.order.toJSON(),
       [LicenseGetFields.COLUMN_VENDOR_LICENSE_ID]: this.vendorLicenseId,

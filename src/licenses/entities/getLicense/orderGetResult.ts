@@ -6,12 +6,12 @@ export enum OrderGetFields {
 }
 
 export type OrderGetData = {
-  [OrderGetFields.COLUMN_REFERENCE]: string;
+  [OrderGetFields.COLUMN_REFERENCE]: string | null;
   [OrderGetFields.COLUMN_LINK]: string;
 };
 
 export class OrderGetResult extends AbstractEntity<OrderGetData> {
-  readonly #reference: string;
+  readonly #reference: string | null;
   readonly #link: string;
 
   public constructor(data: OrderGetData) {
@@ -21,7 +21,7 @@ export class OrderGetResult extends AbstractEntity<OrderGetData> {
     this.#link = data[OrderGetFields.COLUMN_LINK];
   }
 
-  public get reference(): string {
+  public get reference(): string | null {
     return this.#reference;
   }
 

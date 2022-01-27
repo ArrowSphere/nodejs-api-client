@@ -10,18 +10,18 @@ export enum ActionMessagesGetResultFields {
 
 export type ActionMessagesGetResultData = {
   [ActionMessagesGetResultFields.COLUMN_ACTION]: string;
-  [ActionMessagesGetResultFields.COLUMN_MESSAGE]: string;
-  [ActionMessagesGetResultFields.COLUMN_MAX_DECREASE]: number;
-  [ActionMessagesGetResultFields.COLUMN_SUPPORTED_UNTIL]: string;
-  [ActionMessagesGetResultFields.COLUMN_SUSPEND_DATE]: string;
+  [ActionMessagesGetResultFields.COLUMN_MESSAGE]?: string;
+  [ActionMessagesGetResultFields.COLUMN_MAX_DECREASE]?: number;
+  [ActionMessagesGetResultFields.COLUMN_SUPPORTED_UNTIL]?: string;
+  [ActionMessagesGetResultFields.COLUMN_SUSPEND_DATE]?: string;
 };
 
 export class ActionMessagesGetResult extends AbstractEntity<ActionMessagesGetResultData> {
   readonly #action: string;
-  readonly #message: string;
-  readonly #maxDecrease: number;
-  readonly #supportedUntil: string;
-  readonly #suspendDate: string;
+  readonly #message?: string;
+  readonly #maxDecrease?: number;
+  readonly #supportedUntil?: string;
+  readonly #suspendDate?: string;
 
   public constructor(data: ActionMessagesGetResultData) {
     super(data);
@@ -38,19 +38,19 @@ export class ActionMessagesGetResult extends AbstractEntity<ActionMessagesGetRes
     return this.#action;
   }
 
-  public get message(): string {
+  public get message(): string | undefined {
     return this.#message;
   }
 
-  public get maxDecrease(): number {
+  public get maxDecrease(): number | undefined {
     return this.#maxDecrease;
   }
 
-  public get supportedUntil(): string {
+  public get supportedUntil(): string | undefined {
     return this.#supportedUntil;
   }
 
-  public get suspendDate(): string {
+  public get suspendDate(): string | undefined {
     return this.#suspendDate;
   }
 
