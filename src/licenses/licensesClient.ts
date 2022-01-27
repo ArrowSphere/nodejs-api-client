@@ -40,7 +40,7 @@ import {
   PriceBandFindResultDataKeywords,
   PriceBandFindResultDataSortParameters,
 } from './entities/offer/priceBandFindResult';
-import { GetData, LicenseGet } from './entities/getResult';
+import { GetData, GetResult, LicenseGet } from './entities/getResult';
 
 /**
  * Parameters passable to the request for refining search.
@@ -443,12 +443,12 @@ export class LicensesClient extends AbstractClient {
     return new ConfigFindResult(rawResponse);
   }
 
-  public getLicense(
+  public async getLicense(
     licenseReference: string,
     parameters: Parameters = {},
   ): Promise<GetData<LicenseGet>> {
     this.path = licenseReference;
 
-    return this.get(parameters);
+    return new GetResult(await this.get(parameters)).toJSON();
   }
 }

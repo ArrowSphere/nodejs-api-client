@@ -6,13 +6,13 @@ export enum BuySellFields {
 }
 
 export type BuySellData = {
-  [BuySellFields.COLUMN_BUY]: number;
-  [BuySellFields.COLUMN_SELL]: number;
+  [BuySellFields.COLUMN_BUY]?: number;
+  [BuySellFields.COLUMN_SELL]?: number;
 };
 
 export class BuySellFindResult extends AbstractEntity<BuySellData> {
-  readonly #buy: number;
-  readonly #sell: number;
+  readonly #buy?: number;
+  readonly #sell?: number;
 
   public constructor(data: BuySellData) {
     super(data);
@@ -21,11 +21,11 @@ export class BuySellFindResult extends AbstractEntity<BuySellData> {
     this.#sell = data[BuySellFields.COLUMN_SELL];
   }
 
-  public get buy(): number {
+  public get buy(): number | undefined {
     return this.#buy;
   }
 
-  public get sell(): number {
+  public get sell(): number | undefined {
     return this.#sell;
   }
 

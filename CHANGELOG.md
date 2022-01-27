@@ -3,6 +3,17 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.2] - 2022-02-01
+
+### Changed
+
+- Fixed type of `GetLicense` endpoint
+- Fixed type of `ActionMessagesGetResult` object
+- Fixed type of `ActionsGetResult` object
+- Fixed type of `BuySellFindResult` object
+- Fixed type of `LicenseGetResult` object
+- Fixed type of `OrderGetResult` object
+
 ## [2.1.1] - 2022-01-27
 
 ### Changed

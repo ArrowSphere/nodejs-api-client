@@ -15,28 +15,28 @@ export enum ActionsGetFields {
 
 export type ActionsGetData = {
   [ActionsGetFields.COLUMN_HISTORY]: string;
-  [ActionsGetFields.COLUMN_UPDATE]: string;
-  [ActionsGetFields.COLUMN_INCREASE_SEATS]: string;
-  [ActionsGetFields.COLUMN_DECREASE_SEATS]: string;
-  [ActionsGetFields.COLUMN_ADDONS_CATALOG]: string;
-  [ActionsGetFields.COLUMN_SUSPEND]: string;
-  [ActionsGetFields.COLUMN_REACTIVATE]: string;
-  [ActionsGetFields.COLUMN_AUTO_RENEW_OFF]: string;
-  [ActionsGetFields.COLUMN_AUTO_RENEW_ON]: string;
-  [ActionsGetFields.COLUMN_CANCEL]: string;
+  [ActionsGetFields.COLUMN_UPDATE]?: string;
+  [ActionsGetFields.COLUMN_INCREASE_SEATS]?: string;
+  [ActionsGetFields.COLUMN_DECREASE_SEATS]?: string;
+  [ActionsGetFields.COLUMN_ADDONS_CATALOG]?: string;
+  [ActionsGetFields.COLUMN_SUSPEND]?: string;
+  [ActionsGetFields.COLUMN_REACTIVATE]?: string;
+  [ActionsGetFields.COLUMN_AUTO_RENEW_OFF]?: string;
+  [ActionsGetFields.COLUMN_AUTO_RENEW_ON]?: string;
+  [ActionsGetFields.COLUMN_CANCEL]?: string;
 };
 
 export class ActionsGetResult extends AbstractEntity<ActionsGetData> {
   readonly #history: string;
-  readonly #update: string;
-  readonly #increaseSeats: string;
-  readonly #decreaseSeats: string;
-  readonly #addons_catalog: string;
-  readonly #suspend: string;
-  readonly #reactivate: string;
-  readonly #autoRenewOff: string;
-  readonly #autoRenewOn: string;
-  readonly #cancel: string;
+  readonly #update?: string;
+  readonly #increaseSeats?: string;
+  readonly #decreaseSeats?: string;
+  readonly #addons_catalog?: string;
+  readonly #suspend?: string;
+  readonly #reactivate?: string;
+  readonly #autoRenewOff?: string;
+  readonly #autoRenewOn?: string;
+  readonly #cancel?: string;
 
   public constructor(data: ActionsGetData) {
     super(data);
@@ -57,39 +57,39 @@ export class ActionsGetResult extends AbstractEntity<ActionsGetData> {
     return this.#history;
   }
 
-  public get update(): string {
+  public get update(): string | undefined {
     return this.#update;
   }
 
-  public get increaseSeats(): string {
+  public get increaseSeats(): string | undefined {
     return this.#increaseSeats;
   }
 
-  public get decreaseSeats(): string {
+  public get decreaseSeats(): string | undefined {
     return this.#decreaseSeats;
   }
 
-  public get addonsCatalog(): string {
+  public get addonsCatalog(): string | undefined {
     return this.#addons_catalog;
   }
 
-  public get suspend(): string {
+  public get suspend(): string | undefined {
     return this.#suspend;
   }
 
-  public get reactivate(): string {
+  public get reactivate(): string | undefined {
     return this.#reactivate;
   }
 
-  public get autoRenewOff(): string {
+  public get autoRenewOff(): string | undefined {
     return this.#autoRenewOff;
   }
 
-  public get autoRenewOn(): string {
+  public get autoRenewOn(): string | undefined {
     return this.#autoRenewOn;
   }
 
-  public get cancel(): string {
+  public get cancel(): string | undefined {
     return this.#cancel;
   }
 
