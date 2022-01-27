@@ -52,6 +52,7 @@ export const LICENSE_MOCK_URL_UPDATE_SEATS = '/licenses/XSP123456/seats';
 export const LICENSE_MOCK_URL_SUSPEND_LICENSE = '/licenses/XSP123456/suspend';
 export const LICENSE_MOCK_URL_REACTIVATE_LICENSE =
   '/licenses/XSP123456/reactivate';
+export const LICENSE_MOCK_URL_CANCEL_LICENSE = '/licenses/XSP123456/cancel';
 
 /**
  * Mock license data to be used in tests and returned by mocks
@@ -798,6 +799,18 @@ describe('LicensesClient', () => {
         .reply(204);
 
       await getLicenseClient.reactivateLicense('XSP123456');
+      expect(nock.isDone()).to.be.true;
+    });
+  });
+
+  describe('cancelLicense', () => {
+    const getLicenseClient = new PublicApiClient()
+      .getLicensesClient()
+      .setUrl(LICENSES_MOCK_URL);
+    it('calls the put method', async () => {
+      nock(LICENSES_MOCK_URL).put(LICENSE_MOCK_URL_CANCEL_LICENSE).reply(204);
+
+      await getLicenseClient.cancelLicense('XSP123456');
       expect(nock.isDone()).to.be.true;
     });
   });
