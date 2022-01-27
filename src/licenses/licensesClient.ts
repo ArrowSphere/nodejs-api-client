@@ -309,6 +309,11 @@ export class LicensesClient extends AbstractClient {
   private SEATS_PATH = '/seats';
 
   /**
+   * The path of suspend endpoint
+   */
+  private SUSPEND_PATH = '/suspend';
+
+  /**
    * Returns the raw result from the find endpoint call
    *
    * @param postData - Find payload
@@ -471,5 +476,14 @@ export class LicensesClient extends AbstractClient {
     this.path = licenseReference + this.SEATS_PATH;
 
     return this.put(putData, parameters);
+  }
+
+  public suspendLicense(
+    licenseReference: string,
+    parameters: Parameters = {},
+  ): Promise<void> {
+    this.path = licenseReference + this.SUSPEND_PATH;
+
+    return this.put(undefined, parameters);
   }
 }
