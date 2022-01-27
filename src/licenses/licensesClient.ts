@@ -314,6 +314,11 @@ export class LicensesClient extends AbstractClient {
   private SUSPEND_PATH = '/suspend';
 
   /**
+   * The path of reactivate endpoint
+   */
+  private REACTIVATE_PATH = '/reactivate';
+
+  /**
    * Returns the raw result from the find endpoint call
    *
    * @param postData - Find payload
@@ -483,6 +488,15 @@ export class LicensesClient extends AbstractClient {
     parameters: Parameters = {},
   ): Promise<void> {
     this.path = licenseReference + this.SUSPEND_PATH;
+
+    return this.put(undefined, parameters);
+  }
+
+  public reactivateLicense(
+    licenseReference: string,
+    parameters: Parameters = {},
+  ): Promise<void> {
+    this.path = licenseReference + this.REACTIVATE_PATH;
 
     return this.put(undefined, parameters);
   }
