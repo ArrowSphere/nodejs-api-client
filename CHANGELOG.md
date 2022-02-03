@@ -3,6 +3,14 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.6.0] - 2022-02-22
+
+### Added
+
+- Add endpoint get customers
+- Move file GetResult to use it with all endpoint
+- Update GetResult class to add pagination field
+
 ## [2.5.0] - 2022-02-14
 
 ### Added

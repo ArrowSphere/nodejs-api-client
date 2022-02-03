@@ -40,7 +40,7 @@ import {
   PriceBandFindResultDataKeywords,
   PriceBandFindResultDataSortParameters,
 } from './entities/offer/priceBandFindResult';
-import { GetResult } from './entities/getResult';
+import { GetResult } from '../getResult';
 import { LicenseGetFields } from './entities/getLicense/licenseGetResult';
 import { GetLicenseResult } from './entities/getResult/getLicenseResult';
 

@@ -14,7 +14,7 @@ A license is managed by the `LicenseFind` entity.
 | Field                | Type                  | Example                              | Description                                                                                           |
 |----------------------|-----------------------|--------------------------------------|-------------------------------------------------------------------------------------------------------|
 | acceptEula           | ```bool```            | false                                |                                                                                                       |
-| activeSeats          | ```ActiveSeatsData``` |                                      | [ActiveSeats](#ActiveSeatsFindResult) object of active seat information                               |                                             |
+| activeSeats          | ```ActiveSeatsData``` |                                      | [ActiveSeats](#ActiveSeatsFindResult) object of active seat information                               |
 | autoRenew            | ```bool```            | true                                 | True if the license is renewed automatically upon expiration                                          |
 | baseSeat             | ```int```             | 6                                    | The number of seats at the time of the license purchase                                               |
 | category             | ```string```          | BaseProduct                          | Indicates if the offer is a BaseProduct or an Addon                                                   |
@@ -24,7 +24,7 @@ A license is managed by the `LicenseFind` entity.
 | customerName         | ```string```          | My customer                          | The name of the end-customer                                                                          |
 | customerRef          | ```string```          | XSP123456789                         | The reference of the end-customer                                                                     |
 | endDate              | ```string```          | 2021-11-18T17:48:43.000Z             | The end date of the license                                                                           |
-| friendlyName         | ```string```          | XSP12345                             | MS-0B-O365-ENTERPRIS                                                                                  |XSP555555|XSP987654321 | The friendly name of the license                                                                      |
+| friendlyName         | ```string```          | XSP12345                             | MS-0B-O365-ENTERPRIS                                                                                  |
 | id                   | ```int```             | 123456                               | The license identifier (an internal identifier)                                                       |
 | isEnabled            | ```bool```            | true                                 | True if the license is active                                                                         |
 | lastUpdate           | ```string```          | 2020-12-08T15:42:30.069Z             | The last time the license's data was updated (for any reason)                                         |

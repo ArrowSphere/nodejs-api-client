@@ -227,7 +227,6 @@ export abstract class AbstractClient {
    */
   protected generateUrl(parameters: Parameters, options: Options): string {
     const params = { ...parameters, ...this.generatePagination() };
-
     const url = new URL(
       `${options.isAdmin ? path.join('admin', this.basePath) : this.basePath}${
         this.path
