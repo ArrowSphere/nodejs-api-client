@@ -5,7 +5,7 @@ import { expect } from 'chai';
 import nock from 'nock';
 
 // Sources
-import { PublicApiClient } from '../../src';
+import { GetResult, PublicApiClient } from '../../src';
 import {
   FindData,
   LicenseFindParameters,
@@ -41,7 +41,6 @@ import {
   ActiveSeatsFindResultFields,
   LicenseGet,
 } from '../../src';
-import querystring from 'querystring';
 
 export const LICENSES_MOCK_URL = 'https://licenses.localhost';
 export const LICENSES_FIND_ENDPOINT = new RegExp('/licenses/v2/find.*');
@@ -251,7 +250,7 @@ export const PAYLOAD_SCHEMA_LICENSE: GetData<LicenseGet> = {
       [LicenseGetFields.COLUMN_LICENSE_ID]: '123456',
       [LicenseGetFields.COLUMN_PARENT_LICENSE_ID]: 'parent_license_id',
       [LicenseGetFields.COLUMN_FRIENDLY_NAME]: 'friendly_name',
-      [LicenseGetFields.COLUMN_CUSTOMER_REF]: 'customer_name',
+      [LicenseGetFields.COLUMN_CUSTOMER_REF]: 'customer_ref',
       [LicenseGetFields.COLUMN_STATE]: 'state',
       [LicenseGetFields.COLUMN_SERVICE_REF]: 'service_ref',
       [LicenseGetFields.COLUMN_SKU]: 'sku',
@@ -321,7 +320,7 @@ export const PAYLOAD_SCHEMA_LICENSE_WITHOUT_OPTIONAL_FIELDS: GetData<LicenseGet>
       [LicenseGetFields.COLUMN_LICENSE_ID]: '123456',
       [LicenseGetFields.COLUMN_PARENT_LICENSE_ID]: 'parent_license_id',
       [LicenseGetFields.COLUMN_FRIENDLY_NAME]: 'friendly_name',
-      [LicenseGetFields.COLUMN_CUSTOMER_REF]: 'customer_name',
+      [LicenseGetFields.COLUMN_CUSTOMER_REF]: 'customer_ref',
       [LicenseGetFields.COLUMN_STATE]: 'state',
       [LicenseGetFields.COLUMN_SERVICE_REF]: 'service_ref',
       [LicenseGetFields.COLUMN_SKU]: 'sku',
@@ -359,76 +358,6 @@ export const PAYLOAD_SCHEMA_LICENSE_WITHOUT_OPTIONAL_FIELDS: GetData<LicenseGet>
     },
   },
 };
-
-const PAYLOAD_SCHEMA_LICENSE_JOI = Joi.object({
-  status: Joi.number(),
-  data: Joi.object({
-    license: Joi.object({
-      [LicenseGetFields.COLUMN_LICENSE_ID]: Joi.string(),
-      [LicenseGetFields.COLUMN_PARENT_LICENSE_ID]: Joi.string(),
-      [LicenseGetFields.COLUMN_FRIENDLY_NAME]: Joi.string(),
-      [LicenseGetFields.COLUMN_CUSTOMER_REF]: Joi.string(),
-      [LicenseGetFields.COLUMN_STATE]: Joi.string(),
-      [LicenseGetFields.COLUMN_SERVICE_REF]: Joi.string(),
-      [LicenseGetFields.COLUMN_SKU]: Joi.string(),
-      [LicenseGetFields.COLUMN_NAME]: Joi.string(),
-      [LicenseGetFields.COLUMN_SEATS]: Joi.string(),
-      [LicenseGetFields.COLUMN_ACTIVE_SEATS]: Joi.object({
-        [ActiveSeatsFindResultFields.COLUMN_NUMBER]: Joi.number(),
-        [ActiveSeatsFindResultFields.COLUMN_LAST_UPDATE]: Joi.string(),
-      }),
-      [LicenseGetFields.COLUMN_ACTIVATION_DATETIME]: Joi.string(),
-      [LicenseGetFields.COLUMN_EXPIRY_DATETIME]: Joi.string(),
-      [LicenseGetFields.COLUMN_AUTO_RENEW]: Joi.boolean(),
-      [LicenseGetFields.COLUMN_MESSAGE]: Joi.string(),
-      [LicenseGetFields.COLUMN_ACTIONS]: Joi.object({
-        [ActionsGetFields.COLUMN_HISTORY]: Joi.string(),
-        [ActionsGetFields.COLUMN_UPDATE]: Joi.string(),
-        [ActionsGetFields.COLUMN_INCREASE_SEATS]: Joi.string(),
-        [ActionsGetFields.COLUMN_DECREASE_SEATS]: Joi.string(),
-        [ActionsGetFields.COLUMN_ADDONS_CATALOG]: Joi.string(),
-        [ActionsGetFields.COLUMN_SUSPEND]: Joi.string(),
-        [ActionsGetFields.COLUMN_REACTIVATE]: Joi.string(),
-        [ActionsGetFields.COLUMN_AUTO_RENEW_OFF]: Joi.string(),
-        [ActionsGetFields.COLUMN_AUTO_RENEW_ON]: Joi.string(),
-        [ActionsGetFields.COLUMN_CANCEL]: Joi.string(),
-      }),
-      [LicenseGetFields.COLUMN_ACTION_MESSAGES]: Joi.array().items(
-        Joi.object({
-          [ActionMessagesGetResultFields.COLUMN_ACTION]: Joi.string(),
-          [ActionMessagesGetResultFields.COLUMN_MESSAGE]: Joi.string(),
-          [ActionMessagesGetResultFields.COLUMN_MAX_DECREASE]: Joi.string(),
-          [ActionMessagesGetResultFields.COLUMN_SUPPORTED_UNTIL]: Joi.string(),
-          [ActionMessagesGetResultFields.COLUMN_SUSPEND_DATE]: Joi.string(),
-        }),
-      ),
-      [LicenseGetFields.COLUMN_ORDER_REFERENCE]: Joi.string(),
-      [LicenseGetFields.COLUMN_ORDER]: Joi.object({
-        [OrderGetFields.COLUMN_LINK]: Joi.string(),
-        [OrderGetFields.COLUMN_REFERENCE]: Joi.string(),
-      }),
-      [LicenseGetFields.COLUMN_VENDOR_LICENSE_ID]: Joi.string(),
-      [LicenseGetFields.COLUMN_PERIODICITY]: Joi.string(),
-      [LicenseGetFields.COLUMN_TERM]: Joi.string(),
-      [LicenseGetFields.COLUMN_CATEGORY]: Joi.string(),
-      [LicenseGetFields.COLUMN_PROGRAM]: Joi.string(),
-      [LicenseGetFields.COLUMN_ASSOCIATED_SUBSCRIPTION_PROGRAM]: Joi.string(),
-      [LicenseGetFields.COLUMN_PRICE]: Joi.object({
-        [LicensePriceGetFields.COLUMN_UNIT]: Joi.object({
-          [BuySellFields.COLUMN_BUY]: Joi.number(),
-          [BuySellFields.COLUMN_SELL]: Joi.number(),
-        }),
-        [LicensePriceGetFields.COLUMN_TOTAL]: Joi.object({
-          [BuySellFields.COLUMN_BUY]: Joi.number(),
-          [BuySellFields.COLUMN_SELL]: Joi.number(),
-        }),
-      }),
-      [LicenseGetFields.COLUMN_ARROW_SUB_CATEGORIES]: Joi.array().items(
-        Joi.string(),
-      ),
-    }),
-  }),
-});
 
 const PAYLOAD_UPDATE_SEATS = {
   [LicenseGetFields.COLUMN_SEATS]: 3,
@@ -797,35 +726,15 @@ describe('LicensesClient', () => {
     const getLicenseClient = new PublicApiClient()
       .getLicensesClient()
       .setUrl(LICENSES_MOCK_URL);
-    it('calls the get method with the right payload', async () => {
-      nock(LICENSES_MOCK_URL)
-        .get(LICENSE_MOCK_URL_GET_LICENSE)
-        .reply((_uri) => {
-          try {
-            const query = querystring.decode(
-              new URL(_uri, LICENSES_MOCK_URL).search.replace('?', ''),
-            );
-            expect(() =>
-              Joi.assert(query, PAYLOAD_SCHEMA_LICENSE_JOI),
-            ).not.to.throw();
-          } catch (error) {
-            return [500];
-          }
-          return [200];
-        });
-
-      await getLicenseClient.getLicense('123456');
-    });
 
     it('calls the get method and returns its result', async () => {
       nock(LICENSES_MOCK_URL)
         .get(LICENSE_MOCK_URL_GET_LICENSE)
         .reply(200, PAYLOAD_SCHEMA_LICENSE);
 
-      const result: GetData<LicenseGet> = await getLicenseClient.getLicense(
-        '123456',
-      );
-      expect(result).to.eql(PAYLOAD_SCHEMA_LICENSE);
+      const result = await getLicenseClient.getLicense('123456');
+      expect(result).to.be.instanceof(GetResult);
+      expect(result.toJSON()).to.eql(PAYLOAD_SCHEMA_LICENSE);
     });
 
     it('calls the get method and returns its result without optional fields', async () => {
@@ -833,10 +742,11 @@ describe('LicensesClient', () => {
         .get(LICENSE_MOCK_URL_GET_LICENSE)
         .reply(200, PAYLOAD_SCHEMA_LICENSE_WITHOUT_OPTIONAL_FIELDS);
 
-      const result: GetData<LicenseGet> = await getLicenseClient.getLicense(
-        '123456',
+      const result = await getLicenseClient.getLicense('123456');
+      expect(result).to.be.instanceof(GetResult);
+      expect(result.toJSON()).to.eql(
+        PAYLOAD_SCHEMA_LICENSE_WITHOUT_OPTIONAL_FIELDS,
       );
-      expect(result).to.eql(PAYLOAD_SCHEMA_LICENSE_WITHOUT_OPTIONAL_FIELDS);
     });
   });
 

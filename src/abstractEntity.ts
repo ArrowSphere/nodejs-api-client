@@ -5,6 +5,8 @@ import { EntityValidationException } from './exception';
  * Class AbstractEntity
  */
 export abstract class AbstractEntity<T> {
+  readonly #entityDataInput: T;
+
   protected VALIDATION_RULES: Rules = {};
 
   protected VALIDATION_MESSAGES: ErrorMessages = {};
@@ -20,6 +22,12 @@ export abstract class AbstractEntity<T> {
    */
   protected constructor(data: T) {
     this.validate(data);
+
+    this.#entityDataInput = data;
+  }
+
+  get entityDataInput(): T {
+    return this.#entityDataInput;
   }
 
   /**

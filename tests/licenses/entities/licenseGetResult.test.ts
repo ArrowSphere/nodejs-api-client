@@ -17,7 +17,7 @@ describe('LicenseGetResult', () => {
     [LicenseGetFields.COLUMN_LICENSE_ID]: '123456',
     [LicenseGetFields.COLUMN_PARENT_LICENSE_ID]: 'parent_license_id',
     [LicenseGetFields.COLUMN_FRIENDLY_NAME]: 'friendly_name',
-    [LicenseGetFields.COLUMN_CUSTOMER_REF]: 'customer_name',
+    [LicenseGetFields.COLUMN_CUSTOMER_REF]: 'customer_ref',
     [LicenseGetFields.COLUMN_STATE]: 'state',
     [LicenseGetFields.COLUMN_SERVICE_REF]: 'service_ref',
     [LicenseGetFields.COLUMN_SKU]: 'sku',

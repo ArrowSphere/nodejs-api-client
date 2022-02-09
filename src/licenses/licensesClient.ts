@@ -40,8 +40,9 @@ import {
   PriceBandFindResultDataKeywords,
   PriceBandFindResultDataSortParameters,
 } from './entities/offer/priceBandFindResult';
-import { GetData, GetResult, LicenseGet } from './entities/getResult';
+import { GetResult } from './entities/getResult';
 import { LicenseGetFields } from './entities/getLicense/licenseGetResult';
+import { GetLicenseResult } from './entities/getResult/getLicenseResult';
 
 /**
  * Parameters passable to the request for refining search.
@@ -456,10 +457,10 @@ export class LicensesClient extends AbstractClient {
   public async getLicense(
     licenseReference: string,
     parameters: Parameters = {},
-  ): Promise<GetData<LicenseGet>> {
+  ): Promise<GetResult<GetLicenseResult>> {
     this.path = licenseReference;
 
-    return new GetResult(await this.get(parameters)).toJSON();
+    return new GetResult(GetLicenseResult, await this.get(parameters));
   }
 
   public updateSeats(
