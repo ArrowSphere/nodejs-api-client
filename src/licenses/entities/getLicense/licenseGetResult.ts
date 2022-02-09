@@ -100,48 +100,62 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
   readonly #price: LicensePriceGetResult;
   readonly #arrowSubCategories?: Array<string> | null;
 
-  public constructor(data: LicenseGetData) {
-    super(data);
+  public constructor(licenseGetDataInput: LicenseGetData) {
+    super(licenseGetDataInput);
 
-    this.#license_id = data[LicenseGetFields.COLUMN_LICENSE_ID];
-    this.#parent_license_id = data[LicenseGetFields.COLUMN_PARENT_LICENSE_ID];
-    this.#friendlyName = data[LicenseGetFields.COLUMN_FRIENDLY_NAME];
-    this.#customer_ref = data[LicenseGetFields.COLUMN_CUSTOMER_REF];
-    this.#state = data[LicenseGetFields.COLUMN_STATE];
-    this.#service_ref = data[LicenseGetFields.COLUMN_SERVICE_REF];
-    this.#sku = data[LicenseGetFields.COLUMN_SKU];
-    this.#name = data[LicenseGetFields.COLUMN_NAME];
-    this.#seats = data[LicenseGetFields.COLUMN_SEATS];
+    this.#license_id = licenseGetDataInput[LicenseGetFields.COLUMN_LICENSE_ID];
+    this.#parent_license_id =
+      licenseGetDataInput[LicenseGetFields.COLUMN_PARENT_LICENSE_ID];
+    this.#friendlyName =
+      licenseGetDataInput[LicenseGetFields.COLUMN_FRIENDLY_NAME];
+    this.#customer_ref =
+      licenseGetDataInput[LicenseGetFields.COLUMN_CUSTOMER_REF];
+    this.#state = licenseGetDataInput[LicenseGetFields.COLUMN_STATE];
+    this.#service_ref =
+      licenseGetDataInput[LicenseGetFields.COLUMN_SERVICE_REF];
+    this.#sku = licenseGetDataInput[LicenseGetFields.COLUMN_SKU];
+    this.#name = licenseGetDataInput[LicenseGetFields.COLUMN_NAME];
+    this.#seats = licenseGetDataInput[LicenseGetFields.COLUMN_SEATS];
     this.#activeSeats = new ActiveSeatsFindResult(
-      data[LicenseGetFields.COLUMN_ACTIVE_SEATS],
+      licenseGetDataInput[LicenseGetFields.COLUMN_ACTIVE_SEATS],
     );
     this.#activation_datetime =
-      data[LicenseGetFields.COLUMN_ACTIVATION_DATETIME];
-    this.#expiry_datetime = data[LicenseGetFields.COLUMN_EXPIRY_DATETIME];
-    this.#autoRenew = data[LicenseGetFields.COLUMN_AUTO_RENEW];
-    this.#message = data[LicenseGetFields.COLUMN_MESSAGE];
-    this.#actions = data[LicenseGetFields.COLUMN_ACTIONS]
+      licenseGetDataInput[LicenseGetFields.COLUMN_ACTIVATION_DATETIME];
+    this.#expiry_datetime =
+      licenseGetDataInput[LicenseGetFields.COLUMN_EXPIRY_DATETIME];
+    this.#autoRenew = licenseGetDataInput[LicenseGetFields.COLUMN_AUTO_RENEW];
+    this.#message = licenseGetDataInput[LicenseGetFields.COLUMN_MESSAGE];
+    this.#actions = licenseGetDataInput[LicenseGetFields.COLUMN_ACTIONS]
       ? new ActionsGetResult(
-          data[LicenseGetFields.COLUMN_ACTIONS] as ActionsGetData,
+          licenseGetDataInput[
+            LicenseGetFields.COLUMN_ACTIONS
+          ] as ActionsGetData,
         )
       : undefined;
-    this.#actionMessages = data[LicenseGetFields.COLUMN_ACTION_MESSAGES]?.map(
-      (result) => new ActionMessagesGetResult(result),
+    this.#actionMessages = licenseGetDataInput[
+      LicenseGetFields.COLUMN_ACTION_MESSAGES
+    ]?.map((result) => new ActionMessagesGetResult(result));
+    this.#order_reference =
+      licenseGetDataInput[LicenseGetFields.COLUMN_ORDER_REFERENCE];
+    this.#order = new OrderGetResult(
+      licenseGetDataInput[LicenseGetFields.COLUMN_ORDER],
     );
-    this.#order_reference = data[LicenseGetFields.COLUMN_ORDER_REFERENCE];
-    this.#order = new OrderGetResult(data[LicenseGetFields.COLUMN_ORDER]);
-    this.#vendor_license_id = data[LicenseGetFields.COLUMN_VENDOR_LICENSE_ID];
-    this.#periodicity = data[LicenseGetFields.COLUMN_PERIODICITY];
-    this.#term = data[LicenseGetFields.COLUMN_TERM];
-    this.#category = data[LicenseGetFields.COLUMN_CATEGORY];
-    this.#program = data[LicenseGetFields.COLUMN_PROGRAM];
+    this.#vendor_license_id =
+      licenseGetDataInput[LicenseGetFields.COLUMN_VENDOR_LICENSE_ID];
+    this.#periodicity =
+      licenseGetDataInput[LicenseGetFields.COLUMN_PERIODICITY];
+    this.#term = licenseGetDataInput[LicenseGetFields.COLUMN_TERM];
+    this.#category = licenseGetDataInput[LicenseGetFields.COLUMN_CATEGORY];
+    this.#program = licenseGetDataInput[LicenseGetFields.COLUMN_PROGRAM];
     this.#associatedSubscriptionProgram =
-      data[LicenseGetFields.COLUMN_ASSOCIATED_SUBSCRIPTION_PROGRAM];
+      licenseGetDataInput[
+        LicenseGetFields.COLUMN_ASSOCIATED_SUBSCRIPTION_PROGRAM
+      ];
     this.#price = new LicensePriceGetResult(
-      data[LicenseGetFields.COLUMN_PRICE],
+      licenseGetDataInput[LicenseGetFields.COLUMN_PRICE],
     );
     this.#arrowSubCategories =
-      data[LicenseGetFields.COLUMN_ARROW_SUB_CATEGORIES];
+      licenseGetDataInput[LicenseGetFields.COLUMN_ARROW_SUB_CATEGORIES];
   }
 
   public get id(): string {
