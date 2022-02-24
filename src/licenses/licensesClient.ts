@@ -282,6 +282,10 @@ export type UpdateSeatsData = {
   [LicenseGetFields.COLUMN_SEATS]: number;
 };
 
+export type PutFriendlyName = {
+  [LicenseGetFields.COLUMN_FRIENDLY_NAME]: string;
+};
+
 export class LicensesClient extends AbstractClient {
   /**
    * The base path of the Licenses API
@@ -322,6 +326,11 @@ export class LicensesClient extends AbstractClient {
    * The path of cancel endpoint
    */
   private CANCEL_PATH = '/cancel';
+
+  /**
+   * The path of update friendlyName endpoint
+   */
+  private UPDATE_FRIENDLYNAME = '/friendlyName';
 
   /**
    * Returns the raw result from the find endpoint call
@@ -513,5 +522,15 @@ export class LicensesClient extends AbstractClient {
     this.path = licenseReference + this.CANCEL_PATH;
 
     return this.put(undefined, parameters);
+  }
+
+  public async updateFriendlyName(
+    licenseReference: string,
+    putData: PutFriendlyName,
+    parameters: Parameters = {},
+  ): Promise<void> {
+    this.path = licenseReference + this.UPDATE_FRIENDLYNAME;
+
+    return await this.put(putData, parameters);
   }
 }

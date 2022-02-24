@@ -47,12 +47,14 @@ export const LICENSES_FIND_ENDPOINT = new RegExp('/licenses/v2/find.*');
 export const LICENSES_CONFIG_FIND_ENDPOINT = new RegExp(
   '/licenses/XSP1234/configs',
 );
-export const LICENSE_MOCK_URL_GET_LICENSE = '/licenses/123456';
+export const LICENSE_MOCK_URL_LICENSE = '/licenses/123456';
 export const LICENSE_MOCK_URL_UPDATE_SEATS = '/licenses/XSP123456/seats';
 export const LICENSE_MOCK_URL_SUSPEND_LICENSE = '/licenses/XSP123456/suspend';
 export const LICENSE_MOCK_URL_REACTIVATE_LICENSE =
   '/licenses/XSP123456/reactivate';
 export const LICENSE_MOCK_URL_CANCEL_LICENSE = '/licenses/XSP123456/cancel';
+export const LICENSE_MOCK_URL_UPDATE_FRIENDLYNAME =
+  '/licenses/123456/friendlyName';
 
 /**
  * Mock license data to be used in tests and returned by mocks
@@ -741,7 +743,7 @@ describe('LicensesClient', () => {
 
     it('calls the get method and returns its result', async () => {
       nock(LICENSES_MOCK_URL)
-        .get(LICENSE_MOCK_URL_GET_LICENSE)
+        .get(LICENSE_MOCK_URL_LICENSE)
         .reply(200, PAYLOAD_SCHEMA_LICENSE);
 
       const result = await getLicenseClient.getLicense('123456');
@@ -751,7 +753,7 @@ describe('LicensesClient', () => {
 
     it('calls the get method and returns its result without optional fields', async () => {
       nock(LICENSES_MOCK_URL)
-        .get(LICENSE_MOCK_URL_GET_LICENSE)
+        .get(LICENSE_MOCK_URL_LICENSE)
         .reply(200, PAYLOAD_SCHEMA_LICENSE_WITHOUT_OPTIONAL_FIELDS);
 
       const result = await getLicenseClient.getLicense('123456');
@@ -819,6 +821,22 @@ describe('LicensesClient', () => {
       nock(LICENSES_MOCK_URL).put(LICENSE_MOCK_URL_CANCEL_LICENSE).reply(204);
 
       await getLicenseClient.cancelLicense('XSP123456');
+      expect(nock.isDone()).to.be.true;
+    });
+  });
+
+  describe('updateFriendlyName', () => {
+    const patchLicenseClient = new PublicApiClient()
+      .getLicensesClient()
+      .setUrl(LICENSES_MOCK_URL);
+    it('call put method', async () => {
+      nock(LICENSES_MOCK_URL)
+        .put(LICENSE_MOCK_URL_UPDATE_FRIENDLYNAME)
+        .reply(204);
+
+      await patchLicenseClient.updateFriendlyName('123456', {
+        [LicenseGetFields.COLUMN_FRIENDLY_NAME]: 'friendlyName',
+      });
       expect(nock.isDone()).to.be.true;
     });
   });

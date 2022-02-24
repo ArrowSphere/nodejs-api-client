@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Update object license for getLicense endpoint
+- Add endpoint update license friendlyName
 
 ## [2.6.0] - 2022-02-22
 
