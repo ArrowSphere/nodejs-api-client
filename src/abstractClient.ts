@@ -158,12 +158,18 @@ export abstract class AbstractClient {
   private getResponse<T = AxiosResponse['data']>(response: AxiosResponse): T {
     const statusCode = response.status;
     if (statusCode === 404) {
-      throw new NotFoundException(`Resource not found on URL ${this.getUrl()}`);
+      throw new NotFoundException(
+        `Resource not found on URL ${this.getUrl()}`,
+        response.data.error,
+        statusCode,
+      );
     }
 
     if (statusCode >= 400 && statusCode <= 599) {
       throw new PublicApiClientException(
         `Error: status code: ${statusCode}. URL: ${this.getUrl()}`,
+        response.data.error,
+        statusCode,
       );
     }
 
