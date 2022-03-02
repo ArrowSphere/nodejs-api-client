@@ -20,6 +20,10 @@ export enum LicenseGetFields {
   COLUMN_FRIENDLY_NAME = 'friendlyName',
   COLUMN_CUSTOMER_REF = 'customer_ref',
   COLUMN_STATE = 'state',
+  COLUMN_STATUS_CODE = 'statusCode',
+  COLUMN_IS_TRIAL = 'isTrial',
+  COLUMN_IS_ADDON = 'isAddon',
+  COLUMN_CURRENCY = 'currency',
   COLUMN_SERVICE_REF = 'service_ref',
   COLUMN_SKU = 'sku',
   COLUMN_NAME = 'name',
@@ -49,6 +53,10 @@ export type LicenseGetData = {
   [LicenseGetFields.COLUMN_FRIENDLY_NAME]: string | null;
   [LicenseGetFields.COLUMN_CUSTOMER_REF]: string;
   [LicenseGetFields.COLUMN_STATE]: string;
+  [LicenseGetFields.COLUMN_STATUS_CODE]: number;
+  [LicenseGetFields.COLUMN_IS_TRIAL]: boolean;
+  [LicenseGetFields.COLUMN_IS_ADDON]: boolean;
+  [LicenseGetFields.COLUMN_CURRENCY]: string;
   [LicenseGetFields.COLUMN_SERVICE_REF]: string;
   [LicenseGetFields.COLUMN_SKU]: string;
   [LicenseGetFields.COLUMN_NAME]: string;
@@ -78,6 +86,10 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
   readonly #friendlyName: string | null;
   readonly #customer_ref: string;
   readonly #state: string;
+  readonly #statusCode: number;
+  readonly #isTrial: boolean;
+  readonly #isAddon: boolean;
+  readonly #currency: string;
   readonly #service_ref: string;
   readonly #sku: string;
   readonly #name: string;
@@ -111,6 +123,10 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
     this.#customer_ref =
       licenseGetDataInput[LicenseGetFields.COLUMN_CUSTOMER_REF];
     this.#state = licenseGetDataInput[LicenseGetFields.COLUMN_STATE];
+    this.#statusCode = licenseGetDataInput[LicenseGetFields.COLUMN_STATUS_CODE];
+    this.#isTrial = licenseGetDataInput[LicenseGetFields.COLUMN_IS_TRIAL];
+    this.#isAddon = licenseGetDataInput[LicenseGetFields.COLUMN_IS_ADDON];
+    this.#currency = licenseGetDataInput[LicenseGetFields.COLUMN_CURRENCY];
     this.#service_ref =
       licenseGetDataInput[LicenseGetFields.COLUMN_SERVICE_REF];
     this.#sku = licenseGetDataInput[LicenseGetFields.COLUMN_SKU];
@@ -176,6 +192,22 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
 
   public get state(): string {
     return this.#state;
+  }
+
+  get statusCode(): number {
+    return this.#statusCode;
+  }
+
+  get isTrial(): boolean {
+    return this.#isTrial;
+  }
+
+  get isAddon(): boolean {
+    return this.#isAddon;
+  }
+
+  get currency(): string {
+    return this.#currency;
   }
 
   public get serviceRef(): string {
@@ -269,6 +301,10 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
       [LicenseGetFields.COLUMN_FRIENDLY_NAME]: this.friendlyName,
       [LicenseGetFields.COLUMN_CUSTOMER_REF]: this.customerRef,
       [LicenseGetFields.COLUMN_STATE]: this.state,
+      [LicenseGetFields.COLUMN_STATUS_CODE]: this.statusCode,
+      [LicenseGetFields.COLUMN_IS_TRIAL]: this.isTrial,
+      [LicenseGetFields.COLUMN_IS_ADDON]: this.isAddon,
+      [LicenseGetFields.COLUMN_CURRENCY]: this.currency,
       [LicenseGetFields.COLUMN_SERVICE_REF]: this.serviceRef,
       [LicenseGetFields.COLUMN_SKU]: this.sku,
       [LicenseGetFields.COLUMN_NAME]: this.name,
