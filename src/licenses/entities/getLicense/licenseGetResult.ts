@@ -23,7 +23,6 @@ export enum LicenseGetFields {
   COLUMN_STATUS_CODE = 'statusCode',
   COLUMN_IS_TRIAL = 'isTrial',
   COLUMN_IS_ADDON = 'isAddon',
-  COLUMN_CURRENCY = 'currency',
   COLUMN_SERVICE_REF = 'service_ref',
   COLUMN_SKU = 'sku',
   COLUMN_NAME = 'name',
@@ -56,7 +55,6 @@ export type LicenseGetData = {
   [LicenseGetFields.COLUMN_STATUS_CODE]: number;
   [LicenseGetFields.COLUMN_IS_TRIAL]: boolean;
   [LicenseGetFields.COLUMN_IS_ADDON]: boolean;
-  [LicenseGetFields.COLUMN_CURRENCY]: string;
   [LicenseGetFields.COLUMN_SERVICE_REF]: string;
   [LicenseGetFields.COLUMN_SKU]: string;
   [LicenseGetFields.COLUMN_NAME]: string;
@@ -89,7 +87,6 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
   readonly #statusCode: number;
   readonly #isTrial: boolean;
   readonly #isAddon: boolean;
-  readonly #currency: string;
   readonly #service_ref: string;
   readonly #sku: string;
   readonly #name: string;
@@ -126,7 +123,6 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
     this.#statusCode = licenseGetDataInput[LicenseGetFields.COLUMN_STATUS_CODE];
     this.#isTrial = licenseGetDataInput[LicenseGetFields.COLUMN_IS_TRIAL];
     this.#isAddon = licenseGetDataInput[LicenseGetFields.COLUMN_IS_ADDON];
-    this.#currency = licenseGetDataInput[LicenseGetFields.COLUMN_CURRENCY];
     this.#service_ref =
       licenseGetDataInput[LicenseGetFields.COLUMN_SERVICE_REF];
     this.#sku = licenseGetDataInput[LicenseGetFields.COLUMN_SKU];
@@ -204,10 +200,6 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
 
   get isAddon(): boolean {
     return this.#isAddon;
-  }
-
-  get currency(): string {
-    return this.#currency;
   }
 
   public get serviceRef(): string {
@@ -304,7 +296,6 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
       [LicenseGetFields.COLUMN_STATUS_CODE]: this.statusCode,
       [LicenseGetFields.COLUMN_IS_TRIAL]: this.isTrial,
       [LicenseGetFields.COLUMN_IS_ADDON]: this.isAddon,
-      [LicenseGetFields.COLUMN_CURRENCY]: this.currency,
       [LicenseGetFields.COLUMN_SERVICE_REF]: this.serviceRef,
       [LicenseGetFields.COLUMN_SKU]: this.sku,
       [LicenseGetFields.COLUMN_NAME]: this.name,

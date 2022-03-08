@@ -261,7 +261,6 @@ export const PAYLOAD_SCHEMA_LICENSE: GetData<LicenseGet> = {
       [LicenseGetFields.COLUMN_STATUS_CODE]: 86,
       [LicenseGetFields.COLUMN_IS_TRIAL]: true,
       [LicenseGetFields.COLUMN_IS_ADDON]: true,
-      [LicenseGetFields.COLUMN_CURRENCY]: 'EUR',
       [LicenseGetFields.COLUMN_SERVICE_REF]: 'service_ref',
       [LicenseGetFields.COLUMN_SKU]: 'sku',
       [LicenseGetFields.COLUMN_NAME]: 'name',
@@ -309,6 +308,7 @@ export const PAYLOAD_SCHEMA_LICENSE: GetData<LicenseGet> = {
       [LicenseGetFields.COLUMN_ASSOCIATED_SUBSCRIPTION_PROGRAM]:
         'associated_subscription_program',
       [LicenseGetFields.COLUMN_PRICE]: {
+        [LicensePriceGetFields.COLUMN_CURRENCY]: 'CURRENCY',
         [LicensePriceGetFields.COLUMN_UNIT]: {
           [BuySellFields.COLUMN_BUY]: 2,
           [BuySellFields.COLUMN_SELL]: 3,
@@ -335,7 +335,6 @@ export const PAYLOAD_SCHEMA_LICENSE_WITHOUT_OPTIONAL_FIELDS: GetData<LicenseGet>
       [LicenseGetFields.COLUMN_STATUS_CODE]: 86,
       [LicenseGetFields.COLUMN_IS_TRIAL]: true,
       [LicenseGetFields.COLUMN_IS_ADDON]: true,
-      [LicenseGetFields.COLUMN_CURRENCY]: 'EUR',
       [LicenseGetFields.COLUMN_SERVICE_REF]: 'service_ref',
       [LicenseGetFields.COLUMN_SKU]: 'sku',
       [LicenseGetFields.COLUMN_NAME]: 'name',
@@ -360,6 +359,7 @@ export const PAYLOAD_SCHEMA_LICENSE_WITHOUT_OPTIONAL_FIELDS: GetData<LicenseGet>
       [LicenseGetFields.COLUMN_ASSOCIATED_SUBSCRIPTION_PROGRAM]:
         'associated_subscription_program',
       [LicenseGetFields.COLUMN_PRICE]: {
+        [LicensePriceGetFields.COLUMN_CURRENCY]: 'CURRENCY',
         [LicensePriceGetFields.COLUMN_UNIT]: {
           [BuySellFields.COLUMN_BUY]: 2,
           [BuySellFields.COLUMN_SELL]: 3,
