@@ -3,18 +3,24 @@ import nock from 'nock';
 import {
   ContactFields,
   DetailsFields,
+  InvitationContactFields,
   CustomerFields,
   GetResult,
   GetResultFields,
   Parameters,
   PublicApiClient,
   DataCustomersFields,
+  CompanyFields,
+  DataInvitationFields,
 } from '../../src/';
 import { expect } from 'chai';
 import { PaginationFields } from '../../src/pagination';
 
 export const CUSTOMERS_MOCK_URL = 'https://customers.localhost';
 export const CUSTOMERS_GET_CUSTOMERS_URL = new RegExp('/customers.*');
+export const CUSTOMERS_GET_CUSTOMER_INVITATION_URL = new RegExp(
+  '/customers/invitations.*',
+);
 
 export const PAYLOAD_GET_CUSTOMERS = {
   [GetResultFields.COLUMN_STATUS]: 200,
@@ -110,6 +116,24 @@ export const PAYLOAD_GET_CUSTOMERS_WITHOUT_OPTIONAL_FIELDS = {
   },
 };
 
+export const PAYLOAD_GET_CUSTOMER_INVITATION = {
+  [GetResultFields.COLUMN_STATUS]: 200,
+  [GetResultFields.COLUMN_DATA]: {
+    [DataInvitationFields.COLUMN_CODE]: 'CODE_999',
+    [DataInvitationFields.COLUMN_CREATED_AT]: '01-01-2021',
+    [DataInvitationFields.COLUMN_UPDATED_AT]: '09-09-2022',
+    [DataInvitationFields.COLUMN_COMPANY]: {
+      [CompanyFields.COLUMN_REFERENCE]: 'REFERENCE_0123456789',
+    },
+    [DataInvitationFields.COLUMN_CONTACT]: {
+      [InvitationContactFields.COLUMN_FIRSTNAME]: 'firstname',
+      [InvitationContactFields.COLUMN_USERNAME]: 'username',
+      [InvitationContactFields.COLUMN_LASTNAME]: 'lastname',
+      [InvitationContactFields.COLUMN_EMAIL]: 'email',
+    },
+  },
+};
+
 describe('CustomersClients', () => {
   describe('getCustomers', () => {
     const client = new PublicApiClient()
@@ -164,6 +188,27 @@ describe('CustomersClients', () => {
       expect(result.toJSON()).to.eql(
         PAYLOAD_GET_CUSTOMERS_WITHOUT_OPTIONAL_FIELDS,
       );
+    });
+  });
+
+  describe('getCustomerInvitation', () => {
+    const client = new PublicApiClient()
+      .getCustomersClient()
+      .setUrl(CUSTOMERS_MOCK_URL);
+
+    it('call get customer invitation method with invitation code', async () => {
+      nock(CUSTOMERS_MOCK_URL)
+        .get(CUSTOMERS_GET_CUSTOMER_INVITATION_URL)
+        .reply(200, PAYLOAD_GET_CUSTOMER_INVITATION);
+
+      const result = await client.getCustomerInvitation(
+        PAYLOAD_GET_CUSTOMER_INVITATION[GetResultFields.COLUMN_DATA][
+          DataInvitationFields.COLUMN_CODE
+        ],
+      );
+
+      expect(result).to.be.instanceof(GetResult);
+      expect(result.toJSON()).to.eql(PAYLOAD_GET_CUSTOMER_INVITATION);
     });
   });
 });
