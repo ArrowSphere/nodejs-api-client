@@ -44,7 +44,7 @@ A customers contact are managed by the `customersContact` entity.
 | Email                   | ```string``` | john.doe@examplecompany.com | Company main contact email      |
 | Phone                   | ```string``` | +33 (0)654321098            | Company main contact phone      |
 | SyncPartnerContactRefId | ```number``` | 123456                      | Company main contact ID         |
-| ContactPersonID         | ```string``` | ANY_STRING_ID               | Contact ERP ID                  |
+| ContactPersonID         | ```string``` | ANY_STRING_ID               | InvitationContact ERP ID                  |
 
 ### CustomerDetails
 
@@ -60,6 +60,38 @@ A customers contact are managed by the `customersDetails` entity.
 | TenantId          | ```string```  | MY_TENANT_ID                | Required for a Microsoft product when a migration is requested                                                                                                                                                                    |
 | IbmCustomerNumber | ```string```  | MY_IBM_CUSTOMER_NUMBER      | Required for an IBM Importer command be complete                                                                                                                                                                                  |
 | IbmMaasAccountId  | ```string```  | MY_IBM_MAAS_ACCOUNT_ID      | Required for an IBM product                                                                                                                                                                                                       |
+
+### Invitation
+
+A customer invitation are managed by the `getCustomerInvitation` entity.
+
+| Field             | Type                           | Example                  | Description                                    |
+|-------------------|--------------------------------|--------------------------|------------------------------------------------|
+| code              | ```string```                   | Abcd123efgH              | The invitation code                            |
+| createdAt         | ```string```                   | 2021-12-25T23:45:12.123Z | The date when this invitation was created      |
+| updatedAt         | ```string```                   | 2021-12-25T23:45:12.123Z | The date when this invitation was last updated |
+| company           | ```getCustomersCompanyData```  |                          | Company reference                              |
+| contact           | ```getCustomersContactData```  |                          | Invitation specific contact                    |
+
+### InvitationContact
+
+A customers invitation contact are managed by the `invitationContact` entity.
+
+| Field                   | Type         | Example                     | Description                                |
+|-------------------------|--------------|-----------------------------|--------------------------------------------|
+| firstname               | ```string``` | John                        | The first name of the end customer contact |
+| lastName                | ```string``` | Doe                         | The last name of the end customer contact  |
+| email                   | ```string``` | john.doe@examplecompany.com | The e-mail of the end customer contact     |
+| userName                | ```string``` | uidd-uidd-uidd              | Generated uidd username                    |
+
+### Company
+
+A customers company are managed by the `company` entity.
+
+| Field                   | Type         | Example   | Description                         |
+|-------------------------|--------------|-----------|-------------------------------------|
+| reference               | ```string``` | XSP12345  | The end customer company reference  |
+
 
 ## Usage
 
