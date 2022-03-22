@@ -2,11 +2,33 @@ import { GetResult, Parameters, PublicApiClient } from '../../src';
 import nock from 'nock';
 import { expect } from 'chai';
 import { PAYLOAD_GET_ORDERS } from './mocks/orders.mocks';
+import {
+  CreateOrderInputPayload,
+  CreateOrderResponsePayload,
+} from './mocks/create.mocks';
 
 export const ORDERS_MOCK_URL = 'https://orders.localhost';
+export const ORDERS_CREATE = '/orders';
 export const GET_ORDERS_URL = new RegExp('/orders.*');
 
 describe('OrdersClient', () => {
+  const client = new PublicApiClient()
+    .getOrdersClient()
+    .setUrl(ORDERS_MOCK_URL);
+
+  describe('create', () => {
+    it('calls the post method with the right payload', async () => {
+      nock(ORDERS_MOCK_URL)
+        .post(ORDERS_CREATE)
+        .reply(200, CreateOrderResponsePayload);
+
+      const response = await client.create(CreateOrderInputPayload);
+
+      expect(response).to.be.instanceof(GetResult);
+      expect(response.toJSON()).to.eqls(CreateOrderResponsePayload);
+    });
+  });
+
   describe('getListOrders', async () => {
     const orderClient = new PublicApiClient()
       .getOrdersClient()
