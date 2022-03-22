@@ -3,6 +3,14 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.2.0] - 2022-03-24
+
+### Changed
+
+- Add endpoint create order
+- Add endpoint list order
+- Add endpoint get an order
+
 ## [3.1.0] - 2022-03-21
 
 ### Changed
