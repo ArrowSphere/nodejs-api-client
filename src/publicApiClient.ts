@@ -3,6 +3,7 @@ import { CheckDomainClient, WhoAmIClient } from './general';
 import { LicensesClient } from './licenses/licensesClient';
 import { SubscriptionsClient } from './subscriptions/subscriptionsClient';
 import { CustomersClient } from './customers/customersClient';
+import { OrdersClient } from './orders';
 
 /**
  * Public API Client class, should be the main entry point for your calls
@@ -58,6 +59,16 @@ export class PublicApiClient extends AbstractClient {
    */
   public getSubscriptionsClient(): SubscriptionsClient {
     return new SubscriptionsClient(this.client)
+      .setUrl(this.url)
+      .setApiKey(this.apiKey);
+  }
+
+  /**
+   * Creates a new {@link OrdersClient} instance and returns it
+   * @returns {@link OrdersClient}
+   */
+  public getOrdersClient(): OrdersClient {
+    return new OrdersClient(this.client)
       .setUrl(this.url)
       .setApiKey(this.apiKey);
   }
