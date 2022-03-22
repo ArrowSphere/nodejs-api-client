@@ -11,6 +11,8 @@ export enum ParameterKeys {
   API_KEY = 'apiKey',
   PAGE = 'page',
   PER_PAGE = 'per_page',
+  SORT_BY = 'sort_by',
+  ORDER_BY = 'order_by',
   PER_PAGE_CAMEL = 'perPage',
 }
 
