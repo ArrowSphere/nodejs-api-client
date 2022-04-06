@@ -15,6 +15,8 @@ export enum CreateOrderInputFields {
   COLUMN_PARENT_SKU = 'parentSku',
   COLUMN_PERIODICITY = 'periodicity',
   COLUMN_TERM = 'term',
+  COLUMN_DISCOUNT = 'discount',
+  COLUMN_UPLIFT = 'uplift',
 }
 
 export type CreateOrderInputType = {
@@ -25,13 +27,15 @@ export type CreateOrderInputType = {
   [CreateOrderInputFields.COLUMN_PRODUCTS]: Array<{
     [CreateOrderInputFields.COLUMN_SKU]: string;
     [CreateOrderInputFields.COLUMN_QUANTITY]: number;
-    [CreateOrderInputFields.COLUMN_SUBSCRIPTION]: {
+    [CreateOrderInputFields.COLUMN_SUBSCRIPTION]?: {
       [CreateOrderInputFields.COLUMN_REFERENCE]: string;
     };
     [CreateOrderInputFields.COLUMN_PARENT_LICENSE_ID]?: string;
     [CreateOrderInputFields.COLUMN_PARENT_SKU]?: string;
     [CreateOrderInputFields.COLUMN_PERIODICITY]?: string;
     [CreateOrderInputFields.COLUMN_TERM]?: string;
+    [CreateOrderInputFields.COLUMN_DISCOUNT]?: number;
+    [CreateOrderInputFields.COLUMN_UPLIFT]?: number;
   }>;
 };
 
@@ -56,16 +60,22 @@ export class OrdersClient extends AbstractClient {
   }
 
   public async getListOrders(
+    perPage = 25,
+    page = 1,
     parameters: Parameters = {},
   ): Promise<GetResult<DataListOrders>> {
+    this.setPerPage(perPage);
+    this.setPage(page);
+
     return new GetResult(DataListOrders, await this.get(parameters));
   }
 
   public async getOrder(
     orderReference: string,
+    parameters: Parameters = {},
   ): Promise<GetResult<DataListOrders>> {
-    this.path = `${this.ROOT_PATH}/${orderReference}`;
+    this.path = `/${orderReference}`;
 
-    return new GetResult(DataListOrders, await this.get());
+    return new GetResult(DataListOrders, await this.get(parameters));
   }
 }

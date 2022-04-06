@@ -3,6 +3,20 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.2.1] - 2022-04-06
+
+### Changed
+
+- OrderClient :
+  - Update type CreateOrderInputType, Fields subscription was optional
+  - Update type CreateOrderInputType, Add Fields discount and uplift
+- Endpoint List Order :
+  - add Pagination
+  - Fields Partner was optional 
+- Endpoint Get Order :
+  - Update generated URL
+  - Fields Partner was optional
+
 ## [3.2.0] - 2022-04-01
 
 ### Changed

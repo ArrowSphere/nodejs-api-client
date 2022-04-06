@@ -21,7 +21,7 @@ export type OrderType = {
   [OrderFields.COLUMN_DATESTATUS]: string;
   [OrderFields.COLUMN_DATECREATION]: string;
   [OrderFields.COLUMN_ORDER_REFERENCE]: string;
-  [OrderFields.COLUMN_PARTNER]: OrderPartnerType;
+  [OrderFields.COLUMN_PARTNER]?: OrderPartnerType;
   [OrderFields.COLUMN_CUSTOMER]: ReferenceLinkType;
   [OrderFields.COLUMN_PONUMBER]: string;
   [OrderFields.COLUMN_PRODUCTS]: Array<OrderProductsType>;
@@ -33,7 +33,7 @@ export class Order extends AbstractEntity<OrderType> {
   readonly #dateStatus: string;
   readonly #dateCreation: string;
   readonly #order_reference: string;
-  readonly #partner: OrderPartner;
+  readonly #partner?: OrderPartner;
   readonly #customer: ReferenceLink;
   readonly #ponumber: string;
   readonly #products: Array<OrderProduct>;
@@ -47,9 +47,11 @@ export class Order extends AbstractEntity<OrderType> {
     this.#dateCreation = getOrderDataInput[OrderFields.COLUMN_DATECREATION];
     this.#order_reference =
       getOrderDataInput[OrderFields.COLUMN_ORDER_REFERENCE];
-    this.#partner = new OrderPartner(
-      getOrderDataInput[OrderFields.COLUMN_PARTNER],
-    );
+    this.#partner = getOrderDataInput[OrderFields.COLUMN_PARTNER]
+      ? new OrderPartner(
+          getOrderDataInput[OrderFields.COLUMN_PARTNER] as OrderPartnerType,
+        )
+      : undefined;
     this.#customer = new ReferenceLink(
       getOrderDataInput[OrderFields.COLUMN_CUSTOMER],
     );
@@ -74,7 +76,7 @@ export class Order extends AbstractEntity<OrderType> {
   get order_reference(): string {
     return this.#order_reference;
   }
-  get partner(): OrderPartner {
+  get partner(): OrderPartner | undefined {
     return this.#partner;
   }
   get customer(): ReferenceLink {
@@ -94,7 +96,7 @@ export class Order extends AbstractEntity<OrderType> {
       [OrderFields.COLUMN_DATESTATUS]: this.dateStatus,
       [OrderFields.COLUMN_DATECREATION]: this.dateCreation,
       [OrderFields.COLUMN_ORDER_REFERENCE]: this.order_reference,
-      [OrderFields.COLUMN_PARTNER]: this.partner.toJSON(),
+      [OrderFields.COLUMN_PARTNER]: this.partner?.toJSON(),
       [OrderFields.COLUMN_CUSTOMER]: this.customer.toJSON(),
       [OrderFields.COLUMN_PONUMBER]: this.ponumber,
       [OrderFields.COLUMN_PRODUCTS]: this.products.map((order: OrderProduct) =>
