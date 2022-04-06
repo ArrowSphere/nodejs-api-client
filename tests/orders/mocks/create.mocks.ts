@@ -44,6 +44,8 @@ export const CreateOrderFullInputPayload = {
       [CreateOrderInputFields.COLUMN_PARENT_SKU]: 'XXXXXXX-XXXXX-XXXXXXXXXX',
       [CreateOrderInputFields.COLUMN_PERIODICITY]: 'per Month',
       [CreateOrderInputFields.COLUMN_TERM]: '1 Year',
+      [CreateOrderInputFields.COLUMN_DISCOUNT]: 5,
+      [CreateOrderInputFields.COLUMN_UPLIFT]: 2,
     },
   ],
 };
