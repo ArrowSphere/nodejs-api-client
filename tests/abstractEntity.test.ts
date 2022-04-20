@@ -24,6 +24,17 @@ describe('AbstractEntity', () => {
     });
   });
 
+  describe('entityDataInput', () => {
+    it('get the entity data input', function () {
+      const data: TestData = {
+        sampleField: 'sampleValue',
+      };
+
+      const testEntity = new TestEntity(data);
+      expect(testEntity.entityDataInput).to.be.equals(data);
+    });
+  });
+
   describe('validate', () => {
     it('validates if the flag is set to true', () => {
       const data: TestData = {

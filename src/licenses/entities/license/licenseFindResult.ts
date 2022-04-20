@@ -9,6 +9,7 @@ import {
 import { AbstractEntity } from '../../../abstractEntity';
 import { Rules } from 'validatorjs';
 import {
+  ConfigFindResult,
   ConfigFindResultData,
   ConfigFindResultDataFiltersParameters,
   ConfigFindResultDataKeywords,
@@ -20,6 +21,7 @@ import {
   SortParameters,
 } from '../../licensesClient';
 import {
+  WarningFindResult,
   WarningFindResultData,
   WarningFindResultDataFiltersParameters,
   WarningFindResultDataKeywords,
@@ -98,14 +100,8 @@ export type LicenseFindResultData = {
   [LicenseFindResultFields.COLUMN_BASE_SEAT]: number;
   [LicenseFindResultFields.COLUMN_CATEGORY]: string;
   [LicenseFindResultFields.COLUMN_CLOUD_TYPE]: string;
-  [LicenseFindResultFields.COLUMN_CONFIGS]:
-    | Array<ConfigFindResultData>
-    | null
-    | undefined;
-  [LicenseFindResultFields.COLUMN_WARNINGS]:
-    | Array<WarningFindResultData>
-    | null
-    | undefined;
+  [LicenseFindResultFields.COLUMN_CONFIGS]?: Array<ConfigFindResultData> | null;
+  [LicenseFindResultFields.COLUMN_WARNINGS]?: Array<WarningFindResultData> | null;
   [LicenseFindResultFields.COLUMN_CUSTOMER_NAME]: string;
   [LicenseFindResultFields.COLUMN_CUSTOMER_REF]: string;
   [LicenseFindResultFields.COLUMN_END_DATE]: string;
@@ -298,8 +294,8 @@ export class LicenseFindResult extends AbstractEntity<LicenseFindResultData> {
   readonly #baseSeat: number;
   readonly #category: string;
   readonly #classification: string;
-  readonly #configs?: Array<ConfigFindResultData> | null | undefined;
-  readonly #warnings?: Array<WarningFindResultData> | null | undefined;
+  readonly #configs?: Array<ConfigFindResult> | null;
+  readonly #warnings?: Array<WarningFindResult> | null;
   readonly #customerName: string;
   readonly #customerRef: string;
   readonly #endDate: string;
@@ -358,12 +354,14 @@ export class LicenseFindResult extends AbstractEntity<LicenseFindResultData> {
     this.#baseSeat = data[LicenseFindResultFields.COLUMN_BASE_SEAT];
     this.#category = data[LicenseFindResultFields.COLUMN_CATEGORY];
     this.#classification = data[LicenseFindResultFields.COLUMN_CLOUD_TYPE];
-    if (typeof data[LicenseFindResultFields.COLUMN_CONFIGS] !== 'undefined') {
-      this.#configs = data?.[LicenseFindResultFields.COLUMN_CONFIGS];
-    }
-    if (typeof data[LicenseFindResultFields.COLUMN_WARNINGS] !== 'undefined') {
-      this.#warnings = data?.[LicenseFindResultFields.COLUMN_WARNINGS];
-    }
+    this.#configs = data[LicenseFindResultFields.COLUMN_CONFIGS]?.map(
+      (configData: ConfigFindResultData): ConfigFindResult =>
+        new ConfigFindResult(configData),
+    );
+    this.#warnings = data[LicenseFindResultFields.COLUMN_WARNINGS]?.map(
+      (warningData: WarningFindResultData): WarningFindResult =>
+        new WarningFindResult(warningData),
+    );
     this.#customerName = data[LicenseFindResultFields.COLUMN_CUSTOMER_NAME];
     this.#customerRef = data[LicenseFindResultFields.COLUMN_CUSTOMER_REF];
     this.#endDate = data[LicenseFindResultFields.COLUMN_END_DATE];
@@ -451,11 +449,11 @@ export class LicenseFindResult extends AbstractEntity<LicenseFindResultData> {
     return this.#classification;
   }
 
-  public get configs(): Array<ConfigFindResultData> | null | undefined {
+  public get configs(): Array<ConfigFindResult> | null | undefined {
     return this.#configs;
   }
 
-  public get warnings(): Array<WarningFindResultData> | null | undefined {
+  public get warnings(): Array<WarningFindResult> | null | undefined {
     return this.#warnings;
   }
 
@@ -599,8 +597,12 @@ export class LicenseFindResult extends AbstractEntity<LicenseFindResultData> {
       [LicenseFindResultFields.COLUMN_BASE_SEAT]: this.baseSeat,
       [LicenseFindResultFields.COLUMN_CATEGORY]: this.category,
       [LicenseFindResultFields.COLUMN_CLOUD_TYPE]: this.classification,
-      [LicenseFindResultFields.COLUMN_CONFIGS]: this.configs,
-      [LicenseFindResultFields.COLUMN_WARNINGS]: this.warnings,
+      [LicenseFindResultFields.COLUMN_CONFIGS]: this.configs?.map(
+        (config: ConfigFindResult) => config.toJSON(),
+      ),
+      [LicenseFindResultFields.COLUMN_WARNINGS]: this.warnings?.map(
+        (warning: WarningFindResult) => warning.toJSON(),
+      ),
       [LicenseFindResultFields.COLUMN_CUSTOMER_NAME]: this.customerName,
       [LicenseFindResultFields.COLUMN_CUSTOMER_REF]: this.customerRef,
       [LicenseFindResultFields.COLUMN_END_DATE]: this.endDate,
