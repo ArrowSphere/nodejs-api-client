@@ -42,7 +42,7 @@ export class LicensePriceGetResult extends AbstractEntity<LicensePriceGetData> {
 
   public toJSON(): LicensePriceGetData {
     return {
-      [LicensePriceGetFields.COLUMN_CURRENCY]: this.#currency,
+      [LicensePriceGetFields.COLUMN_CURRENCY]: this.currency,
       [LicensePriceGetFields.COLUMN_UNIT]: this.unit.toJSON(),
       [LicensePriceGetFields.COLUMN_TOTAL]: this.total.toJSON(),
     };
