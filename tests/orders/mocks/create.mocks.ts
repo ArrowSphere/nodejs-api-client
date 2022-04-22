@@ -1,9 +1,12 @@
 import {
   CreateOrderInputFields,
+  CreateOrderInputType,
   ReferenceLinkFields,
-} from '../../../src/orders';
+  ReferenceLinkType,
+} from '../../../src';
+import { GetData } from '../../../src';
 
-export const CreateOrderResponsePayload = {
+export const CreateOrderResponsePayload: GetData<ReferenceLinkType> = {
   status: 200,
   data: {
     [ReferenceLinkFields.COLUMN_REFERENCE]: 'XSPO123456',
@@ -11,7 +14,7 @@ export const CreateOrderResponsePayload = {
   },
 };
 
-export const CreateOrderPartialInputPayload = {
+export const CreateOrderPartialInputPayload: CreateOrderInputType = {
   [CreateOrderInputFields.COLUMN_CUSTOMER]: {
     [CreateOrderInputFields.COLUMN_REFERENCE]: 'XSP4533',
   },
@@ -27,7 +30,7 @@ export const CreateOrderPartialInputPayload = {
   ],
 };
 
-export const CreateOrderFullInputPayload = {
+export const CreateOrderFullInputPayload: CreateOrderInputType = {
   [CreateOrderInputFields.COLUMN_CUSTOMER]: {
     [CreateOrderInputFields.COLUMN_REFERENCE]: 'XSP4533',
     [CreateOrderInputFields.COLUMN_PO_NUMBER]: '456789',
