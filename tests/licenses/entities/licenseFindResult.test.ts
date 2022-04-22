@@ -8,11 +8,13 @@ import {
 import { LicenseFindResultFields } from '../../../src/licenses/entities/license/licenseFindResult';
 import { MOCK_RESULT_DATA } from '../licensesClient.test';
 
+const date = new Date().toISOString();
+
 export const MOCK_LICENSE_DATA_WITHOUT_OPTIONAL_DATA_INPUT: LicenseFindResultData = {
   [LicenseFindResultFields.COLUMN_HIGHLIGHT]: {},
   [LicenseFindResultFields.COLUMN_ACCEPT_EULA]: true,
   [LicenseFindResultFields.COLUMN_ACTIVE_SEATS]: {
-    [ActiveSeatsFindResultFields.COLUMN_LAST_UPDATE]: new Date().toISOString(),
+    [ActiveSeatsFindResultFields.COLUMN_LAST_UPDATE]: date,
     [ActiveSeatsFindResultFields.COLUMN_NUMBER]: 1,
   },
   [LicenseFindResultFields.COLUMN_AUTO_RENEW]: true,
@@ -21,11 +23,11 @@ export const MOCK_LICENSE_DATA_WITHOUT_OPTIONAL_DATA_INPUT: LicenseFindResultDat
   [LicenseFindResultFields.COLUMN_CLOUD_TYPE]: 'cloud_type',
   [LicenseFindResultFields.COLUMN_CUSTOMER_NAME]: 'customer_name',
   [LicenseFindResultFields.COLUMN_CUSTOMER_REF]: 'ref',
-  [LicenseFindResultFields.COLUMN_END_DATE]: new Date().toISOString(),
+  [LicenseFindResultFields.COLUMN_END_DATE]: date,
   [LicenseFindResultFields.COLUMN_FRIENDLY_NAME]: 'friendly_name',
   [LicenseFindResultFields.COLUMN_ID]: 1,
   [LicenseFindResultFields.COLUMN_IS_ENABLED]: true,
-  [LicenseFindResultFields.COLUMN_LAST_UPDATE]: new Date().toISOString(),
+  [LicenseFindResultFields.COLUMN_LAST_UPDATE]: date,
   [LicenseFindResultFields.COLUMN_MARKETPLACE]: 'marketplace',
   [LicenseFindResultFields.COLUMN_MESSAGE]: 'message',
   [LicenseFindResultFields.COLUMN_OFFER]: 'offer',
@@ -46,7 +48,7 @@ export const MOCK_LICENSE_DATA_WITHOUT_OPTIONAL_DATA_INPUT: LicenseFindResultDat
   [LicenseFindResultFields.COLUMN_SEAT]: 1,
   [LicenseFindResultFields.COLUMN_SERVICE_REF]: 'service_ref',
   [LicenseFindResultFields.COLUMN_SKU]: 'SKU',
-  [LicenseFindResultFields.COLUMN_START_DATE]: new Date().toISOString(),
+  [LicenseFindResultFields.COLUMN_START_DATE]: date,
   [LicenseFindResultFields.COLUMN_STATUS_CODE]: 200,
   [LicenseFindResultFields.COLUMN_STATUS_LABEL]: 'Success',
   [LicenseFindResultFields.COLUMN_SUBSCRIPTION_ID]: 'subscription_id',
@@ -65,7 +67,7 @@ export const MOCK_LICENSE_DATA_WITHOUT_OPTIONAL_DATA_RESPONSE: LicenseFindResult
   [LicenseFindResultFields.COLUMN_HIGHLIGHT]: {},
   [LicenseFindResultFields.COLUMN_ACCEPT_EULA]: true,
   [LicenseFindResultFields.COLUMN_ACTIVE_SEATS]: {
-    [ActiveSeatsFindResultFields.COLUMN_LAST_UPDATE]: new Date().toISOString(),
+    [ActiveSeatsFindResultFields.COLUMN_LAST_UPDATE]: date,
     [ActiveSeatsFindResultFields.COLUMN_NUMBER]: 1,
   },
   [LicenseFindResultFields.COLUMN_AUTO_RENEW]: true,
@@ -76,11 +78,11 @@ export const MOCK_LICENSE_DATA_WITHOUT_OPTIONAL_DATA_RESPONSE: LicenseFindResult
   [LicenseFindResultFields.COLUMN_WARNINGS]: undefined,
   [LicenseFindResultFields.COLUMN_CUSTOMER_NAME]: 'customer_name',
   [LicenseFindResultFields.COLUMN_CUSTOMER_REF]: 'ref',
-  [LicenseFindResultFields.COLUMN_END_DATE]: new Date().toISOString(),
+  [LicenseFindResultFields.COLUMN_END_DATE]: date,
   [LicenseFindResultFields.COLUMN_FRIENDLY_NAME]: 'friendly_name',
   [LicenseFindResultFields.COLUMN_ID]: 1,
   [LicenseFindResultFields.COLUMN_IS_ENABLED]: true,
-  [LicenseFindResultFields.COLUMN_LAST_UPDATE]: new Date().toISOString(),
+  [LicenseFindResultFields.COLUMN_LAST_UPDATE]: date,
   [LicenseFindResultFields.COLUMN_MARKETPLACE]: 'marketplace',
   [LicenseFindResultFields.COLUMN_MESSAGE]: 'message',
   [LicenseFindResultFields.COLUMN_OFFER]: 'offer',
@@ -101,7 +103,7 @@ export const MOCK_LICENSE_DATA_WITHOUT_OPTIONAL_DATA_RESPONSE: LicenseFindResult
   [LicenseFindResultFields.COLUMN_SEAT]: 1,
   [LicenseFindResultFields.COLUMN_SERVICE_REF]: 'service_ref',
   [LicenseFindResultFields.COLUMN_SKU]: 'SKU',
-  [LicenseFindResultFields.COLUMN_START_DATE]: new Date().toISOString(),
+  [LicenseFindResultFields.COLUMN_START_DATE]: date,
   [LicenseFindResultFields.COLUMN_STATUS_CODE]: 200,
   [LicenseFindResultFields.COLUMN_STATUS_LABEL]: 'Success',
   [LicenseFindResultFields.COLUMN_SUBSCRIPTION_ID]: 'subscription_id',

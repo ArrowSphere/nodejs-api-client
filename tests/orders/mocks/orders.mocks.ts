@@ -1,16 +1,18 @@
 // PAYLOADS
-import { GetResultFields } from '../../../src';
 import {
+  GetData,
+  GetResultFields,
   DataListOrdersFields,
+  DataListOrdersType,
   OrderFields,
   OrderPartnerFields,
   OrderProductsFields,
   ProductPricesFields,
-} from '../../../src/orders';
-import { ReferenceLinkFields } from '../../../src/orders/entities/referenceLink';
-import { SharedContactFields } from '../../../src/shared/contact/contact';
+  ReferenceLinkFields,
+  SharedContactFields,
+} from '../../../src';
 
-export const PAYLOAD_ORDERS = {
+export const PAYLOAD_ORDERS: GetData<DataListOrdersType> = {
   [GetResultFields.COLUMN_STATUS]: 200,
   [GetResultFields.COLUMN_DATA]: {
     [DataListOrdersFields.COLUMN_ORDERS]: [
@@ -41,11 +43,15 @@ export const PAYLOAD_ORDERS = {
             [OrderProductsFields.COLUMN_STATUS]: 'Provisioned',
             [OrderProductsFields.COLUMN_DATESTATUS]: '2017-05-15 09:39:05',
             [OrderProductsFields.COLUMN_DETAILEDSTATUS]: 'Provisioned',
+            [OrderProductsFields.COLUMN_IS_ADDON]: true,
+            [OrderProductsFields.COLUMN_ARROWSUBCATEGORIES]: ['nce'],
+            [OrderProductsFields.COLUMN_IS_TRIAL]: true,
             [OrderProductsFields.COLUMN_PRICES]: {
               [ProductPricesFields.COLUMN_BUY]: 11,
               [ProductPricesFields.COLUMN_SELL]: 11,
               [ProductPricesFields.COLUMN_CURRENCY]: 'EUR',
               [ProductPricesFields.COLUMN_PERIODICITY]: 'per Month',
+              [ProductPricesFields.COLUMN_TERM]: 'one year',
             },
             [OrderProductsFields.COLUMN_SUBSCRIPTION]: {
               [ReferenceLinkFields.COLUMN_REFERENCE]: 'XSPS7896',
@@ -62,7 +68,7 @@ export const PAYLOAD_ORDERS = {
   },
 };
 
-export const PAYLOAD_ORDERS_WITHOUT_OPTIONAL = {
+export const PAYLOAD_ORDERS_WITHOUT_OPTIONAL: GetData<DataListOrdersType> = {
   [GetResultFields.COLUMN_STATUS]: 200,
   [GetResultFields.COLUMN_DATA]: {
     [DataListOrdersFields.COLUMN_ORDERS]: [
@@ -85,11 +91,14 @@ export const PAYLOAD_ORDERS_WITHOUT_OPTIONAL = {
             [OrderProductsFields.COLUMN_STATUS]: 'Provisioned',
             [OrderProductsFields.COLUMN_DATESTATUS]: '2017-05-15 09:39:05',
             [OrderProductsFields.COLUMN_DETAILEDSTATUS]: 'Provisioned',
+            [OrderProductsFields.COLUMN_IS_ADDON]: true,
+            [OrderProductsFields.COLUMN_IS_TRIAL]: true,
             [OrderProductsFields.COLUMN_PRICES]: {
               [ProductPricesFields.COLUMN_BUY]: 11,
               [ProductPricesFields.COLUMN_SELL]: 11,
               [ProductPricesFields.COLUMN_CURRENCY]: 'EUR',
               [ProductPricesFields.COLUMN_PERIODICITY]: 'per Month',
+              [ProductPricesFields.COLUMN_TERM]: 'one year',
             },
             [OrderProductsFields.COLUMN_SUBSCRIPTION]: {
               [ReferenceLinkFields.COLUMN_REFERENCE]: 'XSPS7896',

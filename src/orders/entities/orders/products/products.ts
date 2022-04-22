@@ -1,25 +1,16 @@
 import { AbstractEntity } from '../../../../abstractEntity';
 import { ReferenceLink, ReferenceLinkType } from '../../referenceLink';
+import { ProductPrices, ProductPricesType } from './prices/productPrices';
 
-export enum ProductPricesFields {
-  COLUMN_BUY = 'buy',
-  COLUMN_SELL = 'sell',
-  COLUMN_CURRENCY = 'currency',
-  COLUMN_PERIODICITY = 'periodicity',
-}
-
-export type ProductPricesType = {
-  [ProductPricesFields.COLUMN_BUY]: number;
-  [ProductPricesFields.COLUMN_SELL]: number;
-  [ProductPricesFields.COLUMN_CURRENCY]: string;
-  [ProductPricesFields.COLUMN_PERIODICITY]: string;
-};
 export enum OrderProductsFields {
   COLUMN_SKU = 'sku',
   COLUMN_QUANTITY = 'quantity',
   COLUMN_STATUS = 'status',
   COLUMN_DATESTATUS = 'dateStatus',
   COLUMN_DETAILEDSTATUS = 'detailedStatus',
+  COLUMN_IS_ADDON = 'isAddon',
+  COLUMN_ARROWSUBCATEGORIES = 'arrowSubCategories',
+  COLUMN_IS_TRIAL = 'isTrial',
   COLUMN_PRICES = 'prices',
   COLUMN_SUBSCRIPTION = 'subscription',
   COLUMN_LICENSE = 'license',
@@ -31,6 +22,9 @@ export type OrderProductsType = {
   [OrderProductsFields.COLUMN_STATUS]: string;
   [OrderProductsFields.COLUMN_DATESTATUS]: string;
   [OrderProductsFields.COLUMN_DETAILEDSTATUS]: string;
+  [OrderProductsFields.COLUMN_IS_ADDON]: boolean;
+  [OrderProductsFields.COLUMN_ARROWSUBCATEGORIES]?: Array<string>;
+  [OrderProductsFields.COLUMN_IS_TRIAL]: boolean;
   [OrderProductsFields.COLUMN_PRICES]: ProductPricesType;
   [OrderProductsFields.COLUMN_SUBSCRIPTION]: ReferenceLinkType;
   [OrderProductsFields.COLUMN_LICENSE]: ReferenceLinkType;
@@ -42,7 +36,10 @@ export class OrderProduct extends AbstractEntity<OrderProductsType> {
   readonly #status: string;
   readonly #dateStatus: string;
   readonly #detailedStatus: string;
-  readonly #prices: ProductPricesType;
+  readonly #isAddon: boolean;
+  readonly #arrowSubCategories?: Array<string>;
+  readonly #isTrial: boolean;
+  readonly #prices: ProductPrices;
   readonly #subscription: ReferenceLink;
   readonly #license: ReferenceLink;
 
@@ -55,7 +52,14 @@ export class OrderProduct extends AbstractEntity<OrderProductsType> {
     this.#dateStatus = getOrderProducts[OrderProductsFields.COLUMN_DATESTATUS];
     this.#detailedStatus =
       getOrderProducts[OrderProductsFields.COLUMN_DETAILEDSTATUS];
-    this.#prices = getOrderProducts[OrderProductsFields.COLUMN_PRICES];
+    this.#isAddon = getOrderProducts[OrderProductsFields.COLUMN_IS_ADDON];
+    this.#arrowSubCategories =
+      getOrderProducts[OrderProductsFields.COLUMN_ARROWSUBCATEGORIES] ??
+      undefined;
+    this.#isTrial = getOrderProducts[OrderProductsFields.COLUMN_IS_TRIAL];
+    this.#prices = new ProductPrices(
+      getOrderProducts[OrderProductsFields.COLUMN_PRICES],
+    );
     this.#subscription = new ReferenceLink(
       getOrderProducts[OrderProductsFields.COLUMN_SUBSCRIPTION],
     );
@@ -79,7 +83,16 @@ export class OrderProduct extends AbstractEntity<OrderProductsType> {
   get detailedStatus(): string {
     return this.#detailedStatus;
   }
-  get prices(): ProductPricesType {
+  get isAddon(): boolean {
+    return this.#isAddon;
+  }
+  get arrowSubCategories(): Array<string> | undefined {
+    return this.#arrowSubCategories;
+  }
+  get isTrial(): boolean {
+    return this.#isTrial;
+  }
+  get prices(): ProductPrices {
     return this.#prices;
   }
   get subscription(): ReferenceLink {
@@ -96,7 +109,10 @@ export class OrderProduct extends AbstractEntity<OrderProductsType> {
       [OrderProductsFields.COLUMN_STATUS]: this.status,
       [OrderProductsFields.COLUMN_DATESTATUS]: this.dateStatus,
       [OrderProductsFields.COLUMN_DETAILEDSTATUS]: this.detailedStatus,
-      [OrderProductsFields.COLUMN_PRICES]: this.prices,
+      [OrderProductsFields.COLUMN_IS_ADDON]: this.isAddon,
+      [OrderProductsFields.COLUMN_ARROWSUBCATEGORIES]: this.arrowSubCategories,
+      [OrderProductsFields.COLUMN_IS_TRIAL]: this.isTrial,
+      [OrderProductsFields.COLUMN_PRICES]: this.prices.toJSON(),
       [OrderProductsFields.COLUMN_SUBSCRIPTION]: this.subscription.toJSON(),
       [OrderProductsFields.COLUMN_LICENSE]: this.license.toJSON(),
     };

@@ -31,16 +31,29 @@
 
 ### OrderProduct
 
-| Field          | Type                    | Example                                                                            | Description                                                    |
-|----------------|-------------------------|------------------------------------------------------------------------------------|----------------------------------------------------------------|
-| sku            | ```string```            | Microsoft&#124;&#124;_MS-0ZH-VISIO&#124;&#124;B4D4B7F4-4089-43B6-9C44-DE97B760FB11 | Order SKU                                                      |
-| quantity       | ```number```            | 2                                                                                  | Number of products bought                                      |
-| status         | ```string```            | Provisioned                                                                        | Order status                                                   |
-| dateStatus     | ```string```            | 2017-05-15 09:39:05                                                                | Date the product became the current "Status"                   |
-| detailedStatus | ```string```            | Provisioned                                                                        | An individual product can be a different status than the order |
-| prices         | ```ProductPricesType``` | {"buy": 11,"sell": 11,"currency": "EUR","periodicity": "per Month"}                | ProductPrice Object                                            |
-| subscription   | ```ReferenceLinkType``` |                                                                                    | [ReferenceLink](#ReferenceLink)                                |
-| license        | ```ReferenceLinkType``` |                                                                                    | [ReferenceLink](#ReferenceLink)                                |
+| Field              | Type                    | Example                                                                            | Description                                                    |
+|--------------------|-------------------------|------------------------------------------------------------------------------------|----------------------------------------------------------------|
+| sku                | ```string```            | Microsoft&#124;&#124;_MS-0ZH-VISIO&#124;&#124;B4D4B7F4-4089-43B6-9C44-DE97B760FB11 | Order SKU                                                      |
+| quantity           | ```number```            | 2                                                                                  | Number of products bought                                      |
+| status             | ```string```            | Provisioned                                                                        | Order status                                                   |
+| dateStatus         | ```string```            | 2017-05-15 09:39:05                                                                | Date the product became the current "Status"                   |
+| detailedStatus     | ```string```            | Provisioned                                                                        | An individual product can be a different status than the order |
+| isAddon            | ```bool```              | true                                                                               | Is an Addon                                                    |
+| arrowSubCategories | ```array```             | ["nce"]                                                                            | Arrow Sub Categories                                           |
+| isTrial            | ```bool```              | true                                                                               | Is Trial                                                       |
+| prices             | ```ProductPricesType``` |                                                                                    | [ProductPrices](#ProductPrices)                                |
+| subscription       | ```ReferenceLinkType``` |                                                                                    | [ReferenceLink](#ReferenceLink)                                |
+| license            | ```ReferenceLinkType``` |                                                                                    | [ReferenceLink](#ReferenceLink)                                |
+
+### ProductPrices
+
+| Field       | Type         | Example   | Description                  |
+|-------------|--------------|-----------|------------------------------|
+| buy         | ```number``` | 11        | Price the product was bought |
+| sell        | ```number``` | 11        | Price the product was sold   |
+| currency    | ```string``` | EUR       | Currency                     |
+| periodicity | ```string``` | per Month | Product price periodicity    |
+| term        | ```string``` | one year  | Product price term           |
 
 ### ReferenceLink
 
