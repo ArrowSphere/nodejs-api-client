@@ -47,13 +47,15 @@
 
 ### ProductPrices
 
-| Field       | Type         | Example   | Description                  |
-|-------------|--------------|-----------|------------------------------|
-| buy         | ```number``` | 11        | Price the product was bought |
-| sell        | ```number``` | 11        | Price the product was sold   |
-| currency    | ```string``` | EUR       | Currency                     |
-| periodicity | ```string``` | per Month | Product price periodicity    |
-| term        | ```string``` | one year  | Product price term           |
+| Field           | Type         | Example   | Description                    |
+|-----------------|--------------|-----------|--------------------------------|
+| buy             | ```number``` | 11        | Price the product was bought   |
+| sell            | ```number``` | 11        | Price the product was sold     |
+| currency        | ```string``` | EUR       | Currency                       |
+| periodicity     | ```string``` | per Month | Product price periodicity      |
+| term            | ```string``` | one year  | Product price term             |
+| periodicityCode | ```number``` | 8640      | Product price periodicity code |
+| termCode        | ```number``` | 8640      | Product price term code        |
 
 ### ReferenceLink
 

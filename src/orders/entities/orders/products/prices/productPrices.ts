@@ -6,6 +6,8 @@ export enum ProductPricesFields {
   COLUMN_CURRENCY = 'currency',
   COLUMN_PERIODICITY = 'periodicity',
   COLUMN_TERM = 'term',
+  COLUMN_PERIODICITY_CODE = 'periodicityCode',
+  COLUMN_TERM_CODE = 'termCode',
 }
 
 export type ProductPricesType = {
@@ -14,6 +16,8 @@ export type ProductPricesType = {
   [ProductPricesFields.COLUMN_CURRENCY]: string;
   [ProductPricesFields.COLUMN_PERIODICITY]: string;
   [ProductPricesFields.COLUMN_TERM]: string;
+  [ProductPricesFields.COLUMN_PERIODICITY_CODE]: number;
+  [ProductPricesFields.COLUMN_TERM_CODE]: number;
 };
 
 export class ProductPrices extends AbstractEntity<ProductPricesType> {
@@ -22,6 +26,8 @@ export class ProductPrices extends AbstractEntity<ProductPricesType> {
   readonly #currency: string;
   readonly #periodicity: string;
   readonly #term: string;
+  readonly #periodicityCode: number;
+  readonly #termCode: number;
 
   public constructor(productPricesInput: ProductPricesType) {
     super(productPricesInput);
@@ -32,6 +38,9 @@ export class ProductPrices extends AbstractEntity<ProductPricesType> {
     this.#periodicity =
       productPricesInput[ProductPricesFields.COLUMN_PERIODICITY];
     this.#term = productPricesInput[ProductPricesFields.COLUMN_TERM];
+    this.#periodicityCode =
+      productPricesInput[ProductPricesFields.COLUMN_PERIODICITY_CODE];
+    this.#termCode = productPricesInput[ProductPricesFields.COLUMN_TERM_CODE];
   }
 
   get buy(): number {
@@ -49,6 +58,12 @@ export class ProductPrices extends AbstractEntity<ProductPricesType> {
   get term(): string {
     return this.#term;
   }
+  get periodicityCode(): number {
+    return this.#periodicityCode;
+  }
+  get termCode(): number {
+    return this.#termCode;
+  }
 
   public toJSON(): ProductPricesType {
     return {
@@ -57,6 +72,8 @@ export class ProductPrices extends AbstractEntity<ProductPricesType> {
       [ProductPricesFields.COLUMN_CURRENCY]: this.currency,
       [ProductPricesFields.COLUMN_PERIODICITY]: this.periodicity,
       [ProductPricesFields.COLUMN_TERM]: this.term,
+      [ProductPricesFields.COLUMN_PERIODICITY_CODE]: this.periodicityCode,
+      [ProductPricesFields.COLUMN_TERM_CODE]: this.termCode,
     };
   }
 }

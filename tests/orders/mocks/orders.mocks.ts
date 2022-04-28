@@ -52,6 +52,8 @@ export const PAYLOAD_ORDERS: GetData<DataListOrdersType> = {
               [ProductPricesFields.COLUMN_CURRENCY]: 'EUR',
               [ProductPricesFields.COLUMN_PERIODICITY]: 'per Month',
               [ProductPricesFields.COLUMN_TERM]: 'one year',
+              [ProductPricesFields.COLUMN_PERIODICITY_CODE]: 8640,
+              [ProductPricesFields.COLUMN_TERM_CODE]: 8640,
             },
             [OrderProductsFields.COLUMN_SUBSCRIPTION]: {
               [ReferenceLinkFields.COLUMN_REFERENCE]: 'XSPS7896',
@@ -99,6 +101,8 @@ export const PAYLOAD_ORDERS_WITHOUT_OPTIONAL: GetData<DataListOrdersType> = {
               [ProductPricesFields.COLUMN_CURRENCY]: 'EUR',
               [ProductPricesFields.COLUMN_PERIODICITY]: 'per Month',
               [ProductPricesFields.COLUMN_TERM]: 'one year',
+              [ProductPricesFields.COLUMN_PERIODICITY_CODE]: 8640,
+              [ProductPricesFields.COLUMN_TERM_CODE]: 8640,
             },
             [OrderProductsFields.COLUMN_SUBSCRIPTION]: {
               [ReferenceLinkFields.COLUMN_REFERENCE]: 'XSPS7896',
