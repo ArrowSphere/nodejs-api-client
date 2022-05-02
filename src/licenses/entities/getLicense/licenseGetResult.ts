@@ -38,7 +38,9 @@ export enum LicenseGetFields {
   COLUMN_ORDER = 'order',
   COLUMN_VENDOR_LICENSE_ID = 'vendor_license_id',
   COLUMN_PERIODICITY = 'periodicity',
+  COLUMN_PERIODICITY_CODE = 'periodicityCode',
   COLUMN_TERM = 'term',
+  COLUMN_TERM_CODE = 'termCode',
   COLUMN_CATEGORY = 'category',
   COLUMN_PROGRAM = 'program',
   COLUMN_ASSOCIATED_SUBSCRIPTION_PROGRAM = 'associatedSubscriptionProgram',
@@ -70,7 +72,9 @@ export type LicenseGetData = {
   [LicenseGetFields.COLUMN_ORDER]: OrderGetData;
   [LicenseGetFields.COLUMN_VENDOR_LICENSE_ID]: string | null;
   [LicenseGetFields.COLUMN_PERIODICITY]: string;
+  [LicenseGetFields.COLUMN_PERIODICITY_CODE]: number;
   [LicenseGetFields.COLUMN_TERM]: string;
+  [LicenseGetFields.COLUMN_TERM_CODE]: number;
   [LicenseGetFields.COLUMN_CATEGORY]: string;
   [LicenseGetFields.COLUMN_PROGRAM]: string;
   [LicenseGetFields.COLUMN_ASSOCIATED_SUBSCRIPTION_PROGRAM]: string;
@@ -102,7 +106,9 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
   readonly #order: OrderGetResult;
   readonly #vendor_license_id: string | null;
   readonly #periodicity: string;
+  readonly #periodicityCode: number;
   readonly #term: string;
+  readonly #termCode: number;
   readonly #category: string;
   readonly #program: string;
   readonly #associatedSubscriptionProgram: string;
@@ -156,7 +162,10 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
       licenseGetDataInput[LicenseGetFields.COLUMN_VENDOR_LICENSE_ID];
     this.#periodicity =
       licenseGetDataInput[LicenseGetFields.COLUMN_PERIODICITY];
+    this.#periodicityCode =
+      licenseGetDataInput[LicenseGetFields.COLUMN_PERIODICITY_CODE];
     this.#term = licenseGetDataInput[LicenseGetFields.COLUMN_TERM];
+    this.#termCode = licenseGetDataInput[LicenseGetFields.COLUMN_TERM_CODE];
     this.#category = licenseGetDataInput[LicenseGetFields.COLUMN_CATEGORY];
     this.#program = licenseGetDataInput[LicenseGetFields.COLUMN_PROGRAM];
     this.#associatedSubscriptionProgram =
@@ -262,8 +271,16 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
     return this.#periodicity;
   }
 
+  get periodicityCode(): number {
+    return this.#periodicityCode;
+  }
+
   public get term(): string {
     return this.#term;
+  }
+
+  get termCode(): number {
+    return this.#termCode;
   }
 
   public get category(): string {
@@ -313,7 +330,9 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
       [LicenseGetFields.COLUMN_ORDER]: this.order.toJSON(),
       [LicenseGetFields.COLUMN_VENDOR_LICENSE_ID]: this.vendorLicenseId,
       [LicenseGetFields.COLUMN_PERIODICITY]: this.periodicity,
+      [LicenseGetFields.COLUMN_PERIODICITY_CODE]: this.periodicityCode,
       [LicenseGetFields.COLUMN_TERM]: this.term,
+      [LicenseGetFields.COLUMN_TERM_CODE]: this.termCode,
       [LicenseGetFields.COLUMN_CATEGORY]: this.category,
       [LicenseGetFields.COLUMN_PROGRAM]: this.program,
       [LicenseGetFields.COLUMN_ASSOCIATED_SUBSCRIPTION_PROGRAM]: this
