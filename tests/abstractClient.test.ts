@@ -14,6 +14,7 @@ import {
   TEST_ENDPOINT,
   TestClient,
 } from './TestClient';
+import { constants } from 'http2';
 
 chai.use(chaiAsPromised);
 
@@ -111,6 +112,29 @@ describe('AbstractClient', () => {
         .reply(204);
       await client.putTestAdmin();
       expect(nock.isDone()).to.be.true;
+    });
+  });
+
+  describe('patch', () => {
+    const expectedData = { result: true };
+    const client = new TestClient();
+
+    it('makes a HTTP PUT request on the specified URL', async () => {
+      nock(MOCK_URL)
+        .patch(TEST_ENDPOINT)
+        .reply(constants.HTTP_STATUS_OK, expectedData);
+      const result = await client.patchTest();
+      expect(nock.isDone()).to.be.true;
+      expect(result).to.eql(expectedData);
+    });
+
+    it('prefixes with admin if the endpoint has the option', async () => {
+      nock(MOCK_URL + '/admin')
+        .patch(TEST_ENDPOINT)
+        .reply(constants.HTTP_STATUS_OK, expectedData);
+      const result = await client.patchTestAdmin();
+      expect(nock.isDone()).to.be.true;
+      expect(result).to.eql(expectedData);
     });
   });
 
