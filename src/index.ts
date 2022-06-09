@@ -5,6 +5,7 @@ export * from './publicGraphQLClient';
 export * from './abstractEntity';
 export * from './abstractClient';
 export * from './abstractGraphQLClient';
+export * from './campaign/';
 export * from './catalog/';
 export { ContactInformation };
 export * from './customers/';
