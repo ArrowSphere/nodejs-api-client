@@ -7,6 +7,7 @@ export * from './abstractClient';
 export * from './abstractGraphQLClient';
 export * from './campaign/';
 export * from './catalog/';
+export * from './consumption';
 export { ContactInformation };
 export * from './customers/';
 export * from './general/';
