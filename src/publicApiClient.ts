@@ -6,6 +6,7 @@ import { CustomersClient } from './customers/customersClient';
 import { OrdersClient } from './orders';
 import { ContactClient } from './contact/contactClient';
 import { CampaignClient } from './campaign';
+import { ConsumptionClient } from './consumption/consumptionClient';
 
 /**
  * Public API Client class, should be the main entry point for your calls
@@ -91,6 +92,12 @@ export class PublicApiClient extends AbstractClient {
    */
   public getCampaignClient(): CampaignClient {
     return new CampaignClient(this.client)
+      .setUrl(this.url)
+      .setApiKey(this.apiKey);
+  }
+
+  public getConsumptionClient(): ConsumptionClient {
+    return new ConsumptionClient(this.client)
       .setUrl(this.url)
       .setApiKey(this.apiKey);
   }
