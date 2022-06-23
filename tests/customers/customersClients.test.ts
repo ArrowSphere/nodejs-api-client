@@ -15,9 +15,13 @@ import {
 } from '../../src/';
 import { expect } from 'chai';
 import { PaginationFields } from '../../src/pagination';
+import { PAYLOAD_ORDERS } from '../orders/mocks/orders.mocks';
 
 export const CUSTOMERS_MOCK_URL = 'https://customers.localhost';
 export const CUSTOMERS_GET_CUSTOMERS_URL = new RegExp('/customers.*');
+export const CUSTOMERS_GET_CUSTOMERS_ORDERS_URL = new RegExp(
+  '/customers/REF/orders.*',
+);
 export const CUSTOMERS_GET_CUSTOMER_INVITATION_URL = new RegExp(
   '/customers/invitations.*',
 );
@@ -188,6 +192,48 @@ describe('CustomersClients', () => {
       expect(result.toJSON()).to.eql(
         PAYLOAD_GET_CUSTOMERS_WITHOUT_OPTIONAL_FIELDS,
       );
+    });
+  });
+
+  describe('getCustomerOrders', () => {
+    const client = new PublicApiClient()
+      .getCustomersClient()
+      .setUrl(CUSTOMERS_MOCK_URL);
+
+    it('call get customer orders method with parameters', async () => {
+      nock(CUSTOMERS_MOCK_URL)
+        .get(CUSTOMERS_GET_CUSTOMERS_ORDERS_URL)
+        .reply(200, PAYLOAD_ORDERS);
+
+      const parameters: Parameters = {
+        from: '2021-10-29',
+        order_by: 'ASC',
+        sort_by: 'status',
+      };
+      const page = 2;
+      const per_page = 5;
+      const customerRef = 'REF';
+      const result = await client.getCustomerOrders(
+        customerRef,
+        per_page,
+        page,
+        parameters,
+      );
+
+      expect(result).to.be.instanceof(GetResult);
+      expect(result.toJSON()).to.eql(PAYLOAD_ORDERS);
+    });
+
+    it('Should get customer list orders without parameters', async () => {
+      nock(CUSTOMERS_MOCK_URL)
+        .get(CUSTOMERS_GET_CUSTOMERS_ORDERS_URL)
+        .reply(200, PAYLOAD_ORDERS);
+
+      const customerRef = 'REF';
+
+      const result = await client.getCustomerOrders(customerRef);
+      expect(result).to.be.instanceof(GetResult);
+      expect(result.toJSON()).to.eql(PAYLOAD_ORDERS);
     });
   });
 
