@@ -135,6 +135,7 @@ export const PAYLOAD_GET_CUSTOMER_INVITATION = {
       [InvitationContactFields.COLUMN_LASTNAME]: 'lastname',
       [InvitationContactFields.COLUMN_EMAIL]: 'email',
     },
+    [DataInvitationFields.COLUMN_POLICY]: 'admin',
   },
 };
 

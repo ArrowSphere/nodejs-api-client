@@ -11,6 +11,7 @@ export enum DataInvitationFields {
   COLUMN_UPDATED_AT = 'updatedAt',
   COLUMN_COMPANY = 'company',
   COLUMN_CONTACT = 'contact',
+  COLUMN_POLICY = 'policy',
 }
 
 export type DataInvitationType = {
@@ -19,6 +20,7 @@ export type DataInvitationType = {
   [DataInvitationFields.COLUMN_UPDATED_AT]: string;
   [DataInvitationFields.COLUMN_COMPANY]: CompanyType;
   [DataInvitationFields.COLUMN_CONTACT]: InvitationContactType;
+  [DataInvitationFields.COLUMN_POLICY]: string;
 };
 
 export class DataInvitation extends AbstractEntity<DataInvitationType> {
@@ -27,6 +29,7 @@ export class DataInvitation extends AbstractEntity<DataInvitationType> {
   readonly #updatedAt: string;
   readonly #company: Company;
   readonly #contact: InvitationContact;
+  readonly #policy: string;
 
   public constructor(getCustomerInvitationDataInput: DataInvitationType) {
     super(getCustomerInvitationDataInput);
@@ -43,6 +46,8 @@ export class DataInvitation extends AbstractEntity<DataInvitationType> {
     this.#contact = new InvitationContact(
       getCustomerInvitationDataInput[DataInvitationFields.COLUMN_CONTACT],
     );
+    this.#policy =
+      getCustomerInvitationDataInput[DataInvitationFields.COLUMN_POLICY];
   }
 
   get code(): string {
@@ -65,6 +70,10 @@ export class DataInvitation extends AbstractEntity<DataInvitationType> {
     return this.#contact;
   }
 
+  get policy(): string {
+    return this.#policy;
+  }
+
   public toJSON(): DataInvitationType {
     return {
       [DataInvitationFields.COLUMN_CODE]: this.code,
@@ -72,6 +81,7 @@ export class DataInvitation extends AbstractEntity<DataInvitationType> {
       [DataInvitationFields.COLUMN_UPDATED_AT]: this.updatedAt,
       [DataInvitationFields.COLUMN_COMPANY]: this.company.toJSON(),
       [DataInvitationFields.COLUMN_CONTACT]: this.contact.toJSON(),
+      [DataInvitationFields.COLUMN_POLICY]: this.policy,
     };
   }
 }
