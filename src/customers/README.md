@@ -65,13 +65,14 @@ A customers contact are managed by the `customersDetails` entity.
 
 A customer invitation are managed by the `getCustomerInvitation` entity.
 
-| Field             | Type                           | Example                  | Description                                    |
-|-------------------|--------------------------------|--------------------------|------------------------------------------------|
-| code              | ```string```                   | Abcd123efgH              | The invitation code                            |
-| createdAt         | ```string```                   | 2021-12-25T23:45:12.123Z | The date when this invitation was created      |
-| updatedAt         | ```string```                   | 2021-12-25T23:45:12.123Z | The date when this invitation was last updated |
-| company           | ```getCustomersCompanyData```  |                          | Company reference                              |
-| contact           | ```getCustomersContactData```  |                          | Invitation specific contact                    |
+| Field     | Type                          | Example                  | Description                                    |
+|-----------|-------------------------------|--------------------------|------------------------------------------------|
+| code      | ```string```                  | Abcd123efgH              | The invitation code                            |
+| createdAt | ```string```                  | 2021-12-25T23:45:12.123Z | The date when this invitation was created      |
+| updatedAt | ```string```                  | 2021-12-25T23:45:12.123Z | The date when this invitation was last updated |
+| company   | ```getCustomersCompanyData``` |                          | Company reference                              |
+| contact   | ```getCustomersContactData``` |                          | Invitation specific contact                    |
+| policy    | ```string```                  | admin                    | Customers policy                               |
 
 ### InvitationContact
 
