@@ -2,6 +2,7 @@ import { AbstractEntity } from '../../../../abstractEntity';
 
 export enum BannersFields {
   COLUMN_BACKGROUND_IMAGE_UUID = 'backgroundImageUuid',
+  COLUMN_BACKGROUND_COLOR = 'backgroundColor',
   COLUMN_TYPE = 'type',
   COLUMN_BUTTON_PLACEMENT = 'buttonPlacement',
   COLUMN_BUTTON_TEXT = 'buttonText',
@@ -11,6 +12,7 @@ export enum BannersFields {
 
 export type BannersType = {
   [BannersFields.COLUMN_BACKGROUND_IMAGE_UUID]: string;
+  [BannersFields.COLUMN_BACKGROUND_COLOR]?: string;
   [BannersFields.COLUMN_TYPE]?: string;
   [BannersFields.COLUMN_BUTTON_PLACEMENT]?: string;
   [BannersFields.COLUMN_BUTTON_TEXT]?: string;
@@ -25,6 +27,7 @@ export class Banners extends AbstractEntity<BannersType> {
   readonly #buttonText?: string;
   readonly #text?: string;
   readonly #textColor?: string;
+  readonly #backgroundColor?: string;
 
   constructor(bannerInput: BannersType) {
     super(bannerInput);
@@ -35,10 +38,14 @@ export class Banners extends AbstractEntity<BannersType> {
     this.#buttonText = bannerInput[BannersFields.COLUMN_BUTTON_TEXT];
     this.#text = bannerInput[BannersFields.COLUMN_TEXT];
     this.#textColor = bannerInput[BannersFields.COLUMN_TEXT_COLOR];
+    this.#backgroundColor = bannerInput[BannersFields.COLUMN_BACKGROUND_COLOR];
   }
 
   get backgroundImageUuid(): string {
     return this.#backgroundImageUuid;
+  }
+  get backgroundColor(): string | undefined {
+    return this.#backgroundColor;
   }
   get type(): string | undefined {
     return this.#type;
@@ -59,6 +66,7 @@ export class Banners extends AbstractEntity<BannersType> {
   public toJSON(): BannersType {
     return {
       [BannersFields.COLUMN_BACKGROUND_IMAGE_UUID]: this.backgroundImageUuid,
+      [BannersFields.COLUMN_BACKGROUND_COLOR]: this.backgroundColor,
       [BannersFields.COLUMN_TYPE]: this.type,
       [BannersFields.COLUMN_BUTTON_PLACEMENT]: this.buttonPlacement,
       [BannersFields.COLUMN_BUTTON_TEXT]: this.buttonText,
