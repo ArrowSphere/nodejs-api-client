@@ -113,6 +113,7 @@ export const GET_ACTIVE_CAMPAIGN_OUTPUT_MINIMAL: GetData<CampaignType> = {
       {
         [BannersFields.COLUMN_BACKGROUND_IMAGE_UUID]:
           'd8553daa-1d39-489e-89c0-3731c0d3ad0b',
+        [BannersFields.COLUMN_BACKGROUND_COLOR]: '#FFFF',
         [BannersFields.COLUMN_TYPE]: 'PICTURE',
         [BannersFields.COLUMN_BUTTON_PLACEMENT]: 'RIGHT',
         [BannersFields.COLUMN_BUTTON_TEXT]: 'Click here',

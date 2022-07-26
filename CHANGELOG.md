@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.9.1] - 2022-07-26
+
+### Changed
+
+- add backgroundColor key mapping on getActiveCampaign payload
+
 ## [3.9.0] - 2022-07-11
 
 ### Changed
