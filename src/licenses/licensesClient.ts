@@ -64,6 +64,11 @@ export enum LicenseFindParameters {
   DATA_FILTERS = 'filters',
 
   /**
+   * The key for exclusion filers search query parameter
+   */
+  DATA_EXCLUSION_FILTERS = 'exclusionFilters',
+
+  /**
    * The key for sort search query parameter
    */
   DATA_SORT = 'sort',
@@ -260,6 +265,7 @@ export type LicenseFindPayload = {
   [LicenseFindParameters.DATA_KEYWORD]?: string;
   [LicenseFindParameters.DATA_KEYWORDS]?: LicenseKeywordsParameters;
   [LicenseFindParameters.DATA_FILTERS]?: LicenseFiltersParameters;
+  [LicenseFindParameters.DATA_EXCLUSION_FILTERS]?: LicenseFiltersParameters;
   [LicenseFindParameters.DATA_SORT]?: LicenseSortParameters;
   [LicenseFindParameters.DATA_HIGHLIGHT]?: boolean;
 };
@@ -271,6 +277,7 @@ export type LicenseFindRawPayload = {
     offer?: LicenseRawKeywordsParametersOffer;
   };
   [LicenseFindParameters.DATA_FILTERS]?: LicenseRawFiltersParameters;
+  [LicenseFindParameters.DATA_EXCLUSION_FILTERS]?: LicenseRawFiltersParameters;
   [LicenseFindParameters.DATA_SORT]?: {
     license?: LicenseRawSortParametersLicense;
     offer?: LicenseRawSortParametersOffer;
@@ -405,6 +412,26 @@ export class LicensesClient extends AbstractClient {
           {},
         ),
         ...Object.entries(postData.filters.offer ?? {}).reduce(
+          (acc: LicenseRawFiltersParameters, [filter, value]) => {
+            acc[`offer.${filter}`] = value;
+            return acc;
+          },
+          {},
+        ),
+      };
+    }
+
+    if (postData.exclusionFilters) {
+      // Flatten with prefix for each type of filter (license and offer)
+      rawLicensePayload.exclusionFilters = {
+        ...Object.entries(postData.exclusionFilters.license ?? {}).reduce(
+          (acc: LicenseRawFiltersParameters, [filter, value]) => {
+            acc[`license.${filter}`] = value;
+            return acc;
+          },
+          {},
+        ),
+        ...Object.entries(postData.exclusionFilters.offer ?? {}).reduce(
           (acc: LicenseRawFiltersParameters, [filter, value]) => {
             acc[`offer.${filter}`] = value;
             return acc;
