@@ -226,6 +226,17 @@ const PAYLOAD_SCHEMA = Joi.object({
     ),
     Joi.any(),
   ),
+  [LicenseFindParameters.DATA_EXCLUSION_FILTERS]: Joi.object().pattern(
+    Joi.string().valid(
+      ...Object.values(LicenseFindResultFields).map(
+        (field) => `license.${field}`,
+      ),
+      ...Object.values(PriceBandActionFlagsFindResultFields).map(
+        (field) => `offer.priceBand.actionFlags.${field}`,
+      ),
+    ),
+    Joi.any(),
+  ),
   [LicenseFindParameters.DATA_SORT]: Joi.object().pattern(
     Joi.string().valid(
       ...Object.values(LicenseFindResultFields).map(
@@ -295,6 +306,22 @@ describe('LicensesClient', () => {
         },
       },
     },
+    [LicenseFindParameters.DATA_EXCLUSION_FILTERS]: {
+      license: {
+        [LicenseFindResultFields.COLUMN_ACCEPT_EULA]: true,
+        [LicenseFindResultFields.COLUMN_SEAT]: {
+          [LicenseFindParameters.FILTERS_GT]: 2,
+          [LicenseFindParameters.FILTERS_LT]: 10,
+        },
+      },
+      offer: {
+        [OfferFindResultFields.COLUMN_PRICE_BAND]: {
+          [PriceBandFindResultFields.COLUMN_ACTION_FLAGS]: {
+            [PriceBandActionFlagsFindResultFields.COLUMN_CAN_BE_CANCELLED]: true,
+          },
+        },
+      },
+    },
     [LicenseFindParameters.DATA_SORT]: {
       license: {
         [LicenseFindResultFields.COLUMN_CUSTOMER_NAME]:
@@ -320,6 +347,10 @@ describe('LicensesClient', () => {
       },
     },
     [LicenseFindParameters.DATA_FILTERS]: {
+      [`license.${LicenseFindResultFields.COLUMN_ACCEPT_EULA}`]: true,
+      [`offer.${OfferFindResultFields.COLUMN_PRICE_BAND}.${PriceBandFindResultFields.COLUMN_ACTION_FLAGS}.${PriceBandActionFlagsFindResultFields.COLUMN_CAN_BE_CANCELLED}`]: true,
+    },
+    [LicenseFindParameters.DATA_EXCLUSION_FILTERS]: {
       [`license.${LicenseFindResultFields.COLUMN_ACCEPT_EULA}`]: true,
       [`offer.${OfferFindResultFields.COLUMN_PRICE_BAND}.${PriceBandFindResultFields.COLUMN_ACTION_FLAGS}.${PriceBandActionFlagsFindResultFields.COLUMN_CAN_BE_CANCELLED}`]: true,
     },
@@ -443,7 +474,7 @@ describe('LicensesClient', () => {
       ).not.to.be.rejected;
     });
 
-    it('works without license filters', () => {
+    it('works without offer filters', () => {
       nock(LICENSES_MOCK_URL)
         .post(LICENSES_FIND_ENDPOINT)
         .reply(() => {
@@ -471,6 +502,42 @@ describe('LicensesClient', () => {
           ...standardPayload,
           [LicenseFindParameters.DATA_FILTERS]: {
             offer: standardPayload[LicenseFindParameters.DATA_FILTERS]?.offer,
+          },
+        }),
+      ).not.to.be.rejected;
+    });
+
+    it('works without offer exclusion filters', () => {
+      nock(LICENSES_MOCK_URL)
+        .post(LICENSES_FIND_ENDPOINT)
+        .reply(() => {
+          return [204];
+        });
+      expect(
+        client.find({
+          ...standardPayload,
+          [LicenseFindParameters.DATA_EXCLUSION_FILTERS]: {
+            license:
+              standardPayload[LicenseFindParameters.DATA_EXCLUSION_FILTERS]
+                ?.license,
+          },
+        }),
+      ).not.to.be.rejected;
+    });
+
+    it('works without license exclusion filters', () => {
+      nock(LICENSES_MOCK_URL)
+        .post(LICENSES_FIND_ENDPOINT)
+        .reply(() => {
+          return [204];
+        });
+      expect(
+        client.find({
+          ...standardPayload,
+          [LicenseFindParameters.DATA_EXCLUSION_FILTERS]: {
+            offer:
+              standardPayload[LicenseFindParameters.DATA_EXCLUSION_FILTERS]
+                ?.offer,
           },
         }),
       ).not.to.be.rejected;
