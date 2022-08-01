@@ -25,4 +25,13 @@ export class CampaignClient extends AbstractClient {
 
     return new GetResult(CampaignAssets, await this.get(parameters));
   }
+
+  public async getCampaignDetails(
+    campaignReference: string,
+    parameters: Parameters = {},
+  ): Promise<GetResult<Campaign>> {
+    this.path = `/campaigns/${campaignReference}`;
+
+    return new GetResult(Campaign, await this.get(parameters));
+  }
 }

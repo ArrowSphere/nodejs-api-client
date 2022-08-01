@@ -21,6 +21,7 @@ import {
 
 export const CAMPAIGN_MOCK_URL = 'https://campaign.localhost';
 export const GET_ACTIVE_CAMPAIGN = new RegExp('/active.*');
+export const GET_CAMPAIGN_DETAILS = new RegExp('/campaigns.*');
 export const GET_CAMPAIGN_ASSETS = new RegExp('/.*./assets');
 
 describe('CampaignClient', () => {
@@ -119,6 +120,21 @@ describe('CampaignClient', () => {
 
       expect(response).to.be.instanceof(GetResult);
       expect(response.toJSON()).to.be.deep.equals(GET_CAMPAIGN_ASSETS_OUTPUT);
+    });
+  });
+
+  describe('getCampaignDetails', () => {
+    it('calls the get campaign details method with parameters', async () => {
+      nock(CAMPAIGN_MOCK_URL)
+        .get(GET_CAMPAIGN_DETAILS)
+        .reply(200, GET_ACTIVE_CAMPAIGN_OUTPUT);
+
+      const response: GetResult<Campaign> = await client.getCampaignDetails(
+        '0ce70536-a59d-4c21-b39d-272b034367fa',
+      );
+
+      expect(response).to.be.instanceof(GetResult);
+      expect(response.toJSON()).to.be.deep.equals(GET_ACTIVE_CAMPAIGN_OUTPUT);
     });
   });
 });
