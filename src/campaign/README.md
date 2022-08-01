@@ -132,4 +132,13 @@ A ActiveCampaignAssets page are managed by the `ActiveCampaignAssets` entity.
 
 | Field      | Type                     | Example                 | Description             |
 |------------|--------------------------|-------------------------|-------------------------|
-| assets     | ```CampaignAssets[]```   |                         | Campaign assets array   |
+| assets     | ```CampaignAssets[]```   |                         | Campaign assets array   |### GetActiveCampaignAssets
+
+
+### GetCampaignDetails
+
+A CampaignDetails page are managed by the `CampaignDetails` entity.
+
+| Field    | Type             | Example                 | Description |
+|----------|------------------|-------------------------|-------------|
+| campaign | ```Campaign```   |                         | Campaign    | 
