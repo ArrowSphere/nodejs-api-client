@@ -34,14 +34,9 @@ export type SubscriptionsListData = {
 
 export class SubscriptionsClient extends AbstractClient {
   /**
-   * The base path of the Subscriptions API
-   */
-  private ROOT_PATH = '/subscriptions';
-
-  /**
    * The base path of the API
    */
-  protected basePath = this.ROOT_PATH;
+  protected basePath = '/subscriptions';
 
   /**
    * The path of the List endpoint
@@ -57,7 +52,6 @@ export class SubscriptionsClient extends AbstractClient {
    * Calls the subscriptions API list endpoint
    *
    * @param data - List payload
-   * @param parameters - Extra parameters to pass
    *
    * @returns Promise\<AxiosResponse\<{@link SubscriptionsListData}\>\>   */
   public async listRaw(
@@ -75,7 +69,6 @@ export class SubscriptionsClient extends AbstractClient {
    * @param postData - List payload
    * @param perPage - Number of results per page
    * @param page - Page number to fetch
-   * @param parameters - Extra parameters to pass
    *
    * @returns Promise\<{@link SubscriptionsListResult}\>
    *

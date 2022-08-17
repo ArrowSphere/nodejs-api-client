@@ -41,16 +41,9 @@ export type CreateOrderInputType = {
 
 export class OrdersClient extends AbstractClient {
   /**
-   * The base path of the Orders API
-   *
-   * TODO: Actually we use php endpoint and we need to add "/index.php/api" before "/orders" remove "/index.php/api" when endpoint is available in nodejs
-   */
-  private ROOT_PATH = '/index.php/api/orders';
-
-  /**
    * The base path of the API
    */
-  protected basePath = this.ROOT_PATH;
+  protected basePath = '/index.php/api/orders';
 
   public async create(
     postData: CreateOrderInputType,
