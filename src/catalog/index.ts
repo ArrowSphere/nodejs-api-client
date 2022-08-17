@@ -1,2 +1,2 @@
-export * from './types/catalogGraphQLTypes';
 export * from './catalogGraphQLClient';
+export * from './types/catalogGraphQLTypes';
