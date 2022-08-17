@@ -295,14 +295,9 @@ export type PutFriendlyName = {
 
 export class LicensesClient extends AbstractClient {
   /**
-   * The base path of the Licenses API
-   */
-  private ROOT_PATH = '/licenses/';
-
-  /**
    * The base path of the API
    */
-  protected basePath = this.ROOT_PATH;
+  protected basePath = '/licenses/';
 
   /**
    * The path of the Find endpoint

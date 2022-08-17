@@ -26,14 +26,9 @@ export type ContactRequestType = {
 
 export class ContactClient extends AbstractClient {
   /**
-   * The base path of the Customers API
-   */
-  private ROOT_PATH = '/contacts';
-
-  /**
    * The base path of the API
    */
-  protected basePath = this.ROOT_PATH;
+  protected basePath = '/contacts';
 
   public async createContact(
     postData: ContactRequestType,

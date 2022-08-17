@@ -4,14 +4,9 @@ import { GetProductsType } from './types/catalogGraphQLTypes';
 
 export class CatalogGraphQLClient extends AbstractGraphQLClient {
   /**
-   * The base path of the Catalog API
-   */
-  private ROOT_PATH = 'catalog/';
-
-  /**
    * The base path of the API
    */
-  protected basePath = this.ROOT_PATH;
+  protected basePath = 'catalog/';
 
   /**
    * The Path of graphql catalog API
