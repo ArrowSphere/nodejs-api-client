@@ -9,6 +9,7 @@ import {
   LandingPageFooterFields,
   LandingPageFooterFeatureFields,
   LandingPageHeaderFields,
+  PostEmailCampaignType,
 } from '../../../src';
 
 export const GET_ACTIVE_CAMPAIGN_PARAMETERS = {
@@ -287,5 +288,12 @@ export const GET_ACTIVE_CAMPAIGN_OUTPUT_WITHOUT_LANDING: GetData<CampaignType> =
           '6e3a0d7a-8651-4e47-89db-c5b2fbaff8f0',
       },
     },
+  },
+};
+
+export const PAYLOAD_POST_CAMPAIGN_EMAIL: PostEmailCampaignType = {
+  application: 'xcp',
+  metadata: {
+    domain: 'myportals.cloud',
   },
 };
