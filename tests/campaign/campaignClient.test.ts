@@ -13,6 +13,7 @@ import {
   GET_ACTIVE_CAMPAIGN_OUTPUT_WITHOUT_FOOTER_FEATURES,
   GET_ACTIVE_CAMPAIGN_OUTPUT_WITHOUT_LANDING,
   GET_ACTIVE_CAMPAIGN_PARAMETERS,
+  PAYLOAD_POST_CAMPAIGN_EMAIL,
 } from './mocks/campaign.mocks';
 import {
   GET_CAMPAIGN_ASSETS_OUTPUT,
@@ -23,6 +24,7 @@ export const CAMPAIGN_MOCK_URL = 'https://campaign.localhost';
 export const GET_ACTIVE_CAMPAIGN = new RegExp('/active.*');
 export const GET_CAMPAIGN_DETAILS = new RegExp('/campaigns.*');
 export const GET_CAMPAIGN_ASSETS = new RegExp('/.*./assets');
+export const POST_CAMPAIGN_EMAIL = new RegExp('/.*./notify');
 
 describe('CampaignClient', () => {
   const client = new PublicApiClient()
@@ -135,6 +137,19 @@ describe('CampaignClient', () => {
 
       expect(response).to.be.instanceof(GetResult);
       expect(response.toJSON()).to.be.deep.equals(GET_ACTIVE_CAMPAIGN_OUTPUT);
+    });
+  });
+
+  describe('postCampaignEmail', () => {
+    it('calls the post campaign email method with parameters', async () => {
+      nock(CAMPAIGN_MOCK_URL).post(POST_CAMPAIGN_EMAIL).reply(204);
+
+      await client.postCampaignEmail(
+        '0ce70536-a59d-4c21-b39d-272b034367fa',
+        PAYLOAD_POST_CAMPAIGN_EMAIL,
+      );
+
+      expect(nock.isDone()).to.be.true;
     });
   });
 });
