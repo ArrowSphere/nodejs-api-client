@@ -289,3 +289,10 @@ export const GET_ACTIVE_CAMPAIGN_OUTPUT_WITHOUT_LANDING: GetData<CampaignType> =
     },
   },
 };
+
+export const PAYLOAD_POST_CAMPAIGN_EMAIL = {
+  application: 'xcp',
+  metadata: {
+    domain: 'myportals.cloud',
+  },
+};
