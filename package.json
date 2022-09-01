@@ -4,7 +4,7 @@
     "type": "git",
     "url": "https://github.com/ArrowSphere/nodejs-api-client.git"
   },
-  "version": "3.13.0",
+  "version": "3.13.1-rc.1",
   "description": "Node.js client for ArrowSphere's public API",
   "main": "build/index.js",
   "types": "build/index.d.ts",
@@ -79,7 +79,7 @@
   },
   "dependencies": {
     "@types/validatorjs": "3.15.0",
-    "axios": "0.21.1",
+    "axios": "0.21.2",
     "graphql": "^16.3.0",
     "graphql-request": "4.2.0",
     "validatorjs": "3.22.1"
