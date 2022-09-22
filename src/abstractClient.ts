@@ -16,7 +16,10 @@ export enum ParameterKeys {
   PER_PAGE_CAMEL = 'perPage',
 }
 
-export type Parameters = Record<string, string | string[] | undefined>;
+export type Parameters = Record<
+  string,
+  string | string[] | number | boolean | null | undefined
+>;
 
 export type Headers = Record<string, string>;
 
