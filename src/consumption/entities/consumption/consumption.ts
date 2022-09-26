@@ -7,12 +7,12 @@ export enum ConsumptionFields {
 
 export type ConsumptionType = {
   [ConsumptionFields.COLUMN_HEADERS]: Array<string>;
-  [ConsumptionFields.COLUMN_LINES]: Array<string | number>;
+  [ConsumptionFields.COLUMN_LINES]: Array<Array<string | number>>;
 };
 
 export class Consumption extends AbstractEntity<ConsumptionType> {
   readonly #headers: Array<string>;
-  readonly #lines: Array<string | number>;
+  readonly #lines: Array<Array<string | number>>;
 
   public constructor(consumptionResponse: ConsumptionType) {
     super(consumptionResponse);
@@ -25,7 +25,7 @@ export class Consumption extends AbstractEntity<ConsumptionType> {
     return this.#headers;
   }
 
-  get lines(): Array<string | number> {
+  get lines(): Array<Array<string | number>> {
     return this.#lines;
   }
 
