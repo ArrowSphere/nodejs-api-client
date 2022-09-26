@@ -10,10 +10,10 @@ A ConsumptionBI are the entity which holds information about the ConsumptionBI.
 
 A consumption are managed by the `Consumption` entity.
 
-| Field    | Type        | Example             | Description                       |
-|----------|-------------|---------------------|-----------------------------------|
-| headers  | ```array``` | ['Report Period']   | Headers, array of string          |
-| lines    | ```array``` | ['2021-10', 412.02] | Lines, array of string and number |
+| Field    | Type        | Example               | Description                                |
+|----------|-------------|-----------------------|--------------------------------------------|
+| headers  | ```array``` | ['Report Period']     | Headers, array of string                   |
+| lines    | ```array``` | [['2021-10', 412.02]] | Lines, array of array of string and number |
 
 ### ConsumptionBI
 
