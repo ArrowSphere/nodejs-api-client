@@ -9,6 +9,15 @@ import {
   OrderGetFields,
 } from '../../src';
 import { GetLicenseResultData } from '../../src/licenses/entities/getResult/getLicenseResult';
+import {
+  GetLicenceHistoryResultData,
+  GetLicenceHistoryResultFields,
+} from '../../build/licenses/entities/getLicense/licenceHistoryResult';
+import { LicenseHistoryGetFields } from '../../build/licenses/entities/history/getLicenseHistoryResult';
+import {
+  HistoryNotesFields,
+  LicenseHistoryGetData,
+} from '../../src/licenses/entities/history/getLicenseHistoryResult';
 
 export const PAYLOAD_SCHEMA_LICENSE: GetData<GetLicenseResultData> = {
   status: 200,
@@ -135,5 +144,49 @@ export const PAYLOAD_SCHEMA_LICENSE_WITHOUT_OPTIONAL_FIELDS: GetData<GetLicenseR
         },
       },
     },
+  },
+};
+export const HISTORY_PAYLOAD: LicenseHistoryGetData = {
+  [LicenseHistoryGetFields.COLUMN_LICENSE_HISTORY_ACTION]: 'created',
+  [LicenseHistoryGetFields.COLUMN_LICENSE_HISTORY_NOTES]: {
+    [HistoryNotesFields.COLUMN_BEFORE]: {
+      sku: '031C9E47-4802-4248-838E-778FB1D2CC05',
+      state: 'In progress',
+      activation_date: '2018-06-08T10:34:28+00:00',
+      expiration_date: '2022-06-08T10:34:28+00:00',
+      seats: 1,
+      baseSeats: 1,
+      activeSeats: 1,
+      action: 'in_progress',
+    },
+    [HistoryNotesFields.COLUMN_AFTER]: {
+      sku: '031C9E47-4802-4248-838E-778FB1D2CC05',
+      state: 'Activated',
+      activation_date: '2018-06-08T10:34:28+00:00',
+      expiration_date: '2022-06-08T10:34:28+00:00',
+      seats: 1,
+      baseSeats: 1,
+      activeSeats: 1,
+      action: 'created',
+    },
+    [HistoryNotesFields.COLUMN_EXTRA_INFORMATION]: {
+      user: {
+        name: 'username',
+        ref: 'XSP12345',
+        email: 'email@company.com',
+        role: 'User',
+      },
+    },
+  },
+  [LicenseHistoryGetFields.COLUMN_LICENSE_HISTORY_CREATED_AT]:
+    '2018-06-08T10:34:14+00:00',
+  [LicenseHistoryGetFields.COLUMN_LICENSE_HISTORY_UPDATED_AT]:
+    '2018-06-08T10:34:14+00:00',
+};
+
+export const PAYLOAD_LICENSE_HISTORY: GetData<GetLicenceHistoryResultData> = {
+  status: 200,
+  data: {
+    [GetLicenceHistoryResultFields.COLUMN_LICENSE_HISTORY]: [HISTORY_PAYLOAD],
   },
 };

@@ -43,6 +43,7 @@ import {
 import { GetResult } from '../getResult';
 import { LicenseGetFields } from './entities/getLicense/licenseGetResult';
 import { GetLicenseResult } from './entities/getResult/getLicenseResult';
+import { GetLicenceHistoryResult } from './entities/getLicense/licenceHistoryResult';
 
 /**
  * Parameters passable to the request for refining search.
@@ -332,8 +333,12 @@ export class LicensesClient extends AbstractClient {
   /**
    * The path of update friendlyName endpoint
    */
-  private UPDATE_FRIENDLYNAME = '/friendlyName';
+  private UPDATE_FRIENDLYNAME_PATH = '/friendlyName';
 
+  /**
+   * The path of license history
+   */
+  private GET_LICENSE_HISTORY_PATH = '/history';
   /**
    * Returns the raw result from the find endpoint call
    *
@@ -551,8 +556,17 @@ export class LicensesClient extends AbstractClient {
     putData: PutFriendlyName,
     parameters: Parameters = {},
   ): Promise<void> {
-    this.path = licenseReference + this.UPDATE_FRIENDLYNAME;
+    this.path = licenseReference + this.UPDATE_FRIENDLYNAME_PATH;
 
     return await this.put(putData, parameters);
+  }
+
+  public async getHistory(
+    licenseReference: string,
+    parameters: Parameters = {},
+  ): Promise<GetResult<GetLicenceHistoryResult>> {
+    this.path = licenseReference + this.GET_LICENSE_HISTORY_PATH;
+
+    return new GetResult(GetLicenceHistoryResult, await this.get(parameters));
   }
 }
