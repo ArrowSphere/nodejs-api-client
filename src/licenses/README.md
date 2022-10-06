@@ -289,6 +289,15 @@ A license is managed by the `LicenseGet` entity.
 | buy   | ```number``` | 4007.52  |             |
 | sell  | ```number``` | 4554     |             |
 
+### LicenseHistory
+
+| Field       | Type                   | Example                    | Description |
+|-------------|------------------------|----------------------------|-------------|
+| action      | `string`               | created                    |             |
+| notes       | `HistoryNotesGetData`  |                            |             |
+| created_at  | `string`               | 2018-06-08T 10:34:14+00:00 |             |
+| updated_at  | `string`               | `2018-06-08T10:34:14+00:00 |             |
+
 ## Usage
 
 The license client is simply called `LicensesClient`.
