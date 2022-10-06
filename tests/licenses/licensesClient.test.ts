@@ -35,6 +35,7 @@ import {
   ActiveSeatsFindResultFields,
 } from '../../src';
 import {
+  PAYLOAD_LICENSE_HISTORY,
   PAYLOAD_SCHEMA_LICENSE,
   PAYLOAD_SCHEMA_LICENSE_WITHOUT_OPTIONAL_FIELDS,
 } from './licenses.mocks';
@@ -52,6 +53,7 @@ export const LICENSE_MOCK_URL_REACTIVATE_LICENSE =
 export const LICENSE_MOCK_URL_CANCEL_LICENSE = '/licenses/XSP123456/cancel';
 export const LICENSE_MOCK_URL_UPDATE_FRIENDLYNAME =
   '/licenses/123456/friendlyName';
+export const LICENSE_MOCK_URL_GET_HISTORY = '/licenses/12343/history';
 
 /**
  * Mock license data to be used in tests and returned by mocks
@@ -777,6 +779,20 @@ describe('LicensesClient', () => {
       await patchLicenseClient.updateFriendlyName('123456', {
         [LicenseGetFields.COLUMN_FRIENDLY_NAME]: 'friendlyName',
       });
+      expect(nock.isDone()).to.be.true;
+    });
+  });
+
+  describe('getLicenseHistory', () => {
+    const getLicenseHistory = new PublicApiClient()
+      .getLicensesClient()
+      .setUrl(LICENSES_MOCK_URL);
+    it('call get method', async () => {
+      nock(LICENSES_MOCK_URL)
+        .get(LICENSE_MOCK_URL_GET_HISTORY)
+        .reply(200, PAYLOAD_LICENSE_HISTORY);
+
+      await getLicenseHistory.getHistory('12343');
       expect(nock.isDone()).to.be.true;
     });
   });
