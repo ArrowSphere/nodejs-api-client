@@ -71,6 +71,11 @@ export abstract class AbstractClient {
   protected isCamelPagination = false;
 
   /**
+   * Defines header information for axios call
+   */
+  protected headers: Headers = {};
+
+  /**
    * AbstractClient constructor.
    * @param client - Pre-existing Axios instance that will be used for calls
    * @returns AbstractClient
@@ -135,9 +140,21 @@ export abstract class AbstractClient {
   }
 
   /**
+   * Sets Header Information
+   * @param headers - Header axios information
+   * @returns AbstractClient
+   */
+  public setHeaders(headers: Record<string, string>): this {
+    this.headers = headers;
+
+    return this;
+  }
+
+  /**
    * Sends a GET request and returns the response
    * @param parameters - Query parameters to send
    * @param headers - Headers to send
+   * @param options - Options to send
    * @returns Promise\<AxiosResponse['data']\>
    */
   protected async get<T = AxiosResponse['data']>(
@@ -187,7 +204,11 @@ export abstract class AbstractClient {
    * @returns {@link Headers}
    */
   private prepareHeaders(headers: Headers): Headers {
-    return { ...headers, [ParameterKeys.API_KEY]: this.apiKey };
+    return {
+      ...headers,
+      [ParameterKeys.API_KEY]: this.apiKey,
+      ...this.headers,
+    };
   }
 
   /**
@@ -196,6 +217,7 @@ export abstract class AbstractClient {
    * @param payload - Payload to be sent in the POST body
    * @param parameters - Query parameters to be sent in the request
    * @param headers - Headers to be sent in the request
+   * @param options - Options to send
    */
   protected async post(
     payload: Payload = {},
@@ -214,6 +236,14 @@ export abstract class AbstractClient {
     return this.getResponse(response);
   }
 
+  /**
+   * Sends a PUT request
+   * @param payload - Payload to be sent in the POST body
+   * @param parameters - Query parameters to be sent in the request
+   * @param headers - Headers to be sent in the request
+   * @param options - Options to send
+   * @returns Promise\<void\>
+   */
   protected async put(
     payload: Payload = {},
     parameters: Parameters = {},
@@ -231,6 +261,14 @@ export abstract class AbstractClient {
     return this.getResponse(response);
   }
 
+  /**
+   * Sends a PATCH request
+   * @param payload - Payload to be sent in the POST body
+   * @param parameters - Query parameters to be sent in the request
+   * @param headers - Headers to be sent in the request
+   * @param options - Options to send
+   * @returns Promise\<T\>
+   */
   protected async patch<T>(
     payload: Payload = {},
     parameters: Parameters = {},
@@ -251,6 +289,7 @@ export abstract class AbstractClient {
   /**
    * Generates the full url for request
    * @param parameters - Parameters to serialize
+   * @param options - Options to send
    * @returns string
    */
   protected generateUrl(parameters: Parameters, options: Options): string {
