@@ -1,23 +1,19 @@
 import {
+  ActionHistoryResultData,
+  ActionHistoryResultFields,
   ActionMessagesGetResultFields,
   ActionsGetFields,
   ActiveSeatsFindResultFields,
   BuySellFields,
   GetData,
+  GetLicenseResultData,
+  HistoryNotesFields,
+  LicenceHistoryResultData,
+  LicenceHistoryResultFields,
   LicenseGetFields,
   LicensePriceGetFields,
   OrderGetFields,
 } from '../../src';
-import { GetLicenseResultData } from '../../src/licenses/entities/getResult/getLicenseResult';
-import {
-  GetLicenceHistoryResultData,
-  GetLicenceHistoryResultFields,
-} from '../../build/licenses/entities/getLicense/licenceHistoryResult';
-import { LicenseHistoryGetFields } from '../../build/licenses/entities/history/getLicenseHistoryResult';
-import {
-  HistoryNotesFields,
-  LicenseHistoryGetData,
-} from '../../src/licenses/entities/history/getLicenseHistoryResult';
 
 export const PAYLOAD_SCHEMA_LICENSE: GetData<GetLicenseResultData> = {
   status: 200,
@@ -146,9 +142,9 @@ export const PAYLOAD_SCHEMA_LICENSE_WITHOUT_OPTIONAL_FIELDS: GetData<GetLicenseR
     },
   },
 };
-export const HISTORY_PAYLOAD: LicenseHistoryGetData = {
-  [LicenseHistoryGetFields.COLUMN_LICENSE_HISTORY_ACTION]: 'created',
-  [LicenseHistoryGetFields.COLUMN_LICENSE_HISTORY_NOTES]: {
+export const HISTORY_PAYLOAD: ActionHistoryResultData = {
+  [ActionHistoryResultFields.COLUMN_ACTION]: 'created',
+  [ActionHistoryResultFields.COLUMN_NOTES]: {
     [HistoryNotesFields.COLUMN_BEFORE]: {
       sku: '031C9E47-4802-4248-838E-778FB1D2CC05',
       state: 'In progress',
@@ -178,15 +174,13 @@ export const HISTORY_PAYLOAD: LicenseHistoryGetData = {
       },
     },
   },
-  [LicenseHistoryGetFields.COLUMN_LICENSE_HISTORY_CREATED_AT]:
-    '2018-06-08T10:34:14+00:00',
-  [LicenseHistoryGetFields.COLUMN_LICENSE_HISTORY_UPDATED_AT]:
-    '2018-06-08T10:34:14+00:00',
+  [ActionHistoryResultFields.COLUMN_CREATED_AT]: '2018-06-08T10:34:14+00:00',
+  [ActionHistoryResultFields.COLUMN_UPDATED_AT]: '2018-06-08T10:34:14+00:00',
 };
 
-export const PAYLOAD_LICENSE_HISTORY: GetData<GetLicenceHistoryResultData> = {
+export const PAYLOAD_LICENSE_HISTORY: GetData<LicenceHistoryResultData> = {
   status: 200,
   data: {
-    [GetLicenceHistoryResultFields.COLUMN_LICENSE_HISTORY]: [HISTORY_PAYLOAD],
+    [LicenceHistoryResultFields.COLUMN_ACTIONS]: [HISTORY_PAYLOAD],
   },
 };

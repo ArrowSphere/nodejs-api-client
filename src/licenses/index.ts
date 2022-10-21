@@ -7,6 +7,8 @@ export * from './entities/getLicense/licenseGetResult';
 export * from './entities/getLicense/licensePriceGetResult';
 export * from './entities/getLicense/orderGetResult';
 export * from './entities/getResult/getLicenseResult';
+export * from './entities/history/actionHistoryResult';
+export * from './entities/history/licenceHistoryResult';
 export * from './entities/license/activeSeatsFindResult';
 export * from './entities/license/configFindResult';
 export * from './entities/license/licenseFindResult';
