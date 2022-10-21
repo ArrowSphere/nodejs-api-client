@@ -43,7 +43,7 @@ import {
 import { GetResult } from '../getResult';
 import { LicenseGetFields } from './entities/getLicense/licenseGetResult';
 import { GetLicenseResult } from './entities/getResult/getLicenseResult';
-import { GetLicenceHistoryResult } from './entities/getLicense/licenceHistoryResult';
+import { LicenceHistoryResult } from './entities/history/licenceHistoryResult';
 
 /**
  * Parameters passable to the request for refining search.
@@ -564,9 +564,9 @@ export class LicensesClient extends AbstractClient {
   public async getHistory(
     licenseReference: string,
     parameters: Parameters = {},
-  ): Promise<GetResult<GetLicenceHistoryResult>> {
+  ): Promise<GetResult<LicenceHistoryResult>> {
     this.path = licenseReference + this.GET_LICENSE_HISTORY_PATH;
 
-    return new GetResult(GetLicenceHistoryResult, await this.get(parameters));
+    return new GetResult(LicenceHistoryResult, await this.get(parameters));
   }
 }
