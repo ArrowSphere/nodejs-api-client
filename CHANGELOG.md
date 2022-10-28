@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Update key note for license history
+- Update key "note" for license history
 
 ## [3.15.0] - 2022-10-24
 
