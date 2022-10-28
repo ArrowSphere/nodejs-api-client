@@ -7,7 +7,7 @@ import {
   BuySellFields,
   GetData,
   GetLicenseResultData,
-  HistoryNotesFields,
+  HistoryNoteFields,
   LicenceHistoryResultData,
   LicenceHistoryResultFields,
   LicenseGetFields,
@@ -144,8 +144,8 @@ export const PAYLOAD_SCHEMA_LICENSE_WITHOUT_OPTIONAL_FIELDS: GetData<GetLicenseR
 };
 export const HISTORY_PAYLOAD: ActionHistoryResultData = {
   [ActionHistoryResultFields.COLUMN_ACTION]: 'created',
-  [ActionHistoryResultFields.COLUMN_NOTES]: {
-    [HistoryNotesFields.COLUMN_BEFORE]: {
+  [ActionHistoryResultFields.COLUMN_NOTE]: {
+    [HistoryNoteFields.COLUMN_BEFORE]: {
       sku: '031C9E47-4802-4248-838E-778FB1D2CC05',
       state: 'In progress',
       activation_date: '2018-06-08T10:34:28+00:00',
@@ -155,7 +155,7 @@ export const HISTORY_PAYLOAD: ActionHistoryResultData = {
       activeSeats: 1,
       action: 'in_progress',
     },
-    [HistoryNotesFields.COLUMN_AFTER]: {
+    [HistoryNoteFields.COLUMN_AFTER]: {
       sku: '031C9E47-4802-4248-838E-778FB1D2CC05',
       state: 'Activated',
       activation_date: '2018-06-08T10:34:28+00:00',
@@ -165,7 +165,7 @@ export const HISTORY_PAYLOAD: ActionHistoryResultData = {
       activeSeats: 1,
       action: 'created',
     },
-    [HistoryNotesFields.COLUMN_EXTRA_INFORMATION]: {
+    [HistoryNoteFields.COLUMN_EXTRA_INFORMATION]: {
       user: {
         name: 'username',
         ref: 'XSP12345',
