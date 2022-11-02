@@ -339,6 +339,17 @@ export class LicensesClient extends AbstractClient {
    * The path of license history
    */
   private GET_LICENSE_HISTORY_PATH = '/history';
+
+  /**
+   * The path of cancel license auto-renew
+   */
+  private CANCEL_AUTO_RENEW_PATH = '/autorenew/cancel';
+
+  /**
+   * The path of reactivate license auto-renew
+   */
+  private REACTIVATE_AUTO_RENEW_PATH = '/autorenew/reactivate';
+
   /**
    * Returns the raw result from the find endpoint call
    *
@@ -568,5 +579,23 @@ export class LicensesClient extends AbstractClient {
     this.path = licenseReference + this.GET_LICENSE_HISTORY_PATH;
 
     return new GetResult(LicenceHistoryResult, await this.get(parameters));
+  }
+
+  public async cancelAutoRenew(
+    licenseReference: string,
+    parameters: Parameters = {},
+  ): Promise<void> {
+    this.path = licenseReference + this.CANCEL_AUTO_RENEW_PATH;
+
+    return await this.put(undefined, parameters);
+  }
+
+  public async reactivateAutoRenew(
+    licenseReference: string,
+    parameters: Parameters = {},
+  ): Promise<void> {
+    this.path = licenseReference + this.REACTIVATE_AUTO_RENEW_PATH;
+
+    return await this.put(undefined, parameters);
   }
 }

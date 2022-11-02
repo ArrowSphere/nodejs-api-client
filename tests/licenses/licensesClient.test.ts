@@ -54,6 +54,10 @@ export const LICENSE_MOCK_URL_CANCEL_LICENSE = '/licenses/XSP123456/cancel';
 export const LICENSE_MOCK_URL_UPDATE_FRIENDLYNAME =
   '/licenses/123456/friendlyName';
 export const LICENSE_MOCK_URL_GET_HISTORY = '/licenses/12343/history';
+export const LICENSE_MOCK_URL_CANCEL_AUTO_RENEW_LICENSE =
+  '/licenses/XSP123456/autorenew/cancel';
+export const LICENSE_MOCK_URL_REACTIVATE_AUTO_RENEW_LICENSE =
+  '/licenses/XSP123456/autorenew/reactivate';
 
 /**
  * Mock license data to be used in tests and returned by mocks
@@ -793,6 +797,34 @@ describe('LicensesClient', () => {
         .reply(200, PAYLOAD_LICENSE_HISTORY);
 
       await getLicenseHistory.getHistory('12343');
+      expect(nock.isDone()).to.be.true;
+    });
+  });
+
+  describe('cancelAutoRenew', () => {
+    const getLicenseClient = new PublicApiClient()
+      .getLicensesClient()
+      .setUrl(LICENSES_MOCK_URL);
+    it('calls the put method', async () => {
+      nock(LICENSES_MOCK_URL)
+        .put(LICENSE_MOCK_URL_CANCEL_AUTO_RENEW_LICENSE)
+        .reply(204);
+
+      await getLicenseClient.cancelAutoRenew('XSP123456');
+      expect(nock.isDone()).to.be.true;
+    });
+  });
+
+  describe('reactivateAutoRenew', () => {
+    const getLicenseClient = new PublicApiClient()
+      .getLicensesClient()
+      .setUrl(LICENSES_MOCK_URL);
+    it('calls the put method', async () => {
+      nock(LICENSES_MOCK_URL)
+        .put(LICENSE_MOCK_URL_REACTIVATE_AUTO_RENEW_LICENSE)
+        .reply(204);
+
+      await getLicenseClient.reactivateAutoRenew('XSP123456');
       expect(nock.isDone()).to.be.true;
     });
   });
