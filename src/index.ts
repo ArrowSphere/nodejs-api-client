@@ -13,6 +13,7 @@ export * from './orders/';
 export * from './publicApiClient';
 export * from './publicGraphQLClient';
 export * from './shared/';
+export * from './standards/';
 export * from './subscriptions/';
 export { ContactInformation };
 import * as ContactInformation from './contact';
