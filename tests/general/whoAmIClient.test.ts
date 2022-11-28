@@ -5,8 +5,7 @@ import sinonChai from 'sinon-chai';
 import nock from 'nock';
 
 // Sources
-import { PublicApiClient } from '../../src';
-import { WhoAmI, WhoAmIResponseFields } from '../../src/general';
+import { PublicApiClient, WhoAmI, WhoAmIResponseFields } from '../../src';
 
 chai.use(sinonChai);
 

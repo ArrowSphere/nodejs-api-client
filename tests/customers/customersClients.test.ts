@@ -7,6 +7,7 @@ import {
   CustomerFields,
   GetResult,
   GetResultFields,
+  PaginationFields,
   Parameters,
   PublicApiClient,
   DataCustomersFields,
@@ -14,7 +15,6 @@ import {
   DataInvitationFields,
 } from '../../src/';
 import { expect } from 'chai';
-import { PaginationFields } from '../../src/pagination';
 import { PAYLOAD_ORDERS } from '../orders/mocks/orders.mocks';
 
 export const CUSTOMERS_MOCK_URL = 'https://customers.localhost';

@@ -1,6 +1,10 @@
-import { GetData, GetResultFields, ContactInformation } from '../../../src';
+import {
+  GetData,
+  GetResultFields,
+  ContactInformation,
+  PaginationFields,
+} from '../../../src';
 import { constants } from 'http2';
-import { PaginationFields } from '../../../src/pagination';
 
 export const CONTACT_CREATE_REQUEST: ContactInformation.ContactRequestType = {
   [ContactInformation.ContactRequestFields.COLUMN_FIRSTNAME]: 'John',
