@@ -85,6 +85,21 @@ export abstract class AbstractClient {
 
     // Prevent axios from throwing its own errors, let us do that
     this.client.defaults.validateStatus = null;
+
+    this.client.interceptors.request.use((request) => {
+      console.log(
+        'AXIOS - Starting Request : ',
+        JSON.stringify(request, null, 2),
+      );
+
+      return request;
+    });
+
+    this.client.interceptors.response.use((response) => {
+      console.log('AXIOS - Response : ', JSON.stringify(response, null, 2));
+
+      return response;
+    });
   }
 
   /**
@@ -162,12 +177,18 @@ export abstract class AbstractClient {
     headers: Headers = {},
     options: Options = {},
   ): Promise<T> {
+    console.log('GET parameters', parameters);
+    console.log('GET options', options);
+    console.log('GET Header', headers);
+
     const response = await this.client.get<T>(
       this.generateUrl(parameters, options),
       {
         headers: this.prepareHeaders(headers),
       },
     );
+
+    console.log('GET Response', response);
 
     return this.getResponse<T>(response);
   }
@@ -225,6 +246,11 @@ export abstract class AbstractClient {
     headers: Headers = {},
     options: Options = {},
   ): Promise<AxiosResponse['data']> {
+    console.log('POST parameters', parameters);
+    console.log('POST options', options);
+    console.log('POST payload', payload);
+    console.log('POST Header', headers);
+
     const response = await this.client.post(
       this.generateUrl(parameters, options),
       payload,
@@ -232,6 +258,8 @@ export abstract class AbstractClient {
         headers: this.prepareHeaders(headers),
       },
     );
+
+    console.log('POST Response', response);
 
     return this.getResponse(response);
   }
@@ -250,6 +278,11 @@ export abstract class AbstractClient {
     headers: Headers = {},
     options: Options = {},
   ): Promise<void> {
+    console.log('PUT parameters', parameters);
+    console.log('PUT options', options);
+    console.log('PUT payload', payload);
+    console.log('PUT Header', headers);
+
     const response = await this.client.put(
       this.generateUrl(parameters, options),
       payload,
@@ -257,6 +290,8 @@ export abstract class AbstractClient {
         headers: this.prepareHeaders(headers),
       },
     );
+
+    console.log('PUT Response', response);
 
     return this.getResponse(response);
   }
@@ -275,6 +310,11 @@ export abstract class AbstractClient {
     headers: Headers = {},
     options: Options = {},
   ): Promise<T> {
+    console.log('PATCH parameters', parameters);
+    console.log('PATCH options', options);
+    console.log('PATCH payload', payload);
+    console.log('PATCH Header', headers);
+
     const response = await this.client.patch(
       this.generateUrl(parameters, options),
       payload,
@@ -282,6 +322,8 @@ export abstract class AbstractClient {
         headers: this.prepareHeaders(headers),
       },
     );
+
+    console.log('PATCH Response', response);
 
     return this.getResponse(response);
   }

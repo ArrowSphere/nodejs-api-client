@@ -1,4 +1,4 @@
-import { AbstractEntity } from '../../../abstractEntity';
+import { AbstractEntity } from '../../../../abstractEntity';
 import { SecurityResources, SecurityResourcesType } from './securityResources';
 
 export enum ResourcesFields {

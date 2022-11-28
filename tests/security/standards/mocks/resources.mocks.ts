@@ -1,11 +1,11 @@
-import { PaginationFields } from '../../../src/pagination';
 import {
   GetData,
   GetResultFields,
+  PaginationFields,
   ResourcesFields,
   ResourcesType,
   SecurityResourcesFields,
-} from '../../../src';
+} from '../../../../src';
 
 export const PAYLOAD_RESOURCES_RESPONSE: GetData<ResourcesType> = {
   [GetResultFields.COLUMN_STATUS]: 200,
