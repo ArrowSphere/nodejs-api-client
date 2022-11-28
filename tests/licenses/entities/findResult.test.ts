@@ -1,7 +1,11 @@
 import { expect } from 'chai';
 import nock from 'nock';
-import { PublicApiClient } from '../../../src';
-import { FilterFindResult, FindData, FindResult } from '../../../src/licenses';
+import {
+  FilterFindResult,
+  FindData,
+  FindResult,
+  PublicApiClient,
+} from '../../../src';
 import {
   MOCK_FIND_RESPONSE,
   MOCK_RESULT_DATA,

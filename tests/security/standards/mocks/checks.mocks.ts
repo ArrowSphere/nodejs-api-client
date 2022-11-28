@@ -3,9 +3,9 @@ import {
   ChecksType,
   GetData,
   GetResultFields,
+  PaginationFields,
   SecurityChecksFields,
-} from '../../../src';
-import { PaginationFields } from '../../../src/pagination';
+} from '../../../../src';
 
 export const PAYLOAD_CHECKS_RESPONSE: GetData<ChecksType> = {
   [GetResultFields.COLUMN_STATUS]: 200,

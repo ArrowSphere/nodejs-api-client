@@ -1,6 +1,6 @@
-import { AbstractClient, Parameters } from '../abstractClient';
+import { AbstractClient, Parameters } from '../../abstractClient';
 import { Standards } from './entities/standards/standards';
-import { GetResult } from '../getResult';
+import { GetResult } from '../../getResult';
 import { Checks } from './entities/checks/checks';
 import { Resources } from './entities/resources/resources';
 

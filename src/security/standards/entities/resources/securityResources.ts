@@ -1,4 +1,4 @@
-import { AbstractEntity } from '../../../abstractEntity';
+import { AbstractEntity } from '../../../../abstractEntity';
 
 export enum SecurityResourcesFields {
   COLUMN_STATUS = 'status',

@@ -3,9 +3,9 @@ import {
   ActiveSeatsFindResultFields,
   LicenseFindResult,
   LicenseFindResultData,
+  LicenseFindResultFields,
   PriceFindResultFields,
-} from '../../../src/licenses';
-import { LicenseFindResultFields } from '../../../src/licenses/entities/license/licenseFindResult';
+} from '../../../src';
 import { MOCK_RESULT_DATA } from '../licensesClient.test';
 
 const date = new Date().toISOString();

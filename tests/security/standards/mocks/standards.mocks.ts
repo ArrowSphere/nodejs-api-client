@@ -1,11 +1,11 @@
 import {
   GetData,
   GetResultFields,
+  PaginationFields,
   SecurityStandardsFields,
   StandardsFields,
   StandardsType,
-} from '../../../src';
-import { PaginationFields } from '../../../src/pagination';
+} from '../../../../src';
 
 export const PAYLOAD_STANDARDS_RESPONSE: GetData<StandardsType> = {
   [GetResultFields.COLUMN_STATUS]: 200,
