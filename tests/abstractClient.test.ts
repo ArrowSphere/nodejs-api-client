@@ -24,16 +24,6 @@ describe('AbstractClient', () => {
       nock(MOCK_URL).get('/').reply(200);
     });
 
-    it('uses the passed axios instance', (done) => {
-      const axiosClient = axios.create();
-      axiosClient.interceptors.request.use((value) => {
-        done();
-        return value;
-      });
-      const client = new TestClient(axiosClient);
-      client.get();
-    });
-
     it('creates a new axios client', (done) => {
       const client = new TestClient();
       client
@@ -189,11 +179,11 @@ describe('AbstractClient', () => {
 
       const apiKey = 'apiKey';
       const axiosClient = axios.create();
-      const client = new TestClient(axiosClient).setApiKey(apiKey);
+      const client = new TestClient().setApiKey(apiKey);
 
       axiosClient.interceptors.request.use(
         axiosExpectInterceptor(({ config }: ExpectFunctionParameters) => {
-          expect(config?.headers[ParameterKeys.API_KEY]).to.equal(apiKey);
+          expect(config?.headers?.[ParameterKeys.API_KEY]).to.equal(apiKey);
         }),
       );
 
@@ -207,7 +197,7 @@ describe('AbstractClient', () => {
 
       const apiKey = 'apiKey';
       const axiosClient = axios.create();
-      const client = new TestClient(axiosClient).setApiKey(apiKey);
+      const client = new TestClient().setApiKey(apiKey);
 
       axiosClient.interceptors.request.use(
         axiosExpectInterceptor(
@@ -230,7 +220,7 @@ describe('AbstractClient', () => {
 
       const apiKey = 'apiKey';
       const axiosClient = axios.create();
-      const client = new TestClient(axiosClient).setApiKey(apiKey);
+      const client = new TestClient().setApiKey(apiKey);
       const perPage = 10;
       const page = 2;
 
@@ -259,7 +249,7 @@ describe('AbstractClient', () => {
 
       const apiKey = 'apiKey';
       const axiosClient = axios.create();
-      const client = new TestClient(axiosClient).setApiKey(apiKey);
+      const client = new TestClient().setApiKey(apiKey);
       const perPage = -1;
       const page = 1;
 
@@ -284,7 +274,7 @@ describe('AbstractClient', () => {
 
       const apiKey = 'apiKey';
       const axiosClient = axios.create();
-      const client = new TestClient(axiosClient).setApiKey(apiKey);
+      const client = new TestClient().setApiKey(apiKey);
       const perPage = 25;
 
       axiosClient.interceptors.request.use(
