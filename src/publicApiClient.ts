@@ -23,7 +23,7 @@ export class PublicApiClient extends AbstractClient {
    * @returns {@link CustomersClient}
    */
   public getCustomersClient(): CustomersClient {
-    return new CustomersClient(this.client)
+    return new CustomersClient()
       .setUrl(this.url)
       .setApiKey(this.apiKey)
       .setHeaders(this.headers);
@@ -34,7 +34,7 @@ export class PublicApiClient extends AbstractClient {
    * @returns {@link WhoAmIClient}
    */
   public getWhoamiClient(): WhoAmIClient {
-    return new WhoAmIClient(this.client)
+    return new WhoAmIClient()
       .setUrl(this.url)
       .setApiKey(this.apiKey)
       .setHeaders(this.headers);
@@ -45,7 +45,7 @@ export class PublicApiClient extends AbstractClient {
    * @returns {@link LicensesClient}
    */
   public getLicensesClient(): LicensesClient {
-    return new LicensesClient(this.client)
+    return new LicensesClient()
       .setUrl(this.url)
       .setApiKey(this.apiKey)
       .setHeaders(this.headers);
@@ -56,7 +56,7 @@ export class PublicApiClient extends AbstractClient {
    * @returns {@link CheckDomainClient}
    */
   public getCheckDomainClient(): CheckDomainClient {
-    return new CheckDomainClient(this.client)
+    return new CheckDomainClient()
       .setUrl(this.url)
       .setApiKey(this.apiKey)
       .setHeaders(this.headers);
@@ -67,7 +67,7 @@ export class PublicApiClient extends AbstractClient {
    * @returns {@link SubscriptionsClient}
    */
   public getSubscriptionsClient(): SubscriptionsClient {
-    return new SubscriptionsClient(this.client)
+    return new SubscriptionsClient()
       .setUrl(this.url)
       .setApiKey(this.apiKey)
       .setHeaders(this.headers);
@@ -78,7 +78,7 @@ export class PublicApiClient extends AbstractClient {
    * @returns {@link OrdersClient}
    */
   public getOrdersClient(): OrdersClient {
-    return new OrdersClient(this.client)
+    return new OrdersClient()
       .setUrl(this.url)
       .setApiKey(this.apiKey)
       .setHeaders(this.headers);
@@ -89,7 +89,7 @@ export class PublicApiClient extends AbstractClient {
    * @returns {@link ContactClient}
    */
   public getContactClient(): ContactClient {
-    return new ContactClient(this.client)
+    return new ContactClient()
       .setUrl(this.url)
       .setApiKey(this.apiKey)
       .setHeaders(this.headers);
@@ -100,28 +100,28 @@ export class PublicApiClient extends AbstractClient {
    * @returns {@link ContactClient}
    */
   public getCampaignClient(): CampaignClient {
-    return new CampaignClient(this.client)
+    return new CampaignClient()
       .setUrl(this.url)
       .setApiKey(this.apiKey)
       .setHeaders(this.headers);
   }
 
   public getConsumptionClient(): ConsumptionClient {
-    return new ConsumptionClient(this.client)
+    return new ConsumptionClient()
       .setUrl(this.url)
       .setApiKey(this.apiKey)
       .setHeaders(this.headers);
   }
 
   public getSecurityStandardsClient(): StandardsClient {
-    return new StandardsClient(this.client)
+    return new StandardsClient()
       .setUrl(this.url)
       .setApiKey(this.apiKey)
       .setHeaders(this.headers);
   }
 
   public getSecurityRegisterClient(): RegisterClient {
-    return new RegisterClient(this.client)
+    return new RegisterClient()
       .setUrl(this.url)
       .setApiKey(this.apiKey)
       .setHeaders(this.headers);

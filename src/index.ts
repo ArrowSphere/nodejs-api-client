@@ -1,3 +1,4 @@
+export * from './axiosSingleton';
 export * from './abstractClient';
 export * from './abstractEntity';
 export * from './abstractGraphQLClient';
