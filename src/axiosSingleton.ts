@@ -28,7 +28,7 @@ export class AxiosSingleton {
   private static _handleRequest(
     request: AxiosRequestConfig,
   ): AxiosRequestConfig {
-    console.log('AXIOS - Request : ', request);
+    console.log('AXIOS - Request : ', AxiosSingleton.cleanRequestLog(request));
 
     return request;
   }
@@ -37,8 +37,36 @@ export class AxiosSingleton {
    * @param response - Axios Response
    */
   private static _handleResponse(response: AxiosResponse): AxiosResponse {
-    console.log('AXIOS - Response : ', response);
+    console.log(
+      'AXIOS - Response : ',
+      AxiosSingleton.cleanResponseLog(response),
+    );
 
     return response;
+  }
+
+  /**
+   * @param request - Axios Request
+   */
+  private static cleanRequestLog(
+    request: AxiosRequestConfig,
+  ): AxiosRequestConfig {
+    const tempRequest = request;
+
+    delete tempRequest?.headers?.apiKey;
+
+    return tempRequest;
+  }
+
+  /**
+   * @param response - Axios Response
+   */
+  private static cleanResponseLog(response: AxiosResponse): AxiosResponse {
+    const tempResponse = response;
+
+    delete tempResponse?.config?.headers?.apiKey;
+    delete tempResponse?.request;
+
+    return tempResponse;
   }
 }
