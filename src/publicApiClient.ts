@@ -9,6 +9,7 @@ import { CampaignClient } from './campaign';
 import { ConsumptionClient } from './consumption';
 import { StandardsClient } from './security/standards/standardsClient';
 import { RegisterClient } from './security';
+import { CartClient } from './cart/cartClient';
 
 /**
  * Public API Client class, should be the main entry point for your calls
@@ -122,6 +123,13 @@ export class PublicApiClient extends AbstractClient {
 
   public getSecurityRegisterClient(): RegisterClient {
     return new RegisterClient()
+      .setUrl(this.url)
+      .setApiKey(this.apiKey)
+      .setHeaders(this.headers);
+  }
+
+  public getCartClient(): CartClient {
+    return new CartClient()
       .setUrl(this.url)
       .setApiKey(this.apiKey)
       .setHeaders(this.headers);
