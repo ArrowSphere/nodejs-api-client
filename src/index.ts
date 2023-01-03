@@ -3,6 +3,7 @@ export * from './abstractClient';
 export * from './abstractEntity';
 export * from './abstractGraphQLClient';
 export * from './campaign/';
+export * from './cart/';
 export * from './catalog/';
 export * from './consumption';
 export * from './customers/';

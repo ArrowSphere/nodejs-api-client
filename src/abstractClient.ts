@@ -284,6 +284,29 @@ export abstract class AbstractClient {
   }
 
   /**
+   * Sends a DELETE request
+   * @param payload - Payload to be sent in the POST body
+   * @param parameters - Query parameters to be sent in the request
+   * @param headers - Headers to be sent in the request
+   * @param options - Options to send
+   * @returns Promise\<T\>
+   */
+  protected async delete(
+    parameters: Parameters = {},
+    headers: Headers = {},
+    options: Options = {},
+  ): Promise<void> {
+    const response = await this.client.delete(
+      this.generateUrl(parameters, options),
+      {
+        headers: this.prepareHeaders(headers),
+      },
+    );
+
+    return this.getResponse(response);
+  }
+
+  /**
    * Generates the full url for request
    * @param parameters - Parameters to serialize
    * @param options - Options to send
