@@ -10,7 +10,15 @@ import {
   LandingPageFooterFeatureFields,
   LandingPageHeaderFields,
   PostEmailCampaignType,
+  CampaignV2Type,
+  CampaignV2Fields,
+  LandingPageFooterV2Fields,
+  LandingPageV2Fields,
+  LandingPageFooterFeatureV2Fields,
+  BannerV2Fields,
 } from '../../../src';
+import { LandingPageHeaderV2Fields } from '../../../src/campaign/entities/v2/campaign/landingPage/landingPageHeader';
+import { LandingPageFooterFeatureItemFields } from '../../../src/campaign/entities/v2/campaign/landingPage/landingPageFooter/landingPageFooterFeatureItem';
 
 export const GET_ACTIVE_CAMPAIGN_PARAMETERS = {
   customer: 'XSP12345',
@@ -171,6 +179,311 @@ export const GET_ACTIVE_CAMPAIGN_OUTPUT_MINIMAL: GetData<CampaignType> = {
             [LandingPageFooterFeatureFields.COLUMN_SIZE]: 4,
           },
         ],
+      },
+    },
+  },
+};
+
+export const GET_ACTIVE_V2_CAMPAIGN_OUTPUT: GetData<CampaignV2Type> = {
+  status: 200,
+  data: {
+    [CampaignV2Fields.COLUMN_REFERENCE]: 'c925ec6e-e029-4146-8400-2867c7761743',
+    [CampaignV2Fields.COLUMN_NAME]: 'Campaign Microsoft',
+    [CampaignV2Fields.COLUMN_CATEGORY]: 'BANNER',
+    [CampaignV2Fields.COLUMN_IS_ACTIVATED]: true,
+    [CampaignV2Fields.COLUMN_CREATED_AT]: '2021-06-25T16:00:00Z',
+    [CampaignV2Fields.COLUMN_UPDATED_AT]: '2021-06-25T18:00:00Z',
+    [CampaignV2Fields.COLUMN_DELETED_AT]: '2021-08-25T16:00:00Z',
+    [CampaignV2Fields.COLUMN_RULES]: {
+      [RulesFields.COLUMN_LOCATIONS]: ['MCP'],
+      [RulesFields.COLUMN_ROLES]: ['EXT_MSP', 'EXT_MSP_P'],
+      [RulesFields.COLUMN_MARKETPLACES]: ['FR', 'US'],
+      [RulesFields.COLUMN_SUBSCRIPTIONS]: ['MSCSP', 'DDPCaaS'],
+      [RulesFields.COLUMN_RESELLERS]: ['XSP12354', 'XSP256'],
+      [RulesFields.COLUMN_END_CUSTOMERS]: ['XSP45678', 'XSP789'],
+    },
+    [CampaignV2Fields.COLUMN_START_DATE]: '2021-08-01',
+    [CampaignV2Fields.COLUMN_END_DATE]: '2021-09-31',
+    [CampaignV2Fields.COLUMN_BANNER]: {
+      [BannerV2Fields.COLUMN_BACKGROUND_IMAGE_UUID]:
+        'd8553daa-1d39-489e-89c0-3731c0d3ad0b',
+      [BannerV2Fields.COLUMN_TYPE]: 'PICTURE',
+      [BannerV2Fields.COLUMN_BUTTON_PLACEMENT]: 'RIGHT',
+      [BannerV2Fields.COLUMN_BUTTON_TEXT]: 'Click here',
+      [BannerV2Fields.COLUMN_TEXT]: 'Banner Title',
+      [BannerV2Fields.COLUMN_TEXT_COLOR]: '#119EOF',
+    },
+    [CampaignV2Fields.COLUMN_LANDING_PAGE]: {
+      [LandingPageV2Fields.COLUMN_URL]:
+        'https://XXXXXXXXXX.com/landingpage.html',
+      [LandingPageV2Fields.COLUMN_HEADER]: {
+        [LandingPageHeaderV2Fields.COLUMN_BACKGROUND_IMAGE_UUID]:
+          '0fed6621-fe0c-4290-813a-58217e37b3ae',
+        [LandingPageHeaderV2Fields.COLUMN_VENDOR_LOGO_UUID]:
+          'e174e2a2-7545-4ef1-8f0c-122d0140cdea',
+        [LandingPageHeaderV2Fields.COLUMN_TITLE]: 'Microsoft Big campaign',
+        [LandingPageHeaderV2Fields.COLUMN_BACKGROUND_COLOR]: '#FF00FF',
+        [LandingPageHeaderV2Fields.COLUMN_BASELINE]:
+          'This page will explain ...',
+        [LandingPageHeaderV2Fields.COLUMN_TEXT_COLOR]: '#FF00FF',
+        [LandingPageHeaderV2Fields.COLUMN_CIRCLE_COLOR]: '#FF0000',
+      },
+      [LandingPageV2Fields.COLUMN_BODY]: {
+        [LandingPageBodyFields.COLUMN_BACKGROUND_COLOR]: '#FFF',
+        [LandingPageBodyFields.COLUMN_BACKGROUND_IMAGE_UUID]:
+          '6e3a0d7a-8651-4e47-89db-c5b2fbaff8f0',
+        [LandingPageBodyFields.COLUMN_TYPE]: 'PICTURE',
+        [LandingPageBodyFields.COLUMN_TITLE]: 'This is a body title',
+        [LandingPageBodyFields.COLUMN_DESCRIPTION]:
+          '<p>This is a great description</p>',
+        [LandingPageBodyFields.COLUMN_VIDEO_URL]: 'https://.../',
+        [LandingPageBodyFields.COLUMN_BUTTON_TEXT]: 'Send form',
+        [LandingPageBodyFields.COLUMN_CONTACT_EMAIL]:
+          'firstname.name@mailprovider.com',
+      },
+      [LandingPageV2Fields.COLUMN_FOOTER]: {
+        [LandingPageFooterV2Fields.COLUMN_TITLE]: 'Microsoft Big campaign',
+        [LandingPageFooterV2Fields.COLUMN_BACKGROUND_COLOR]: '#FF00FF',
+        [LandingPageFooterV2Fields.COLUMN_BUTTON_TEXT]: 'Click here!',
+        [LandingPageFooterV2Fields.COLUMN_BUTTON_URL]: 'https://.../',
+        [LandingPageFooterV2Fields.COLUMN_TEXT_COLOR]: '#FF00FF',
+        [LandingPageFooterV2Fields.COLUMN_FEATURE]: {
+          [LandingPageFooterFeatureV2Fields.COLUMN_TITLE]:
+            'This is a great feature',
+          [LandingPageFooterFeatureV2Fields.COLUMN_DESCRIPTION]:
+            '<p>This is a great description</p>',
+          [LandingPageFooterFeatureV2Fields.COLUMN_ITEMS]: [
+            {
+              [LandingPageFooterFeatureItemFields.COLUMN_TITLE]:
+                'This is a feature title',
+              [LandingPageFooterFeatureItemFields.COLUMN_DESCRIPTION]:
+                'This is a description',
+              [LandingPageFooterFeatureItemFields.COLUMN_BUTTON_URL]:
+                'https://.../',
+              [LandingPageFooterFeatureItemFields.COLUMN_BUTTON_TEXT]:
+                'Click here!',
+              [LandingPageFooterFeatureItemFields.COLUMN_ICON]: 'fa-icon',
+              [LandingPageFooterFeatureItemFields.COLUMN_SIZE]: 4,
+            },
+          ],
+        },
+        [LandingPageFooterV2Fields.COLUMN_MARKETING_FEATURE]: {
+          [LandingPageFooterFeatureV2Fields.COLUMN_TITLE]:
+            'This is a great marketing feature',
+          [LandingPageFooterFeatureV2Fields.COLUMN_DESCRIPTION]:
+            '<p>This is a great description</p>',
+          [LandingPageFooterFeatureV2Fields.COLUMN_ITEMS]: [
+            {
+              [LandingPageFooterFeatureItemFields.COLUMN_TITLE]:
+                'This is a marketing feature title',
+              [LandingPageFooterFeatureItemFields.COLUMN_DESCRIPTION]:
+                'This is a description',
+              [LandingPageFooterFeatureItemFields.COLUMN_BUTTON_URL]:
+                'https://.../',
+              [LandingPageFooterFeatureItemFields.COLUMN_BUTTON_TEXT]:
+                'Click here!',
+              [LandingPageFooterFeatureItemFields.COLUMN_ICON]: 'fa-icon',
+              [LandingPageFooterFeatureItemFields.COLUMN_SIZE]: 4,
+            },
+          ],
+        },
+      },
+    },
+  },
+};
+
+export const GET_ACTIVE_V2_CAMPAIGN_OUTPUT_WITHOUT_FEATURE_ITEMS: GetData<CampaignV2Type> = {
+  status: 200,
+  data: {
+    [CampaignV2Fields.COLUMN_REFERENCE]: 'c925ec6e-e029-4146-8400-2867c7761743',
+    [CampaignV2Fields.COLUMN_NAME]: 'Campaign Microsoft',
+    [CampaignV2Fields.COLUMN_CATEGORY]: 'BANNER',
+    [CampaignV2Fields.COLUMN_IS_ACTIVATED]: true,
+    [CampaignV2Fields.COLUMN_CREATED_AT]: '2021-06-25T16:00:00Z',
+    [CampaignV2Fields.COLUMN_UPDATED_AT]: '2021-06-25T18:00:00Z',
+    [CampaignV2Fields.COLUMN_DELETED_AT]: '2021-08-25T16:00:00Z',
+    [CampaignV2Fields.COLUMN_RULES]: {
+      [RulesFields.COLUMN_LOCATIONS]: ['MCP'],
+      [RulesFields.COLUMN_ROLES]: ['EXT_MSP', 'EXT_MSP_P'],
+      [RulesFields.COLUMN_MARKETPLACES]: ['FR', 'US'],
+      [RulesFields.COLUMN_SUBSCRIPTIONS]: ['MSCSP', 'DDPCaaS'],
+      [RulesFields.COLUMN_RESELLERS]: ['XSP12354', 'XSP256'],
+      [RulesFields.COLUMN_END_CUSTOMERS]: ['XSP45678', 'XSP789'],
+    },
+    [CampaignV2Fields.COLUMN_START_DATE]: '2021-08-01',
+    [CampaignV2Fields.COLUMN_END_DATE]: '2021-09-31',
+    [CampaignV2Fields.COLUMN_BANNER]: {
+      [BannerV2Fields.COLUMN_BACKGROUND_IMAGE_UUID]:
+        'd8553daa-1d39-489e-89c0-3731c0d3ad0b',
+      [BannerV2Fields.COLUMN_TYPE]: 'PICTURE',
+      [BannerV2Fields.COLUMN_BUTTON_PLACEMENT]: 'RIGHT',
+      [BannerV2Fields.COLUMN_BUTTON_TEXT]: 'Click here',
+      [BannerV2Fields.COLUMN_TEXT]: 'Banner Title',
+      [BannerV2Fields.COLUMN_TEXT_COLOR]: '#119EOF',
+    },
+    [CampaignV2Fields.COLUMN_LANDING_PAGE]: {
+      [LandingPageV2Fields.COLUMN_URL]:
+        'https://XXXXXXXXXX.com/landingpage.html',
+      [LandingPageV2Fields.COLUMN_HEADER]: {
+        [LandingPageHeaderV2Fields.COLUMN_BACKGROUND_IMAGE_UUID]:
+          '0fed6621-fe0c-4290-813a-58217e37b3ae',
+        [LandingPageHeaderV2Fields.COLUMN_VENDOR_LOGO_UUID]:
+          'e174e2a2-7545-4ef1-8f0c-122d0140cdea',
+        [LandingPageHeaderV2Fields.COLUMN_TITLE]: 'Microsoft Big campaign',
+        [LandingPageHeaderV2Fields.COLUMN_BACKGROUND_COLOR]: '#FF00FF',
+        [LandingPageHeaderV2Fields.COLUMN_BASELINE]:
+          'This page will explain ...',
+        [LandingPageHeaderV2Fields.COLUMN_TEXT_COLOR]: '#FF00FF',
+        [LandingPageHeaderV2Fields.COLUMN_CIRCLE_COLOR]: '#FF0000',
+      },
+      [LandingPageV2Fields.COLUMN_BODY]: {
+        [LandingPageBodyFields.COLUMN_BACKGROUND_COLOR]: '#FFF',
+        [LandingPageBodyFields.COLUMN_BACKGROUND_IMAGE_UUID]:
+          '6e3a0d7a-8651-4e47-89db-c5b2fbaff8f0',
+        [LandingPageBodyFields.COLUMN_TYPE]: 'PICTURE',
+        [LandingPageBodyFields.COLUMN_TITLE]: 'This is a body title',
+        [LandingPageBodyFields.COLUMN_DESCRIPTION]:
+          '<p>This is a great description</p>',
+        [LandingPageBodyFields.COLUMN_VIDEO_URL]: 'https://.../',
+        [LandingPageBodyFields.COLUMN_BUTTON_TEXT]: 'Send form',
+        [LandingPageBodyFields.COLUMN_CONTACT_EMAIL]:
+          'firstname.name@mailprovider.com',
+      },
+      [LandingPageV2Fields.COLUMN_FOOTER]: {
+        [LandingPageFooterV2Fields.COLUMN_TITLE]: 'Microsoft Big campaign',
+        [LandingPageFooterV2Fields.COLUMN_BACKGROUND_COLOR]: '#FF00FF',
+        [LandingPageFooterV2Fields.COLUMN_BUTTON_TEXT]: 'Click here!',
+        [LandingPageFooterV2Fields.COLUMN_BUTTON_URL]: 'https://.../',
+        [LandingPageFooterV2Fields.COLUMN_TEXT_COLOR]: '#FF00FF',
+        [LandingPageFooterV2Fields.COLUMN_FEATURE]: {
+          [LandingPageFooterFeatureV2Fields.COLUMN_TITLE]:
+            'This is a great feature',
+          [LandingPageFooterFeatureV2Fields.COLUMN_DESCRIPTION]:
+            '<p>This is a great description</p>',
+        },
+        [LandingPageFooterV2Fields.COLUMN_MARKETING_FEATURE]: {
+          [LandingPageFooterFeatureV2Fields.COLUMN_TITLE]:
+            'This is a great marketing feature',
+          [LandingPageFooterFeatureV2Fields.COLUMN_DESCRIPTION]:
+            '<p>This is a great description</p>',
+        },
+      },
+    },
+  },
+};
+
+export const GET_ACTIVE_V2_CAMPAIGN_OUTPUT_WITHOUT_FEATURE: GetData<CampaignV2Type> = {
+  status: 200,
+  data: {
+    [CampaignV2Fields.COLUMN_REFERENCE]: 'c925ec6e-e029-4146-8400-2867c7761743',
+    [CampaignV2Fields.COLUMN_NAME]: 'Campaign Microsoft',
+    [CampaignV2Fields.COLUMN_CATEGORY]: 'BANNER',
+    [CampaignV2Fields.COLUMN_IS_ACTIVATED]: true,
+    [CampaignV2Fields.COLUMN_CREATED_AT]: '2021-06-25T16:00:00Z',
+    [CampaignV2Fields.COLUMN_UPDATED_AT]: '2021-06-25T18:00:00Z',
+    [CampaignV2Fields.COLUMN_DELETED_AT]: '2021-08-25T16:00:00Z',
+    [CampaignV2Fields.COLUMN_RULES]: {
+      [RulesFields.COLUMN_LOCATIONS]: ['MCP'],
+      [RulesFields.COLUMN_ROLES]: ['EXT_MSP', 'EXT_MSP_P'],
+      [RulesFields.COLUMN_MARKETPLACES]: ['FR', 'US'],
+      [RulesFields.COLUMN_SUBSCRIPTIONS]: ['MSCSP', 'DDPCaaS'],
+      [RulesFields.COLUMN_RESELLERS]: ['XSP12354', 'XSP256'],
+      [RulesFields.COLUMN_END_CUSTOMERS]: ['XSP45678', 'XSP789'],
+    },
+    [CampaignV2Fields.COLUMN_START_DATE]: '2021-08-01',
+    [CampaignV2Fields.COLUMN_END_DATE]: '2021-09-31',
+    [CampaignV2Fields.COLUMN_BANNER]: {
+      [BannerV2Fields.COLUMN_BACKGROUND_IMAGE_UUID]:
+        'd8553daa-1d39-489e-89c0-3731c0d3ad0b',
+      [BannerV2Fields.COLUMN_TYPE]: 'PICTURE',
+      [BannerV2Fields.COLUMN_BUTTON_PLACEMENT]: 'RIGHT',
+      [BannerV2Fields.COLUMN_BUTTON_TEXT]: 'Click here',
+      [BannerV2Fields.COLUMN_TEXT]: 'Banner Title',
+      [BannerV2Fields.COLUMN_TEXT_COLOR]: '#119EOF',
+    },
+    [CampaignV2Fields.COLUMN_LANDING_PAGE]: {
+      [LandingPageV2Fields.COLUMN_URL]:
+        'https://XXXXXXXXXX.com/landingpage.html',
+      [LandingPageV2Fields.COLUMN_HEADER]: {
+        [LandingPageHeaderV2Fields.COLUMN_BACKGROUND_IMAGE_UUID]:
+          '0fed6621-fe0c-4290-813a-58217e37b3ae',
+        [LandingPageHeaderV2Fields.COLUMN_VENDOR_LOGO_UUID]:
+          'e174e2a2-7545-4ef1-8f0c-122d0140cdea',
+        [LandingPageHeaderV2Fields.COLUMN_TITLE]: 'Microsoft Big campaign',
+        [LandingPageHeaderV2Fields.COLUMN_BACKGROUND_COLOR]: '#FF00FF',
+        [LandingPageHeaderV2Fields.COLUMN_BASELINE]:
+          'This page will explain ...',
+        [LandingPageHeaderV2Fields.COLUMN_TEXT_COLOR]: '#FF00FF',
+        [LandingPageHeaderV2Fields.COLUMN_CIRCLE_COLOR]: '#FF0000',
+      },
+      [LandingPageV2Fields.COLUMN_BODY]: {
+        [LandingPageBodyFields.COLUMN_BACKGROUND_COLOR]: '#FFF',
+        [LandingPageBodyFields.COLUMN_BACKGROUND_IMAGE_UUID]:
+          '6e3a0d7a-8651-4e47-89db-c5b2fbaff8f0',
+        [LandingPageBodyFields.COLUMN_TYPE]: 'PICTURE',
+        [LandingPageBodyFields.COLUMN_TITLE]: 'This is a body title',
+        [LandingPageBodyFields.COLUMN_DESCRIPTION]:
+          '<p>This is a great description</p>',
+        [LandingPageBodyFields.COLUMN_VIDEO_URL]: 'https://.../',
+        [LandingPageBodyFields.COLUMN_BUTTON_TEXT]: 'Send form',
+        [LandingPageBodyFields.COLUMN_CONTACT_EMAIL]:
+          'firstname.name@mailprovider.com',
+      },
+      [LandingPageV2Fields.COLUMN_FOOTER]: {
+        [LandingPageFooterV2Fields.COLUMN_TITLE]: 'Microsoft Big campaign',
+        [LandingPageFooterV2Fields.COLUMN_BACKGROUND_COLOR]: '#FF00FF',
+        [LandingPageFooterV2Fields.COLUMN_BUTTON_TEXT]: 'Click here!',
+        [LandingPageFooterV2Fields.COLUMN_BUTTON_URL]: 'https://.../',
+        [LandingPageFooterV2Fields.COLUMN_TEXT_COLOR]: '#FF00FF',
+      },
+    },
+  },
+};
+
+export const GET_ACTIVE_V2_CAMPAIGN_OUTPUT_MINIMAL: GetData<CampaignV2Type> = {
+  status: 200,
+  data: {
+    [CampaignV2Fields.COLUMN_REFERENCE]: 'c925ec6e-e029-4146-8400-2867c7761743',
+    [CampaignV2Fields.COLUMN_NAME]: 'Campaign Microsoft',
+    [CampaignV2Fields.COLUMN_CATEGORY]: 'BANNER',
+    [CampaignV2Fields.COLUMN_IS_ACTIVATED]: true,
+    [CampaignV2Fields.COLUMN_CREATED_AT]: '2021-06-25T16:00:00Z',
+    [CampaignV2Fields.COLUMN_UPDATED_AT]: '2021-06-25T18:00:00Z',
+    [CampaignV2Fields.COLUMN_DELETED_AT]: '2021-08-25T16:00:00Z',
+    [CampaignV2Fields.COLUMN_BANNER]: {
+      [BannerV2Fields.COLUMN_BACKGROUND_IMAGE_UUID]:
+        'd8553daa-1d39-489e-89c0-3731c0d3ad0b',
+      [BannerV2Fields.COLUMN_TYPE]: 'PICTURE',
+      [BannerV2Fields.COLUMN_BUTTON_PLACEMENT]: 'RIGHT',
+      [BannerV2Fields.COLUMN_BUTTON_TEXT]: 'Click here',
+      [BannerV2Fields.COLUMN_TEXT]: 'Banner Title',
+      [BannerV2Fields.COLUMN_TEXT_COLOR]: '#119EOF',
+    },
+    [CampaignV2Fields.COLUMN_LANDING_PAGE]: {
+      [LandingPageV2Fields.COLUMN_HEADER]: {
+        [LandingPageHeaderV2Fields.COLUMN_BACKGROUND_IMAGE_UUID]:
+          '0fed6621-fe0c-4290-813a-58217e37b3ae',
+        [LandingPageHeaderV2Fields.COLUMN_VENDOR_LOGO_UUID]:
+          'e174e2a2-7545-4ef1-8f0c-122d0140cdea',
+        [LandingPageHeaderV2Fields.COLUMN_TITLE]: 'Microsoft Big campaign',
+        [LandingPageHeaderV2Fields.COLUMN_BACKGROUND_COLOR]: '#FF00FF',
+        [LandingPageHeaderV2Fields.COLUMN_BASELINE]:
+          'This page will explain ...',
+        [LandingPageHeaderV2Fields.COLUMN_TEXT_COLOR]: '#FF00FF',
+        [LandingPageHeaderV2Fields.COLUMN_CIRCLE_COLOR]: '#FF0000',
+      },
+      [LandingPageV2Fields.COLUMN_BODY]: {
+        [LandingPageBodyFields.COLUMN_BACKGROUND_COLOR]: '#FFF',
+        [LandingPageBodyFields.COLUMN_BACKGROUND_IMAGE_UUID]:
+          '6e3a0d7a-8651-4e47-89db-c5b2fbaff8f0',
+        [LandingPageBodyFields.COLUMN_TYPE]: 'PICTURE',
+        [LandingPageBodyFields.COLUMN_TITLE]: 'This is a body title',
+        [LandingPageBodyFields.COLUMN_DESCRIPTION]:
+          '<p>This is a great description</p>',
+        [LandingPageBodyFields.COLUMN_VIDEO_URL]: 'https://.../',
+        [LandingPageBodyFields.COLUMN_BUTTON_TEXT]: 'Send form',
+        [LandingPageBodyFields.COLUMN_CONTACT_EMAIL]:
+          'firstname.name@mailprovider.com',
       },
     },
   },

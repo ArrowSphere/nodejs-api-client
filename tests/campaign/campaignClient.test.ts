@@ -6,6 +6,7 @@ import {
   PublicApiClient,
   Campaign,
   CampaignAssets,
+  CampaignV2,
 } from '../../src';
 import {
   GET_ACTIVE_CAMPAIGN_OUTPUT,
@@ -13,6 +14,10 @@ import {
   GET_ACTIVE_CAMPAIGN_OUTPUT_WITHOUT_FOOTER_FEATURES,
   GET_ACTIVE_CAMPAIGN_OUTPUT_WITHOUT_LANDING,
   GET_ACTIVE_CAMPAIGN_PARAMETERS,
+  GET_ACTIVE_V2_CAMPAIGN_OUTPUT,
+  GET_ACTIVE_V2_CAMPAIGN_OUTPUT_MINIMAL,
+  GET_ACTIVE_V2_CAMPAIGN_OUTPUT_WITHOUT_FEATURE,
+  GET_ACTIVE_V2_CAMPAIGN_OUTPUT_WITHOUT_FEATURE_ITEMS,
   PAYLOAD_POST_CAMPAIGN_EMAIL,
 } from './mocks/campaign.mocks';
 import {
@@ -137,6 +142,96 @@ describe('CampaignClient', () => {
 
       expect(response).to.be.instanceof(GetResult);
       expect(response.toJSON()).to.be.deep.equals(GET_ACTIVE_CAMPAIGN_OUTPUT);
+    });
+  });
+
+  describe('getActiveCampaignV2', () => {
+    it('calls the get active campaign method with parameters', async () => {
+      nock(CAMPAIGN_MOCK_URL)
+        .get(GET_ACTIVE_CAMPAIGN)
+        .reply(200, GET_ACTIVE_V2_CAMPAIGN_OUTPUT);
+
+      const response: GetResult<CampaignV2> = await client.getActiveCampaignV2(
+        GET_ACTIVE_CAMPAIGN_PARAMETERS,
+      );
+
+      expect(response).to.be.instanceof(GetResult);
+      expect(response.toJSON()).to.be.deep.equals(
+        GET_ACTIVE_V2_CAMPAIGN_OUTPUT,
+      );
+    });
+
+    it('calls the get active campaign method without parameters', async () => {
+      nock(CAMPAIGN_MOCK_URL)
+        .get(GET_ACTIVE_CAMPAIGN)
+        .reply(200, GET_ACTIVE_V2_CAMPAIGN_OUTPUT);
+
+      const response: GetResult<CampaignV2> = await client.getActiveCampaignV2();
+
+      expect(response).to.be.instanceof(GetResult);
+      expect(response.toJSON()).to.be.deep.equals(
+        GET_ACTIVE_V2_CAMPAIGN_OUTPUT,
+      );
+    });
+
+    it('Can handle a minimal response', async () => {
+      nock(CAMPAIGN_MOCK_URL)
+        .get(GET_ACTIVE_CAMPAIGN)
+        .reply(200, GET_ACTIVE_V2_CAMPAIGN_OUTPUT_MINIMAL);
+
+      const response: GetResult<CampaignV2> = await client.getActiveCampaignV2();
+
+      expect(response).to.be.instanceof(GetResult);
+      expect(response.toJSON()).to.be.deep.equals(
+        GET_ACTIVE_V2_CAMPAIGN_OUTPUT_MINIMAL,
+      );
+    });
+  });
+
+  describe('getCampaignDetailsV2', () => {
+    it('calls the get campaign details method with parameters', async () => {
+      nock(CAMPAIGN_MOCK_URL)
+        .get(GET_CAMPAIGN_DETAILS)
+        .reply(200, GET_ACTIVE_V2_CAMPAIGN_OUTPUT);
+
+      const response: GetResult<CampaignV2> = await client.getCampaignDetailsV2(
+        '0ce70536-a59d-4c21-b39d-272b034367fa',
+      );
+
+      expect(response).to.be.instanceof(GetResult);
+      expect(response.toJSON()).to.be.deep.equals(
+        GET_ACTIVE_V2_CAMPAIGN_OUTPUT,
+      );
+    });
+
+    it('calls the get campaign details without feature', async () => {
+      nock(CAMPAIGN_MOCK_URL)
+        .get(GET_CAMPAIGN_DETAILS)
+        .reply(200, GET_ACTIVE_V2_CAMPAIGN_OUTPUT_WITHOUT_FEATURE);
+
+      const response: GetResult<CampaignV2> = await client.getCampaignDetailsV2(
+        '0ce70536-a59d-4c21-b39d-272b034367fa',
+      );
+
+      expect(response).to.be.instanceof(GetResult);
+      expect(response.toJSON()).to.be.deep.equals(
+        GET_ACTIVE_V2_CAMPAIGN_OUTPUT_WITHOUT_FEATURE,
+      );
+    });
+
+    it('calls the get campaign details without feature items', async () => {
+      nock(CAMPAIGN_MOCK_URL)
+        .get(GET_CAMPAIGN_DETAILS)
+        .reply(200, GET_ACTIVE_V2_CAMPAIGN_OUTPUT_WITHOUT_FEATURE_ITEMS);
+
+      const response: GetResult<CampaignV2> = await client.getCampaignDetailsV2(
+        '0ce70536-a59d-4c21-b39d-272b034367fa',
+      );
+
+      expect(response).to.be.instanceof(GetResult);
+      expect(response.toJSON()).to.be.deep.equals(
+        GET_ACTIVE_V2_CAMPAIGN_OUTPUT_WITHOUT_FEATURE_ITEMS,
+      );
     });
   });
 
