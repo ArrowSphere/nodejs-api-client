@@ -1,6 +1,7 @@
 import { AbstractClient, Parameters } from '../abstractClient';
 import { GetResult } from '../getResult';
 import { Campaign } from './entities/campaign/campaign';
+import { CampaignV2 } from './entities/v2/campaign/campaign';
 import { CampaignAssets } from './entities/campaignAssets/campaignAssets';
 
 export enum PostEmailCampaignFields {
@@ -23,12 +24,23 @@ export class CampaignClient extends AbstractClient {
    */
   protected basePath = '/campaigns';
 
+  /**
+   * @deprecated Use getActiveCampaignV2() instead
+   */
   public async getActiveCampaign(
     parameters: Parameters = {},
   ): Promise<GetResult<Campaign>> {
     this.path = '/active';
 
     return new GetResult(Campaign, await this.get(parameters));
+  }
+
+  public async getActiveCampaignV2(
+    parameters: Parameters = {},
+  ): Promise<GetResult<CampaignV2>> {
+    this.path = '/v2/active';
+
+    return new GetResult(CampaignV2, await this.get(parameters));
   }
 
   public async getCampaignAssets(
@@ -47,6 +59,15 @@ export class CampaignClient extends AbstractClient {
     this.path = `/${campaignReference}`;
 
     return new GetResult(Campaign, await this.get(parameters));
+  }
+
+  public async getCampaignDetailsV2(
+    campaignReference: string,
+    parameters: Parameters = {},
+  ): Promise<GetResult<CampaignV2>> {
+    this.path = `/v2/${campaignReference}`;
+
+    return new GetResult(CampaignV2, await this.get(parameters));
   }
 
   public async postCampaignEmail(
