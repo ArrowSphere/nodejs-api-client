@@ -128,6 +128,29 @@ describe('AbstractClient', () => {
     });
   });
 
+  describe('delete', () => {
+    const expectedData = { result: true };
+    const client = new TestClient();
+
+    it('makes a HTTP delete request on the specified URL', async () => {
+      nock(MOCK_URL)
+        .delete(TEST_ENDPOINT)
+        .reply(constants.HTTP_STATUS_OK, expectedData);
+      const result = await client.deleteTest();
+      expect(nock.isDone()).to.be.true;
+      expect(result).to.eql(expectedData);
+    });
+
+    it('prefixes with admin if the endpoint has the option', async () => {
+      nock(MOCK_URL + '/admin')
+        .delete(TEST_ENDPOINT)
+        .reply(constants.HTTP_STATUS_OK, expectedData);
+      const result = await client.deleteTestAdmin();
+      expect(nock.isDone()).to.be.true;
+      expect(result).to.eql(expectedData);
+    });
+  });
+
   describe('getResponse', () => {
     it('throws a NotFoundException if the status code is 404', async () => {
       nock(MOCK_URL).get(TEST_ENDPOINT).reply(404);
