@@ -68,6 +68,16 @@ export class TestClient extends AbstractClient {
     this.path = TEST_ENDPOINT;
     return super.patch({}, {}, {}, { isAdmin: true });
   }
+
+  deleteTest(): Promise<void> {
+    this.path = TEST_ENDPOINT;
+    return super.delete();
+  }
+
+  deleteTestAdmin(): Promise<void> {
+    this.path = TEST_ENDPOINT;
+    return super.delete({}, {}, { isAdmin: true });
+  }
 }
 
 export const axiosExpectInterceptor = (
