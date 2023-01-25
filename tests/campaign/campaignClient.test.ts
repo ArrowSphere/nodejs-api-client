@@ -14,16 +14,19 @@ import {
   GET_ACTIVE_CAMPAIGN_OUTPUT_WITHOUT_FOOTER_FEATURES,
   GET_ACTIVE_CAMPAIGN_OUTPUT_WITHOUT_LANDING,
   GET_ACTIVE_CAMPAIGN_PARAMETERS,
-  GET_ACTIVE_V2_CAMPAIGN_OUTPUT,
-  GET_ACTIVE_V2_CAMPAIGN_OUTPUT_MINIMAL,
-  GET_ACTIVE_V2_CAMPAIGN_OUTPUT_WITHOUT_FEATURE,
-  GET_ACTIVE_V2_CAMPAIGN_OUTPUT_WITHOUT_FEATURE_ITEMS,
+  GET_ACTIVE_CAMPAIGNS_V2_OUTPUT,
+  GET_ACTIVE_CAMPAIGNS_V2_MINIMAL_OUTPUT,
+  GET_DETAILS_CAMPAIGN_V2_OUTPUT,
+  GET_DETAILS_CAMPAIGN_V2_WITHOUT_FEATURE_OUTPUT,
+  GET_DETAILS_CAMPAIGN_V2_WITHOUT_FEATURE_ITEMS_OUTPUT,
   PAYLOAD_POST_CAMPAIGN_EMAIL,
+  GET_DETAILS_CAMPAIGN_V2_MINIMAL_OUTPUT,
 } from './mocks/campaign.mocks';
 import {
   GET_CAMPAIGN_ASSETS_OUTPUT,
   GET_CAMPAIGN_ASSETS_PARAMETERS,
 } from './mocks/campaignAssets.mock';
+import { CampaignList } from '../../src/campaign/entities/v2/campaignList';
 
 export const CAMPAIGN_MOCK_URL = 'https://campaign.localhost';
 export const GET_ACTIVE_CAMPAIGN = new RegExp('/active.*');
@@ -149,41 +152,41 @@ describe('CampaignClient', () => {
     it('calls the get active campaign method with parameters', async () => {
       nock(CAMPAIGN_MOCK_URL)
         .get(GET_ACTIVE_CAMPAIGN)
-        .reply(200, GET_ACTIVE_V2_CAMPAIGN_OUTPUT);
+        .reply(200, GET_ACTIVE_CAMPAIGNS_V2_OUTPUT);
 
-      const response: GetResult<CampaignV2> = await client.getActiveCampaignV2(
+      const response: GetResult<CampaignList> = await client.getActiveCampaignV2(
         GET_ACTIVE_CAMPAIGN_PARAMETERS,
       );
 
       expect(response).to.be.instanceof(GetResult);
       expect(response.toJSON()).to.be.deep.equals(
-        GET_ACTIVE_V2_CAMPAIGN_OUTPUT,
+        GET_ACTIVE_CAMPAIGNS_V2_OUTPUT,
       );
     });
 
     it('calls the get active campaign method without parameters', async () => {
       nock(CAMPAIGN_MOCK_URL)
         .get(GET_ACTIVE_CAMPAIGN)
-        .reply(200, GET_ACTIVE_V2_CAMPAIGN_OUTPUT);
+        .reply(200, GET_ACTIVE_CAMPAIGNS_V2_OUTPUT);
 
-      const response: GetResult<CampaignV2> = await client.getActiveCampaignV2();
+      const response: GetResult<CampaignList> = await client.getActiveCampaignV2();
 
       expect(response).to.be.instanceof(GetResult);
       expect(response.toJSON()).to.be.deep.equals(
-        GET_ACTIVE_V2_CAMPAIGN_OUTPUT,
+        GET_ACTIVE_CAMPAIGNS_V2_OUTPUT,
       );
     });
 
     it('Can handle a minimal response', async () => {
       nock(CAMPAIGN_MOCK_URL)
         .get(GET_ACTIVE_CAMPAIGN)
-        .reply(200, GET_ACTIVE_V2_CAMPAIGN_OUTPUT_MINIMAL);
+        .reply(200, GET_ACTIVE_CAMPAIGNS_V2_MINIMAL_OUTPUT);
 
-      const response: GetResult<CampaignV2> = await client.getActiveCampaignV2();
+      const response: GetResult<CampaignList> = await client.getActiveCampaignV2();
 
       expect(response).to.be.instanceof(GetResult);
       expect(response.toJSON()).to.be.deep.equals(
-        GET_ACTIVE_V2_CAMPAIGN_OUTPUT_MINIMAL,
+        GET_ACTIVE_CAMPAIGNS_V2_MINIMAL_OUTPUT,
       );
     });
   });
@@ -192,7 +195,7 @@ describe('CampaignClient', () => {
     it('calls the get campaign details method with parameters', async () => {
       nock(CAMPAIGN_MOCK_URL)
         .get(GET_CAMPAIGN_DETAILS)
-        .reply(200, GET_ACTIVE_V2_CAMPAIGN_OUTPUT);
+        .reply(200, GET_DETAILS_CAMPAIGN_V2_OUTPUT);
 
       const response: GetResult<CampaignV2> = await client.getCampaignDetailsV2(
         '0ce70536-a59d-4c21-b39d-272b034367fa',
@@ -200,14 +203,29 @@ describe('CampaignClient', () => {
 
       expect(response).to.be.instanceof(GetResult);
       expect(response.toJSON()).to.be.deep.equals(
-        GET_ACTIVE_V2_CAMPAIGN_OUTPUT,
+        GET_DETAILS_CAMPAIGN_V2_OUTPUT,
+      );
+    });
+
+    it('Can handle a minimal response', async () => {
+      nock(CAMPAIGN_MOCK_URL)
+        .get(GET_CAMPAIGN_DETAILS)
+        .reply(200, GET_DETAILS_CAMPAIGN_V2_MINIMAL_OUTPUT);
+
+      const response: GetResult<CampaignV2> = await client.getCampaignDetailsV2(
+        '0ce70536-a59d-4c21-b39d-272b034367fa',
+      );
+
+      expect(response).to.be.instanceof(GetResult);
+      expect(response.toJSON()).to.be.deep.equals(
+        GET_DETAILS_CAMPAIGN_V2_MINIMAL_OUTPUT,
       );
     });
 
     it('calls the get campaign details without feature', async () => {
       nock(CAMPAIGN_MOCK_URL)
         .get(GET_CAMPAIGN_DETAILS)
-        .reply(200, GET_ACTIVE_V2_CAMPAIGN_OUTPUT_WITHOUT_FEATURE);
+        .reply(200, GET_DETAILS_CAMPAIGN_V2_WITHOUT_FEATURE_OUTPUT);
 
       const response: GetResult<CampaignV2> = await client.getCampaignDetailsV2(
         '0ce70536-a59d-4c21-b39d-272b034367fa',
@@ -215,14 +233,14 @@ describe('CampaignClient', () => {
 
       expect(response).to.be.instanceof(GetResult);
       expect(response.toJSON()).to.be.deep.equals(
-        GET_ACTIVE_V2_CAMPAIGN_OUTPUT_WITHOUT_FEATURE,
+        GET_DETAILS_CAMPAIGN_V2_WITHOUT_FEATURE_OUTPUT,
       );
     });
 
     it('calls the get campaign details without feature items', async () => {
       nock(CAMPAIGN_MOCK_URL)
         .get(GET_CAMPAIGN_DETAILS)
-        .reply(200, GET_ACTIVE_V2_CAMPAIGN_OUTPUT_WITHOUT_FEATURE_ITEMS);
+        .reply(200, GET_DETAILS_CAMPAIGN_V2_WITHOUT_FEATURE_ITEMS_OUTPUT);
 
       const response: GetResult<CampaignV2> = await client.getCampaignDetailsV2(
         '0ce70536-a59d-4c21-b39d-272b034367fa',
@@ -230,7 +248,7 @@ describe('CampaignClient', () => {
 
       expect(response).to.be.instanceof(GetResult);
       expect(response.toJSON()).to.be.deep.equals(
-        GET_ACTIVE_V2_CAMPAIGN_OUTPUT_WITHOUT_FEATURE_ITEMS,
+        GET_DETAILS_CAMPAIGN_V2_WITHOUT_FEATURE_ITEMS_OUTPUT,
       );
     });
   });
