@@ -5,6 +5,7 @@ import {
 } from '../../../../shared/contact/contact';
 
 enum InvitationContactEnum {
+  COLUMN_ID = 'id',
   COLUMN_USERNAME = 'username',
 }
 
@@ -14,6 +15,7 @@ export const InvitationContactFields = {
 };
 
 interface InvitationContactInterface {
+  [InvitationContactFields.COLUMN_ID]: string;
   [InvitationContactFields.COLUMN_USERNAME]: string;
 }
 
@@ -21,6 +23,7 @@ export type InvitationContactType = InvitationContactInterface &
   SharedContactInterface;
 
 export class InvitationContact extends AbstractEntity<InvitationContactType> {
+  readonly #id: string;
   readonly #username: string;
   readonly #firstname: string;
   readonly #lastname: string;
@@ -28,6 +31,8 @@ export class InvitationContact extends AbstractEntity<InvitationContactType> {
 
   public constructor(getCustomersContactDataInput: InvitationContactType) {
     super(getCustomersContactDataInput);
+
+    this.#id = getCustomersContactDataInput[InvitationContactFields.COLUMN_ID];
 
     this.#firstname =
       getCustomersContactDataInput[SharedContactFields.COLUMN_FIRSTNAME];
@@ -37,6 +42,10 @@ export class InvitationContact extends AbstractEntity<InvitationContactType> {
       getCustomersContactDataInput[SharedContactFields.COLUMN_LASTNAME];
     this.#email =
       getCustomersContactDataInput[SharedContactFields.COLUMN_EMAIL];
+  }
+
+  get id(): string {
+    return this.#id;
   }
 
   get username(): string {
@@ -57,6 +66,7 @@ export class InvitationContact extends AbstractEntity<InvitationContactType> {
 
   public toJSON(): InvitationContactType {
     return {
+      [InvitationContactFields.COLUMN_ID]: this.id,
       [InvitationContactFields.COLUMN_USERNAME]: this.username,
       [SharedContactFields.COLUMN_FIRSTNAME]: this.firstName,
       [SharedContactFields.COLUMN_LASTNAME]: this.lastName,
