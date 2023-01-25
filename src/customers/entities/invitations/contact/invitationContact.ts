@@ -16,7 +16,7 @@ export const InvitationContactFields = {
 
 interface InvitationContactInterface {
   [InvitationContactFields.COLUMN_ID]: string;
-  [InvitationContactFields.COLUMN_USERNAME]: string;
+  [InvitationContactFields.COLUMN_USERNAME]: string | null;
 }
 
 export type InvitationContactType = InvitationContactInterface &
@@ -24,7 +24,7 @@ export type InvitationContactType = InvitationContactInterface &
 
 export class InvitationContact extends AbstractEntity<InvitationContactType> {
   readonly #id: string;
-  readonly #username: string;
+  readonly #username: string | null;
   readonly #firstname: string;
   readonly #lastname: string;
   readonly #email: string;
@@ -48,7 +48,7 @@ export class InvitationContact extends AbstractEntity<InvitationContactType> {
     return this.#id;
   }
 
-  get username(): string {
+  get username(): string | null {
     return this.#username;
   }
 

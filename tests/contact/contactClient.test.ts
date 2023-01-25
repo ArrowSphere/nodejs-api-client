@@ -5,10 +5,14 @@ import { expect } from 'chai';
 import {
   CONTACT_CREATE_REQUEST,
   CONTACT_CREATE_RESPONSE,
+  CONTACT_CREATE_WITH_USERNAME_REQUEST,
   CONTACT_GET_RESPONSE,
+  CONTACT_GET_WITH_USERNAME_RESPONSE,
   CONTACT_LIST_RESPONSE,
   CONTACT_PATCH_REQUEST,
   CONTACT_PATCH_RESPONSE,
+  CONTACT_PATCH_WITH_USERNAME_REQUEST,
+  CONTACT_PATCH_WITH_USERNAME_RESPONSE,
 } from './mocks/contacts.mocks';
 
 export const CONTACT_MOCK_URL = 'https://contacts.localhost';
@@ -28,6 +32,19 @@ describe('ContactClient', function () {
 
       const response: GetResult<ContactInformation.ContactCreate> = await client.createContact(
         CONTACT_CREATE_REQUEST,
+      );
+
+      expect(response).to.be.instanceof(GetResult);
+      expect(response.toJSON()).to.be.deep.equal(CONTACT_CREATE_RESPONSE);
+    });
+
+    it('call the post method with username', async function () {
+      nock(CONTACT_MOCK_URL)
+        .post(CONTACT)
+        .reply(constants.HTTP_STATUS_OK, CONTACT_CREATE_RESPONSE);
+
+      const response: GetResult<ContactInformation.ContactCreate> = await client.createContact(
+        CONTACT_CREATE_WITH_USERNAME_REQUEST,
       );
 
       expect(response).to.be.instanceof(GetResult);
@@ -61,6 +78,21 @@ describe('ContactClient', function () {
       expect(response).to.be.instanceof(GetResult);
       expect(response.toJSON()).to.be.deep.equal(CONTACT_GET_RESPONSE);
     });
+
+    it('call the get method contact has username', async function () {
+      nock(CONTACT_MOCK_URL)
+        .get(GET_CONTACT_URL)
+        .reply(constants.HTTP_STATUS_OK, CONTACT_GET_WITH_USERNAME_RESPONSE);
+
+      const response: GetResult<ContactInformation.Contact> = await client.getContact(
+        '1234',
+      );
+
+      expect(response).to.be.instanceof(GetResult);
+      expect(response.toJSON()).to.be.deep.equal(
+        CONTACT_GET_WITH_USERNAME_RESPONSE,
+      );
+    });
   });
 
   describe('updateContact', function () {
@@ -76,6 +108,22 @@ describe('ContactClient', function () {
 
       expect(response).to.be.instanceof(GetResult);
       expect(response.toJSON()).to.be.deep.equal(CONTACT_PATCH_RESPONSE);
+    });
+
+    it('call the patch method with username contact', async function () {
+      nock(CONTACT_MOCK_URL)
+        .patch(GET_CONTACT_URL)
+        .reply(constants.HTTP_STATUS_OK, CONTACT_PATCH_WITH_USERNAME_RESPONSE);
+
+      const response: GetResult<ContactInformation.Contact> = await client.updateContact(
+        '1234',
+        CONTACT_PATCH_WITH_USERNAME_REQUEST,
+      );
+
+      expect(response).to.be.instanceof(GetResult);
+      expect(response.toJSON()).to.be.deep.equal(
+        CONTACT_PATCH_WITH_USERNAME_RESPONSE,
+      );
     });
   });
 });
