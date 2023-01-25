@@ -5,6 +5,7 @@ import { Contact, ContactType } from './entities/contact';
 import { ContactList } from './entities/contactList';
 
 export enum ContactRequestFields {
+  COLUMN_USERNAME = 'xapUsername',
   COLUMN_FIRSTNAME = 'firstname',
   COLUMN_LASTNAME = 'lastname',
   COLUMN_EMAIL = 'email',
@@ -15,6 +16,7 @@ export enum ContactRequestFields {
 }
 
 export type ContactRequestType = {
+  [ContactRequestFields.COLUMN_USERNAME]?: string;
   [ContactRequestFields.COLUMN_FIRSTNAME]: string;
   [ContactRequestFields.COLUMN_LASTNAME]: string;
   [ContactRequestFields.COLUMN_EMAIL]: string;
@@ -22,6 +24,10 @@ export type ContactRequestType = {
   [ContactRequestFields.COLUMN_ERP_ID]: string;
   [ContactRequestFields.COLUMN_TYPE]: string;
   [ContactRequestFields.COLUMN_ROLE]: string;
+};
+
+export type ContactUpdateRequestType = {
+  [Property in keyof ContactRequestType]?: ContactRequestType[Property];
 };
 
 export class ContactClient extends AbstractClient {
@@ -59,7 +65,7 @@ export class ContactClient extends AbstractClient {
 
   public async updateContact(
     contactReference: string,
-    patchData: ContactRequestType,
+    patchData: ContactUpdateRequestType,
     parameters: Parameters = {},
   ): Promise<GetResult<Contact>> {
     this.path = `/${contactReference}`;

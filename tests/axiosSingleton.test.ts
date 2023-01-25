@@ -84,7 +84,6 @@ describe('axiosSingleton', function () {
   describe('cleanRequestLog', function () {
     it('should be call', function () {
       const response = AxiosSingleton['cleanRequestLog'](REQUEST);
-      console.log(response);
 
       expect(response).to.deep.equals(REQUEST_RESULT);
     });
