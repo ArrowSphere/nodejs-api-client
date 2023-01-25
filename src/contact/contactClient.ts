@@ -5,7 +5,7 @@ import { Contact, ContactType } from './entities/contact';
 import { ContactList } from './entities/contactList';
 
 export enum ContactRequestFields {
-  COLUMN_USERNAME = 'xapUsername',
+  COLUMN_USERNAME = 'username',
   COLUMN_FIRSTNAME = 'firstname',
   COLUMN_LASTNAME = 'lastname',
   COLUMN_EMAIL = 'email',
