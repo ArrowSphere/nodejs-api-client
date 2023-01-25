@@ -3,6 +3,7 @@ import { GetResult } from '../getResult';
 import { Campaign } from './entities/campaign/campaign';
 import { CampaignV2 } from './entities/v2/campaign/campaign';
 import { CampaignAssets } from './entities/campaignAssets/campaignAssets';
+import { CampaignList } from './entities/v2/campaignList';
 
 export enum PostEmailCampaignFields {
   COLUMN_APPLICATION = 'application',
@@ -37,10 +38,10 @@ export class CampaignClient extends AbstractClient {
 
   public async getActiveCampaignV2(
     parameters: Parameters = {},
-  ): Promise<GetResult<CampaignV2>> {
+  ): Promise<GetResult<CampaignList>> {
     this.path = '/v2/active';
 
-    return new GetResult(CampaignV2, await this.get(parameters));
+    return new GetResult(CampaignList, await this.get(parameters));
   }
 
   public async getCampaignAssets(
