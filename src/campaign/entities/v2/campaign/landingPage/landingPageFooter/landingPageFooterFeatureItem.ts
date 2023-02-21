@@ -2,6 +2,7 @@ import { AbstractEntity } from '../../../../../../abstractEntity';
 export enum LandingPageFooterFeatureItemFields {
   COLUMN_TITLE = 'title',
   COLUMN_DESCRIPTION = 'description',
+  COLUMN_IMAGE_UUID = 'imageUuid',
   COLUMN_BUTTON_TEXT = 'buttonText',
   COLUMN_BUTTON_URL = 'buttonUrl',
   COLUMN_ICON = 'icon',
@@ -11,6 +12,7 @@ export enum LandingPageFooterFeatureItemFields {
 export type LandingPageFooterFeatureItemType = {
   [LandingPageFooterFeatureItemFields.COLUMN_TITLE]?: string | undefined;
   [LandingPageFooterFeatureItemFields.COLUMN_DESCRIPTION]?: string | undefined;
+  [LandingPageFooterFeatureItemFields.COLUMN_IMAGE_UUID]?: string | undefined;
   [LandingPageFooterFeatureItemFields.COLUMN_BUTTON_TEXT]?: string | undefined;
   [LandingPageFooterFeatureItemFields.COLUMN_BUTTON_URL]?: string | undefined;
   [LandingPageFooterFeatureItemFields.COLUMN_ICON]?: string | undefined;
@@ -20,6 +22,7 @@ export type LandingPageFooterFeatureItemType = {
 export class LandingPageFooterFeatureItem extends AbstractEntity<LandingPageFooterFeatureItemType> {
   readonly #title?: string;
   readonly #description?: string;
+  readonly #imageUuid?: string;
   readonly #buttonText?: string;
   readonly #buttonUrl?: string;
   readonly #icon?: string;
@@ -37,6 +40,10 @@ export class LandingPageFooterFeatureItem extends AbstractEntity<LandingPageFoot
     this.#description =
       landingPageFooterFeatureItemInput[
         LandingPageFooterFeatureItemFields.COLUMN_DESCRIPTION
+      ];
+    this.#imageUuid =
+      landingPageFooterFeatureItemInput[
+        LandingPageFooterFeatureItemFields.COLUMN_IMAGE_UUID
       ];
     this.#buttonText =
       landingPageFooterFeatureItemInput[
@@ -64,6 +71,10 @@ export class LandingPageFooterFeatureItem extends AbstractEntity<LandingPageFoot
     return this.#description;
   }
 
+  get imageUuid(): string | undefined {
+    return this.#imageUuid;
+  }
+
   get buttonText(): string | undefined {
     return this.#buttonText;
   }
@@ -84,6 +95,7 @@ export class LandingPageFooterFeatureItem extends AbstractEntity<LandingPageFoot
     return {
       [LandingPageFooterFeatureItemFields.COLUMN_TITLE]: this.title,
       [LandingPageFooterFeatureItemFields.COLUMN_DESCRIPTION]: this.description,
+      [LandingPageFooterFeatureItemFields.COLUMN_IMAGE_UUID]: this.imageUuid,
       [LandingPageFooterFeatureItemFields.COLUMN_BUTTON_TEXT]: this.buttonText,
       [LandingPageFooterFeatureItemFields.COLUMN_BUTTON_URL]: this.buttonUrl,
       [LandingPageFooterFeatureItemFields.COLUMN_ICON]: this.icon,

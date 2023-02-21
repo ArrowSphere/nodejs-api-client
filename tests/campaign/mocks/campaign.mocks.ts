@@ -783,6 +783,8 @@ export const GET_DETAILS_CAMPAIGN_V2_MINIMAL_OUTPUT: GetData<CampaignV2Type> = {
                 'This is a feature title',
               [LandingPageFooterFeatureItemFields.COLUMN_DESCRIPTION]:
                 'This is a description',
+              [LandingPageFooterFeatureItemFields.COLUMN_IMAGE_UUID]:
+                '539395aa-e418-4a3a-b151-45beffd04231',
               [LandingPageFooterFeatureItemFields.COLUMN_BUTTON_URL]:
                 'https://.../',
               [LandingPageFooterFeatureItemFields.COLUMN_BUTTON_TEXT]:
@@ -803,6 +805,8 @@ export const GET_DETAILS_CAMPAIGN_V2_MINIMAL_OUTPUT: GetData<CampaignV2Type> = {
                 'This is a marketing feature title',
               [LandingPageFooterFeatureItemFields.COLUMN_DESCRIPTION]:
                 'This is a description',
+              [LandingPageFooterFeatureItemFields.COLUMN_IMAGE_UUID]:
+                '539395aa-e418-4a3a-b151-45beffd04231',
               [LandingPageFooterFeatureItemFields.COLUMN_BUTTON_URL]:
                 'https://.../',
               [LandingPageFooterFeatureItemFields.COLUMN_BUTTON_TEXT]:
