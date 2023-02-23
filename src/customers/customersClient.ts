@@ -10,7 +10,7 @@ import {
   CustomerContactTypeType,
 } from './entities/customers/customerContact/customerContact';
 
-enum CustomerContactPayloadFields {
+export enum CustomerContactPayloadFields {
   COLUMN_FIRST_NAME = 'firstName',
   COLUMN_LAST_NAME = 'lastName',
   COLUMN_EMAIL = 'email',
@@ -20,7 +20,7 @@ enum CustomerContactPayloadFields {
   COLUMN_ROLE = 'role',
 }
 
-type PostCustomerContactPayload = {
+export type PostCustomerContactPayload = {
   [CustomerContactPayloadFields.COLUMN_FIRST_NAME]: string;
   [CustomerContactPayloadFields.COLUMN_LAST_NAME]: string;
   [CustomerContactPayloadFields.COLUMN_EMAIL]: string;
@@ -30,7 +30,7 @@ type PostCustomerContactPayload = {
   [CustomerContactPayloadFields.COLUMN_ROLE]: CustomerContactRoleType;
 };
 
-type PatchCustomerContactPayload = {
+export type PatchCustomerContactPayload = {
   [Property in keyof PostCustomerContactPayload]?: PostCustomerContactPayload[Property];
 };
 
