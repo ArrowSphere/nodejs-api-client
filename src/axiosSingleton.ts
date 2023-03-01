@@ -29,7 +29,7 @@ export class AxiosSingleton {
   private static _handleRequest(
     request: AxiosRequestConfig,
   ): AxiosRequestConfig {
-    console.log('AXIOS - Request : ', AxiosSingleton.cleanRequestLog(request));
+    console.info('AXIOS - Request : ', AxiosSingleton.cleanRequestLog(request));
 
     return request;
   }
@@ -38,7 +38,7 @@ export class AxiosSingleton {
    * @param response - Axios Response
    */
   private static _handleResponse(response: AxiosResponse): AxiosResponse {
-    console.log(
+    console.info(
       'AXIOS - Response : ',
       AxiosSingleton.cleanResponseLog(response),
     );
