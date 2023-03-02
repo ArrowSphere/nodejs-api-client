@@ -8,7 +8,32 @@ import {
   IssueCreatedByFields,
   IssueAdditionalDataFields,
   IssuesType,
+  CreateIssuePayload,
+  IssueProgramsType,
+  UpdateIssuePayload,
+  IssueStatusesType,
+  StatusDetailsValueEnum,
 } from '../../../src';
+
+export const CREATE_ISSUE_PAYLOAD: CreateIssuePayload = {
+  title: 'title',
+  description: 'description',
+  topicId: '1',
+  program: IssueProgramsType.ARWS_AMS,
+};
+
+export const UPDATE_ISSUE_PAYLOAD: UpdateIssuePayload = [
+  {
+    op: 'replace',
+    path: 'status',
+    value: IssueStatusesType.CLOSED,
+  },
+  {
+    op: 'replace',
+    path: 'statusDetails',
+    value: StatusDetailsValueEnum.RESOLVED,
+  },
+];
 
 export const LIST_ISSUE_RESPONSE: GetData<IssuesType> = {
   [GetResultFields.COLUMN_STATUS]: 200,

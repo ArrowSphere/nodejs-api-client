@@ -8,8 +8,8 @@ import { GetResult } from '../getResult';
 import { IssueAttachment, IssueAttachments } from './entities/issue/attachment';
 import { CreateIssuePayload, UpdateIssuePayload } from './payloads/issue';
 import { IssueComment, IssueComments } from './entities/issue/comment';
-import { CreateCommentPayload } from './payloads/comment';
-import { CreateAttachmentPayload } from './payloads/attachment';
+import { AddIssueCommentPayload } from './payloads/comment';
+import { AddIssueAttachmentPayload } from './payloads/attachment';
 import { Topics } from './entities/topic';
 
 export enum ListIssueParametersFields {
@@ -41,6 +41,7 @@ export class SupportCenterClient extends AbstractClient {
     parameters: Parameters = {},
   ): Promise<GetResult<Topics>> {
     this.path = `/topics`;
+
     return new GetResult(Topics, await this.get(parameters));
   }
 
@@ -48,6 +49,7 @@ export class SupportCenterClient extends AbstractClient {
     parameters: ListIssueParametersType = {},
   ): Promise<GetResult<Issues>> {
     this.path = `/issues`;
+
     return new GetResult(Issues, await this.get(parameters));
   }
 
@@ -56,6 +58,7 @@ export class SupportCenterClient extends AbstractClient {
     parameters: Parameters = {},
   ): Promise<GetResult<Issue>> {
     this.path = `/issues`;
+
     return new GetResult(Issue, await this.post(issuePayload, parameters));
   }
 
@@ -73,54 +76,55 @@ export class SupportCenterClient extends AbstractClient {
     payload: UpdateIssuePayload,
     parameters: Parameters = {},
   ): Promise<GetResult<Issue>> {
-    this.path = `/${issueId}`;
+    this.path = `/issues/${issueId}`;
+
     return new GetResult(Issue, await this.patch(payload, parameters));
   }
 
-  public async listComments(
+  public async listIssueComments(
     issueId: string,
     parameters: Parameters = {},
   ): Promise<GetResult<IssueComments>> {
-    this.path = `/${issueId}/comments`;
+    this.path = `/issues/${issueId}/comments`;
 
     return new GetResult(IssueComments, await this.get(parameters));
   }
 
-  public async addComment(
+  public async addIssueComment(
     issueId: string,
-    payload: CreateCommentPayload,
+    payload: AddIssueCommentPayload,
     parameters: Parameters = {},
   ): Promise<GetResult<IssueComment>> {
-    this.path = `/${issueId}/comments`;
+    this.path = `/issues/${issueId}/comments`;
 
     return new GetResult(IssueComment, await this.post(payload, parameters));
   }
 
-  public async listAttachments(
+  public async listIssueAttachments(
     issueId: string,
     parameters: Parameters = {},
   ): Promise<GetResult<IssueAttachments>> {
-    this.path = `/${issueId}/attachments`;
+    this.path = `/issues/${issueId}/attachments`;
 
     return new GetResult(IssueAttachments, await this.get(parameters));
   }
 
-  public async addAttachment(
+  public async addIssueAttachment(
     issueId: string,
-    payload: CreateAttachmentPayload,
+    payload: AddIssueAttachmentPayload,
     parameters: Parameters = {},
   ): Promise<GetResult<IssueAttachment>> {
-    this.path = `/${issueId}/attachments`;
+    this.path = `/issues/${issueId}/attachments`;
 
     return new GetResult(IssueAttachment, await this.post(payload, parameters));
   }
 
-  public async downloadAttachment(
+  public async downloadIssueAttachment(
     issueId: string,
     attachmentId: string,
     parameters: Parameters = {},
   ): Promise<GetResult<IssueAttachment>> {
-    this.path = `/${issueId}/attachments/${attachmentId}`;
+    this.path = `/issues/${issueId}/attachments/${attachmentId}`;
 
     return new GetResult(IssueAttachment, await this.get(parameters));
   }
