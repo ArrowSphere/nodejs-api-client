@@ -1,6 +1,7 @@
 import { IssueCreatedByType } from '../entities/issue/issue';
+import { IssueCommentFields } from '../entities/issue/comment';
 
-export type CreateCommentPayload = {
-  body: string;
-  createdBy?: IssueCreatedByType;
+export type AddIssueCommentPayload = {
+  [IssueCommentFields.COLUMN_BODY]: string;
+  [IssueCommentFields.COLUMN_CREATED_BY]?: IssueCreatedByType;
 };

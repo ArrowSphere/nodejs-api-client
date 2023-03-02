@@ -1,6 +1,7 @@
 import {
   IssueAdditionalDataType,
   IssueCreatedByType,
+  IssueFields,
   IssueOfferType,
   IssueStatusesType,
 } from '../entities/issue/issue';
@@ -12,14 +13,14 @@ export enum IssueProgramsType {
 }
 
 export type CreateIssuePayload = {
-  title: string;
-  description: string;
-  topicId: string;
-  program: IssueProgramsType;
-  offer?: IssueOfferType;
-  createdBy?: IssueCreatedByType;
-  endCustomerRef?: string;
-  additionalData?: Array<IssueAdditionalDataType>;
+  [IssueFields.COLUMN_TITLE]: string;
+  [IssueFields.COLUMN_DESCRIPTION]: string;
+  [IssueFields.COLUMN_TOPIC_ID]: string;
+  [IssueFields.COLUMN_PROGRAM]: IssueProgramsType;
+  [IssueFields.COLUMN_OFFER]?: IssueOfferType;
+  [IssueFields.COLUMN_CREATED_BY]?: IssueCreatedByType;
+  [IssueFields.COLUMN_END_CUSTOMER_REF]?: string;
+  [IssueFields.COLUMN_ADDITIONAL_DATA]?: Array<IssueAdditionalDataType>;
 };
 
 export type UpdateIssueStatusOperation = {
