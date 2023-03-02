@@ -17,6 +17,16 @@ export enum ParameterKeys {
   PER_PAGE_CAMEL = 'perPage',
 }
 
+export type ParametersWithPaginationType =
+  | (Parameters & {
+      [ParameterKeys.PAGE]?: number;
+      [ParameterKeys.PER_PAGE]?: number;
+    })
+  | (Parameters & {
+      [ParameterKeys.PAGE]?: number;
+      [ParameterKeys.PER_PAGE_CAMEL]?: number;
+    });
+
 export type Parameters = Record<
   string,
   string | string[] | number | number[] | boolean | null | undefined
@@ -24,7 +34,7 @@ export type Parameters = Record<
 
 export type Headers = Record<string, string>;
 
-export type Payload = Record<string, unknown>;
+export type Payload = Record<string, unknown> | Array<Payload>;
 
 export type Options = {
   isAdmin?: boolean;
