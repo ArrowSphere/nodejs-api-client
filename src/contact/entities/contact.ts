@@ -1,6 +1,7 @@
 import { AbstractEntity } from '../../abstractEntity';
 
 export enum ContactFields {
+  COLUMN_USERNAME = 'username',
   COLUMN_ID = 'id',
   COLUMN_COMPANY_ID = 'companyId',
   COLUMN_RESELLER = 'reseller',
@@ -15,6 +16,7 @@ export enum ContactFields {
 }
 
 export type ContactType = {
+  [ContactFields.COLUMN_USERNAME]: string | null;
   [ContactFields.COLUMN_ID]: number;
   [ContactFields.COLUMN_COMPANY_ID]: number;
   [ContactFields.COLUMN_RESELLER]: string;
@@ -29,6 +31,7 @@ export type ContactType = {
 };
 
 export class Contact extends AbstractEntity<ContactType> {
+  readonly #username: string | null;
   readonly #id: number;
   readonly #companyId: number;
   readonly #reseller: string;
@@ -44,6 +47,7 @@ export class Contact extends AbstractEntity<ContactType> {
   public constructor(contactDataInput: ContactType) {
     super(contactDataInput);
 
+    this.#username = contactDataInput[ContactFields.COLUMN_USERNAME];
     this.#id = contactDataInput[ContactFields.COLUMN_ID];
     this.#companyId = contactDataInput[ContactFields.COLUMN_COMPANY_ID];
     this.#reseller = contactDataInput[ContactFields.COLUMN_RESELLER];
@@ -55,6 +59,10 @@ export class Contact extends AbstractEntity<ContactType> {
     this.#type = contactDataInput[ContactFields.COLUMN_TYPE];
     this.#role = contactDataInput[ContactFields.COLUMN_ROLE];
     this.#status = contactDataInput[ContactFields.COLUMN_STATUS];
+  }
+
+  public get username(): string | null {
+    return this.#username;
   }
 
   public get id(): number {
@@ -103,6 +111,7 @@ export class Contact extends AbstractEntity<ContactType> {
 
   public toJSON(): ContactType {
     return {
+      [ContactFields.COLUMN_USERNAME]: this.username,
       [ContactFields.COLUMN_ID]: this.id,
       [ContactFields.COLUMN_COMPANY_ID]: this.companyId,
       [ContactFields.COLUMN_RESELLER]: this.reseller,

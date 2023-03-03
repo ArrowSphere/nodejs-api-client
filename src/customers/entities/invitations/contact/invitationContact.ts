@@ -2,9 +2,10 @@ import { AbstractEntity } from '../../../../abstractEntity';
 import {
   SharedContactFields,
   SharedContactInterface,
-} from '../../../../shared/contact/contact';
+} from '../../../../shared';
 
 enum InvitationContactEnum {
+  COLUMN_ID = 'id',
   COLUMN_USERNAME = 'username',
 }
 
@@ -14,14 +15,16 @@ export const InvitationContactFields = {
 };
 
 interface InvitationContactInterface {
-  [InvitationContactFields.COLUMN_USERNAME]: string;
+  [InvitationContactFields.COLUMN_ID]: string;
+  [InvitationContactFields.COLUMN_USERNAME]: string | null;
 }
 
 export type InvitationContactType = InvitationContactInterface &
   SharedContactInterface;
 
 export class InvitationContact extends AbstractEntity<InvitationContactType> {
-  readonly #username: string;
+  readonly #id: string;
+  readonly #username: string | null;
   readonly #firstname: string;
   readonly #lastname: string;
   readonly #email: string;
@@ -29,6 +32,7 @@ export class InvitationContact extends AbstractEntity<InvitationContactType> {
   public constructor(getCustomersContactDataInput: InvitationContactType) {
     super(getCustomersContactDataInput);
 
+    this.#id = getCustomersContactDataInput[InvitationContactFields.COLUMN_ID];
     this.#firstname =
       getCustomersContactDataInput[SharedContactFields.COLUMN_FIRSTNAME];
     this.#username =
@@ -39,7 +43,11 @@ export class InvitationContact extends AbstractEntity<InvitationContactType> {
       getCustomersContactDataInput[SharedContactFields.COLUMN_EMAIL];
   }
 
-  get username(): string {
+  get id(): string {
+    return this.#id;
+  }
+
+  get username(): string | null {
     return this.#username;
   }
 
@@ -57,6 +65,7 @@ export class InvitationContact extends AbstractEntity<InvitationContactType> {
 
   public toJSON(): InvitationContactType {
     return {
+      [InvitationContactFields.COLUMN_ID]: this.id,
       [InvitationContactFields.COLUMN_USERNAME]: this.username,
       [SharedContactFields.COLUMN_FIRSTNAME]: this.firstName,
       [SharedContactFields.COLUMN_LASTNAME]: this.lastName,
