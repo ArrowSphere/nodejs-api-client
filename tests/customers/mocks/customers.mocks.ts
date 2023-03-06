@@ -115,6 +115,7 @@ export const PAYLOAD_GET_CUSTOMER_INVITATION = {
       [CompanyFields.COLUMN_REFERENCE]: 'REFERENCE_0123456789',
     },
     [DataInvitationFields.COLUMN_CONTACT]: {
+      [InvitationContactFields.COLUMN_ID]: 1234,
       [InvitationContactFields.COLUMN_FIRSTNAME]: 'firstname',
       [InvitationContactFields.COLUMN_USERNAME]: 'username',
       [InvitationContactFields.COLUMN_LASTNAME]: 'lastname',
