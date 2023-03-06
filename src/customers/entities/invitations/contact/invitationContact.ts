@@ -2,10 +2,11 @@ import { AbstractEntity } from '../../../../abstractEntity';
 import {
   SharedContactFields,
   SharedContactInterface,
-} from '../../../../shared/contact/contact';
+} from '../../../../shared';
 
 enum InvitationContactEnum {
   COLUMN_USERNAME = 'username',
+  COLUMN_REFERENCE = 'reference',
 }
 
 export const InvitationContactFields = {
@@ -14,14 +15,16 @@ export const InvitationContactFields = {
 };
 
 interface InvitationContactInterface {
-  [InvitationContactFields.COLUMN_USERNAME]: string;
+  [InvitationContactFields.COLUMN_USERNAME]: string | null;
+  [InvitationContactFields.COLUMN_REFERENCE]: string;
 }
 
 export type InvitationContactType = InvitationContactInterface &
   SharedContactInterface;
 
 export class InvitationContact extends AbstractEntity<InvitationContactType> {
-  readonly #username: string;
+  readonly #reference: string;
+  readonly #username: string | null;
   readonly #firstname: string;
   readonly #lastname: string;
   readonly #email: string;
@@ -29,6 +32,8 @@ export class InvitationContact extends AbstractEntity<InvitationContactType> {
   public constructor(getCustomersContactDataInput: InvitationContactType) {
     super(getCustomersContactDataInput);
 
+    this.#reference =
+      getCustomersContactDataInput[InvitationContactFields.COLUMN_REFERENCE];
     this.#firstname =
       getCustomersContactDataInput[SharedContactFields.COLUMN_FIRSTNAME];
     this.#username =
@@ -39,7 +44,11 @@ export class InvitationContact extends AbstractEntity<InvitationContactType> {
       getCustomersContactDataInput[SharedContactFields.COLUMN_EMAIL];
   }
 
-  get username(): string {
+  get reference(): string {
+    return this.#reference;
+  }
+
+  get username(): string | null {
     return this.#username;
   }
 
@@ -57,10 +66,11 @@ export class InvitationContact extends AbstractEntity<InvitationContactType> {
 
   public toJSON(): InvitationContactType {
     return {
+      [InvitationContactFields.COLUMN_REFERENCE]: this.reference,
       [InvitationContactFields.COLUMN_USERNAME]: this.username,
-      [SharedContactFields.COLUMN_FIRSTNAME]: this.firstName,
-      [SharedContactFields.COLUMN_LASTNAME]: this.lastName,
-      [SharedContactFields.COLUMN_EMAIL]: this.email,
+      [InvitationContactFields.COLUMN_FIRSTNAME]: this.firstName,
+      [InvitationContactFields.COLUMN_LASTNAME]: this.lastName,
+      [InvitationContactFields.COLUMN_EMAIL]: this.email,
     };
   }
 }
