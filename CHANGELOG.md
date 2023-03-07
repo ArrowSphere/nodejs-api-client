@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Add id in customer invitation contact
+- Add reference in customer invitation contact
 
 ## [3.20.2] - 2023-03-01
 
