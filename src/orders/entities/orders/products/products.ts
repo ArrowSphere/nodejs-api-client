@@ -1,6 +1,11 @@
 import { AbstractEntity } from '../../../../abstractEntity';
 import { ReferenceLink, ReferenceLinkType } from '../../referenceLink';
 import { ProductPrices, ProductPricesType } from './prices/productPrices';
+import { ProductProgram, ProductProgramType } from './program/productProgram';
+import {
+  ProductIdentifiers,
+  ProductIdentifiersType,
+} from './identifiers/productIdentifiers';
 
 export enum OrderProductsFields {
   COLUMN_SKU = 'sku',
@@ -14,6 +19,10 @@ export enum OrderProductsFields {
   COLUMN_PRICES = 'prices',
   COLUMN_SUBSCRIPTION = 'subscription',
   COLUMN_LICENSE = 'license',
+  COLUMN_NAME = 'name',
+  COLUMN_CLASSIFICATION = 'classification',
+  COLUMN_PROGRAM = 'program',
+  COLUMN_IDENTIFIERS = 'identifiers',
 }
 
 export type OrderProductsType = {
@@ -28,6 +37,10 @@ export type OrderProductsType = {
   [OrderProductsFields.COLUMN_PRICES]: ProductPricesType;
   [OrderProductsFields.COLUMN_SUBSCRIPTION]: ReferenceLinkType;
   [OrderProductsFields.COLUMN_LICENSE]: ReferenceLinkType;
+  [OrderProductsFields.COLUMN_NAME]: string;
+  [OrderProductsFields.COLUMN_CLASSIFICATION]: string;
+  [OrderProductsFields.COLUMN_PROGRAM]: ProductProgramType;
+  [OrderProductsFields.COLUMN_IDENTIFIERS]: ProductIdentifiersType;
 };
 
 export class OrderProduct extends AbstractEntity<OrderProductsType> {
@@ -42,6 +55,10 @@ export class OrderProduct extends AbstractEntity<OrderProductsType> {
   readonly #prices: ProductPrices;
   readonly #subscription: ReferenceLink;
   readonly #license: ReferenceLink;
+  readonly #name: string;
+  readonly #classification: string;
+  readonly #program: ProductProgram;
+  readonly #identifier: ProductIdentifiers;
 
   public constructor(getOrderProducts: OrderProductsType) {
     super(getOrderProducts);
@@ -65,6 +82,15 @@ export class OrderProduct extends AbstractEntity<OrderProductsType> {
     );
     this.#license = new ReferenceLink(
       getOrderProducts[OrderProductsFields.COLUMN_LICENSE],
+    );
+    this.#name = getOrderProducts[OrderProductsFields.COLUMN_NAME];
+    this.#classification =
+      getOrderProducts[OrderProductsFields.COLUMN_CLASSIFICATION];
+    this.#program = new ProductProgram(
+      getOrderProducts[OrderProductsFields.COLUMN_PROGRAM],
+    );
+    this.#identifier = new ProductIdentifiers(
+      getOrderProducts[OrderProductsFields.COLUMN_IDENTIFIERS],
     );
   }
 
@@ -101,6 +127,18 @@ export class OrderProduct extends AbstractEntity<OrderProductsType> {
   get license(): ReferenceLink {
     return this.#license;
   }
+  get name(): string {
+    return this.#name;
+  }
+  get classification(): string {
+    return this.#classification;
+  }
+  get program(): ProductProgram {
+    return this.#program;
+  }
+  get identifier(): ProductIdentifiers {
+    return this.#identifier;
+  }
 
   public toJSON(): OrderProductsType {
     return {
@@ -115,6 +153,10 @@ export class OrderProduct extends AbstractEntity<OrderProductsType> {
       [OrderProductsFields.COLUMN_PRICES]: this.prices.toJSON(),
       [OrderProductsFields.COLUMN_SUBSCRIPTION]: this.subscription.toJSON(),
       [OrderProductsFields.COLUMN_LICENSE]: this.license.toJSON(),
+      [OrderProductsFields.COLUMN_NAME]: this.name,
+      [OrderProductsFields.COLUMN_CLASSIFICATION]: this.classification,
+      [OrderProductsFields.COLUMN_PROGRAM]: this.program.toJSON(),
+      [OrderProductsFields.COLUMN_IDENTIFIERS]: this.identifier.toJSON(),
     };
   }
 }

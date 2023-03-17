@@ -1,13 +1,16 @@
 // PAYLOADS
 import {
-  GetData,
-  GetResultFields,
   DataListOrdersFields,
   DataListOrdersType,
+  GetData,
+  GetResultFields,
+  IdentifiersVendorFields,
   OrderFields,
   OrderPartnerFields,
   OrderProductsFields,
+  ProductIdentifiersFields,
   ProductPricesFields,
+  ProductProgramFields,
   ReferenceLinkFields,
   SharedContactFields,
 } from '../../../src';
@@ -63,6 +66,17 @@ export const PAYLOAD_ORDERS: GetData<DataListOrdersType> = {
               [ReferenceLinkFields.COLUMN_REFERENCE]: 'XSP87708',
               [ReferenceLinkFields.COLUMN_LINK]: '/api/licenses/XSP87708',
             },
+            [OrderProductsFields.COLUMN_NAME]: 'products_name',
+            [OrderProductsFields.COLUMN_CLASSIFICATION]:
+              'products_classification',
+            [OrderProductsFields.COLUMN_PROGRAM]: {
+              [ProductProgramFields.COLUMN_LEGACY_CODE]: 'legacy_code',
+            },
+            [OrderProductsFields.COLUMN_IDENTIFIERS]: {
+              [ProductIdentifiersFields.COLUMN_VENDOR]: {
+                [IdentifiersVendorFields.COLUMN_SKU]: 'sku',
+              },
+            },
           },
         ],
       },
@@ -111,6 +125,17 @@ export const PAYLOAD_ORDERS_WITHOUT_OPTIONAL: GetData<DataListOrdersType> = {
             [OrderProductsFields.COLUMN_LICENSE]: {
               [ReferenceLinkFields.COLUMN_REFERENCE]: 'XSP87708',
               [ReferenceLinkFields.COLUMN_LINK]: '/api/licenses/XSP87708',
+            },
+            [OrderProductsFields.COLUMN_NAME]: 'products_name',
+            [OrderProductsFields.COLUMN_CLASSIFICATION]:
+              'products_classification',
+            [OrderProductsFields.COLUMN_PROGRAM]: {
+              [ProductProgramFields.COLUMN_LEGACY_CODE]: 'legacy_code',
+            },
+            [OrderProductsFields.COLUMN_IDENTIFIERS]: {
+              [ProductIdentifiersFields.COLUMN_VENDOR]: {
+                [IdentifiersVendorFields.COLUMN_SKU]: 'sku',
+              },
             },
           },
         ],

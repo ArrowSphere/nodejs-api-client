@@ -44,6 +44,10 @@
 | prices             | ```ProductPricesType``` |                                                                                    | [ProductPrices](#ProductPrices)                                |
 | subscription       | ```ReferenceLinkType``` |                                                                                    | [ReferenceLink](#ReferenceLink)                                |
 | license            | ```ReferenceLinkType``` |                                                                                    | [ReferenceLink](#ReferenceLink)                                |
+| name               | ```string```            | name                                                                               | Product Name                                                   |
+| classification     | ```string```            | classification                                                                     | Product Classification                                         |
+| program            | ```ReferenceLinkType``` |                                                                                    | [ProductProgram](#ReferenceLink)                               |
+| identifiers        | ```ReferenceLinkType``` |                                                                                    | [ProductIdentifiers](#ReferenceLink)                           |
 
 ### ProductPrices
 
@@ -56,6 +60,24 @@
 | term            | ```string``` | one year  | Product price term             |
 | periodicityCode | ```number``` | 8640      | Product price periodicity code |
 | termCode        | ```number``` | 8640      | Product price term code        |
+
+### ProductProgram
+
+| Field      | Type          | Example    | Description |
+|------------|---------------|------------|-------------|
+| legacyCode | ```string```  | legacyCode | legacy code |
+
+### ProductIdentifiers
+
+| Field  | Type                    | Example | Description                         |
+|--------|-------------------------|---------|-------------------------------------|
+| vendor | ```IdentifiersVendor``` |         | [IdentifiersVendor](#ReferenceLink) |
+
+### IdentifiersVendor
+
+| Field | Type          | Example | Description     |
+|-------|---------------|---------|-----------------|
+| sky   | ```string```  | sku     | identifiers sku |
 
 ### ReferenceLink
 
