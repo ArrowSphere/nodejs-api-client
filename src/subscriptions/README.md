@@ -12,7 +12,7 @@ A subscription is identified in ArrowSphere by its _id_ which is a sequential in
 A subscription is managed by the `Subscription` entity.
 
 | Field                      | Type     | Example              | Description                                            |
-| -------------------------- | -------- | -------------------- | ------------------------------------------------------ |
+|----------------------------|----------|----------------------|--------------------------------------------------------|
 | subscriptionId             | `int`    | 2234                 | Subscription identifier                                |
 | partnerTagLabels           | `string` | SDK,TIER2            | Partner tag labels                                     |
 | workgroupCode              | `string` | FR                   | Marketplace where the subscription is registered       |
@@ -41,7 +41,7 @@ The List endpoint is deisgn to perform easy filtered listing of subscriptions.
 The query parameters are the following and match the table in [Subscription](#Subscription)
 
 | Name          | Type            | Subscription field |
-| ------------- | --------------- | ------------------ |
+|---------------|-----------------|--------------------|
 | subscription  | string[]        | -                  |
 | status        | string[]        | -                  |
 | partnerTag    | string[]        | partnerTagLabels   |
