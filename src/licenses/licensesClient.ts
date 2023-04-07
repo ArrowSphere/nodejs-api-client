@@ -1,7 +1,12 @@
 /**
  * Class LicensesClient
  */
-import { AbstractClient, Parameters } from '../abstractClient';
+import {
+  AbstractClient,
+  ExtraInformationFields,
+  ExtraInformationType,
+  Parameters,
+} from '../abstractClient';
 import { FindConfig, FindData, FindResult } from './entities/findResult';
 import {
   ConfigFindResult,
@@ -288,10 +293,32 @@ export type LicenseFindRawPayload = {
 
 export type UpdateSeatsData = {
   [LicenseGetFields.COLUMN_SEATS]: number;
+  [ExtraInformationFields.COLUMN_EXTRA_INFORMATION]?: ExtraInformationType;
 };
 
 export type PutFriendlyName = {
   [LicenseGetFields.COLUMN_FRIENDLY_NAME]: string;
+  [ExtraInformationFields.COLUMN_EXTRA_INFORMATION]?: ExtraInformationType;
+};
+
+export type PutReactivate = {
+  [ExtraInformationFields.COLUMN_EXTRA_INFORMATION]?: ExtraInformationType;
+};
+
+export type PutSuspend = {
+  [ExtraInformationFields.COLUMN_EXTRA_INFORMATION]?: ExtraInformationType;
+};
+
+export type PutCancel = {
+  [ExtraInformationFields.COLUMN_EXTRA_INFORMATION]?: ExtraInformationType;
+};
+
+export type PutCancelAutoRenew = {
+  [ExtraInformationFields.COLUMN_EXTRA_INFORMATION]?: ExtraInformationType;
+};
+
+export type PutReactivateAutoRenew = {
+  [ExtraInformationFields.COLUMN_EXTRA_INFORMATION]?: ExtraInformationType;
 };
 
 export class LicensesClient extends AbstractClient {
@@ -537,29 +564,32 @@ export class LicensesClient extends AbstractClient {
 
   public suspendLicense(
     licenseReference: string,
+    payload?: PutSuspend,
     parameters: Parameters = {},
   ): Promise<void> {
     this.path = licenseReference + this.SUSPEND_PATH;
 
-    return this.put(undefined, parameters);
+    return this.put(payload, parameters);
   }
 
   public reactivateLicense(
     licenseReference: string,
+    payload?: PutReactivate,
     parameters: Parameters = {},
   ): Promise<void> {
     this.path = licenseReference + this.REACTIVATE_PATH;
 
-    return this.put(undefined, parameters);
+    return this.put(payload, parameters);
   }
 
   public cancelLicense(
     licenseReference: string,
+    payload?: PutCancel,
     parameters: Parameters = {},
   ): Promise<void> {
     this.path = licenseReference + this.CANCEL_PATH;
 
-    return this.put(undefined, parameters);
+    return this.put(payload, parameters);
   }
 
   public async updateFriendlyName(
@@ -583,19 +613,21 @@ export class LicensesClient extends AbstractClient {
 
   public async cancelAutoRenew(
     licenseReference: string,
+    payload?: PutCancelAutoRenew,
     parameters: Parameters = {},
   ): Promise<void> {
     this.path = licenseReference + this.CANCEL_AUTO_RENEW_PATH;
 
-    return await this.put(undefined, parameters);
+    return await this.put(payload, parameters);
   }
 
   public async reactivateAutoRenew(
     licenseReference: string,
+    payload?: PutReactivateAutoRenew,
     parameters: Parameters = {},
   ): Promise<void> {
     this.path = licenseReference + this.REACTIVATE_AUTO_RENEW_PATH;
 
-    return await this.put(undefined, parameters);
+    return await this.put(payload, parameters);
   }
 }

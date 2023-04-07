@@ -8,16 +8,16 @@ jobs:
   lint-build-test:
     strategy:
       matrix:
-        node: ['12.x', '14.x']
+        node: ['14.x', '16.x', '18.x']
     env:
       COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
     name: Lint, Build, Test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         name: Checkout code
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node }}
       - name: Install Node.js dependencies
