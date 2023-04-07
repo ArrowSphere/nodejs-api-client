@@ -15,11 +15,11 @@ export class AxiosSingleton {
     return AxiosSingleton._axiosInstance;
   }
 
-  private static _initializedRequestInterceptor() {
+  private static _initializedRequestInterceptor(): void {
     this._axiosInstance.interceptors.request.use(this._handleRequest);
   }
 
-  private static _initializedResponseInterceptor() {
+  private static _initializedResponseInterceptor(): void {
     this._axiosInstance.interceptors.response.use(this._handleResponse);
   }
 

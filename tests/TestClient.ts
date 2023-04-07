@@ -1,4 +1,4 @@
-import { AbstractClient } from '../src';
+import { AbstractClient, ConfigurationsClient } from '../src';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { URL, URLSearchParams } from 'url';
 
@@ -11,9 +11,8 @@ export const MOCK_URL = 'https://localhost';
 export const TEST_ENDPOINT = '/test';
 
 export class TestClient extends AbstractClient {
-  constructor() {
-    super();
-    this.url = MOCK_URL;
+  constructor(configuration?: ConfigurationsClient) {
+    super(configuration);
   }
 
   get(): Promise<AxiosResponse['data']> {
