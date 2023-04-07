@@ -10,11 +10,14 @@ import { AxiosInstance, AxiosResponse } from 'axios';
  */
 export enum ParameterKeys {
   API_KEY = 'apiKey',
+  EXTRA_INFORMATION = 'extraInformation',
+  HEADERS = 'headers',
+  ORDER_BY = 'order_by',
   PAGE = 'page',
   PER_PAGE = 'per_page',
-  SORT_BY = 'sort_by',
-  ORDER_BY = 'order_by',
   PER_PAGE_CAMEL = 'perPage',
+  SORT_BY = 'sort_by',
+  URL = 'url',
 }
 
 export type Parameters = Record<
@@ -23,11 +26,19 @@ export type Parameters = Record<
 >;
 
 export type Headers = Record<string, string>;
+export type ExtraInformation = Record<string, unknown>;
 
 export type Payload = Record<string, unknown>;
 
 export type Options = {
   isAdmin?: boolean;
+};
+
+export type ConfigurationsClient = {
+  [ParameterKeys.API_KEY]?: string;
+  [ParameterKeys.URL]?: string;
+  [ParameterKeys.HEADERS]?: Headers;
+  [ParameterKeys.EXTRA_INFORMATION]?: ExtraInformation;
 };
 
 export abstract class AbstractClient {
@@ -77,11 +88,23 @@ export abstract class AbstractClient {
   protected headers: Headers = {};
 
   /**
+   * Defines extra information in payload
+   */
+  protected extraInformation: Record<string, unknown> = {};
+
+  /**
    * AbstractClient constructor.
    * @returns AbstractClient
    */
-  protected constructor() {
+  protected constructor(configuration?: ConfigurationsClient) {
     this.client = AxiosSingleton.getInstance();
+
+    this.setApiKey(configuration?.[ParameterKeys.API_KEY] ?? '');
+    this.setUrl(configuration?.[ParameterKeys.URL] ?? '');
+    this.setHeaders(configuration?.[ParameterKeys.HEADERS] ?? {});
+    this.setExtraInformation(
+      configuration?.[ParameterKeys.EXTRA_INFORMATION] ?? {},
+    );
   }
 
   /**
@@ -143,6 +166,12 @@ export abstract class AbstractClient {
    */
   public setHeaders(headers: Record<string, string>): this {
     this.headers = headers;
+
+    return this;
+  }
+
+  public setExtraInformation(extraInformation: Record<string, unknown>): this {
+    this.extraInformation = extraInformation;
 
     return this;
   }
@@ -224,7 +253,7 @@ export abstract class AbstractClient {
   ): Promise<AxiosResponse['data']> {
     const response = await this.client.post(
       this.generateUrl(parameters, options),
-      payload,
+      this.generatePayload(payload),
       {
         headers: this.prepareHeaders(headers),
       },
@@ -249,7 +278,7 @@ export abstract class AbstractClient {
   ): Promise<void> {
     const response = await this.client.put(
       this.generateUrl(parameters, options),
-      payload,
+      this.generatePayload(payload),
       {
         headers: this.prepareHeaders(headers),
       },
@@ -351,5 +380,12 @@ export abstract class AbstractClient {
     }
 
     return params;
+  }
+
+  private generatePayload(payload: Payload): Payload {
+    return {
+      ...payload,
+      ...this.extraInformation,
+    };
   }
 }
