@@ -10,11 +10,17 @@ import { AxiosInstance, AxiosResponse } from 'axios';
  */
 export enum ParameterKeys {
   API_KEY = 'apiKey',
+  HEADERS = 'headers',
+  ORDER_BY = 'order_by',
   PAGE = 'page',
   PER_PAGE = 'per_page',
-  SORT_BY = 'sort_by',
-  ORDER_BY = 'order_by',
   PER_PAGE_CAMEL = 'perPage',
+  SORT_BY = 'sort_by',
+  URL = 'url',
+}
+
+export enum ExtraInformationFields {
+  COLUMN_EXTRA_INFORMATION = 'extraInformation',
 }
 
 export type Parameters = Record<
@@ -29,6 +35,14 @@ export type Payload = Record<string, unknown>;
 export type Options = {
   isAdmin?: boolean;
 };
+
+export type ConfigurationsClient = {
+  [ParameterKeys.API_KEY]?: string;
+  [ParameterKeys.URL]?: string;
+  [ParameterKeys.HEADERS]?: Headers;
+};
+
+export type ExtraInformationType = Record<string, undefined>;
 
 export abstract class AbstractClient {
   /**
@@ -80,8 +94,12 @@ export abstract class AbstractClient {
    * AbstractClient constructor.
    * @returns AbstractClient
    */
-  protected constructor() {
+  protected constructor(configuration?: ConfigurationsClient) {
     this.client = AxiosSingleton.getInstance();
+
+    this.setApiKey(configuration?.[ParameterKeys.API_KEY] ?? '');
+    this.setUrl(configuration?.[ParameterKeys.URL] ?? '');
+    this.setHeaders(configuration?.[ParameterKeys.HEADERS] ?? {});
   }
 
   /**

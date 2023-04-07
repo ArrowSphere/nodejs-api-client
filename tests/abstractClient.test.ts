@@ -1,12 +1,17 @@
 // Test tools
-import axios from 'axios';
+// import axios from 'axios';
 import chai, { expect } from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 import nock from 'nock';
 
 // Sources
-import { ParameterKeys } from '../src';
-import { NotFoundException, PublicApiClientException } from '../src/exception';
+import {
+  AbstractClient,
+  ConfigurationsClient,
+  NotFoundException,
+  ParameterKeys,
+  PublicApiClientException,
+} from '../src';
 import {
   axiosExpectInterceptor,
   ExpectFunctionParameters,
@@ -14,29 +19,50 @@ import {
   TEST_ENDPOINT,
   TestClient,
 } from './TestClient';
+import axios from 'axios';
 import { constants } from 'http2';
 
 chai.use(chaiAsPromised);
+let client: TestClient;
+const apiKey = 'apiKey';
 
 describe('AbstractClient', () => {
-  describe('constructor', () => {
-    beforeEach(() => {
-      nock(MOCK_URL).get('/').reply(200);
-    });
+  const expectedData = { result: true };
+  beforeEach(() => {
+    client = new TestClient().setUrl(MOCK_URL).setApiKey(apiKey);
+  });
 
+  describe('constructor', () => {
+    nock(MOCK_URL).get('/').reply(200);
     it('creates a new axios client', (done) => {
-      const client = new TestClient();
+      const client = new TestClient().setUrl(MOCK_URL);
       client
         .get()
         .then(() => done())
         .catch(console.error);
     });
+
+    it('creates a new instance of TestClient with object parameters', () => {
+      const configurations: ConfigurationsClient = {
+        [ParameterKeys.URL]: MOCK_URL,
+        [ParameterKeys.API_KEY]: 'api_key',
+        [ParameterKeys.HEADERS]: {
+          headers: 'information',
+        },
+      };
+      const client = new TestClient(configurations);
+      expect(client).to.be.an.instanceof(AbstractClient);
+      expect(client['url']).to.be.equal(configurations[ParameterKeys.URL]);
+      expect(client['apiKey']).to.be.equal(
+        configurations[ParameterKeys.API_KEY],
+      );
+      expect(client['headers']).to.be.equal(
+        configurations[ParameterKeys.HEADERS],
+      );
+    });
   });
 
   describe('get', () => {
-    const expectedData = { result: true };
-    const client = new TestClient();
-
     it('makes a HTTP GET request on the specified URL', async () => {
       nock(MOCK_URL).get(TEST_ENDPOINT).reply(200, expectedData);
       await client.getTest();
@@ -61,9 +87,6 @@ describe('AbstractClient', () => {
   });
 
   describe('post', () => {
-    const expectedData = { result: true };
-    const client = new TestClient();
-
     it('makes a HTTP POST request on the specified URL', async () => {
       nock(MOCK_URL).post(TEST_ENDPOINT).reply(200, expectedData);
       await client.postTest();
@@ -88,8 +111,6 @@ describe('AbstractClient', () => {
   });
 
   describe('put', () => {
-    const client = new TestClient();
-
     it('makes a HTTP PUT request on the specified URL', async () => {
       nock(MOCK_URL).put(TEST_ENDPOINT).reply(204);
       await client.putTest();
@@ -106,9 +127,6 @@ describe('AbstractClient', () => {
   });
 
   describe('patch', () => {
-    const expectedData = { result: true };
-    const client = new TestClient();
-
     it('makes a HTTP PUT request on the specified URL', async () => {
       nock(MOCK_URL)
         .patch(TEST_ENDPOINT)
@@ -129,9 +147,6 @@ describe('AbstractClient', () => {
   });
 
   describe('delete', () => {
-    const expectedData = { result: true };
-    const client = new TestClient();
-
     it('makes a HTTP delete request on the specified URL', async () => {
       nock(MOCK_URL)
         .delete(TEST_ENDPOINT)
@@ -154,7 +169,6 @@ describe('AbstractClient', () => {
   describe('getResponse', () => {
     it('throws a NotFoundException if the status code is 404', async () => {
       nock(MOCK_URL).get(TEST_ENDPOINT).reply(404);
-      const client = new TestClient();
 
       try {
         await client.getTest();
@@ -165,7 +179,6 @@ describe('AbstractClient', () => {
 
     it('throws a PublicApiClientException if the status code is between 400 and 599', async () => {
       const nockInterceptor = nock(MOCK_URL).get(TEST_ENDPOINT);
-      const client = new TestClient();
       let asserted = 0;
       let i;
 
@@ -187,9 +200,6 @@ describe('AbstractClient', () => {
     });
 
     it('returns the response data', async () => {
-      const expectedData = { result: true };
-      const client = new TestClient();
-
       nock(MOCK_URL).get(TEST_ENDPOINT).reply(200, expectedData);
 
       expect(await client.getTest()).to.eqls(expectedData);
@@ -199,10 +209,7 @@ describe('AbstractClient', () => {
   describe('prepareHeaders', () => {
     it('adds the API key parameter in the headers', async () => {
       nock(MOCK_URL).get(TEST_ENDPOINT).reply(200);
-
-      const apiKey = 'apiKey';
       const axiosClient = axios.create();
-      const client = new TestClient().setApiKey(apiKey);
 
       axiosClient.interceptors.request.use(
         axiosExpectInterceptor(({ config }: ExpectFunctionParameters) => {
@@ -218,9 +225,7 @@ describe('AbstractClient', () => {
     it('does not set pagination parameters if page is 1 and per page is falsy', async () => {
       nock(MOCK_URL).get(TEST_ENDPOINT).reply(200);
 
-      const apiKey = 'apiKey';
       const axiosClient = axios.create();
-      const client = new TestClient().setApiKey(apiKey);
 
       axiosClient.interceptors.request.use(
         axiosExpectInterceptor(
@@ -241,9 +246,7 @@ describe('AbstractClient', () => {
         .get(new RegExp(`${TEST_ENDPOINT}.+`))
         .reply(200);
 
-      const apiKey = 'apiKey';
       const axiosClient = axios.create();
-      const client = new TestClient().setApiKey(apiKey);
       const perPage = 10;
       const page = 2;
 
@@ -270,9 +273,7 @@ describe('AbstractClient', () => {
         .get(new RegExp(`${TEST_ENDPOINT}.*`))
         .reply(200);
 
-      const apiKey = 'apiKey';
       const axiosClient = axios.create();
-      const client = new TestClient().setApiKey(apiKey);
       const perPage = -1;
       const page = 1;
 
@@ -295,9 +296,7 @@ describe('AbstractClient', () => {
         .get(new RegExp(`${TEST_ENDPOINT}.*`))
         .reply(200);
 
-      const apiKey = 'apiKey';
       const axiosClient = axios.create();
-      const client = new TestClient().setApiKey(apiKey);
       const perPage = 25;
 
       axiosClient.interceptors.request.use(
