@@ -90,7 +90,7 @@ export abstract class AbstractClient {
   /**
    * Defines extra information in payload
    */
-  protected extraInformation: Record<string, unknown> = {};
+  protected extraInformation: Record<string, unknown> | undefined;
 
   /**
    * AbstractClient constructor.
@@ -170,10 +170,10 @@ export abstract class AbstractClient {
     return this;
   }
 
-  public setExtraInformation(extraInformation: ExtraInformation): this {
-    this.extraInformation = extraInformation
-      ? { extraInformation: extraInformation }
-      : {};
+  public setExtraInformation(information: ExtraInformation): this {
+    this.extraInformation = information
+      ? { extraInformation: information }
+      : undefined;
 
     return this;
   }
