@@ -42,7 +42,7 @@ export type ConfigurationsClient = {
   [ParameterKeys.HEADERS]?: Headers;
 };
 
-export type ExtraInformationType = Record<string, undefined>;
+export type ExtraInformationType = Record<string, unknown>;
 
 export abstract class AbstractClient {
   /**
