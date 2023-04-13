@@ -3,7 +3,6 @@
  */
 import {
   AbstractClient,
-  ExtraInformationFields,
   ExtraInformationType,
   Parameters,
 } from '../abstractClient';
@@ -293,33 +292,21 @@ export type LicenseFindRawPayload = {
 
 export type UpdateSeatsData = {
   [LicenseGetFields.COLUMN_SEATS]: number;
-  [ExtraInformationFields.COLUMN_EXTRA_INFORMATION]?: ExtraInformationType;
-};
+} & ExtraInformationType;
 
 export type PutFriendlyName = {
   [LicenseGetFields.COLUMN_FRIENDLY_NAME]: string;
-  [ExtraInformationFields.COLUMN_EXTRA_INFORMATION]?: ExtraInformationType;
-};
+} & ExtraInformationType;
 
-export type PutReactivate = {
-  [ExtraInformationFields.COLUMN_EXTRA_INFORMATION]?: ExtraInformationType;
-};
+export type PutReactivate = ExtraInformationType;
 
-export type PutSuspend = {
-  [ExtraInformationFields.COLUMN_EXTRA_INFORMATION]?: ExtraInformationType;
-};
+export type PutSuspend = ExtraInformationType;
 
-export type PutCancel = {
-  [ExtraInformationFields.COLUMN_EXTRA_INFORMATION]?: ExtraInformationType;
-};
+export type PutCancel = ExtraInformationType;
 
-export type PutCancelAutoRenew = {
-  [ExtraInformationFields.COLUMN_EXTRA_INFORMATION]?: ExtraInformationType;
-};
+export type PutCancelAutoRenew = ExtraInformationType;
 
-export type PutReactivateAutoRenew = {
-  [ExtraInformationFields.COLUMN_EXTRA_INFORMATION]?: ExtraInformationType;
-};
+export type PutReactivateAutoRenew = ExtraInformationType;
 
 export class LicensesClient extends AbstractClient {
   /**
