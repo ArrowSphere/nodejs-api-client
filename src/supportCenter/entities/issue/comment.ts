@@ -10,41 +10,45 @@ export enum IssueCommentFields {
 
 export type IssueCommentType = {
   [IssueCommentFields.COLUMN_ID]: string;
-  [IssueCommentFields.COLUMN_BODY]: string;
-  [IssueCommentFields.COLUMN_DATE]: string;
-  [IssueCommentFields.COLUMN_CREATED_BY]: IssueCreatedByType;
+  [IssueCommentFields.COLUMN_BODY]?: string;
+  [IssueCommentFields.COLUMN_DATE]?: string;
+  [IssueCommentFields.COLUMN_CREATED_BY]?: IssueCreatedByType;
 };
 
 export class IssueComment extends AbstractEntity<IssueCommentType> {
   readonly #id: string;
-  readonly #body: string;
-  readonly #date: Date;
-  readonly #createdBy: IssueCreatedBy;
+  readonly #body?: string;
+  readonly #date?: Date;
+  readonly #createdBy?: IssueCreatedBy;
 
   constructor(input: IssueCommentType) {
     super(input);
 
     this.#id = input[IssueCommentFields.COLUMN_ID];
     this.#body = input[IssueCommentFields.COLUMN_BODY];
-    this.#date = new Date(input[IssueCommentFields.COLUMN_DATE]);
-    this.#createdBy = new IssueCreatedBy(
-      input[IssueCommentFields.COLUMN_CREATED_BY],
-    );
+    this.#date = input[IssueCommentFields.COLUMN_DATE]
+      ? new Date(input[IssueCommentFields.COLUMN_DATE] as string)
+      : undefined;
+    this.#createdBy = input[IssueCommentFields.COLUMN_CREATED_BY]
+      ? new IssueCreatedBy(
+          input[IssueCommentFields.COLUMN_CREATED_BY] as IssueCreatedByType,
+        )
+      : undefined;
   }
 
   get id(): string {
     return this.#id;
   }
 
-  get body(): string {
+  get body(): string | undefined {
     return this.#body;
   }
 
-  get date(): Date {
+  get date(): Date | undefined {
     return this.#date;
   }
 
-  get createdBy(): IssueCreatedBy {
+  get createdBy(): IssueCreatedBy | undefined {
     return this.#createdBy;
   }
 
@@ -52,8 +56,8 @@ export class IssueComment extends AbstractEntity<IssueCommentType> {
     return {
       [IssueCommentFields.COLUMN_ID]: this.id,
       [IssueCommentFields.COLUMN_BODY]: this.body,
-      [IssueCommentFields.COLUMN_DATE]: this.date.toISOString(),
-      [IssueCommentFields.COLUMN_CREATED_BY]: this.createdBy.toJSON(),
+      [IssueCommentFields.COLUMN_DATE]: this.date?.toISOString(),
+      [IssueCommentFields.COLUMN_CREATED_BY]: this.createdBy?.toJSON(),
     };
   }
 }
