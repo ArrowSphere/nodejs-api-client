@@ -256,37 +256,37 @@ export class Issue extends AbstractEntity<IssueType> {
     this.#endCustomerRef = input[IssueFields.COLUMN_END_CUSTOMER_REF];
     this.#language = input[IssueFields.COLUMN_LANGUAGE];
 
-    if (input[IssueFields.COLUMN_OFFER]) {
-      this.#offer = new IssueOffer(input[IssueFields.COLUMN_OFFER]);
-    }
+    this.#offer = input[IssueFields.COLUMN_OFFER]
+      ? new IssueOffer(input[IssueFields.COLUMN_OFFER] as IssueOfferType)
+      : undefined;
 
     this.#priority = input[IssueFields.COLUMN_PRIORITY];
     this.#status = input[IssueFields.COLUMN_STATUS];
 
-    if (input[IssueFields.COLUMN_CREATED_BY]) {
-      this.#createdBy = new IssueCreatedBy(
-        input[IssueFields.COLUMN_CREATED_BY],
-      );
-    }
+    this.#createdBy = input[IssueFields.COLUMN_CREATED_BY]
+      ? new IssueCreatedBy(
+          input[IssueFields.COLUMN_CREATED_BY] as IssueCreatedByType,
+        )
+      : undefined;
 
-    if (input[IssueFields.COLUMN_SUPPORT_PLAN]) {
-      this.#supportPlan = new IssueSupportPlan(
-        input[IssueFields.COLUMN_SUPPORT_PLAN],
-      );
-    }
+    this.#supportPlan = input[IssueFields.COLUMN_SUPPORT_PLAN]
+      ? new IssueSupportPlan(
+          input[IssueFields.COLUMN_SUPPORT_PLAN] as IssueSupportPlanType,
+        )
+      : undefined;
 
     this.#program = input[IssueFields.COLUMN_PROGRAM];
     this.#additionalData = input[IssueFields.COLUMN_ADDITIONAL_DATA].map(
       (item) => new IssueAdditionalData(item),
     );
 
-    if (input[IssueFields.COLUMN_CREATED]) {
-      this.#created = new Date(input[IssueFields.COLUMN_CREATED]);
-    }
+    this.#created = input[IssueFields.COLUMN_CREATED]
+      ? new Date(input[IssueFields.COLUMN_CREATED] as string)
+      : undefined;
 
-    if (input[IssueFields.COLUMN_UPDATED]) {
-      this.#updated = new Date(input[IssueFields.COLUMN_UPDATED]);
-    }
+    this.#updated = input[IssueFields.COLUMN_UPDATED]
+      ? new Date(input[IssueFields.COLUMN_UPDATED] as string)
+      : undefined;
   }
 
   get id(): string | undefined {
