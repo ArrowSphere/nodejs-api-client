@@ -9,16 +9,16 @@ export enum IssueAttachmentFields {
 
 export type IssueAttachmentType = {
   [IssueAttachmentFields.COLUMN_ID]: string;
-  [IssueAttachmentFields.COLUMN_FILE_NAME]: string;
-  [IssueAttachmentFields.COLUMN_MIME_TYPE]: string;
-  [IssueAttachmentFields.COLUMN_CONTENT]: string;
+  [IssueAttachmentFields.COLUMN_FILE_NAME]?: string;
+  [IssueAttachmentFields.COLUMN_MIME_TYPE]?: string;
+  [IssueAttachmentFields.COLUMN_CONTENT]?: string;
 };
 
 export class IssueAttachment extends AbstractEntity<IssueAttachmentType> {
   readonly #id: string;
-  readonly #fileName: string;
-  readonly #mimeType: string;
-  readonly #content: string;
+  readonly #fileName?: string;
+  readonly #mimeType?: string;
+  readonly #content?: string;
 
   constructor(input: IssueAttachmentType) {
     super(input);
@@ -33,15 +33,15 @@ export class IssueAttachment extends AbstractEntity<IssueAttachmentType> {
     return this.#id;
   }
 
-  get fileName(): string {
+  get fileName(): string | undefined {
     return this.#fileName;
   }
 
-  get mimeType(): string {
+  get mimeType(): string | undefined {
     return this.#mimeType;
   }
 
-  get content(): string {
+  get content(): string | undefined {
     return this.#content;
   }
 
@@ -58,7 +58,7 @@ export class IssueAttachment extends AbstractEntity<IssueAttachmentType> {
 export type IssueAttachmentsType = Array<IssueAttachmentType>;
 
 export class IssueAttachments extends AbstractEntity<IssueAttachmentsType> {
-  #list: IssueAttachment[];
+  readonly #list: IssueAttachment[];
 
   constructor(input: IssueAttachmentsType) {
     super(input);
