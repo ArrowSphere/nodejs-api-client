@@ -88,7 +88,7 @@ export type IssueType = {
   [IssueFields.COLUMN_CREATED_BY]?: IssueCreatedByType;
   [IssueFields.COLUMN_SUPPORT_PLAN]?: IssueSupportPlanType;
   [IssueFields.COLUMN_PROGRAM]: string;
-  [IssueFields.COLUMN_ADDITIONAL_DATA]: Array<IssueAdditionalDataType>;
+  [IssueFields.COLUMN_ADDITIONAL_DATA]?: Array<IssueAdditionalDataType>;
   [IssueFields.COLUMN_CREATED]?: string;
   [IssueFields.COLUMN_UPDATED]?: string;
 };
@@ -242,7 +242,7 @@ export class Issue extends AbstractEntity<IssueType> {
   readonly #createdBy?: IssueCreatedBy;
   readonly #supportPlan?: IssueSupportPlan;
   readonly #program: string;
-  readonly #additionalData: Array<IssueAdditionalData>;
+  readonly #additionalData?: Array<IssueAdditionalData>;
   readonly #created?: Date;
   readonly #updated?: Date;
 
@@ -276,9 +276,12 @@ export class Issue extends AbstractEntity<IssueType> {
       : undefined;
 
     this.#program = input[IssueFields.COLUMN_PROGRAM];
-    this.#additionalData = input[IssueFields.COLUMN_ADDITIONAL_DATA].map(
-      (item) => new IssueAdditionalData(item),
-    );
+
+    this.#additionalData = input[IssueFields.COLUMN_ADDITIONAL_DATA]
+      ? (input[
+          IssueFields.COLUMN_ADDITIONAL_DATA
+        ] as IssueAdditionalData[]).map((item) => new IssueAdditionalData(item))
+      : undefined;
 
     this.#created = input[IssueFields.COLUMN_CREATED]
       ? new Date(input[IssueFields.COLUMN_CREATED] as string)
@@ -337,7 +340,7 @@ export class Issue extends AbstractEntity<IssueType> {
     return this.#program;
   }
 
-  get additionalData(): Array<IssueAdditionalData> {
+  get additionalData(): Array<IssueAdditionalData> | undefined {
     return this.#additionalData;
   }
 
@@ -363,7 +366,7 @@ export class Issue extends AbstractEntity<IssueType> {
       [IssueFields.COLUMN_CREATED_BY]: this.createdBy?.toJSON(),
       [IssueFields.COLUMN_SUPPORT_PLAN]: this.supportPlan?.toJSON(),
       [IssueFields.COLUMN_PROGRAM]: this.program,
-      [IssueFields.COLUMN_ADDITIONAL_DATA]: this.additionalData.map((item) =>
+      [IssueFields.COLUMN_ADDITIONAL_DATA]: this.additionalData?.map((item) =>
         item.toJSON(),
       ),
       [IssueFields.COLUMN_CREATED]: this.created?.toISOString(),
