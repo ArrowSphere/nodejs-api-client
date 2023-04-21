@@ -1,6 +1,8 @@
 import { AbstractGraphQLClient } from '../abstractGraphQLClient';
 import { GetProductsType } from './types/catalogGraphQLTypes';
-// import { inspect } from 'util';
+import { jsonToGraphQLQuery } from 'json-to-graphql-query';
+import { addSlashes } from 'slashes';
+import { CatalogQuery } from './types/catalogGraphQLQueries';
 
 export class CatalogGraphQLClient extends AbstractGraphQLClient {
   /**
@@ -17,5 +19,13 @@ export class CatalogGraphQLClient extends AbstractGraphQLClient {
     this.path = this.GRAPHQL;
 
     return await this.post(request);
+  }
+
+  public async findByQuery(query: CatalogQuery): Promise<GetProductsType> {
+    const graphqlQuery: string =
+      '{"query":"{' + addSlashes(jsonToGraphQLQuery(query)) + '}"}';
+    console.log('graphqlQuery', graphqlQuery);
+
+    return (this.find(graphqlQuery) as unknown) as GetProductsType;
   }
 }
