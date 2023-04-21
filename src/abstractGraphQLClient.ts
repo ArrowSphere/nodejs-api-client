@@ -1,9 +1,9 @@
 import { GraphQLClient } from 'graphql-request';
 import * as Dom from 'graphql-request/dist/types.dom';
-import { URL } from 'url';
 import { Options } from './abstractClient';
-import path from 'path';
+import * as path from 'path';
 import { GetProductsType } from './catalog';
+import { jsonToGraphQLQuery } from 'json-to-graphql-query';
 
 export type GraphQLResponseTypes = GetProductsType;
 
@@ -34,8 +34,8 @@ export abstract class AbstractGraphQLClient {
     return this;
   }
 
-  public setToken(apiKey: string): this {
-    this.token = apiKey;
+  public setToken(token: string): this {
+    this.token = token;
 
     return this;
   }
@@ -59,6 +59,7 @@ export abstract class AbstractGraphQLClient {
   }
 
   protected async post(query: string): Promise<GraphQLResponseTypes> {
+    console.log('entering post');
     this.getClient().client.setHeaders({
       authorization: this.token,
       ...this.optionsHeader,
@@ -75,5 +76,11 @@ export abstract class AbstractGraphQLClient {
       this.url,
     );
     return url.toString();
+  }
+
+  protected stringifyQuery(query: any): string {
+    const graphqlQuery: string = jsonToGraphQLQuery(query);
+
+    return `{${graphqlQuery}}`;
   }
 }

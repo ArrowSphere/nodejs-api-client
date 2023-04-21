@@ -1,6 +1,6 @@
 import { AbstractGraphQLClient } from '../abstractGraphQLClient';
 import { GetProductsType } from './types/catalogGraphQLTypes';
-// import { inspect } from 'util';
+import { CatalogQuery } from './types/catalogGraphQLQueries';
 
 export class CatalogGraphQLClient extends AbstractGraphQLClient {
   /**
@@ -17,5 +17,11 @@ export class CatalogGraphQLClient extends AbstractGraphQLClient {
     this.path = this.GRAPHQL;
 
     return await this.post(request);
+  }
+
+  public async findByQuery(query: CatalogQuery): Promise<GetProductsType> {
+    const queryStr: string = this.stringifyQuery(query);
+
+    return this.find(queryStr);
   }
 }

@@ -1,3 +1,5 @@
+// Here are the types, they are useful to have exact types of the responses
+
 export type GetProductsType = {
   getProducts?: PaginatedProductsType;
 };
