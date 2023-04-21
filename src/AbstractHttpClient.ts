@@ -55,11 +55,7 @@ export abstract class AbstractHttpClient {
     error: PublicApiClientException,
   ): Promise<HandleHttpExceptionOutput> {
     const appropriateHandlers: HttpExceptionHandler[] = this.httpExceptionHandlers.filter(
-      (handler) => {
-        console.log('httpStatus', error.httpCode);
-        const res = handler.getHandledHttpStatuses().includes(error.httpCode);
-        return res;
-      },
+      (handler) => handler.getHandledHttpStatuses().includes(error.httpCode),
     );
 
     // handle retry
@@ -73,5 +69,14 @@ export abstract class AbstractHttpClient {
     }
 
     return output;
+  }
+
+  protected mapToPublicApiException(error: any): PublicApiClientException {
+    return new PublicApiClientException(
+      error?.message,
+      String(error),
+      error?.response?.status,
+      error?.response?.config,
+    );
   }
 }
