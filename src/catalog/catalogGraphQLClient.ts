@@ -1,6 +1,7 @@
 import { AbstractGraphQLClient } from '../abstractGraphQLClient';
 import { GetProductsType } from './types/catalogGraphQLTypes';
-// import { inspect } from 'util';
+import { CatalogQuery } from './types/catalogGraphQLQueries';
+import { PublicApiClientException } from '../exception';
 
 export class CatalogGraphQLClient extends AbstractGraphQLClient {
   /**
@@ -17,5 +18,26 @@ export class CatalogGraphQLClient extends AbstractGraphQLClient {
     this.path = this.GRAPHQL;
 
     return await this.post(request);
+  }
+
+  public async findByQuery(
+    query: CatalogQuery,
+  ): Promise<GetProductsType | null> {
+    const queryStr: string = this.stringifyQuery(query);
+
+    try {
+      return await this.find(queryStr);
+    } catch (error: any) {
+      const exception: PublicApiClientException = this.mapToPublicApiException(
+        error,
+      );
+
+      const { mustRetry } = await this.handleError(exception);
+      if (mustRetry) {
+        return await this.find(queryStr);
+      }
+    }
+
+    return null;
   }
 }
