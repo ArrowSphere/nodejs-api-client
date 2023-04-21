@@ -1,4 +1,4 @@
-import { HandleHttpExceptionOutput } from '././HandleHttpExceptionOutput';
+import { HandleHttpExceptionOutput } from './HandleHttpExceptionOutput';
 import { Hooks } from './Hooks';
 import { PublicApiClientException } from '../publicApiClientException';
 

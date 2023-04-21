@@ -50,6 +50,17 @@ The output documentation should be located in the `docs/` folder, just open the 
 
 - [CheckDomain](./src/general/CHECKDOMAIN.md)
 - [WhoAmI](./src/general/WHOAMI.md)
+- [Campaign](./src/campaign/README.md)
+- [Cart](./src/cart/README.md)
+- [Catalog](./src/catalog/README.md)
+- [Consumption](./src/consumption/README.md)
+- [Contact](./src/contact/README.md)
+- [Customers](./src/customers/README.md)
+- [Licenses](./src/licenses/README.md)
+- [Orders](./src/orders/README.md)
+- [Subscriptions](./src/subscriptions/README.md)
+- [Support Center](./src/supportCenter/README.md)
+
 - [SecurityScore](./src/securityScore/README.md)
 
 ### Licenses
