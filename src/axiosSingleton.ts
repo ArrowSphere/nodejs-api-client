@@ -1,4 +1,9 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, {
+  AxiosInstance,
+  AxiosRequestConfig,
+  AxiosResponse,
+  RawAxiosRequestHeaders,
+} from 'axios';
 import { cloneDeep } from 'lodash';
 
 export class AxiosSingleton {
@@ -52,11 +57,13 @@ export class AxiosSingleton {
   private static cleanRequestLog(
     request: AxiosRequestConfig,
   ): AxiosRequestConfig {
-    const tempRequest = cloneDeep(request);
+    const tempRequest: AxiosRequestConfig = cloneDeep(request);
 
-    // coverage bug delete undefined element
-    /* istanbul ignore next */
-    delete tempRequest.headers?.apiKey;
+    if (tempRequest.headers?.apiKey) {
+      const apiKey = tempRequest.headers?.apiKey as string;
+      (tempRequest.headers as RawAxiosRequestHeaders).apiKey =
+        '****************************' + apiKey.substring(apiKey.length - 4);
+    }
 
     return tempRequest;
   }
@@ -65,11 +72,13 @@ export class AxiosSingleton {
    * @param response - Axios Response
    */
   private static cleanResponseLog(response: AxiosResponse): AxiosResponse {
-    const tempResponse = cloneDeep(response);
+    const tempResponse: AxiosResponse = cloneDeep(response);
 
-    // coverage bug delete undefined element
-    /* istanbul ignore next */
-    delete tempResponse.config.headers?.apiKey;
+    if (tempResponse.config.headers?.apiKey) {
+      const apiKey = tempResponse.config.headers?.apiKey as string;
+      (tempResponse.config.headers as RawAxiosRequestHeaders).apiKey =
+        '****************************' + apiKey.substring(apiKey.length - 4);
+    }
     delete tempResponse.request;
 
     return tempResponse;
