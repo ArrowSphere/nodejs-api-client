@@ -10,7 +10,7 @@
   "types": "build/index.d.ts",
   "scripts": {
     "build": "tsc --build",
-    "clean": "rimraf build/",
+    "clean": "rm -rf build/",
     "doc": "typedoc ./src/index.ts ./src/**/index.ts",
     "lint": "eslint ./{src,tests}/**/*.ts && prettier --list-different ./{src,tests}/**/*.ts",
     "lint:fix": "eslint ./{src,tests}/**/*.ts --fix && prettier --write ./{src,tests}/**/*.ts",
