@@ -11,6 +11,7 @@ import { StandardsClient } from './security/standards/standardsClient';
 import { RegisterClient } from './security';
 import { CartClient } from './cart/cartClient';
 import { SupportCenterClient } from './supportCenter';
+import { CatalogClient } from './catalog';
 
 /**
  * Public API Client class, should be the main entry point for your calls
@@ -137,6 +138,13 @@ export class PublicApiClient extends AbstractClient {
   }
   public getSupportCenterClient(): SupportCenterClient {
     return new SupportCenterClient()
+      .setUrl(this.url)
+      .setApiKey(this.apiKey)
+      .setHeaders(this.headers);
+  }
+
+  public getCatalogClient(): CatalogClient {
+    return new CatalogClient()
       .setUrl(this.url)
       .setApiKey(this.apiKey)
       .setHeaders(this.headers);
