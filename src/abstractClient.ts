@@ -83,6 +83,11 @@ export abstract class AbstractClient {
   protected apiKey = '';
 
   /**
+   * ArrowSphere token
+   */
+  protected token = '';
+
+  /**
    * Current pagination page number
    */
   protected page = 1;
@@ -121,6 +126,12 @@ export abstract class AbstractClient {
    */
   public setApiKey(key: string): this {
     this.apiKey = key;
+
+    return this;
+  }
+
+  public setToken(apiKey: string): this {
+    this.token = apiKey;
 
     return this;
   }
