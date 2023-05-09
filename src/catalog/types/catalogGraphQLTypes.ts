@@ -60,7 +60,7 @@ export type ProductType = {
   xspUrl?: string;
   saleConstraints?: SaleConstraintsType;
   vendor?: VendorType;
-  program?: ProgramType;
+  program?: GraphqlProgramType;
   weightTopSales?: number;
   weightForced?: number;
   priceBand?: Array<PriceBandType>;
@@ -146,7 +146,7 @@ export type VendorType = {
   name?: string;
 };
 
-export type ProgramType = {
+export type GraphqlProgramType = {
   isEnabled?: boolean;
   legacyCode?: string;
   names?: ProgramNameType;
