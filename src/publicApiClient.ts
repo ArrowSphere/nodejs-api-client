@@ -13,6 +13,7 @@ import { CartClient } from './cart/cartClient';
 import { SupportCenterClient } from './supportCenter';
 import { CatalogClient } from './catalog';
 import { UserClient } from './user';
+import { NotificationsClient } from './notifications';
 
 /**
  * Public API Client class, should be the main entry point for your calls
@@ -169,6 +170,14 @@ export class PublicApiClient extends AbstractRestfulClient {
     return new UserClient()
       .setUrl(this.url)
       .setApiKey(this.apiKey)
+      .setHeaders(this.headers)
+      .setHttpExceptionHandlers(this.httpExceptionHandlers);
+  }
+
+  public getNotificationsClient(): NotificationsClient {
+    return new NotificationsClient()
+      .setUrl(this.url)
+      .setToken(this.token)
       .setHeaders(this.headers)
       .setHttpExceptionHandlers(this.httpExceptionHandlers);
   }
