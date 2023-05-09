@@ -7,7 +7,7 @@ const REQUEST: AxiosRequestConfig = {
   method: 'GET',
   headers: {
     test: 'key',
-    apiKey: 'test',
+    apiKey: 'myTestRequestAPIKEY',
   },
 };
 
@@ -16,6 +16,7 @@ const REQUEST_RESULT: AxiosRequestConfig = {
   method: 'GET',
   headers: {
     test: 'key',
+    apiKey: '****************************IKEY',
   },
 };
 

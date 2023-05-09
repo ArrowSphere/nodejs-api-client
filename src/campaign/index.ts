@@ -15,6 +15,7 @@ export * from './entities/v2/campaign/landingPage/landingPageFooter/landingPageF
 export * from './entities/v2/campaign/landingPage/landingPage';
 export * from './entities/v2/campaign/landingPage/landingPageHeader';
 export * from './entities/v2/campaign/campaign';
+export * from './entities/v2/campaignList';
 export { AssetsCampaignAssets };
 export * from './entities/campaignAssets/campaignAssets';
 export * from './campaignClient';
