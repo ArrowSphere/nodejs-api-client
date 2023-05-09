@@ -3,7 +3,15 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.28.0] - 2023-05-10
+
+### Changed
+
+- add notification endpoint
+
 ## [3.27.0] - 2023-05-10
+
+### Changed
 
 - update create order client to add attributes for injection scenario
 
