@@ -9,6 +9,7 @@ import {
   CreateOrderFullInputPayload,
   CreateOrderPartialInputPayload,
   CreateOrderResponsePayload,
+  CreateOrderInjectionScenarioPayload,
 } from './mocks/create.mocks';
 
 export const ORDERS_MOCK_URL = 'https://orders.localhost/index.php/api';
@@ -38,6 +39,17 @@ describe('OrdersClient', () => {
         .reply(200, CreateOrderResponsePayload);
 
       const response = await client.create(CreateOrderFullInputPayload);
+
+      expect(response).to.be.instanceof(GetResult);
+      expect(response.toJSON()).to.eqls(CreateOrderResponsePayload);
+    });
+
+    it('calls the post method for injection  the full payload', async () => {
+      nock(ORDERS_MOCK_URL)
+        .post(ORDERS_CREATE)
+        .reply(200, CreateOrderResponsePayload);
+
+      const response = await client.create(CreateOrderInjectionScenarioPayload);
 
       expect(response).to.be.instanceof(GetResult);
       expect(response.toJSON()).to.eqls(CreateOrderResponsePayload);
