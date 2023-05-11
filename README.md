@@ -50,6 +50,7 @@ The output documentation should be located in the `docs/` folder, just open the 
 
 - [CheckDomain](./src/general/CHECKDOMAIN.md)
 - [WhoAmI](./src/general/WHOAMI.md)
+- [SecurityScore](./src/securityScore/README.md)
 
 ### Licenses
 
