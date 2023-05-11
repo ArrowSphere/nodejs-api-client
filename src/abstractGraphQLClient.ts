@@ -2,11 +2,8 @@ import { GraphQLClient } from 'graphql-request';
 import * as Dom from 'graphql-request/dist/types.dom';
 import { Options } from './abstractClient';
 import * as path from 'path';
-import { GetProductsType } from './catalog';
 import { jsonToGraphQLQuery } from 'json-to-graphql-query';
 import { AbstractHttpClient } from './AbstractHttpClient';
-
-export type GraphQLResponseTypes = GetProductsType;
 
 export abstract class AbstractGraphQLClient extends AbstractHttpClient {
   protected client!: GraphQLClient;

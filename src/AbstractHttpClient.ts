@@ -55,7 +55,11 @@ export abstract class AbstractHttpClient {
     error: PublicApiClientException,
   ): Promise<HandleHttpExceptionOutput> {
     const appropriateHandlers: HttpExceptionHandler[] = this.httpExceptionHandlers.filter(
-      (handler) => handler.getHandledHttpStatuses().includes(error.httpCode),
+      (handler) => {
+        console.log('httpStatus', error.httpCode);
+        const res = handler.getHandledHttpStatuses().includes(error.httpCode);
+        return res;
+      },
     );
 
     // handle retry
