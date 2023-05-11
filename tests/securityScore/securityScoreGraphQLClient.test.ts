@@ -43,7 +43,7 @@ describe('SecurityScoreGraphQLClient', () => {
           endCustomersAgg: {
             customers: [
               {
-                customerRef: 'XSP',
+                reference: 'XSP',
                 progression: 1,
                 data: [
                   {
@@ -76,7 +76,7 @@ describe('SecurityScoreGraphQLClient', () => {
       };
 
       const graphqlQuery =
-        '{getPartnerData (searchBody: {marketplace: [["FR"]]}) { avgCurrentScore period { from to } endCustomersAgg { customers { customerRef progression data { date accounts avgCurrentScore failed passed subscriptionReferences } } } issueAgg { issues { name data { count date } progression } } }}';
+        '{getPartnerData (searchBody: {marketplace: [["FR"]]}) { avgCurrentScore period { from to } endCustomersAgg { customers { reference progression data { date accounts avgCurrentScore failed passed subscriptionReferences } } } issueAgg { issues { name data { count date } progression } } }}';
 
       const expectedResult = {
         getPartnerData: {
@@ -203,18 +203,20 @@ describe('SecurityScoreGraphQLClient', () => {
             to: 'true',
           },
           standardsAgg: {
-            standards: {
-              name: 'true',
-              progression: 1,
-              data: [
-                {
-                  date: 'true',
-                  score: 1,
-                  failed: 1,
-                  passed: 0,
-                },
-              ],
-            },
+            standards: [
+              {
+                name: 'true',
+                progression: 1,
+                data: [
+                  {
+                    date: 'true',
+                    score: 1,
+                    failed: 1,
+                    passed: 0,
+                  },
+                ],
+              },
+            ],
           },
           severityAgg: {
             severities: [
