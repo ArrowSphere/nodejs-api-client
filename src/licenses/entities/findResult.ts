@@ -104,7 +104,7 @@ export class FindResult extends AbstractEntity<FindData> {
 
   /**
    * Gets all the licenses from the result, page per page.
-   * Follows the asybc interator implementation through the generator pattern.
+   * Follows the async interator implementation through the generator pattern.
    * @returns Generator|{@link LicenseFindResult}[]
    */
   public async *getResults(): AsyncGenerator<

@@ -1,15 +1,16 @@
 import { NotFoundException, PublicApiClientException } from './exception';
 import querystring from 'querystring';
-import { URL } from 'url';
 import path from 'path';
 import { AxiosSingleton } from './axiosSingleton';
 import { AxiosInstance, AxiosResponse } from 'axios';
+import { AbstractHttpClient, HttpClientSecurity } from './AbstractHttpClient';
 
 /**
  * Lists of available query parameters for the API call
  */
 export enum ParameterKeys {
   API_KEY = 'apiKey',
+  AUTHORIZATION = 'Authorization',
   HEADERS = 'headers',
   ORDER_BY = 'order_by',
   PAGE = 'page',
@@ -56,26 +57,11 @@ export type ExtraInformationType = {
   [ExtraInformationFields.COLUMN_EXTRA_INFORMATION]?: Record<string, unknown>;
 };
 
-export abstract class AbstractClient {
-  /**
-   * Base path for HTTP calls
-   */
-  protected basePath = '';
-
-  /**
-   * Current path for HTTP calls
-   */
-  protected path = '';
-
+export abstract class AbstractClient extends AbstractHttpClient {
   /**
    * Axios instance for client
    */
   protected client: AxiosInstance;
-
-  /**
-   * ArrowSphere API URL
-   */
-  protected url = '';
 
   /**
    * ArrowSphere API key
@@ -107,6 +93,7 @@ export abstract class AbstractClient {
    * @returns AbstractClient
    */
   protected constructor(configuration?: ConfigurationsClient) {
+    super();
     this.client = AxiosSingleton.getInstance();
 
     this.setApiKey(configuration?.[ParameterKeys.API_KEY] ?? '');
@@ -121,17 +108,6 @@ export abstract class AbstractClient {
    */
   public setApiKey(key: string): this {
     this.apiKey = key;
-
-    return this;
-  }
-
-  /**
-   * Sets the client ArrowSphere API url
-   * @param url - API url
-   * @returns this
-   */
-  public setUrl(url: string): this {
-    this.url = url;
 
     return this;
   }
@@ -231,9 +207,14 @@ export abstract class AbstractClient {
    * @returns {@link Headers}
    */
   private prepareHeaders(headers: Headers): Headers {
+    const securityHeader: { [headerName: string]: string } =
+      this.security === HttpClientSecurity.API_KEY
+        ? { [ParameterKeys.API_KEY]: this.apiKey }
+        : { [ParameterKeys.AUTHORIZATION]: this.token };
+
     return {
       ...headers,
-      [ParameterKeys.API_KEY]: this.apiKey,
+      ...securityHeader,
       ...this.headers,
     };
   }
