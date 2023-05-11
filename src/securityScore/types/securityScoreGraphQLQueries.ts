@@ -2,6 +2,7 @@ import { SearchBodyArgument, PaginateArgument } from './queryArguments';
 
 import {
   AccountsAggType,
+  CheckType,
   EndCustomersAggType,
   FilterType,
   IssuesAggType,
@@ -10,6 +11,7 @@ import {
   ScoreResultType,
   SeveritiesAggType,
   StandardsAggType,
+  StandardType,
 } from './securityScoreGraphQLTypes';
 
 export type GetPartnerDataQuery = {
@@ -34,11 +36,14 @@ export type GetCustomerDataQuery = {
     __args?: {
       searchBody?: SearchBodyArgument;
     };
-    filters?: [FilterType];
-    avgCurrentScore?: number;
     accountsAgg?: AccountsAggType;
-    severityAgg?: SeveritiesAggType;
+    avgCurrentScore?: number;
+    filters?: [FilterType];
+    monthlyTrendAgg?: MonthlyTrendAggType;
     period?: PeriodsType;
+    results?: [ScoreResultType];
+    severityAgg?: SeveritiesAggType;
+    standards?: [StandardType];
     subscriptionReferences?: number;
   };
 };
@@ -48,10 +53,14 @@ export type GetCustomerAccountDataQuery = {
     __args?: {
       searchBody?: SearchBodyArgument;
     };
-    filters?: [FilterType];
     avgCurrentScore?: boolean;
-    standardsAgg?: StandardsAggType;
-    severityAgg?: SeveritiesAggType;
+    checks?: [CheckType];
+    filters?: [FilterType];
+    monthlyTrendAgg?: MonthlyTrendAggType;
     period?: PeriodsType;
+    result?: ScoreResultType;
+    severityAgg?: SeveritiesAggType;
+    standardsAgg?: StandardsAggType;
+    standards?: [StandardType];
   };
 };
