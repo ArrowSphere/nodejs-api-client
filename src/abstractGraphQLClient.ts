@@ -1,28 +1,15 @@
 import { GraphQLClient } from 'graphql-request';
 import * as Dom from 'graphql-request/dist/types.dom';
-import { URL } from 'url';
 import { Options } from './abstractClient';
-import path from 'path';
+import * as path from 'path';
 import { GetProductsType } from './catalog';
+import { jsonToGraphQLQuery } from 'json-to-graphql-query';
+import { AbstractHttpClient } from './AbstractHttpClient';
 
 export type GraphQLResponseTypes = GetProductsType;
 
-export abstract class AbstractGraphQLClient {
-  /**
-   * Base path for HTTP calls
-   */
-  protected basePath = '';
-
-  /**
-   * Current path for HTTP calls
-   */
-  protected path = '';
-
+export abstract class AbstractGraphQLClient extends AbstractHttpClient {
   protected client!: GraphQLClient;
-
-  protected url = '';
-
-  protected token = '';
 
   protected optionsHeader?: Dom.RequestInit['headers'];
 
@@ -30,18 +17,6 @@ export abstract class AbstractGraphQLClient {
 
   private getClient() {
     this.client = new GraphQLClient(this.generateUrl());
-
-    return this;
-  }
-
-  public setToken(apiKey: string): this {
-    this.token = apiKey;
-
-    return this;
-  }
-
-  public setUrl(url: string): this {
-    this.url = url;
 
     return this;
   }
@@ -58,7 +33,9 @@ export abstract class AbstractGraphQLClient {
     return this;
   }
 
-  protected async post(query: string): Promise<GraphQLResponseTypes> {
+  protected async post<GraphQLResponseTypes>(
+    query: string,
+  ): Promise<GraphQLResponseTypes> {
     this.getClient().client.setHeaders({
       authorization: this.token,
       ...this.optionsHeader,
@@ -75,5 +52,11 @@ export abstract class AbstractGraphQLClient {
       this.url,
     );
     return url.toString();
+  }
+
+  protected stringifyQuery(query: any): string {
+    const graphqlQuery: string = jsonToGraphQLQuery(query);
+
+    return `{${graphqlQuery}}`;
   }
 }

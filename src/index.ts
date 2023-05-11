@@ -19,5 +19,6 @@ export * from './shared/';
 export * from './security/';
 export * from './subscriptions/';
 export * from './supportCenter/';
+export * from './securityScore/';
 export { ContactInformation };
 import * as ContactInformation from './contact';
