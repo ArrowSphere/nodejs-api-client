@@ -1,18 +1,18 @@
 import { SearchBodyArgument, PaginateArgument } from './queryArguments';
 
 import {
-  AccountsAggType,
-  CheckType,
-  EndCustomersAggType,
-  FilterType,
-  IssuesAggType,
-  MonthlyTrendAggType,
-  PeriodsType,
-  ScoreResultType,
-  SeveritiesAggType,
-  StandardsAggType,
-  StandardType,
-} from './securityScoreGraphQLTypes';
+  AccountsAggSchema,
+  CheckSchema,
+  EndCustomersAggSchema,
+  FilterSchema,
+  IssuesAggSchema,
+  MonthlyTrendAggSchema,
+  PeriodsSchema,
+  ScoreResultSchema,
+  SeveritiesAggSchema,
+  StandardsAggSchema,
+  StandardSchema,
+} from './securityScoreGraphQLSchemas';
 
 export type GetPartnerDataQuery = {
   getPartnerData: {
@@ -20,14 +20,14 @@ export type GetPartnerDataQuery = {
       searchBody?: SearchBodyArgument;
       paginate?: PaginateArgument;
     };
-    filters?: [FilterType];
-    results?: [ScoreResultType];
-    avgCurrentScore?: number;
-    monthlyTrendAgg?: MonthlyTrendAggType;
-    endCustomersAgg?: EndCustomersAggType;
-    issueAgg?: IssuesAggType;
-    severityAgg?: SeveritiesAggType;
-    period?: PeriodsType;
+    filters?: FilterSchema;
+    results?: ScoreResultSchema;
+    avgCurrentScore?: boolean;
+    monthlyTrendAgg?: MonthlyTrendAggSchema;
+    endCustomersAgg?: EndCustomersAggSchema;
+    issueAgg?: IssuesAggSchema;
+    severityAgg?: SeveritiesAggSchema;
+    period?: PeriodsSchema;
   };
 };
 
@@ -36,15 +36,15 @@ export type GetCustomerDataQuery = {
     __args?: {
       searchBody?: SearchBodyArgument;
     };
-    accountsAgg?: AccountsAggType;
-    avgCurrentScore?: number;
-    filters?: [FilterType];
-    monthlyTrendAgg?: MonthlyTrendAggType;
-    period?: PeriodsType;
-    results?: [ScoreResultType];
-    severityAgg?: SeveritiesAggType;
-    standards?: [StandardType];
-    subscriptionReferences?: number;
+    filters?: FilterSchema;
+    accountsAgg?: AccountsAggSchema;
+    severityAgg?: SeveritiesAggSchema;
+    period?: PeriodsSchema;
+    avgCurrentScore?: boolean;
+    monthlyTrendAgg?: MonthlyTrendAggSchema;
+    results?: ScoreResultSchema;
+    standards?: StandardSchema;
+    subscriptionReferences?: boolean;
   };
 };
 
@@ -53,14 +53,14 @@ export type GetCustomerAccountDataQuery = {
     __args?: {
       searchBody?: SearchBodyArgument;
     };
+    filters?: [FilterSchema];
     avgCurrentScore?: boolean;
-    checks?: [CheckType];
-    filters?: [FilterType];
-    monthlyTrendAgg?: MonthlyTrendAggType;
-    period?: PeriodsType;
-    result?: ScoreResultType;
-    severityAgg?: SeveritiesAggType;
-    standardsAgg?: StandardsAggType;
-    standards?: [StandardType];
+    standardsAgg?: StandardsAggSchema;
+    severityAgg?: SeveritiesAggSchema;
+    period?: PeriodsSchema;
+    checks?: CheckSchema;
+    monthlyTrendAgg?: MonthlyTrendAggSchema;
+    result?: ScoreResultSchema;
+    standards?: StandardSchema;
   };
 };
