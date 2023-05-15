@@ -44,6 +44,7 @@ export type CheckType = {
 
 export type StandardType = {
   name?: string;
+  reference?: string;
   checks?: [CheckType];
   failed?: number;
   passed?: number;
@@ -74,6 +75,7 @@ export type NameCountByDateType = {
 export type NameAggType = {
   name?: string;
   data?: [NameCountByDateType];
+  last?: NameCountByDateType;
   progression?: number;
 };
 
@@ -81,6 +83,7 @@ export type IssueDataAggType = {
   name?: string;
   reference?: string;
   vendorCode?: string;
+  last?: NameCountByDateType;
   data?: [NameCountByDateType];
   progression?: number;
 };
@@ -129,17 +132,6 @@ export type MonthlyTrendAggType = {
   scores?: [ScoreByMonthType];
 };
 
-export type GetPartnerDataType = {
-  filters?: [FilterType];
-  results?: [ScoreResultType];
-  avgCurrentScore?: number;
-  monthlyTrendAgg?: MonthlyTrendAggType;
-  endCustomersAgg?: EndCustomersAggType;
-  issueAgg?: IssuesAggType;
-  severityAgg?: SeveritiesAggType;
-  period?: PeriodsType;
-};
-
 export type CompareAccountAggType = {
   date?: string;
   avgCurrentScore?: number;
@@ -148,26 +140,15 @@ export type CompareAccountAggType = {
 };
 
 export type AccountAggType = {
-  accountRef?: string;
+  name?: string;
+  last?: CompareAccountAggType;
+  reference?: string;
   data?: [CompareAccountAggType];
   progression?: number;
 };
 
 export type AccountsAggType = {
   accounts: [AccountAggType];
-};
-
-export type GetCustomerDataType = {
-  accountsAgg?: AccountsAggType;
-  avgCurrentScore?: number;
-  filters?: [FilterType];
-  monthlyTrendAgg?: MonthlyTrendAggType;
-  period?: PeriodsType;
-  results?: [ScoreResultType];
-  issueAgg?: IssuesAggType;
-  severityAgg?: SeveritiesAggType;
-  standards?: [StandardType];
-  subscriptionReferences?: number;
 };
 
 export type CompareStandardAggType = {
@@ -180,6 +161,7 @@ export type CompareStandardAggType = {
 export type StandardAggType = {
   name?: string;
   reference?: string;
+  last?: CompareStandardAggType;
   data?: [CompareStandardAggType];
   progression?: number;
 };
@@ -188,15 +170,25 @@ export type StandardsAggType = {
   standards: [StandardAggType];
 };
 
-export type GetCustomerAccountDataType = {
-  avgCurrentScore?: number;
-  checks?: [CheckType];
-  filters?: [FilterType];
-  issueAgg?: IssuesAggType;
-  monthlyTrendAgg?: MonthlyTrendAggType;
-  period?: PeriodsType;
-  result?: ScoreResultType;
-  severityAgg?: SeveritiesAggType;
-  standardsAgg?: StandardsAggType;
-  standards?: [StandardType];
+export type CompareCheckType = {
+  date?: string;
+  processed?: number;
+  isFailed?: boolean;
+  flagged?: number;
+  score?: number;
+};
+
+export type ChecksByStandardType = {
+  data?: [CompareCheckType];
+  last?: CompareCheckType;
+  name?: string;
+  description?: string;
+  reference?: string;
+  severity?: string;
+  progression?: number;
+};
+
+export type CheckByStandardType = {
+  standard?: string;
+  checks?: [ChecksByStandardType];
 };
