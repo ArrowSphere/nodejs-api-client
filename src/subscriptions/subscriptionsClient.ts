@@ -1,9 +1,11 @@
 /**
  * Class SubscriptionsClient
  */
-import { AbstractClient } from '../abstractClient';
-import { SubscriptionData } from './entities/subscription';
+import { AbstractClient, Parameters } from '../abstractClient';
+import { Subscription, SubscriptionData } from './entities/subscription';
 import { SubscriptionsListResult } from './entities/subscriptionsListResult';
+import { GetResult } from '../getResult';
+import { DataInvitation } from '../customers';
 
 export type SubscriptionsListPayload = {
   subscription?: string[];
@@ -84,5 +86,21 @@ export class SubscriptionsClient extends AbstractClient {
     const response = await this.listRaw(postData);
 
     return new SubscriptionsListResult(response, this, postData);
+  }
+
+  /**
+   * Return a subscription finding it by its reference.
+   *
+   * Note: This endpoint requires an admin token to be called
+   *
+   */
+  public async getOneByReference(
+    licenseRef: string,
+    parameters: Parameters,
+  ): Promise<GetResult<Subscription>> {
+    this.path = `/licenses/${licenseRef}`;
+    const res = await this.get(parameters, {}, { isAdmin: true });
+
+    return new GetResult(Subscription, res);
   }
 }
