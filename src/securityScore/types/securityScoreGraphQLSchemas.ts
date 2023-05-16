@@ -2,6 +2,7 @@ import { Merge, Schema } from 'type-fest';
 import {
   AccountType,
   CheckType,
+  CheckByStandardType,
   CompareAccountAggType,
   CompareEndCustomerAggType,
   CompareStandardAggType,
@@ -71,10 +72,11 @@ export type IssuesAggSchema = {
 
 export type PeriodsSchema = Schema<PeriodsType, boolean>;
 
-export type CheckSchema = Schema<CheckType, boolean>;
+export type CheckByStandardSchema = Schema<CheckByStandardType, boolean>;
 type MissingFieldsInStandardType = {
   checks?: CheckSchema;
 };
+export type CheckSchema = Schema<CheckType, boolean>;
 export type StandardSchema = Merge<
   Schema<StandardType, boolean>,
   MissingFieldsInStandardType
