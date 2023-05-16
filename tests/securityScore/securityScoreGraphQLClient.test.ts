@@ -6,13 +6,6 @@ import {
   GetCustomerDataType,
   GetCustomerAccountDataType,
   SecurityScoreGraphQLClient,
-  GetPartnerDataQuery,
-  GetCustomerDataQuery,
-  GetCustomerAccountDataQuery,
-  SecurityScoreQueries,
-  SearchBodyFields,
-  SearchFilterFields,
-  SearchFilterValues,
 } from '../../src/securityScore';
 import {
   Hooks,
@@ -20,6 +13,7 @@ import {
   HandleHttpExceptionOutput,
 } from '../../src/exception/exception-handlers';
 import { PublicApiClientException } from '../../src/exception';
+import * as SecurityScoreQueryMock from './mocks/securityScoreQueries.mocks';
 
 describe('SecurityScoreGraphQLClient', () => {
   const client = new SecurityScoreGraphQLClient();
@@ -90,48 +84,6 @@ describe('SecurityScoreGraphQLClient', () => {
 
   describe('getPartnerData', () => {
     it('makes a graphql POST request on the specified URL getPartnerData', async () => {
-      const query: GetPartnerDataQuery = {
-        [SecurityScoreQueries.GET_PARTNER_DATA]: {
-          __args: {
-            searchBody: {
-              [SearchBodyFields.MARKETPLACE]: [['FR']],
-            },
-          },
-          avgCurrentScore: true,
-          period: {
-            from: true,
-            to: true,
-          },
-          endCustomersAgg: {
-            customers: {
-              reference: true,
-              progression: true,
-              data: {
-                date: true,
-                accounts: true,
-                avgCurrentScore: true,
-                failed: true,
-                passed: true,
-                subscriptionReferences: true,
-              },
-            },
-          },
-          issueAgg: {
-            issues: {
-              name: true,
-              data: {
-                count: true,
-                date: true,
-              },
-              progression: true,
-            },
-          },
-        },
-      };
-
-      const graphqlQuery =
-        '{getPartnerData (searchBody: {marketplace: [["FR"]]}) { avgCurrentScore period { from to } endCustomersAgg { customers { reference progression data { date accounts avgCurrentScore failed passed subscriptionReferences } } } issueAgg { issues { name data { count date } progression } } }}';
-
       const expectedResult = {
         getPartnerData: {
           avgCurrentScore: 6.5,
@@ -140,13 +92,37 @@ describe('SecurityScoreGraphQLClient', () => {
             to: '2023-02',
           },
           endCustomersAgg: {
-            customers: [
-              {
-                customerRef: 'XSP0',
-                progression: null,
-                data: [],
+            customers: {
+              data: [
+                {
+                  date: '2023-04-02',
+                  accounts: 3,
+                  avgCurrentScore: 45.53,
+                  failed: 0,
+                  passed: 1,
+                  subscriptionReferences: 'arrowsphere-1',
+                },
+                {
+                  date: '2023-04-01',
+                  accounts: 3,
+                  avgCurrentScore: 46.53,
+                  failed: 0,
+                  passed: 1,
+                  subscriptionReferences: 'arrowsphere-1',
+                },
+              ],
+              last: {
+                date: '2023-04-02',
+                accounts: 3,
+                avgCurrentScore: 45.53,
+                failed: 0,
+                passed: 1,
+                subscriptionReferences: 'arrowsphere-1',
               },
-            ],
+              name: 'arrowsphere',
+              progression: 0.5,
+              reference: 'XSP0',
+            },
           },
         },
       };
@@ -154,7 +130,7 @@ describe('SecurityScoreGraphQLClient', () => {
       graphQLClient.resolves(expectedResult);
 
       const result: GetPartnerDataType | null = await client.getPartnerData(
-        query,
+        SecurityScoreQueryMock.GET_PARTNER_DATA_QUERY,
       );
 
       expect(result?.avgCurrentScore).to.be.equals(
@@ -166,76 +142,30 @@ describe('SecurityScoreGraphQLClient', () => {
         expectedResult.getPartnerData.endCustomersAgg,
       );
 
-      sinon.assert.calledOnceWithExactly(graphQLClient, graphqlQuery);
+      sinon.assert.calledOnceWithExactly(
+        graphQLClient,
+        SecurityScoreQueryMock.GET_PARTNER_DATA_GQL,
+      );
     });
 
     it('makes a graphql POST request on the specified URL getPartnerData must return null', async () => {
-      const query: GetPartnerDataQuery = {
-        [SecurityScoreQueries.GET_PARTNER_DATA]: {
-          __args: {
-            searchBody: {
-              [SearchBodyFields.MARKETPLACE]: [['FR']],
-            },
-          },
-          avgCurrentScore: true,
-        },
-      };
-
-      const graphqlQuery =
-        '{getPartnerData (searchBody: {marketplace: [["FR"]]}) { avgCurrentScore }}';
-
       graphQLClient.resolves(null);
 
       const result: GetPartnerDataType | null = await client.getPartnerData(
-        query,
+        SecurityScoreQueryMock.GET_PARTNER_DATA_QUERY,
       );
 
       expect(result).to.be.null;
 
-      sinon.assert.calledOnceWithExactly(graphQLClient, graphqlQuery);
+      sinon.assert.calledOnceWithExactly(
+        graphQLClient,
+        SecurityScoreQueryMock.GET_PARTNER_DATA_GQL,
+      );
     });
   });
 
   describe('getCustomerData', () => {
     it('makes a graphql POST request on the specified URL getCustomerData', async () => {
-      const query: GetCustomerDataQuery = {
-        [SecurityScoreQueries.GET_CUSTOMER_DATA]: {
-          __args: {
-            searchBody: {
-              [SearchBodyFields.MARKETPLACE]: [['FR']],
-              [SearchBodyFields.FILTERS]: [
-                {
-                  [SearchFilterFields.NAMES]: [
-                    SearchFilterValues.REGISTRATION_CUSTOMER_REFERENCE,
-                  ],
-                  [SearchFilterFields.VALUES]: [['XSP0']],
-                },
-              ],
-            },
-          },
-          avgCurrentScore: true,
-          period: {
-            from: true,
-            to: true,
-          },
-          accountsAgg: {
-            accounts: {
-              accountRef: true,
-              data: {
-                date: true,
-                avgCurrentScore: true,
-                failed: true,
-                passed: true,
-              },
-              progression: true,
-            },
-          },
-        },
-      };
-
-      const graphqlQuery =
-        '{getCustomerData (searchBody: {marketplace: [["FR"]], filters: [{names: ["registration.customer.reference"], values: [["XSP0"]]}]}) { avgCurrentScore period { from to } accountsAgg { accounts { accountRef data { date avgCurrentScore failed passed } progression } } }}';
-
       const expectedResult = {
         getCustomerData: {
           avgCurrentScore: 6.5,
@@ -258,7 +188,7 @@ describe('SecurityScoreGraphQLClient', () => {
       graphQLClient.resolves(expectedResult);
 
       const result: GetCustomerDataType | null = await client.getCustomerData(
-        query,
+        SecurityScoreQueryMock.GET_CUSTOMER_DATA_QUERY,
       );
 
       expect(result?.avgCurrentScore).to.be.equals(
@@ -272,86 +202,30 @@ describe('SecurityScoreGraphQLClient', () => {
         expectedResult.getCustomerData.accountsAgg,
       );
 
-      sinon.assert.calledOnceWithExactly(graphQLClient, graphqlQuery);
+      sinon.assert.calledOnceWithExactly(
+        graphQLClient,
+        SecurityScoreQueryMock.GET_CUSTOMER_DATA_GQL,
+      );
     });
 
     it('makes a graphql POST request on the specified URL getCustomerData must return null', async () => {
-      const query: GetCustomerDataQuery = {
-        [SecurityScoreQueries.GET_CUSTOMER_DATA]: {
-          __args: {
-            searchBody: {
-              [SearchBodyFields.MARKETPLACE]: [['FR']],
-            },
-          },
-          avgCurrentScore: true,
-        },
-      };
-
-      const graphqlQuery =
-        '{getCustomerData (searchBody: {marketplace: [["FR"]]}) { avgCurrentScore }}';
-
       graphQLClient.resolves(null);
 
       const result: GetCustomerDataType | null = await client.getCustomerData(
-        query,
+        SecurityScoreQueryMock.GET_CUSTOMER_DATA_QUERY,
       );
 
       expect(result).to.be.null;
 
-      sinon.assert.calledOnceWithExactly(graphQLClient, graphqlQuery);
+      sinon.assert.calledOnceWithExactly(
+        graphQLClient,
+        SecurityScoreQueryMock.GET_CUSTOMER_DATA_GQL,
+      );
     });
   });
 
   describe('getCustomerAccountData', () => {
     it('makes a graphql POST request on the specified URL getCustomerAccountData', async () => {
-      const query: GetCustomerAccountDataQuery = {
-        [SecurityScoreQueries.GET_CUSTOMER_ACCOUNT_DATA]: {
-          __args: {
-            searchBody: {
-              [SearchBodyFields.MARKETPLACE]: [['FR']],
-              [SearchBodyFields.FILTERS]: [
-                {
-                  [SearchFilterFields.NAMES]: [
-                    SearchFilterValues.REGISTRATION_CUSTOMER_REFERENCE,
-                  ],
-                  [SearchFilterFields.VALUES]: [['XSP0']],
-                },
-              ],
-            },
-          },
-          avgCurrentScore: true,
-          period: {
-            from: true,
-            to: true,
-          },
-          standardsAgg: {
-            standards: {
-              name: true,
-              progression: true,
-              data: {
-                date: true,
-                score: true,
-                failed: true,
-                passed: true,
-              },
-            },
-          },
-          severityAgg: {
-            severities: {
-              name: true,
-              progression: true,
-              data: {
-                count: true,
-                date: true,
-              },
-            },
-          },
-        },
-      };
-
-      const graphqlQuery =
-        '{getCustomerAccountData (searchBody: {marketplace: [["FR"]], filters: [{names: ["registration.customer.reference"], values: [["XSP0"]]}]}) { avgCurrentScore period { from to } standardsAgg { standards { name progression data { date score failed passed } } } severityAgg { severities { name progression data { count date } } } }}';
-
       const expectedResult = {
         getCustomerAccountData: {
           avgCurrentScore: 6.5,
@@ -374,7 +248,7 @@ describe('SecurityScoreGraphQLClient', () => {
       graphQLClient.resolves(expectedResult);
 
       const result: GetCustomerAccountDataType | null = await client.getCustomerAccountData(
-        query,
+        SecurityScoreQueryMock.GET_CUSTOMER_ACCOUNT_DATA_QUERY,
       );
 
       expect(result?.avgCurrentScore).to.be.equals(
@@ -388,33 +262,25 @@ describe('SecurityScoreGraphQLClient', () => {
         expectedResult.getCustomerAccountData.standardsAgg,
       );
 
-      sinon.assert.calledOnceWithExactly(graphQLClient, graphqlQuery);
+      sinon.assert.calledOnceWithExactly(
+        graphQLClient,
+        SecurityScoreQueryMock.GET_CUSTOMER_ACCOUNT_DATA_GQL,
+      );
     });
 
     it('makes a graphql POST request on the specified URL getCustomerAccountData must return null', async () => {
-      const query: GetCustomerAccountDataQuery = {
-        [SecurityScoreQueries.GET_CUSTOMER_ACCOUNT_DATA]: {
-          __args: {
-            searchBody: {
-              [SearchBodyFields.MARKETPLACE]: [['FR']],
-            },
-          },
-          avgCurrentScore: true,
-        },
-      };
-
-      const graphqlQuery =
-        '{getCustomerAccountData (searchBody: {marketplace: [["FR"]]}) { avgCurrentScore }}';
-
       graphQLClient.resolves(null);
 
       const result: GetCustomerAccountDataType | null = await client.getCustomerAccountData(
-        query,
+        SecurityScoreQueryMock.GET_CUSTOMER_ACCOUNT_DATA_QUERY,
       );
 
       expect(result).to.be.null;
 
-      sinon.assert.calledOnceWithExactly(graphQLClient, graphqlQuery);
+      sinon.assert.calledOnceWithExactly(
+        graphQLClient,
+        SecurityScoreQueryMock.GET_CUSTOMER_ACCOUNT_DATA_GQL,
+      );
     });
   });
 });

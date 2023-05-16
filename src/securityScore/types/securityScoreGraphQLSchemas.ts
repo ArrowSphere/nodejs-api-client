@@ -2,109 +2,169 @@ import { Merge, Schema } from 'type-fest';
 import {
   AccountType,
   CheckType,
-  CheckByStandardType,
-  CompareAccountAggType,
-  CompareEndCustomerAggType,
-  CompareStandardAggType,
   FilterValuesType,
-  IssueDataAggType,
   MonthlyTrendAggType,
-  NameCountByDateType,
   PeriodsType,
   RegistrationType,
-  ScoreByMonthType,
   StandardAggType,
   StandardType,
+  EndCustomerByDateAggType,
+  AccountByDateAggType,
+  CheckAggType,
+  PaginationsType,
+  ScoreByDateAggType,
+  StandardWithCheckType,
+  ChecksByStandardType,
+  CheckByDateType,
+  NameCountByDateAggType,
+  EndCustomerAggType,
+  SeverityAggType,
+  AccountAggType,
+  StandardByDateAggType,
+  ScoreByMonthAggType,
+  ScoresAggType,
 } from './securityScoreGraphQLTypes';
 
 type MissingFieldsOfMonthlyTrendAggSchema = {
-  scores?: Schema<ScoreByMonthType, boolean>;
+  scores?: Schema<ScoreByMonthAggType, boolean>;
 };
+
 export type MonthlyTrendAggSchema = Merge<
   Schema<MonthlyTrendAggType, boolean>,
   MissingFieldsOfMonthlyTrendAggSchema
 >;
 
-type CompareEndCustomerAggSchema = Schema<CompareEndCustomerAggType, boolean>;
+export type PaginationSchema = Schema<PaginationsType, boolean>;
 
-type EndCustomerAggSchema = {
-  reference?: boolean;
-  name?: boolean;
-  data?: CompareEndCustomerAggSchema;
-  progression?: boolean;
+type EndCustomerByDateAggSchema = Schema<EndCustomerByDateAggType, boolean>;
+
+type MissingFieldsInEndCustomerAggSchema = {
+  data?: EndCustomerByDateAggSchema;
 };
+
+type EndCustomerAggSchema = Merge<
+  Schema<EndCustomerAggType, boolean>,
+  MissingFieldsInEndCustomerAggSchema
+>;
+
 export type EndCustomersAggSchema = {
-  customers: EndCustomerAggSchema;
+  customers?: EndCustomerAggSchema;
 };
 
-type CompareAccountAggSchema = Schema<CompareAccountAggType, boolean>;
-export type AccountAggSchema = {
-  accountRef?: boolean;
-  data?: CompareAccountAggSchema;
-  progression?: boolean;
+type AccountByDateAggSchema = Schema<AccountByDateAggType, boolean>;
+
+type MissingFieldsInAccountAggSchema = {
+  data?: AccountByDateAggSchema;
 };
+
+type AccountAggSchema = Merge<
+  Schema<AccountAggType, boolean>,
+  MissingFieldsInAccountAggSchema
+>;
+
 export type AccountsAggSchema = {
-  accounts: AccountAggSchema;
+  accounts?: AccountAggSchema;
 };
 
 type FilterValuesSchema = Schema<FilterValuesType, boolean>;
+
 export type FilterSchema = {
   name?: boolean;
   values?: FilterValuesSchema;
 };
 
-type NameCountByDateSchema = Schema<NameCountByDateType, boolean>;
-type NameAggSchema = {
-  name?: boolean;
-  data?: NameCountByDateSchema;
-  progression?: boolean;
+type NameCountByDateAggSchema = Schema<NameCountByDateAggType, boolean>;
+
+type MissingFieldsInCheckDataAggSchema = {
+  data?: NameCountByDateAggSchema;
 };
-type MissingFieldsInIssueDataAggSchema = {
-  data?: NameCountByDateSchema;
-};
-type IssueDataAggSchema = Merge<
-  Schema<IssueDataAggType, boolean>,
-  MissingFieldsInIssueDataAggSchema
+
+type CheckAggAggSchema = Merge<
+  Schema<CheckAggType, boolean>,
+  MissingFieldsInCheckDataAggSchema
 >;
-export type IssuesAggSchema = {
-  issues: IssueDataAggSchema;
+
+export type ChecksAggSchema = {
+  checks?: CheckAggAggSchema;
 };
 
 export type PeriodsSchema = Schema<PeriodsType, boolean>;
 
-export type CheckByStandardSchema = Schema<CheckByStandardType, boolean>;
+type CheckSchema = Schema<CheckType, boolean>;
+
 type MissingFieldsInStandardType = {
   checks?: CheckSchema;
 };
-export type CheckSchema = Schema<CheckType, boolean>;
+
 export type StandardSchema = Merge<
   Schema<StandardType, boolean>,
   MissingFieldsInStandardType
 >;
+
 type MissingFieldsInAccountSchema = {
-  standards: StandardSchema;
+  standards?: StandardSchema;
 };
+
 type AccountSchema = Merge<
   Schema<AccountType, boolean>,
   MissingFieldsInAccountSchema
 >;
+
 type RegistrationSchema = Schema<RegistrationType, boolean>;
 export type ScoreResultSchema = {
   account?: AccountSchema;
   registration?: RegistrationSchema;
 };
 
+export type SeverityAggSchema = Merge<
+  Schema<SeverityAggType, boolean>,
+  MissingFieldsInCheckDataAggSchema
+>;
+
 export type SeveritiesAggSchema = {
-  severities: NameAggSchema;
+  severities?: SeverityAggSchema;
 };
 
-type CompareStandardAggSchema = Schema<CompareStandardAggType, boolean>;
+type StandardByDateAggSchema = Schema<StandardByDateAggType, boolean>;
+
 type MissingFieldsInStandardAggSchema = {
-  data?: CompareStandardAggSchema;
+  data?: StandardByDateAggSchema;
 };
+
 type StandardAggSchema = Merge<
   Schema<StandardAggType, boolean>,
   MissingFieldsInStandardAggSchema
 >;
 
-export type StandardsAggSchema = { standards: StandardAggSchema };
+export type StandardsAggSchema = { standards?: StandardAggSchema };
+
+type ScoreByDateAggSchema = Schema<ScoreByDateAggType, boolean>;
+
+type MissingFieldsInScoresAggSchema = {
+  scores?: ScoreByDateAggSchema;
+};
+
+export type ScoresAggSchema = Merge<
+  Schema<ScoresAggType, boolean>,
+  MissingFieldsInScoresAggSchema
+>;
+
+type CheckByDateSchema = Schema<CheckByDateType, boolean>;
+
+type MissingFieldsInChecksByStandardSchema = {
+  data?: CheckByDateSchema;
+};
+
+type ChecksByStandardSchema = Merge<
+  Schema<ChecksByStandardType, boolean>,
+  MissingFieldsInChecksByStandardSchema
+>;
+
+type MissingFieldsInStandardWithCheckSchema = {
+  checks?: ChecksByStandardSchema;
+};
+
+export type StandardWithCheckSchema = Merge<
+  Schema<StandardWithCheckType, boolean>,
+  MissingFieldsInStandardWithCheckSchema
+>;

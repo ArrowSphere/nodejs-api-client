@@ -4,8 +4,17 @@ export type FilterType = {
 };
 
 export type FilterValuesType = {
-  value?: string;
   count?: number;
+  value?: string;
+};
+
+export type PaginationsType = {
+  currentPage?: number;
+  next?: string;
+  perPage?: number;
+  previous?: string;
+  total?: number;
+  totalPage?: number;
 };
 
 export type SubscriptionRegistrationType = {
@@ -13,52 +22,52 @@ export type SubscriptionRegistrationType = {
 };
 
 export type CustomerRegistrationType = {
-  reference?: string;
   name?: string;
+  reference?: string;
 };
 
 export type ResellerRegistrationType = {
-  reference?: string;
   name?: string;
+  reference?: string;
 };
 
 export type RegistrationType = {
   accountReference?: string;
-  subscription?: SubscriptionRegistrationType;
   customer?: CustomerRegistrationType;
-  reseller?: ResellerRegistrationType;
-  vendorCode?: string;
   marketplace?: string;
+  reseller?: ResellerRegistrationType;
+  subscription?: SubscriptionRegistrationType;
+  vendorCode?: string;
 };
 
 export type CheckType = {
-  name?: string;
   description?: string;
-  processed?: number;
-  isFailed?: boolean;
   flagged?: number;
+  isFailed?: boolean;
+  name?: string;
+  processed?: number;
   reference?: string;
   score?: number;
   severity?: string;
 };
 
 export type StandardType = {
-  name?: string;
-  reference?: string;
   checks?: [CheckType];
   failed?: number;
+  name?: string;
   passed?: number;
+  reference?: string;
   score?: number;
   total?: number;
 };
 
 export type AccountType = {
-  reference?: string;
-  name?: string;
-  standards?: [StandardType];
   failed?: number;
+  name?: string;
   passed?: number;
+  reference?: string;
   score?: number;
+  standards?: [StandardType];
   total?: number;
 };
 
@@ -67,128 +76,147 @@ export type ScoreResultType = {
   registration?: RegistrationType;
 };
 
-export type NameCountByDateType = {
+export type NameCountByDateAggType = {
   count?: number;
   date?: string;
 };
 
-export type NameAggType = {
+export type SeverityAggType = {
+  data?: [NameCountByDateAggType];
+  last?: NameCountByDateAggType;
   name?: string;
-  data?: [NameCountByDateType];
-  last?: NameCountByDateType;
-  progression?: number;
-};
-
-export type IssueDataAggType = {
-  name?: string;
-  reference?: string;
-  vendorCode?: string;
-  last?: NameCountByDateType;
-  data?: [NameCountByDateType];
   progression?: number;
 };
 
 export type SeveritiesAggType = {
-  severities: [NameAggType];
+  severities: [SeverityAggType];
 };
 
-export type IssuesAggType = {
-  issues: [IssueDataAggType];
+export type CheckAggType = {
+  data?: [NameCountByDateAggType];
+  last?: NameCountByDateAggType;
+  name?: string;
+  progression?: number;
+  reference?: string;
+  vendorCode?: string;
 };
 
-export type CompareEndCustomerAggType = {
-  date?: string;
+export type ChecksAggType = {
+  checks: [CheckAggType];
+};
+
+export type EndCustomerByDateAggType = {
   accounts?: number;
   avgCurrentScore?: number;
+  date?: string;
   failed?: number;
   passed?: number;
+  total?: number;
   subscriptionReferences?: number;
 };
 
 export type EndCustomerAggType = {
-  reference?: string;
+  data?: [EndCustomerByDateAggType];
+  last?: EndCustomerByDateAggType;
   name?: string;
-  data?: [CompareEndCustomerAggType];
   progression?: number;
+  reference?: string;
 };
 
 export type EndCustomersAggType = {
   customers: [EndCustomerAggType];
 };
 
-export type ScoreByMonthType = {
-  date?: string;
+export type ScoreByMonthAggType = {
   avgCurrentScore?: number;
-};
-
-export type PeriodsType = {
-  from?: string;
-  to?: string;
+  date?: string;
 };
 
 export type MonthlyTrendAggType = {
-  period?: PeriodsType;
-  avgCurrentScore?: number;
-  scores?: [ScoreByMonthType];
+  avgCurrentScore: number;
+  period: PeriodsType;
+  scores: [ScoreByMonthAggType];
 };
 
-export type CompareAccountAggType = {
-  date?: string;
+export type ScoreByDateAggType = {
   avgCurrentScore?: number;
+  date?: string;
   failed?: number;
   passed?: number;
+  total?: number;
+};
+
+export type ScoresAggType = {
+  last?: ScoreByDateAggType;
+  scores?: [ScoreByDateAggType];
+  total?: number;
+};
+
+export type AccountByDateAggType = {
+  avgCurrentScore: number;
+  date: string;
+  failed: number;
+  passed: number;
+  total?: number;
 };
 
 export type AccountAggType = {
+  data?: [AccountByDateAggType];
+  last?: AccountByDateAggType;
   name?: string;
-  last?: CompareAccountAggType;
-  reference?: string;
-  data?: [CompareAccountAggType];
   progression?: number;
+  reference?: string;
 };
 
 export type AccountsAggType = {
   accounts: [AccountAggType];
 };
 
-export type CompareStandardAggType = {
+export type StandardByDateAggType = {
   date?: string;
   score?: number;
   failed?: number;
   passed?: number;
+  total?: number;
 };
 
 export type StandardAggType = {
+  data?: [StandardByDateAggType];
+  last?: StandardByDateAggType;
   name?: string;
-  reference?: string;
-  last?: CompareStandardAggType;
-  data?: [CompareStandardAggType];
   progression?: number;
+  reference?: string;
 };
 
 export type StandardsAggType = {
   standards: [StandardAggType];
 };
 
-export type CompareCheckType = {
+export type CheckByDateType = {
   date?: string;
-  processed?: number;
-  isFailed?: boolean;
   flagged?: number;
+  isFailed?: boolean;
+  processed?: number;
   score?: number;
 };
 
 export type ChecksByStandardType = {
-  data?: [CompareCheckType];
-  last?: CompareCheckType;
-  name?: string;
+  data?: [CheckByDateType];
   description?: string;
+  last?: CheckByDateType;
+  name?: string;
+  progression?: number;
   reference?: string;
   severity?: string;
-  progression?: number;
 };
 
-export type CheckByStandardType = {
-  standard?: string;
+export type StandardWithCheckType = {
   checks?: [ChecksByStandardType];
+  name?: string;
+  reference?: string;
+};
+
+export type PeriodsType = {
+  from?: string;
+  to?: string;
 };
