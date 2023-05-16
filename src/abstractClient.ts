@@ -1,16 +1,17 @@
 import { NotFoundException, PublicApiClientException } from './exception';
 import querystring from 'querystring';
-import { URL } from 'url';
+// import { URL } from 'url';
 import path from 'path';
 import { AxiosSingleton } from './axiosSingleton';
 import { AxiosInstance, AxiosResponse } from 'axios';
-import { AbstractHttpClient } from './AbstractHttpClient';
+import { AbstractHttpClient, HttpClientSecurity } from './AbstractHttpClient';
 
 /**
  * Lists of available query parameters for the API call
  */
 export enum ParameterKeys {
   API_KEY = 'apiKey',
+  AUTHORIZATION = 'Authorization',
   HEADERS = 'headers',
   ORDER_BY = 'order_by',
   PAGE = 'page',
@@ -207,9 +208,14 @@ export abstract class AbstractClient extends AbstractHttpClient {
    * @returns {@link Headers}
    */
   private prepareHeaders(headers: Headers): Headers {
+    const securityHeader: { [headerName: string]: string } =
+      this.security === HttpClientSecurity.API_KEY
+        ? { [ParameterKeys.API_KEY]: this.apiKey }
+        : { [ParameterKeys.AUTHORIZATION]: this.token };
+
     return {
       ...headers,
-      [ParameterKeys.API_KEY]: this.apiKey,
+      ...securityHeader,
       ...this.headers,
     };
   }
@@ -228,13 +234,16 @@ export abstract class AbstractClient extends AbstractHttpClient {
     headers: Headers = {},
     options: Options = {},
   ): Promise<AxiosResponse['data']> {
-    const response = await this.client.post(
-      this.generateUrl(parameters, options),
-      payload,
-      {
-        headers: this.prepareHeaders(headers),
-      },
-    );
+    const url = this.generateUrl(parameters, options);
+
+    console.log({ url });
+
+    const myheaders = this.prepareHeaders(headers);
+    console.log({ myheaders });
+
+    const response = await this.client.post(url, payload, {
+      headers: myheaders,
+    });
 
     return this.getResponse(response);
   }

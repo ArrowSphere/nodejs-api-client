@@ -5,7 +5,6 @@ import { AbstractClient, Parameters } from '../abstractClient';
 import { Subscription, SubscriptionData } from './entities/subscription';
 import { SubscriptionsListResult } from './entities/subscriptionsListResult';
 import { GetResult } from '../getResult';
-import { DataInvitation } from '../customers';
 
 export type SubscriptionsListPayload = {
   subscription?: string[];
@@ -96,7 +95,7 @@ export class SubscriptionsClient extends AbstractClient {
    */
   public async getOneByReference(
     licenseRef: string,
-    parameters: Parameters,
+    parameters: Parameters = {},
   ): Promise<GetResult<Subscription>> {
     this.path = `/licenses/${licenseRef}`;
     const res = await this.get(parameters, {}, { isAdmin: true });

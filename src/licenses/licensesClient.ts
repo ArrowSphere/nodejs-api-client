@@ -427,10 +427,13 @@ export class LicensesClient extends AbstractClient {
     }
 
     if (postData.filters) {
+      console.log('postData.filters.license', postData.filters.license);
       // Flatten with prefix for each type of filter (license and offer)
       rawLicensePayload.filters = {
         ...Object.entries(postData.filters.license ?? {}).reduce(
           (acc: LicenseRawFiltersParameters, [filter, value]) => {
+            console.log({ filter });
+            console.log({ value });
             acc[`license.${filter}`] = value;
             return acc;
           },
@@ -444,6 +447,8 @@ export class LicensesClient extends AbstractClient {
           {},
         ),
       };
+
+      console.log('rawLicensePayload.filters', rawLicensePayload.filters);
     }
 
     if (postData.exclusionFilters) {

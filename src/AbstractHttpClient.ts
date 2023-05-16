@@ -4,6 +4,11 @@ import {
 } from './exception/exception-handlers';
 import { PublicApiClientException } from './exception';
 
+export enum HttpClientSecurity {
+  TOKEN = 'token',
+  API_KEY = 'apikey',
+}
+
 export abstract class AbstractHttpClient {
   /**
    * Base path for HTTP calls
@@ -25,6 +30,12 @@ export abstract class AbstractHttpClient {
    * Http Exceptions Handlers
    */
   protected httpExceptionHandlers: HttpExceptionHandler[] = [];
+  /**
+   * Security used to auth on server
+   * Default to API_KEY to handle
+   * the existing codebase
+   */
+  protected security: HttpClientSecurity = HttpClientSecurity.API_KEY;
 
   public setToken(token: string): this {
     this.token = token;
@@ -34,6 +45,12 @@ export abstract class AbstractHttpClient {
 
   public setUrl(url: string): this {
     this.url = url;
+
+    return this;
+  }
+
+  public setSecurity(security: HttpClientSecurity): this {
+    this.security = security;
 
     return this;
   }
