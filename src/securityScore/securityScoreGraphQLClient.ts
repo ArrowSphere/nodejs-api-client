@@ -1,9 +1,21 @@
 import { AbstractGraphQLClient } from '../abstractGraphQLClient';
 import {
+  GetPartnerData,
   GetPartnerDataType,
+  GetPartnerDataGraphQLResultType,
+} from './entities/getPartnerData';
+import {
+  GetCustomerData,
   GetCustomerDataType,
+  GetCustomerDataGraphQLResultType,
+} from './entities/getCustomerData';
+import {
+  GetCustomerAccountData,
   GetCustomerAccountDataType,
-} from './types/securityScoreGraphQLTypes';
+  GetCustomerAccountDataGraphQLResultType,
+} from './entities/getCustomerAccountData';
+import { PublicApiClientException } from '../exception';
+import { SecurityScoreQueries } from './types/queryArguments';
 import {
   GetPartnerDataQuery,
   GetCustomerDataQuery,
@@ -23,33 +35,78 @@ export class SecurityScoreGraphQLClient extends AbstractGraphQLClient {
 
   public async find<GraphQLResponseTypes>(
     request: string,
-  ): Promise<GraphQLResponseTypes> {
+  ): Promise<GraphQLResponseTypes | null> {
     this.path = this.GRAPHQL;
 
-    return await this.post<GraphQLResponseTypes>(request);
+    try {
+      return await this.post<GraphQLResponseTypes>(request);
+    } catch (error: any) {
+      const exception: PublicApiClientException = this.mapToPublicApiException(
+        error,
+      );
+
+      const { mustRetry } = await this.handleError(exception);
+      if (mustRetry) {
+        return await this.post<GraphQLResponseTypes>(request);
+      }
+    }
+
+    return null;
   }
 
   public async getPartnerData(
     getPartnerDataQuery: GetPartnerDataQuery,
-  ): Promise<GetPartnerDataType> {
+  ): Promise<GetPartnerDataType | null> {
     const queryStr: string = this.stringifyQuery(getPartnerDataQuery);
 
-    return this.find<GetPartnerDataType>(queryStr);
+    const getPartnerDataResult: GetPartnerDataGraphQLResultType | null = await this.find<GetPartnerDataGraphQLResultType>(
+      queryStr,
+    );
+
+    if (getPartnerDataResult) {
+      return new GetPartnerData(
+        getPartnerDataResult[SecurityScoreQueries.GET_PARTNER_DATA],
+      ).toJSON();
+    }
+
+    return null;
   }
 
   public async getCustomerData(
     getCustomerDataQuery: GetCustomerDataQuery,
-  ): Promise<GetCustomerDataType> {
+  ): Promise<GetCustomerDataType | null> {
     const queryStr: string = this.stringifyQuery(getCustomerDataQuery);
 
-    return this.find<GetCustomerDataType>(queryStr);
+    const getCustomerDataResult: GetCustomerDataGraphQLResultType | null = await this.find<GetCustomerDataGraphQLResultType>(
+      queryStr,
+    );
+
+    if (getCustomerDataResult) {
+      return new GetCustomerData(
+        getCustomerDataResult[SecurityScoreQueries.GET_CUSTOMER_DATA],
+      ).toJSON();
+    }
+
+    return null;
   }
 
   public async getCustomerAccountData(
     getCustomerAccountDataQuery: GetCustomerAccountDataQuery,
-  ): Promise<GetCustomerAccountDataType> {
+  ): Promise<GetCustomerAccountDataType | null> {
     const queryStr: string = this.stringifyQuery(getCustomerAccountDataQuery);
 
-    return this.find<GetCustomerAccountDataType>(queryStr);
+    const getCustomerAccountDataResult: GetCustomerAccountDataGraphQLResultType | null = await this.find<GetCustomerAccountDataGraphQLResultType>(
+      queryStr,
+    );
+
+    if (getCustomerAccountDataResult) {
+      return new GetCustomerAccountData(
+        getCustomerAccountDataResult[
+          SecurityScoreQueries.GET_CUSTOMER_ACCOUNT_DATA
+        ],
+      ).toJSON();
+    }
+
+    return null;
   }
 }
