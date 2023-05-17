@@ -239,12 +239,13 @@ export abstract class AbstractClient extends AbstractHttpClient {
     headers: Headers = {},
     options: Options = {},
   ): Promise<AxiosResponse['data']> {
-    const url = this.generateUrl(parameters, options);
-    const myheaders = this.prepareHeaders(headers);
-
-    const response = await this.client.post(url, payload, {
-      headers: myheaders,
-    });
+    const response = await this.client.post(
+      this.generateUrl(parameters, options),
+      payload,
+      {
+        headers: this.prepareHeaders(headers),
+      },
+    );
 
     return this.getResponse(response);
   }
