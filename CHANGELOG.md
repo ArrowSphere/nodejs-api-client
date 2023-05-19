@@ -3,6 +3,20 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.30.0] - 2023-05-29
+
+### Changed
+  
+- Add extra information order
+  
+## [3.29.0] - 2023-05-22
+
+### Changed
+  
+- feat(catalog-client): add GQL client with token security and strong typing
+- feat(security-score-client): add GQL client with token security and strong typing
+- feat(licence-client): add option token security for the abstract restful client
+
 ## [3.28.0] - 2023-05-22
 
 ### Changed
