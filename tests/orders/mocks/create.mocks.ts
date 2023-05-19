@@ -52,6 +52,17 @@ export const CreateOrderFullInputPayload: CreateOrderInputType = {
       [CreateOrderInputFields.COLUMN_UPLIFT]: 2,
     },
   ],
+  [CreateOrderInputFields.COLUMN_EXTRA_INFORMATION]: {
+    programs: {
+      info1: {
+        key1: 'value1',
+      },
+      info2: {
+        key1: 'value1',
+        key2: 'value2',
+      },
+    },
+  },
 };
 
 export const CreateOrderInjectionScenarioPayload: CreateOrderInputType = {

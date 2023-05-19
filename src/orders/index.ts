@@ -6,5 +6,6 @@ export * from './entities/orders/products/identifiers/productIdentifiers';
 export * from './entities/orders/products/prices/productPrices';
 export * from './entities/orders/products/program/productProgram';
 export * from './entities/orders/products/products';
+export * from './entities/orders/extraInformation/extraInformation';
 export * from './entities/referenceLink';
 export * from './ordersClient';
