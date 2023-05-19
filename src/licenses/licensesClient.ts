@@ -378,6 +378,8 @@ export class LicensesClient extends AbstractClient {
   ): Promise<FindData> {
     this.path = this.FIND_PATH;
 
+    console.log({ parameters });
+
     return this.post(postData, parameters);
   }
 
