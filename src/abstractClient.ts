@@ -1,6 +1,5 @@
 import { NotFoundException, PublicApiClientException } from './exception';
 import querystring from 'querystring';
-import { URL } from 'url';
 import path from 'path';
 import { AxiosSingleton } from './axiosSingleton';
 import { AxiosInstance, AxiosResponse } from 'axios';

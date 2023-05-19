@@ -4,7 +4,7 @@
     "type": "git",
     "url": "https://github.com/ArrowSphere/nodejs-api-client.git"
   },
-  "version": "3.28.0",
+  "version": "3.29.0-rc.uts.1",
   "description": "Node.js client for ArrowSphere's public API",
   "main": "build/index.js",
   "types": "build/index.d.ts",
@@ -58,8 +58,8 @@
     "sinon": "9.2.4",
     "sinon-chai": "3.5.0",
     "source-map-support": "0.5.19",
-    "ts-node": "9.1.1",
-    "typescript": "4.1.5"
+    "ts-node": "10.9.1",
+    "typescript": "4.7.4"
   },
   "husky": {
     "hooks": {

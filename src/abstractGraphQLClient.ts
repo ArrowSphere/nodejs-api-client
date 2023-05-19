@@ -1,6 +1,5 @@
 import { GraphQLClient } from 'graphql-request';
 import * as Dom from 'graphql-request/dist/types.dom';
-import { URL } from 'url';
 import { Options } from './abstractClient';
 import path from 'path';
 import { GetProductsType } from './catalog';
