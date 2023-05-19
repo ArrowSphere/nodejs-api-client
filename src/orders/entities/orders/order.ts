@@ -2,6 +2,10 @@ import { AbstractEntity } from '../../../abstractEntity';
 import { OrderProduct, OrderProductsType } from './products/products';
 import { OrderPartner, OrderPartnerType } from './partner/partner';
 import { ReferenceLink, ReferenceLinkType } from '../referenceLink';
+import {
+  OrderExtraInformation,
+  OrderExtraInformationType,
+} from './extraInformation/extraInformation';
 
 export enum OrderFields {
   COLUMN_REFERENCE = 'reference',
@@ -13,6 +17,7 @@ export enum OrderFields {
   COLUMN_CUSTOMER = 'customer',
   COLUMN_PONUMBER = 'ponumber',
   COLUMN_PRODUCTS = 'products',
+  COLUMN_EXTRA_INFORMATION = 'extraInformation',
 }
 
 export type OrderType = {
@@ -25,6 +30,7 @@ export type OrderType = {
   [OrderFields.COLUMN_CUSTOMER]: ReferenceLinkType;
   [OrderFields.COLUMN_PONUMBER]: string;
   [OrderFields.COLUMN_PRODUCTS]: Array<OrderProductsType>;
+  [OrderFields.COLUMN_EXTRA_INFORMATION]?: OrderExtraInformationType;
 };
 
 export class Order extends AbstractEntity<OrderType> {
@@ -37,6 +43,7 @@ export class Order extends AbstractEntity<OrderType> {
   readonly #customer: ReferenceLink;
   readonly #ponumber: string;
   readonly #products: Array<OrderProduct>;
+  readonly #extraInformation?: OrderExtraInformation;
 
   public constructor(getOrderDataInput: OrderType) {
     super(getOrderDataInput);
@@ -59,6 +66,16 @@ export class Order extends AbstractEntity<OrderType> {
     this.#products = getOrderDataInput[OrderFields.COLUMN_PRODUCTS].map(
       (order: OrderProductsType) => new OrderProduct(order),
     );
+
+    this.#extraInformation = getOrderDataInput[
+      OrderFields.COLUMN_EXTRA_INFORMATION
+    ]
+      ? new OrderExtraInformation(
+          getOrderDataInput[
+            OrderFields.COLUMN_EXTRA_INFORMATION
+          ] as OrderExtraInformationType,
+        )
+      : undefined;
   }
 
   get reference(): string {
@@ -89,6 +106,10 @@ export class Order extends AbstractEntity<OrderType> {
     return this.#products;
   }
 
+  get extraInformation(): OrderExtraInformation | undefined {
+    return this.#extraInformation;
+  }
+
   public toJSON(): OrderType {
     return {
       [OrderFields.COLUMN_REFERENCE]: this.reference,
@@ -102,6 +123,7 @@ export class Order extends AbstractEntity<OrderType> {
       [OrderFields.COLUMN_PRODUCTS]: this.products.map((order: OrderProduct) =>
         order.toJSON(),
       ),
+      [OrderFields.COLUMN_EXTRA_INFORMATION]: this.extraInformation?.toJSON(),
     };
   }
 }
