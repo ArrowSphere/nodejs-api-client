@@ -1,7 +1,7 @@
 export class PublicApiClientException extends Error {
   public httpCode: number;
   public httpError: string;
-  public config: any;
+  public config?: any;
 
   constructor(message: string, httpError = '', httpCode = 0, config = {}) {
     super(message);
