@@ -4,7 +4,7 @@
     "type": "git",
     "url": "https://github.com/ArrowSphere/nodejs-api-client.git"
   },
-  "version": "3.29.0",
+  "version": "3.29.0-rc.jpb.4",
   "description": "Node.js client for ArrowSphere's public API",
   "main": "build/index.js",
   "types": "build/index.d.ts",
@@ -86,7 +86,7 @@
     "graphql-request": "4.2.0",
     "json-to-graphql-query": "^2.2.5",
     "lodash": "^4.17.21",
-    "type-fest": "^3.9.0",
+    "type-fest": "^2.19.0",
     "validatorjs": "3.22.1"
   }
 }
