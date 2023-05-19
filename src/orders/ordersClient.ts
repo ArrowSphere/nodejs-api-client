@@ -35,6 +35,7 @@ export enum CreateOrderInputFields {
   COLUMN_PRICE_CURRENCY = 'currency',
   COLUMN_PRICE_UNIT = 'unitPrice',
   COLUMN_PRICE_EXCHANGE_RATE = 'exchangeRate',
+  COLUMN_EXTRA_INFORMATION = 'extraInformation',
 }
 
 export enum scenarioType {
@@ -93,6 +94,9 @@ export type CreateOrderInputType = {
       };
     };
   }>;
+  [CreateOrderInputFields.COLUMN_EXTRA_INFORMATION]?: {
+    programs: { [key: string]: { [name: string]: string } };
+  };
 };
 
 export class OrdersClient extends AbstractClient {
