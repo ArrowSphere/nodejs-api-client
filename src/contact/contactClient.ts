@@ -1,4 +1,4 @@
-import { AbstractClient, Parameters } from '../abstractClient';
+import { AbstractRestfulClient, Parameters } from '../abstractRestfulClient';
 import { GetData, GetResult } from '../getResult';
 import { ContactCreate } from './entities/contactCreate';
 import { Contact, ContactType } from './entities/contact';
@@ -24,7 +24,7 @@ export type ContactRequestType = {
   [ContactRequestFields.COLUMN_ROLE]: string;
 };
 
-export class ContactClient extends AbstractClient {
+export class ContactClient extends AbstractRestfulClient {
   /**
    * The base path of the API
    */

@@ -3,6 +3,11 @@ import { AbstractGraphQLClient } from './abstractGraphQLClient';
 
 export class PublicGraphQLClient extends AbstractGraphQLClient {
   public getCatalogGraphQLClient(): CatalogGraphQLClient {
-    return new CatalogGraphQLClient().setUrl(this.url).setToken(this.token);
+    return new CatalogGraphQLClient()
+      .setUrl(this.url)
+      .setToken(this.token)
+      .setHeaders(this.headers)
+      .setToken(this.token)
+      .setHttpExceptionHandlers(this.httpExceptionHandlers);
   }
 }

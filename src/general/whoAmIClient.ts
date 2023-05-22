@@ -1,8 +1,8 @@
-import { AbstractClient } from '../abstractClient';
+import { AbstractRestfulClient } from '../abstractRestfulClient';
 import { AxiosResponse } from 'axios';
 import { WhoAmI, WhoAmIResponseData } from './entities/whoAmI';
 
-export class WhoAmIClient extends AbstractClient {
+export class WhoAmIClient extends AbstractRestfulClient {
   /**
    * Gets and returns the raw whoami call response data
    * @returns Promise\<AxiosResponse\<{@link WhoAmIResponseData}\>\>

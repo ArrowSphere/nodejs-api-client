@@ -1,6 +1,6 @@
-import { AxiosSingleton } from '../build';
 import { expect } from 'chai';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { AxiosSingleton } from '../src';
 
 const REQUEST: AxiosRequestConfig = {
   url: 'testUrl',

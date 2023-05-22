@@ -6,7 +6,7 @@ import { FilterFindResult, FilterFindResultData } from './filterFindResult';
 import { AbstractEntity } from '../../abstractEntity';
 import { LicensesClient, LicenseFindRawPayload } from '../licensesClient';
 import { OfferFindResult, OfferFindResultData } from './offer/offerFindResult';
-import { Parameters } from '../../abstractClient';
+import { Parameters } from '../../abstractRestfulClient';
 
 export type FindData = {
   pagination: {
