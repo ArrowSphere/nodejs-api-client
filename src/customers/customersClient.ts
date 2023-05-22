@@ -1,4 +1,4 @@
-import { AbstractClient, Parameters } from '../abstractClient';
+import { AbstractRestfulClient, Parameters } from '../abstractRestfulClient';
 import { GetResult } from '../getResult';
 import { DataCustomers } from './entities/dataCustomers';
 import { DataInvitation } from './entities/dataInvitation';
@@ -34,7 +34,7 @@ export type PatchCustomerContactPayload = {
   [Property in keyof PostCustomerContactPayload]?: PostCustomerContactPayload[Property];
 };
 
-export class CustomersClient extends AbstractClient {
+export class CustomersClient extends AbstractRestfulClient {
   /**
    * The base path of the API
    */

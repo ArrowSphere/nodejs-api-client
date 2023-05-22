@@ -1,8 +1,8 @@
-import { AbstractClient, Parameters } from '../../abstractClient';
+import { AbstractRestfulClient, Parameters } from '../../abstractRestfulClient';
 import { GetResult } from '../../getResult';
 import { RegistrationLink } from './entity/registrationLink';
 
-export class RegisterClient extends AbstractClient {
+export class RegisterClient extends AbstractRestfulClient {
   /**
    * The base path of the API
    */

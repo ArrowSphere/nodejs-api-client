@@ -6,7 +6,7 @@ import nock from 'nock';
 
 // Sources
 import {
-  AbstractClient,
+  AbstractRestfulClient,
   ConfigurationsClient,
   NotFoundException,
   ParameterKeys,
@@ -51,7 +51,7 @@ describe('AbstractClient', () => {
         },
       };
       const client = new TestClient(configurations);
-      expect(client).to.be.an.instanceof(AbstractClient);
+      expect(client).to.be.an.instanceof(AbstractRestfulClient);
       expect(client['url']).to.be.equal(configurations[ParameterKeys.URL]);
       expect(client['apiKey']).to.be.equal(
         configurations[ParameterKeys.API_KEY],

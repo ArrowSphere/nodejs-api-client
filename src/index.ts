@@ -1,5 +1,5 @@
 export * from './axiosSingleton';
-export * from './abstractClient';
+export * from './abstractRestfulClient';
 export * from './abstractEntity';
 export * from './abstractGraphQLClient';
 export * from './campaign/';
@@ -20,5 +20,6 @@ export * from './security/';
 export * from './subscriptions/';
 export * from './supportCenter/';
 export * from './securityScore/';
+export * from './user/';
 export { ContactInformation };
 import * as ContactInformation from './contact';

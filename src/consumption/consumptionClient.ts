@@ -1,9 +1,9 @@
-import { AbstractClient, Parameters } from '../abstractClient';
+import { AbstractRestfulClient, Parameters } from '../abstractRestfulClient';
 import { ConsumptionBI } from './entities/bi/consumptionBI';
 import { GetResult } from '../getResult';
 import { Consumption } from './entities/consumption/consumption';
 
-export class ConsumptionClient extends AbstractClient {
+export class ConsumptionClient extends AbstractRestfulClient {
   /**
    * The base path of the API
    */
