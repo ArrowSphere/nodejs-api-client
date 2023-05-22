@@ -1,14 +1,15 @@
 import { AbstractEntity } from '../../abstractEntity';
 import {
+  ChecksAggType,
   EndCustomersAggType,
   FilterType,
+  MarketplacesAggType,
   MonthlyTrendAggType,
   PaginationsType,
   PeriodsType,
   ScoreResultType,
-  SeveritiesAggType,
   ScoresAggType,
-  ChecksAggType,
+  SeveritiesAggType,
 } from '../types/securityScoreGraphQLTypes';
 import { SecurityScoreQueries } from '../types/queryArguments';
 
@@ -17,6 +18,7 @@ export enum GetPartnerDataFields {
   COLUMN_CHECKS_AGG = 'checksAgg',
   COLUMN_END_CUSTOMERS_AGG = 'endCustomersAgg',
   COLUMN_FILTERS = 'filters',
+  COLUMN_MARKETPLACES_AGG = 'marketplacesAgg',
   COLUMN_MONTHLY_TREND_AGG = 'monthlyTrendAgg',
   COLUMN_PAGINATION = 'pagination',
   COLUMN_PERIOD = 'period',
@@ -30,6 +32,7 @@ export type GetPartnerDataType = {
   [GetPartnerDataFields.COLUMN_CHECKS_AGG]?: ChecksAggType;
   [GetPartnerDataFields.COLUMN_END_CUSTOMERS_AGG]?: EndCustomersAggType;
   [GetPartnerDataFields.COLUMN_FILTERS]?: [FilterType];
+  [GetPartnerDataFields.COLUMN_MARKETPLACES_AGG]?: MarketplacesAggType;
   [GetPartnerDataFields.COLUMN_MONTHLY_TREND_AGG]?: MonthlyTrendAggType;
   [GetPartnerDataFields.COLUMN_PAGINATION]?: PaginationsType;
   [GetPartnerDataFields.COLUMN_PERIOD]?: PeriodsType;
@@ -47,6 +50,7 @@ export class GetPartnerData extends AbstractEntity<GetPartnerDataType> {
   readonly #checksAgg?: ChecksAggType;
   readonly #endCustomersAgg?: EndCustomersAggType;
   readonly #filters?: [FilterType];
+  readonly #marketplacesAgg?: MarketplacesAggType;
   readonly #monthlyTrendAgg?: MonthlyTrendAggType;
   readonly #period?: PeriodsType;
   readonly #pagination?: PaginationsType;
@@ -64,6 +68,8 @@ export class GetPartnerData extends AbstractEntity<GetPartnerDataType> {
     this.#endCustomersAgg =
       getPartnerDataInput[GetPartnerDataFields.COLUMN_END_CUSTOMERS_AGG];
     this.#filters = getPartnerDataInput[GetPartnerDataFields.COLUMN_FILTERS];
+    this.#marketplacesAgg =
+      getPartnerDataInput[GetPartnerDataFields.COLUMN_MARKETPLACES_AGG];
     this.#monthlyTrendAgg =
       getPartnerDataInput[GetPartnerDataFields.COLUMN_MONTHLY_TREND_AGG];
     this.#period = getPartnerDataInput[GetPartnerDataFields.COLUMN_PERIOD];
@@ -96,6 +102,10 @@ export class GetPartnerData extends AbstractEntity<GetPartnerDataType> {
     return this.#monthlyTrendAgg;
   }
 
+  get marketplacesAgg(): MarketplacesAggType | undefined {
+    return this.#marketplacesAgg;
+  }
+
   get period(): PeriodsType | undefined {
     return this.#period;
   }
@@ -122,6 +132,7 @@ export class GetPartnerData extends AbstractEntity<GetPartnerDataType> {
       [GetPartnerDataFields.COLUMN_CHECKS_AGG]: this.checksAgg,
       [GetPartnerDataFields.COLUMN_END_CUSTOMERS_AGG]: this.endCustomersAgg,
       [GetPartnerDataFields.COLUMN_FILTERS]: this.filters,
+      [GetPartnerDataFields.COLUMN_MARKETPLACES_AGG]: this.marketplacesAgg,
       [GetPartnerDataFields.COLUMN_MONTHLY_TREND_AGG]: this.monthlyTrendAgg,
       [GetPartnerDataFields.COLUMN_PERIOD]: this.period,
       [GetPartnerDataFields.COLUMN_PAGINATION]: this.pagination,
