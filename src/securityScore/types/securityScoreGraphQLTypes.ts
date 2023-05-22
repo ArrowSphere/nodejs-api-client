@@ -149,7 +149,6 @@ export type ScoreByDateAggType = {
 export type ScoresAggType = {
   last?: ScoreByDateAggType;
   scores?: [ScoreByDateAggType];
-  total?: number;
 };
 
 export type AccountByDateAggType = {
