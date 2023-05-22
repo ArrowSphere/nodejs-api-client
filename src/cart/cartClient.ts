@@ -1,4 +1,4 @@
-import { AbstractClient, Parameters } from '../abstractClient';
+import { AbstractRestfulClient, Parameters } from '../abstractRestfulClient';
 import { GetResult } from '../getResult';
 import { Item, ItemList } from './entities';
 
@@ -35,7 +35,7 @@ export type ItemRequestType = {
 export type ItemAddRequestType = ItemRequestType;
 export type ItemUpdateRequestType = ItemRequestType;
 
-export class CartClient extends AbstractClient {
+export class CartClient extends AbstractRestfulClient {
   protected basePath = '/cart';
   public async addItem(
     postData: ItemAddRequestType,

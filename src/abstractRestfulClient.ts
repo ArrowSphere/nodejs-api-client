@@ -57,7 +57,7 @@ export type ExtraInformationType = {
   [ExtraInformationFields.COLUMN_EXTRA_INFORMATION]?: Record<string, unknown>;
 };
 
-export abstract class AbstractClient extends AbstractHttpClient {
+export abstract class AbstractRestfulClient extends AbstractHttpClient {
   /**
    * Axios instance for client
    */
@@ -90,7 +90,7 @@ export abstract class AbstractClient extends AbstractHttpClient {
 
   /**
    * AbstractClient constructor.
-   * @returns AbstractClient
+   * @returns AbstractRestfulClient
    */
   protected constructor(configuration?: ConfigurationsClient) {
     super();
@@ -134,7 +134,7 @@ export abstract class AbstractClient extends AbstractHttpClient {
   /**
    * Sets the page number
    * @param page - Page number
-   * @returns AbstractClient
+   * @returns AbstractRestfulClient
    */
   public setPage(page: number): this {
     this.page = page;
@@ -145,7 +145,7 @@ export abstract class AbstractClient extends AbstractHttpClient {
   /**
    * Sets Header Information
    * @param headers - Header axios information
-   * @returns AbstractClient
+   * @returns AbstractRestfulClient
    */
   public setHeaders(headers: Record<string, string>): this {
     this.headers = headers;

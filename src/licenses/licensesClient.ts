@@ -2,10 +2,10 @@
  * Class LicensesClient
  */
 import {
-  AbstractClient,
+  AbstractRestfulClient,
   ExtraInformationType,
   Parameters,
-} from '../abstractClient';
+} from '../abstractRestfulClient';
 import { FindConfig, FindData, FindResult } from './entities/findResult';
 import {
   ConfigFindResult,
@@ -308,7 +308,7 @@ export type PutCancelAutoRenew = ExtraInformationType;
 
 export type PutReactivateAutoRenew = ExtraInformationType;
 
-export class LicensesClient extends AbstractClient {
+export class LicensesClient extends AbstractRestfulClient {
   /**
    * The base path of the API
    */

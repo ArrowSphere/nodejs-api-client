@@ -1,4 +1,4 @@
-import { AbstractClient } from './abstractClient';
+import { AbstractRestfulClient } from './abstractRestfulClient';
 import { CheckDomainClient, WhoAmIClient } from './general';
 import { LicensesClient } from './licenses';
 import { SubscriptionsClient } from './subscriptions';
@@ -12,11 +12,12 @@ import { RegisterClient } from './security';
 import { CartClient } from './cart/cartClient';
 import { SupportCenterClient } from './supportCenter';
 import { CatalogClient } from './catalog';
+import { UserClient } from './user';
 
 /**
  * Public API Client class, should be the main entry point for your calls
  */
-export class PublicApiClient extends AbstractClient {
+export class PublicApiClient extends AbstractRestfulClient {
   constructor() {
     super();
   }
@@ -145,6 +146,13 @@ export class PublicApiClient extends AbstractClient {
 
   public getCatalogClient(): CatalogClient {
     return new CatalogClient()
+      .setUrl(this.url)
+      .setApiKey(this.apiKey)
+      .setHeaders(this.headers);
+  }
+
+  public getUserClient(): UserClient {
+    return new UserClient()
       .setUrl(this.url)
       .setApiKey(this.apiKey)
       .setHeaders(this.headers);

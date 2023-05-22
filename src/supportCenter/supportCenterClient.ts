@@ -1,8 +1,8 @@
 import {
-  AbstractClient,
+  AbstractRestfulClient,
   Parameters,
   ParametersWithPaginationType,
-} from '../abstractClient';
+} from '../abstractRestfulClient';
 import { Issue, Issues, IssueStatusesType } from './entities/issue/issue';
 import { GetResult } from '../getResult';
 import { IssueAttachment, IssueAttachments } from './entities/issue/attachment';
@@ -34,7 +34,7 @@ export type ListIssueParametersType = ParametersWithPaginationType & {
   [ListIssueParametersFields.TITLE]?: string;
 };
 
-export class SupportCenterClient extends AbstractClient {
+export class SupportCenterClient extends AbstractRestfulClient {
   protected basePath = '/support';
 
   public async listTopics(

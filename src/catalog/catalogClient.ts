@@ -1,9 +1,9 @@
-import { AbstractClient, Parameters } from '../abstractClient';
+import { AbstractRestfulClient, Parameters } from '../abstractRestfulClient';
 import { GetResult } from '../getResult';
 import { Program } from './entities/program';
 import { Programs } from './entities/programs';
 
-export class CatalogClient extends AbstractClient {
+export class CatalogClient extends AbstractRestfulClient {
   /**
    * The base path of the API
    */
