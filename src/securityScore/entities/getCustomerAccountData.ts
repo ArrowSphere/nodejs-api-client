@@ -30,15 +30,15 @@ export enum GetCustomerAccountDataFields {
 export type GetCustomerAccountDataType = {
   [GetCustomerAccountDataFields.COLUMN_AVG_CURRENT_SCORE]?: number;
   [GetCustomerAccountDataFields.COLUMN_CHECKS_AGG]?: ChecksAggType;
-  [GetCustomerAccountDataFields.COLUMN_FILTERS]?: [FilterType];
+  [GetCustomerAccountDataFields.COLUMN_FILTERS]?: FilterType[];
   [GetCustomerAccountDataFields.COLUMN_MONTHLY_TREND_AGG]?: MonthlyTrendAggType;
   [GetCustomerAccountDataFields.COLUMN_PAGINATION]?: PaginationsType;
   [GetCustomerAccountDataFields.COLUMN_PERIOD]?: PeriodsType;
-  [GetCustomerAccountDataFields.COLUMN_RESULTS]?: [ScoreResultType];
+  [GetCustomerAccountDataFields.COLUMN_RESULTS]?: ScoreResultType[];
   [GetCustomerAccountDataFields.COLUMN_SCORES_AGG]?: ScoresAggType;
   [GetCustomerAccountDataFields.COLUMN_SEVERITIES_AGG]?: SeveritiesAggType;
   [GetCustomerAccountDataFields.COLUMN_STANDARDS_AGG]?: StandardsAggType;
-  [GetCustomerAccountDataFields.COLUMN_STANDARDS]?: [StandardWithCheckType];
+  [GetCustomerAccountDataFields.COLUMN_STANDARDS]?: StandardWithCheckType[];
 };
 
 export type GetCustomerAccountDataGraphQLResultType = {
@@ -48,15 +48,15 @@ export type GetCustomerAccountDataGraphQLResultType = {
 export class GetCustomerAccountData extends AbstractEntity<GetCustomerAccountDataType> {
   readonly #avgCurrentScore?: number;
   readonly #checksAgg?: ChecksAggType;
-  readonly #filters?: [FilterType];
+  readonly #filters?: FilterType[];
   readonly #monthlyTrendAgg?: MonthlyTrendAggType;
   readonly #pagination?: PaginationsType;
   readonly #period?: PeriodsType;
-  readonly #results?: [ScoreResultType];
+  readonly #results?: ScoreResultType[];
   readonly #scoresAgg?: ScoresAggType;
   readonly #severitiesAgg?: SeveritiesAggType;
   readonly #standardsAgg?: StandardsAggType;
-  readonly #standards?: [StandardWithCheckType];
+  readonly #standards?: StandardWithCheckType[];
 
   public constructor(getCustomerAccountDataInput: GetCustomerAccountDataType) {
     super(getCustomerAccountDataInput);
@@ -109,7 +109,7 @@ export class GetCustomerAccountData extends AbstractEntity<GetCustomerAccountDat
     return this.#checksAgg;
   }
 
-  get filters(): [FilterType] | undefined {
+  get filters(): FilterType[] | undefined {
     return this.#filters;
   }
 
@@ -129,7 +129,7 @@ export class GetCustomerAccountData extends AbstractEntity<GetCustomerAccountDat
     return this.#scoresAgg;
   }
 
-  get results(): [ScoreResultType] | undefined {
+  get results(): ScoreResultType[] | undefined {
     return this.#results;
   }
 
@@ -141,7 +141,7 @@ export class GetCustomerAccountData extends AbstractEntity<GetCustomerAccountDat
     return this.#standardsAgg;
   }
 
-  get standards(): [StandardWithCheckType] | undefined {
+  get standards(): StandardWithCheckType[] | undefined {
     return this.#standards;
   }
 
