@@ -32,14 +32,14 @@ export type GetCustomerDataType = {
   [GetCustomerDataFields.COLUMN_ACCOUNTS_AGG]?: AccountsAggType;
   [GetCustomerDataFields.COLUMN_AVG_CURRENT_SCORE]?: number;
   [GetCustomerDataFields.COLUMN_CHECKS_AGG]?: ChecksAggType;
-  [GetCustomerDataFields.COLUMN_FILTERS]?: [FilterType];
+  [GetCustomerDataFields.COLUMN_FILTERS]?: FilterType[];
   [GetCustomerDataFields.COLUMN_MONTHLY_TREND_AGG]?: MonthlyTrendAggType;
   [GetCustomerDataFields.COLUMN_PAGINATION]?: PaginationsType;
   [GetCustomerDataFields.COLUMN_PERIOD]?: PeriodsType;
-  [GetCustomerDataFields.COLUMN_RESULTS]?: [ScoreResultType];
+  [GetCustomerDataFields.COLUMN_RESULTS]?: ScoreResultType[];
   [GetCustomerDataFields.COLUMN_SCORES_AGG]?: ScoresAggType;
   [GetCustomerDataFields.COLUMN_SEVERITIES_AGG]?: SeveritiesAggType;
-  [GetCustomerDataFields.COLUMN_STANDARDS]?: [StandardType];
+  [GetCustomerDataFields.COLUMN_STANDARDS]?: StandardType[];
   [GetCustomerDataFields.COLUMN_SUBSCRIPTION_REFERENCES]?: number;
 };
 
@@ -51,14 +51,14 @@ export class GetCustomerData extends AbstractEntity<GetCustomerDataType> {
   readonly #accountsAgg?: AccountsAggType;
   readonly #avgCurrentScore?: number;
   readonly #checksAgg?: ChecksAggType;
-  readonly #filters?: [FilterType];
+  readonly #filters?: FilterType[];
   readonly #monthlyTrendAgg?: MonthlyTrendAggType;
   readonly #pagination?: PaginationsType;
   readonly #period?: PeriodsType;
-  readonly #results?: [ScoreResultType];
+  readonly #results?: ScoreResultType[];
   readonly #scoresAgg?: ScoresAggType;
   readonly #severitiesAgg?: SeveritiesAggType;
-  readonly #standards?: [StandardType];
+  readonly #standards?: StandardType[];
   readonly #subscriptionReferences?: number;
 
   public constructor(getCustomerDataInput: GetCustomerDataType) {
@@ -101,7 +101,7 @@ export class GetCustomerData extends AbstractEntity<GetCustomerDataType> {
     return this.#checksAgg;
   }
 
-  get filters(): [FilterType] | undefined {
+  get filters(): FilterType[] | undefined {
     return this.#filters;
   }
 
@@ -117,7 +117,7 @@ export class GetCustomerData extends AbstractEntity<GetCustomerDataType> {
     return this.#period;
   }
 
-  get results(): [ScoreResultType] | undefined {
+  get results(): ScoreResultType[] | undefined {
     return this.#results;
   }
 
@@ -129,7 +129,7 @@ export class GetCustomerData extends AbstractEntity<GetCustomerDataType> {
     return this.#severitiesAgg;
   }
 
-  get standards(): [StandardType] | undefined {
+  get standards(): StandardType[] | undefined {
     return this.#standards;
   }
 
