@@ -1,4 +1,4 @@
-import { AbstractClient, ConfigurationsClient } from '../src';
+import { AbstractRestfulClient, ConfigurationsClient } from '../src';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { URL, URLSearchParams } from 'url';
 
@@ -10,7 +10,7 @@ export type ExpectFunctionParameters = {
 export const MOCK_URL = 'https://localhost';
 export const TEST_ENDPOINT = '/test';
 
-export class TestClient extends AbstractClient {
+export class TestClient extends AbstractRestfulClient {
   constructor(configuration?: ConfigurationsClient) {
     super(configuration);
   }

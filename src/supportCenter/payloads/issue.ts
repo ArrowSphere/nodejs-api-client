@@ -5,7 +5,7 @@ import {
   IssueOfferType,
   IssueStatusesType,
 } from '../entities/issue/issue';
-import { Payload } from '../../abstractClient';
+import { Payload } from '../../abstractRestfulClient';
 
 export enum IssueProgramsType {
   MSCSP = 'MSCSP',
