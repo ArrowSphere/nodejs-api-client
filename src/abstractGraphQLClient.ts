@@ -1,6 +1,6 @@
 import { GraphQLClient } from 'graphql-request';
 import * as Dom from 'graphql-request/dist/types.dom';
-import { Options } from './abstractClient';
+import { Options } from './abstractRestfulClient';
 import * as path from 'path';
 import { GetProductsType } from './catalog';
 import { jsonToGraphQLQuery } from 'json-to-graphql-query';
@@ -9,22 +9,22 @@ import { AbstractHttpClient } from './AbstractHttpClient';
 export type GraphQLResponseTypes = GetProductsType;
 
 export abstract class AbstractGraphQLClient extends AbstractHttpClient {
-  protected client!: GraphQLClient;
+  /**
+   * Must not be called directly.
+   * Use getClientInstance() to access it.
+   * @protected
+   */
+  protected graphQLClient!: GraphQLClient;
 
   protected optionsHeader?: Dom.RequestInit['headers'];
 
   protected options: Options = {};
 
-  private getClient() {
-    this.client = new GraphQLClient(this.generateUrl());
-
-    return this;
-  }
-
-  public setOptionsHeader(options: Dom.RequestInit['headers']): this {
-    this.optionsHeader = options;
-
-    return this;
+  private getClientInstance(): GraphQLClient {
+    return (
+      this.graphQLClient ??
+      (this.graphQLClient = new GraphQLClient(this.generateUrl()))
+    );
   }
 
   public setOptions(options: Options): this {
@@ -36,15 +36,16 @@ export abstract class AbstractGraphQLClient extends AbstractHttpClient {
   protected async post<GraphQLResponseTypes>(
     query: string,
   ): Promise<GraphQLResponseTypes> {
-    this.getClient().client.setHeaders({
+    const headers: Record<string, string> = {
       authorization: this.token,
-      ...this.optionsHeader,
-    });
+      ...this.headers,
+    };
+    this.getClientInstance().setHeaders(headers);
 
-    return await this.client.request<GraphQLResponseTypes>(query);
+    return await this.getClientInstance().request<GraphQLResponseTypes>(query);
   }
 
-  protected generateUrl(): string {
+  private generateUrl(): string {
     const url = new URL(
       `${
         this.options.isAdmin ? path.join('admin', this.basePath) : this.basePath

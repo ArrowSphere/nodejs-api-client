@@ -1,4 +1,4 @@
-import { AbstractClient, Parameters } from '../abstractClient';
+import { AbstractRestfulClient, Parameters } from '../abstractRestfulClient';
 import { GetResult } from '../getResult';
 import { DataListOrders } from './entities/dataListOrders';
 import { ReferenceLink } from './entities/referenceLink';
@@ -95,7 +95,7 @@ export type CreateOrderInputType = {
   }>;
 };
 
-export class OrdersClient extends AbstractClient {
+export class OrdersClient extends AbstractRestfulClient {
   /**
    * The base path of the API
    */

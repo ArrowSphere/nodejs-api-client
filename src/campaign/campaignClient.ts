@@ -1,4 +1,4 @@
-import { AbstractClient, Parameters } from '../abstractClient';
+import { AbstractRestfulClient, Parameters } from '../abstractRestfulClient';
 import { GetResult } from '../getResult';
 import { Campaign } from './entities/campaign/campaign';
 import { CampaignV2 } from './entities/v2/campaign/campaign';
@@ -19,7 +19,7 @@ export type PostEmailCampaignMetadataType = {
   [keys in string]: string;
 };
 
-export class CampaignClient extends AbstractClient {
+export class CampaignClient extends AbstractRestfulClient {
   /**
    * The base path of the API
    */

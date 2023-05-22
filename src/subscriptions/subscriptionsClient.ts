@@ -1,7 +1,7 @@
 /**
  * Class SubscriptionsClient
  */
-import { AbstractClient } from '../abstractClient';
+import { AbstractRestfulClient } from '../abstractRestfulClient';
 import { SubscriptionData } from './entities/subscription';
 import { SubscriptionsListResult } from './entities/subscriptionsListResult';
 
@@ -32,7 +32,7 @@ export type SubscriptionsListData = {
   };
 };
 
-export class SubscriptionsClient extends AbstractClient {
+export class SubscriptionsClient extends AbstractRestfulClient {
   /**
    * The base path of the API
    */

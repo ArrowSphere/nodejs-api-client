@@ -1,12 +1,12 @@
 import { AxiosResponse } from 'axios';
-import { AbstractClient, Parameters } from '../abstractClient';
+import { AbstractRestfulClient, Parameters } from '../abstractRestfulClient';
 
 export type CheckDomainData = { isDomainAvailable: boolean };
 
 /**
  * Class CheckDomainClient
  */
-export class CheckDomainClient extends AbstractClient {
+export class CheckDomainClient extends AbstractRestfulClient {
   /**
    * @param vendorName - The vendor's name
    * @param domainName - The domain to check

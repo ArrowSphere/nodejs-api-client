@@ -3,7 +3,11 @@ import querystring from 'querystring';
 import path from 'path';
 import { AxiosSingleton } from './axiosSingleton';
 import { AxiosInstance, AxiosResponse } from 'axios';
-import { AbstractHttpClient, HttpClientSecurity } from './AbstractHttpClient';
+import {
+  AbstractHttpClient,
+  Headers,
+  HttpClientSecurity,
+} from './AbstractHttpClient';
 
 /**
  * Lists of available query parameters for the API call
@@ -39,8 +43,6 @@ export type Parameters = Record<
   string | string[] | number | number[] | boolean | null | undefined
 >;
 
-export type Headers = Record<string, string>;
-
 export type Payload = Record<string, unknown> | Array<Payload>;
 
 export type Options = {
@@ -57,7 +59,7 @@ export type ExtraInformationType = {
   [ExtraInformationFields.COLUMN_EXTRA_INFORMATION]?: Record<string, unknown>;
 };
 
-export abstract class AbstractClient extends AbstractHttpClient {
+export abstract class AbstractRestfulClient extends AbstractHttpClient {
   /**
    * Axios instance for client
    */
@@ -84,13 +86,8 @@ export abstract class AbstractClient extends AbstractHttpClient {
   protected isCamelPagination = false;
 
   /**
-   * Defines header information for axios call
-   */
-  protected headers: Headers = {};
-
-  /**
    * AbstractClient constructor.
-   * @returns AbstractClient
+   * @returns AbstractRestfulClient
    */
   protected constructor(configuration?: ConfigurationsClient) {
     super();
@@ -134,21 +131,10 @@ export abstract class AbstractClient extends AbstractHttpClient {
   /**
    * Sets the page number
    * @param page - Page number
-   * @returns AbstractClient
+   * @returns AbstractRestfulClient
    */
   public setPage(page: number): this {
     this.page = page;
-
-    return this;
-  }
-
-  /**
-   * Sets Header Information
-   * @param headers - Header axios information
-   * @returns AbstractClient
-   */
-  public setHeaders(headers: Record<string, string>): this {
-    this.headers = headers;
 
     return this;
   }
