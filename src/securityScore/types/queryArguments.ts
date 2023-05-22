@@ -93,13 +93,13 @@ export type PaginateArgument = {
 };
 
 export type SearchBodyArgument = {
-  [SearchBodyFields.FILTERS]?: [SearchFilterArgument];
   [SearchBodyFields.EXCLUSION_FILTERS]?: [SearchFilterArgument];
-  [SearchBodyFields.SORT]?: [SortArgument];
-  [SearchBodyFields.SUBSCRIPTION_REFERENCE]?: [[string]];
+  [SearchBodyFields.FILTERS]?: [SearchFilterArgument];
   [SearchBodyFields.MARKETPLACE]?: [[string]];
   [SearchBodyFields.MONTHLY_TREND_PERIOD]?: PeriodInputArgument;
   [SearchBodyFields.PERIOD]?: PeriodInputArgument;
+  [SearchBodyFields.SORT]?: [SortArgument];
+  [SearchBodyFields.SUBSCRIPTION_REFERENCE]?: [[string]];
 };
 
 export type PeriodInputArgument = {

@@ -23,6 +23,10 @@ import {
   StandardByDateAggType,
   ScoreByMonthAggType,
   ScoresAggType,
+  MarketplaceAggType,
+  MarketplaceByDateAggType,
+  MarketplacePartnerAggType,
+  MarketplacePartnerAggByDateAggType,
 } from './securityScoreGraphQLTypes';
 
 type MissingFieldsOfMonthlyTrendAggSchema = {
@@ -168,3 +172,33 @@ export type StandardWithCheckSchema = Merge<
   Schema<StandardWithCheckType, boolean>,
   MissingFieldsInStandardWithCheckSchema
 >;
+
+type MarketplacePartnerAggByDateAggSchema = Schema<
+  MarketplacePartnerAggByDateAggType,
+  boolean
+>;
+
+type MissingFieldsInMarketplacePartnerAggSchema = {
+  data?: MarketplacePartnerAggByDateAggSchema;
+};
+
+type MarketplacePartnerAggSchema = Merge<
+  Schema<MarketplacePartnerAggType, boolean>,
+  MissingFieldsInMarketplacePartnerAggSchema
+>;
+
+type MarketplaceByDateAggSchema = Schema<MarketplaceByDateAggType, boolean>;
+
+type MissingFieldsInMarketplaceAggSchema = {
+  data?: MarketplaceByDateAggSchema;
+  partners?: MarketplacePartnerAggSchema;
+};
+
+type MarketplaceAggSchema = Merge<
+  Schema<MarketplaceAggType, boolean>,
+  MissingFieldsInMarketplaceAggSchema
+>;
+
+export type MarketplacesAggSchema = {
+  marketplaces?: MarketplaceAggSchema;
+};

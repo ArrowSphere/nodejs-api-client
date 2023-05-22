@@ -18,6 +18,7 @@ import {
   StandardsAggSchema,
   StandardSchema,
   StandardWithCheckSchema,
+  MarketplacesAggSchema,
 } from './securityScoreGraphQLSchemas';
 import { GetPartnerDataFields } from '../entities/getPartnerData';
 import { GetCustomerDataFields } from '../entities/getCustomerData';
@@ -33,6 +34,7 @@ export type GetPartnerDataQuery = {
     [GetPartnerDataFields.COLUMN_CHECKS_AGG]?: ChecksAggSchema;
     [GetPartnerDataFields.COLUMN_END_CUSTOMERS_AGG]?: EndCustomersAggSchema;
     [GetPartnerDataFields.COLUMN_FILTERS]?: FilterSchema;
+    [GetPartnerDataFields.COLUMN_MARKETPLACES_AGG]?: MarketplacesAggSchema;
     [GetPartnerDataFields.COLUMN_MONTHLY_TREND_AGG]?: MonthlyTrendAggSchema;
     [GetPartnerDataFields.COLUMN_PAGINATION]?: PaginationSchema;
     [GetPartnerDataFields.COLUMN_PERIOD]?: PeriodsSchema;

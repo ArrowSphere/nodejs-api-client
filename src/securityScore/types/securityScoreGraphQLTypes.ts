@@ -192,6 +192,48 @@ export type StandardsAggType = {
   standards: [StandardAggType];
 };
 
+export type MarketplaceSubscriptionReferenceAggType = {
+  accounts?: number;
+  avgCurrentScore?: number;
+  name?: string;
+};
+
+export type MarketplaceSubscriptionReferencesAggType = {
+  subscriptionReferences?: [MarketplaceSubscriptionReferenceAggType];
+};
+
+export type MarketplacePartnerAggByDateAggType = {
+  accounts?: number;
+  avgCurrentScore?: number;
+  date?: string;
+  subscriptionReferencesAgg?: MarketplaceSubscriptionReferencesAggType;
+};
+
+export type MarketplaceByDateAggType = {
+  avgCurrentScore?: number;
+  date?: string;
+};
+
+export type MarketplacePartnerAggType = {
+  data?: [MarketplacePartnerAggByDateAggType];
+  last?: MarketplacePartnerAggByDateAggType;
+  name?: string;
+  reference?: string;
+  progression?: number;
+};
+
+export type MarketplaceAggType = {
+  data?: [MarketplaceByDateAggType];
+  last?: MarketplaceByDateAggType;
+  name?: string;
+  partners?: [MarketplacePartnerAggType];
+  progression?: number;
+};
+
+export type MarketplacesAggType = {
+  marketplaces: [MarketplaceAggType];
+};
+
 export type CheckByDateType = {
   date?: string;
   flagged?: number;
