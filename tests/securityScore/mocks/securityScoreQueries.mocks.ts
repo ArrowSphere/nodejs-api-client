@@ -382,13 +382,17 @@ export const GET_CUSTOMER_ACCOUNT_DATA_QUERY: GetCustomerAccountDataQuery = {
   [SecurityScoreQueries.GET_CUSTOMER_ACCOUNT_DATA]: {
     __args: {
       searchBody: {
-        [SearchBodyFields.MARKETPLACE]: [['FR']],
+        [SearchBodyFields.MARKETPLACE]: [['FR'], ['UK']],
         [SearchBodyFields.FILTERS]: [
           {
             [SearchFilterFields.NAMES]: [
               SearchFilterValues.REGISTRATION_CUSTOMER_REFERENCE,
             ],
             [SearchFilterFields.VALUES]: [['XSP0']],
+          },
+          {
+            [SearchFilterFields.NAMES]: [SearchFilterValues.ACCOUNT_REFERENCE],
+            [SearchFilterFields.VALUES]: [['arrowsphere-1']],
           },
         ],
       },
@@ -563,4 +567,4 @@ export const GET_CUSTOMER_ACCOUNT_DATA_QUERY: GetCustomerAccountDataQuery = {
 };
 
 export const GET_CUSTOMER_ACCOUNT_DATA_GQL =
-  '{getCustomerAccountData (searchBody: {marketplace: [["FR"]], filters: [{names: ["registration.customer.reference"], values: [["XSP0"]]}]}) { avgCurrentScore checksAgg { checks { data { count date } last { count date } name progression reference vendorCode } } filters { name values { count value } } monthlyTrendAgg { avgCurrentScore period { from to } scores { avgCurrentScore date } } pagination { currentPage perPage previous next total totalPage } period { from to } results { account { failed name passed reference score standards { checks { description flagged isFailed name processed reference score severity } failed passed reference score total } total } registration { accountReference customer { name reference } marketplace reseller { name reference } subscription { reference } vendorCode } } scoresAgg { last { avgCurrentScore date failed passed total } scores { avgCurrentScore date failed passed total } } severitiesAgg { severities { data { count date } last { count date } name progression } } standardsAgg { standards { data { date score failed passed total } last { date score failed passed total } name progression reference } } standards { checks { data { date flagged isFailed processed score } description last { date flagged isFailed processed score } name progression reference severity } name reference } }}';
+  '{getCustomerAccountData (searchBody: {marketplace: [["FR"], ["UK"]], filters: [{names: ["registration.customer.reference"], values: [["XSP0"]]}, {names: ["account.reference"], values: [["arrowsphere-1"]]}]}) { avgCurrentScore checksAgg { checks { data { count date } last { count date } name progression reference vendorCode } } filters { name values { count value } } monthlyTrendAgg { avgCurrentScore period { from to } scores { avgCurrentScore date } } pagination { currentPage perPage previous next total totalPage } period { from to } results { account { failed name passed reference score standards { checks { description flagged isFailed name processed reference score severity } failed passed reference score total } total } registration { accountReference customer { name reference } marketplace reseller { name reference } subscription { reference } vendorCode } } scoresAgg { last { avgCurrentScore date failed passed total } scores { avgCurrentScore date failed passed total } } severitiesAgg { severities { data { count date } last { count date } name progression } } standardsAgg { standards { data { date score failed passed total } last { date score failed passed total } name progression reference } } standards { checks { data { date flagged isFailed processed score } description last { date flagged isFailed processed score } name progression reference severity } name reference } }}';
