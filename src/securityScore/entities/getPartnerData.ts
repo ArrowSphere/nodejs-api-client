@@ -31,12 +31,12 @@ export type GetPartnerDataType = {
   [GetPartnerDataFields.COLUMN_AVG_CURRENT_SCORE]?: number;
   [GetPartnerDataFields.COLUMN_CHECKS_AGG]?: ChecksAggType;
   [GetPartnerDataFields.COLUMN_END_CUSTOMERS_AGG]?: EndCustomersAggType;
-  [GetPartnerDataFields.COLUMN_FILTERS]?: [FilterType];
+  [GetPartnerDataFields.COLUMN_FILTERS]?: FilterType[];
   [GetPartnerDataFields.COLUMN_MARKETPLACES_AGG]?: MarketplacesAggType;
   [GetPartnerDataFields.COLUMN_MONTHLY_TREND_AGG]?: MonthlyTrendAggType;
   [GetPartnerDataFields.COLUMN_PAGINATION]?: PaginationsType;
   [GetPartnerDataFields.COLUMN_PERIOD]?: PeriodsType;
-  [GetPartnerDataFields.COLUMN_RESULTS]?: [ScoreResultType];
+  [GetPartnerDataFields.COLUMN_RESULTS]?: ScoreResultType[];
   [GetPartnerDataFields.COLUMN_SCORES_AGG]?: ScoresAggType;
   [GetPartnerDataFields.COLUMN_SEVERITIES_AGG]?: SeveritiesAggType;
 };
@@ -49,12 +49,12 @@ export class GetPartnerData extends AbstractEntity<GetPartnerDataType> {
   readonly #avgCurrentScore?: number;
   readonly #checksAgg?: ChecksAggType;
   readonly #endCustomersAgg?: EndCustomersAggType;
-  readonly #filters?: [FilterType];
+  readonly #filters?: FilterType[];
   readonly #marketplacesAgg?: MarketplacesAggType;
   readonly #monthlyTrendAgg?: MonthlyTrendAggType;
   readonly #period?: PeriodsType;
   readonly #pagination?: PaginationsType;
-  readonly #results?: [ScoreResultType];
+  readonly #results?: ScoreResultType[];
   readonly #scoresAgg?: ScoresAggType;
   readonly #severitiesAgg?: SeveritiesAggType;
 
@@ -94,7 +94,7 @@ export class GetPartnerData extends AbstractEntity<GetPartnerDataType> {
     return this.#endCustomersAgg;
   }
 
-  get filters(): [FilterType] | undefined {
+  get filters(): FilterType[] | undefined {
     return this.#filters;
   }
 
@@ -114,7 +114,7 @@ export class GetPartnerData extends AbstractEntity<GetPartnerDataType> {
     return this.#pagination;
   }
 
-  get results(): [ScoreResultType] | undefined {
+  get results(): ScoreResultType[] | undefined {
     return this.#results;
   }
 

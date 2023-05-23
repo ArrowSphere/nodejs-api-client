@@ -1,6 +1,6 @@
 export type FilterType = {
   name?: string;
-  values?: [FilterValuesType];
+  values?: FilterValuesType[];
 };
 
 export type FilterValuesType = {
@@ -52,7 +52,7 @@ export type CheckType = {
 };
 
 export type StandardType = {
-  checks?: [CheckType];
+  checks?: CheckType[];
   failed?: number;
   name?: string;
   passed?: number;
@@ -67,7 +67,7 @@ export type AccountType = {
   passed?: number;
   reference?: string;
   score?: number;
-  standards?: [StandardType];
+  standards?: StandardType[];
   total?: number;
 };
 
@@ -82,18 +82,18 @@ export type NameCountByDateAggType = {
 };
 
 export type SeverityAggType = {
-  data?: [NameCountByDateAggType];
+  data?: NameCountByDateAggType[];
   last?: NameCountByDateAggType;
   name?: string;
   progression?: number;
 };
 
 export type SeveritiesAggType = {
-  severities: [SeverityAggType];
+  severities: SeverityAggType[];
 };
 
 export type CheckAggType = {
-  data?: [NameCountByDateAggType];
+  data?: NameCountByDateAggType;
   last?: NameCountByDateAggType;
   name?: string;
   progression?: number;
@@ -102,7 +102,7 @@ export type CheckAggType = {
 };
 
 export type ChecksAggType = {
-  checks: [CheckAggType];
+  checks: CheckAggType[];
 };
 
 export type EndCustomerByDateAggType = {
@@ -116,7 +116,7 @@ export type EndCustomerByDateAggType = {
 };
 
 export type EndCustomerAggType = {
-  data?: [EndCustomerByDateAggType];
+  data?: EndCustomerByDateAggType[];
   last?: EndCustomerByDateAggType;
   name?: string;
   progression?: number;
@@ -124,7 +124,7 @@ export type EndCustomerAggType = {
 };
 
 export type EndCustomersAggType = {
-  customers: [EndCustomerAggType];
+  customers: EndCustomerAggType[];
 };
 
 export type ScoreByMonthAggType = {
@@ -135,7 +135,7 @@ export type ScoreByMonthAggType = {
 export type MonthlyTrendAggType = {
   avgCurrentScore: number;
   period: PeriodsType;
-  scores: [ScoreByMonthAggType];
+  scores: ScoreByMonthAggType[];
 };
 
 export type ScoreByDateAggType = {
@@ -148,7 +148,7 @@ export type ScoreByDateAggType = {
 
 export type ScoresAggType = {
   last?: ScoreByDateAggType;
-  scores?: [ScoreByDateAggType];
+  scores?: ScoreByDateAggType[];
 };
 
 export type AccountByDateAggType = {
@@ -160,7 +160,7 @@ export type AccountByDateAggType = {
 };
 
 export type AccountAggType = {
-  data?: [AccountByDateAggType];
+  data?: AccountByDateAggType[];
   last?: AccountByDateAggType;
   name?: string;
   progression?: number;
@@ -168,7 +168,7 @@ export type AccountAggType = {
 };
 
 export type AccountsAggType = {
-  accounts: [AccountAggType];
+  accounts: AccountAggType[];
 };
 
 export type StandardByDateAggType = {
@@ -180,7 +180,7 @@ export type StandardByDateAggType = {
 };
 
 export type StandardAggType = {
-  data?: [StandardByDateAggType];
+  data?: StandardByDateAggType[];
   last?: StandardByDateAggType;
   name?: string;
   progression?: number;
@@ -188,7 +188,7 @@ export type StandardAggType = {
 };
 
 export type StandardsAggType = {
-  standards: [StandardAggType];
+  standards: StandardAggType[];
 };
 
 export type MarketplaceSubscriptionReferenceAggType = {
@@ -198,7 +198,7 @@ export type MarketplaceSubscriptionReferenceAggType = {
 };
 
 export type MarketplaceSubscriptionReferencesAggType = {
-  subscriptionReferences?: [MarketplaceSubscriptionReferenceAggType];
+  subscriptionReferences?: MarketplaceSubscriptionReferenceAggType[];
 };
 
 export type MarketplacePartnerAggByDateAggType = {
@@ -214,7 +214,7 @@ export type MarketplaceByDateAggType = {
 };
 
 export type MarketplacePartnerAggType = {
-  data?: [MarketplacePartnerAggByDateAggType];
+  data?: MarketplacePartnerAggByDateAggType[];
   last?: MarketplacePartnerAggByDateAggType;
   name?: string;
   reference?: string;
@@ -222,15 +222,15 @@ export type MarketplacePartnerAggType = {
 };
 
 export type MarketplaceAggType = {
-  data?: [MarketplaceByDateAggType];
+  data?: MarketplaceByDateAggType[];
   last?: MarketplaceByDateAggType;
   name?: string;
-  partners?: [MarketplacePartnerAggType];
+  partners?: MarketplacePartnerAggType[];
   progression?: number;
 };
 
 export type MarketplacesAggType = {
-  marketplaces: [MarketplaceAggType];
+  marketplaces: MarketplaceAggType[];
 };
 
 export type CheckByDateType = {
@@ -242,7 +242,7 @@ export type CheckByDateType = {
 };
 
 export type ChecksByStandardType = {
-  data?: [CheckByDateType];
+  data?: CheckByDateType[];
   description?: string;
   last?: CheckByDateType;
   name?: string;
@@ -252,7 +252,7 @@ export type ChecksByStandardType = {
 };
 
 export type StandardWithCheckType = {
-  checks?: [ChecksByStandardType];
+  checks?: ChecksByStandardType[];
   name?: string;
   reference?: string;
 };
