@@ -93,7 +93,7 @@ export type SeveritiesAggType = {
 };
 
 export type CheckAggType = {
-  data?: NameCountByDateAggType;
+  data?: NameCountByDateAggType[];
   last?: NameCountByDateAggType;
   name?: string;
   progression?: number;
