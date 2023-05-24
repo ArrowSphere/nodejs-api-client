@@ -16,6 +16,7 @@
     "lint:fix": "eslint ./{src,tests}/**/*.ts --fix && prettier --write ./{src,tests}/**/*.ts",
     "prepare": "npm run clean && npm run build",
     "test": "mocha -r ts-node/register \"tests/**/*.ts\"",
+    "test:one": "mocha -r ts-node/register",
     "test:watch": "mocha --watch -r ts-node/register \"tests/**/*.ts\"",
     "test:coverage": "nyc --check-coverage npm run test",
     "test:coverage:report": "nyc report --reporter=text-lcov | coveralls"

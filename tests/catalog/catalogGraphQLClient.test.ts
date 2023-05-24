@@ -1,8 +1,7 @@
 import nock from 'nock';
 import { expect } from 'chai';
-import { CatalogGraphQLClient } from '../../src';
+import { CatalogGraphQLClient, ProductType } from '../../src';
 import { CatalogQuery } from '../../src/catalog/types/catalogGraphQLQueries';
-import { ProductType } from '../../build';
 
 const CATALOG_GRAPHQL_URL = 'https://graphql.localhost';
 const CATALOG_POST_URL = '/catalog/graphql';
@@ -35,7 +34,7 @@ describe('CatalogGraphQLClient', () => {
       const client = new CatalogGraphQLClient()
         .setUrl(CATALOG_GRAPHQL_URL)
         .setOptions({ isAdmin: true })
-        .setOptionsHeader({ authorization: 'test' });
+        .setHeaders({ authorization: 'test' });
 
       nock(CATALOG_GRAPHQL_URL + '/admin')
         .post(CATALOG_POST_URL)
@@ -84,7 +83,7 @@ describe('CatalogGraphQLClient', () => {
     it('should return response corresponding to query', async () => {
       const client = new CatalogGraphQLClient()
         .setUrl(CATALOG_GRAPHQL_URL)
-        .setOptionsHeader({ authorization: 'test' });
+        .setHeaders({ authorization: 'test' });
 
       const products: ProductType[] = [
         {
