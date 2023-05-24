@@ -9,6 +9,8 @@ export enum HttpClientSecurity {
   API_KEY = 'apikey',
 }
 
+export type Headers = Record<string, string>;
+
 export abstract class AbstractHttpClient {
   /**
    * Base path for HTTP calls
@@ -26,6 +28,10 @@ export abstract class AbstractHttpClient {
    * ArrowSphere API URL
    */
   protected url = '';
+  /**
+   * Defines header information for http requests
+   */
+  protected headers: Headers = {};
   /**
    * Http Exceptions Handlers
    */
@@ -51,6 +57,31 @@ export abstract class AbstractHttpClient {
 
   public setSecurity(security: HttpClientSecurity): this {
     this.security = security;
+
+    return this;
+  }
+
+  /**
+   * Warning: can remove useful headers, prefer use mergeHeaders()
+   * @param headers
+   */
+  public setHeaders(headers: Record<string, string>): this {
+    this.headers = headers;
+
+    return this;
+  }
+
+  /**
+   * Will merge existing headers with those in parameters.
+   * If There is key equality, the header passed as parameter has priority.
+   * @param headers
+   */
+  public mergeHeaders(headers: Record<string, string>): this {
+    const mergedHeaders: Record<string, string> = {
+      ...this.headers,
+      ...headers,
+    };
+    this.setHeaders(mergedHeaders);
 
     return this;
   }
