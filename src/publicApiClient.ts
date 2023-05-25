@@ -30,7 +30,8 @@ export class PublicApiClient extends AbstractRestfulClient {
     return new CustomersClient()
       .setUrl(this.url)
       .setApiKey(this.apiKey)
-      .setHeaders(this.headers);
+      .setHeaders(this.headers)
+      .setHttpExceptionHandlers(this.httpExceptionHandlers);
   }
 
   /**
@@ -41,7 +42,8 @@ export class PublicApiClient extends AbstractRestfulClient {
     return new WhoAmIClient()
       .setUrl(this.url)
       .setApiKey(this.apiKey)
-      .setHeaders(this.headers);
+      .setHeaders(this.headers)
+      .setHttpExceptionHandlers(this.httpExceptionHandlers);
   }
 
   /**
@@ -52,7 +54,8 @@ export class PublicApiClient extends AbstractRestfulClient {
     return new LicensesClient()
       .setUrl(this.url)
       .setApiKey(this.apiKey)
-      .setHeaders(this.headers);
+      .setHeaders(this.headers)
+      .setHttpExceptionHandlers(this.httpExceptionHandlers);
   }
 
   /**
@@ -63,7 +66,8 @@ export class PublicApiClient extends AbstractRestfulClient {
     return new CheckDomainClient()
       .setUrl(this.url)
       .setApiKey(this.apiKey)
-      .setHeaders(this.headers);
+      .setHeaders(this.headers)
+      .setHttpExceptionHandlers(this.httpExceptionHandlers);
   }
 
   /**
@@ -74,7 +78,8 @@ export class PublicApiClient extends AbstractRestfulClient {
     return new SubscriptionsClient()
       .setUrl(this.url)
       .setApiKey(this.apiKey)
-      .setHeaders(this.headers);
+      .setHeaders(this.headers)
+      .setHttpExceptionHandlers(this.httpExceptionHandlers);
   }
 
   /**
@@ -85,7 +90,8 @@ export class PublicApiClient extends AbstractRestfulClient {
     return new OrdersClient()
       .setUrl(this.url)
       .setApiKey(this.apiKey)
-      .setHeaders(this.headers);
+      .setHeaders(this.headers)
+      .setHttpExceptionHandlers(this.httpExceptionHandlers);
   }
 
   /**
@@ -96,7 +102,8 @@ export class PublicApiClient extends AbstractRestfulClient {
     return new ContactClient()
       .setUrl(this.url)
       .setApiKey(this.apiKey)
-      .setHeaders(this.headers);
+      .setHeaders(this.headers)
+      .setHttpExceptionHandlers(this.httpExceptionHandlers);
   }
 
   /**
@@ -107,55 +114,63 @@ export class PublicApiClient extends AbstractRestfulClient {
     return new CampaignClient()
       .setUrl(this.url)
       .setApiKey(this.apiKey)
-      .setHeaders(this.headers);
+      .setHeaders(this.headers)
+      .setHttpExceptionHandlers(this.httpExceptionHandlers);
   }
 
   public getConsumptionClient(): ConsumptionClient {
     return new ConsumptionClient()
       .setUrl(this.url)
       .setApiKey(this.apiKey)
-      .setHeaders(this.headers);
+      .setHeaders(this.headers)
+      .setHttpExceptionHandlers(this.httpExceptionHandlers);
   }
 
   public getSecurityStandardsClient(): StandardsClient {
     return new StandardsClient()
       .setUrl(this.url)
       .setApiKey(this.apiKey)
-      .setHeaders(this.headers);
+      .setHeaders(this.headers)
+      .setHttpExceptionHandlers(this.httpExceptionHandlers);
   }
 
   public getSecurityRegisterClient(): RegisterClient {
     return new RegisterClient()
       .setUrl(this.url)
       .setApiKey(this.apiKey)
-      .setHeaders(this.headers);
+      .setHeaders(this.headers)
+      .setHttpExceptionHandlers(this.httpExceptionHandlers);
   }
 
   public getCartClient(): CartClient {
     return new CartClient()
       .setUrl(this.url)
       .setApiKey(this.apiKey)
-      .setHeaders(this.headers);
+      .setHeaders(this.headers)
+      .setHttpExceptionHandlers(this.httpExceptionHandlers);
   }
   public getSupportCenterClient(): SupportCenterClient {
     return new SupportCenterClient()
       .setUrl(this.url)
       .setApiKey(this.apiKey)
-      .setHeaders(this.headers);
+      .setHeaders(this.headers)
+      .setHttpExceptionHandlers(this.httpExceptionHandlers);
   }
 
   public getCatalogClient(): CatalogClient {
     return new CatalogClient()
       .setUrl(this.url)
       .setApiKey(this.apiKey)
-      .setHeaders(this.headers);
+      .setHeaders(this.headers)
+      .setHttpExceptionHandlers(this.httpExceptionHandlers);
   }
 
   public getUserClient(): UserClient {
     return new UserClient()
       .setUrl(this.url)
       .setApiKey(this.apiKey)
-      .setHeaders(this.headers);
+      .setHeaders(this.headers)
+      .setHttpExceptionHandlers(this.httpExceptionHandlers);
   }
 }
 

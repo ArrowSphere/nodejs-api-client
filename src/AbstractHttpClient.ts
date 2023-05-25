@@ -97,6 +97,15 @@ export abstract class AbstractHttpClient {
   }
 
   /**
+   * Allow to set error handlers.
+   */
+  public setHttpExceptionHandlers(handlers: HttpExceptionHandler[]): this {
+    this.httpExceptionHandlers = handlers;
+
+    return this;
+  }
+
+  /**
    * Will find appropriate ErrorHandlers and apply them to the error in order of registering.
    */
   protected async handleError(
