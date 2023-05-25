@@ -7,6 +7,7 @@ export class PublicGraphQLClient extends AbstractGraphQLClient {
       .setUrl(this.url)
       .setToken(this.token)
       .setHeaders(this.headers)
-      .setToken(this.token);
+      .setToken(this.token)
+      .setHttpExceptionHandlers(this.httpExceptionHandlers);
   }
 }
