@@ -3,7 +3,33 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [3.28.0] - 2023-05-22
+## [3.31.0] - 2023-05-26
+
+### Changed
+
+- Add method removeHeader
+
+## [3.30.0] - 2023-05-26
+
+### Changed
+
+- Add a new Rest client & rename AbstractRestfulClient
+- Allow to mergeHeaders
+- Allow to propagate easily an error handler from PublicApiClient to its instances
+- Add marketplacesAgg type
+- Fix ScoresAggType
+- Fix array type
+- Fix CheckAggType
+
+## [3.29.0] - 2023-05-11
+
+### Changed
+
+- Add GQL client with token security and strong typing
+- Add GQL client with token security and strong typing
+- Add option token security for the abstract restful client
+
+## [3.28.0] - 2023-05-09
 
 ### Changed
 
