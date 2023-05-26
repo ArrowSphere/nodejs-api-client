@@ -86,6 +86,12 @@ export abstract class AbstractHttpClient {
     return this;
   }
 
+  public removeHeader(headerKey: string): this {
+    delete this.headers[headerKey];
+
+    return this;
+  }
+
   /**
    * Allow to register error/exception handler.
    * Handlers can be developed in another projects as long as they respect the interface HttpExceptionHandler.
