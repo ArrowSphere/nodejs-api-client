@@ -16,7 +16,6 @@ import {
   ScoresAggSchema,
   SeveritiesAggSchema,
   StandardsAggSchema,
-  StandardSchema,
   StandardWithCheckSchema,
   MarketplacesAggSchema,
 } from './securityScoreGraphQLSchemas';
@@ -60,7 +59,7 @@ export type GetCustomerDataQuery = {
     [GetCustomerDataFields.COLUMN_RESULTS]?: ScoreResultSchema;
     [GetCustomerDataFields.COLUMN_SCORES_AGG]?: ScoresAggSchema;
     [GetCustomerDataFields.COLUMN_SEVERITIES_AGG]?: SeveritiesAggSchema;
-    [GetCustomerDataFields.COLUMN_STANDARDS]?: StandardSchema;
+    [GetCustomerDataFields.COLUMN_STANDARDS]?: StandardWithCheckSchema;
     [GetCustomerDataFields.COLUMN_SUBSCRIPTION_REFERENCES]?: boolean;
   };
 };
