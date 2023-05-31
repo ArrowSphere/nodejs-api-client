@@ -355,28 +355,35 @@ export const GET_CUSTOMER_DATA_QUERY: GetCustomerDataQuery = {
     },
     standards: {
       checks: {
+        data: {
+          date: true,
+          flagged: true,
+          isFailed: true,
+          processed: true,
+          score: true,
+        },
         description: true,
-        flagged: true,
-        isFailed: true,
+        last: {
+          date: true,
+          flagged: true,
+          isFailed: true,
+          processed: true,
+          score: true,
+        },
         name: true,
-        processed: true,
+        progression: true,
         reference: true,
-        score: true,
         severity: true,
       },
-      failed: true,
       name: true,
-      passed: true,
       reference: true,
-      score: true,
-      total: true,
     },
     subscriptionReferences: true,
   },
 };
 
 export const GET_CUSTOMER_DATA_GQL =
-  '{getCustomerData (searchBody: {marketplace: [["FR"]], filters: [{names: ["registration.customer.reference"], values: [["XSP0"]]}]}) { accountsAgg { accounts { data { date avgCurrentScore failed passed total } last { date avgCurrentScore failed passed total } name progression reference } } avgCurrentScore checksAgg { checks { data { count date } last { count date } name progression reference vendorCode } } filters { name values { count value } } monthlyTrendAgg { avgCurrentScore period { from to } scores { avgCurrentScore date } } pagination { currentPage perPage previous next total totalPage } period { from to } results { account { failed name passed reference score standards { checks { description flagged isFailed name processed reference score severity } failed passed reference score total } total } registration { accountReference customer { name reference } marketplace reseller { name reference } subscription { reference } vendorCode } } scoresAgg { last { avgCurrentScore date failed passed total } scores { avgCurrentScore date failed passed total } } severitiesAgg { severities { data { count date } last { count date } name progression } } standards { checks { description flagged isFailed name processed reference score severity } failed name passed reference score total } subscriptionReferences }}';
+  '{getCustomerData (searchBody: {marketplace: [["FR"]], filters: [{names: ["registration.customer.reference"], values: [["XSP0"]]}]}) { accountsAgg { accounts { data { date avgCurrentScore failed passed total } last { date avgCurrentScore failed passed total } name progression reference } } avgCurrentScore checksAgg { checks { data { count date } last { count date } name progression reference vendorCode } } filters { name values { count value } } monthlyTrendAgg { avgCurrentScore period { from to } scores { avgCurrentScore date } } pagination { currentPage perPage previous next total totalPage } period { from to } results { account { failed name passed reference score standards { checks { description flagged isFailed name processed reference score severity } failed passed reference score total } total } registration { accountReference customer { name reference } marketplace reseller { name reference } subscription { reference } vendorCode } } scoresAgg { last { avgCurrentScore date failed passed total } scores { avgCurrentScore date failed passed total } } severitiesAgg { severities { data { count date } last { count date } name progression } } standards { checks { data { date flagged isFailed processed score } description last { date flagged isFailed processed score } name progression reference severity } name reference } subscriptionReferences }}';
 
 export const GET_CUSTOMER_ACCOUNT_DATA_QUERY: GetCustomerAccountDataQuery = {
   [SecurityScoreQueries.GET_CUSTOMER_ACCOUNT_DATA]: {
