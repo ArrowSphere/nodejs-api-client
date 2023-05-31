@@ -7,9 +7,9 @@ import {
   SeveritiesAggType,
   PaginationsType,
   PeriodsType,
-  StandardType,
   ChecksAggType,
   ScoresAggType,
+  StandardWithCheckType,
 } from '../types/securityScoreGraphQLTypes';
 import { SecurityScoreQueries } from '../types/queryArguments';
 
@@ -39,7 +39,7 @@ export type GetCustomerDataType = {
   [GetCustomerDataFields.COLUMN_RESULTS]?: ScoreResultType[];
   [GetCustomerDataFields.COLUMN_SCORES_AGG]?: ScoresAggType;
   [GetCustomerDataFields.COLUMN_SEVERITIES_AGG]?: SeveritiesAggType;
-  [GetCustomerDataFields.COLUMN_STANDARDS]?: StandardType[];
+  [GetCustomerDataFields.COLUMN_STANDARDS]?: StandardWithCheckType[];
   [GetCustomerDataFields.COLUMN_SUBSCRIPTION_REFERENCES]?: number;
 };
 
@@ -58,7 +58,7 @@ export class GetCustomerData extends AbstractEntity<GetCustomerDataType> {
   readonly #results?: ScoreResultType[];
   readonly #scoresAgg?: ScoresAggType;
   readonly #severitiesAgg?: SeveritiesAggType;
-  readonly #standards?: StandardType[];
+  readonly #standards?: StandardWithCheckType[];
   readonly #subscriptionReferences?: number;
 
   public constructor(getCustomerDataInput: GetCustomerDataType) {
@@ -129,7 +129,7 @@ export class GetCustomerData extends AbstractEntity<GetCustomerDataType> {
     return this.#severitiesAgg;
   }
 
-  get standards(): StandardType[] | undefined {
+  get standards(): StandardWithCheckType[] | undefined {
     return this.#standards;
   }
 
