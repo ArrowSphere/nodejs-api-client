@@ -8,6 +8,7 @@ import {
   PriceBandType,
   PricesType,
   ProductType,
+  PromotionType,
   RelatedOfferType,
 } from './catalogGraphQLTypes';
 import { Merge, Schema } from 'type-fest';
@@ -18,6 +19,7 @@ export type FiltersSchema = Schema<FiltersType, boolean>;
 
 type IdentifiersSchema = Schema<IdentifiersType, boolean>;
 type RelatedOfferSchema = Schema<RelatedOfferType, boolean>;
+type PromotionSchema = Schema<PromotionType, boolean>;
 
 /**
  * Field of type array are not handled by Schema, they must be overwritten
@@ -28,6 +30,7 @@ type MissingFieldsOfProductSchema = {
   conversionOfferPrimaries?: IdentifiersSchema;
   relatedOffers?: RelatedOfferSchema;
   priceBand?: PriceBandSchema;
+  promotions?: PromotionSchema;
 };
 
 export type ProductSchema = Merge<
@@ -40,7 +43,7 @@ type AttributeSchema = Schema<AttributeType, boolean>;
  * Field of type array are not handled by Schema, they must be overwritten
  */
 type MissingFieldsOfPriceBandSchema = {
-  attributes?: Array<AttributeSchema>;
+  attributes?: AttributeSchema;
 };
 /**
  * No type corresponding

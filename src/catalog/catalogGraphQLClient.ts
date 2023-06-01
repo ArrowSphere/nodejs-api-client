@@ -1,7 +1,15 @@
 import { AbstractGraphQLClient } from '../abstractGraphQLClient';
-import { GetProductsType } from './types/catalogGraphQLTypes';
-import { CatalogQuery } from './types/catalogGraphQLQueries';
+import {
+  GetPriceBandType,
+  GetProductsType,
+  GetProductType,
+} from './types/catalogGraphQLTypes';
+import { CatalogQueries, CatalogQuery } from './types/catalogGraphQLQueries';
 import { PublicApiClientException } from '../exception';
+import {
+  FindOnePriceBandQueryOutput,
+  FindOneProductQueryOutput,
+} from './types/FindOneProductQueryOutput';
 
 export class CatalogGraphQLClient extends AbstractGraphQLClient {
   /**
@@ -20,6 +28,10 @@ export class CatalogGraphQLClient extends AbstractGraphQLClient {
     return await this.post(request);
   }
 
+  /**
+   * @deprecated
+   * Prefer using findProductsByQuery instead.
+   */
   public async findByQuery(
     query: CatalogQuery,
   ): Promise<GetProductsType | null> {
@@ -35,6 +47,73 @@ export class CatalogGraphQLClient extends AbstractGraphQLClient {
       const { mustRetry } = await this.handleError(exception);
       if (mustRetry) {
         return await this.find(queryStr);
+      }
+    }
+
+    return null;
+  }
+
+  public async findProductsByQuery(
+    query: Pick<CatalogQueries, 'getProducts'>,
+  ): Promise<GetProductsType | null> {
+    const queryStr: string = this.stringifyQuery(query);
+
+    try {
+      return await this.find(queryStr);
+    } catch (error: unknown) {
+      const exception: PublicApiClientException = this.mapToPublicApiException(
+        error,
+      );
+
+      const { mustRetry } = await this.handleError(exception);
+      if (mustRetry) {
+        return await this.find(queryStr);
+      }
+    }
+
+    return null;
+  }
+
+  public async findOneProductByQuery(
+    query: Pick<CatalogQueries, 'product'>,
+  ): Promise<GetProductType | null> {
+    this.path = this.GRAPHQL;
+
+    const queryStr: string = this.stringifyQuery(query);
+
+    try {
+      return await this.post<FindOneProductQueryOutput>(queryStr);
+    } catch (error: unknown) {
+      const exception: PublicApiClientException = this.mapToPublicApiException(
+        error,
+      );
+
+      const { mustRetry } = await this.handleError(exception);
+      if (mustRetry) {
+        return await this.post<FindOneProductQueryOutput>(queryStr);
+      }
+    }
+
+    return null;
+  }
+
+  public async findOnePriceBandByQuery(
+    query: Pick<CatalogQueries, 'priceBand'>,
+  ): Promise<GetPriceBandType | null> {
+    this.path = this.GRAPHQL;
+
+    const queryStr: string = this.stringifyQuery(query);
+
+    try {
+      return await this.post<FindOnePriceBandQueryOutput>(queryStr);
+    } catch (error: unknown) {
+      const exception: PublicApiClientException = this.mapToPublicApiException(
+        error,
+      );
+
+      const { mustRetry } = await this.handleError(exception);
+      if (mustRetry) {
+        return await this.post<FindOnePriceBandQueryOutput>(queryStr);
       }
     }
 
