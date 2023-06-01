@@ -1,18 +1,45 @@
-import { QueryArguments } from './queryArguments';
+import {
+  QueryPriceBandArguments,
+  QueryProductArguments,
+} from './queryProductArguments';
 import {
   FiltersSchema,
   PaginationSchema,
+  PriceBandSchema,
   ProductSchema,
 } from './catalogGraphQLSchemas';
+import { Merge } from 'type-fest';
 
+/**
+ * @deprecated
+ */
 export type CatalogQuery = {
   getProducts: GetPaginatedProductsQuery;
 };
 
-export declare type GetPaginatedProductsQuery = {
-  __args: QueryArguments;
+/**
+ * Represent the Catalog Schema of Public API
+ */
+export type CatalogQueries = {
+  getProducts?: GetPaginatedProductsQuery;
+  priceBand?: GetPriceBandQuery;
+  product?: GetProductQuery;
+};
+
+export type GetPaginatedProductsQuery = {
+  __args: QueryProductArguments;
   filters?: FiltersSchema;
   pagination?: PaginationSchema;
   products?: ProductSchema;
   topOffers?: ProductSchema;
 };
+
+export type GetProductQuery = Merge<
+  { __args: QueryProductArguments },
+  ProductSchema
+>;
+
+export type GetPriceBandQuery = Merge<
+  { __args: QueryPriceBandArguments },
+  PriceBandSchema
+>;

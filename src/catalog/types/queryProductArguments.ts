@@ -1,14 +1,37 @@
 /**
  * For field __args
  */
-export type QueryArguments = {
+export type QueryProductArguments = {
   paginate?: PaginateArgument;
   searchBody: SearchBodyArgument;
+};
+
+/**
+ * For field __args
+ */
+export type QueryPriceBandArguments = {
+  paginate?: PaginateArgument;
+  searchBody: SearchBodyPriceBandsArgument;
 };
 
 export type PaginateArgument = {
   page: number;
   perPage: number;
+};
+
+export type SearchBodyPriceBandsArgument = {
+  keywords?: string;
+  filters?: SearchFilterArgument[];
+  exclusionFilters?: SearchFilterArgument[];
+  sort?: SortArgument;
+  highlight?: boolean;
+  aggregatorFilter?: string[];
+  marketplace?: string;
+  resellerRef?: string;
+  endCustomerRef?: string;
+  restricted?: boolean;
+  getFamilies?: boolean;
+  quantity?: number;
 };
 
 export type SearchBodyArgument = {

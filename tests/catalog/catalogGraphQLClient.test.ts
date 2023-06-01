@@ -1,7 +1,6 @@
 import nock from 'nock';
 import { expect } from 'chai';
-import { CatalogGraphQLClient, ProductType } from '../../src';
-import { CatalogQuery } from '../../src/catalog/types/catalogGraphQLQueries';
+import { CatalogGraphQLClient, CatalogQuery, ProductType } from '../../src';
 
 const CATALOG_GRAPHQL_URL = 'https://graphql.localhost';
 const CATALOG_POST_URL = '/catalog/graphql';
