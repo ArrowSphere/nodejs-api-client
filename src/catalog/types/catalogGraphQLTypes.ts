@@ -4,6 +4,10 @@ export type GetProductsType = {
   getProducts?: PaginatedProductsType;
 };
 
+export type GetProductType = {
+  product?: ProductType;
+};
+
 export type PaginatedProductsType = {
   filters?: Array<FiltersType>;
   pagination?: PaginationType;
@@ -47,6 +51,7 @@ export type ProductType = {
   baseOfferPrimaries?: Array<IdentifiersType>;
   assets?: AssetsType;
   environmentAvailability?: string;
+  promotions?: Array<PromotionType>;
   marketplace?: string;
   isEnabled?: boolean;
   isTrial?: boolean;
@@ -173,6 +178,8 @@ export type PriceBandType = {
   prices?: PricesType;
   saleConstraints?: PriceBandSaleConstraintsType;
   uom?: UomType;
+  promotionPrices?: PromotionPricesType;
+  vendor?: VendorType;
 };
 
 export type PriceBandActionFlagsType = {
@@ -229,6 +236,7 @@ export type PricesType = {
   buy?: string;
   sell?: string;
   public?: string;
+  vendorPricingSource?: VendorPricingSourceType;
 };
 
 export type PriceBandSaleConstraintsType = {
@@ -255,4 +263,36 @@ export type OfferResellersType = {
 
 export type ResellerType = {
   xspRef?: string;
+};
+
+export type PromotionPricesType = {
+  promotionId?: string;
+  prices?: PricesType;
+};
+
+export type VendorPricingSourceType = {
+  currency?: string;
+  changeRate?: number;
+  prices?: PricesType;
+};
+
+export type PromotionType = {
+  promotionId?: string;
+  vendorSku?: string;
+  marketplace?: string;
+  name?: string;
+  description?: string;
+  isAutoApplicable?: boolean;
+  startDate?: string;
+  endDate?: string;
+  promotionType?: string;
+  pricingType?: string;
+  pricingValue?: number;
+  billing?: BillingType;
+  minQuantity?: number;
+  maxQuantity?: number;
+  currency?: string;
+  applicableUntil?: string;
+  applicableFor?: number;
+  checkEligibility?: boolean;
 };

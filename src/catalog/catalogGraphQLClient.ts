@@ -1,7 +1,8 @@
 import { AbstractGraphQLClient } from '../abstractGraphQLClient';
-import { GetProductsType } from './types/catalogGraphQLTypes';
+import { GetProductsType, GetProductType } from './types/catalogGraphQLTypes';
 import { CatalogQuery } from './types/catalogGraphQLQueries';
 import { PublicApiClientException } from '../exception';
+import { FindOneProductQueryOutput } from './types/FindOneProductQueryOutput';
 
 export class CatalogGraphQLClient extends AbstractGraphQLClient {
   /**
@@ -21,7 +22,7 @@ export class CatalogGraphQLClient extends AbstractGraphQLClient {
   }
 
   public async findByQuery(
-    query: CatalogQuery,
+    query: Pick<CatalogQuery, 'getProducts'>,
   ): Promise<GetProductsType | null> {
     const queryStr: string = this.stringifyQuery(query);
 
@@ -35,6 +36,29 @@ export class CatalogGraphQLClient extends AbstractGraphQLClient {
       const { mustRetry } = await this.handleError(exception);
       if (mustRetry) {
         return await this.find(queryStr);
+      }
+    }
+
+    return null;
+  }
+
+  public async findOneByQuery(
+    query: Pick<CatalogQuery, 'product'>,
+  ): Promise<GetProductType | null> {
+    this.path = this.GRAPHQL;
+
+    const queryStr: string = this.stringifyQuery(query);
+
+    try {
+      return await this.post<FindOneProductQueryOutput>(queryStr);
+    } catch (error: any) {
+      const exception: PublicApiClientException = this.mapToPublicApiException(
+        error,
+      );
+
+      const { mustRetry } = await this.handleError(exception);
+      if (mustRetry) {
+        return await this.post<FindOneProductQueryOutput>(queryStr);
       }
     }
 
