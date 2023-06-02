@@ -10,9 +10,7 @@ import {
 export const PAYLOAD_RESOURCES_RESPONSE: GetData<ResourcesType> = {
   [GetResultFields.COLUMN_STATUS]: 200,
   [GetResultFields.COLUMN_DATA]: {
-    [ResourcesFields.COLUMN_DESCRIPTION]:
-      'Checks buckets in Amazon Simple Storage Service (Amazon S3) that have open access permissions or allow access to any authenticated AWS user. ...',
-    [ResourcesFields.COLUMN_METADATA]: [
+    [ResourcesFields.COLUMN_HEADERS]: [
       'Region Name',
       'Region API Parameter',
       'Bucket Name',
@@ -22,7 +20,6 @@ export const PAYLOAD_RESOURCES_RESPONSE: GetData<ResourcesType> = {
       'Policy Allows Access',
       'Ignored Bucket Name',
     ],
-    [ResourcesFields.COLUMN_NAME]: 'Amazon S3 Bucket Permissions',
     [ResourcesFields.COLUMN_RESOURCES]: [
       {
         [SecurityResourcesFields.COLUMN_STATUS]: 'FAILED',
@@ -37,7 +34,6 @@ export const PAYLOAD_RESOURCES_RESPONSE: GetData<ResourcesType> = {
         ],
       },
     ],
-    [ResourcesFields.COLUMN_UPDATED_AT]: '2021-12-06T18:00:00Z',
   },
   [GetResultFields.COLUMN_PAGINATION]: {
     [PaginationFields.COLUMN_PER_PAGE]: 15,
