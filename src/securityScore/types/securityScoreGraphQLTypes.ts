@@ -43,6 +43,7 @@ export type RegistrationType = {
 export type CheckType = {
   description?: string;
   flagged?: number;
+  group?: string;
   isFailed?: boolean;
   name?: string;
   processed?: number;
