@@ -1,4 +1,7 @@
-import { AbstractRestfulClient } from './abstractRestfulClient';
+import {
+  AbstractRestfulClient,
+  ConfigurationsClient,
+} from './abstractRestfulClient';
 import { CheckDomainClient, WhoAmIClient } from './general';
 import { LicensesClient } from './licenses';
 import { SubscriptionsClient } from './subscriptions';
@@ -27,8 +30,10 @@ export class PublicApiClient extends AbstractRestfulClient {
    * Creates a new {@link CustomersClient} instance and returns it
    * @returns {@link CustomersClient}
    */
-  public getCustomersClient(): CustomersClient {
-    return new CustomersClient()
+  public getCustomersClient(
+    configuration?: ConfigurationsClient,
+  ): CustomersClient {
+    return new CustomersClient(configuration)
       .setUrl(this.url)
       .setApiKey(this.apiKey)
       .setHeaders(this.headers)
@@ -39,8 +44,8 @@ export class PublicApiClient extends AbstractRestfulClient {
    * Creates a new {@link WhoAmIClient} instance and returns it
    * @returns {@link WhoAmIClient}
    */
-  public getWhoamiClient(): WhoAmIClient {
-    return new WhoAmIClient()
+  public getWhoamiClient(configuration?: ConfigurationsClient): WhoAmIClient {
+    return new WhoAmIClient(configuration)
       .setUrl(this.url)
       .setApiKey(this.apiKey)
       .setHeaders(this.headers)
@@ -51,8 +56,10 @@ export class PublicApiClient extends AbstractRestfulClient {
    * Creates a new {@link LicensesClient} instance and returns it
    * @returns {@link LicensesClient}
    */
-  public getLicensesClient(): LicensesClient {
-    return new LicensesClient()
+  public getLicensesClient(
+    configuration?: ConfigurationsClient,
+  ): LicensesClient {
+    return new LicensesClient(configuration)
       .setUrl(this.url)
       .setApiKey(this.apiKey)
       .setHeaders(this.headers)
@@ -63,8 +70,10 @@ export class PublicApiClient extends AbstractRestfulClient {
    * Creates a new {@link CheckDomainClient} instance and returns it
    * @returns {@link CheckDomainClient}
    */
-  public getCheckDomainClient(): CheckDomainClient {
-    return new CheckDomainClient()
+  public getCheckDomainClient(
+    configuration?: ConfigurationsClient,
+  ): CheckDomainClient {
+    return new CheckDomainClient(configuration)
       .setUrl(this.url)
       .setApiKey(this.apiKey)
       .setHeaders(this.headers)
@@ -75,8 +84,10 @@ export class PublicApiClient extends AbstractRestfulClient {
    * Creates a new {@link SubscriptionsClient} instance and returns it
    * @returns {@link SubscriptionsClient}
    */
-  public getSubscriptionsClient(): SubscriptionsClient {
-    return new SubscriptionsClient()
+  public getSubscriptionsClient(
+    configuration?: ConfigurationsClient,
+  ): SubscriptionsClient {
+    return new SubscriptionsClient(configuration)
       .setUrl(this.url)
       .setApiKey(this.apiKey)
       .setHeaders(this.headers)
@@ -87,8 +98,8 @@ export class PublicApiClient extends AbstractRestfulClient {
    * Creates a new {@link OrdersClient} instance and returns it
    * @returns {@link OrdersClient}
    */
-  public getOrdersClient(): OrdersClient {
-    return new OrdersClient()
+  public getOrdersClient(configuration?: ConfigurationsClient): OrdersClient {
+    return new OrdersClient(configuration)
       .setUrl(this.url)
       .setApiKey(this.apiKey)
       .setHeaders(this.headers)
@@ -99,8 +110,8 @@ export class PublicApiClient extends AbstractRestfulClient {
    * Creates a new {@link ContactClient} instance and returns it
    * @returns {@link ContactClient}
    */
-  public getContactClient(): ContactClient {
-    return new ContactClient()
+  public getContactClient(configuration?: ConfigurationsClient): ContactClient {
+    return new ContactClient(configuration)
       .setUrl(this.url)
       .setApiKey(this.apiKey)
       .setHeaders(this.headers)
@@ -111,71 +122,83 @@ export class PublicApiClient extends AbstractRestfulClient {
    * Creates a new {@link ContactClient} instance and returns it
    * @returns {@link ContactClient}
    */
-  public getCampaignClient(): CampaignClient {
-    return new CampaignClient()
+  public getCampaignClient(
+    configuration?: ConfigurationsClient,
+  ): CampaignClient {
+    return new CampaignClient(configuration)
       .setUrl(this.url)
       .setApiKey(this.apiKey)
       .setHeaders(this.headers)
       .setHttpExceptionHandlers(this.httpExceptionHandlers);
   }
 
-  public getConsumptionClient(): ConsumptionClient {
-    return new ConsumptionClient()
+  public getConsumptionClient(
+    configuration?: ConfigurationsClient,
+  ): ConsumptionClient {
+    return new ConsumptionClient(configuration)
       .setUrl(this.url)
       .setApiKey(this.apiKey)
       .setHeaders(this.headers)
       .setHttpExceptionHandlers(this.httpExceptionHandlers);
   }
 
-  public getSecurityStandardsClient(): StandardsClient {
-    return new StandardsClient()
+  public getSecurityStandardsClient(
+    configuration?: ConfigurationsClient,
+  ): StandardsClient {
+    return new StandardsClient(configuration)
       .setUrl(this.url)
       .setApiKey(this.apiKey)
       .setHeaders(this.headers)
       .setHttpExceptionHandlers(this.httpExceptionHandlers);
   }
 
-  public getSecurityRegisterClient(): RegisterClient {
-    return new RegisterClient()
+  public getSecurityRegisterClient(
+    configuration?: ConfigurationsClient,
+  ): RegisterClient {
+    return new RegisterClient(configuration)
       .setUrl(this.url)
       .setApiKey(this.apiKey)
       .setHeaders(this.headers)
       .setHttpExceptionHandlers(this.httpExceptionHandlers);
   }
 
-  public getCartClient(): CartClient {
-    return new CartClient()
+  public getCartClient(configuration?: ConfigurationsClient): CartClient {
+    return new CartClient(configuration)
       .setUrl(this.url)
       .setApiKey(this.apiKey)
       .setHeaders(this.headers)
       .setHttpExceptionHandlers(this.httpExceptionHandlers);
   }
-  public getSupportCenterClient(): SupportCenterClient {
-    return new SupportCenterClient()
-      .setUrl(this.url)
-      .setApiKey(this.apiKey)
-      .setHeaders(this.headers)
-      .setHttpExceptionHandlers(this.httpExceptionHandlers);
-  }
-
-  public getCatalogClient(): CatalogClient {
-    return new CatalogClient()
+  public getSupportCenterClient(
+    configuration?: ConfigurationsClient,
+  ): SupportCenterClient {
+    return new SupportCenterClient(configuration)
       .setUrl(this.url)
       .setApiKey(this.apiKey)
       .setHeaders(this.headers)
       .setHttpExceptionHandlers(this.httpExceptionHandlers);
   }
 
-  public getUserClient(): UserClient {
-    return new UserClient()
+  public getCatalogClient(configuration?: ConfigurationsClient): CatalogClient {
+    return new CatalogClient(configuration)
       .setUrl(this.url)
       .setApiKey(this.apiKey)
       .setHeaders(this.headers)
       .setHttpExceptionHandlers(this.httpExceptionHandlers);
   }
 
-  public getNotificationsClient(): NotificationsClient {
-    return new NotificationsClient()
+  public getUserClient(configuration?: ConfigurationsClient): UserClient {
+    return new UserClient(configuration)
+      .setUrl(this.url)
+      .setApiKey(this.apiKey)
+      .setHeaders(this.headers)
+      .setHttpExceptionHandlers(this.httpExceptionHandlers);
+  }
+
+  public getNotificationsClient(
+    configuration?: ConfigurationsClient,
+  ): NotificationsClient {
+    return new NotificationsClient(configuration)
       .setUrl(this.url)
       .setToken(this.token)
       .setHeaders(this.headers)
