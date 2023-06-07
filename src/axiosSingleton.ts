@@ -6,11 +6,19 @@ import axios, {
 } from 'axios';
 import { cloneDeep } from 'lodash';
 
+export type AxiosSingletonConfiguration = {
+  isLogging?: boolean;
+};
+
 export class AxiosSingleton {
   private static _axiosInstance: AxiosInstance;
+  private static _isLogging = false;
 
-  public static getInstance(): AxiosInstance {
+  public static getInstance(
+    configuration: AxiosSingletonConfiguration = {},
+  ): AxiosInstance {
     if (!AxiosSingleton._axiosInstance) {
+      this._isLogging = !!configuration.isLogging;
       AxiosSingleton._axiosInstance = axios.create();
       AxiosSingleton._initializedRequestInterceptor();
       AxiosSingleton._initializedResponseInterceptor();
@@ -21,32 +29,49 @@ export class AxiosSingleton {
   }
 
   private static _initializedRequestInterceptor(): void {
-    this._axiosInstance.interceptors.request.use(this._handleRequest);
+    this._axiosInstance.interceptors.request.use((req) =>
+      this._handleRequest(req, this._isLogging),
+    );
   }
 
   private static _initializedResponseInterceptor(): void {
-    this._axiosInstance.interceptors.response.use(this._handleResponse);
+    this._axiosInstance.interceptors.response.use((req) =>
+      this._handleResponse(req, this._isLogging),
+    );
   }
 
   /**
    * @param request - Axios Request
+   * @param isLogging - Must log
    */
   private static _handleRequest(
     request: AxiosRequestConfig,
+    isLogging = false,
   ): AxiosRequestConfig {
-    console.info('AXIOS - Request : ', AxiosSingleton.cleanRequestLog(request));
+    if (isLogging) {
+      console.info(
+        'AXIOS - Request : ',
+        AxiosSingleton.cleanRequestLog(request),
+      );
+    }
 
     return request;
   }
 
   /**
    * @param response - Axios Response
+   * @param isLogging - Must log
    */
-  private static _handleResponse(response: AxiosResponse): AxiosResponse {
-    console.info(
-      'AXIOS - Response : ',
-      AxiosSingleton.cleanResponseLog(response),
-    );
+  private static _handleResponse(
+    response: AxiosResponse,
+    isLogging = false,
+  ): AxiosResponse {
+    if (isLogging) {
+      console.info(
+        'AXIOS - Response : ',
+        AxiosSingleton.cleanResponseLog(response),
+      );
+    }
 
     return response;
   }
