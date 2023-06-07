@@ -16,6 +16,7 @@ export enum ParameterKeys {
   API_KEY = 'apiKey',
   AUTHORIZATION = 'Authorization',
   HEADERS = 'headers',
+  IS_LOGGING = 'is_logging',
   ORDER_BY = 'order_by',
   PAGE = 'page',
   PER_PAGE = 'per_page',
@@ -52,6 +53,7 @@ export type Options = {
 export type ConfigurationsClient = {
   [ParameterKeys.API_KEY]?: string;
   [ParameterKeys.URL]?: string;
+  [ParameterKeys.IS_LOGGING]?: boolean;
   [ParameterKeys.HEADERS]?: Headers;
 };
 
@@ -91,7 +93,11 @@ export abstract class AbstractRestfulClient extends AbstractHttpClient {
    */
   protected constructor(configuration?: ConfigurationsClient) {
     super();
-    this.client = AxiosSingleton.getInstance();
+    this.client = AxiosSingleton.getInstance({
+      isLogging: configuration
+        ? !!configuration[ParameterKeys.IS_LOGGING]
+        : false,
+    });
 
     this.setApiKey(configuration?.[ParameterKeys.API_KEY] ?? '');
     this.setUrl(configuration?.[ParameterKeys.URL] ?? '');
