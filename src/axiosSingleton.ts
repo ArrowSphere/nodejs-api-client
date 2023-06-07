@@ -34,8 +34,6 @@ export class AxiosSingleton {
   private static _handleRequest(
     request: AxiosRequestConfig,
   ): AxiosRequestConfig {
-    console.info('AXIOS - Request : ', AxiosSingleton.cleanRequestLog(request));
-
     return request;
   }
 
@@ -43,11 +41,6 @@ export class AxiosSingleton {
    * @param response - Axios Response
    */
   private static _handleResponse(response: AxiosResponse): AxiosResponse {
-    console.info(
-      'AXIOS - Response : ',
-      AxiosSingleton.cleanResponseLog(response),
-    );
-
     return response;
   }
 
