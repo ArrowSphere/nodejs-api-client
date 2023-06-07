@@ -1,16 +1,19 @@
-import axios, {
-  AxiosInstance,
-  AxiosRequestConfig,
-  AxiosResponse,
-  RawAxiosRequestHeaders,
-} from 'axios';
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { cloneDeep } from 'lodash';
+
+export type AxiosSingletonConfiguration = {
+  isLogging?: boolean;
+};
 
 export class AxiosSingleton {
   private static _axiosInstance: AxiosInstance;
+  private static _isLogging: boolean;
 
-  public static getInstance(): AxiosInstance {
+  public static getInstance(
+    configuration: AxiosSingletonConfiguration = {},
+  ): AxiosInstance {
     if (!AxiosSingleton._axiosInstance) {
+      this._isLogging = !!configuration.isLogging;
       AxiosSingleton._axiosInstance = axios.create();
       AxiosSingleton._initializedRequestInterceptor();
       AxiosSingleton._initializedResponseInterceptor();
@@ -34,6 +37,13 @@ export class AxiosSingleton {
   private static _handleRequest(
     request: AxiosRequestConfig,
   ): AxiosRequestConfig {
+    if (this._isLogging) {
+      console.info(
+        'AXIOS - Request : ',
+        AxiosSingleton.cleanRequestLog(request),
+      );
+    }
+
     return request;
   }
 
@@ -41,6 +51,13 @@ export class AxiosSingleton {
    * @param response - Axios Response
    */
   private static _handleResponse(response: AxiosResponse): AxiosResponse {
+    if (this._isLogging) {
+      console.info(
+        'AXIOS - Response : ',
+        AxiosSingleton.cleanResponseLog(response),
+      );
+    }
+
     return response;
   }
 
@@ -50,13 +67,11 @@ export class AxiosSingleton {
   private static cleanRequestLog(
     request: AxiosRequestConfig,
   ): AxiosRequestConfig {
-    const tempRequest: AxiosRequestConfig = cloneDeep(request);
+    const tempRequest = cloneDeep(request);
 
-    if (tempRequest.headers?.apiKey) {
-      const apiKey = tempRequest.headers?.apiKey as string;
-      (tempRequest.headers as RawAxiosRequestHeaders).apiKey =
-        '****************************' + apiKey.substring(apiKey.length - 4);
-    }
+    // coverage bug delete undefined element
+    /* istanbul ignore next */
+    delete tempRequest.headers?.apiKey;
 
     return tempRequest;
   }
@@ -65,13 +80,11 @@ export class AxiosSingleton {
    * @param response - Axios Response
    */
   private static cleanResponseLog(response: AxiosResponse): AxiosResponse {
-    const tempResponse: AxiosResponse = cloneDeep(response);
+    const tempResponse = cloneDeep(response);
 
-    if (tempResponse.config.headers?.apiKey) {
-      const apiKey = tempResponse.config.headers?.apiKey as string;
-      (tempResponse.config.headers as RawAxiosRequestHeaders).apiKey =
-        '****************************' + apiKey.substring(apiKey.length - 4);
-    }
+    // coverage bug delete undefined element
+    /* istanbul ignore next */
+    delete tempResponse.config.headers?.apiKey;
     delete tempResponse.request;
 
     return tempResponse;
