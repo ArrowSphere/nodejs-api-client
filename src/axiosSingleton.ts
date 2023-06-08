@@ -17,8 +17,8 @@ export class AxiosSingleton {
   public static getInstance(
     configuration: AxiosSingletonConfiguration = {},
   ): AxiosInstance {
+    this._isLogging = !!configuration.isLogging;
     if (!AxiosSingleton._axiosInstance) {
-      this._isLogging = !!configuration.isLogging;
       AxiosSingleton._axiosInstance = axios.create();
       AxiosSingleton._initializedRequestInterceptor();
       AxiosSingleton._initializedResponseInterceptor();
