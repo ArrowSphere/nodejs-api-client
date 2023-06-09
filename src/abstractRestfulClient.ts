@@ -327,6 +327,9 @@ export abstract class AbstractRestfulClient extends AbstractHttpClient {
       url.search = querystring.stringify(params);
     }
 
+    // We need to set the value back to empty in case we have a new call with the same instance.
+    this.path = '';
+
     return url.toString();
   }
 
