@@ -53,7 +53,7 @@ export class NotificationsClient extends AbstractRestfulClient {
     notificationId: string,
     parameters: Parameters = {},
   ): Promise<GetResult<Notification>> {
-    this.path = `${notificationId}`;
+    this.path = `/${notificationId}`;
 
     return new GetResult(Notification, await this.get(parameters));
   }
@@ -62,7 +62,7 @@ export class NotificationsClient extends AbstractRestfulClient {
     notificationId: string,
     parameters: Parameters = {},
   ): Promise<void> {
-    this.path = `${notificationId}`;
+    this.path = `/${notificationId}`;
 
     return await this.delete(parameters);
   }
