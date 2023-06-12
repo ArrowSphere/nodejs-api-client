@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Add extra information order
+- Fix path for notification Endpoint
 
 ## [3.36.0] - 2023-06-09
 

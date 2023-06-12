@@ -4,8 +4,6 @@ import {
   NotificationDetailsFields,
   NotificationDetailsType,
   NotificationsType,
-  NotificationType,
-  NotificationFields,
   TotalFields,
   TotalType,
 } from '../../../src';
@@ -28,10 +26,10 @@ export const PAYLOAD_LIST_ALL_NOTIFICATIONS: GetData<NotificationsType> = {
   },
 };
 
-export const PAYLOAD_ONE_NOTIFICATION: GetData<NotificationType> = {
+export const PAYLOAD_ONE_NOTIFICATION: GetData<NotificationsType> = {
   status: 200,
   data: {
-    [NotificationFields.COLUMN_NOTIFICATION]: NOTIFICATION,
+    [NotificationsFields.COLUMN_NOTIFICATIONS]: [NOTIFICATION],
   },
 };
 

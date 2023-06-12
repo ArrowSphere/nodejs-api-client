@@ -46,7 +46,7 @@ describe('NotificationsClient', () => {
     });
   });
 
-  describe('getNotification', () => {
+  describe('getOne', () => {
     it('should get one notification', async () => {
       nock(NOTIFICATIONS_URL)
         .get(TEST_NOTIFICATIONS_URL_PARAMS)
@@ -58,7 +58,7 @@ describe('NotificationsClient', () => {
     });
   });
 
-  describe('deleteNotification', () => {
+  describe('deleteOne', () => {
     it('should list notification without parameters', async () => {
       nock(NOTIFICATIONS_URL).delete(TEST_NOTIFICATIONS_URL_PARAMS).reply(204);
 
@@ -76,7 +76,7 @@ describe('NotificationsClient', () => {
     });
   });
 
-  describe('read', () => {
+  describe('readOne', () => {
     it('should read one notifications', async () => {
       nock(NOTIFICATIONS_URL)
         .patch(TEST_NOTIFICATIONS_URL_PARAMS_READ)
