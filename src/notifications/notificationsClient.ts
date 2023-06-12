@@ -6,7 +6,6 @@ import {
 } from '../abstractRestfulClient';
 import { GetResult } from '../getResult';
 import { Notifications } from './entities/notifications';
-import { Notification } from './entities/notification';
 import { Total } from './entities/total';
 
 export enum ListParametersFields {
@@ -52,17 +51,17 @@ export class NotificationsClient extends AbstractRestfulClient {
   public async getOne(
     notificationId: string,
     parameters: Parameters = {},
-  ): Promise<GetResult<Notification>> {
-    this.path = `${notificationId}`;
+  ): Promise<GetResult<Notifications>> {
+    this.path = `/${notificationId}`;
 
-    return new GetResult(Notification, await this.get(parameters));
+    return new GetResult(Notifications, await this.get(parameters));
   }
 
   public async deleteOne(
     notificationId: string,
     parameters: Parameters = {},
   ): Promise<void> {
-    this.path = `${notificationId}`;
+    this.path = `/${notificationId}`;
 
     return await this.delete(parameters);
   }
