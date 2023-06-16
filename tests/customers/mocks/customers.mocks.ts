@@ -9,6 +9,7 @@ import {
   GetResultFields,
   InvitationContactFields,
   PaginationFields,
+  AdditionalExtraInformationFields,
 } from '../../../src';
 
 export const PAYLOAD_GET_CUSTOMERS = {
@@ -51,6 +52,11 @@ export const PAYLOAD_GET_CUSTOMERS = {
           [DetailsFields.COLUMN_TENANT_ID]: 'tenant_id',
         },
         [CustomerFields.COLUMN_DELETED_AT]: 'deleted_at',
+        [CustomerFields.COLUMN_EXTRA_INFORMATION]: {
+          [AdditionalExtraInformationFields.COLUMN_PROGRAMS]: {
+            test: 'test',
+          },
+        },
       },
     ],
   },

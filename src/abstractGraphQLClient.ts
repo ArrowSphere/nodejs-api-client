@@ -12,7 +12,6 @@ export abstract class AbstractGraphQLClient extends AbstractHttpClient {
   /**
    * Must not be called directly.
    * Use getClientInstance() to access it.
-   * @protected
    */
   protected graphQLClient!: GraphQLClient;
 
