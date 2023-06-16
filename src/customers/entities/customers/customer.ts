@@ -1,6 +1,10 @@
 import { AbstractEntity } from '../../../abstractEntity';
 import { Contact, ContactType } from './contact/contact';
 import { Details, DetailsType } from './details/details';
+import {
+  AdditionalExtraInformation,
+  AdditionalExtraInformationType,
+} from '../../../shared';
 
 export enum CustomerFields {
   COLUMN_REFERENCE = 'Reference',
@@ -21,8 +25,9 @@ export enum CustomerFields {
   COLUMN_BILLING_ID = 'BillingId',
   COLUMN_INTERNAL_REFERENCE = 'InternalReference',
   COLUMN_CONTACT = 'Contact',
-  COLUMN_DETAILS = 'Details',
   COLUMN_DELETED_AT = 'DeletedAt',
+  COLUMN_DETAILS = 'Details',
+  COLUMN_EXTRA_INFORMATION = 'extraInformation',
 }
 
 export type CustomerType = {
@@ -44,8 +49,9 @@ export type CustomerType = {
   [CustomerFields.COLUMN_BILLING_ID]: string;
   [CustomerFields.COLUMN_INTERNAL_REFERENCE]: string;
   [CustomerFields.COLUMN_CONTACT]: ContactType;
-  [CustomerFields.COLUMN_DETAILS]: DetailsType;
   [CustomerFields.COLUMN_DELETED_AT]?: string | null;
+  [CustomerFields.COLUMN_DETAILS]: DetailsType;
+  [CustomerFields.COLUMN_EXTRA_INFORMATION]?: AdditionalExtraInformationType;
 };
 
 export class Customer extends AbstractEntity<CustomerType> {
@@ -67,8 +73,9 @@ export class Customer extends AbstractEntity<CustomerType> {
   readonly #billingId: string;
   readonly #internalReference: string;
   readonly #contact: Contact;
-  readonly #details: Details;
   readonly #deletedAt?: string | null;
+  readonly #details: Details;
+  readonly #extraInformation?: AdditionalExtraInformation;
 
   public constructor(getCustomersDataInput: CustomerType) {
     super(getCustomersDataInput);
@@ -101,10 +108,19 @@ export class Customer extends AbstractEntity<CustomerType> {
     this.#contact = new Contact(
       getCustomersDataInput[CustomerFields.COLUMN_CONTACT],
     );
+    this.#deletedAt = getCustomersDataInput[CustomerFields.COLUMN_DELETED_AT];
     this.#details = new Details(
       getCustomersDataInput[CustomerFields.COLUMN_DETAILS],
     );
-    this.#deletedAt = getCustomersDataInput[CustomerFields.COLUMN_DELETED_AT];
+    this.#extraInformation = getCustomersDataInput[
+      CustomerFields.COLUMN_EXTRA_INFORMATION
+    ]
+      ? new AdditionalExtraInformation(
+          getCustomersDataInput[
+            CustomerFields.COLUMN_EXTRA_INFORMATION
+          ] as AdditionalExtraInformationType,
+        )
+      : undefined;
   }
 
   get Reference(): string {
@@ -187,6 +203,10 @@ export class Customer extends AbstractEntity<CustomerType> {
     return this.#deletedAt;
   }
 
+  get ExtraInformation(): AdditionalExtraInformation | undefined {
+    return this.#extraInformation;
+  }
+
   public toJSON(): CustomerType {
     return {
       [CustomerFields.COLUMN_REFERENCE]: this.Reference,
@@ -209,6 +229,7 @@ export class Customer extends AbstractEntity<CustomerType> {
       [CustomerFields.COLUMN_CONTACT]: this.Contact.toJSON(),
       [CustomerFields.COLUMN_DETAILS]: this.Details.toJSON(),
       [CustomerFields.COLUMN_DELETED_AT]: this.DeletedAt,
+      [CustomerFields.COLUMN_EXTRA_INFORMATION]: this.ExtraInformation?.toJSON(),
     };
   }
 }
