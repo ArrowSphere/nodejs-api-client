@@ -63,7 +63,7 @@ export abstract class AbstractHttpClient {
 
   /**
    * Warning: can remove useful headers, prefer use mergeHeaders()
-   * @param headers
+   * @param headers - Set headers information
    */
   public setHeaders(headers: Record<string, string>): this {
     this.headers = headers;
@@ -74,7 +74,7 @@ export abstract class AbstractHttpClient {
   /**
    * Will merge existing headers with those in parameters.
    * If There is key equality, the header passed as parameter has priority.
-   * @param headers
+   * @param headers - Merge headers information
    */
   public mergeHeaders(headers: Record<string, string>): this {
     const mergedHeaders: Record<string, string> = {

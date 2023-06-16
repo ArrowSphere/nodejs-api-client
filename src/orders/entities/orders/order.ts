@@ -3,9 +3,9 @@ import { OrderProduct, OrderProductsType } from './products/products';
 import { OrderPartner, OrderPartnerType } from './partner/partner';
 import { ReferenceLink, ReferenceLinkType } from '../referenceLink';
 import {
-  OrderExtraInformation,
-  OrderExtraInformationType,
-} from './extraInformation/extraInformation';
+  AdditionalExtraInformation,
+  AdditionalExtraInformationType,
+} from '../../../shared';
 
 export enum OrderFields {
   COLUMN_REFERENCE = 'reference',
@@ -30,7 +30,7 @@ export type OrderType = {
   [OrderFields.COLUMN_CUSTOMER]: ReferenceLinkType;
   [OrderFields.COLUMN_PONUMBER]: string;
   [OrderFields.COLUMN_PRODUCTS]: Array<OrderProductsType>;
-  [OrderFields.COLUMN_EXTRA_INFORMATION]?: OrderExtraInformationType;
+  [OrderFields.COLUMN_EXTRA_INFORMATION]?: AdditionalExtraInformationType;
 };
 
 export class Order extends AbstractEntity<OrderType> {
@@ -43,7 +43,7 @@ export class Order extends AbstractEntity<OrderType> {
   readonly #customer: ReferenceLink;
   readonly #ponumber: string;
   readonly #products: Array<OrderProduct>;
-  readonly #extraInformation?: OrderExtraInformation;
+  readonly #extraInformation?: AdditionalExtraInformation;
 
   public constructor(getOrderDataInput: OrderType) {
     super(getOrderDataInput);
@@ -70,10 +70,10 @@ export class Order extends AbstractEntity<OrderType> {
     this.#extraInformation = getOrderDataInput[
       OrderFields.COLUMN_EXTRA_INFORMATION
     ]
-      ? new OrderExtraInformation(
+      ? new AdditionalExtraInformation(
           getOrderDataInput[
             OrderFields.COLUMN_EXTRA_INFORMATION
-          ] as OrderExtraInformationType,
+          ] as AdditionalExtraInformationType,
         )
       : undefined;
   }
@@ -106,7 +106,7 @@ export class Order extends AbstractEntity<OrderType> {
     return this.#products;
   }
 
-  get extraInformation(): OrderExtraInformation | undefined {
+  get extraInformation(): AdditionalExtraInformation | undefined {
     return this.#extraInformation;
   }
 
