@@ -1,11 +1,11 @@
 // PAYLOADS
 import {
+  AdditionalExtraInformationFields,
   DataListOrdersFields,
   DataListOrdersType,
   GetData,
   GetResultFields,
   IdentifiersVendorFields,
-  OrderExtraInformationFields,
   OrderFields,
   OrderPartnerFields,
   OrderProductsFields,
@@ -81,7 +81,7 @@ export const PAYLOAD_ORDERS: GetData<DataListOrdersType> = {
           },
         ],
         [OrderFields.COLUMN_EXTRA_INFORMATION]: {
-          [OrderExtraInformationFields.COLUMN_PROGRAMS]: {
+          [AdditionalExtraInformationFields.COLUMN_PROGRAMS]: {
             info1: {
               key1: 'value1',
             },
