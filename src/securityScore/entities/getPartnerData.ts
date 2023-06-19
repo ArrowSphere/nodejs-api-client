@@ -2,7 +2,6 @@ import { AbstractEntity } from '../../abstractEntity';
 import {
   ChecksAggType,
   EndCustomersAggType,
-  FilterType,
   MarketplacesAggType,
   MonthlyTrendAggType,
   PaginationsType,
@@ -14,10 +13,8 @@ import {
 import { SecurityScoreQueries } from '../types/queryArguments';
 
 export enum GetPartnerDataFields {
-  COLUMN_AVG_CURRENT_SCORE = 'avgCurrentScore',
   COLUMN_CHECKS_AGG = 'checksAgg',
   COLUMN_END_CUSTOMERS_AGG = 'endCustomersAgg',
-  COLUMN_FILTERS = 'filters',
   COLUMN_MARKETPLACES_AGG = 'marketplacesAgg',
   COLUMN_MONTHLY_TREND_AGG = 'monthlyTrendAgg',
   COLUMN_PAGINATION = 'pagination',
@@ -28,10 +25,8 @@ export enum GetPartnerDataFields {
 }
 
 export type GetPartnerDataType = {
-  [GetPartnerDataFields.COLUMN_AVG_CURRENT_SCORE]?: number;
   [GetPartnerDataFields.COLUMN_CHECKS_AGG]?: ChecksAggType;
   [GetPartnerDataFields.COLUMN_END_CUSTOMERS_AGG]?: EndCustomersAggType;
-  [GetPartnerDataFields.COLUMN_FILTERS]?: FilterType[];
   [GetPartnerDataFields.COLUMN_MARKETPLACES_AGG]?: MarketplacesAggType;
   [GetPartnerDataFields.COLUMN_MONTHLY_TREND_AGG]?: MonthlyTrendAggType;
   [GetPartnerDataFields.COLUMN_PAGINATION]?: PaginationsType;
@@ -46,10 +41,8 @@ export type GetPartnerDataGraphQLResultType = {
 };
 
 export class GetPartnerData extends AbstractEntity<GetPartnerDataType> {
-  readonly #avgCurrentScore?: number;
   readonly #checksAgg?: ChecksAggType;
   readonly #endCustomersAgg?: EndCustomersAggType;
-  readonly #filters?: FilterType[];
   readonly #marketplacesAgg?: MarketplacesAggType;
   readonly #monthlyTrendAgg?: MonthlyTrendAggType;
   readonly #period?: PeriodsType;
@@ -61,13 +54,10 @@ export class GetPartnerData extends AbstractEntity<GetPartnerDataType> {
   public constructor(getPartnerDataInput: GetPartnerDataType) {
     super(getPartnerDataInput);
 
-    this.#avgCurrentScore =
-      getPartnerDataInput[GetPartnerDataFields.COLUMN_AVG_CURRENT_SCORE];
     this.#checksAgg =
       getPartnerDataInput[GetPartnerDataFields.COLUMN_CHECKS_AGG];
     this.#endCustomersAgg =
       getPartnerDataInput[GetPartnerDataFields.COLUMN_END_CUSTOMERS_AGG];
-    this.#filters = getPartnerDataInput[GetPartnerDataFields.COLUMN_FILTERS];
     this.#marketplacesAgg =
       getPartnerDataInput[GetPartnerDataFields.COLUMN_MARKETPLACES_AGG];
     this.#monthlyTrendAgg =
@@ -82,20 +72,12 @@ export class GetPartnerData extends AbstractEntity<GetPartnerDataType> {
       getPartnerDataInput[GetPartnerDataFields.COLUMN_SEVERITIES_AGG];
   }
 
-  get avgCurrentScore(): number | undefined {
-    return this.#avgCurrentScore;
-  }
-
   get checksAgg(): ChecksAggType | undefined {
     return this.#checksAgg;
   }
 
   get endCustomersAgg(): EndCustomersAggType | undefined {
     return this.#endCustomersAgg;
-  }
-
-  get filters(): FilterType[] | undefined {
-    return this.#filters;
   }
 
   get monthlyTrendAgg(): MonthlyTrendAggType | undefined {
@@ -128,10 +110,8 @@ export class GetPartnerData extends AbstractEntity<GetPartnerDataType> {
 
   public toJSON(): GetPartnerDataType {
     return {
-      [GetPartnerDataFields.COLUMN_AVG_CURRENT_SCORE]: this.avgCurrentScore,
       [GetPartnerDataFields.COLUMN_CHECKS_AGG]: this.checksAgg,
       [GetPartnerDataFields.COLUMN_END_CUSTOMERS_AGG]: this.endCustomersAgg,
-      [GetPartnerDataFields.COLUMN_FILTERS]: this.filters,
       [GetPartnerDataFields.COLUMN_MARKETPLACES_AGG]: this.marketplacesAgg,
       [GetPartnerDataFields.COLUMN_MONTHLY_TREND_AGG]: this.monthlyTrendAgg,
       [GetPartnerDataFields.COLUMN_PERIOD]: this.period,
