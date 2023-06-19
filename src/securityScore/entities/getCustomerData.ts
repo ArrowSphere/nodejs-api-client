@@ -1,7 +1,6 @@
 import { AbstractEntity } from '../../abstractEntity';
 import {
   AccountsAggType,
-  FilterType,
   ScoreResultType,
   MonthlyTrendAggType,
   SeveritiesAggType,
@@ -15,9 +14,7 @@ import { SecurityScoreQueries } from '../types/queryArguments';
 
 export enum GetCustomerDataFields {
   COLUMN_ACCOUNTS_AGG = 'accountsAgg',
-  COLUMN_AVG_CURRENT_SCORE = 'avgCurrentScore',
   COLUMN_CHECKS_AGG = 'checksAgg',
-  COLUMN_FILTERS = 'filters',
   COLUMN_MONTHLY_TREND_AGG = 'monthlyTrendAgg',
   COLUMN_PAGINATION = 'pagination',
   COLUMN_PERIOD = 'period',
@@ -30,9 +27,7 @@ export enum GetCustomerDataFields {
 
 export type GetCustomerDataType = {
   [GetCustomerDataFields.COLUMN_ACCOUNTS_AGG]?: AccountsAggType;
-  [GetCustomerDataFields.COLUMN_AVG_CURRENT_SCORE]?: number;
   [GetCustomerDataFields.COLUMN_CHECKS_AGG]?: ChecksAggType;
-  [GetCustomerDataFields.COLUMN_FILTERS]?: FilterType[];
   [GetCustomerDataFields.COLUMN_MONTHLY_TREND_AGG]?: MonthlyTrendAggType;
   [GetCustomerDataFields.COLUMN_PAGINATION]?: PaginationsType;
   [GetCustomerDataFields.COLUMN_PERIOD]?: PeriodsType;
@@ -49,9 +44,7 @@ export type GetCustomerDataGraphQLResultType = {
 
 export class GetCustomerData extends AbstractEntity<GetCustomerDataType> {
   readonly #accountsAgg?: AccountsAggType;
-  readonly #avgCurrentScore?: number;
   readonly #checksAgg?: ChecksAggType;
-  readonly #filters?: FilterType[];
   readonly #monthlyTrendAgg?: MonthlyTrendAggType;
   readonly #pagination?: PaginationsType;
   readonly #period?: PeriodsType;
@@ -66,11 +59,8 @@ export class GetCustomerData extends AbstractEntity<GetCustomerDataType> {
 
     this.#accountsAgg =
       getCustomerDataInput[GetCustomerDataFields.COLUMN_ACCOUNTS_AGG];
-    this.#avgCurrentScore =
-      getCustomerDataInput[GetCustomerDataFields.COLUMN_AVG_CURRENT_SCORE];
     this.#checksAgg =
       getCustomerDataInput[GetCustomerDataFields.COLUMN_CHECKS_AGG];
-    this.#filters = getCustomerDataInput[GetCustomerDataFields.COLUMN_FILTERS];
     this.#monthlyTrendAgg =
       getCustomerDataInput[GetCustomerDataFields.COLUMN_MONTHLY_TREND_AGG];
     this.#pagination =
@@ -93,16 +83,8 @@ export class GetCustomerData extends AbstractEntity<GetCustomerDataType> {
     return this.#accountsAgg;
   }
 
-  get avgCurrentScore(): number | undefined {
-    return this.#avgCurrentScore;
-  }
-
   get checksAgg(): ChecksAggType | undefined {
     return this.#checksAgg;
-  }
-
-  get filters(): FilterType[] | undefined {
-    return this.#filters;
   }
 
   get monthlyTrendAgg(): MonthlyTrendAggType | undefined {
@@ -140,9 +122,7 @@ export class GetCustomerData extends AbstractEntity<GetCustomerDataType> {
   public toJSON(): GetCustomerDataType {
     return {
       [GetCustomerDataFields.COLUMN_ACCOUNTS_AGG]: this.accountsAgg,
-      [GetCustomerDataFields.COLUMN_AVG_CURRENT_SCORE]: this.avgCurrentScore,
       [GetCustomerDataFields.COLUMN_CHECKS_AGG]: this.checksAgg,
-      [GetCustomerDataFields.COLUMN_FILTERS]: this.filters,
       [GetCustomerDataFields.COLUMN_MONTHLY_TREND_AGG]: this.monthlyTrendAgg,
       [GetCustomerDataFields.COLUMN_PAGINATION]: this.pagination,
       [GetCustomerDataFields.COLUMN_PERIOD]: this.period,
