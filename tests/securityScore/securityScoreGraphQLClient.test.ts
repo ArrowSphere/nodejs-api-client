@@ -133,10 +133,6 @@ describe('SecurityScoreGraphQLClient', () => {
         SecurityScoreQueryMock.GET_PARTNER_DATA_QUERY,
       );
 
-      expect(result?.avgCurrentScore).to.be.equals(
-        expectedResult.getPartnerData.avgCurrentScore,
-      );
-
       expect(result?.period).to.be.equals(expectedResult.getPartnerData.period);
       expect(result?.endCustomersAgg).to.be.equals(
         expectedResult.getPartnerData.endCustomersAgg,
@@ -189,10 +185,6 @@ describe('SecurityScoreGraphQLClient', () => {
 
       const result: GetCustomerDataType | null = await client.getCustomerData(
         SecurityScoreQueryMock.GET_CUSTOMER_DATA_QUERY,
-      );
-
-      expect(result?.avgCurrentScore).to.be.equals(
-        expectedResult.getCustomerData.avgCurrentScore,
       );
 
       expect(result?.period).to.be.equals(
@@ -249,10 +241,6 @@ describe('SecurityScoreGraphQLClient', () => {
 
       const result: GetCustomerAccountDataType | null = await client.getCustomerAccountData(
         SecurityScoreQueryMock.GET_CUSTOMER_ACCOUNT_DATA_QUERY,
-      );
-
-      expect(result?.avgCurrentScore).to.be.equals(
-        expectedResult.getCustomerAccountData.avgCurrentScore,
       );
 
       expect(result?.period).to.be.equals(

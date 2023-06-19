@@ -53,8 +53,10 @@ export type CheckType = {
 };
 
 export type StandardType = {
+  currentScore?: number;
   checks?: CheckType[];
   failed?: number;
+  maxScore?: number;
   name?: string;
   passed?: number;
   reference?: string;
