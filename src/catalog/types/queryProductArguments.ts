@@ -21,8 +21,8 @@ export type PaginateArgument = {
 
 export type SearchBodyPriceBandsArgument = {
   keywords?: string;
-  filters?: SearchFilterArgument[];
-  exclusionFilters?: SearchFilterArgument[];
+  filters?: SearchProductFilterArgument[];
+  exclusionFilters?: SearchProductFilterArgument[];
   sort?: SortArgument;
   highlight?: boolean;
   aggregatorFilter?: string[];
@@ -37,8 +37,8 @@ export type SearchBodyPriceBandsArgument = {
 export type SearchBodyArgument = {
   aggregatorFilter?: string[];
   endCustomerRef?: string;
-  exclusionFilters?: SearchFilterArgument[];
-  filters?: SearchFilterArgument[];
+  exclusionFilters?: SearchProductFilterArgument[];
+  filters?: SearchProductFilterArgument[];
   getFamilies?: boolean;
   highlight?: boolean;
   keywords?: string;
@@ -50,11 +50,11 @@ export type SearchBodyArgument = {
   topOffers?: boolean;
 };
 
-export type SearchFilterArgument = {
+export type SearchProductFilterArgument = {
   name: string;
   value: string | string[];
   operator?: OperatorArgument;
-  filters?: SearchFilterArgument[];
+  filters?: SearchProductFilterArgument[];
 };
 
 export enum OperatorArgument {
