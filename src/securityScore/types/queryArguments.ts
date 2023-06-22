@@ -82,6 +82,7 @@ export enum SortFields {
 }
 
 export enum SecurityScoreQueries {
+  GET_ADMIN_DATA = 'getAdminData',
   GET_PARTNER_DATA = 'getPartnerData',
   GET_CUSTOMER_DATA = 'getCustomerData',
   GET_CUSTOMER_ACCOUNT_DATA = 'getCustomerAccountData',
