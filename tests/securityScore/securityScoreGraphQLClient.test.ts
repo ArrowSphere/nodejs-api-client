@@ -6,6 +6,7 @@ import {
   GetCustomerDataType,
   GetCustomerAccountDataType,
   SecurityScoreGraphQLClient,
+  GetAdminDataType,
 } from '../../src/securityScore';
 import {
   Hooks,
@@ -156,6 +157,81 @@ describe('SecurityScoreGraphQLClient', () => {
       sinon.assert.calledOnceWithExactly(
         graphQLClient,
         SecurityScoreQueryMock.GET_PARTNER_DATA_GQL,
+      );
+    });
+  });
+
+  describe('getAdminData', () => {
+    it('makes a graphql POST request on the specified URL getAdminData', async () => {
+      const expectedResult = {
+        getAdminData: {
+          avgCurrentScore: 6.5,
+          period: {
+            from: '2023-01',
+            to: '2023-02',
+          },
+          partnersAgg: {
+            partners: {
+              data: [
+                {
+                  avgCurrentScore: 35.53,
+                  date: '2023-04-02',
+                  failed: 0,
+                  passed: 3,
+                  total: 4,
+                },
+                {
+                  avgCurrentScore: 32.09,
+                  date: '2023-04-01',
+                  failed: 1,
+                  passed: 2,
+                  total: 3,
+                },
+              ],
+              last: {
+                avgCurrentScore: 32.09,
+                date: '2023-04-01',
+                failed: 1,
+                passed: 2,
+                total: 3,
+              },
+              name: 'arrowsphere',
+              progression: 0.5,
+              reference: 'XSP0',
+            },
+          },
+        },
+      };
+
+      graphQLClient.resolves(expectedResult);
+
+      const result: GetAdminDataType | null = await client.getAdminData(
+        SecurityScoreQueryMock.GET_ADMIN_DATA_QUERY,
+      );
+
+      expect(result?.period).to.be.equals(expectedResult.getAdminData.period);
+      expect(result?.partnersAgg).to.be.equals(
+        expectedResult.getAdminData.partnersAgg,
+      );
+
+      sinon.assert.calledOnceWithExactly(
+        graphQLClient,
+        SecurityScoreQueryMock.GET_ADMIN_DATA_GQL,
+      );
+    });
+
+    it('makes a graphql POST request on the specified URL getAdminData must return null', async () => {
+      graphQLClient.resolves(null);
+
+      const result: GetAdminDataType | null = await client.getAdminData(
+        SecurityScoreQueryMock.GET_ADMIN_DATA_QUERY,
+      );
+
+      expect(result).to.be.null;
+
+      sinon.assert.calledOnceWithExactly(
+        graphQLClient,
+        SecurityScoreQueryMock.GET_ADMIN_DATA_GQL,
       );
     });
   });

@@ -20,7 +20,13 @@ import {
   GetPartnerDataQuery,
   GetCustomerDataQuery,
   GetCustomerAccountDataQuery,
+  GetAdminDataQuery,
 } from './types/securityScoreGraphQLQueries';
+import {
+  GetAdminData,
+  GetAdminDataType,
+  GetAdminDataGraphQLResultType,
+} from './entities/getAdminData';
 
 export class SecurityScoreGraphQLClient extends AbstractGraphQLClient {
   /**
@@ -66,6 +72,24 @@ export class SecurityScoreGraphQLClient extends AbstractGraphQLClient {
     if (getPartnerDataResult) {
       return new GetPartnerData(
         getPartnerDataResult[SecurityScoreQueries.GET_PARTNER_DATA],
+      ).toJSON();
+    }
+
+    return null;
+  }
+
+  public async getAdminData(
+    getAdminDataQuery: GetAdminDataQuery,
+  ): Promise<GetAdminDataType | null> {
+    const queryStr: string = this.stringifyQuery(getAdminDataQuery);
+
+    const getAdminDataResult: GetAdminDataGraphQLResultType | null = await this.find<GetAdminDataGraphQLResultType>(
+      queryStr,
+    );
+
+    if (getAdminDataResult) {
+      return new GetAdminData(
+        getAdminDataResult[SecurityScoreQueries.GET_ADMIN_DATA],
       ).toJSON();
     }
 

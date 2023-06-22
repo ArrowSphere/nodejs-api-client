@@ -27,6 +27,9 @@ import {
   MarketplaceByDateAggType,
   MarketplacePartnerAggType,
   MarketplacePartnerAggByDateAggType,
+  CheckCountByDateAggType,
+  PartnerByDateAggType,
+  PartnerAggType,
 } from './securityScoreGraphQLTypes';
 
 type MissingFieldsOfMonthlyTrendAggSchema = {
@@ -79,17 +82,23 @@ export type FilterSchema = {
 
 type NameCountByDateAggSchema = Schema<NameCountByDateAggType, boolean>;
 
-type MissingFieldsInCheckDataAggSchema = {
+type MissingFieldsInSeverityAggSchema = {
   data?: NameCountByDateAggSchema;
 };
 
-type CheckAggAggSchema = Merge<
+type CheckCountByDateAggSchema = Schema<CheckCountByDateAggType, boolean>;
+
+type MissingFieldsInCheckAggSchema = {
+  data?: CheckCountByDateAggSchema;
+};
+
+type CheckAggSchema = Merge<
   Schema<CheckAggType, boolean>,
-  MissingFieldsInCheckDataAggSchema
+  MissingFieldsInCheckAggSchema
 >;
 
 export type ChecksAggSchema = {
-  checks?: CheckAggAggSchema;
+  checks?: CheckAggSchema;
 };
 
 export type PeriodsSchema = Schema<PeriodsType, boolean>;
@@ -122,7 +131,7 @@ export type ScoreResultSchema = {
 
 export type SeverityAggSchema = Merge<
   Schema<SeverityAggType, boolean>,
-  MissingFieldsInCheckDataAggSchema
+  MissingFieldsInSeverityAggSchema
 >;
 
 export type SeveritiesAggSchema = {
@@ -201,4 +210,19 @@ type MarketplaceAggSchema = Merge<
 
 export type MarketplacesAggSchema = {
   marketplaces?: MarketplaceAggSchema;
+};
+
+type PartnerByDateAggTypeSchema = Schema<PartnerByDateAggType, boolean>;
+
+type MissingFieldsInPartnerAggSchema = {
+  data?: PartnerByDateAggTypeSchema;
+};
+
+type PartnerAggSchema = Merge<
+  Schema<PartnerAggType, boolean>,
+  MissingFieldsInPartnerAggSchema
+>;
+
+export type PartnersAggSchema = {
+  partners?: PartnerAggSchema;
 };
