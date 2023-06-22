@@ -17,10 +17,12 @@ import {
   StandardsAggSchema,
   StandardWithCheckSchema,
   MarketplacesAggSchema,
+  PartnersAggSchema,
 } from './securityScoreGraphQLSchemas';
 import { GetPartnerDataFields } from '../entities/getPartnerData';
 import { GetCustomerDataFields } from '../entities/getCustomerData';
 import { GetCustomerAccountDataFields } from '../entities/getCustomerAccountData';
+import { GetAdminDataFields } from '../entities/getAdminData';
 
 export type GetPartnerDataQuery = {
   [SecurityScoreQueries.GET_PARTNER_DATA]: {
@@ -74,5 +76,23 @@ export type GetCustomerAccountDataQuery = {
     [GetCustomerAccountDataFields.COLUMN_SEVERITIES_AGG]?: SeveritiesAggSchema;
     [GetCustomerAccountDataFields.COLUMN_STANDARDS_AGG]?: StandardsAggSchema;
     [GetCustomerAccountDataFields.COLUMN_STANDARDS]?: StandardWithCheckSchema;
+  };
+};
+
+export type GetAdminDataQuery = {
+  [SecurityScoreQueries.GET_ADMIN_DATA]: {
+    __args?: {
+      searchBody?: SearchBodyArgument;
+      paginate?: PaginateArgument;
+    };
+    [GetAdminDataFields.COLUMN_CHECKS_AGG]?: ChecksAggSchema;
+    [GetAdminDataFields.COLUMN_MARKETPLACES_AGG]?: MarketplacesAggSchema;
+    [GetAdminDataFields.COLUMN_MONTHLY_TREND_AGG]?: MonthlyTrendAggSchema;
+    [GetAdminDataFields.COLUMN_PARTNERS_AGG]?: PartnersAggSchema;
+    [GetAdminDataFields.COLUMN_PAGINATION]?: PaginationSchema;
+    [GetAdminDataFields.COLUMN_PERIOD]?: PeriodsSchema;
+    [GetAdminDataFields.COLUMN_RESULTS]?: ScoreResultSchema;
+    [GetPartnerDataFields.COLUMN_SCORES_AGG]?: ScoresAggSchema;
+    [GetPartnerDataFields.COLUMN_SEVERITIES_AGG]?: SeveritiesAggSchema;
   };
 };

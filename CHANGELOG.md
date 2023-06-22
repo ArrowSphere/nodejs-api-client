@@ -3,10 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [3.40.0] - 2023-06-20
+## [3.40.0] - 2023-06-22
 
 ### Changed
 
+- Add Query GetAdminData for Security Score
+- Rename SearchFilterArgument to avoid name collision
 - Refactor find products by query
 - Add find one priceBand by query
 - Add find one product by query
