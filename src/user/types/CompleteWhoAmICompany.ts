@@ -1,6 +1,7 @@
 import { AbstractEntity } from '../../abstractEntity';
 
 export enum CompleteWhoAmICompanyFields {
+  COLUMN_HAS_ACCESS_TO_XCM = 'hasAccessToXcm',
   COLUMN_HAS_ACCESS_TO_XCP = 'hasAccessToXcp',
   COLUMN_IS_PROTECTED = 'isProtected',
   COLUMN_MARKETPLACE = 'marketplace',
@@ -10,6 +11,7 @@ export enum CompleteWhoAmICompanyFields {
 }
 
 export type CompleteWhoAmICompanyData = {
+  [CompleteWhoAmICompanyFields.COLUMN_HAS_ACCESS_TO_XCM]: boolean;
   [CompleteWhoAmICompanyFields.COLUMN_HAS_ACCESS_TO_XCP]: boolean;
   [CompleteWhoAmICompanyFields.COLUMN_IS_PROTECTED]: boolean;
   [CompleteWhoAmICompanyFields.COLUMN_MARKETPLACE]?: string;
@@ -22,6 +24,8 @@ export class CompleteWhoAmICompany extends AbstractEntity<CompleteWhoAmICompanyD
   constructor(data: CompleteWhoAmICompanyData) {
     super(data);
 
+    this.#hasAccessToXcm =
+      data[CompleteWhoAmICompanyFields.COLUMN_HAS_ACCESS_TO_XCM];
     this.#hasAccessToXcp =
       data[CompleteWhoAmICompanyFields.COLUMN_HAS_ACCESS_TO_XCP];
     this.#isProtected = data[CompleteWhoAmICompanyFields.COLUMN_IS_PROTECTED];
@@ -31,12 +35,17 @@ export class CompleteWhoAmICompany extends AbstractEntity<CompleteWhoAmICompanyD
     this.#tags = data[CompleteWhoAmICompanyFields.COLUMN_TAGS];
   }
 
+  readonly #hasAccessToXcm: boolean;
   readonly #hasAccessToXcp: boolean;
   readonly #isProtected: boolean;
   readonly #marketplace?: string;
   readonly #name?: string;
   readonly #reference: string;
   readonly #tags: string[];
+
+  get hasAccessToXcm(): boolean {
+    return this.#hasAccessToXcm;
+  }
 
   get hasAccessToXcp(): boolean {
     return this.#hasAccessToXcp;
@@ -64,6 +73,8 @@ export class CompleteWhoAmICompany extends AbstractEntity<CompleteWhoAmICompanyD
 
   public toJSON(): CompleteWhoAmICompanyData {
     return {
+      [CompleteWhoAmICompanyFields.COLUMN_HAS_ACCESS_TO_XCM]: this
+        .hasAccessToXcm,
       [CompleteWhoAmICompanyFields.COLUMN_HAS_ACCESS_TO_XCP]: this
         .hasAccessToXcp,
       [CompleteWhoAmICompanyFields.COLUMN_IS_PROTECTED]: this.isProtected,
