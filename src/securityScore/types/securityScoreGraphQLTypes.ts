@@ -95,9 +95,17 @@ export type SeveritiesAggType = {
   severities: SeverityAggType[];
 };
 
+export type CheckCountByDateAggType = {
+  count?: number;
+  accounts?: number;
+  customers?: number;
+  partners?: number;
+  date?: string;
+};
+
 export type CheckAggType = {
-  data?: NameCountByDateAggType[];
-  last?: NameCountByDateAggType;
+  data?: CheckCountByDateAggType[];
+  last?: CheckCountByDateAggType;
   name?: string;
   progression?: number;
   reference?: string;
@@ -128,6 +136,26 @@ export type EndCustomerAggType = {
 
 export type EndCustomersAggType = {
   customers: EndCustomerAggType[];
+};
+
+export type PartnerByDateAggType = {
+  avgCurrentScore?: number;
+  date?: string;
+  failed?: number;
+  passed?: number;
+  total?: number;
+};
+
+export type PartnerAggType = {
+  data?: PartnerByDateAggType[];
+  last?: PartnerByDateAggType;
+  name?: string;
+  progression?: number;
+  reference?: string;
+};
+
+export type PartnersAggType = {
+  partners?: PartnerAggType[];
 };
 
 export type ScoreByMonthAggType = {
@@ -194,21 +222,12 @@ export type StandardsAggType = {
   standards: StandardAggType[];
 };
 
-export type MarketplaceSubscriptionReferenceAggType = {
-  accounts?: number;
-  avgCurrentScore?: number;
-  name?: string;
-};
-
-export type MarketplaceSubscriptionReferencesAggType = {
-  subscriptionReferences?: MarketplaceSubscriptionReferenceAggType[];
-};
-
 export type MarketplacePartnerAggByDateAggType = {
-  accounts?: number;
   avgCurrentScore?: number;
   date?: string;
-  subscriptionReferencesAgg?: MarketplaceSubscriptionReferencesAggType;
+  failed?: number;
+  passed?: number;
+  total?: number;
 };
 
 export type MarketplaceByDateAggType = {
