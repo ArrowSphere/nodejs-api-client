@@ -21,6 +21,8 @@ export const CreateOrderPartialInputPayload: CreateOrderInputType = {
   },
   [CreateOrderInputFields.COLUMN_PRODUCTS]: [
     {
+      [CreateOrderInputFields.COLUMN_ARROW_SPHERE_PRICE_BAND_SKU]:
+        'MSCSP_CFQ7TTC0LDPB-0001_FR_EUR_1_720_720',
       [CreateOrderInputFields.COLUMN_SKU]:
         'SAAS||Microsoft||MS-0A-O365-BUSINESS||BD938F12-058F-4927-BBA3-AE36B1D2501C',
       [CreateOrderInputFields.COLUMN_QUANTITY]: 2,
@@ -38,6 +40,8 @@ export const CreateOrderFullInputPayload: CreateOrderInputType = {
   },
   [CreateOrderInputFields.COLUMN_PRODUCTS]: [
     {
+      [CreateOrderInputFields.COLUMN_ARROW_SPHERE_PRICE_BAND_SKU]:
+        'MSCSP_CFQ7TTC0LDPB-0001_FR_EUR_1_720_720',
       [CreateOrderInputFields.COLUMN_SKU]:
         'SAAS||Microsoft||MS-0A-O365-BUSINESS||BD938F12-058F-4927-BBA3-AE36B1D2501C',
       [CreateOrderInputFields.COLUMN_QUANTITY]: 2,
@@ -73,6 +77,8 @@ export const CreateOrderInjectionScenarioPayload: CreateOrderInputType = {
   [CreateOrderInputFields.COLUMN_SCENARIO]: scenarioType.INJECTION,
   [CreateOrderInputFields.COLUMN_PRODUCTS]: [
     {
+      [CreateOrderInputFields.COLUMN_ARROW_SPHERE_PRICE_BAND_SKU]:
+        'MSCSP_CFQ7TTC0LDPB-0001_FR_EUR_1_720_720',
       [CreateOrderInputFields.COLUMN_SKU]:
         'SAAS||Microsoft||MS-0A-O365-BUSINESS||BD938F12-058F-4927-BBA3-AE36B1D2501C',
       [CreateOrderInputFields.COLUMN_QUANTITY]: 2,
