@@ -15,12 +15,12 @@ export class CatalogGraphQLClient extends AbstractGraphQLClient {
   /**
    * The base path of the API
    */
-  protected basePath = 'catalog/';
+  protected basePath = '/catalog';
 
   /**
    * The Path of graphql catalog API
    */
-  private GRAPHQL = 'graphql';
+  private GRAPHQL = '/graphql';
 
   public async find(request: string): Promise<GetProductsType> {
     this.path = this.GRAPHQL;
