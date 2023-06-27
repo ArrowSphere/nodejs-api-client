@@ -312,12 +312,12 @@ export class LicensesClient extends AbstractRestfulClient {
   /**
    * The base path of the API
    */
-  protected basePath = '/licenses/';
+  protected basePath = '/licenses';
 
   /**
    * The path of the Find endpoint
    */
-  private FIND_PATH = 'v2/find';
+  private FIND_PATH = '/v2/find';
 
   /**
    * The path of the Configs endpoint
@@ -492,7 +492,7 @@ export class LicensesClient extends AbstractRestfulClient {
   }
 
   public getConfigsRaw(reference: string): Promise<FindConfig> {
-    this.path = reference + this.CONFIGS_PATH;
+    this.path = `/${reference}${this.CONFIGS_PATH}`;
 
     return this.get();
   }
@@ -511,7 +511,7 @@ export class LicensesClient extends AbstractRestfulClient {
     reference: string,
     config: ConfigFindResult,
   ): Promise<ConfigFindResultData> {
-    this.path = reference + this.CONFIGS_PATH;
+    this.path = `/${reference}${this.CONFIGS_PATH}`;
     const postData: ConfigFindResultData = {
       [ConfigFindResultFields.COLUMN_NAME]: config.name,
       [ConfigFindResultFields.COLUMN_SCOPE]: config.scope,
@@ -534,7 +534,7 @@ export class LicensesClient extends AbstractRestfulClient {
     licenseReference: string,
     parameters: Parameters = {},
   ): Promise<GetResult<GetLicenseResult>> {
-    this.path = licenseReference;
+    this.path = `/${licenseReference}`;
 
     return new GetResult(GetLicenseResult, await this.get(parameters));
   }
@@ -544,7 +544,7 @@ export class LicensesClient extends AbstractRestfulClient {
     putData: UpdateSeatsData,
     parameters: Parameters = {},
   ): Promise<void> {
-    this.path = licenseReference + this.SEATS_PATH;
+    this.path = `/${licenseReference}${this.SEATS_PATH}`;
 
     return this.put(putData, parameters);
   }
@@ -554,7 +554,7 @@ export class LicensesClient extends AbstractRestfulClient {
     payload?: PutSuspend,
     parameters: Parameters = {},
   ): Promise<void> {
-    this.path = licenseReference + this.SUSPEND_PATH;
+    this.path = `/${licenseReference}${this.SUSPEND_PATH}`;
 
     return this.put(payload, parameters);
   }
@@ -564,7 +564,7 @@ export class LicensesClient extends AbstractRestfulClient {
     payload?: PutReactivate,
     parameters: Parameters = {},
   ): Promise<void> {
-    this.path = licenseReference + this.REACTIVATE_PATH;
+    this.path = `/${licenseReference}${this.REACTIVATE_PATH}`;
 
     return this.put(payload, parameters);
   }
@@ -574,7 +574,7 @@ export class LicensesClient extends AbstractRestfulClient {
     payload?: PutCancel,
     parameters: Parameters = {},
   ): Promise<void> {
-    this.path = licenseReference + this.CANCEL_PATH;
+    this.path = `/${licenseReference}${this.CANCEL_PATH}`;
 
     return this.put(payload, parameters);
   }
@@ -584,7 +584,7 @@ export class LicensesClient extends AbstractRestfulClient {
     putData: PutFriendlyName,
     parameters: Parameters = {},
   ): Promise<void> {
-    this.path = licenseReference + this.UPDATE_FRIENDLYNAME_PATH;
+    this.path = `/${licenseReference}${this.UPDATE_FRIENDLYNAME_PATH}`;
 
     return await this.put(putData, parameters);
   }
@@ -593,7 +593,7 @@ export class LicensesClient extends AbstractRestfulClient {
     licenseReference: string,
     parameters: Parameters = {},
   ): Promise<GetResult<LicenceHistoryResult>> {
-    this.path = licenseReference + this.GET_LICENSE_HISTORY_PATH;
+    this.path = `/${licenseReference}${this.GET_LICENSE_HISTORY_PATH}`;
 
     return new GetResult(LicenceHistoryResult, await this.get(parameters));
   }
@@ -603,7 +603,7 @@ export class LicensesClient extends AbstractRestfulClient {
     payload?: PutCancelAutoRenew,
     parameters: Parameters = {},
   ): Promise<void> {
-    this.path = licenseReference + this.CANCEL_AUTO_RENEW_PATH;
+    this.path = `/${licenseReference}${this.CANCEL_AUTO_RENEW_PATH}`;
 
     return await this.put(payload, parameters);
   }
@@ -613,7 +613,7 @@ export class LicensesClient extends AbstractRestfulClient {
     payload?: PutReactivateAutoRenew,
     parameters: Parameters = {},
   ): Promise<void> {
-    this.path = licenseReference + this.REACTIVATE_AUTO_RENEW_PATH;
+    this.path = `/${licenseReference}${this.REACTIVATE_AUTO_RENEW_PATH}`;
 
     return await this.put(payload, parameters);
   }

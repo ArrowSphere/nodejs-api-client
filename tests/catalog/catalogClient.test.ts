@@ -7,7 +7,7 @@ import {
   LIST_PROGRAMS_RESPONSE,
 } from './mocks/program.mocks';
 
-export const CATALOG_MOCK_URL = 'https://catalog.localhost/';
+export const CATALOG_MOCK_URL = 'https://catalog.localhost';
 export const CATALOG_MOCK_PATH = '/catalog';
 
 export const LIST_PROGRAMS_URL_INTERCEPTOR = new RegExp(

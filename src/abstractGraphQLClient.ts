@@ -45,12 +45,11 @@ export abstract class AbstractGraphQLClient extends AbstractHttpClient {
   }
 
   private generateUrl(): string {
-    const url = new URL(
-      `${
-        this.options.isAdmin ? path.join('admin', this.basePath) : this.basePath
-      }${this.path}`,
-      this.url,
-    );
+    const baseUrl: string = this.url.replace(new RegExp('/$'), '');
+    const basePath: string = this.options.isAdmin
+      ? path.join('/admin', this.basePath)
+      : this.basePath;
+    const url = new URL(`${baseUrl}${basePath}${this.path}`);
     return url.toString();
   }
 

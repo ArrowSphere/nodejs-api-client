@@ -32,12 +32,12 @@ export class SecurityScoreGraphQLClient extends AbstractGraphQLClient {
   /**
    * The base path of the API
    */
-  protected basePath = 'security/';
+  protected basePath = '/security';
 
   /**
    * The Path of graphql catalog API
    */
-  private GRAPHQL = 'graphql/score';
+  private GRAPHQL = '/graphql/score';
 
   public async find<GraphQLResponseTypes>(
     request: string,
