@@ -9,8 +9,15 @@ import {
   GET_CONSUMPTION_DAILY_PARAMETERS,
   GET_CONSUMPTION_MONTHLY_PARAMETERS,
   GET_CONSUMPTION_RESPONSE,
+  CONSUMPTION_REQUEST_DOWNLOAD_PAYLOAD,
+  CONSUMPTION_REQUEST_DOWNLOAD_RESPONSE,
 } from './mocks/consumption.mocks';
-import { ConsumptionBI, Consumption, GetResult } from '../../src';
+import {
+  ConsumptionBI,
+  Consumption,
+  GetResult,
+  ConsumptionDownloadRequest,
+} from '../../src';
 
 export const CONSUMPTION_MOCK_URL = 'https://consumption.localhost';
 export const GET_CONSUMPTION_MONTHLY_URL = new RegExp(
@@ -21,6 +28,10 @@ export const GET_CONSUMPTION_DAILY_URL = new RegExp(
 );
 export const GET_CONSUMPTION_BI_URL = new RegExp(
   '/consumption/bi/top/monthly.*',
+);
+
+export const CONSUMPTION_DOWNLOAD_REQUEST_URL = new RegExp(
+  '/consumption/v2/downloadRequest.*',
 );
 
 describe('ConsumptionClient', () => {
@@ -59,6 +70,24 @@ describe('ConsumptionClient', () => {
       expect(response).to.be.instanceof(GetResult);
       expect(response.data).to.be.instanceof(Consumption);
       expect(response.toJSON()).to.be.deep.equals(GET_CONSUMPTION_RESPONSE);
+    });
+  });
+
+  describe('consumptionDownloadRequest', () => {
+    it('call the post method', async () => {
+      nock(CONSUMPTION_MOCK_URL)
+        .post(CONSUMPTION_DOWNLOAD_REQUEST_URL)
+        .reply(constants.HTTP_STATUS_OK, CONSUMPTION_REQUEST_DOWNLOAD_RESPONSE);
+
+      const response: GetResult<ConsumptionDownloadRequest> = await client.consumptionDownloadRequest(
+        CONSUMPTION_REQUEST_DOWNLOAD_PAYLOAD,
+      );
+
+      expect(response).to.be.instanceof(GetResult);
+      expect(response.data).to.be.instanceof(ConsumptionDownloadRequest);
+      expect(response.toJSON()).to.be.deep.equals(
+        CONSUMPTION_REQUEST_DOWNLOAD_RESPONSE,
+      );
     });
   });
 
