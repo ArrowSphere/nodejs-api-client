@@ -103,7 +103,7 @@ export class OrdersClient extends AbstractRestfulClient {
   /**
    * The base path of the API
    */
-  protected basePath = '/index.php/api/orders';
+  protected basePath = '/orders';
 
   public async create(
     postData: CreateOrderInputType,

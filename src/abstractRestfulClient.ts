@@ -317,12 +317,11 @@ export abstract class AbstractRestfulClient extends AbstractHttpClient {
    */
   protected generateUrl(parameters: Parameters, options: Options): string {
     const params = { ...parameters, ...this.generatePagination() };
-    const url = new URL(
-      `${options.isAdmin ? path.join('admin', this.basePath) : this.basePath}${
-        this.path
-      }`,
-      this.url,
-    );
+    const baseUrl: string = this.url.replace(new RegExp('/$'), '');
+    const basePath: string = options.isAdmin
+      ? path.join('/admin', this.basePath)
+      : this.basePath;
+    const url = new URL(`${baseUrl}${basePath}${this.path}`);
     if (Object.values(params).length) {
       url.search = querystring.stringify(params);
     }
