@@ -7,6 +7,8 @@ import {
   GetData,
   ConsumptionType,
   ConsumptionFields,
+  ConsumptionDownloadRequestFields,
+  ConsumptionDownloadRequestType,
 } from '../../../src';
 
 export const GET_CONSUMPTION_MONTHLY_PARAMETERS = {
@@ -120,4 +122,23 @@ export const GET_CONSUMPTION_BI_RESPONSE: GetData<ConsumptionBIType> = {
 export const GET_CONSUMPTION_BI_RESPONSE_WITHOUT_DATA: GetData<ConsumptionBIType> = {
   [GetResultFields.COLUMN_STATUS]: 200,
   [GetResultFields.COLUMN_DATA]: {},
+};
+
+export const CONSUMPTION_REQUEST_DOWNLOAD_PAYLOAD = {
+  customer: '1234567890',
+  licenseRef: '1234567890',
+  dateStart: '2020-10-01',
+  dateEnd: '2021-10-31',
+  columns: ['column1', 'column2'],
+  callbackURL: 'https://example.com/callback',
+};
+
+export const CONSUMPTION_REQUEST_DOWNLOAD_RESPONSE: GetData<ConsumptionDownloadRequestType> = {
+  [GetResultFields.COLUMN_STATUS]: 200,
+  [GetResultFields.COLUMN_DATA]: {
+    [ConsumptionDownloadRequestFields.COLUMN_REF]: '1234567890',
+    [ConsumptionDownloadRequestFields.COLUMN_LINK]: ['https://example.com'],
+    [ConsumptionDownloadRequestFields.COLUMN_LINK_EXPIRATION_DATE]:
+      '2021-10-31T00:00:00.000Z',
+  },
 };
