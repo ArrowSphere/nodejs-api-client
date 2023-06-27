@@ -2,6 +2,16 @@ import { AbstractRestfulClient, Parameters } from '../abstractRestfulClient';
 import { ConsumptionBI } from './entities/bi/consumptionBI';
 import { GetResult } from '../getResult';
 import { Consumption } from './entities/consumption/consumption';
+import { ConsumptionDownloadRequest } from './entities/consumption/consumptionDownloadRequest';
+
+export type ConsumptionDownloadRequestPayload = {
+  customer: string;
+  licenseRef: string;
+  dateStart: string;
+  dateEnd: string;
+  columns: Array<string>;
+  callbackURL: string;
+};
 
 export class ConsumptionClient extends AbstractRestfulClient {
   /**
@@ -33,5 +43,13 @@ export class ConsumptionClient extends AbstractRestfulClient {
     this.path = '/bi/top/monthly';
 
     return new GetResult(ConsumptionBI, await this.get(parameters));
+  }
+
+  public async consumptionDownloadRequest(
+    payload: ConsumptionDownloadRequestPayload,
+  ): Promise<ConsumptionDownloadRequest> {
+    this.path = '/v2/downloadRequest';
+
+    return new ConsumptionDownloadRequest(await this.post(payload));
   }
 }
