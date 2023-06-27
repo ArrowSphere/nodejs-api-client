@@ -21,7 +21,7 @@ import {
   LIST_ISSUE_ATTACHMENTS_RESPONSE,
 } from './mocks/attchment.mocks';
 
-export const SUPPORT_CENTER_MOCK_URL = 'https://support.localhost/';
+export const SUPPORT_CENTER_MOCK_URL = 'https://support.localhost';
 export const SUPPORT_CENTER_MOCK_PATH = '/support';
 
 export const LIST_TOPICS_URL_INTERCEPTOR = new RegExp(
