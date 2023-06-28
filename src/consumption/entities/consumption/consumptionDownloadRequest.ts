@@ -8,14 +8,14 @@ export enum ConsumptionDownloadRequestFields {
 
 export type ConsumptionDownloadRequestType = {
   [ConsumptionDownloadRequestFields.COLUMN_REF]: string;
-  [ConsumptionDownloadRequestFields.COLUMN_LINK]: Array<string>;
-  [ConsumptionDownloadRequestFields.COLUMN_LINK_EXPIRATION_DATE]: string;
+  [ConsumptionDownloadRequestFields.COLUMN_LINK]?: Array<string>;
+  [ConsumptionDownloadRequestFields.COLUMN_LINK_EXPIRATION_DATE]?: string;
 };
 
 export class ConsumptionDownloadRequest extends AbstractEntity<ConsumptionDownloadRequestType> {
   readonly #ref: string;
-  readonly #link: Array<string>;
-  readonly #linkExpirationDate: string;
+  readonly #link?: Array<string>;
+  readonly #linkExpirationDate?: string;
 
   public constructor(consumptionResponse: ConsumptionDownloadRequestType) {
     super(consumptionResponse);
@@ -34,11 +34,11 @@ export class ConsumptionDownloadRequest extends AbstractEntity<ConsumptionDownlo
     return this.#ref;
   }
 
-  get link(): Array<string> {
+  get link(): Array<string> | undefined {
     return this.#link;
   }
 
-  get linkExpirationDate(): string {
+  get linkExpirationDate(): string | undefined {
     return this.#linkExpirationDate;
   }
 

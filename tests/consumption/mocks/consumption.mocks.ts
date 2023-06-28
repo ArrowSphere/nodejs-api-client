@@ -133,12 +133,8 @@ export const CONSUMPTION_REQUEST_DOWNLOAD_PAYLOAD = {
   callbackURL: 'https://example.com/callback',
 };
 
-export const CONSUMPTION_REQUEST_DOWNLOAD_RESPONSE: GetData<ConsumptionDownloadRequestType> = {
-  [GetResultFields.COLUMN_STATUS]: 200,
-  [GetResultFields.COLUMN_DATA]: {
-    [ConsumptionDownloadRequestFields.COLUMN_REF]: '1234567890',
-    [ConsumptionDownloadRequestFields.COLUMN_LINK]: ['https://example.com'],
-    [ConsumptionDownloadRequestFields.COLUMN_LINK_EXPIRATION_DATE]:
-      '2021-10-31T00:00:00.000Z',
-  },
+export const CONSUMPTION_REQUEST_DOWNLOAD_RESPONSE: ConsumptionDownloadRequestType = {
+  [ConsumptionDownloadRequestFields.COLUMN_REF]: '1234567890',
+  [ConsumptionDownloadRequestFields.COLUMN_LINK]: undefined,
+  [ConsumptionDownloadRequestFields.COLUMN_LINK_EXPIRATION_DATE]: undefined,
 };

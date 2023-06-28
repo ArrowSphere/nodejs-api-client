@@ -79,12 +79,11 @@ describe('ConsumptionClient', () => {
         .post(CONSUMPTION_DOWNLOAD_REQUEST_URL)
         .reply(constants.HTTP_STATUS_OK, CONSUMPTION_REQUEST_DOWNLOAD_RESPONSE);
 
-      const response: GetResult<ConsumptionDownloadRequest> = await client.consumptionDownloadRequest(
+      const response: ConsumptionDownloadRequest = await client.consumptionDownloadRequest(
         CONSUMPTION_REQUEST_DOWNLOAD_PAYLOAD,
       );
 
-      expect(response).to.be.instanceof(GetResult);
-      expect(response.data).to.be.instanceof(ConsumptionDownloadRequest);
+      expect(response).to.be.instanceof(ConsumptionDownloadRequest);
       expect(response.toJSON()).to.be.deep.equals(
         CONSUMPTION_REQUEST_DOWNLOAD_RESPONSE,
       );
