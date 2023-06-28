@@ -4,7 +4,7 @@ import { GetResult } from '../getResult';
 import { Consumption } from './entities/consumption/consumption';
 import { ConsumptionDownloadRequest } from './entities/consumption/consumptionDownloadRequest';
 
-type ConsumptionDownloadRequestPayload = {
+export type ConsumptionDownloadRequestPayload = {
   customer: string;
   licenseRef: string;
   dateStart: string;
