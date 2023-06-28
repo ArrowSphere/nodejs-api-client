@@ -4,7 +4,7 @@ import { GetResult } from '../getResult';
 import { Consumption } from './entities/consumption/consumption';
 import { ConsumptionDownloadRequest } from './entities/consumption/consumptionDownloadRequest';
 
-type ConsumptionDownloadRequestPayload = {
+export type ConsumptionDownloadRequestPayload = {
   customer: string;
   licenseRef: string;
   dateStart: string;
@@ -47,9 +47,9 @@ export class ConsumptionClient extends AbstractRestfulClient {
 
   public async consumptionDownloadRequest(
     payload: ConsumptionDownloadRequestPayload,
-  ): Promise<GetResult<ConsumptionDownloadRequest>> {
+  ): Promise<ConsumptionDownloadRequest> {
     this.path = '/v2/downloadRequest';
 
-    return new GetResult(ConsumptionDownloadRequest, await this.post(payload));
+    return new ConsumptionDownloadRequest(await this.post(payload));
   }
 }
