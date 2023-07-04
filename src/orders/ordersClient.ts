@@ -53,8 +53,8 @@ export type CreateOrderInputType = {
   [CreateOrderInputFields.COLUMN_SCENARIO]?: scenarioType;
   [CreateOrderInputFields.COLUMN_SCHEDULE_DATE]?: string;
   [CreateOrderInputFields.COLUMN_PRODUCTS]: Array<{
-    [CreateOrderInputFields.COLUMN_ARROW_SPHERE_PRICE_BAND_SKU]: string;
-    [CreateOrderInputFields.COLUMN_SKU]: string;
+    [CreateOrderInputFields.COLUMN_ARROW_SPHERE_PRICE_BAND_SKU]?: string;
+    [CreateOrderInputFields.COLUMN_SKU]?: string;
     [CreateOrderInputFields.COLUMN_QUANTITY]: number;
     [CreateOrderInputFields.COLUMN_SUBSCRIPTION]?: {
       [CreateOrderInputFields.COLUMN_REFERENCE]: string;
