@@ -50,7 +50,7 @@ type MissingFieldsOfPriceBandSchema = {
  */
 export type PriceBandSchema = Merge<
   Schema<PriceBandType, boolean>,
-  MissingFieldsOfPriceBandSchema
+  MissingFieldsOfPriceBandSchema & { attributes?: boolean }
 >;
 
 export type PriceBandPriceSchema = Schema<PricesType, boolean>;
