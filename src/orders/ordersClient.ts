@@ -52,52 +52,54 @@ export type CreateOrderInputType = {
   };
   [CreateOrderInputFields.COLUMN_SCENARIO]?: scenarioType;
   [CreateOrderInputFields.COLUMN_SCHEDULE_DATE]?: string;
-  [CreateOrderInputFields.COLUMN_PRODUCTS]: Array<{
-    [CreateOrderInputFields.COLUMN_ARROW_SPHERE_PRICE_BAND_SKU]?: string;
-    [CreateOrderInputFields.COLUMN_SKU]?: string;
-    [CreateOrderInputFields.COLUMN_QUANTITY]: number;
-    [CreateOrderInputFields.COLUMN_SUBSCRIPTION]?: {
-      [CreateOrderInputFields.COLUMN_REFERENCE]: string;
-    };
-    [CreateOrderInputFields.COLUMN_PARENT_LICENSE_ID]?: string;
-    [CreateOrderInputFields.COLUMN_PARENT_SKU]?: string;
-    [CreateOrderInputFields.COLUMN_PERIODICITY]?: string | number;
-    [CreateOrderInputFields.COLUMN_TERM]?: string | number;
-    [CreateOrderInputFields.COLUMN_DISCOUNT]?: number;
-    [CreateOrderInputFields.COLUMN_UPLIFT]?: number;
-    [CreateOrderInputFields.COLUMN_AUTO_RENEW]?: boolean;
-    [CreateOrderInputFields.COLUMN_EFFECTIVE_START_DATE]?: string;
-    [CreateOrderInputFields.COLUMN_EFFECTIVE_END_DATE]?: string;
-    [CreateOrderInputFields.COLUMN_VENDOR_REFERENCE_ID]?: string;
-    [CreateOrderInputFields.COLUMN_PARENT_VENDOR_REFERENCE_ID]?: string;
-    [CreateOrderInputFields.COLUMN_FRIENDLY_NAME]?: string;
-    [CreateOrderInputFields.COLUMN_COMMENT1]?: string;
-    [CreateOrderInputFields.COLUMN_COMMENT2]?: string;
-    [CreateOrderInputFields.COLUMN_PRICE]?: {
-      [CreateOrderInputFields.COLUMN_PRICE_BUY]?: {
-        [CreateOrderInputFields.COLUMN_PRICE_CURRENCY]?: string;
-        [CreateOrderInputFields.COLUMN_PRICE_UNIT]?: number;
-        [CreateOrderInputFields.COLUMN_PRICE_EXCHANGE_RATE]?: number;
-      };
-      [CreateOrderInputFields.COLUMN_PRICE_LIST]?: {
-        [CreateOrderInputFields.COLUMN_PRICE_CURRENCY]?: string;
-        [CreateOrderInputFields.COLUMN_PRICE_UNIT]?: number;
-        [CreateOrderInputFields.COLUMN_PRICE_EXCHANGE_RATE]?: number;
-      };
-      [CreateOrderInputFields.COLUMN_PRICE_RESELLER]?: {
-        [CreateOrderInputFields.COLUMN_PRICE_CURRENCY]?: string;
-        [CreateOrderInputFields.COLUMN_PRICE_UNIT]?: number;
-        [CreateOrderInputFields.COLUMN_PRICE_EXCHANGE_RATE]?: number;
-      };
-      [CreateOrderInputFields.COLUMN_PRICE_END_CUSTOMER]?: {
-        [CreateOrderInputFields.COLUMN_PRICE_CURRENCY]?: string;
-        [CreateOrderInputFields.COLUMN_PRICE_UNIT]?: number;
-        [CreateOrderInputFields.COLUMN_PRICE_EXCHANGE_RATE]?: number;
-      };
-    };
-  }>;
+  [CreateOrderInputFields.COLUMN_PRODUCTS]: Array<CreateOrderProductType>;
   [CreateOrderInputFields.COLUMN_EXTRA_INFORMATION]?: {
     programs: { [key: string]: { [name: string]: string } };
+  };
+};
+
+export type CreateOrderProductType = {
+  [CreateOrderInputFields.COLUMN_ARROW_SPHERE_PRICE_BAND_SKU]?: string;
+  [CreateOrderInputFields.COLUMN_SKU]?: string;
+  [CreateOrderInputFields.COLUMN_QUANTITY]: number;
+  [CreateOrderInputFields.COLUMN_SUBSCRIPTION]?: {
+    [CreateOrderInputFields.COLUMN_REFERENCE]: string;
+  };
+  [CreateOrderInputFields.COLUMN_PARENT_LICENSE_ID]?: string;
+  [CreateOrderInputFields.COLUMN_PARENT_SKU]?: string;
+  [CreateOrderInputFields.COLUMN_PERIODICITY]?: string | number;
+  [CreateOrderInputFields.COLUMN_TERM]?: string | number;
+  [CreateOrderInputFields.COLUMN_DISCOUNT]?: number;
+  [CreateOrderInputFields.COLUMN_UPLIFT]?: number;
+  [CreateOrderInputFields.COLUMN_AUTO_RENEW]?: boolean;
+  [CreateOrderInputFields.COLUMN_EFFECTIVE_START_DATE]?: string;
+  [CreateOrderInputFields.COLUMN_EFFECTIVE_END_DATE]?: string;
+  [CreateOrderInputFields.COLUMN_VENDOR_REFERENCE_ID]?: string;
+  [CreateOrderInputFields.COLUMN_PARENT_VENDOR_REFERENCE_ID]?: string;
+  [CreateOrderInputFields.COLUMN_FRIENDLY_NAME]?: string;
+  [CreateOrderInputFields.COLUMN_COMMENT1]?: string;
+  [CreateOrderInputFields.COLUMN_COMMENT2]?: string;
+  [CreateOrderInputFields.COLUMN_PRICE]?: {
+    [CreateOrderInputFields.COLUMN_PRICE_BUY]?: {
+      [CreateOrderInputFields.COLUMN_PRICE_CURRENCY]?: string;
+      [CreateOrderInputFields.COLUMN_PRICE_UNIT]?: number;
+      [CreateOrderInputFields.COLUMN_PRICE_EXCHANGE_RATE]?: number;
+    };
+    [CreateOrderInputFields.COLUMN_PRICE_LIST]?: {
+      [CreateOrderInputFields.COLUMN_PRICE_CURRENCY]?: string;
+      [CreateOrderInputFields.COLUMN_PRICE_UNIT]?: number;
+      [CreateOrderInputFields.COLUMN_PRICE_EXCHANGE_RATE]?: number;
+    };
+    [CreateOrderInputFields.COLUMN_PRICE_RESELLER]?: {
+      [CreateOrderInputFields.COLUMN_PRICE_CURRENCY]?: string;
+      [CreateOrderInputFields.COLUMN_PRICE_UNIT]?: number;
+      [CreateOrderInputFields.COLUMN_PRICE_EXCHANGE_RATE]?: number;
+    };
+    [CreateOrderInputFields.COLUMN_PRICE_END_CUSTOMER]?: {
+      [CreateOrderInputFields.COLUMN_PRICE_CURRENCY]?: string;
+      [CreateOrderInputFields.COLUMN_PRICE_UNIT]?: number;
+      [CreateOrderInputFields.COLUMN_PRICE_EXCHANGE_RATE]?: number;
+    };
   };
 };
 
