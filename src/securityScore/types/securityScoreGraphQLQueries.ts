@@ -92,7 +92,7 @@ export type GetAdminDataQuery = {
     [GetAdminDataFields.COLUMN_PAGINATION]?: PaginationSchema;
     [GetAdminDataFields.COLUMN_PERIOD]?: PeriodsSchema;
     [GetAdminDataFields.COLUMN_RESULTS]?: ScoreResultSchema;
-    [GetPartnerDataFields.COLUMN_SCORES_AGG]?: ScoresAggSchema;
-    [GetPartnerDataFields.COLUMN_SEVERITIES_AGG]?: SeveritiesAggSchema;
+    [GetAdminDataFields.COLUMN_SCORES_AGG]?: ScoresAggSchema;
+    [GetAdminDataFields.COLUMN_SEVERITIES_AGG]?: SeveritiesAggSchema;
   };
 };
