@@ -30,6 +30,10 @@ import {
   CheckCountByDateAggType,
   PartnerByDateAggType,
   PartnerAggType,
+  UnregisteredOfferIaasSubscriptionType,
+  UnregisteredOfferIaasType,
+  UnregisteredOfferSaasType,
+  UnregisteredEndCustomerAggType,
 } from './securityScoreGraphQLTypes';
 
 type MissingFieldsOfMonthlyTrendAggSchema = {
@@ -54,8 +58,42 @@ type EndCustomerAggSchema = Merge<
   MissingFieldsInEndCustomerAggSchema
 >;
 
+type UnregisteredOfferIaasSubscriptionSchema = Schema<
+  UnregisteredOfferIaasSubscriptionType,
+  boolean
+>;
+type MissingFieldsInUnregisteredOfferIaasSchema = {
+  subscriptions?: UnregisteredOfferIaasSubscriptionSchema;
+};
+
+type UnregisteredOfferIaasSchema = Merge<
+  Schema<UnregisteredOfferIaasType, boolean>,
+  MissingFieldsInUnregisteredOfferIaasSchema
+>;
+
+type UnregisteredOfferSaasSchema = Schema<UnregisteredOfferSaasType, boolean>;
+
+type UnregisteredOffersSchema = {
+  iaas?: UnregisteredOfferIaasSchema;
+  saas?: UnregisteredOfferSaasSchema;
+};
+
+type UnregisteredEndCustomerAggTypeSchema = Schema<
+  UnregisteredEndCustomerAggType,
+  boolean
+>;
+type MissingFieldsInUnregisteredEndCustomerAggSchema = {
+  offers?: UnregisteredOffersSchema;
+};
+
+type UnregisteredEndCustomerAggSchema = Merge<
+  UnregisteredEndCustomerAggTypeSchema,
+  MissingFieldsInUnregisteredEndCustomerAggSchema
+>;
+
 export type EndCustomersAggSchema = {
   customers?: EndCustomerAggSchema;
+  unregisteredCustomers?: UnregisteredEndCustomerAggSchema;
 };
 
 type AccountByDateAggSchema = Schema<AccountByDateAggType, boolean>;
@@ -71,6 +109,7 @@ type AccountAggSchema = Merge<
 
 export type AccountsAggSchema = {
   accounts?: AccountAggSchema;
+  unregisteredAccounts?: UnregisteredOffersSchema;
 };
 
 type FilterValuesSchema = Schema<FilterValuesType, boolean>;

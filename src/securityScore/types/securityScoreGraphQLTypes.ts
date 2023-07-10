@@ -92,7 +92,7 @@ export type SeverityAggType = {
 };
 
 export type SeveritiesAggType = {
-  severities: SeverityAggType[];
+  severities?: SeverityAggType[];
 };
 
 export type CheckCountByDateAggType = {
@@ -121,6 +121,7 @@ export type EndCustomerByDateAggType = {
   avgCurrentScore?: number;
   date?: string;
   failed?: number;
+  name?: string;
   passed?: number;
   total?: number;
   subscriptionReferences?: number;
@@ -134,14 +135,44 @@ export type EndCustomerAggType = {
   reference?: string;
 };
 
+export type UnregisteredOfferIaasSubscriptionType = {
+  partnerRef?: string;
+  friendlyName?: string;
+  vendorSubscriptionId?: string;
+};
+
+export type UnregisteredOfferIaasType = {
+  sku?: string;
+  name?: string;
+  subscriptions?: UnregisteredOfferIaasSubscriptionType[];
+};
+
+export type UnregisteredOfferSaasType = {
+  name?: string;
+  subscription?: string;
+};
+
+export type UnregisteredOffersType = {
+  iaas?: UnregisteredOfferIaasType[];
+  saas?: UnregisteredOfferSaasType[];
+};
+
+export type UnregisteredEndCustomerAggType = {
+  name?: string;
+  reference?: string;
+  offers?: UnregisteredOffersType;
+};
+
 export type EndCustomersAggType = {
-  customers: EndCustomerAggType[];
+  customers?: EndCustomerAggType[];
+  unregisteredCustomers?: UnregisteredEndCustomerAggType[];
 };
 
 export type PartnerByDateAggType = {
   avgCurrentScore?: number;
   date?: string;
   failed?: number;
+  name?: string;
   passed?: number;
   total?: number;
 };
@@ -164,9 +195,9 @@ export type ScoreByMonthAggType = {
 };
 
 export type MonthlyTrendAggType = {
-  avgCurrentScore: number;
-  period: PeriodsType;
-  scores: ScoreByMonthAggType[];
+  avgCurrentScore?: number;
+  period?: PeriodsType;
+  scores?: ScoreByMonthAggType[];
 };
 
 export type ScoreByDateAggType = {
@@ -183,10 +214,11 @@ export type ScoresAggType = {
 };
 
 export type AccountByDateAggType = {
-  avgCurrentScore: number;
-  date: string;
-  failed: number;
-  passed: number;
+  avgCurrentScore?: number;
+  date?: string;
+  failed?: number;
+  name?: string;
+  passed?: number;
   total?: number;
 };
 
@@ -199,7 +231,8 @@ export type AccountAggType = {
 };
 
 export type AccountsAggType = {
-  accounts: AccountAggType[];
+  accounts?: AccountAggType[];
+  unregisteredAccounts?: UnregisteredOffersType;
 };
 
 export type StandardByDateAggType = {
@@ -259,6 +292,7 @@ export type CheckByDateType = {
   date?: string;
   flagged?: number;
   isFailed?: boolean;
+  name?: string;
   processed?: number;
   score?: number;
 };
