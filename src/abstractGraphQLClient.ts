@@ -5,6 +5,8 @@ import * as path from 'path';
 import { GetProductsType } from './catalog';
 import { jsonToGraphQLQuery } from 'json-to-graphql-query';
 import { AbstractHttpClient } from './AbstractHttpClient';
+import { PublicApiClientException } from './exception';
+import { URL } from 'url';
 
 export type GraphQLResponseTypes = GetProductsType;
 
@@ -35,13 +37,34 @@ export abstract class AbstractGraphQLClient extends AbstractHttpClient {
   protected async post<GraphQLResponseTypes>(
     query: string,
   ): Promise<GraphQLResponseTypes> {
+    try {
+      this.applyHeaders();
+      return await this.getClientInstance().request<GraphQLResponseTypes>(
+        query,
+      );
+    } catch (error) {
+      const exception: PublicApiClientException = this.mapToPublicApiException(
+        error,
+      );
+
+      const { mustRetry } = await this.handleError(exception);
+      if (mustRetry) {
+        this.applyHeaders();
+        return await this.getClientInstance().request<GraphQLResponseTypes>(
+          query,
+        );
+      }
+
+      throw error;
+    }
+  }
+
+  private applyHeaders(): void {
     const headers: Record<string, string> = {
       authorization: this.token,
       ...this.headers,
     };
     this.getClientInstance().setHeaders(headers);
-
-    return await this.getClientInstance().request<GraphQLResponseTypes>(query);
   }
 
   private generateUrl(): string {
