@@ -51,15 +51,22 @@
 
 ### ProductPrices
 
-| Field           | Type         | Example   | Description                    |
-|-----------------|--------------|-----------|--------------------------------|
-| buy             | ```number``` | 11        | Price the product was bought   |
-| sell            | ```number``` | 11        | Price the product was sold     |
-| currency        | ```string``` | EUR       | Currency                       |
-| periodicity     | ```string``` | per Month | Product price periodicity      |
-| term            | ```string``` | one year  | Product price term             |
-| periodicityCode | ```number``` | 8640      | Product price periodicity code |
-| termCode        | ```number``` | 8640      | Product price term code        |
+| Field           | Type                  | Example | Description                                                          |
+|-----------------|-----------------------|---------|----------------------------------------------------------------------|
+| vendor          | ```tierPricingType``` |         | [tierPricing](#tierPricing) unit is not used for vendor tier pricing |
+| buy             | ```tierPricingType``` |         | [tierPricing](#tierPricing)                                          |
+| list            | ```tierPricingType``` |         | [tierPricing](#tierPricing)                                          |
+| reseller        | ```tierPricingType``` |         | [tierPricing](#tierPricing)                                          |
+| endCustomer     | ```tierPricingType``` |         | [tierPricing](#tierPricing)                                          |
+
+### tierPricing
+
+| Field        | Type         | Example | Description                                  |
+|--------------|--------------|---------|----------------------------------------------|
+| currency     | ```string``` | EUR     | tier pricing currency iso format             |
+| unit         | ```number``` | 12.4    | tier pricing value                           |
+| exchangeRate | ```number``` | 0.92    | exchange rate (use for vendor exchange rate) |
+
 
 ### ProductProgram
 

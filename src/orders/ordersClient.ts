@@ -29,6 +29,7 @@ export enum CreateOrderInputFields {
   COLUMN_SCENARIO = 'scenario',
   COLUMN_SCHEDULE_DATE = 'scheduledDate',
   COLUMN_PRICE = 'price',
+  COLUMN_PRICE_VENDOR = 'vendor',
   COLUMN_PRICE_BUY = 'buy',
   COLUMN_PRICE_LIST = 'list',
   COLUMN_PRICE_RESELLER = 'reseller',
@@ -80,6 +81,10 @@ export type CreateOrderProductType = {
   [CreateOrderInputFields.COLUMN_COMMENT1]?: string;
   [CreateOrderInputFields.COLUMN_COMMENT2]?: string;
   [CreateOrderInputFields.COLUMN_PRICE]?: {
+    [CreateOrderInputFields.COLUMN_PRICE_VENDOR]?: {
+      [CreateOrderInputFields.COLUMN_PRICE_CURRENCY]?: string;
+      [CreateOrderInputFields.COLUMN_PRICE_EXCHANGE_RATE]?: number;
+    };
     [CreateOrderInputFields.COLUMN_PRICE_BUY]?: {
       [CreateOrderInputFields.COLUMN_PRICE_CURRENCY]?: string;
       [CreateOrderInputFields.COLUMN_PRICE_UNIT]?: number;
