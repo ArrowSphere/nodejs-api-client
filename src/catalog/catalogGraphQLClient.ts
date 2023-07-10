@@ -5,7 +5,6 @@ import {
   GetProductType,
 } from './types/catalogGraphQLTypes';
 import { CatalogQueries, CatalogQuery } from './types/catalogGraphQLQueries';
-import { PublicApiClientException } from '../exception';
 import {
   FindOnePriceBandQueryOutput,
   FindOneProductQueryOutput,
@@ -39,18 +38,9 @@ export class CatalogGraphQLClient extends AbstractGraphQLClient {
 
     try {
       return await this.find(queryStr);
-    } catch (error: any) {
-      const exception: PublicApiClientException = this.mapToPublicApiException(
-        error,
-      );
-
-      const { mustRetry } = await this.handleError(exception);
-      if (mustRetry) {
-        return await this.find(queryStr);
-      }
+    } catch (error: unknown) {
+      return null;
     }
-
-    return null;
   }
 
   public async findProductsByQuery(
@@ -61,17 +51,8 @@ export class CatalogGraphQLClient extends AbstractGraphQLClient {
     try {
       return await this.find(queryStr);
     } catch (error: unknown) {
-      const exception: PublicApiClientException = this.mapToPublicApiException(
-        error,
-      );
-
-      const { mustRetry } = await this.handleError(exception);
-      if (mustRetry) {
-        return await this.find(queryStr);
-      }
+      return null;
     }
-
-    return null;
   }
 
   public async findOneProductByQuery(
@@ -84,17 +65,8 @@ export class CatalogGraphQLClient extends AbstractGraphQLClient {
     try {
       return await this.post<FindOneProductQueryOutput>(queryStr);
     } catch (error: unknown) {
-      const exception: PublicApiClientException = this.mapToPublicApiException(
-        error,
-      );
-
-      const { mustRetry } = await this.handleError(exception);
-      if (mustRetry) {
-        return await this.post<FindOneProductQueryOutput>(queryStr);
-      }
+      return null;
     }
-
-    return null;
   }
 
   public async findOnePriceBandByQuery(
@@ -107,16 +79,7 @@ export class CatalogGraphQLClient extends AbstractGraphQLClient {
     try {
       return await this.post<FindOnePriceBandQueryOutput>(queryStr);
     } catch (error: unknown) {
-      const exception: PublicApiClientException = this.mapToPublicApiException(
-        error,
-      );
-
-      const { mustRetry } = await this.handleError(exception);
-      if (mustRetry) {
-        return await this.post<FindOnePriceBandQueryOutput>(queryStr);
-      }
+      return null;
     }
-
-    return null;
   }
 }

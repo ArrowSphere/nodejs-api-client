@@ -14,7 +14,6 @@ import {
   GetCustomerAccountDataType,
   GetCustomerAccountDataGraphQLResultType,
 } from './entities/getCustomerAccountData';
-import { PublicApiClientException } from '../exception';
 import { SecurityScoreQueries } from './types/queryArguments';
 import {
   GetPartnerDataQuery,
@@ -46,18 +45,9 @@ export class SecurityScoreGraphQLClient extends AbstractGraphQLClient {
 
     try {
       return await this.post<GraphQLResponseTypes>(request);
-    } catch (error: any) {
-      const exception: PublicApiClientException = this.mapToPublicApiException(
-        error,
-      );
-
-      const { mustRetry } = await this.handleError(exception);
-      if (mustRetry) {
-        return await this.post<GraphQLResponseTypes>(request);
-      }
+    } catch (error: unknown) {
+      return null;
     }
-
-    return null;
   }
 
   public async getPartnerData(
