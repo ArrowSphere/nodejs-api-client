@@ -1,6 +1,5 @@
 import { expect } from 'chai';
-import sinon, { SinonStub } from 'sinon';
-import { AbstractGraphQLClient } from '../../src/abstractGraphQLClient';
+import sinon = require('sinon');
 import {
   GetPartnerDataType,
   GetCustomerDataType,
@@ -15,30 +14,33 @@ import {
 } from '../../src/exception/exception-handlers';
 import { PublicApiClientException } from '../../src/exception';
 import * as SecurityScoreQueryMock from './mocks/securityScoreQueries.mocks';
+import { GraphQLClient } from 'graphql-request';
+import { SECURITY_MOCK_URL } from './mocks/securityScoreQueries.mocks';
 
 describe('SecurityScoreGraphQLClient', () => {
-  const client = new SecurityScoreGraphQLClient();
-  let graphQLClient: SinonStub;
+  const client = new SecurityScoreGraphQLClient().setUrl(SECURITY_MOCK_URL);
+  let graphQLClient: sinon.SinonStubbedInstance<GraphQLClient>;
 
   beforeEach(() => {
-    graphQLClient = sinon.stub(AbstractGraphQLClient.prototype, <any>'post');
+    graphQLClient = sinon.stub(GraphQLClient.prototype);
+    graphQLClient.setHeaders.returnsThis();
   });
 
   afterEach(() => {
-    graphQLClient.restore();
+    sinon.restore();
   });
 
   describe('find', () => {
     it('makes a graphql POST request on the specified URL and handle exception', async () => {
       const query = '{getPartnerData { avgCurrentScore}}';
 
-      graphQLClient.rejects(new Error('unexpected error'));
+      graphQLClient.request.rejects(new Error('unexpected error'));
 
       const result: GetPartnerDataType | null = await client.find<GetPartnerDataType>(
         query,
       );
 
-      sinon.assert.calledOnceWithExactly(graphQLClient, query);
+      graphQLClient.request.calledOnceWithExactly(sinon.match(query));
 
       expect(result).to.be.null;
     });
@@ -67,17 +69,17 @@ describe('SecurityScoreGraphQLClient', () => {
 
       client.registerHttpExceptionHandler(exceptionHandler);
 
-      graphQLClient
+      graphQLClient.request
         .onCall(0)
-        .rejects({ message: 'unexpected error', response: { status: 403 } });
-
-      graphQLClient.onCall(1).resolves(expectedResult);
+        .rejects({ message: 'unexpected error', response: { status: 403 } })
+        .onCall(1)
+        .resolves(expectedResult);
 
       const result: GetPartnerDataType | null = await client.find<GetPartnerDataType>(
         query,
       );
 
-      sinon.assert.calledTwice(graphQLClient);
+      sinon.assert.calledTwice(graphQLClient.request);
 
       expect(result).to.be.equals(expectedResult);
     });
@@ -128,7 +130,7 @@ describe('SecurityScoreGraphQLClient', () => {
         },
       };
 
-      graphQLClient.resolves(expectedResult);
+      graphQLClient.request.resolves(expectedResult);
 
       const result: GetPartnerDataType | null = await client.getPartnerData(
         SecurityScoreQueryMock.GET_PARTNER_DATA_QUERY,
@@ -139,14 +141,13 @@ describe('SecurityScoreGraphQLClient', () => {
         expectedResult.getPartnerData.endCustomersAgg,
       );
 
-      sinon.assert.calledOnceWithExactly(
-        graphQLClient,
-        SecurityScoreQueryMock.GET_PARTNER_DATA_GQL,
+      graphQLClient.request.calledOnceWithExactly(
+        sinon.match(SecurityScoreQueryMock.GET_PARTNER_DATA_GQL),
       );
     });
 
     it('makes a graphql POST request on the specified URL getPartnerData must return null', async () => {
-      graphQLClient.resolves(null);
+      graphQLClient.request.resolves(null);
 
       const result: GetPartnerDataType | null = await client.getPartnerData(
         SecurityScoreQueryMock.GET_PARTNER_DATA_QUERY,
@@ -154,9 +155,8 @@ describe('SecurityScoreGraphQLClient', () => {
 
       expect(result).to.be.null;
 
-      sinon.assert.calledOnceWithExactly(
-        graphQLClient,
-        SecurityScoreQueryMock.GET_PARTNER_DATA_GQL,
+      graphQLClient.request.calledOnceWithExactly(
+        sinon.match(SecurityScoreQueryMock.GET_PARTNER_DATA_GQL),
       );
     });
   });
@@ -203,7 +203,7 @@ describe('SecurityScoreGraphQLClient', () => {
         },
       };
 
-      graphQLClient.resolves(expectedResult);
+      graphQLClient.request.resolves(expectedResult);
 
       const result: GetAdminDataType | null = await client.getAdminData(
         SecurityScoreQueryMock.GET_ADMIN_DATA_QUERY,
@@ -214,14 +214,13 @@ describe('SecurityScoreGraphQLClient', () => {
         expectedResult.getAdminData.partnersAgg,
       );
 
-      sinon.assert.calledOnceWithExactly(
-        graphQLClient,
-        SecurityScoreQueryMock.GET_ADMIN_DATA_GQL,
+      graphQLClient.request.calledOnceWithExactly(
+        sinon.match(SecurityScoreQueryMock.GET_ADMIN_DATA_GQL),
       );
     });
 
     it('makes a graphql POST request on the specified URL getAdminData must return null', async () => {
-      graphQLClient.resolves(null);
+      graphQLClient.request.resolves(null);
 
       const result: GetAdminDataType | null = await client.getAdminData(
         SecurityScoreQueryMock.GET_ADMIN_DATA_QUERY,
@@ -229,9 +228,8 @@ describe('SecurityScoreGraphQLClient', () => {
 
       expect(result).to.be.null;
 
-      sinon.assert.calledOnceWithExactly(
-        graphQLClient,
-        SecurityScoreQueryMock.GET_ADMIN_DATA_GQL,
+      graphQLClient.request.calledOnceWithExactly(
+        sinon.match(SecurityScoreQueryMock.GET_ADMIN_DATA_GQL),
       );
     });
   });
@@ -257,7 +255,7 @@ describe('SecurityScoreGraphQLClient', () => {
         },
       };
 
-      graphQLClient.resolves(expectedResult);
+      graphQLClient.request.resolves(expectedResult);
 
       const result: GetCustomerDataType | null = await client.getCustomerData(
         SecurityScoreQueryMock.GET_CUSTOMER_DATA_QUERY,
@@ -270,14 +268,13 @@ describe('SecurityScoreGraphQLClient', () => {
         expectedResult.getCustomerData.accountsAgg,
       );
 
-      sinon.assert.calledOnceWithExactly(
-        graphQLClient,
-        SecurityScoreQueryMock.GET_CUSTOMER_DATA_GQL,
+      graphQLClient.request.calledOnceWithExactly(
+        sinon.match(SecurityScoreQueryMock.GET_CUSTOMER_DATA_GQL),
       );
     });
 
     it('makes a graphql POST request on the specified URL getCustomerData must return null', async () => {
-      graphQLClient.resolves(null);
+      graphQLClient.request.resolves(null);
 
       const result: GetCustomerDataType | null = await client.getCustomerData(
         SecurityScoreQueryMock.GET_CUSTOMER_DATA_QUERY,
@@ -285,9 +282,8 @@ describe('SecurityScoreGraphQLClient', () => {
 
       expect(result).to.be.null;
 
-      sinon.assert.calledOnceWithExactly(
-        graphQLClient,
-        SecurityScoreQueryMock.GET_CUSTOMER_DATA_GQL,
+      graphQLClient.request.calledOnceWithExactly(
+        sinon.match(SecurityScoreQueryMock.GET_CUSTOMER_DATA_GQL),
       );
     });
   });
@@ -313,7 +309,7 @@ describe('SecurityScoreGraphQLClient', () => {
         },
       };
 
-      graphQLClient.resolves(expectedResult);
+      graphQLClient.request.resolves(expectedResult);
 
       const result: GetCustomerAccountDataType | null = await client.getCustomerAccountData(
         SecurityScoreQueryMock.GET_CUSTOMER_ACCOUNT_DATA_QUERY,
@@ -326,14 +322,13 @@ describe('SecurityScoreGraphQLClient', () => {
         expectedResult.getCustomerAccountData.standardsAgg,
       );
 
-      sinon.assert.calledOnceWithExactly(
-        graphQLClient,
-        SecurityScoreQueryMock.GET_CUSTOMER_ACCOUNT_DATA_GQL,
+      graphQLClient.request.calledOnceWithExactly(
+        sinon.match(SecurityScoreQueryMock.GET_CUSTOMER_ACCOUNT_DATA_GQL),
       );
     });
 
     it('makes a graphql POST request on the specified URL getCustomerAccountData must return null', async () => {
-      graphQLClient.resolves(null);
+      graphQLClient.request.resolves(null);
 
       const result: GetCustomerAccountDataType | null = await client.getCustomerAccountData(
         SecurityScoreQueryMock.GET_CUSTOMER_ACCOUNT_DATA_QUERY,
@@ -341,9 +336,8 @@ describe('SecurityScoreGraphQLClient', () => {
 
       expect(result).to.be.null;
 
-      sinon.assert.calledOnceWithExactly(
-        graphQLClient,
-        SecurityScoreQueryMock.GET_CUSTOMER_ACCOUNT_DATA_GQL,
+      graphQLClient.request.calledOnceWithExactly(
+        sinon.match(SecurityScoreQueryMock.GET_CUSTOMER_ACCOUNT_DATA_GQL),
       );
     });
   });

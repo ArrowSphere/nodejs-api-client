@@ -26,6 +26,15 @@ export class PublicApiClient extends AbstractRestfulClient {
     super();
   }
 
+  private applyConfig(client: AbstractRestfulClient): AbstractRestfulClient {
+    return client
+      .setUrl(this.url)
+      .setSecurity(this.security)
+      .setApiKey(this.apiKey)
+      .setHeaders(this.headers)
+      .setHttpExceptionHandlers(this.httpExceptionHandlers);
+  }
+
   /**
    * Creates a new {@link CustomersClient} instance and returns it
    * @returns {@link CustomersClient}
@@ -33,11 +42,10 @@ export class PublicApiClient extends AbstractRestfulClient {
   public getCustomersClient(
     configuration?: ConfigurationsClient,
   ): CustomersClient {
-    return new CustomersClient(configuration)
-      .setUrl(this.url)
-      .setApiKey(this.apiKey)
-      .setHeaders(this.headers)
-      .setHttpExceptionHandlers(this.httpExceptionHandlers);
+    const client: CustomersClient = new CustomersClient(configuration);
+    this.applyConfig(client);
+
+    return client;
   }
 
   /**
@@ -45,11 +53,10 @@ export class PublicApiClient extends AbstractRestfulClient {
    * @returns {@link WhoAmIClient}
    */
   public getWhoamiClient(configuration?: ConfigurationsClient): WhoAmIClient {
-    return new WhoAmIClient(configuration)
-      .setUrl(this.url)
-      .setApiKey(this.apiKey)
-      .setHeaders(this.headers)
-      .setHttpExceptionHandlers(this.httpExceptionHandlers);
+    const client: WhoAmIClient = new WhoAmIClient(configuration);
+    this.applyConfig(client);
+
+    return client;
   }
 
   /**
@@ -59,11 +66,10 @@ export class PublicApiClient extends AbstractRestfulClient {
   public getLicensesClient(
     configuration?: ConfigurationsClient,
   ): LicensesClient {
-    return new LicensesClient(configuration)
-      .setUrl(this.url)
-      .setApiKey(this.apiKey)
-      .setHeaders(this.headers)
-      .setHttpExceptionHandlers(this.httpExceptionHandlers);
+    const client: LicensesClient = new LicensesClient(configuration);
+    this.applyConfig(client);
+
+    return client;
   }
 
   /**
@@ -73,11 +79,10 @@ export class PublicApiClient extends AbstractRestfulClient {
   public getCheckDomainClient(
     configuration?: ConfigurationsClient,
   ): CheckDomainClient {
-    return new CheckDomainClient(configuration)
-      .setUrl(this.url)
-      .setApiKey(this.apiKey)
-      .setHeaders(this.headers)
-      .setHttpExceptionHandlers(this.httpExceptionHandlers);
+    const client: CheckDomainClient = new CheckDomainClient(configuration);
+    this.applyConfig(client);
+
+    return client;
   }
 
   /**
@@ -87,11 +92,10 @@ export class PublicApiClient extends AbstractRestfulClient {
   public getSubscriptionsClient(
     configuration?: ConfigurationsClient,
   ): SubscriptionsClient {
-    return new SubscriptionsClient(configuration)
-      .setUrl(this.url)
-      .setApiKey(this.apiKey)
-      .setHeaders(this.headers)
-      .setHttpExceptionHandlers(this.httpExceptionHandlers);
+    const client: SubscriptionsClient = new SubscriptionsClient(configuration);
+    this.applyConfig(client);
+
+    return client;
   }
 
   /**
@@ -99,11 +103,10 @@ export class PublicApiClient extends AbstractRestfulClient {
    * @returns {@link OrdersClient}
    */
   public getOrdersClient(configuration?: ConfigurationsClient): OrdersClient {
-    return new OrdersClient(configuration)
-      .setUrl(this.url)
-      .setApiKey(this.apiKey)
-      .setHeaders(this.headers)
-      .setHttpExceptionHandlers(this.httpExceptionHandlers);
+    const client: OrdersClient = new OrdersClient(configuration);
+    this.applyConfig(client);
+
+    return client;
   }
 
   /**
@@ -111,11 +114,10 @@ export class PublicApiClient extends AbstractRestfulClient {
    * @returns {@link ContactClient}
    */
   public getContactClient(configuration?: ConfigurationsClient): ContactClient {
-    return new ContactClient(configuration)
-      .setUrl(this.url)
-      .setApiKey(this.apiKey)
-      .setHeaders(this.headers)
-      .setHttpExceptionHandlers(this.httpExceptionHandlers);
+    const client: ContactClient = new ContactClient(configuration);
+    this.applyConfig(client);
+
+    return client;
   }
 
   /**
@@ -125,84 +127,75 @@ export class PublicApiClient extends AbstractRestfulClient {
   public getCampaignClient(
     configuration?: ConfigurationsClient,
   ): CampaignClient {
-    return new CampaignClient(configuration)
-      .setUrl(this.url)
-      .setApiKey(this.apiKey)
-      .setHeaders(this.headers)
-      .setHttpExceptionHandlers(this.httpExceptionHandlers);
+    const client: CampaignClient = new CampaignClient(configuration);
+    this.applyConfig(client);
+
+    return client;
   }
 
   public getConsumptionClient(
     configuration?: ConfigurationsClient,
   ): ConsumptionClient {
-    return new ConsumptionClient(configuration)
-      .setUrl(this.url)
-      .setApiKey(this.apiKey)
-      .setHeaders(this.headers)
-      .setHttpExceptionHandlers(this.httpExceptionHandlers);
+    const client: ConsumptionClient = new ConsumptionClient(configuration);
+    this.applyConfig(client);
+
+    return client;
   }
 
   public getSecurityStandardsClient(
     configuration?: ConfigurationsClient,
   ): StandardsClient {
-    return new StandardsClient(configuration)
-      .setUrl(this.url)
-      .setApiKey(this.apiKey)
-      .setHeaders(this.headers)
-      .setHttpExceptionHandlers(this.httpExceptionHandlers);
+    const client: StandardsClient = new StandardsClient(configuration);
+    this.applyConfig(client);
+
+    return client;
   }
 
   public getSecurityRegisterClient(
     configuration?: ConfigurationsClient,
   ): RegisterClient {
-    return new RegisterClient(configuration)
-      .setUrl(this.url)
-      .setApiKey(this.apiKey)
-      .setHeaders(this.headers)
-      .setHttpExceptionHandlers(this.httpExceptionHandlers);
+    const client: RegisterClient = new RegisterClient(configuration);
+    this.applyConfig(client);
+
+    return client;
   }
 
   public getCartClient(configuration?: ConfigurationsClient): CartClient {
-    return new CartClient(configuration)
-      .setUrl(this.url)
-      .setApiKey(this.apiKey)
-      .setHeaders(this.headers)
-      .setHttpExceptionHandlers(this.httpExceptionHandlers);
+    const client: CartClient = new CartClient(configuration);
+    this.applyConfig(client);
+
+    return client;
   }
   public getSupportCenterClient(
     configuration?: ConfigurationsClient,
   ): SupportCenterClient {
-    return new SupportCenterClient(configuration)
-      .setUrl(this.url)
-      .setApiKey(this.apiKey)
-      .setHeaders(this.headers)
-      .setHttpExceptionHandlers(this.httpExceptionHandlers);
+    const client: SupportCenterClient = new SupportCenterClient(configuration);
+    this.applyConfig(client);
+
+    return client;
   }
 
   public getCatalogClient(configuration?: ConfigurationsClient): CatalogClient {
-    return new CatalogClient(configuration)
-      .setUrl(this.url)
-      .setApiKey(this.apiKey)
-      .setHeaders(this.headers)
-      .setHttpExceptionHandlers(this.httpExceptionHandlers);
+    const client: CatalogClient = new CatalogClient(configuration);
+    this.applyConfig(client);
+
+    return client;
   }
 
   public getUserClient(configuration?: ConfigurationsClient): UserClient {
-    return new UserClient(configuration)
-      .setUrl(this.url)
-      .setApiKey(this.apiKey)
-      .setHeaders(this.headers)
-      .setHttpExceptionHandlers(this.httpExceptionHandlers);
+    const client: UserClient = new UserClient(configuration);
+    this.applyConfig(client);
+
+    return client;
   }
 
   public getNotificationsClient(
     configuration?: ConfigurationsClient,
   ): NotificationsClient {
-    return new NotificationsClient(configuration)
-      .setUrl(this.url)
-      .setToken(this.token)
-      .setHeaders(this.headers)
-      .setHttpExceptionHandlers(this.httpExceptionHandlers);
+    const client: NotificationsClient = new NotificationsClient(configuration);
+    this.applyConfig(client);
+
+    return client;
   }
 }
 
