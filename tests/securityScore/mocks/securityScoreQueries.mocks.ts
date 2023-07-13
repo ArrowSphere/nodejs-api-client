@@ -9,6 +9,7 @@ import {
   SecurityScoreQueries,
 } from '../../../src/securityScore';
 
+export const SECURITY_MOCK_URL = 'http://security.localhost';
 export const GET_PARTNER_DATA_QUERY: GetPartnerDataQuery = {
   [SecurityScoreQueries.GET_PARTNER_DATA]: {
     __args: {

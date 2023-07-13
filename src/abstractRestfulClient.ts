@@ -2,7 +2,7 @@ import { NotFoundException, PublicApiClientException } from './exception';
 import querystring from 'querystring';
 import path from 'path';
 import { AxiosSingleton } from './axiosSingleton';
-import { AxiosInstance, AxiosResponse } from 'axios';
+import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import {
   AbstractHttpClient,
   Headers,
@@ -157,14 +157,28 @@ export abstract class AbstractRestfulClient extends AbstractHttpClient {
     headers: Headers = {},
     options: Options = {},
   ): Promise<T> {
-    const response = await this.client.get<T>(
-      this.generateUrl(parameters, options),
-      {
-        headers: this.prepareHeaders(headers),
-      },
-    );
+    const url: string = this.generateUrl(parameters, options);
+    const config: AxiosRequestConfig = {
+      headers: this.prepareHeaders(headers),
+    };
 
-    return this.getResponse<T>(response);
+    try {
+      const response = await this.client.get<T>(url, config);
+      return this.getResponse<T>(response);
+    } catch (error) {
+      if (error instanceof PublicApiClientException) {
+        const { mustRetry } = await this.handleError(error);
+
+        if (mustRetry) {
+          const config: AxiosRequestConfig = {
+            headers: this.prepareHeaders(headers),
+          };
+          const response = await this.client.get<T>(url, config);
+          return this.getResponse<T>(response);
+        }
+      }
+      throw error;
+    }
   }
 
   /**
@@ -225,15 +239,28 @@ export abstract class AbstractRestfulClient extends AbstractHttpClient {
     headers: Headers = {},
     options: Options = {},
   ): Promise<AxiosResponse['data']> {
-    const response = await this.client.post(
-      this.generateUrl(parameters, options),
-      payload,
-      {
-        headers: this.prepareHeaders(headers),
-      },
-    );
+    const url: string = this.generateUrl(parameters, options);
+    const config: AxiosRequestConfig = {
+      headers: this.prepareHeaders(headers),
+    };
 
-    return this.getResponse(response);
+    try {
+      const response = await this.client.post(url, payload, config);
+      return this.getResponse(response);
+    } catch (error) {
+      if (error instanceof PublicApiClientException) {
+        const { mustRetry } = await this.handleError(error);
+
+        if (mustRetry) {
+          const config: AxiosRequestConfig = {
+            headers: this.prepareHeaders(headers),
+          };
+          const response = await this.client.post(url, payload, config);
+          return this.getResponse(response);
+        }
+      }
+      throw error;
+    }
   }
 
   /**
@@ -250,15 +277,28 @@ export abstract class AbstractRestfulClient extends AbstractHttpClient {
     headers: Headers = {},
     options: Options = {},
   ): Promise<void> {
-    const response = await this.client.put(
-      this.generateUrl(parameters, options),
-      payload,
-      {
-        headers: this.prepareHeaders(headers),
-      },
-    );
+    const url: string = this.generateUrl(parameters, options);
+    const config: AxiosRequestConfig = {
+      headers: this.prepareHeaders(headers),
+    };
 
-    return this.getResponse(response);
+    try {
+      const response = await this.client.put(url, payload, config);
+      return this.getResponse(response);
+    } catch (error) {
+      if (error instanceof PublicApiClientException) {
+        const { mustRetry } = await this.handleError(error);
+
+        if (mustRetry) {
+          const config: AxiosRequestConfig = {
+            headers: this.prepareHeaders(headers),
+          };
+          const response = await this.client.put(url, payload, config);
+          return this.getResponse(response);
+        }
+      }
+      throw error;
+    }
   }
 
   /**
@@ -275,15 +315,28 @@ export abstract class AbstractRestfulClient extends AbstractHttpClient {
     headers: Headers = {},
     options: Options = {},
   ): Promise<T> {
-    const response = await this.client.patch(
-      this.generateUrl(parameters, options),
-      payload,
-      {
-        headers: this.prepareHeaders(headers),
-      },
-    );
+    const url: string = this.generateUrl(parameters, options);
+    const config: AxiosRequestConfig = {
+      headers: this.prepareHeaders(headers),
+    };
 
-    return this.getResponse(response);
+    try {
+      const response = await this.client.patch(url, payload, config);
+      return this.getResponse(response);
+    } catch (error) {
+      if (error instanceof PublicApiClientException) {
+        const { mustRetry } = await this.handleError(error);
+
+        if (mustRetry) {
+          const config: AxiosRequestConfig = {
+            headers: this.prepareHeaders(headers),
+          };
+          const response = await this.client.patch(url, payload, config);
+          return this.getResponse(response);
+        }
+      }
+      throw error;
+    }
   }
 
   /**
@@ -299,14 +352,28 @@ export abstract class AbstractRestfulClient extends AbstractHttpClient {
     headers: Headers = {},
     options: Options = {},
   ): Promise<void> {
-    const response = await this.client.delete(
-      this.generateUrl(parameters, options),
-      {
-        headers: this.prepareHeaders(headers),
-      },
-    );
+    const url: string = this.generateUrl(parameters, options);
+    const config: AxiosRequestConfig = {
+      headers: this.prepareHeaders(headers),
+    };
 
-    return this.getResponse(response);
+    try {
+      const response = await this.client.delete(url, config);
+      return this.getResponse(response);
+    } catch (error) {
+      if (error instanceof PublicApiClientException) {
+        const { mustRetry } = await this.handleError(error);
+
+        if (mustRetry) {
+          const config: AxiosRequestConfig = {
+            headers: this.prepareHeaders(headers),
+          };
+          const response = await this.client.delete(url, config);
+          return this.getResponse(response);
+        }
+      }
+      throw error;
+    }
   }
 
   /**

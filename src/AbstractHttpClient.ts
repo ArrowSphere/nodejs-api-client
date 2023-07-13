@@ -126,9 +126,12 @@ export abstract class AbstractHttpClient {
 
     for (const handler of appropriateHandlers) {
       const res: HandleHttpExceptionOutput = await handler.handle(error, {
-        setToken: this.setToken,
+        setToken: this.setToken.bind(this),
       });
-      output.mustRetry = res.mustRetry;
+
+      if (res.mustRetry) {
+        output.mustRetry = true;
+      }
     }
 
     return output;
