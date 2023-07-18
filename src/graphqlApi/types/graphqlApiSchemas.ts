@@ -9,10 +9,10 @@ import { ContinentType, CountryType } from './entities/country';
 import { WorkgroupType } from './entities/workgroup';
 import {
   ErrorsType,
-  PaginationType,
+  PageType,
   Queries,
-  SelectDataFields,
-  SelectableFields,
+  SelectDataField,
+  SelectableField,
 } from './graphqlApiQueries';
 
 export type PartnertagSchema = Schema<PartnertagType, boolean>;
@@ -35,38 +35,38 @@ export type ArrowCompanySchema = Schema<ArrowCompanyType, boolean>;
 export type ContinentSchema = Schema<ContinentType, boolean>;
 export type CountrySchema = Schema<CountryType, boolean>;
 export type ErrorsSchema = Schema<ErrorsType, boolean>;
-export type PaginationSchema = Schema<PaginationType, boolean>;
+export type PageSchema = Schema<PageType, boolean>;
 export type WorkgroupSchema = Schema<WorkgroupType, boolean>;
 
 export type SelectAllResultSchema = {
-  [SelectableFields.DATA]?: SelectAllResponseDataSchema;
-  [SelectableFields.ERRORS]?: ErrorsSchema;
-  [SelectableFields.PAGINATION]?: PaginationSchema;
+  [SelectableField.DATA]?: SelectAllResponseDataSchema;
+  [SelectableField.ERRORS]?: ErrorsSchema;
+  [SelectableField.PAGINATION]?: PageSchema;
 };
 
 export type SelectAllResponseDataSchema = {
-  [SelectDataFields.ARROW_COMPANY]?: ArrowCompanySchema;
-  [SelectDataFields.CONTINENT]?: ContinentSchema;
-  [SelectDataFields.COUNTRY]?: CountrySchema;
-  [SelectDataFields.END_CUSTOMER]?: EndCustomerSchema;
-  [SelectDataFields.PARTNER]?: PartnerSchema;
-  [SelectDataFields.PARTNERTAG]?: PartnertagSchema;
-  [SelectDataFields.WORKGROUP]?: WorkgroupSchema;
+  [SelectDataField.ARROW_COMPANY]?: ArrowCompanySchema;
+  [SelectDataField.CONTINENT]?: ContinentSchema;
+  [SelectDataField.COUNTRY]?: CountrySchema;
+  [SelectDataField.END_CUSTOMER]?: EndCustomerSchema;
+  [SelectDataField.PARTNER]?: PartnerSchema;
+  [SelectDataField.PARTNERTAG]?: PartnertagSchema;
+  [SelectDataField.WORKGROUP]?: WorkgroupSchema;
 };
 
 export type SelectOneResultSchema = {
-  [SelectableFields.DATA]?: SelectOneResponseDataSchema;
-  [SelectableFields.ERRORS]?: ErrorsSchema;
+  [SelectableField.DATA]?: SelectOneResponseDataSchema;
+  [SelectableField.ERRORS]?: ErrorsSchema;
 };
 
 export type SelectOneResponseDataSchema = {
-  [SelectDataFields.ARROW_COMPANY]?: ArrowCompanySchema;
-  [SelectDataFields.CONTINENT]?: ContinentSchema;
-  [SelectDataFields.COUNTRY]?: CountrySchema;
-  [SelectDataFields.END_CUSTOMER]?: EndCustomerSchema;
-  [SelectDataFields.PARTNER]?: PartnerSchema;
-  [SelectDataFields.PARTNERTAG]?: PartnertagSchema;
-  [SelectDataFields.WORKGROUP]?: WorkgroupSchema;
+  [SelectDataField.ARROW_COMPANY]?: ArrowCompanySchema;
+  [SelectDataField.CONTINENT]?: ContinentSchema;
+  [SelectDataField.COUNTRY]?: CountrySchema;
+  [SelectDataField.END_CUSTOMER]?: EndCustomerSchema;
+  [SelectDataField.PARTNER]?: PartnerSchema;
+  [SelectDataField.PARTNERTAG]?: PartnertagSchema;
+  [SelectDataField.WORKGROUP]?: WorkgroupSchema;
 };
 
 export type SelectAllQuerySchema = {
