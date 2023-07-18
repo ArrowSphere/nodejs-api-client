@@ -14,9 +14,9 @@ import {
   Queries,
   SelectAllQueryType,
   SelectAllResultType,
-  SelectDataFields,
+  SelectDataField,
   SelectOneResultType,
-  SelectableFields,
+  SelectableField,
 } from '../../src/graphqlApi';
 
 describe('GraphqlApiClient', () => {
@@ -52,8 +52,8 @@ describe('GraphqlApiClient', () => {
 
       const expectedResult: SelectAllResultType = {
         [Queries.SELECT_ALL]: {
-          [SelectableFields.DATA]: {
-            [SelectDataFields.END_CUSTOMER]: [
+          [SelectableField.DATA]: {
+            [SelectDataField.END_CUSTOMER]: [
               {
                 id: 123,
                 name: 'Arrow ECS',
@@ -102,8 +102,8 @@ describe('GraphqlApiClient', () => {
     it('makes a graphql POST request on the specified URL selectAll', async () => {
       const expectedResult: SelectAllResultType = {
         [Queries.SELECT_ALL]: {
-          [SelectableFields.DATA]: {
-            [SelectDataFields.END_CUSTOMER]: [
+          [SelectableField.DATA]: {
+            [SelectDataField.END_CUSTOMER]: [
               {
                 id: 123,
                 name: 'Arrow ECS',
@@ -120,12 +120,12 @@ describe('GraphqlApiClient', () => {
       );
 
       expect(
-        result?.[Queries.SELECT_ALL]?.[SelectableFields.DATA]?.[
-          SelectDataFields.END_CUSTOMER
+        result?.[Queries.SELECT_ALL]?.[SelectableField.DATA]?.[
+          SelectDataField.END_CUSTOMER
         ],
       ).to.deep.equals(
-        expectedResult?.[Queries.SELECT_ALL]?.[SelectableFields.DATA]?.[
-          SelectDataFields.END_CUSTOMER
+        expectedResult?.[Queries.SELECT_ALL]?.[SelectableField.DATA]?.[
+          SelectDataField.END_CUSTOMER
         ],
       );
 
@@ -153,8 +153,8 @@ describe('GraphqlApiClient', () => {
     it('makes a graphql POST request on the specified URL selectOne', async () => {
       const expectedResult: SelectOneResultType = {
         [Queries.SELECT_ONE]: {
-          [SelectableFields.DATA]: {
-            [SelectDataFields.END_CUSTOMER]: {
+          [SelectableField.DATA]: {
+            [SelectDataField.END_CUSTOMER]: {
               id: 123,
               name: 'Arrow ECS',
             },

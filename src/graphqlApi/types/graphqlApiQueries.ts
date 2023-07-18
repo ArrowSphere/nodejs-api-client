@@ -12,7 +12,7 @@ import {
   CountrySchema,
   EndCustomerSchema,
   ErrorsSchema,
-  PaginationSchema,
+  PageSchema,
   PartnerSchema,
   PartnertagSchema,
   WorkgroupSchema,
@@ -60,65 +60,65 @@ export enum Direction {
   desc = 'desc',
 }
 
-export enum InputPaginationFields {
+export enum InputPaginationField {
   PAGE = 'page',
   PER_PAGE = 'perPage',
 }
 
 export type InputPaginationType = {
-  [InputPaginationFields.PAGE]?: number;
-  [InputPaginationFields.PER_PAGE]?: number;
+  [InputPaginationField.PAGE]?: number;
+  [InputPaginationField.PER_PAGE]?: number;
 };
 
-export enum InputSortFilterFields {
+export enum InputSortFilterField {
   DIRECTION = 'direction',
   NAME = 'name',
 }
 
 export type InputSortFilterType = {
-  [InputSortFilterFields.DIRECTION]?: Direction;
-  [InputSortFilterFields.NAME]?: string;
+  [InputSortFilterField.DIRECTION]?: Direction;
+  [InputSortFilterField.NAME]?: string;
 };
 
-export enum InputSearchFilterFields {
+export enum InputSearchFilterField {
   GROUPS = 'groups',
   LOGICAL_OPERATOR = 'logicalOperator',
 }
 
 export type InputSearchFilterType = {
-  [InputSearchFilterFields.GROUPS]?: InputFiltersType[];
-  [InputSearchFilterFields.LOGICAL_OPERATOR]?: LogicalOperator;
+  [InputSearchFilterField.GROUPS]?: InputFiltersType[];
+  [InputSearchFilterField.LOGICAL_OPERATOR]?: LogicalOperator;
 };
 
-export enum InputFiltersFields {
+export enum InputFiltersField {
   ITEMS = 'items',
   LOGICAL_OPERATOR = 'logicalOperator',
 }
 
 export type InputFiltersType = {
-  [InputFiltersFields.ITEMS]?: InputFilterValueType[];
-  [InputFiltersFields.LOGICAL_OPERATOR]?: LogicalOperator;
+  [InputFiltersField.ITEMS]?: InputFilterValueType[];
+  [InputFiltersField.LOGICAL_OPERATOR]?: LogicalOperator;
 };
 
-export enum InputFilterValueFields {
+export enum InputFilterValueField {
   NAME = 'name',
   OPERATOR = 'operator',
   VALUE = 'value',
 }
 
 export type InputFilterValueType = {
-  [InputFilterValueFields.NAME]?: string;
-  [InputFilterValueFields.OPERATOR]?: ComparisonOperator;
-  [InputFilterValueFields.VALUE]?: string[];
+  [InputFilterValueField.NAME]?: string;
+  [InputFilterValueField.OPERATOR]?: ComparisonOperator;
+  [InputFilterValueField.VALUE]?: string[];
 };
 
-export enum SelectableFields {
+export enum SelectableField {
   DATA = 'data',
   ERRORS = 'errors',
   PAGINATION = 'pagination',
 }
 
-export enum SelectDataFields {
+export enum SelectDataField {
   ARROW_COMPANY = 'arrowCompany',
   CONTINENT = 'continent',
   COUNTRY = 'country',
@@ -130,33 +130,33 @@ export enum SelectDataFields {
 
 export type SelectAllResultType = {
   [Queries.SELECT_ALL]: {
-    [SelectableFields.DATA]?: SelectAllResponseDataType;
-    [SelectableFields.ERRORS]?: ErrorsType;
-    [SelectableFields.PAGINATION]?: PaginationType;
+    [SelectableField.DATA]?: SelectAllResponseDataType;
+    [SelectableField.ERRORS]?: ErrorsType;
+    [SelectableField.PAGINATION]?: PageType;
   };
 };
 
 export type SelectAllResponseDataType = {
-  [SelectDataFields.ARROW_COMPANY]?: ArrowCompanyType[];
-  [SelectDataFields.CONTINENT]?: ContinentType[];
-  [SelectDataFields.COUNTRY]?: CountryType[];
-  [SelectDataFields.END_CUSTOMER]?: EndCustomerType[];
-  [SelectDataFields.PARTNER]?: PartnerType[];
-  [SelectDataFields.PARTNERTAG]?: PartnertagType[];
-  [SelectDataFields.WORKGROUP]?: WorkgroupType[];
+  [SelectDataField.ARROW_COMPANY]?: ArrowCompanyType[];
+  [SelectDataField.CONTINENT]?: ContinentType[];
+  [SelectDataField.COUNTRY]?: CountryType[];
+  [SelectDataField.END_CUSTOMER]?: EndCustomerType[];
+  [SelectDataField.PARTNER]?: PartnerType[];
+  [SelectDataField.PARTNERTAG]?: PartnertagType[];
+  [SelectDataField.WORKGROUP]?: WorkgroupType[];
 };
 
-export enum ErrorsFields {
+export enum ErrorsField {
   CODE = 'code',
   MESSAGE = 'message',
 }
 
 export type ErrorsType = {
-  [ErrorsFields.CODE]?: string;
-  [ErrorsFields.MESSAGE]?: string;
+  [ErrorsField.CODE]?: string;
+  [ErrorsField.MESSAGE]?: string;
 };
 
-export enum PaginationFields {
+export enum PaginationField {
   CURRENT_PAGE = 'currentPage',
   NEXT = 'next',
   PER_PAGE = 'perPage',
@@ -166,34 +166,34 @@ export enum PaginationFields {
   TOTAL_PAGES = 'totalPages',
 }
 
-export type PaginationType = {
-  [PaginationFields.CURRENT_PAGE]?: number;
-  [PaginationFields.NEXT]?: number;
-  [PaginationFields.PER_PAGE]?: number;
-  [PaginationFields.PREVIOUS]?: number;
-  [PaginationFields.TOTAL]?: number;
-  [PaginationFields.TOTAL_PAGE]?: number;
-  [PaginationFields.TOTAL_PAGES]?: number;
+export type PageType = {
+  [PaginationField.CURRENT_PAGE]?: number;
+  [PaginationField.NEXT]?: number;
+  [PaginationField.PER_PAGE]?: number;
+  [PaginationField.PREVIOUS]?: number;
+  [PaginationField.TOTAL]?: number;
+  [PaginationField.TOTAL_PAGE]?: number;
+  [PaginationField.TOTAL_PAGES]?: number;
 };
 
 export type SelectOneResultType = {
   [Queries.SELECT_ONE]: {
-    [SelectableFields.DATA]?: SelectOneResponseDataType;
-    [SelectableFields.ERRORS]?: ErrorsType;
+    [SelectableField.DATA]?: SelectOneResponseDataType;
+    [SelectableField.ERRORS]?: ErrorsType;
   };
 };
 
 export type SelectOneResponseDataType = {
-  [SelectDataFields.ARROW_COMPANY]?: ArrowCompanyType;
-  [SelectDataFields.CONTINENT]?: ContinentType;
-  [SelectDataFields.COUNTRY]?: CountryType;
-  [SelectDataFields.END_CUSTOMER]?: EndCustomerType;
-  [SelectDataFields.PARTNER]?: PartnerType;
-  [SelectDataFields.PARTNERTAG]?: PartnertagType;
-  [SelectDataFields.WORKGROUP]?: WorkgroupType;
+  [SelectDataField.ARROW_COMPANY]?: ArrowCompanyType;
+  [SelectDataField.CONTINENT]?: ContinentType;
+  [SelectDataField.COUNTRY]?: CountryType;
+  [SelectDataField.END_CUSTOMER]?: EndCustomerType;
+  [SelectDataField.PARTNER]?: PartnerType;
+  [SelectDataField.PARTNERTAG]?: PartnertagType;
+  [SelectDataField.WORKGROUP]?: WorkgroupType;
 };
 
-export enum QueryVariablesFields {
+export enum QueryVariablesField {
   AGGREGATOR_FILTER = 'aggregatorFilter',
   EXCLUSION_FILTERS = 'exclusionFilters',
   FILTERS = 'filters',
@@ -203,12 +203,12 @@ export enum QueryVariablesFields {
 }
 
 export type QueryVariablesType = {
-  [QueryVariablesFields.AGGREGATOR_FILTER]?: string[];
-  [QueryVariablesFields.EXCLUSION_FILTERS]?: InputSearchFilterType;
-  [QueryVariablesFields.FILTERS]?: InputSearchFilterType;
-  [QueryVariablesFields.PAGINATION]?: InputPaginationType;
-  [QueryVariablesFields.QUERY_MODIFIER]?: QueryModifier;
-  [QueryVariablesFields.SORT]?: InputSortFilterType[];
+  [QueryVariablesField.AGGREGATOR_FILTER]?: string[];
+  [QueryVariablesField.EXCLUSION_FILTERS]?: InputSearchFilterType;
+  [QueryVariablesField.FILTERS]?: InputSearchFilterType;
+  [QueryVariablesField.PAGINATION]?: InputPaginationType;
+  [QueryVariablesField.QUERY_MODIFIER]?: QueryModifier;
+  [QueryVariablesField.SORT]?: InputSortFilterType[];
 };
 
 export enum Queries {
@@ -218,33 +218,33 @@ export enum Queries {
 
 export type SelectOneQueryType = {
   [Queries.SELECT_ONE]: {
-    __args?: Omit<QueryVariablesType, QueryVariablesFields.PAGINATION>;
-    [SelectableFields.DATA]: {
-      [SelectDataFields.ARROW_COMPANY]?: ArrowCompanySchema;
-      [SelectDataFields.CONTINENT]?: ContinentSchema;
-      [SelectDataFields.COUNTRY]?: CountrySchema;
-      [SelectDataFields.END_CUSTOMER]?: EndCustomerSchema;
-      [SelectDataFields.PARTNER]?: PartnerSchema;
-      [SelectDataFields.PARTNERTAG]?: PartnertagSchema;
-      [SelectDataFields.WORKGROUP]?: WorkgroupSchema;
+    __args?: Omit<QueryVariablesType, QueryVariablesField.PAGINATION>;
+    [SelectableField.DATA]: {
+      [SelectDataField.ARROW_COMPANY]?: ArrowCompanySchema;
+      [SelectDataField.CONTINENT]?: ContinentSchema;
+      [SelectDataField.COUNTRY]?: CountrySchema;
+      [SelectDataField.END_CUSTOMER]?: EndCustomerSchema;
+      [SelectDataField.PARTNER]?: PartnerSchema;
+      [SelectDataField.PARTNERTAG]?: PartnertagSchema;
+      [SelectDataField.WORKGROUP]?: WorkgroupSchema;
     };
-    [SelectableFields.ERRORS]?: ErrorsSchema;
+    [SelectableField.ERRORS]?: ErrorsSchema;
   };
 };
 
 export type SelectAllQueryType = {
   [Queries.SELECT_ALL]: {
     __args?: QueryVariablesType;
-    [SelectableFields.DATA]: {
-      [SelectDataFields.ARROW_COMPANY]?: ArrowCompanySchema;
-      [SelectDataFields.CONTINENT]?: ContinentSchema;
-      [SelectDataFields.COUNTRY]?: CountrySchema;
-      [SelectDataFields.END_CUSTOMER]?: EndCustomerSchema;
-      [SelectDataFields.PARTNER]?: PartnerSchema;
-      [SelectDataFields.PARTNERTAG]?: PartnertagSchema;
-      [SelectDataFields.WORKGROUP]?: WorkgroupSchema;
+    [SelectableField.DATA]: {
+      [SelectDataField.ARROW_COMPANY]?: ArrowCompanySchema;
+      [SelectDataField.CONTINENT]?: ContinentSchema;
+      [SelectDataField.COUNTRY]?: CountrySchema;
+      [SelectDataField.END_CUSTOMER]?: EndCustomerSchema;
+      [SelectDataField.PARTNER]?: PartnerSchema;
+      [SelectDataField.PARTNERTAG]?: PartnertagSchema;
+      [SelectDataField.WORKGROUP]?: WorkgroupSchema;
     };
-    [SelectableFields.ERRORS]?: ErrorsSchema;
-    [SelectableFields.PAGINATION]?: PaginationSchema;
+    [SelectableField.ERRORS]?: ErrorsSchema;
+    [SelectableField.PAGINATION]?: PageSchema;
   };
 };
