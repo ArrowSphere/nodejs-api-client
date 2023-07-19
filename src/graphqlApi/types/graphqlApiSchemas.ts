@@ -21,9 +21,14 @@ type MissingFieldsOfCompanySchema = {
   partnerTags?: PartnertagSchema;
 };
 
+type MissingFieldsOfEndCustomerSchema = {
+  partnerTags?: PartnertagSchema;
+  partner?: PartnerSchema;
+};
+
 export type EndCustomerSchema = Merge<
   Schema<EndCustomerType, boolean>,
-  MissingFieldsOfCompanySchema
+  MissingFieldsOfEndCustomerSchema
 >;
 
 export type PartnerSchema = Merge<

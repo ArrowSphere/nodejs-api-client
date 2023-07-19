@@ -102,6 +102,12 @@ export const SELECT_ALL_END_CUSTOMER_QUERY: SelectAllQueryType = {
             id: true,
             name: true,
           },
+          partnerTags: {
+            id: true,
+            label: true,
+            description: true,
+            createdAt: true,
+          },
         },
         partnerRef: true,
         partnerTags: {
