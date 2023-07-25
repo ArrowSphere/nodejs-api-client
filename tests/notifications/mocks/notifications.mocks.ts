@@ -11,12 +11,12 @@ import {
 export const NOTIFICATION: NotificationDetailsType = {
   [NotificationDetailsFields.COLUMN_ID]: '6fab2422-e273-11ec-8fea-0242ac120002',
   [NotificationDetailsFields.COLUMN_USERNAME]: 'Kaizer Sauze',
-  [NotificationDetailsFields.COLUMN_CREATED]: 6765765372,
-  [NotificationDetailsFields.COLUMN_EXPIRES]: 8787687655,
+  [NotificationDetailsFields.COLUMN_CREATED]: '2023-07-17',
+  [NotificationDetailsFields.COLUMN_EXPIRES]: '2023-08-17',
   [NotificationDetailsFields.COLUMN_CONTENT]: 'Order fulfilled - [XSP656567]',
   [NotificationDetailsFields.COLUMN_SUBJECT]:
     'Your order has been fulfilled with success',
-  [NotificationDetailsFields.COLUMN_HAS_BEEN_READ]: 0,
+  [NotificationDetailsFields.COLUMN_HAS_BEEN_READ]: false,
 };
 
 export const PAYLOAD_LIST_ALL_NOTIFICATIONS: GetData<NotificationsType> = {
