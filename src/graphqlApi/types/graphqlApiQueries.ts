@@ -104,12 +104,22 @@ export enum InputFilterValueField {
   NAME = 'name',
   OPERATOR = 'operator',
   VALUE = 'value',
+  EXCLUSION = 'exclusion',
 }
 
 export type InputFilterValueType = {
   [InputFilterValueField.NAME]?: string;
   [InputFilterValueField.OPERATOR]?: ComparisonOperator;
   [InputFilterValueField.VALUE]?: string[];
+  [InputFilterValueField.EXCLUSION]?: boolean;
+};
+
+export enum InputQueryOptionsField {
+  SKIP_PARTITION = 'skipPartition',
+}
+
+export type InputQueryOptionsType = {
+  [InputQueryOptionsField.SKIP_PARTITION]?: boolean;
 };
 
 export enum SelectableField {
@@ -200,6 +210,7 @@ export enum QueryVariablesField {
   PAGINATION = 'pagination',
   QUERY_MODIFIER = 'queryModifier',
   SORT = 'sort',
+  OPTIONS = 'options',
 }
 
 export type QueryVariablesType = {
@@ -209,6 +220,7 @@ export type QueryVariablesType = {
   [QueryVariablesField.PAGINATION]?: InputPaginationType;
   [QueryVariablesField.QUERY_MODIFIER]?: QueryModifier;
   [QueryVariablesField.SORT]?: InputSortFilterType[];
+  [QueryVariablesField.OPTIONS]?: InputQueryOptionsType;
 };
 
 export enum Queries {
