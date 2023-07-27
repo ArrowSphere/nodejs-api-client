@@ -7,15 +7,9 @@ import { ContinentType, CountryType } from './entities/country';
 import { PartnertagType } from './entities/partnertag';
 import { WorkgroupType } from './entities/workgroup';
 import {
-  ArrowCompanySchema,
-  ContinentSchema,
-  CountrySchema,
-  EndCustomerSchema,
   ErrorsSchema,
   PageSchema,
-  PartnerSchema,
-  PartnertagSchema,
-  WorkgroupSchema,
+  SelectAllResponseDataSchema,
 } from './graphqlApiSchemas';
 
 /**
@@ -231,15 +225,7 @@ export enum Queries {
 export type SelectOneQueryType = {
   [Queries.SELECT_ONE]: {
     __args?: Omit<QueryVariablesType, QueryVariablesField.PAGINATION>;
-    [SelectableField.DATA]: {
-      [SelectDataField.ARROW_COMPANY]?: ArrowCompanySchema;
-      [SelectDataField.CONTINENT]?: ContinentSchema;
-      [SelectDataField.COUNTRY]?: CountrySchema;
-      [SelectDataField.END_CUSTOMER]?: EndCustomerSchema;
-      [SelectDataField.PARTNER]?: PartnerSchema;
-      [SelectDataField.PARTNERTAG]?: PartnertagSchema;
-      [SelectDataField.WORKGROUP]?: WorkgroupSchema;
-    };
+    [SelectableField.DATA]: SelectAllResponseDataSchema;
     [SelectableField.ERRORS]?: ErrorsSchema;
   };
 };
@@ -247,15 +233,7 @@ export type SelectOneQueryType = {
 export type SelectAllQueryType = {
   [Queries.SELECT_ALL]: {
     __args?: QueryVariablesType;
-    [SelectableField.DATA]: {
-      [SelectDataField.ARROW_COMPANY]?: ArrowCompanySchema;
-      [SelectDataField.CONTINENT]?: ContinentSchema;
-      [SelectDataField.COUNTRY]?: CountrySchema;
-      [SelectDataField.END_CUSTOMER]?: EndCustomerSchema;
-      [SelectDataField.PARTNER]?: PartnerSchema;
-      [SelectDataField.PARTNERTAG]?: PartnertagSchema;
-      [SelectDataField.WORKGROUP]?: WorkgroupSchema;
-    };
+    [SelectableField.DATA]: SelectAllResponseDataSchema;
     [SelectableField.ERRORS]?: ErrorsSchema;
     [SelectableField.PAGINATION]?: PageSchema;
   };
