@@ -13,21 +13,21 @@ export enum NotificationDetailsFields {
 export type NotificationDetailsType = {
   [NotificationDetailsFields.COLUMN_ID]: string;
   [NotificationDetailsFields.COLUMN_USERNAME]: string;
-  [NotificationDetailsFields.COLUMN_CREATED]: number;
-  [NotificationDetailsFields.COLUMN_EXPIRES]: number;
+  [NotificationDetailsFields.COLUMN_CREATED]: string;
+  [NotificationDetailsFields.COLUMN_EXPIRES]: string;
   [NotificationDetailsFields.COLUMN_SUBJECT]: string;
   [NotificationDetailsFields.COLUMN_CONTENT]: string;
-  [NotificationDetailsFields.COLUMN_HAS_BEEN_READ]: number;
+  [NotificationDetailsFields.COLUMN_HAS_BEEN_READ]: boolean;
 };
 
 export class NotificationDetails extends AbstractEntity<NotificationDetailsType> {
   readonly #id: string;
   readonly #userName: string;
-  readonly #created: number;
-  readonly #expires: number;
+  readonly #created: string;
+  readonly #expires: string;
   readonly #subject: string;
   readonly #content: string;
-  readonly #hasBeenRead: number;
+  readonly #hasBeenRead: boolean;
 
   public constructor(notification: NotificationDetailsType) {
     super(notification);
@@ -50,11 +50,11 @@ export class NotificationDetails extends AbstractEntity<NotificationDetailsType>
     return this.#userName;
   }
 
-  get created(): number {
+  get created(): string {
     return this.#created;
   }
 
-  get expires(): number {
+  get expires(): string {
     return this.#expires;
   }
 
@@ -66,7 +66,7 @@ export class NotificationDetails extends AbstractEntity<NotificationDetailsType>
     return this.#content;
   }
 
-  get hasBeenRead(): number {
+  get hasBeenRead(): boolean {
     return this.#hasBeenRead;
   }
 
