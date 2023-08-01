@@ -52,7 +52,7 @@ export type SearchBodyArgument = {
 
 export type SearchProductFilterArgument = {
   name: string;
-  value: string | string[];
+  value: string | string[] | string[][];
   operator?: OperatorArgument;
   filters?: SearchProductFilterArgument[];
 };
