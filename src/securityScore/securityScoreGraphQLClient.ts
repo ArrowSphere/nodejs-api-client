@@ -31,7 +31,7 @@ export class SecurityScoreGraphQLClient extends AbstractGraphQLClient {
   /**
    * The base path of the API
    */
-  protected basePath = '/security';
+  protected basePath = '/wellArchitected';
 
   /**
    * The Path of graphql catalog API
