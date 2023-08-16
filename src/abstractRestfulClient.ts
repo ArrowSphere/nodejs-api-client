@@ -48,6 +48,7 @@ export type Payload = Record<string, unknown> | Array<Payload>;
 
 export type Options = {
   isAdmin?: boolean;
+  returnAxiosData?: boolean;
 };
 
 export type ConfigurationsClient = {
@@ -164,7 +165,7 @@ export abstract class AbstractRestfulClient extends AbstractHttpClient {
 
     try {
       const response = await this.client.get<T>(url, config);
-      return this.getResponse<T>(response);
+      return this.getResponse<T>(response, options);
     } catch (error) {
       if (error instanceof PublicApiClientException) {
         const { mustRetry } = await this.handleError(error);
@@ -174,7 +175,7 @@ export abstract class AbstractRestfulClient extends AbstractHttpClient {
             headers: this.prepareHeaders(headers),
           };
           const response = await this.client.get<T>(url, config);
-          return this.getResponse<T>(response);
+          return this.getResponse<T>(response, options);
         }
       }
       throw error;
@@ -184,9 +185,17 @@ export abstract class AbstractRestfulClient extends AbstractHttpClient {
   /**
    * Processes and returns the Axios response data
    * @param response - The AxiosResponse
+   * @param options - options
    * @returns T
    */
-  private getResponse<T = AxiosResponse['data']>(response: AxiosResponse): T {
+  private getResponse<T = AxiosResponse['data']>(
+    response: AxiosResponse,
+    options: Options = {},
+  ): T {
+    if (options.returnAxiosData) {
+      return response.data;
+    }
+
     const statusCode = response.status;
     if (statusCode === 404) {
       throw new NotFoundException(
@@ -246,7 +255,7 @@ export abstract class AbstractRestfulClient extends AbstractHttpClient {
 
     try {
       const response = await this.client.post(url, payload, config);
-      return this.getResponse(response);
+      return this.getResponse(response, options);
     } catch (error) {
       if (error instanceof PublicApiClientException) {
         const { mustRetry } = await this.handleError(error);
@@ -256,7 +265,7 @@ export abstract class AbstractRestfulClient extends AbstractHttpClient {
             headers: this.prepareHeaders(headers),
           };
           const response = await this.client.post(url, payload, config);
-          return this.getResponse(response);
+          return this.getResponse(response, options);
         }
       }
       throw error;
@@ -284,7 +293,7 @@ export abstract class AbstractRestfulClient extends AbstractHttpClient {
 
     try {
       const response = await this.client.put(url, payload, config);
-      return this.getResponse(response);
+      return this.getResponse(response, options);
     } catch (error) {
       if (error instanceof PublicApiClientException) {
         const { mustRetry } = await this.handleError(error);
@@ -294,7 +303,7 @@ export abstract class AbstractRestfulClient extends AbstractHttpClient {
             headers: this.prepareHeaders(headers),
           };
           const response = await this.client.put(url, payload, config);
-          return this.getResponse(response);
+          return this.getResponse(response, options);
         }
       }
       throw error;
@@ -322,7 +331,7 @@ export abstract class AbstractRestfulClient extends AbstractHttpClient {
 
     try {
       const response = await this.client.patch(url, payload, config);
-      return this.getResponse(response);
+      return this.getResponse(response, options);
     } catch (error) {
       if (error instanceof PublicApiClientException) {
         const { mustRetry } = await this.handleError(error);
@@ -332,7 +341,7 @@ export abstract class AbstractRestfulClient extends AbstractHttpClient {
             headers: this.prepareHeaders(headers),
           };
           const response = await this.client.patch(url, payload, config);
-          return this.getResponse(response);
+          return this.getResponse(response, options);
         }
       }
       throw error;
@@ -359,7 +368,7 @@ export abstract class AbstractRestfulClient extends AbstractHttpClient {
 
     try {
       const response = await this.client.delete(url, config);
-      return this.getResponse(response);
+      return this.getResponse(response, options);
     } catch (error) {
       if (error instanceof PublicApiClientException) {
         const { mustRetry } = await this.handleError(error);
@@ -369,7 +378,7 @@ export abstract class AbstractRestfulClient extends AbstractHttpClient {
             headers: this.prepareHeaders(headers),
           };
           const response = await this.client.delete(url, config);
-          return this.getResponse(response);
+          return this.getResponse(response, options);
         }
       }
       throw error;
