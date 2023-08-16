@@ -5,6 +5,8 @@ export enum ContactFields {
   COLUMN_LASTNAME = 'LastName',
   COLUMN_EMAIL = 'Email',
   COLUMN_PHONE = 'Phone',
+  COLUMN_TYPE = 'Type',
+  COLUMN_ROLE = 'Role',
   COLUMN_SYNC_PARTNER_CONTACT_REF_ID = 'SyncPartnerContactRefId',
   COLUMN_CONTACT_PERSON_ID = 'ContactPersonID',
 }

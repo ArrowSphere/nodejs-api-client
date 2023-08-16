@@ -6,6 +6,10 @@ import {
   Parameters,
   PublicApiClient,
   DataInvitationFields,
+  PostCustomerPayload,
+  APIResponseResourceCreated,
+  APIResponseError,
+  APIResponseCustomerUpdated,
 } from '../../src/';
 import { expect } from 'chai';
 import { PAYLOAD_ORDERS } from '../orders/mocks/orders.mocks';
@@ -17,6 +21,8 @@ import {
   PAYLOAD_GET_CUSTOMERS_WITHOUT_OPTIONAL_FIELDS,
   PAYLOAD_POST_CUSTOMER_CONTACT,
 } from './mocks/customers.mocks';
+import { Axios } from 'axios';
+import sinon from 'sinon';
 
 export const CUSTOMERS_MOCK_URL = 'https://customers.localhost';
 export const CUSTOMERS_GET_CUSTOMERS_URL = new RegExp('/customers.*');
@@ -237,6 +243,158 @@ describe('CustomersClients', () => {
         .reply(200);
 
       await client.deleteCustomerContact('REF', 'REF');
+    });
+  });
+
+  describe('createCustomer', () => {
+    const client = new PublicApiClient()
+      .getCustomersClient()
+      .setUrl(CUSTOMERS_MOCK_URL);
+
+    let axiosClient: sinon.SinonStubbedInstance<Axios>;
+
+    const customerPayload: PostCustomerPayload = {
+      CompanyName: 'Company test 1',
+      AddressLine1: 'Address 1',
+      City: 'Paris',
+      CountryCode: 'FR',
+      Zip: '75012',
+      ReceptionPhone: '1234567890',
+    };
+
+    beforeEach(() => {
+      axiosClient = sinon.stub(Axios.prototype);
+    });
+
+    afterEach(() => {
+      sinon.restore();
+    });
+
+    it('call create customer will succed', async () => {
+      const publicAPIResult = {
+        status: 201,
+        data: {
+          data: {
+            reference: 'XSP123',
+          },
+          status: 201,
+        },
+      };
+
+      const expectedResult: APIResponseResourceCreated = publicAPIResult.data;
+
+      axiosClient.request.resolves(publicAPIResult);
+
+      const result = await client.createCustomer(customerPayload);
+
+      expect(result).to.be.deep.equals(expectedResult);
+    });
+
+    it('call create customer will fail', async () => {
+      customerPayload.CompanyName = '';
+
+      const expectedResult: APIResponseError = {
+        status: 400,
+        message: 'Bad value for Company Name',
+      };
+
+      axiosClient.request.rejects({
+        httpCode: 400,
+        httpError: 'Bad value for Company Name',
+      });
+
+      const result = await client.createCustomer(customerPayload);
+
+      expect(result).to.be.deep.equals(expectedResult);
+    });
+  });
+
+  describe('updateCustomer', () => {
+    const client = new PublicApiClient()
+      .getCustomersClient()
+      .setUrl(CUSTOMERS_MOCK_URL);
+
+    let axiosClient: sinon.SinonStubbedInstance<Axios>;
+
+    const customerPayload: Partial<PostCustomerPayload> = {
+      CompanyName: 'Company test 1',
+      AddressLine1: 'Address 1',
+      AddressLine2: 'Address 2',
+    };
+
+    beforeEach(() => {
+      axiosClient = sinon.stub(Axios.prototype);
+    });
+
+    afterEach(() => {
+      sinon.restore();
+    });
+
+    it('call update customer will succed', async () => {
+      const publicAPIResult = {
+        status: 200,
+        data: {
+          data: {
+            customers: [
+              {
+                Reference: 'XSP123',
+                CompanyName: 'Company Test 1',
+                PartnerCompanyId: '',
+                AddressLine1: 'Address 1',
+                AddressLine2: 'Address 2',
+                Zip: '75012',
+                City: 'Paris',
+                CountryCode: 'FR',
+                State: '',
+                ReceptionPhone: '1234567890',
+                WebsiteUrl: 'www.mycompany.com',
+                EmailContact: 'contact@mycompany.com',
+                Headcount: 0,
+                TaxNumber: '',
+                Ref: '',
+                BillingId: '',
+                InternalReference: '',
+                Contact: {
+                  FirstName: 'Me',
+                  LastName: 'Name',
+                  Email: 'contact@mycompany.com',
+                  Phone: '1234567890',
+                  ContactPersonID: '',
+                  SyncPartnerContactRefId: 2455703,
+                },
+                Details: {},
+              },
+            ],
+          },
+          status: 200,
+        },
+      };
+
+      const expectedResult: APIResponseCustomerUpdated = publicAPIResult.data;
+
+      axiosClient.request.resolves(publicAPIResult);
+
+      const result = await client.updateCustomer('XSP123', customerPayload);
+
+      expect(result).to.be.deep.equals(expectedResult);
+    });
+
+    it('call update customer will fail', async () => {
+      customerPayload.CompanyName = '';
+
+      const expectedResult: APIResponseError = {
+        status: 400,
+        message: 'Bad value for Company Name',
+      };
+
+      axiosClient.request.rejects({
+        code: 400,
+        message: 'Bad value for Company Name',
+      });
+
+      const result = await client.updateCustomer('XSP123', customerPayload);
+
+      expect(result).to.be.deep.equals(expectedResult);
     });
   });
 });
