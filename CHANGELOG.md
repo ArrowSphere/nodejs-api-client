@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Add consumption download request
+- Revert Fix Order type, field license is now optional [3.48.2]
 
 ## [3.48.3] - 2023-08-09
 
