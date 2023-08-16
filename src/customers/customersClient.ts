@@ -9,6 +9,9 @@ import {
   CustomerContactRoleType,
   CustomerContactTypeType,
 } from './entities/customers/customerContact/customerContact';
+import { CustomerFields, CustomerType } from './entities/customers/customer';
+import { ContactFields } from './entities/customers/contact/contact';
+import { AxiosResponse } from 'axios';
 
 export enum CustomerContactPayloadFields {
   COLUMN_FIRST_NAME = 'firstName',
@@ -29,6 +32,54 @@ export type PostCustomerContactPayload = {
   [CustomerContactPayloadFields.COLUMN_TYPE]: CustomerContactTypeType;
   [CustomerContactPayloadFields.COLUMN_ROLE]: CustomerContactRoleType;
 };
+
+export type PostCustomerContact = {
+  [ContactFields.COLUMN_FIRSTNAME]: string;
+  [ContactFields.COLUMN_LASTNAME]: string;
+  [ContactFields.COLUMN_EMAIL]: string;
+  [ContactFields.COLUMN_PHONE]: string;
+  [ContactFields.COLUMN_TYPE]: CustomerContactTypeType;
+  [ContactFields.COLUMN_ROLE]: CustomerContactRoleType;
+};
+
+export type PostCustomerPayload = {
+  [CustomerFields.COLUMN_COMPANY_NAME]: string;
+  [CustomerFields.COLUMN_PARTNER_COMPANY_ID]?: string;
+  [CustomerFields.COLUMN_ADDRESS_LINE_1]: string;
+  [CustomerFields.COLUMN_ADDRESS_LINE_2]?: string;
+  [CustomerFields.COLUMN_ZIP]: string;
+  [CustomerFields.COLUMN_CITY]: string;
+  [CustomerFields.COLUMN_COUNTRY_CODE]: string;
+  [CustomerFields.COLUMN_STATE]?: string;
+  [CustomerFields.COLUMN_RECEPTION_PHONE]: string;
+  [CustomerFields.COLUMN_WEBSITE_URL]?: string;
+  [CustomerFields.COLUMN_EMAIL_CONTACT]?: string;
+  [CustomerFields.COLUMN_HEADCOUNT]?: number;
+  [CustomerFields.COLUMN_TAX_NUMBER]?: string;
+  [CustomerFields.COLUMN_REF]?: string;
+  [CustomerFields.COLUMN_BILLING_ID]?: string;
+  [CustomerFields.COLUMN_INTERNAL_REFERENCE]?: string;
+  [CustomerFields.COLUMN_CONTACT]?: PostCustomerContact;
+};
+
+export type APIResponseResourceCreated = {
+  status: number;
+  data: {
+    reference: string;
+  };
+};
+
+export type APIResponseCustomerUpdated = {
+  status: number;
+  data: {
+    customers: CustomerType[];
+  };
+};
+
+export interface APIResponseError {
+  status: number;
+  error: string;
+}
 
 export type PatchCustomerContactPayload = {
   [Property in keyof PostCustomerContactPayload]?: PostCustomerContactPayload[Property];
@@ -116,6 +167,30 @@ export class CustomersClient extends AbstractRestfulClient {
     return new GetResult(
       CustomerContact,
       await this.patch(payload, parameters),
+    );
+  }
+
+  public async createCustomer(
+    payload: PostCustomerPayload,
+    parameters: Parameters = {},
+  ): Promise<APIResponseResourceCreated | APIResponseError> {
+    this.path = '';
+
+    return await this.post(payload, parameters, {}, { returnAxiosData: true });
+  }
+
+  public async updateCustomer(
+    customerReference: string,
+    payload: Partial<PostCustomerPayload>,
+    parameters: Parameters = {},
+  ): Promise<APIResponseCustomerUpdated | APIResponseError> {
+    this.path = `/${customerReference}`;
+
+    return await this.patch<AxiosResponse['data']>(
+      payload,
+      parameters,
+      {},
+      { returnAxiosData: true },
     );
   }
 }
