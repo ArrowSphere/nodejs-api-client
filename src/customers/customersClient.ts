@@ -10,6 +10,22 @@ import {
   CustomerContactTypeType,
 } from './entities/customers/customerContact/customerContact';
 
+// type APIGatewayProxyResult = {
+//   statusCode: number;
+//   headers?:
+//       | {
+//             [header: string]: boolean | number | string;
+//         }
+//       | undefined;
+//   multiValueHeaders?:
+//       | {
+//             [header: string]: Array<boolean | number | string>;
+//         }
+//       | undefined;
+//   body: string;
+//   isBase64Encoded?: boolean | undefined;
+// };
+
 export enum CustomerContactPayloadFields {
   COLUMN_FIRST_NAME = 'firstName',
   COLUMN_LAST_NAME = 'lastName',
@@ -28,6 +44,72 @@ export type PostCustomerContactPayload = {
   [CustomerContactPayloadFields.COLUMN_PHONE]: string;
   [CustomerContactPayloadFields.COLUMN_TYPE]: CustomerContactTypeType;
   [CustomerContactPayloadFields.COLUMN_ROLE]: CustomerContactRoleType;
+};
+
+export enum CustomerPayloadFields {
+  COLUMN_COMPANY_NAME = 'companyName',
+  COLUMN_PARTNER_COMPANY_ID = 'partnerCompanyId',
+  COLUMN_ADDRESS_LINE1 = 'addressLine1',
+  COLUMN_ADDRESS_LINE2 = 'addressLine2',
+  COLUMN_ADDRESS_ZIP = 'zip',
+  COLUMN_CITY = 'city',
+  COLUMN_COUNTRY_CODE = 'countryCode',
+  COLUMN_STATE = 'state',
+  COLUMN_RECEPTION_PHONE = 'receptionPhone',
+  COLUMN_WEBSITE_URL = 'websiteUrl',
+  COLUMN_EMAIL_CONTACT = 'emailContact',
+  COLUMN_HEAD_COUNT = 'headcount',
+  COLUMN_TAX_NUMBER = 'taxNumber',
+  COLUMN_REF = 'ref',
+  COLUMN_BILLING_ID = 'billingId',
+  COLUMN_INTERNAL_REFERENCE = 'internalReference',
+  COLUMN_TSE_ACCOUNT_STATUS = 'tseAccountStatus',
+  COLUMN_ACTIVE_WITH_ARROW = 'activeWithArrow',
+  COLUMN_CONTACT = 'contact',
+}
+
+export type PostCustomerPayload = {
+  [CustomerPayloadFields.COLUMN_COMPANY_NAME]: string;
+  [CustomerPayloadFields.COLUMN_PARTNER_COMPANY_ID]?: string;
+  [CustomerPayloadFields.COLUMN_ADDRESS_LINE1]: string;
+  [CustomerPayloadFields.COLUMN_ADDRESS_LINE2]?: string;
+  [CustomerPayloadFields.COLUMN_ADDRESS_ZIP]: string;
+  [CustomerPayloadFields.COLUMN_CITY]: string;
+  [CustomerPayloadFields.COLUMN_COUNTRY_CODE]: string;
+  [CustomerPayloadFields.COLUMN_STATE]?: string;
+  [CustomerPayloadFields.COLUMN_RECEPTION_PHONE]: string;
+  [CustomerPayloadFields.COLUMN_WEBSITE_URL]?: string;
+  [CustomerPayloadFields.COLUMN_EMAIL_CONTACT]?: string;
+  [CustomerPayloadFields.COLUMN_HEAD_COUNT]?: number;
+  [CustomerPayloadFields.COLUMN_TAX_NUMBER]?: string;
+  [CustomerPayloadFields.COLUMN_REF]?: string;
+  [CustomerPayloadFields.COLUMN_BILLING_ID]?: string;
+  [CustomerPayloadFields.COLUMN_INTERNAL_REFERENCE]?: string;
+  [CustomerPayloadFields.COLUMN_TSE_ACCOUNT_STATUS]?: string;
+  [CustomerPayloadFields.COLUMN_ACTIVE_WITH_ARROW]?: boolean;
+  [CustomerPayloadFields.COLUMN_CONTACT]?: PostCustomerContactPayload;
+};
+
+export type PatchCustomerPayload = {
+  [CustomerPayloadFields.COLUMN_COMPANY_NAME]?: string;
+  [CustomerPayloadFields.COLUMN_PARTNER_COMPANY_ID]?: string;
+  [CustomerPayloadFields.COLUMN_ADDRESS_LINE1]: string;
+  [CustomerPayloadFields.COLUMN_ADDRESS_LINE2]?: string;
+  [CustomerPayloadFields.COLUMN_ADDRESS_ZIP]?: string;
+  [CustomerPayloadFields.COLUMN_CITY]?: string;
+  [CustomerPayloadFields.COLUMN_COUNTRY_CODE]?: string;
+  [CustomerPayloadFields.COLUMN_STATE]?: string;
+  [CustomerPayloadFields.COLUMN_RECEPTION_PHONE]?: string;
+  [CustomerPayloadFields.COLUMN_WEBSITE_URL]?: string;
+  [CustomerPayloadFields.COLUMN_EMAIL_CONTACT]?: string;
+  [CustomerPayloadFields.COLUMN_HEAD_COUNT]?: number;
+  [CustomerPayloadFields.COLUMN_TAX_NUMBER]?: string;
+  [CustomerPayloadFields.COLUMN_REF]?: string;
+  [CustomerPayloadFields.COLUMN_BILLING_ID]?: string;
+  [CustomerPayloadFields.COLUMN_INTERNAL_REFERENCE]?: string;
+  [CustomerPayloadFields.COLUMN_TSE_ACCOUNT_STATUS]?: string;
+  [CustomerPayloadFields.COLUMN_ACTIVE_WITH_ARROW]?: boolean;
+  [CustomerPayloadFields.COLUMN_CONTACT]?: PostCustomerContactPayload;
 };
 
 export type PatchCustomerContactPayload = {
@@ -117,5 +199,34 @@ export class CustomersClient extends AbstractRestfulClient {
       CustomerContact,
       await this.patch(payload, parameters),
     );
+  }
+
+  public async createCustomer(
+    payload: PostCustomerPayload,
+    parameters: Parameters = {},
+  ): Promise<any> {
+    this.path = '';
+
+    return await this.post(payload, parameters);
+    // try {
+    //   const result = await this.post(payload, parameters);
+    // } catch (error) {
+
+    // }
+  }
+
+  public async updateCustomer(
+    customerReference: string,
+    payload: PatchCustomerPayload,
+    parameters: Parameters = {},
+  ): Promise<any> {
+    this.path = `/${customerReference}`;
+
+    return await this.patch(payload, parameters);
+    // try {
+    //   const result = await this.post(payload, parameters);
+    // } catch (error) {
+
+    // }
   }
 }
