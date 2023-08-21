@@ -1,6 +1,7 @@
 import { AbstractEntity } from '../../abstractEntity';
 
 export enum CompleteWhoAmICompanyFields {
+  COLUMN_COUNTRY_CODE = 'countryCode',
   COLUMN_HAS_ACCESS_TO_XCM = 'hasAccessToXcm',
   COLUMN_HAS_ACCESS_TO_XCP = 'hasAccessToXcp',
   COLUMN_IS_PROTECTED = 'isProtected',
@@ -8,9 +9,16 @@ export enum CompleteWhoAmICompanyFields {
   COLUMN_NAME = 'name',
   COLUMN_REFERENCE = 'reference',
   COLUMN_TAGS = 'tags',
+  COLUMN_UNIT = 'unit',
 }
 
+export type CompanyUnit = {
+  name: string;
+  symbol: string;
+};
+
 export type CompleteWhoAmICompanyData = {
+  [CompleteWhoAmICompanyFields.COLUMN_COUNTRY_CODE]: string;
   [CompleteWhoAmICompanyFields.COLUMN_HAS_ACCESS_TO_XCM]: boolean;
   [CompleteWhoAmICompanyFields.COLUMN_HAS_ACCESS_TO_XCP]: boolean;
   [CompleteWhoAmICompanyFields.COLUMN_IS_PROTECTED]: boolean;
@@ -18,12 +26,14 @@ export type CompleteWhoAmICompanyData = {
   [CompleteWhoAmICompanyFields.COLUMN_NAME]?: string;
   [CompleteWhoAmICompanyFields.COLUMN_REFERENCE]: string;
   [CompleteWhoAmICompanyFields.COLUMN_TAGS]: string[];
+  [CompleteWhoAmICompanyFields.COLUMN_UNIT]: CompanyUnit;
 };
 
 export class CompleteWhoAmICompany extends AbstractEntity<CompleteWhoAmICompanyData> {
   constructor(data: CompleteWhoAmICompanyData) {
     super(data);
 
+    this.#countryCode = data[CompleteWhoAmICompanyFields.COLUMN_COUNTRY_CODE];
     this.#hasAccessToXcm =
       data[CompleteWhoAmICompanyFields.COLUMN_HAS_ACCESS_TO_XCM];
     this.#hasAccessToXcp =
@@ -33,8 +43,10 @@ export class CompleteWhoAmICompany extends AbstractEntity<CompleteWhoAmICompanyD
     this.#name = data[CompleteWhoAmICompanyFields.COLUMN_NAME];
     this.#reference = data[CompleteWhoAmICompanyFields.COLUMN_REFERENCE];
     this.#tags = data[CompleteWhoAmICompanyFields.COLUMN_TAGS];
+    this.#unit = data[CompleteWhoAmICompanyFields.COLUMN_UNIT];
   }
 
+  readonly #countryCode: string;
   readonly #hasAccessToXcm: boolean;
   readonly #hasAccessToXcp: boolean;
   readonly #isProtected: boolean;
@@ -42,6 +54,11 @@ export class CompleteWhoAmICompany extends AbstractEntity<CompleteWhoAmICompanyD
   readonly #name?: string;
   readonly #reference: string;
   readonly #tags: string[];
+  readonly #unit: CompanyUnit;
+
+  get countryCode(): string {
+    return this.#countryCode;
+  }
 
   get hasAccessToXcm(): boolean {
     return this.#hasAccessToXcm;
@@ -71,8 +88,13 @@ export class CompleteWhoAmICompany extends AbstractEntity<CompleteWhoAmICompanyD
     return this.#tags;
   }
 
+  get unit(): CompanyUnit {
+    return this.#unit;
+  }
+
   public toJSON(): CompleteWhoAmICompanyData {
     return {
+      [CompleteWhoAmICompanyFields.COLUMN_COUNTRY_CODE]: this.countryCode,
       [CompleteWhoAmICompanyFields.COLUMN_HAS_ACCESS_TO_XCM]: this
         .hasAccessToXcm,
       [CompleteWhoAmICompanyFields.COLUMN_HAS_ACCESS_TO_XCP]: this
@@ -82,6 +104,7 @@ export class CompleteWhoAmICompany extends AbstractEntity<CompleteWhoAmICompanyD
       [CompleteWhoAmICompanyFields.COLUMN_NAME]: this.name,
       [CompleteWhoAmICompanyFields.COLUMN_REFERENCE]: this.reference,
       [CompleteWhoAmICompanyFields.COLUMN_TAGS]: this.tags,
+      [CompleteWhoAmICompanyFields.COLUMN_UNIT]: this.unit,
     };
   }
 }
