@@ -45,6 +45,7 @@ export type ProductType = {
   classification?: string;
   arrowCategories?: Array<string>;
   arrowSubCategories?: Array<string>;
+  attributesParameters?: Array<AttributesParameters>;
   licenseAgreementType?: string;
   family?: FamilyType;
   isAddon?: boolean;
@@ -158,6 +159,7 @@ export type VendorType = {
 };
 
 export type GraphqlProgramType = {
+  hasProgramEnrollment?: boolean;
   isEnabled?: boolean;
   legacyCode?: string;
   names?: ProgramNameType;
@@ -165,6 +167,7 @@ export type GraphqlProgramType = {
 
 export type ProgramNameType = {
   full?: string;
+  short?: string;
 };
 
 export type PriceBandType = {
@@ -299,4 +302,10 @@ export type PromotionType = {
   applicableUntil?: string;
   applicableFor?: number;
   checkEligibility?: boolean;
+};
+
+export type AttributesParameters = {
+  name?: string;
+  label?: string;
+  position?: number;
 };
