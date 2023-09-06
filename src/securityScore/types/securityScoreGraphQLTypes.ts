@@ -79,14 +79,14 @@ export type ScoreResultType = {
   registration?: RegistrationType;
 };
 
-export type NameCountByDateAggType = {
-  count?: number;
+export type SeverityByDateAggType = {
+  value?: number;
   date?: string;
 };
 
 export type SeverityAggType = {
-  data?: NameCountByDateAggType[];
-  last?: NameCountByDateAggType;
+  data?: SeverityByDateAggType[];
+  last?: SeverityByDateAggType;
   name?: string;
   progression?: number;
 };
@@ -118,11 +118,12 @@ export type ChecksAggType = {
 
 export type EndCustomerByDateAggType = {
   accounts?: number;
-  avgCurrentScore?: number;
   date?: string;
   failed?: number;
   name?: string;
   passed?: number;
+  score?: number;
+  scoreUnit?: string;
   total?: number;
   subscriptionReferences?: number;
 };
@@ -169,11 +170,12 @@ export type EndCustomersAggType = {
 };
 
 export type PartnerByDateAggType = {
-  avgCurrentScore?: number;
   date?: string;
   failed?: number;
   name?: string;
   passed?: number;
+  score?: number;
+  scoreUnit?: string;
   total?: number;
 };
 
@@ -189,22 +191,31 @@ export type PartnersAggType = {
   partners?: PartnerAggType[];
 };
 
+export type ScoreByMonthSeverityType = {
+  name?: string;
+  value?: number;
+};
+
 export type ScoreByMonthAggType = {
-  avgCurrentScore?: number;
   date?: string;
+  score?: number;
+  scoreUnit?: string;
+  severities?: ScoreByMonthSeverityType[];
 };
 
 export type MonthlyTrendAggType = {
-  avgCurrentScore?: number;
   period?: PeriodsType;
+  score?: number;
+  scoreUnit?: string;
   scores?: ScoreByMonthAggType[];
 };
 
 export type ScoreByDateAggType = {
-  avgCurrentScore?: number;
   date?: string;
   failed?: number;
   passed?: number;
+  score?: number;
+  scoreUnit?: string;
   total?: number;
 };
 
@@ -214,11 +225,12 @@ export type ScoresAggType = {
 };
 
 export type AccountByDateAggType = {
-  avgCurrentScore?: number;
   date?: string;
   failed?: number;
   name?: string;
   passed?: number;
+  score?: number;
+  scoreUnit?: string;
   total?: number;
 };
 
@@ -237,9 +249,10 @@ export type AccountsAggType = {
 
 export type StandardByDateAggType = {
   date?: string;
-  score?: number;
   failed?: number;
   passed?: number;
+  score?: number;
+  scoreUnit?: string;
   total?: number;
 };
 
@@ -256,16 +269,18 @@ export type StandardsAggType = {
 };
 
 export type MarketplacePartnerAggByDateAggType = {
-  avgCurrentScore?: number;
   date?: string;
   failed?: number;
   passed?: number;
+  score?: number;
+  scoreUnit?: string;
   total?: number;
 };
 
 export type MarketplaceByDateAggType = {
-  avgCurrentScore?: number;
   date?: string;
+  score?: number;
+  scoreUnit?: string;
 };
 
 export type MarketplacePartnerAggType = {
@@ -295,6 +310,7 @@ export type CheckByDateType = {
   name?: string;
   processed?: number;
   score?: number;
+  scoreUnit?: string;
 };
 
 export type ChecksByStandardType = {

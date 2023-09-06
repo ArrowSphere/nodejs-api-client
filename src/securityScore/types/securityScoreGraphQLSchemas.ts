@@ -16,7 +16,7 @@ import {
   StandardWithCheckType,
   ChecksByStandardType,
   CheckByDateType,
-  NameCountByDateAggType,
+  SeverityByDateAggType,
   EndCustomerAggType,
   SeverityAggType,
   AccountAggType,
@@ -34,10 +34,20 @@ import {
   UnregisteredOfferIaasType,
   UnregisteredOfferSaasType,
   UnregisteredEndCustomerAggType,
+  ScoreByMonthSeverityType,
 } from './securityScoreGraphQLTypes';
 
+type MissingFieldsOfScoreByMonthAggSchema = {
+  severities: Schema<ScoreByMonthSeverityType, boolean>;
+};
+
+type ScoreByMonthAggTypeSchema = Merge<
+  Schema<ScoreByMonthAggType, boolean>,
+  MissingFieldsOfScoreByMonthAggSchema
+>;
+
 type MissingFieldsOfMonthlyTrendAggSchema = {
-  scores?: Schema<ScoreByMonthAggType, boolean>;
+  scores?: ScoreByMonthAggTypeSchema;
 };
 
 export type MonthlyTrendAggSchema = Merge<
@@ -119,10 +129,10 @@ export type FilterSchema = {
   values?: FilterValuesSchema;
 };
 
-type NameCountByDateAggSchema = Schema<NameCountByDateAggType, boolean>;
+type SeverityByDateAggSchema = Schema<SeverityByDateAggType, boolean>;
 
 type MissingFieldsInSeverityAggSchema = {
-  data?: NameCountByDateAggSchema;
+  data?: SeverityByDateAggSchema;
 };
 
 type CheckCountByDateAggSchema = Schema<CheckCountByDateAggType, boolean>;
