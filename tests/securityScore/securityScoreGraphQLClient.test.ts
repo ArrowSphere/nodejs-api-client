@@ -141,8 +141,8 @@ describe('SecurityScoreGraphQLClient', () => {
         expectedResult.getPartnerData.endCustomersAgg,
       );
 
-      graphQLClient.request.calledOnceWithExactly(
-        sinon.match(SecurityScoreQueryMock.GET_PARTNER_DATA_GQL),
+      expect(graphQLClient.request).to.be.calledOnceWithExactly(
+        SecurityScoreQueryMock.GET_PARTNER_DATA_GQL,
       );
     });
 
@@ -154,9 +154,8 @@ describe('SecurityScoreGraphQLClient', () => {
       );
 
       expect(result).to.be.null;
-
-      graphQLClient.request.calledOnceWithExactly(
-        sinon.match(SecurityScoreQueryMock.GET_PARTNER_DATA_GQL),
+      expect(graphQLClient.request).to.be.calledOnceWithExactly(
+        SecurityScoreQueryMock.GET_PARTNER_DATA_GQL,
       );
     });
   });
@@ -214,8 +213,8 @@ describe('SecurityScoreGraphQLClient', () => {
         expectedResult.getAdminData.partnersAgg,
       );
 
-      graphQLClient.request.calledOnceWithExactly(
-        sinon.match(SecurityScoreQueryMock.GET_ADMIN_DATA_GQL),
+      expect(graphQLClient.request).to.be.calledOnceWithExactly(
+        SecurityScoreQueryMock.GET_ADMIN_DATA_GQL,
       );
     });
 
@@ -228,8 +227,8 @@ describe('SecurityScoreGraphQLClient', () => {
 
       expect(result).to.be.null;
 
-      graphQLClient.request.calledOnceWithExactly(
-        sinon.match(SecurityScoreQueryMock.GET_ADMIN_DATA_GQL),
+      expect(graphQLClient.request).to.be.calledOnceWithExactly(
+        SecurityScoreQueryMock.GET_ADMIN_DATA_GQL,
       );
     });
   });
@@ -268,8 +267,8 @@ describe('SecurityScoreGraphQLClient', () => {
         expectedResult.getCustomerData.accountsAgg,
       );
 
-      graphQLClient.request.calledOnceWithExactly(
-        sinon.match(SecurityScoreQueryMock.GET_CUSTOMER_DATA_GQL),
+      expect(graphQLClient.request).to.be.calledOnceWithExactly(
+        SecurityScoreQueryMock.GET_CUSTOMER_DATA_GQL,
       );
     });
 
@@ -281,9 +280,8 @@ describe('SecurityScoreGraphQLClient', () => {
       );
 
       expect(result).to.be.null;
-
-      graphQLClient.request.calledOnceWithExactly(
-        sinon.match(SecurityScoreQueryMock.GET_CUSTOMER_DATA_GQL),
+      expect(graphQLClient.request).to.be.calledOnceWithExactly(
+        SecurityScoreQueryMock.GET_CUSTOMER_DATA_GQL,
       );
     });
   });
@@ -322,8 +320,8 @@ describe('SecurityScoreGraphQLClient', () => {
         expectedResult.getCustomerAccountData.standardsAgg,
       );
 
-      graphQLClient.request.calledOnceWithExactly(
-        sinon.match(SecurityScoreQueryMock.GET_CUSTOMER_ACCOUNT_DATA_GQL),
+      expect(graphQLClient.request).to.be.calledOnceWithExactly(
+        SecurityScoreQueryMock.GET_CUSTOMER_ACCOUNT_DATA_GQL,
       );
     });
 
@@ -336,8 +334,8 @@ describe('SecurityScoreGraphQLClient', () => {
 
       expect(result).to.be.null;
 
-      graphQLClient.request.calledOnceWithExactly(
-        sinon.match(SecurityScoreQueryMock.GET_CUSTOMER_ACCOUNT_DATA_GQL),
+      expect(graphQLClient.request).to.be.calledOnceWithExactly(
+        SecurityScoreQueryMock.GET_CUSTOMER_ACCOUNT_DATA_GQL,
       );
     });
   });
