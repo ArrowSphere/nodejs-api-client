@@ -21,6 +21,9 @@ export enum ListIssueParametersFields {
   SORT = 'sort',
   STATUSES = 'statuses',
   TITLE = 'title',
+  PAGE = 'page',
+  PER_PAGE = 'per_page',
+  PER_PAGE_CAMEL = 'perPage',
 }
 
 export type ListIssueParametersType = ParametersWithPaginationType & {
