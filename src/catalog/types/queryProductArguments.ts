@@ -14,6 +14,24 @@ export type QueryPriceBandArguments = {
   searchBody: SearchBodyPriceBandsArgument;
 };
 
+/**
+ * For field __args
+ */
+export type QueryExchangeRatesArguments = {
+  paginate?: PaginateArgument;
+  searchBody?: SearchBodyArgument;
+};
+
+/**
+ * For field __args
+ */
+export type QueryExchangeRateValueArguments = {
+  from: string;
+  paginate?: PaginateArgument;
+  searchBody?: SearchBodyArgument;
+  to: string;
+};
+
 export type PaginateArgument = {
   page: number;
   perPage: number;
