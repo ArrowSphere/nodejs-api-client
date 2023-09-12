@@ -12,6 +12,10 @@ import {
 } from '../types/securityScoreGraphQLTypes';
 import { SecurityScoreQueries } from '../types/queryArguments';
 
+/**
+ * @deprecated
+ * Prefer using equivalent type in the wellArchitected
+ */
 export enum GetCustomerAccountDataFields {
   COLUMN_CHECKS_AGG = 'checksAgg',
   COLUMN_MONTHLY_TREND_AGG = 'monthlyTrendAgg',
@@ -24,6 +28,10 @@ export enum GetCustomerAccountDataFields {
   COLUMN_STANDARDS = 'standards',
 }
 
+/**
+ * @deprecated
+ * Prefer using equivalent type in the wellArchitected
+ */
 export type GetCustomerAccountDataType = {
   [GetCustomerAccountDataFields.COLUMN_CHECKS_AGG]?: ChecksAggType;
   [GetCustomerAccountDataFields.COLUMN_MONTHLY_TREND_AGG]?: MonthlyTrendAggType;
@@ -36,10 +44,18 @@ export type GetCustomerAccountDataType = {
   [GetCustomerAccountDataFields.COLUMN_STANDARDS]?: StandardWithCheckType[];
 };
 
+/**
+ * @deprecated
+ * Prefer using equivalent type in the wellArchitected
+ */
 export type GetCustomerAccountDataGraphQLResultType = {
   [SecurityScoreQueries.GET_CUSTOMER_ACCOUNT_DATA]: GetCustomerAccountDataType;
 };
 
+/**
+ * @deprecated
+ * Prefer using equivalent type in the wellArchitected
+ */
 export class GetCustomerAccountData extends AbstractEntity<GetCustomerAccountDataType> {
   readonly #checksAgg?: ChecksAggType;
   readonly #monthlyTrendAgg?: MonthlyTrendAggType;
