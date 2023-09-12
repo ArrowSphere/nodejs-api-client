@@ -1,8 +1,12 @@
 import {
+  QueryExchangeRatesArguments,
+  QueryExchangeRateValueArguments,
   QueryPriceBandArguments,
   QueryProductArguments,
 } from './queryProductArguments';
 import {
+  ExchangeRateSchema,
+  ExchangeRateValueSchema,
   FiltersSchema,
   PaginationSchema,
   PriceBandSchema,
@@ -22,6 +26,8 @@ export type CatalogQuery = {
  * Represent the Catalog Schema of Public API
  */
 export type CatalogQueries = {
+  getExchangeRates?: GetExchangeRatesQuery;
+  exchangeRate?: GetExchangeRateValueQuery;
   getProducts?: GetPaginatedProductsQuery;
   priceBand?: GetPriceBandQuery;
   product?: GetProductQuery;
@@ -43,4 +49,14 @@ export type GetProductQuery = Merge<
 export type GetPriceBandQuery = Merge<
   { __args: QueryPriceBandArguments },
   PriceBandSchema
+>;
+
+export type GetExchangeRatesQuery = Merge<
+  { __args: QueryExchangeRatesArguments },
+  ExchangeRateSchema
+>;
+
+export type GetExchangeRateValueQuery = Merge<
+  { __args: QueryExchangeRateValueArguments },
+  ExchangeRateValueSchema
 >;

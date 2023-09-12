@@ -1,11 +1,15 @@
 import { AbstractGraphQLClient } from '../abstractGraphQLClient';
 import {
+  GetExchangeRatesType,
+  GetExchangeRateValueType,
   GetPriceBandType,
   GetProductsType,
   GetProductType,
 } from './types/catalogGraphQLTypes';
 import { CatalogQueries, CatalogQuery } from './types/catalogGraphQLQueries';
 import {
+  FindExchangeRatesQueryOutput,
+  FindExchangeRateValueQueryOutput,
   FindOnePriceBandQueryOutput,
   FindOneProductQueryOutput,
 } from './types/FindOneProductQueryOutput';
@@ -78,6 +82,34 @@ export class CatalogGraphQLClient extends AbstractGraphQLClient {
 
     try {
       return await this.post<FindOnePriceBandQueryOutput>(queryStr);
+    } catch (error: unknown) {
+      return null;
+    }
+  }
+
+  public async getExchangeRates(
+    query: Pick<CatalogQueries, 'getExchangeRates'>,
+  ): Promise<GetExchangeRatesType | null> {
+    this.path = this.GRAPHQL;
+
+    const queryStr: string = this.stringifyQuery(query);
+
+    try {
+      return await this.post<FindExchangeRatesQueryOutput>(queryStr);
+    } catch (error: unknown) {
+      return null;
+    }
+  }
+
+  public async findExchangeRateValue(
+    query: Pick<CatalogQueries, 'exchangeRate'>,
+  ): Promise<GetExchangeRateValueType | null> {
+    this.path = this.GRAPHQL;
+
+    const queryStr: string = this.stringifyQuery(query);
+
+    try {
+      return await this.post<FindExchangeRateValueQueryOutput>(queryStr);
     } catch (error: unknown) {
       return null;
     }
