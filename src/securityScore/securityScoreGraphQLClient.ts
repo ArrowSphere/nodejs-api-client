@@ -27,6 +27,10 @@ import {
   GetAdminDataGraphQLResultType,
 } from './entities/getAdminData';
 
+/**
+ * @deprecated
+ * Prefer using equivalent class in the wellArchitected -> WellArchitectedGraphQLClient
+ */
 export class SecurityScoreGraphQLClient extends AbstractGraphQLClient {
   /**
    * The base path of the API

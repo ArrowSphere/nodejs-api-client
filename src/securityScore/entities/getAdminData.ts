@@ -12,6 +12,10 @@ import {
 } from '../types/securityScoreGraphQLTypes';
 import { SecurityScoreQueries } from '../types/queryArguments';
 
+/**
+ * @deprecated
+ * Prefer using equivalent type in the wellArchitected
+ */
 export enum GetAdminDataFields {
   COLUMN_CHECKS_AGG = 'checksAgg',
   COLUMN_MARKETPLACES_AGG = 'marketplacesAgg',
@@ -24,6 +28,10 @@ export enum GetAdminDataFields {
   COLUMN_SEVERITIES_AGG = 'severitiesAgg',
 }
 
+/**
+ * @deprecated
+ * Prefer using equivalent type in the wellArchitected
+ */
 export type GetAdminDataType = {
   [GetAdminDataFields.COLUMN_CHECKS_AGG]?: ChecksAggType;
   [GetAdminDataFields.COLUMN_MARKETPLACES_AGG]?: MarketplacesAggType;
@@ -36,10 +44,18 @@ export type GetAdminDataType = {
   [GetAdminDataFields.COLUMN_SEVERITIES_AGG]?: SeveritiesAggType;
 };
 
+/**
+ * @deprecated
+ * Prefer using equivalent type in the wellArchitected
+ */
 export type GetAdminDataGraphQLResultType = {
   [SecurityScoreQueries.GET_ADMIN_DATA]: GetAdminDataType;
 };
 
+/**
+ * @deprecated
+ * Prefer using equivalent class in the wellArchitected
+ */
 export class GetAdminData extends AbstractEntity<GetAdminDataType> {
   readonly #checksAgg?: ChecksAggType;
   readonly #marketplacesAgg?: MarketplacesAggType;

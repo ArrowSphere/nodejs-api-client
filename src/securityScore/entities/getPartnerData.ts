@@ -12,6 +12,10 @@ import {
 } from '../types/securityScoreGraphQLTypes';
 import { SecurityScoreQueries } from '../types/queryArguments';
 
+/**
+ * @deprecated
+ * Prefer using equivalent type in the wellArchitected
+ */
 export enum GetPartnerDataFields {
   COLUMN_CHECKS_AGG = 'checksAgg',
   COLUMN_END_CUSTOMERS_AGG = 'endCustomersAgg',
@@ -24,6 +28,10 @@ export enum GetPartnerDataFields {
   COLUMN_SEVERITIES_AGG = 'severitiesAgg',
 }
 
+/**
+ * @deprecated
+ * Prefer using equivalent type in the wellArchitected
+ */
 export type GetPartnerDataType = {
   [GetPartnerDataFields.COLUMN_CHECKS_AGG]?: ChecksAggType;
   [GetPartnerDataFields.COLUMN_END_CUSTOMERS_AGG]?: EndCustomersAggType;
@@ -36,10 +44,18 @@ export type GetPartnerDataType = {
   [GetPartnerDataFields.COLUMN_SEVERITIES_AGG]?: SeveritiesAggType;
 };
 
+/**
+ * @deprecated
+ * Prefer using equivalent type in the wellArchitected
+ */
 export type GetPartnerDataGraphQLResultType = {
   [SecurityScoreQueries.GET_PARTNER_DATA]: GetPartnerDataType;
 };
 
+/**
+ * @deprecated
+ * Prefer using equivalent type in the wellArchitected
+ */
 export class GetPartnerData extends AbstractEntity<GetPartnerDataType> {
   readonly #checksAgg?: ChecksAggType;
   readonly #endCustomersAgg?: EndCustomersAggType;

@@ -24,6 +24,10 @@ import { GetCustomerDataFields } from '../entities/getCustomerData';
 import { GetCustomerAccountDataFields } from '../entities/getCustomerAccountData';
 import { GetAdminDataFields } from '../entities/getAdminData';
 
+/**
+ * @deprecated
+ * Prefer using equivalent type in the wellArchitected
+ */
 export type GetPartnerDataQuery = {
   [SecurityScoreQueries.GET_PARTNER_DATA]: {
     __args?: {
@@ -42,6 +46,10 @@ export type GetPartnerDataQuery = {
   };
 };
 
+/**
+ * @deprecated
+ * Prefer using equivalent type in the wellArchitected
+ */
 export type GetCustomerDataQuery = {
   [SecurityScoreQueries.GET_CUSTOMER_DATA]: {
     __args?: {
@@ -61,6 +69,10 @@ export type GetCustomerDataQuery = {
   };
 };
 
+/**
+ * @deprecated
+ * Prefer using equivalent type in the wellArchitected
+ */
 export type GetCustomerAccountDataQuery = {
   [SecurityScoreQueries.GET_CUSTOMER_ACCOUNT_DATA]: {
     __args?: {
@@ -79,6 +91,10 @@ export type GetCustomerAccountDataQuery = {
   };
 };
 
+/**
+ * @deprecated
+ * Prefer using equivalent type in the wellArchitected
+ */
 export type GetAdminDataQuery = {
   [SecurityScoreQueries.GET_ADMIN_DATA]: {
     __args?: {

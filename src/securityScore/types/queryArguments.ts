@@ -7,6 +7,10 @@ export enum OperatorArgument {
   BETWEEN = 'BETWEEN',
 }
 
+/**
+ * @deprecated
+ * Prefer using equivalent type in the wellArchitected
+ */
 export enum PeriodInputFields {
   FROM = 'from',
   TO = 'to',

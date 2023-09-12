@@ -40,11 +40,19 @@ type MissingFieldsOfMonthlyTrendAggSchema = {
   scores?: Schema<ScoreByMonthAggType, boolean>;
 };
 
+/**
+ * @deprecated
+ * Prefer using equivalent type in the wellArchitected
+ */
 export type MonthlyTrendAggSchema = Merge<
   Schema<MonthlyTrendAggType, boolean>,
   MissingFieldsOfMonthlyTrendAggSchema
 >;
 
+/**
+ * @deprecated
+ * Prefer using equivalent type in the wellArchitected
+ */
 export type PaginationSchema = Schema<PaginationsType, boolean>;
 
 type EndCustomerByDateAggSchema = Schema<EndCustomerByDateAggType, boolean>;
@@ -91,6 +99,10 @@ type UnregisteredEndCustomerAggSchema = Merge<
   MissingFieldsInUnregisteredEndCustomerAggSchema
 >;
 
+/**
+ * @deprecated
+ * Prefer using equivalent type in the wellArchitected
+ */
 export type EndCustomersAggSchema = {
   customers?: EndCustomerAggSchema;
   unregisteredCustomers?: UnregisteredEndCustomerAggSchema;
@@ -107,6 +119,10 @@ type AccountAggSchema = Merge<
   MissingFieldsInAccountAggSchema
 >;
 
+/**
+ * @deprecated
+ * Prefer using equivalent type in the wellArchitected
+ */
 export type AccountsAggSchema = {
   accounts?: AccountAggSchema;
   unregisteredAccounts?: UnregisteredOffersSchema;
@@ -114,6 +130,10 @@ export type AccountsAggSchema = {
 
 type FilterValuesSchema = Schema<FilterValuesType, boolean>;
 
+/**
+ * @deprecated
+ * Prefer using equivalent type in the wellArchitected
+ */
 export type FilterSchema = {
   name?: boolean;
   values?: FilterValuesSchema;
@@ -136,10 +156,18 @@ type CheckAggSchema = Merge<
   MissingFieldsInCheckAggSchema
 >;
 
+/**
+ * @deprecated
+ * Prefer using equivalent type in the wellArchitected
+ */
 export type ChecksAggSchema = {
   checks?: CheckAggSchema;
 };
 
+/**
+ * @deprecated
+ * Prefer using equivalent type in the wellArchitected
+ */
 export type PeriodsSchema = Schema<PeriodsType, boolean>;
 
 type CheckSchema = Schema<CheckType, boolean>;
@@ -148,6 +176,10 @@ type MissingFieldsInStandardType = {
   checks?: CheckSchema;
 };
 
+/**
+ * @deprecated
+ * Prefer using equivalent type in the wellArchitected
+ */
 export type StandardSchema = Merge<
   Schema<StandardType, boolean>,
   MissingFieldsInStandardType
@@ -163,16 +195,28 @@ type AccountSchema = Merge<
 >;
 
 type RegistrationSchema = Schema<RegistrationType, boolean>;
+/**
+ * @deprecated
+ * Prefer using equivalent type in the wellArchitected
+ */
 export type ScoreResultSchema = {
   account?: AccountSchema;
   registration?: RegistrationSchema;
 };
 
+/**
+ * @deprecated
+ * Prefer using equivalent type in the wellArchitected
+ */
 export type SeverityAggSchema = Merge<
   Schema<SeverityAggType, boolean>,
   MissingFieldsInSeverityAggSchema
 >;
 
+/**
+ * @deprecated
+ * Prefer using equivalent type in the wellArchitected
+ */
 export type SeveritiesAggSchema = {
   severities?: SeverityAggSchema;
 };
@@ -188,6 +232,10 @@ type StandardAggSchema = Merge<
   MissingFieldsInStandardAggSchema
 >;
 
+/**
+ * @deprecated
+ * Prefer using equivalent type in the wellArchitected
+ */
 export type StandardsAggSchema = { standards?: StandardAggSchema };
 
 type ScoreByDateAggSchema = Schema<ScoreByDateAggType, boolean>;
@@ -196,6 +244,10 @@ type MissingFieldsInScoresAggSchema = {
   scores?: ScoreByDateAggSchema;
 };
 
+/**
+ * @deprecated
+ * Prefer using equivalent type in the wellArchitected
+ */
 export type ScoresAggSchema = Merge<
   Schema<ScoresAggType, boolean>,
   MissingFieldsInScoresAggSchema
@@ -216,6 +268,10 @@ type MissingFieldsInStandardWithCheckSchema = {
   checks?: ChecksByStandardSchema;
 };
 
+/**
+ * @deprecated
+ * Prefer using equivalent type in the wellArchitected
+ */
 export type StandardWithCheckSchema = Merge<
   Schema<StandardWithCheckType, boolean>,
   MissingFieldsInStandardWithCheckSchema
@@ -247,6 +303,10 @@ type MarketplaceAggSchema = Merge<
   MissingFieldsInMarketplaceAggSchema
 >;
 
+/**
+ * @deprecated
+ * Prefer using equivalent type in the wellArchitected
+ */
 export type MarketplacesAggSchema = {
   marketplaces?: MarketplaceAggSchema;
 };
@@ -262,6 +322,10 @@ type PartnerAggSchema = Merge<
   MissingFieldsInPartnerAggSchema
 >;
 
+/**
+ * @deprecated
+ * Prefer using equivalent type in the wellArchitected
+ */
 export type PartnersAggSchema = {
   partners?: PartnerAggSchema;
 };
