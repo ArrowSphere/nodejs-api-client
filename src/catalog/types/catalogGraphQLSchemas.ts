@@ -2,6 +2,8 @@
 
 import {
   AttributeType,
+  ExchangeRateType,
+  ExchangeRateValueType,
   FiltersType,
   IdentifiersType,
   PaginationType,
@@ -54,3 +56,7 @@ export type PriceBandSchema = Merge<
 >;
 
 export type PriceBandPriceSchema = Schema<PricesType, boolean>;
+
+export type ExchangeRateSchema = Schema<ExchangeRateType, boolean>;
+
+export type ExchangeRateValueSchema = Schema<ExchangeRateValueType, boolean>;

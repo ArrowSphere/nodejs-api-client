@@ -12,6 +12,14 @@ export type GetPriceBandType = {
   priceBand?: PriceBandType;
 };
 
+export type GetExchangeRatesType = {
+  exchangeRates?: ExchangeRateType[];
+};
+
+export type GetExchangeRateValueType = {
+  exchangeRate?: ExchangeRateValueType;
+};
+
 export type PaginatedProductsType = {
   filters?: Array<FiltersType>;
   pagination?: PaginationType;
@@ -302,6 +310,18 @@ export type PromotionType = {
   applicableUntil?: string;
   applicableFor?: number;
   checkEligibility?: boolean;
+};
+
+export type ExchangeRateType = {
+  toEur: string;
+  unitTextName: string;
+  unitTextSymbol: string;
+};
+
+export type ExchangeRateValueType = {
+  unitTextName: string;
+  unitTextSymbol: string;
+  value: number;
 };
 
 export type AttributesParameters = {
