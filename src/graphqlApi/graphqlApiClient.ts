@@ -11,7 +11,7 @@ export class GraphqlApiClient extends AbstractGraphQLClient {
   /**
    * The Path of graphql catalog API
    */
-  private GRAPHQL = '';
+  private GRAPHQL = '/graphql';
 
   public async find<GraphQLResponseTypes>(
     request: string,
