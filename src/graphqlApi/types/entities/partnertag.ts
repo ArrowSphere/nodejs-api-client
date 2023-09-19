@@ -3,4 +3,5 @@ export type PartnertagType = {
   description?: string;
   id?: number;
   label?: string;
+  labelsSerialized?: string;
 };
