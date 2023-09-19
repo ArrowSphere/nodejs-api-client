@@ -99,6 +99,7 @@ export enum InputFilterValueField {
   OPERATOR = 'operator',
   VALUE = 'value',
   EXCLUSION = 'exclusion',
+  HAVING = 'having',
 }
 
 export type InputFilterValueType = {
@@ -106,6 +107,7 @@ export type InputFilterValueType = {
   [InputFilterValueField.OPERATOR]?: ComparisonOperator;
   [InputFilterValueField.VALUE]?: string[];
   [InputFilterValueField.EXCLUSION]?: boolean;
+  [InputFilterValueField.HAVING]?: boolean;
 };
 
 export enum InputQueryOptionsField {
