@@ -117,10 +117,11 @@ export type SeveritiesAggType = {
  */
 export type CheckCountByDateAggType = {
   accounts?: number;
-  count?: number;
   customers?: number;
   date?: string;
   partners?: number;
+  score?: number;
+  scoreUnit?: string;
 };
 
 export type CheckAggType = {
