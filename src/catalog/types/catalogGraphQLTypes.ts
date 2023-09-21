@@ -324,8 +324,3 @@ export type ExchangeRateValueType = {
   value: number;
 };
 
-export type AttributesParameters = {
-  name?: string;
-  label?: string;
-  position?: number;
-};
