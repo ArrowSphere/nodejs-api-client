@@ -27,12 +27,14 @@ const query: GetPartnerDataQuery = {
         checksAgg: {
             checks: {
                 data: {
-                    count: true,
-                    date: true
+                    date: true,
+                    score: true,
+                    scoreUnit: true
                 },
                 last: {
-                    count: true,
-                    date: true
+                    date: true,
+                    score: true,
+                    scoreUnit: true
                 },
                 name: true,
                 progression: true,
