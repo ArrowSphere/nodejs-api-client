@@ -2,6 +2,7 @@ export * from './axiosSingleton';
 export * from './abstractRestfulClient';
 export * from './abstractEntity';
 export * from './abstractGraphQLClient';
+export * from './account/';
 export * from './campaign/';
 export * from './cart/';
 export * from './catalog/';
