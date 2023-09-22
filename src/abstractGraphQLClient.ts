@@ -1,6 +1,6 @@
 import { GraphQLClient } from 'graphql-request';
 import * as Dom from 'graphql-request/dist/types.dom';
-import { Options } from './abstractRestfulClient';
+import { Options, ParameterKeys } from './abstractRestfulClient';
 import * as path from 'path';
 import { GetProductsType } from './catalog';
 import { jsonToGraphQLQuery } from 'json-to-graphql-query';
@@ -8,6 +8,10 @@ import { AbstractHttpClient } from './AbstractHttpClient';
 import { PublicApiClientException } from './exception';
 
 export type GraphQLResponseTypes = GetProductsType;
+
+export type ConfigurationsGraphQLClient = {
+  [ParameterKeys.IS_LOGGING]?: boolean;
+};
 
 export abstract class AbstractGraphQLClient extends AbstractHttpClient {
   /**
@@ -19,6 +23,15 @@ export abstract class AbstractGraphQLClient extends AbstractHttpClient {
   protected optionsHeader?: Dom.RequestInit['headers'];
 
   protected options: Options = {};
+
+  protected isLogging: boolean;
+
+  public constructor(configuration?: ConfigurationsGraphQLClient) {
+    super();
+    this.isLogging = configuration
+      ? !!configuration[ParameterKeys.IS_LOGGING]
+      : false;
+  }
 
   private getClientInstance(): GraphQLClient {
     return (
@@ -38,9 +51,7 @@ export abstract class AbstractGraphQLClient extends AbstractHttpClient {
   ): Promise<GraphQLResponseTypes> {
     try {
       this.applyHeaders();
-      return await this.getClientInstance().request<GraphQLResponseTypes>(
-        query,
-      );
+      return await this.request<GraphQLResponseTypes>(query);
     } catch (error) {
       const exception: PublicApiClientException = this.mapToPublicApiException(
         error,
@@ -56,6 +67,20 @@ export abstract class AbstractGraphQLClient extends AbstractHttpClient {
 
       throw error;
     }
+  }
+
+  private async request<T = any>(query: string): Promise<T> {
+    if (this.isLogging) {
+      console.info('GRAPHQL - Instance : ', this.getClientInstance());
+      console.info('GRAPHQL - Query : ', query);
+    }
+    const response: T = await this.getClientInstance().request<T>(query);
+
+    if (this.isLogging) {
+      console.info('GRAPHQL - Response : ', response);
+    }
+
+    return response;
   }
 
   private applyHeaders(): void {
