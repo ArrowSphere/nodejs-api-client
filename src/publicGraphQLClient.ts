@@ -1,33 +1,58 @@
-import { CatalogGraphQLClient } from './catalog/catalogGraphQLClient';
-import { AbstractGraphQLClient } from './abstractGraphQLClient';
+import { CatalogGraphQLClient } from './catalog';
+import {
+  AbstractGraphQLClient,
+  ConfigurationsGraphQLClient,
+} from './abstractGraphQLClient';
 import { SecurityScoreGraphQLClient } from './securityScore';
 import { GraphqlApiClient } from './graphqlApi';
 import { WellArchitectedGraphQLClient } from './wellArchitected';
+import { AccountGraphQLClient } from './account';
 
 export class PublicGraphQLClient extends AbstractGraphQLClient {
-  public getCatalogGraphQLClient(): CatalogGraphQLClient {
-    const client = new CatalogGraphQLClient();
+  constructor() {
+    super();
+  }
+
+  public getCatalogGraphQLClient(
+    configuration?: ConfigurationsGraphQLClient,
+  ): CatalogGraphQLClient {
+    const client = new CatalogGraphQLClient(configuration);
     this.applyConfig(client);
 
     return client;
   }
 
-  public getSecurityScoreGraphQLClient(): SecurityScoreGraphQLClient {
-    const client = new SecurityScoreGraphQLClient();
+  public getSecurityScoreGraphQLClient(
+    configuration?: ConfigurationsGraphQLClient,
+  ): SecurityScoreGraphQLClient {
+    const client = new SecurityScoreGraphQLClient(configuration);
     this.applyConfig(client);
 
     return client;
   }
 
-  public getWellArchitectedGraphQLClient(): WellArchitectedGraphQLClient {
-    const client = new WellArchitectedGraphQLClient();
+  public getWellArchitectedGraphQLClient(
+    configuration?: ConfigurationsGraphQLClient,
+  ): WellArchitectedGraphQLClient {
+    const client = new WellArchitectedGraphQLClient(configuration);
     this.applyConfig(client);
 
     return client;
   }
 
-  public getGraphqlApiClient(): GraphqlApiClient {
-    const client = new GraphqlApiClient();
+  public getGraphqlApiClient(
+    configuration?: ConfigurationsGraphQLClient,
+  ): GraphqlApiClient {
+    const client = new GraphqlApiClient(configuration);
+    this.applyConfig(client);
+
+    return client;
+  }
+
+  public getGraphqlAccountClient(
+    configuration?: ConfigurationsGraphQLClient,
+  ): AccountGraphQLClient {
+    const client = new AccountGraphQLClient(configuration);
     this.applyConfig(client);
 
     return client;
