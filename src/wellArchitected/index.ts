@@ -6,3 +6,5 @@ export * from './entities/getAdminData';
 export * from './entities/getPartnerData';
 export * from './entities/getCustomerData';
 export * from './entities/getCustomerAccountData';
+export * from './register';
+export * from './standards';
