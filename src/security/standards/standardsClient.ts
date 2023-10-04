@@ -23,6 +23,10 @@ export class StandardsClient extends AbstractRestfulClient {
     return new GetResult(Standards, await this.get(parameters));
   }
 
+  /**
+   * @deprecated
+   * Prefer using the wellArchitected version
+   */
   public async listSecurityStandardsWithAccountReference(
     subscriptionReference: string,
     parameters: Parameters = {},
@@ -47,6 +51,10 @@ export class StandardsClient extends AbstractRestfulClient {
     return new GetResult(Checks, await this.get(parameters));
   }
 
+  /**
+   * @deprecated
+   * Prefer using the wellArchitected version
+   */
   public async listSecurityChecksWithAccountReference(
     subscriptionReference: string,
     standardReference: string,
@@ -73,6 +81,10 @@ export class StandardsClient extends AbstractRestfulClient {
     return new GetResult(Resources, await this.get(parameters));
   }
 
+  /**
+   * @deprecated
+   * Prefer using the wellArchitected version
+   */
   public async listSecurityResourcesWithAccountReference(
     subscriptionReference: string,
     standardReference: string,

@@ -2,16 +2,12 @@ import { AbstractRestfulClient, Parameters } from '../../abstractRestfulClient';
 import { GetResult } from '../../getResult';
 import { RegistrationLink } from './entity/registrationLink';
 
-export class RegisterClient extends AbstractRestfulClient {
+export class WellArchitectedRegisterClient extends AbstractRestfulClient {
   /**
    * The base path of the API
    */
-  protected basePath = '/security';
+  protected basePath = '/wellArchitected';
 
-  /**
-   * @deprecated
-   * Prefer using the wellArchitected version
-   */
   public async register(
     subscriptionReference: string,
     parameters: Parameters = {},
@@ -21,10 +17,6 @@ export class RegisterClient extends AbstractRestfulClient {
     return new GetResult(RegistrationLink, await this.post(parameters));
   }
 
-  /**
-   * @deprecated
-   * Prefer using the wellArchitected version
-   */
   public async deregister(
     subscriptionReference: string,
     parameters: Parameters = {},
@@ -34,10 +26,6 @@ export class RegisterClient extends AbstractRestfulClient {
     return await this.post(parameters);
   }
 
-  /**
-   * @deprecated
-   * Prefer using the wellArchitected version
-   */
   public async checkRegister(
     subscriptionReference: string,
     parameters: Parameters = {},
@@ -47,10 +35,6 @@ export class RegisterClient extends AbstractRestfulClient {
     return await this.get(parameters);
   }
 
-  /**
-   * @deprecated
-   * Prefer using the wellArchitected version
-   */
   public async triggerAsynchronousUpdate(
     subscriptionReference: string,
     parameters: Parameters = {},

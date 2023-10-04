@@ -23,6 +23,9 @@ export * from './subscriptions/';
 export * from './supportCenter/';
 export * from './securityScore/';
 export * from './user/';
-// export * from './wellArchitected/';
+
+export { WellArchitected };
+import * as WellArchitected from './wellArchitected';
+
 export { ContactInformation };
 import * as ContactInformation from './contact';

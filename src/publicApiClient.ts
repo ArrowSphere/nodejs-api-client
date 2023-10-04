@@ -10,13 +10,16 @@ import { OrdersClient } from './orders';
 import { ContactClient } from './contact';
 import { CampaignClient } from './campaign';
 import { ConsumptionClient } from './consumption';
-import { StandardsClient } from './security/standards/standardsClient';
-import { RegisterClient } from './security';
+import {
+  WellArchitectedRegisterClient,
+  WellArchitectedStandardsClient,
+} from './wellArchitected';
 import { CartClient } from './cart/cartClient';
 import { SupportCenterClient } from './supportCenter';
 import { CatalogClient } from './catalog';
 import { UserClient } from './user';
 import { NotificationsClient } from './notifications';
+import { RegisterClient, StandardsClient } from './security';
 
 /**
  * Public API Client class, should be the main entry point for your calls
@@ -142,6 +145,10 @@ export class PublicApiClient extends AbstractRestfulClient {
     return client;
   }
 
+  /**
+   * @deprecated
+   * Prefer using getWellArchitectedStandardsClient
+   */
   public getSecurityStandardsClient(
     configuration?: ConfigurationsClient,
   ): StandardsClient {
@@ -151,10 +158,36 @@ export class PublicApiClient extends AbstractRestfulClient {
     return client;
   }
 
+  /**
+   * @deprecated
+   * Prefer using getWellArchitectedRegisterClient
+   */
   public getSecurityRegisterClient(
     configuration?: ConfigurationsClient,
   ): RegisterClient {
     const client: RegisterClient = new RegisterClient(configuration);
+    this.applyConfig(client);
+
+    return client;
+  }
+
+  public getWellArchitectedStandardsClient(
+    configuration?: ConfigurationsClient,
+  ): WellArchitectedStandardsClient {
+    const client: WellArchitectedStandardsClient = new WellArchitectedStandardsClient(
+      configuration,
+    );
+    this.applyConfig(client);
+
+    return client;
+  }
+
+  public getWellArchitectedRegisterClient(
+    configuration?: ConfigurationsClient,
+  ): WellArchitectedRegisterClient {
+    const client: WellArchitectedRegisterClient = new WellArchitectedRegisterClient(
+      configuration,
+    );
     this.applyConfig(client);
 
     return client;
