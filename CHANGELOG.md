@@ -4,6 +4,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [3.56.0] - 2023-10-05
+- The **security** endpoint is now considered deprecrated.
+- Add the **register** and **standards** functions that used the **security** endpoint in the wellArchitected one.
+
+
 ## [3.55.0] - 2023-09-25
 
 ### Changed
