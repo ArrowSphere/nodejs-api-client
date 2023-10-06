@@ -5,6 +5,7 @@ import {
   LicenseFindResultData,
   LicenseFindResultFields,
   PriceFindResultFields,
+  SecurityFindResultFields,
 } from '../../../src';
 import { MOCK_RESULT_DATA } from '../licensesClient.test';
 
@@ -16,6 +17,9 @@ export const MOCK_LICENSE_DATA_WITHOUT_OPTIONAL_DATA_INPUT: LicenseFindResultDat
   [LicenseFindResultFields.COLUMN_ACTIVE_SEATS]: {
     [ActiveSeatsFindResultFields.COLUMN_LAST_UPDATE]: date,
     [ActiveSeatsFindResultFields.COLUMN_NUMBER]: 1,
+  },
+  [LicenseFindResultFields.COLUMN_SECURITY]: {
+    [SecurityFindResultFields.COLUMN_ACTIVE_FRAUD_EVENTS]: 0,
   },
   [LicenseFindResultFields.COLUMN_AUTO_RENEW]: true,
   [LicenseFindResultFields.COLUMN_BASE_SEAT]: 1,
@@ -69,6 +73,9 @@ export const MOCK_LICENSE_DATA_WITHOUT_OPTIONAL_DATA_RESPONSE: LicenseFindResult
   [LicenseFindResultFields.COLUMN_ACTIVE_SEATS]: {
     [ActiveSeatsFindResultFields.COLUMN_LAST_UPDATE]: date,
     [ActiveSeatsFindResultFields.COLUMN_NUMBER]: 1,
+  },
+  [LicenseFindResultFields.COLUMN_SECURITY]: {
+    [SecurityFindResultFields.COLUMN_ACTIVE_FRAUD_EVENTS]: 0,
   },
   [LicenseFindResultFields.COLUMN_AUTO_RENEW]: true,
   [LicenseFindResultFields.COLUMN_BASE_SEAT]: 1,

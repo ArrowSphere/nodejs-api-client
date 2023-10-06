@@ -33,6 +33,7 @@ import {
   LicenseFindResultFields,
   LicenseGetFields,
   ActiveSeatsFindResultFields,
+  SecurityFindResultFields,
 } from '../../src';
 import {
   PAYLOAD_LICENSE_HISTORY,
@@ -115,6 +116,9 @@ export const MOCK_RESULT_DATA: {
     [LicenseFindResultFields.COLUMN_RESELLER_NAME]: 'reseller_name',
     [LicenseFindResultFields.COLUMN_RESELLER_REF]: 'reseller_ref',
     [LicenseFindResultFields.COLUMN_SEAT]: 1,
+    [LicenseFindResultFields.COLUMN_SECURITY]: {
+      [SecurityFindResultFields.COLUMN_ACTIVE_FRAUD_EVENTS]: 0,
+    },
     [LicenseFindResultFields.COLUMN_SERVICE_REF]: 'service_ref',
     [LicenseFindResultFields.COLUMN_SKU]: 'SKU',
     [LicenseFindResultFields.COLUMN_START_DATE]: new Date().toISOString(),

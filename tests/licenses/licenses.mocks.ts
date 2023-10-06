@@ -13,6 +13,7 @@ import {
   LicenseGetFields,
   LicensePriceGetFields,
   OrderGetFields,
+  SecurityFindResultFields,
 } from '../../src';
 
 export const PAYLOAD_SCHEMA_LICENSE: GetData<GetLicenseResultData> = {
@@ -34,6 +35,9 @@ export const PAYLOAD_SCHEMA_LICENSE: GetData<GetLicenseResultData> = {
       [LicenseGetFields.COLUMN_ACTIVE_SEATS]: {
         [ActiveSeatsFindResultFields.COLUMN_NUMBER]: 3,
         [ActiveSeatsFindResultFields.COLUMN_LAST_UPDATE]: new Date().toISOString(),
+      },
+      [LicenseGetFields.COLUMN_SECURITY]: {
+        [SecurityFindResultFields.COLUMN_ACTIVE_FRAUD_EVENTS]: 0,
       },
       [LicenseGetFields.COLUMN_ACTIVATION_DATETIME]: 'activation_datetime',
       [LicenseGetFields.COLUMN_EXPIRY_DATETIME]: 'expiry_datetime',
@@ -110,6 +114,9 @@ export const PAYLOAD_SCHEMA_LICENSE_WITHOUT_OPTIONAL_FIELDS: GetData<GetLicenseR
       [LicenseGetFields.COLUMN_ACTIVE_SEATS]: {
         [ActiveSeatsFindResultFields.COLUMN_NUMBER]: 3,
         [ActiveSeatsFindResultFields.COLUMN_LAST_UPDATE]: new Date().toISOString(),
+      },
+      [LicenseGetFields.COLUMN_SECURITY]: {
+        [SecurityFindResultFields.COLUMN_ACTIVE_FRAUD_EVENTS]: 0,
       },
       [LicenseGetFields.COLUMN_ACTIVATION_DATETIME]: 'activation_datetime',
       [LicenseGetFields.COLUMN_EXPIRY_DATETIME]: 'expiry_datetime',
