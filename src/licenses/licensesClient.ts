@@ -44,6 +44,10 @@ import {
   PriceBandFindResultDataKeywords,
   PriceBandFindResultDataSortParameters,
 } from './entities/offer/priceBandFindResult';
+import {
+  SecurityFindResultDataKeywords,
+  SecurityFindResultDataSortParameters,
+} from './entities/license/securityFindResult';
 import { GetResult } from '../getResult';
 import { LicenseGetFields } from './entities/getLicense/licenseGetResult';
 import { GetLicenseResult } from './entities/getResult/getLicenseResult';
@@ -169,6 +173,21 @@ export enum LicenseFindParameters {
   FILTERS_LTE = 'lte',
 }
 
+export type BaseParameters<LicenseType, OfferType> = {
+  license?: LicenseType;
+  offer?: OfferType;
+};
+
+export type LicenseSortParameters = BaseParameters<
+  LicenceFindDataSortParameters,
+  OfferFindResultDataSortParameters
+>;
+
+export type LicenseFiltersParameters = BaseParameters<
+  LicenceFindDataFiltersParameters,
+  OfferFindResultDataFiltersParameters
+>;
+
 /**
  * List of keywords to search with.
  */
@@ -195,6 +214,7 @@ export type LicenseRawKeywordsParametersLicence = {
     | ConfigFindResultDataKeywords
     | WarningFindResultDataKeywords
     | PriceFindResultDataKeywords
+    | SecurityFindResultDataKeywords
     | undefined;
 };
 
@@ -210,14 +230,6 @@ export type SortParameters =
   | LicenseFindParameters.SORT_ASCENDING
   | LicenseFindParameters.SORT_DESCENDING;
 
-/**
- * Sort parameters to pass to the request
- */
-export type LicenseSortParameters = {
-  license?: LicenceFindDataSortParameters;
-  offer?: OfferFindResultDataSortParameters;
-};
-
 export type LicenseRawSortParametersLicense = {
   [field: string]:
     | SortParameters
@@ -225,6 +237,7 @@ export type LicenseRawSortParametersLicense = {
     | ConfigFindResultDataSortParameters
     | WarningFindResultDataSortParameters
     | PriceFindResutDataSortParameters
+    | SecurityFindResultDataSortParameters
     | undefined;
 };
 
@@ -250,14 +263,6 @@ export type FiltersParameters =
   | number[]
   | boolean
   | FiltersCompareValue;
-
-/**
- * Filter parameters to pass to the request.
- */
-export type LicenseFiltersParameters = {
-  license?: LicenceFindDataFiltersParameters;
-  offer?: OfferFindResultDataFiltersParameters;
-};
 
 export type LicenseRawFiltersParameters = {
   [field: string]: unknown;
@@ -409,80 +414,35 @@ export class LicensesClient extends AbstractRestfulClient {
     if (postData.keywords) {
       // Flatten with prefix for each type of keyword (license and offer)
       rawLicensePayload.keywords = {
-        ...Object.entries(postData.keywords.license ?? {}).reduce(
-          (acc: LicenseRawKeywordsParametersLicence, [keyword, value]) => {
-            acc[`license.${keyword}`] = value;
-            return acc;
-          },
-          {},
-        ),
-        ...Object.entries(postData.keywords.offer ?? {}).reduce(
-          (acc: LicenseRawKeywordsParametersOffer, [keyword, value]) => {
-            acc[`offer.${keyword}`] = value;
-            return acc;
-          },
-          {},
-        ),
+        ...this.createKeywords(postData.keywords, 'license'),
+        ...this.createKeywords(postData.keywords, 'offer'),
       };
     }
 
     if (postData.filters) {
       // Flatten with prefix for each type of filter (license and offer)
       rawLicensePayload.filters = {
-        ...Object.entries(postData.filters.license ?? {}).reduce(
-          (acc: LicenseRawFiltersParameters, [filter, value]) => {
-            acc[`license.${filter}`] = value;
-            return acc;
-          },
-          {},
-        ),
-        ...Object.entries(postData.filters.offer ?? {}).reduce(
-          (acc: LicenseRawFiltersParameters, [filter, value]) => {
-            acc[`offer.${filter}`] = value;
-            return acc;
-          },
-          {},
-        ),
+        ...this.createFilters(postData.filters, 'license'),
+        ...this.createFilters(postData.filters, 'offer'),
       };
     }
 
     if (postData.exclusionFilters) {
       // Flatten with prefix for each type of filter (license and offer)
       rawLicensePayload.exclusionFilters = {
-        ...Object.entries(postData.exclusionFilters.license ?? {}).reduce(
-          (acc: LicenseRawFiltersParameters, [filter, value]) => {
-            acc[`license.${filter}`] = value;
-            return acc;
-          },
-          {},
-        ),
-        ...Object.entries(postData.exclusionFilters.offer ?? {}).reduce(
-          (acc: LicenseRawFiltersParameters, [filter, value]) => {
-            acc[`offer.${filter}`] = value;
-            return acc;
-          },
-          {},
-        ),
+        ...this.createFilters(postData.exclusionFilters, 'license'),
+        ...this.createFilters(postData.exclusionFilters, 'offer'),
       };
     }
 
     if (postData.sort) {
       // Flatten with prefix for each type of sort keys (license and offer)
       rawLicensePayload.sort = {
-        ...Object.entries(postData.sort.license ?? {}).reduce(
-          (acc: LicenseRawSortParametersLicense, [sort, value]) => {
-            acc[`license.${sort}`] = value;
-            return acc;
-          },
-          {},
-        ),
-        ...Object.entries(postData.sort.offer ?? {}).reduce(
-          (acc: LicenseRawSortParametersOffer, [sort, value]) => {
-            acc[`offer.${sort}`] = value;
-            return acc;
-          },
-          {},
-        ),
+        ...this.createFilters(postData.sort, 'license'),
+        ...this.createFilters(postData.sort, 'offer'),
+      } as {
+        license?: LicenseRawSortParametersLicense;
+        offer?: LicenseRawSortParametersOffer;
       };
     }
 
@@ -616,5 +576,100 @@ export class LicensesClient extends AbstractRestfulClient {
     this.path = `/${licenseReference}${this.REACTIVATE_AUTO_RENEW_PATH}`;
 
     return await this.put(payload, parameters);
+  }
+  private createFilters(
+    parameters: string | BaseParameters<unknown, unknown>,
+    keyParent: string,
+  ): BaseParameters<unknown, unknown> {
+    let appropriateParameters: unknown;
+
+    if (typeof parameters === 'object') {
+      appropriateParameters =
+        keyParent === 'license' ? parameters.license : parameters.offer;
+    } else {
+      appropriateParameters = parameters;
+    }
+
+    return Object.entries(
+      typeof appropriateParameters === 'object'
+        ? (appropriateParameters as Record<string, unknown>)
+        : {},
+    ).reduce((acc: Record<string, unknown>, [key, value]) => {
+      if (typeof value === 'object' && !Array.isArray(value)) {
+        const subAcc: Record<string, unknown> = Object.entries(
+          value as LicenseFiltersParameters,
+        ).reduce((generatedArr: Record<string, unknown>, [i, val]) => {
+          let recursiveArr: BaseParameters<unknown, unknown>;
+          const newKey = keyParent + '.' + key + '.' + i;
+          if (typeof val !== 'object') {
+            generatedArr[`${newKey}`] = val;
+            return generatedArr;
+          } else {
+            recursiveArr = this.createFilters(
+              val as string | BaseParameters<unknown, unknown>,
+              newKey,
+            );
+          }
+
+          return Object.assign(generatedArr, recursiveArr);
+        }, {});
+        Object.assign(acc, subAcc);
+      } else {
+        acc[`${keyParent}.${key}`] = value;
+      }
+      return acc;
+    }, {});
+  }
+
+  private createKeywords(
+    parameters: string | LicenseKeywordsParameters,
+    keyParent: string,
+  ): LicenseKeywordsParameters {
+    let appropriateParameters;
+
+    if (typeof parameters === 'object') {
+      appropriateParameters =
+        keyParent === 'license' ? parameters.license : parameters.offer;
+    } else {
+      appropriateParameters = parameters;
+    }
+
+    return Object.entries(
+      appropriateParameters !== null && appropriateParameters !== void 0
+        ? appropriateParameters
+        : {},
+    ).reduce((acc: Record<string, unknown>, [key, value]) => {
+      if (
+        typeof value === 'object' &&
+        !Array.isArray(value) &&
+        !Object.prototype.hasOwnProperty.call(value, 'operator')
+      ) {
+        const subAcc: Record<string, unknown> = Object.entries(
+          value as LicenseFiltersParameters,
+        ).reduce((generatedArr: Record<string, unknown>, [i, val]) => {
+          let recursiveArr: LicenseKeywordsParameters;
+          const newKey = keyParent + '.' + key + '.' + i;
+
+          if (
+            typeof val !== 'object' ||
+            Object.prototype.hasOwnProperty.call(val, 'operator')
+          ) {
+            generatedArr[`${newKey}`] = val;
+            return generatedArr;
+          } else {
+            recursiveArr = this.createKeywords(
+              val as string | LicenseKeywordsParameters,
+              newKey,
+            );
+          }
+
+          return Object.assign(generatedArr, recursiveArr);
+        }, {});
+        Object.assign(acc, subAcc);
+      } else {
+        acc[`${keyParent}.${key}`] = value;
+      }
+      return acc;
+    }, {});
   }
 }
