@@ -35,6 +35,14 @@ import {
   PriceFindResultFields,
   PriceFindResutDataSortParameters,
 } from './priceFindResult';
+import {
+  SecurityFindResult,
+  SecurityFindResultData,
+  SecurityFindResultDataFiltersParameters,
+  SecurityFindResultDataKeywords,
+  SecurityFindResultDataSortParameters,
+  SecurityFindResultFields,
+} from './securityFindResult';
 
 /**
  * Highlight response object.
@@ -73,6 +81,7 @@ export enum LicenseFindResultFields {
   COLUMN_RESELLER_NAME = 'reseller_name',
   COLUMN_RESELLER_REF = 'reseller_ref',
   COLUMN_SEAT = 'seat',
+  COLUMN_SECURITY = 'security',
   COLUMN_SERVICE_REF = 'service_ref',
   COLUMN_SKU = 'sku',
   COLUMN_START_DATE = 'start_date',
@@ -120,6 +129,7 @@ export type LicenseFindResultData = {
   [LicenseFindResultFields.COLUMN_RESELLER_NAME]: string;
   [LicenseFindResultFields.COLUMN_RESELLER_REF]: string;
   [LicenseFindResultFields.COLUMN_SEAT]: number;
+  [LicenseFindResultFields.COLUMN_SECURITY]: SecurityFindResultData | null;
   [LicenseFindResultFields.COLUMN_SERVICE_REF]: string;
   [LicenseFindResultFields.COLUMN_SKU]: string;
   [LicenseFindResultFields.COLUMN_START_DATE]: string;
@@ -164,6 +174,7 @@ export type LicenceFindDataKeywords = {
   [LicenseFindResultFields.COLUMN_RESELLER_NAME]?: DataKeywords;
   [LicenseFindResultFields.COLUMN_RESELLER_REF]?: DataKeywords;
   [LicenseFindResultFields.COLUMN_SEAT]?: DataKeywords;
+  [LicenseFindResultFields.COLUMN_SECURITY]?: SecurityFindResultDataKeywords;
   [LicenseFindResultFields.COLUMN_SERVICE_REF]?: DataKeywords;
   [LicenseFindResultFields.COLUMN_SKU]?: DataKeywords;
   [LicenseFindResultFields.COLUMN_START_DATE]?: DataKeywords;
@@ -207,6 +218,7 @@ export type LicenceFindDataSortParameters = {
   [LicenseFindResultFields.COLUMN_RESELLER_NAME]?: SortParameters;
   [LicenseFindResultFields.COLUMN_RESELLER_REF]?: SortParameters;
   [LicenseFindResultFields.COLUMN_SEAT]?: SortParameters;
+  [LicenseFindResultFields.COLUMN_SECURITY]?: SecurityFindResultDataSortParameters;
   [LicenseFindResultFields.COLUMN_SERVICE_REF]?: SortParameters;
   [LicenseFindResultFields.COLUMN_SKU]?: SortParameters;
   [LicenseFindResultFields.COLUMN_START_DATE]?: SortParameters;
@@ -250,6 +262,7 @@ export type LicenceFindDataFiltersParameters = {
   [LicenseFindResultFields.COLUMN_RESELLER_NAME]?: FiltersParameters;
   [LicenseFindResultFields.COLUMN_RESELLER_REF]?: FiltersParameters;
   [LicenseFindResultFields.COLUMN_SEAT]?: FiltersParameters;
+  [LicenseFindResultFields.COLUMN_SECURITY]?: SecurityFindResultDataFiltersParameters;
   [LicenseFindResultFields.COLUMN_SERVICE_REF]?: FiltersParameters;
   [LicenseFindResultFields.COLUMN_SKU]?: FiltersParameters;
   [LicenseFindResultFields.COLUMN_START_DATE]?: FiltersParameters;
@@ -314,6 +327,7 @@ export class LicenseFindResult extends AbstractEntity<LicenseFindResultData> {
   readonly #resellerName: string;
   readonly #resellerRef: string;
   readonly #seat: number;
+  readonly #security: SecurityFindResult;
   readonly #serviceRef: string;
   readonly #sku: string;
   readonly #startDate: string;
@@ -403,6 +417,12 @@ export class LicenseFindResult extends AbstractEntity<LicenseFindResultData> {
     this.#resellerName = data[LicenseFindResultFields.COLUMN_RESELLER_NAME];
     this.#resellerRef = data[LicenseFindResultFields.COLUMN_RESELLER_REF];
     this.#seat = data[LicenseFindResultFields.COLUMN_SEAT];
+    this.#security = new SecurityFindResult({
+      [SecurityFindResultFields.COLUMN_ACTIVE_FRAUD_EVENTS]:
+        data?.[LicenseFindResultFields.COLUMN_SECURITY]?.[
+          SecurityFindResultFields.COLUMN_ACTIVE_FRAUD_EVENTS
+        ],
+    });
     this.#serviceRef = data[LicenseFindResultFields.COLUMN_SERVICE_REF];
     this.#sku = data[LicenseFindResultFields.COLUMN_SKU];
     this.#startDate = data[LicenseFindResultFields.COLUMN_START_DATE];
@@ -525,6 +545,10 @@ export class LicenseFindResult extends AbstractEntity<LicenseFindResultData> {
     return this.#seat;
   }
 
+  public get security(): SecurityFindResult {
+    return this.#security;
+  }
+
   public get serviceRef(): string {
     return this.#serviceRef;
   }
@@ -621,6 +645,7 @@ export class LicenseFindResult extends AbstractEntity<LicenseFindResultData> {
       [LicenseFindResultFields.COLUMN_RESELLER_NAME]: this.resellerName,
       [LicenseFindResultFields.COLUMN_RESELLER_REF]: this.resellerRef,
       [LicenseFindResultFields.COLUMN_SEAT]: this.seat,
+      [LicenseFindResultFields.COLUMN_SECURITY]: this.security.toJSON(),
       [LicenseFindResultFields.COLUMN_SERVICE_REF]: this.serviceRef,
       [LicenseFindResultFields.COLUMN_SKU]: this.sku,
       [LicenseFindResultFields.COLUMN_START_DATE]: this.startDate,

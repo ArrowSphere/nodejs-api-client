@@ -30,4 +30,5 @@ export * from './entities/offer/priceband/saleConstraintsFindResult';
 export * from './entities/offer/priceband/identifiers/arrowsphereFindResult';
 export * from './licenseRequestClient';
 export * from './licensesClient';
+export * from './entities/license/securityFindResult';
 export * from './licensesEventClient';
