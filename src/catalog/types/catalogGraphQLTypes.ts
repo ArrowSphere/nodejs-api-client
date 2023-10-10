@@ -12,6 +12,12 @@ export type GetPriceBandType = {
   priceBand?: PriceBandType;
 };
 
+export type GetPriceBandsType = {
+  getPriceBands: {
+    priceBands: PriceBandType[];
+  };
+};
+
 export type GetExchangeRatesType = {
   exchangeRates?: ExchangeRateType[];
 };
@@ -247,11 +253,18 @@ export type PriceBandVendorIdentifierType = {
   sku?: string;
 };
 
+export enum PricesTypeKeys {
+  BUY_KEY = 'buy',
+  SELL_KEY = 'sell',
+  PUBLIC_KEY = 'public',
+  VENDOR_PRICING_SOURCE_KEY = 'vendorPricingSource',
+}
+
 export type PricesType = {
-  buy?: string;
-  sell?: string;
-  public?: string;
-  vendorPricingSource?: VendorPricingSourceType;
+  [PricesTypeKeys.BUY_KEY]?: string;
+  [PricesTypeKeys.SELL_KEY]?: string;
+  [PricesTypeKeys.PUBLIC_KEY]?: string;
+  [PricesTypeKeys.VENDOR_PRICING_SOURCE_KEY]?: VendorPricingSourceType;
 };
 
 export type PriceBandSaleConstraintsType = {

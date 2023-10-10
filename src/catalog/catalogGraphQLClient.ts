@@ -2,6 +2,7 @@ import { AbstractGraphQLClient } from '../abstractGraphQLClient';
 import {
   GetExchangeRatesType,
   GetExchangeRateValueType,
+  GetPriceBandsType,
   GetPriceBandType,
   GetProductsType,
   GetProductType,
@@ -12,6 +13,7 @@ import {
   FindExchangeRateValueQueryOutput,
   FindOnePriceBandQueryOutput,
   FindOneProductQueryOutput,
+  FindPriceBandsQueryOutput,
 } from './types/FindOneProductQueryOutput';
 
 export class CatalogGraphQLClient extends AbstractGraphQLClient {
@@ -82,6 +84,20 @@ export class CatalogGraphQLClient extends AbstractGraphQLClient {
 
     try {
       return await this.post<FindOnePriceBandQueryOutput>(queryStr);
+    } catch (error: unknown) {
+      return null;
+    }
+  }
+
+  public async findPriceBandsByQuery(
+    query: Pick<CatalogQueries, 'getPriceBands'>,
+  ): Promise<GetPriceBandsType | null> {
+    this.path = this.GRAPHQL;
+
+    const queryStr: string = this.stringifyQuery(query);
+
+    try {
+      return await this.post<FindPriceBandsQueryOutput>(queryStr);
     } catch (error: unknown) {
       return null;
     }
