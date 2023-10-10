@@ -28,6 +28,7 @@ export type CatalogQuery = {
 export type CatalogQueries = {
   getExchangeRates?: GetExchangeRatesQuery;
   exchangeRate?: GetExchangeRateValueQuery;
+  getPriceBands?: GetPriceBandsQuery;
   getProducts?: GetPaginatedProductsQuery;
   priceBand?: GetPriceBandQuery;
   product?: GetProductQuery;
@@ -49,6 +50,11 @@ export type GetProductQuery = Merge<
 export type GetPriceBandQuery = Merge<
   { __args: QueryPriceBandArguments },
   PriceBandSchema
+>;
+
+export type GetPriceBandsQuery = Merge<
+  { __args: QueryPriceBandArguments },
+  { priceBands: PriceBandSchema }
 >;
 
 export type GetExchangeRatesQuery = Merge<

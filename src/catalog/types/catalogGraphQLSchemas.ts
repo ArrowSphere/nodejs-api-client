@@ -1,6 +1,7 @@
 // Here are the schemas, they are useful to build the graphql requests
 
 import {
+  AttributesParameters,
   AttributeType,
   ExchangeRateType,
   ExchangeRateValueType,
@@ -19,6 +20,7 @@ export type PaginationSchema = Schema<PaginationType, boolean>;
 
 export type FiltersSchema = Schema<FiltersType, boolean>;
 
+type AttributesParametersSchema = Schema<AttributesParameters, boolean>;
 type IdentifiersSchema = Schema<IdentifiersType, boolean>;
 type RelatedOfferSchema = Schema<RelatedOfferType, boolean>;
 type PromotionSchema = Schema<PromotionType, boolean>;
@@ -28,6 +30,7 @@ type PromotionSchema = Schema<PromotionType, boolean>;
  */
 type MissingFieldsOfProductSchema = {
   addonPrimaries?: IdentifiersSchema;
+  attributesParameters?: AttributesParametersSchema;
   baseOfferPrimaries?: IdentifiersSchema;
   conversionOfferPrimaries?: IdentifiersSchema;
   relatedOffers?: RelatedOfferSchema;

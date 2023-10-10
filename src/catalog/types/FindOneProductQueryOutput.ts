@@ -13,6 +13,12 @@ export type FindOnePriceBandQueryOutput = {
   priceBand: PriceBandType;
 };
 
+export type FindPriceBandsQueryOutput = {
+  getPriceBands: {
+    priceBands: PriceBandType[];
+  };
+};
+
 export type FindExchangeRatesQueryOutput = {
   exchangeRates: ExchangeRateType[];
 };
