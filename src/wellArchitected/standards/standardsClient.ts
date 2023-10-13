@@ -14,8 +14,9 @@ export class WellArchitectedStandardsClient extends AbstractRestfulClient {
     subscriptionReference: string,
     parameters: Parameters = {},
     accountReference: string,
+    pillar: string,
   ): Promise<GetResult<Standards>> {
-    this.path = `/${subscriptionReference}/accounts/${accountReference}/standards`;
+    this.path = `/${subscriptionReference}/${pillar}/accounts/${accountReference}/standards`;
 
     return new GetResult(Standards, await this.get(parameters));
   }
@@ -25,8 +26,9 @@ export class WellArchitectedStandardsClient extends AbstractRestfulClient {
     standardReference: string,
     accountReference: string,
     parameters: Parameters = {},
+    pillar: string,
   ): Promise<GetResult<Checks>> {
-    this.path = `/${subscriptionReference}/accounts/${accountReference}/standards/${standardReference}/checks`;
+    this.path = `/${subscriptionReference}/${pillar}/accounts/${accountReference}/standards/${standardReference}/checks`;
 
     return new GetResult(Checks, await this.get(parameters));
   }
@@ -36,9 +38,10 @@ export class WellArchitectedStandardsClient extends AbstractRestfulClient {
     standardReference: string,
     checkReference: string,
     accountReference: string,
+    pillar: string,
     parameters: Parameters = {},
   ): Promise<GetResult<Resources>> {
-    this.path = `/${subscriptionReference}/accounts/${accountReference}/standards/${standardReference}/checks/${checkReference}/resources`;
+    this.path = `/${subscriptionReference}/${pillar}/accounts/${accountReference}/standards/${standardReference}/checks/${checkReference}/resources`;
 
     return new GetResult(Resources, await this.get(parameters));
   }
