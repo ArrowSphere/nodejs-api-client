@@ -20,6 +20,7 @@ import {
   PAYLOAD_GET_CUSTOMERS,
   PAYLOAD_GET_CUSTOMERS_WITHOUT_OPTIONAL_FIELDS,
   PAYLOAD_POST_CUSTOMER_CONTACT,
+  PAYLOAD_POST_CUSTOMER_INVITATION,
 } from './mocks/customers.mocks';
 import { Axios } from 'axios';
 import sinon from 'sinon';
@@ -411,6 +412,25 @@ describe('CustomersClients', () => {
       );
 
       expect(result).to.be.deep.equals(expectedResult);
+    });
+  });
+
+  describe('postCustomerInvitation', () => {
+    const client = new PublicApiClient()
+      .getCustomersClient()
+      .setUrl(CUSTOMERS_MOCK_URL);
+
+    it('call post customer invitation method to create an invitation', async () => {
+      nock(CUSTOMERS_MOCK_URL)
+        .post(CUSTOMERS_GET_CUSTOMER_INVITATION_URL)
+        .reply(200, PAYLOAD_GET_CUSTOMER_INVITATION);
+
+      const result = await client.postCustomerInvitation(
+        PAYLOAD_POST_CUSTOMER_INVITATION,
+      );
+
+      expect(result).to.be.instanceof(GetResult);
+      expect(result.toJSON()).to.eql(PAYLOAD_GET_CUSTOMER_INVITATION);
     });
   });
 });

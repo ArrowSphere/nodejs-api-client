@@ -62,6 +62,16 @@ export type PostCustomerPayload = {
   [CustomerFields.COLUMN_CONTACT]?: PostCustomerContact;
 };
 
+export enum PostCustomerInvitationFields {
+  COLUMN_CONTACT_ID = 'contactId',
+  COLUMN_POLICY = 'policy',
+}
+
+export type PostCustomerInvitation = {
+  [PostCustomerInvitationFields.COLUMN_CONTACT_ID]: number;
+  [PostCustomerInvitationFields.COLUMN_POLICY]: string;
+};
+
 export type APIResponseResourceCreated = {
   status: number;
   data: {
@@ -194,5 +204,14 @@ export class CustomersClient extends AbstractRestfulClient {
       {},
       { returnAxiosData },
     );
+  }
+
+  public async postCustomerInvitation(
+    payload: PostCustomerInvitation,
+    parameters: Parameters = {},
+  ): Promise<GetResult<DataInvitation>> {
+    this.path = `/invitations`;
+
+    return new GetResult(DataInvitation, await this.post(payload, parameters));
   }
 }
