@@ -10,6 +10,8 @@ import {
   InvitationContactFields,
   PaginationFields,
   AdditionalExtraInformationFields,
+  PostCustomerInvitation,
+  PostCustomerInvitationFields,
 } from '../../../src';
 
 export const PAYLOAD_GET_CUSTOMERS = {
@@ -109,6 +111,11 @@ export const PAYLOAD_GET_CUSTOMERS_WITHOUT_OPTIONAL_FIELDS = {
     [PaginationFields.COLUMN_NEXT]: '/customers?per_page=15&page=3',
     [PaginationFields.COLUMN_PREVIOUS]: '/customers?per_page=15&page=1',
   },
+};
+
+export const PAYLOAD_POST_CUSTOMER_INVITATION: PostCustomerInvitation = {
+  [PostCustomerInvitationFields.COLUMN_CONTACT_ID]: 123456,
+  [PostCustomerInvitationFields.COLUMN_POLICY]: 'policy',
 };
 
 export const PAYLOAD_GET_CUSTOMER_INVITATION = {
