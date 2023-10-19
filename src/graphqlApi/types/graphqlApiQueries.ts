@@ -5,6 +5,7 @@ import {
 } from './entities/company';
 import { ContinentType, CountryType } from './entities/country';
 import { PartnertagType } from './entities/partnertag';
+import { QuoteType } from './entities/quote';
 import { WorkgroupType } from './entities/workgroup';
 import {
   ErrorsSchema,
@@ -140,6 +141,7 @@ export enum SelectDataField {
   END_CUSTOMER = 'endCustomer',
   PARTNER = 'partner',
   PARTNERTAG = 'partnertag',
+  QUOTE = 'quote',
   WORKGROUP = 'workgroup',
 }
 
@@ -158,6 +160,7 @@ export type SelectAllResponseDataType = {
   [SelectDataField.END_CUSTOMER]?: EndCustomerType[];
   [SelectDataField.PARTNER]?: PartnerType[];
   [SelectDataField.PARTNERTAG]?: PartnertagType[];
+  [SelectDataField.QUOTE]?: QuoteType[];
   [SelectDataField.WORKGROUP]?: WorkgroupType[];
 };
 
