@@ -3,24 +3,26 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.58.0] - 2023-10-19
+
+### Changed
+- Update customer client, add post invitation endpoint
+
 ## [3.57.1] - 2023-10-13
 
 ### Changed
 - Fixing the missing pillar in the wellArchitected ressources endpoint
-
 
 ## [3.57.0] - 2023-10-10
 
 ### Changed
 - add method findPriceBandsByQuery
 
-
 ## [3.56.0] - 2023-10-05
 
 ### Changed
 - The **security** endpoint is now considered deprecrated.
 - Add the **register** and **standards** functions that used the **security** endpoint in the wellArchitected one.
-
 
 ## [3.55.0] - 2023-09-25
 
