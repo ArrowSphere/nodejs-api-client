@@ -6,6 +6,7 @@ import {
 } from './entities/company';
 import { PartnertagType } from './entities/partnertag';
 import { ContinentType, CountryType } from './entities/country';
+import { QuoteType } from './entities/quote';
 import { WorkgroupType } from './entities/workgroup';
 import {
   ErrorsType,
@@ -41,6 +42,7 @@ export type ContinentSchema = Schema<ContinentType, boolean>;
 export type CountrySchema = Schema<CountryType, boolean>;
 export type ErrorsSchema = Schema<ErrorsType, boolean>;
 export type PageSchema = Schema<PageType, boolean>;
+export type QuoteSchema = Schema<QuoteType, boolean>;
 export type WorkgroupSchema = Schema<WorkgroupType, boolean>;
 
 export type SelectAllResultSchema = {
@@ -56,6 +58,7 @@ export type SelectAllResponseDataSchema = {
   [SelectDataField.END_CUSTOMER]?: EndCustomerSchema;
   [SelectDataField.PARTNER]?: PartnerSchema;
   [SelectDataField.PARTNERTAG]?: PartnertagSchema;
+  [SelectDataField.QUOTE]?: QuoteSchema;
   [SelectDataField.WORKGROUP]?: WorkgroupSchema;
 };
 
@@ -71,6 +74,7 @@ export type SelectOneResponseDataSchema = {
   [SelectDataField.END_CUSTOMER]?: EndCustomerSchema;
   [SelectDataField.PARTNER]?: PartnerSchema;
   [SelectDataField.PARTNERTAG]?: PartnertagSchema;
+  [SelectDataField.QUOTE]?: QuoteSchema;
   [SelectDataField.WORKGROUP]?: WorkgroupSchema;
 };
 
