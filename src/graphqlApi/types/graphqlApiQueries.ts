@@ -59,6 +59,10 @@ export enum InputPaginationField {
   PER_PAGE = 'perPage',
 }
 
+export enum FormatType {
+  QUERY = 'QUERY'
+}
+
 export type InputPaginationType = {
   [InputPaginationField.PAGE]?: number;
   [InputPaginationField.PER_PAGE]?: number;
@@ -100,6 +104,7 @@ export enum InputFilterValueField {
   VALUE = 'value',
   EXCLUSION = 'exclusion',
   HAVING = 'having',
+  FORMAT_TYPE = 'formatType',
 }
 
 export type InputFilterValueType = {
@@ -108,6 +113,7 @@ export type InputFilterValueType = {
   [InputFilterValueField.VALUE]?: string[];
   [InputFilterValueField.EXCLUSION]?: boolean;
   [InputFilterValueField.HAVING]?: boolean;
+  [InputFilterValueField.FORMAT_TYPE]?: FormatType;
 };
 
 export enum InputQueryOptionsField {
