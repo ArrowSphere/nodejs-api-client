@@ -50,6 +50,7 @@ export type CheckType = {
   description?: string;
   flagged?: number;
   group?: string;
+  hasResources?: boolean;
   isFailed?: boolean;
   name?: string;
   processed?: number;
@@ -365,6 +366,7 @@ export type MarketplacesAggType = {
 export type CheckByDateType = {
   date?: string;
   flagged?: number;
+  hasResources?: boolean;
   isFailed?: boolean;
   name?: string;
   processed?: number;

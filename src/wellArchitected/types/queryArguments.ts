@@ -55,6 +55,7 @@ export enum SearchFilterValues {
   ACCOUNT_STANDARDS_CHECKS_SEVERITY = 'account.standards.checks.severity',
   ACCOUNT_STANDARDS_CHECKS_PROCESSED = 'account.standards.checks.processed',
   ACCOUNT_STANDARDS_CHECKS_FLAGGED = 'account.standards.checks.flagged',
+  ACCOUNT_STANDARDS_CHECKS_HAS_RESOURCES = 'account.standards.checks.hasResources',
   ACCOUNT_STANDARDS_CHECKS_IS_FAILED = 'account.standards.checks.isFailed',
   ACCOUNT_STANDARDS_CHECKS_SCORE = 'account.standards.checks.score',
   ACCOUNT_FAILED = 'account.failed',

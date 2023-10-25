@@ -3,6 +3,7 @@ import { AbstractEntity } from '../../../../abstractEntity';
 export enum SecurityChecksFields {
   COLUMN_DESCRIPTION = 'description',
   COLUMN_FLAGGED = 'flagged',
+  COLUMN_HAS_RESOURCES = 'hasResources',
   COLUMN_IS_FAILED = 'isFailed',
   COLUMN_METADATA = 'metadata',
   COLUMN_NAME = 'name',
@@ -15,6 +16,7 @@ export enum SecurityChecksFields {
 export type SecurityChecksType = {
   [SecurityChecksFields.COLUMN_DESCRIPTION]: string;
   [SecurityChecksFields.COLUMN_FLAGGED]: number;
+  [SecurityChecksFields.COLUMN_HAS_RESOURCES]: boolean;
   [SecurityChecksFields.COLUMN_IS_FAILED]: boolean;
   [SecurityChecksFields.COLUMN_METADATA]: Array<string>;
   [SecurityChecksFields.COLUMN_NAME]: string;
@@ -27,6 +29,7 @@ export type SecurityChecksType = {
 export class SecurityChecks extends AbstractEntity<SecurityChecksType> {
   readonly #description: string;
   readonly #flagged: number;
+  readonly #hasResources: boolean;
   readonly #isFailed: boolean;
   readonly #metadata: Array<string>;
   readonly #name: string;
@@ -42,6 +45,8 @@ export class SecurityChecks extends AbstractEntity<SecurityChecksType> {
       securityChecksDataInput[SecurityChecksFields.COLUMN_DESCRIPTION];
     this.#flagged =
       securityChecksDataInput[SecurityChecksFields.COLUMN_FLAGGED];
+    this.#hasResources =
+      securityChecksDataInput[SecurityChecksFields.COLUMN_HAS_RESOURCES];
     this.#isFailed =
       securityChecksDataInput[SecurityChecksFields.COLUMN_IS_FAILED];
     this.#metadata =
@@ -62,6 +67,10 @@ export class SecurityChecks extends AbstractEntity<SecurityChecksType> {
 
   get flagged(): number {
     return this.#flagged;
+  }
+
+  get hasResources(): boolean {
+    return this.#hasResources;
   }
 
   get isFailed(): boolean {
@@ -96,6 +105,7 @@ export class SecurityChecks extends AbstractEntity<SecurityChecksType> {
     return {
       [SecurityChecksFields.COLUMN_DESCRIPTION]: this.description,
       [SecurityChecksFields.COLUMN_FLAGGED]: this.flagged,
+      [SecurityChecksFields.COLUMN_HAS_RESOURCES]: this.hasResources,
       [SecurityChecksFields.COLUMN_IS_FAILED]: this.isFailed,
       [SecurityChecksFields.COLUMN_METADATA]: this.metadata,
       [SecurityChecksFields.COLUMN_NAME]: this.name,
