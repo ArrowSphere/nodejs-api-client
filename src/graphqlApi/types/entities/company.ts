@@ -24,6 +24,7 @@ type BaseCompanyType = {
   partnerRef?: string;
   partnerTags?: PartnertagType[];
   phone?: string;
+  resellerId?: number;
   state?: string;
   vatNumber?: string;
   zip?: string;
