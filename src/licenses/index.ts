@@ -1,5 +1,7 @@
 export * from './entities/event/licenseEvent';
 export * from './entities/event/licenseEventGraphQL';
+export * from './entities/event/licensesEventQueries';
+export * from './entities/event/licensesEventSchemas';
 export * from './entities/filterFindResult';
 export * from './entities/findResult';
 export * from './entities/getLicense/actionMessagesGetResult';
@@ -26,3 +28,4 @@ export * from './entities/offer/priceband/priceBandPriceFindResult';
 export * from './entities/offer/priceband/saleConstraintsFindResult';
 export * from './entities/offer/priceband/identifiers/arrowsphereFindResult';
 export * from './licensesClient';
+export * from './licensesEventClient';
