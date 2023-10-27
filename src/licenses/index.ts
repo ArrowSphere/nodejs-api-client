@@ -1,5 +1,7 @@
 export * from './entities/event/licenseEvent';
 export * from './entities/event/licenseEventGraphQL';
+export * from './entities/event/licensesEventQueries';
+export * from './entities/event/licensesEventSchemas';
 export * from './entities/filterFindResult';
 export * from './entities/findResult';
 export * from './entities/getLicense/actionMessagesGetResult';
