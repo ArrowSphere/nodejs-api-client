@@ -41,12 +41,12 @@ export interface LicenseEventPriceband {
 export interface LicenseEventOffer {
   arrowsphereSku: string;
   name: string;
-  isManualProvisioning: boolean | null;
+  isManualProvisioning?: boolean | null;
 }
 
 export interface LicenseEventQuantity {
   current: number;
-  requested: number;
+  requested: number | null;
 }
 
 export interface LicenseEventUser {
@@ -56,6 +56,7 @@ export interface LicenseEventUser {
 
 export interface LicenseEventDetails {
   message: string;
+  source: string | null;
 }
 
 export interface LicenseEvent {
