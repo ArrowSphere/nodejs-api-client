@@ -1,3 +1,4 @@
+import { Program } from '../../catalog';
 import {
   ArrowCompanyType,
   EndCustomerType,
@@ -5,6 +6,7 @@ import {
 } from './entities/company';
 import { ContinentType, CountryType } from './entities/country';
 import { PartnertagType } from './entities/partnertag';
+import { ProgramTypeGraphQL, VendorTypeGraphQL } from './entities/program';
 import { QuoteType } from './entities/quote';
 import { WorkgroupType } from './entities/workgroup';
 import {
@@ -141,8 +143,10 @@ export enum SelectDataField {
   END_CUSTOMER = 'endCustomer',
   PARTNER = 'partner',
   PARTNERTAG = 'partnertag',
+  PROGRAM = 'program',
   QUOTE = 'quote',
   WORKGROUP = 'workgroup',
+  VENDOR = 'vendor',
 }
 
 export type SelectAllResultType = {
@@ -160,8 +164,10 @@ export type SelectAllResponseDataType = {
   [SelectDataField.END_CUSTOMER]?: EndCustomerType[];
   [SelectDataField.PARTNER]?: PartnerType[];
   [SelectDataField.PARTNERTAG]?: PartnertagType[];
+  [SelectDataField.PROGRAM]?: Program[];
   [SelectDataField.QUOTE]?: QuoteType[];
   [SelectDataField.WORKGROUP]?: WorkgroupType[];
+  [SelectDataField.VENDOR]?: VendorTypeGraphQL[];
 };
 
 export enum ErrorsField {
@@ -208,7 +214,10 @@ export type SelectOneResponseDataType = {
   [SelectDataField.END_CUSTOMER]?: EndCustomerType;
   [SelectDataField.PARTNER]?: PartnerType;
   [SelectDataField.PARTNERTAG]?: PartnertagType;
+  [SelectDataField.PROGRAM]?: ProgramTypeGraphQL;
+  [SelectDataField.QUOTE]?: QuoteType;
   [SelectDataField.WORKGROUP]?: WorkgroupType;
+  [SelectDataField.VENDOR]?: VendorTypeGraphQL;
 };
 
 export enum QueryVariablesField {

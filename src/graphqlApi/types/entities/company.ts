@@ -1,4 +1,5 @@
 import { CountryType } from './country';
+import { Currency } from './currency';
 import { PartnertagType } from './partnertag';
 import { WorkgroupType } from './workgroup';
 
@@ -40,6 +41,7 @@ type CountableType = {
 };
 
 export type PartnerType = BaseCompanyType & {
+  currency?: Currency;
   country?: CountryType;
   type?: CompanyTypeType;
   workgroup?: WorkgroupType;
