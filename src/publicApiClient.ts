@@ -3,7 +3,7 @@ import {
   ConfigurationsClient,
 } from './abstractRestfulClient';
 import { CheckDomainClient, WhoAmIClient } from './general';
-import { LicensesClient } from './licenses';
+import { LicenseRequestClient, LicensesClient } from './licenses';
 import { SubscriptionsClient } from './subscriptions';
 import { CustomersClient } from './customers';
 import { OrdersClient } from './orders';
@@ -70,6 +70,21 @@ export class PublicApiClient extends AbstractRestfulClient {
     configuration?: ConfigurationsClient,
   ): LicensesClient {
     const client: LicensesClient = new LicensesClient(configuration);
+    this.applyConfig(client);
+
+    return client;
+  }
+
+  /**
+   * Creates a new {@link LicenseRequestClient} instance and returns it
+   * @returns {@link LicenseRequestClient}
+   */
+  public getLicenseRequestClient(
+    configuration?: ConfigurationsClient,
+  ): LicenseRequestClient {
+    const client: LicenseRequestClient = new LicenseRequestClient(
+      configuration,
+    );
     this.applyConfig(client);
 
     return client;
