@@ -7,8 +7,17 @@ export enum LicenseEventActionType {
   EXPIRED = 'expired',
   QUANTITY_UPDATE = 'quantityUpdate',
   REACTIVATED = 'reactivated',
+  RECURRING = 'recurring',
   RENEW = 'renew',
   SUSPENDED = 'suspended',
+}
+
+export enum LicenseEventType {
+  ACTIVATION_SUCCESS = 'activation_success',
+  UPDATED = 'updated',
+  PREPARATION = 'preparation',
+  CREATED = 'created',
+  TRANSMISSION_IN_PROGRESS = 'transmission_in_progress',
 }
 
 export enum LicenseEventStatusCode {
