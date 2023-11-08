@@ -174,9 +174,7 @@ export type LicenceFindDataKeywords = {
   [LicenseFindResultFields.COLUMN_RESELLER_NAME]?: DataKeywords;
   [LicenseFindResultFields.COLUMN_RESELLER_REF]?: DataKeywords;
   [LicenseFindResultFields.COLUMN_SEAT]?: DataKeywords;
-  [LicenseFindResultFields.COLUMN_SECURITY]?:
-    | SecurityFindResultDataKeywords
-    | undefined;
+  [LicenseFindResultFields.COLUMN_SECURITY]?: SecurityFindResultDataKeywords;
   [LicenseFindResultFields.COLUMN_SERVICE_REF]?: DataKeywords;
   [LicenseFindResultFields.COLUMN_SKU]?: DataKeywords;
   [LicenseFindResultFields.COLUMN_START_DATE]?: DataKeywords;
@@ -220,9 +218,7 @@ export type LicenceFindDataSortParameters = {
   [LicenseFindResultFields.COLUMN_RESELLER_NAME]?: SortParameters;
   [LicenseFindResultFields.COLUMN_RESELLER_REF]?: SortParameters;
   [LicenseFindResultFields.COLUMN_SEAT]?: SortParameters;
-  [LicenseFindResultFields.COLUMN_SECURITY]?:
-    | SecurityFindResultDataSortParameters
-    | undefined;
+  [LicenseFindResultFields.COLUMN_SECURITY]?: SecurityFindResultDataSortParameters;
   [LicenseFindResultFields.COLUMN_SERVICE_REF]?: SortParameters;
   [LicenseFindResultFields.COLUMN_SKU]?: SortParameters;
   [LicenseFindResultFields.COLUMN_START_DATE]?: SortParameters;
@@ -266,9 +262,7 @@ export type LicenceFindDataFiltersParameters = {
   [LicenseFindResultFields.COLUMN_RESELLER_NAME]?: FiltersParameters;
   [LicenseFindResultFields.COLUMN_RESELLER_REF]?: FiltersParameters;
   [LicenseFindResultFields.COLUMN_SEAT]?: FiltersParameters;
-  [LicenseFindResultFields.COLUMN_SECURITY]?:
-    | SecurityFindResultDataFiltersParameters
-    | undefined;
+  [LicenseFindResultFields.COLUMN_SECURITY]?: SecurityFindResultDataFiltersParameters;
   [LicenseFindResultFields.COLUMN_SERVICE_REF]?: FiltersParameters;
   [LicenseFindResultFields.COLUMN_SKU]?: FiltersParameters;
   [LicenseFindResultFields.COLUMN_START_DATE]?: FiltersParameters;
@@ -423,13 +417,12 @@ export class LicenseFindResult extends AbstractEntity<LicenseFindResultData> {
     this.#resellerName = data[LicenseFindResultFields.COLUMN_RESELLER_NAME];
     this.#resellerRef = data[LicenseFindResultFields.COLUMN_RESELLER_REF];
     this.#seat = data[LicenseFindResultFields.COLUMN_SEAT];
-    const security: SecurityFindResultData = {
+    this.#security = new SecurityFindResult({
       [SecurityFindResultFields.COLUMN_ACTIVE_FRAUD_EVENTS]:
         data?.[LicenseFindResultFields.COLUMN_SECURITY]?.[
           SecurityFindResultFields.COLUMN_ACTIVE_FRAUD_EVENTS
-        ] ?? null,
-    };
-    this.#security = new SecurityFindResult(security);
+        ],
+    });
     this.#serviceRef = data[LicenseFindResultFields.COLUMN_SERVICE_REF];
     this.#sku = data[LicenseFindResultFields.COLUMN_SKU];
     this.#startDate = data[LicenseFindResultFields.COLUMN_START_DATE];
