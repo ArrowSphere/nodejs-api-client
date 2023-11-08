@@ -178,6 +178,8 @@ export type BaseParameters<LicenseType, OfferType> = {
   offer?: OfferType;
 };
 
+type KeyParent = 'license' | 'offer';
+
 export type LicenseSortParameters = BaseParameters<
   LicenceFindDataSortParameters,
   OfferFindResultDataSortParameters
@@ -579,13 +581,12 @@ export class LicensesClient extends AbstractRestfulClient {
   }
   private createFilters(
     parameters: string | BaseParameters<unknown, unknown>,
-    keyParent: string,
+    keyParent: KeyParent,
   ): BaseParameters<unknown, unknown> {
     let appropriateParameters: unknown;
 
     if (typeof parameters === 'object') {
-      appropriateParameters =
-        keyParent === 'license' ? parameters.license : parameters.offer;
+      appropriateParameters = parameters[keyParent];
     } else {
       appropriateParameters = parameters;
     }
@@ -607,7 +608,7 @@ export class LicensesClient extends AbstractRestfulClient {
           } else {
             recursiveArr = this.createFilters(
               val as string | BaseParameters<unknown, unknown>,
-              newKey,
+              newKey as KeyParent,
             );
           }
 
@@ -635,7 +636,7 @@ export class LicensesClient extends AbstractRestfulClient {
     }
 
     return Object.entries(
-      appropriateParameters !== null && appropriateParameters !== void 0
+      appropriateParameters !== null && appropriateParameters !== undefined
         ? appropriateParameters
         : {},
     ).reduce((acc: Record<string, unknown>, [key, value]) => {

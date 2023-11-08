@@ -13,6 +13,10 @@ import {
   ActiveSeatsFindResult,
   ActiveSeatsFindResultData,
 } from '../license/activeSeatsFindResult';
+import {
+  SecurityFindResult,
+  SecurityFindResultData,
+} from '../license/securityFindResult';
 
 export enum LicenseGetFields {
   COLUMN_LICENSE_ID = 'license_id',
@@ -46,6 +50,7 @@ export enum LicenseGetFields {
   COLUMN_ASSOCIATED_SUBSCRIPTION_PROGRAM = 'associatedSubscriptionProgram',
   COLUMN_PRICE = 'price',
   COLUMN_ARROW_SUB_CATEGORIES = 'arrowSubCategories',
+  COLUMN_SECURITY = 'security',
 }
 
 export type LicenseGetData = {
@@ -62,6 +67,7 @@ export type LicenseGetData = {
   [LicenseGetFields.COLUMN_NAME]: string;
   [LicenseGetFields.COLUMN_SEATS]: number;
   [LicenseGetFields.COLUMN_ACTIVE_SEATS]: ActiveSeatsFindResultData;
+  [LicenseGetFields.COLUMN_SECURITY]: SecurityFindResultData;
   [LicenseGetFields.COLUMN_ACTIVATION_DATETIME]: string | null;
   [LicenseGetFields.COLUMN_EXPIRY_DATETIME]: string | null;
   [LicenseGetFields.COLUMN_AUTO_RENEW]?: boolean;
@@ -96,6 +102,7 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
   readonly #name: string;
   readonly #seats: number;
   readonly #activeSeats: ActiveSeatsFindResult;
+  readonly #security: SecurityFindResult;
   readonly #activation_datetime: string | null;
   readonly #expiry_datetime: string | null;
   readonly #autoRenew?: boolean;
@@ -136,6 +143,9 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
     this.#seats = licenseGetDataInput[LicenseGetFields.COLUMN_SEATS];
     this.#activeSeats = new ActiveSeatsFindResult(
       licenseGetDataInput[LicenseGetFields.COLUMN_ACTIVE_SEATS],
+    );
+    this.#security = new SecurityFindResult(
+      licenseGetDataInput[LicenseGetFields.COLUMN_SECURITY],
     );
     this.#activation_datetime =
       licenseGetDataInput[LicenseGetFields.COLUMN_ACTIVATION_DATETIME];
@@ -231,6 +241,10 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
     return this.#activeSeats;
   }
 
+  public get security(): SecurityFindResult {
+    return this.#security;
+  }
+
   public get activationDatetime(): string | null {
     return this.#activation_datetime;
   }
@@ -318,6 +332,7 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
       [LicenseGetFields.COLUMN_NAME]: this.name,
       [LicenseGetFields.COLUMN_SEATS]: this.seats,
       [LicenseGetFields.COLUMN_ACTIVE_SEATS]: this.activeSeats.toJSON(),
+      [LicenseGetFields.COLUMN_SECURITY]: this.security.toJSON(),
       [LicenseGetFields.COLUMN_ACTIVATION_DATETIME]: this.activationDatetime,
       [LicenseGetFields.COLUMN_EXPIRY_DATETIME]: this.expiryDatetime,
       [LicenseGetFields.COLUMN_AUTO_RENEW]: this.autoRenew,

@@ -26,7 +26,7 @@ export type SecurityFindResultDataFiltersParameters = {
 };
 
 export class SecurityFindResult extends AbstractEntity<SecurityFindResultData> {
-  readonly #activeFraudEvents: number | null | undefined;
+  readonly #activeFraudEvents?: number | null;
 
   public constructor(data: SecurityFindResultData) {
     super(data);
