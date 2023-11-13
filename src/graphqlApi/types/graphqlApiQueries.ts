@@ -10,6 +10,7 @@ import {
   ErrorsSchema,
   PageSchema,
   SelectAllResponseDataSchema,
+  SelectOneResponseDataSchema,
 } from './graphqlApiSchemas';
 
 /**
@@ -236,7 +237,7 @@ export enum Queries {
 export type SelectOneQueryType = {
   [Queries.SELECT_ONE]: {
     __args?: Omit<QueryVariablesType, QueryVariablesField.PAGINATION>;
-    [SelectableField.DATA]: SelectAllResponseDataSchema;
+    [SelectableField.DATA]: SelectOneResponseDataSchema;
     [SelectableField.ERRORS]?: ErrorsSchema;
   };
 };
