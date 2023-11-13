@@ -10,7 +10,11 @@ import * as GraphqlApiQueryMock from './mocks/graphqlApiQueries.mocks';
 import { GraphQLClient } from 'graphql-request';
 import { GRAPHQL_API_MOCK_URL } from './mocks/graphqlApiQueries.mocks';
 import {
+  ArrowCompanyType,
+  EndCustomerType,
+  ErrorsField,
   GraphqlApiClient,
+  PartnerType,
   Queries,
   SelectAllQueryType,
   SelectAllResultType,
@@ -248,6 +252,149 @@ describe('GraphqlApiClient', () => {
       sinon.assert.calledWithExactly(
         graphQLClient.request,
         sinon.match(GraphqlApiQueryMock.SELECT_ONE_END_CUSTOMER_GQL),
+      );
+    });
+  });
+
+  describe('findPartnerById', () => {
+    it('makes a graphql POST request on the specified URL findPartnerById', async () => {
+      const partnerCompany: PartnerType = {
+        id: 1,
+        name: 'The Partner Company',
+      };
+
+      const expectedResult: SelectOneResultType = {
+        [Queries.SELECT_ONE]: {
+          [SelectableField.DATA]: {
+            [SelectDataField.PARTNER]: partnerCompany,
+          },
+        },
+      };
+
+      graphQLClient.request.resolves(expectedResult);
+
+      const result: PartnerType | null = await client.findOneById<PartnerType>(
+        1,
+        {
+          [SelectDataField.PARTNER]: {
+            id: true,
+            name: true,
+          },
+        },
+      );
+
+      expect(result).to.deep.equals(partnerCompany);
+
+      sinon.assert.calledWithExactly(
+        graphQLClient.request,
+        sinon.match(
+          '{selectOne (filters: {groups: [{items: [{name: "id", operator: "EQUALS", value: ["1"]}]}]}) { data { partner { id name } } errors { message } }}',
+        ),
+      );
+    });
+
+    it('makes a graphql POST request on the specified URL findPartnerById and throw error', async () => {
+      const expectedResult: SelectOneResultType = {
+        [Queries.SELECT_ONE]: {
+          [SelectableField.DATA]: {
+            [SelectDataField.PARTNER]: {},
+          },
+          [SelectableField.ERRORS]: {
+            [ErrorsField.MESSAGE]: 'Bad query',
+          },
+        },
+      };
+
+      graphQLClient.request.resolves(expectedResult);
+
+      try {
+        await client.findOneById<PartnerType>(1, {
+          [SelectDataField.PARTNER]: {
+            id: true,
+            name: true,
+          },
+        });
+      } catch (error: unknown) {
+        expect(`${error}`).to.equals('Error: Bad query');
+      }
+
+      sinon.assert.calledWithExactly(
+        graphQLClient.request,
+        sinon.match(
+          '{selectOne (filters: {groups: [{items: [{name: "id", operator: "EQUALS", value: ["1"]}]}]}) { data { partner { id name } } errors { message } }}',
+        ),
+      );
+    });
+  });
+
+  describe('findEndCustomerById', () => {
+    it('makes a graphql POST request on the specified URL findEndCustomerById', async () => {
+      const endCustomer: EndCustomerType = {
+        id: 2,
+        name: 'The End Company',
+      };
+
+      const expectedResult: SelectOneResultType = {
+        [Queries.SELECT_ONE]: {
+          [SelectableField.DATA]: {
+            [SelectDataField.END_CUSTOMER]: endCustomer,
+          },
+        },
+      };
+
+      graphQLClient.request.resolves(expectedResult);
+
+      const result: EndCustomerType | null = await client.findEndCustomerById(
+        2,
+        {
+          id: true,
+          name: true,
+        },
+      );
+
+      expect(result).to.deep.equals(endCustomer);
+
+      sinon.assert.calledWithExactly(
+        graphQLClient.request,
+        sinon.match(
+          '{selectOne (filters: {groups: [{items: [{name: "id", operator: "EQUALS", value: ["2"]}]}]}) { data { endCustomer { id name } } errors { message } }}',
+        ),
+      );
+    });
+  });
+
+  describe('findArrowCompanyById', () => {
+    it('makes a graphql POST request on the specified URL findArrowCompanyById', async () => {
+      const arrowCompany: ArrowCompanyType = {
+        id: 3,
+        name: 'The Arrow Company',
+      };
+
+      const expectedResult: SelectOneResultType = {
+        [Queries.SELECT_ONE]: {
+          [SelectableField.DATA]: {
+            [SelectDataField.ARROW_COMPANY]: arrowCompany,
+          },
+        },
+      };
+
+      graphQLClient.request.resolves(expectedResult);
+
+      const result: ArrowCompanyType | null = await client.findArrowCompanyById(
+        3,
+        {
+          id: true,
+          name: true,
+        },
+      );
+
+      expect(result).to.deep.equals(arrowCompany);
+
+      sinon.assert.calledWithExactly(
+        graphQLClient.request,
+        sinon.match(
+          '{selectOne (filters: {groups: [{items: [{name: "id", operator: "EQUALS", value: ["3"]}]}]}) { data { arrowCompany { id name } } errors { message } }}',
+        ),
       );
     });
   });
