@@ -31,6 +31,7 @@ export class WellArchitectedRegisterClient extends AbstractRestfulClient {
     parameters: Parameters = {},
   ): Promise<void> {
     this.path = `/${subscriptionReference}/register/check`;
+    this.setHeaders({ getVendorStatus: 'true' });
 
     return await this.get(parameters);
   }

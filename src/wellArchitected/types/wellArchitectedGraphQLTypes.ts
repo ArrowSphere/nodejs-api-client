@@ -46,8 +46,20 @@ export type RegistrationType = {
   vendorCode?: string;
 };
 
+export type ExtraDataType = {
+  name?: string;
+  numberValue?: number;
+  value?: string;
+};
+
+export type StatusType = {
+  code: number;
+  message: string;
+};
+
 export type CheckType = {
   description?: string;
+  extraData?: ExtraDataType[];
   flagged?: number;
   group?: string;
   hasResources?: boolean;
@@ -68,6 +80,7 @@ export type StandardType = {
   passed?: number;
   reference?: string;
   score?: number;
+  status?: StatusType;
   total?: number;
 };
 
@@ -365,7 +378,9 @@ export type MarketplacesAggType = {
  */
 export type CheckByDateType = {
   date?: string;
+  extraData?: ExtraDataType[];
   flagged?: number;
+  group?: string;
   hasResources?: boolean;
   isFailed?: boolean;
   name?: string;
