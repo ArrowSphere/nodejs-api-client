@@ -38,6 +38,9 @@ export enum CreateOrderInputFields {
   COLUMN_PRICE_UNIT = 'unitPrice',
   COLUMN_PRICE_EXCHANGE_RATE = 'exchangeRate',
   COLUMN_EXTRA_INFORMATION = 'extraInformation',
+  COLUMN_COTERMINOSITY_DATE = 'coterminosityDate',
+  COLUMN_COTERMINOSITY_SUBSCRIPTION_REF = 'coterminositySubscriptionRef',
+  COLUMN_PROMOTION_ID = 'promotionId',
 }
 
 export enum scenarioType {
@@ -80,6 +83,9 @@ export type CreateOrderProductType = {
   [CreateOrderInputFields.COLUMN_FRIENDLY_NAME]?: string;
   [CreateOrderInputFields.COLUMN_COMMENT1]?: string;
   [CreateOrderInputFields.COLUMN_COMMENT2]?: string;
+  [CreateOrderInputFields.COLUMN_COTERMINOSITY_DATE]?: string;
+  [CreateOrderInputFields.COLUMN_COTERMINOSITY_SUBSCRIPTION_REF]?: string;
+  [CreateOrderInputFields.COLUMN_PROMOTION_ID]?: string;
   [CreateOrderInputFields.COLUMN_PRICE]?: {
     [CreateOrderInputFields.COLUMN_PRICE_VENDOR]?: {
       [CreateOrderInputFields.COLUMN_PRICE_CURRENCY]?: string;
