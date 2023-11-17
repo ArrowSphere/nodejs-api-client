@@ -5,7 +5,12 @@ import { expect } from 'chai';
 import nock from 'nock';
 
 // Sources
-import { GetResult, PublicApiClient } from '../../src';
+import {
+  GetResult,
+  LicensesClient,
+  PostUpgrade,
+  PublicApiClient,
+} from '../../src';
 import {
   FindData,
   LicenseFindParameters,
@@ -40,6 +45,13 @@ import {
   PAYLOAD_SCHEMA_LICENSE,
   PAYLOAD_SCHEMA_LICENSE_WITHOUT_OPTIONAL_FIELDS,
 } from './licenses.mocks';
+import {
+  UpgradeResult,
+  UpgradeResultFields,
+  UpgradeResultType,
+} from '../../src/licenses/entities/license/upgradeResult';
+import { Axios } from 'axios';
+import sinon from 'sinon';
 
 export const LICENSES_MOCK_URL = 'https://licenses.localhost';
 export const LICENSES_FIND_ENDPOINT = new RegExp('/licenses/v2/find.*');
@@ -59,6 +71,7 @@ export const LICENSE_MOCK_URL_CANCEL_AUTO_RENEW_LICENSE =
   '/licenses/XSP123456/autorenew/cancel';
 export const LICENSE_MOCK_URL_REACTIVATE_AUTO_RENEW_LICENSE =
   '/licenses/XSP123456/autorenew/reactivate';
+export const LICENSE_MOCK_URL_UPGRADE_LICENSE = '/licenses/XSP123456/upgrade';
 
 /**
  * Mock license data to be used in tests and returned by mocks
@@ -830,6 +843,61 @@ describe('LicensesClient', () => {
 
       await getLicenseClient.reactivateAutoRenew('XSP123456');
       expect(nock.isDone()).to.be.true;
+    });
+  });
+
+  describe('upgrade license', () => {
+    const licensesClient: LicensesClient = new PublicApiClient()
+      .getLicensesClient()
+      .setUrl(LICENSES_MOCK_URL);
+
+    let axiosClient: sinon.SinonStubbedInstance<Axios>;
+
+    beforeEach(() => {
+      axiosClient = sinon.stub(Axios.prototype);
+    });
+
+    afterEach(() => {
+      sinon.restore();
+    });
+
+    it('calls the post method with the upgrade payload', async () => {
+      const upgradeResult: UpgradeResultType = {
+        [UpgradeResultFields.COLUMN_QUANTITY]: 3,
+        [UpgradeResultFields.COLUMN_NAME]: 'Microsoft 365',
+        [UpgradeResultFields.COLUMN_ORDER]: {
+          reference: 'XSP34',
+          link: 'order/123',
+        },
+        [UpgradeResultFields.COLUMN_PERIODICITY]: 'Monthly',
+        [UpgradeResultFields.COLUMN_SKU]: 'MSCSP:123',
+        [UpgradeResultFields.COLUMN_TERM]: '1 year',
+      };
+
+      const expectedResult = {
+        status: 200,
+        data: {
+          data: upgradeResult,
+          status: 200,
+        },
+      };
+
+      const payload: PostUpgrade = {
+        sku: 'MSCAP:123',
+        billingCycle: 720,
+        term: 86000,
+        quantity: 2,
+      };
+
+      axiosClient.post.resolves(expectedResult);
+      axiosClient.request.resolves(expectedResult);
+
+      const result: GetResult<UpgradeResult> = await licensesClient.upgrade(
+        'XSP123456',
+        payload,
+      );
+
+      expect(result.data.toJSON()).to.be.eqls(upgradeResult);
     });
   });
 });

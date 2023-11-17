@@ -11,6 +11,9 @@ export enum ActionsGetFields {
   COLUMN_AUTO_RENEW_OFF = 'autoRenewOff',
   COLUMN_AUTO_RENEW_ON = 'autoRenewOn',
   COLUMN_CANCEL = 'cancel',
+  COLUMN_CONVERSION = 'conversion',
+  COLUMN_PAUSE = 'pause',
+  COLUMN_UPGRADE = 'upgrade',
 }
 
 export type ActionsGetData = {
@@ -24,6 +27,9 @@ export type ActionsGetData = {
   [ActionsGetFields.COLUMN_AUTO_RENEW_OFF]?: string;
   [ActionsGetFields.COLUMN_AUTO_RENEW_ON]?: string;
   [ActionsGetFields.COLUMN_CANCEL]?: string;
+  [ActionsGetFields.COLUMN_CONVERSION]?: string;
+  [ActionsGetFields.COLUMN_PAUSE]?: string;
+  [ActionsGetFields.COLUMN_UPGRADE]?: string;
 };
 
 export class ActionsGetResult extends AbstractEntity<ActionsGetData> {
@@ -37,6 +43,9 @@ export class ActionsGetResult extends AbstractEntity<ActionsGetData> {
   readonly #autoRenewOff?: string;
   readonly #autoRenewOn?: string;
   readonly #cancel?: string;
+  readonly #conversion?: string;
+  readonly #pause?: string;
+  readonly #upgrade?: string;
 
   public constructor(data: ActionsGetData) {
     super(data);
@@ -51,6 +60,9 @@ export class ActionsGetResult extends AbstractEntity<ActionsGetData> {
     this.#autoRenewOff = data[ActionsGetFields.COLUMN_AUTO_RENEW_OFF];
     this.#autoRenewOn = data[ActionsGetFields.COLUMN_AUTO_RENEW_ON];
     this.#cancel = data[ActionsGetFields.COLUMN_CANCEL];
+    this.#conversion = data[ActionsGetFields.COLUMN_CONVERSION];
+    this.#pause = data[ActionsGetFields.COLUMN_PAUSE];
+    this.#upgrade = data[ActionsGetFields.COLUMN_UPGRADE];
   }
 
   public get history(): string {
@@ -93,6 +105,18 @@ export class ActionsGetResult extends AbstractEntity<ActionsGetData> {
     return this.#cancel;
   }
 
+  public get conversion(): string | undefined {
+    return this.#conversion;
+  }
+
+  public get pause(): string | undefined {
+    return this.#pause;
+  }
+
+  public get upgrade(): string | undefined {
+    return this.#upgrade;
+  }
+
   public toJSON(): ActionsGetData {
     return {
       [ActionsGetFields.COLUMN_HISTORY]: this.history,
@@ -105,6 +129,9 @@ export class ActionsGetResult extends AbstractEntity<ActionsGetData> {
       [ActionsGetFields.COLUMN_AUTO_RENEW_OFF]: this.autoRenewOff,
       [ActionsGetFields.COLUMN_AUTO_RENEW_ON]: this.autoRenewOn,
       [ActionsGetFields.COLUMN_CANCEL]: this.cancel,
+      [ActionsGetFields.COLUMN_CONVERSION]: this.conversion,
+      [ActionsGetFields.COLUMN_PAUSE]: this.pause,
+      [ActionsGetFields.COLUMN_UPGRADE]: this.upgrade,
     };
   }
 }
