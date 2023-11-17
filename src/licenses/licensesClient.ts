@@ -52,6 +52,7 @@ import { GetResult } from '../getResult';
 import { LicenseGetFields } from './entities/getLicense/licenseGetResult';
 import { GetLicenseResult } from './entities/getResult/getLicenseResult';
 import { LicenceHistoryResult } from './entities/history/licenceHistoryResult';
+import { UpgradeResult } from './entities/license/upgradeResult';
 
 /**
  * Parameters passable to the request for refining search.
@@ -315,6 +316,13 @@ export type PutCancelAutoRenew = ExtraInformationType;
 
 export type PutReactivateAutoRenew = ExtraInformationType;
 
+export type PostUpgrade = {
+  sku: string;
+  billingCycle: number;
+  term: number;
+  quantity: number;
+};
+
 export class LicensesClient extends AbstractRestfulClient {
   /**
    * The base path of the API
@@ -370,6 +378,11 @@ export class LicensesClient extends AbstractRestfulClient {
    * The path of reactivate license auto-renew
    */
   private REACTIVATE_AUTO_RENEW_PATH = '/autorenew/reactivate';
+
+  /**
+   * The path of reactivate license auto-renew
+   */
+  private UPGRADE_PATH = '/conversion';
 
   /**
    * Returns the raw result from the find endpoint call
@@ -579,6 +592,17 @@ export class LicensesClient extends AbstractRestfulClient {
 
     return await this.put(payload, parameters);
   }
+
+  public async upgrade(
+    licenseReference: string,
+    payload: PostUpgrade,
+    parameters: Parameters = {},
+  ): Promise<GetResult<UpgradeResult>> {
+    this.path = `/${licenseReference}${this.UPGRADE_PATH}`;
+
+    return new GetResult(UpgradeResult, await this.post(payload, parameters));
+  }
+
   private createFilters(
     parameters: string | BaseParameters<unknown, unknown>,
     keyParent: KeyParent,
