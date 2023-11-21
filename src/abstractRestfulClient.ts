@@ -51,6 +51,44 @@ export type Options = {
   returnAxiosData?: boolean;
 };
 
+export type RegisterCheckReturnSyncStatusError = {
+  statusCode?: number;
+  message?: string;
+};
+
+export type RegisterCheckReturnVendorStatus = {
+  code?: string;
+  message?: string;
+};
+
+export type RegisterCheckReturnSyncStatus = {
+  syncData?: string;
+  cost?: RegisterCheckReturnSyncStatusError;
+  security?: RegisterCheckReturnSyncStatusError;
+  sustainability?: RegisterCheckReturnSyncStatusError;
+};
+
+export type RegisterCheckReturnData = {
+  accountReference?: string;
+  creationDate?: string;
+  classification?: string;
+  customerReference?: string;
+  customerName?: string;
+  resellerReference?: string;
+  resellerName?: string;
+  subscriptionReference?: string;
+  marketplace?: string;
+  vendorSubscriptionId?: string;
+  vendorCode?: string;
+  syncStatus?: RegisterCheckReturnSyncStatus;
+  vendorStatus?: RegisterCheckReturnVendorStatus;
+};
+
+export type CheckStatusReturn = {
+  status?: number;
+  data?: RegisterCheckReturnData;
+};
+
 export type ConfigurationsClient = {
   [ParameterKeys.API_KEY]?: string;
   [ParameterKeys.URL]?: string;
