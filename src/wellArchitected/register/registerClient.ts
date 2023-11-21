@@ -1,4 +1,8 @@
-import { AbstractRestfulClient, Parameters } from '../../abstractRestfulClient';
+import {
+  AbstractRestfulClient,
+  CheckStatusReturn,
+  Parameters,
+} from '../../abstractRestfulClient';
 import { GetResult } from '../../getResult';
 import { RegistrationLink } from './entity/registrationLink';
 
@@ -29,9 +33,13 @@ export class WellArchitectedRegisterClient extends AbstractRestfulClient {
   public async checkRegister(
     subscriptionReference: string,
     parameters: Parameters = {},
-  ): Promise<void> {
+    getVendorStatus?: boolean,
+  ): Promise<CheckStatusReturn> {
     this.path = `/${subscriptionReference}/register/check`;
-    this.setHeaders({ getVendorStatus: 'true' });
+
+    if (getVendorStatus) {
+      this.setHeaders({ getVendorStatus: 'true' });
+    }
 
     return await this.get(parameters);
   }
