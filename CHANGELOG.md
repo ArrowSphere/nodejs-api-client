@@ -3,13 +3,17 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.69.0] - 2023-11-23
+
+### Changed
+- [Customers Contact] Add xcp invitation data in customer contact call
+
 ## [3.68.0] - 2023-11-21
 
 ### Changed
 - [Well Architected] Add ExtraDataType to Checks
 - [Well Architected] Add Status type to Standard
 - [Well Architected] Pass a header with getVendorStatus for the register/check endpoint
-
 
 ## [3.67.0] - 2023-11-17
 

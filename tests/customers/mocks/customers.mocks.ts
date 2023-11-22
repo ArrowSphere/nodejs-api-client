@@ -13,6 +13,7 @@ import {
   PostCustomerInvitation,
   PostCustomerInvitationFields,
 } from '../../../src';
+import { CustomerContactXcpInvitationFields } from '../../../src/customers/entities/customers/customerContact/customerContactXcpInvitation';
 
 export const PAYLOAD_GET_CUSTOMERS = {
   [GetResultFields.COLUMN_STATUS]: 200,
@@ -151,6 +152,9 @@ export const PAYLOAD_GET_CUSTOMER_CONTACT_LIST = {
       [CustomerContactFields.COLUMN_TYPE]: 'type',
       [CustomerContactFields.COLUMN_ROLE]: 'role',
       [CustomerContactFields.COLUMN_IS_ACTIVE]: true,
+      [CustomerContactFields.COLUMN_XCP_INVITATION]: {
+        [CustomerContactXcpInvitationFields.COLUMN_POLICY]: 'policy_admin',
+      },
     },
   ],
 };
@@ -180,5 +184,8 @@ export const PAYLOAD_GET_CUSTOMER_CONTACT = {
     [CustomerContactFields.COLUMN_TYPE]: 'type',
     [CustomerContactFields.COLUMN_ROLE]: 'role',
     [CustomerContactFields.COLUMN_IS_ACTIVE]: true,
+    [CustomerContactFields.COLUMN_XCP_INVITATION]: {
+      [CustomerContactXcpInvitationFields.COLUMN_POLICY]: 'policy_admin',
+    },
   },
 };
