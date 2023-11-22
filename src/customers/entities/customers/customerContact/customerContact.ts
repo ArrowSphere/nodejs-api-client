@@ -1,4 +1,8 @@
 import { AbstractEntity } from '../../../../abstractEntity';
+import {
+  CustomerContactXcpInvitation,
+  CustomerContactXcpInvitationType,
+} from './customerContactXcpInvitation';
 
 export type CustomerContactRoleType = CustomerContactRoleEnum | string;
 export enum CustomerContactRoleEnum {
@@ -27,6 +31,7 @@ export enum CustomerContactFields {
   COLUMN_TYPE = 'type',
   COLUMN_ROLE = 'role',
   COLUMN_IS_ACTIVE = 'isActive',
+  COLUMN_XCP_INVITATION = 'xcpInvitation',
 }
 
 export type CustomerContactType = {
@@ -39,6 +44,7 @@ export type CustomerContactType = {
   [CustomerContactFields.COLUMN_TYPE]: string;
   [CustomerContactFields.COLUMN_ROLE]: string;
   [CustomerContactFields.COLUMN_IS_ACTIVE]: boolean;
+  [CustomerContactFields.COLUMN_XCP_INVITATION]?: CustomerContactXcpInvitationType;
 };
 
 export class CustomerContact extends AbstractEntity<CustomerContactType> {
@@ -51,13 +57,13 @@ export class CustomerContact extends AbstractEntity<CustomerContactType> {
   readonly #type: string;
   readonly #role: string;
   readonly #isActive: boolean;
+  readonly #xcpInvitation?: CustomerContactXcpInvitation;
 
   public constructor(getCustomerContactDataInput: CustomerContactType) {
     super(getCustomerContactDataInput);
 
     this.#reference =
       getCustomerContactDataInput[CustomerContactFields.COLUMN_REFERENCE];
-
     this.#firstName =
       getCustomerContactDataInput[CustomerContactFields.COLUMN_FIRST_NAME];
     this.#lastName =
@@ -66,16 +72,21 @@ export class CustomerContact extends AbstractEntity<CustomerContactType> {
       getCustomerContactDataInput[CustomerContactFields.COLUMN_EMAIL];
     this.#phone =
       getCustomerContactDataInput[CustomerContactFields.COLUMN_PHONE];
-
     this.#username =
       getCustomerContactDataInput[CustomerContactFields.COLUMN_USERNAME];
-
     this.#type = getCustomerContactDataInput[CustomerContactFields.COLUMN_TYPE];
-
     this.#role = getCustomerContactDataInput[CustomerContactFields.COLUMN_ROLE];
-
     this.#isActive =
       getCustomerContactDataInput[CustomerContactFields.COLUMN_IS_ACTIVE];
+    this.#xcpInvitation = getCustomerContactDataInput[
+      CustomerContactFields.COLUMN_XCP_INVITATION
+    ]
+      ? new CustomerContactXcpInvitation(
+          getCustomerContactDataInput[
+            CustomerContactFields.COLUMN_XCP_INVITATION
+          ] as CustomerContactXcpInvitationType,
+        )
+      : undefined;
   }
 
   get reference(): string {
@@ -114,6 +125,10 @@ export class CustomerContact extends AbstractEntity<CustomerContactType> {
     return this.#isActive;
   }
 
+  get xcpInvitation(): CustomerContactXcpInvitationType | undefined {
+    return this.#xcpInvitation;
+  }
+
   public toJSON(): CustomerContactType {
     return {
       [CustomerContactFields.COLUMN_REFERENCE]: this.reference,
@@ -125,6 +140,7 @@ export class CustomerContact extends AbstractEntity<CustomerContactType> {
       [CustomerContactFields.COLUMN_TYPE]: this.type,
       [CustomerContactFields.COLUMN_ROLE]: this.role,
       [CustomerContactFields.COLUMN_IS_ACTIVE]: this.isActive,
+      [CustomerContactFields.COLUMN_XCP_INVITATION]: this.xcpInvitation,
     };
   }
 }
