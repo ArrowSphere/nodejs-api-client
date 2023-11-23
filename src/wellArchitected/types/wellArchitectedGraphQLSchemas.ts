@@ -1,40 +1,41 @@
 import { Merge, Schema } from 'type-fest';
 import {
-  AccountType,
-  CheckType,
-  FilterValuesType,
-  MonthlyTrendAggType,
-  WellArchitectedPeriodType,
-  RegistrationType,
-  StandardAggType,
-  StandardType,
-  EndCustomerByDateAggType,
-  AccountByDateAggType,
-  CheckAggType,
-  WellArchitectedPaginationType,
-  ScoreByDateAggType,
-  StandardWithCheckType,
-  ChecksByStandardType,
-  CheckByDateType,
-  EndCustomerAggType,
-  SeverityAggType,
   AccountAggType,
-  StandardByDateAggType,
-  ScoresAggType,
-  ScoreByMonthAggType,
-  ScoreByMonthSeverityType,
-  SeverityByDateAggType,
+  AccountByDateAggType,
+  AccountType,
+  CheckAggType,
+  CheckByDateType,
+  CheckCountByDateAggType,
+  ChecksByStandardType,
+  CheckType,
+  EndCustomerAggType,
+  EndCustomerByDateAggType,
+  ExtraDataType,
+  FilterValuesType,
   MarketplaceAggType,
   MarketplaceByDateAggType,
-  MarketplacePartnerAggType,
   MarketplacePartnerAggByDateAggType,
-  CheckCountByDateAggType,
-  PartnerByDateAggType,
+  MarketplacePartnerAggType,
+  MonthlyTrendAggType,
   PartnerAggType,
+  PartnerByDateAggType,
+  RegistrationType,
+  ScoreByDateAggType,
+  ScoreByMonthAggType,
+  ScoreByMonthSeverityType,
+  ScoresAggType,
+  SeverityAggType,
+  SeverityByDateAggType,
+  StandardAggType,
+  StandardByDateAggType,
+  StandardType,
+  StandardWithCheckType,
+  UnregisteredEndCustomerAggType,
   UnregisteredOfferIaasSubscriptionType,
   UnregisteredOfferIaasType,
   UnregisteredOfferSaasType,
-  UnregisteredEndCustomerAggType,
+  WellArchitectedPaginationType,
+  WellArchitectedPeriodType,
 } from './wellArchitectedGraphQLTypes';
 
 type MissingFieldsOfScoreByMonthAggSchema = {
@@ -210,10 +211,20 @@ export type ScoresAggSchema = Merge<
   MissingFieldsInScoresAggSchema
 >;
 
-type CheckByDateSchema = Schema<CheckByDateType, boolean>;
+type ExtraDataSchema = Schema<ExtraDataType, boolean>;
+
+type MissingFieldsInCheckByDateSchema = {
+  extraData?: ExtraDataSchema;
+};
+
+type CheckByDateSchema = Merge<
+  Schema<CheckByDateType, boolean>,
+  MissingFieldsInCheckByDateSchema
+>;
 
 type MissingFieldsInChecksByStandardSchema = {
   data?: CheckByDateSchema;
+  last?: CheckByDateSchema;
 };
 
 type ChecksByStandardSchema = Merge<
