@@ -21,6 +21,7 @@ import { UserClient } from './user';
 import { NotificationsClient } from './notifications';
 import { RegisterClient, StandardsClient } from './security';
 import { PartnerClient } from './partner';
+import { OrganizationUnitClient } from './organisationUnit';
 
 /**
  * Public API Client class, should be the main entry point for your calls
@@ -253,6 +254,17 @@ export class PublicApiClient extends AbstractRestfulClient {
     configuration?: ConfigurationsClient,
   ): NotificationsClient {
     const client: NotificationsClient = new NotificationsClient(configuration);
+    this.applyConfig(client);
+
+    return client;
+  }
+
+  public getOrganizationUnitClient(
+    configuration?: ConfigurationsClient,
+  ): OrganizationUnitClient {
+    const client: OrganizationUnitClient = new OrganizationUnitClient(
+      configuration,
+    );
     this.applyConfig(client);
 
     return client;
