@@ -10,6 +10,7 @@ export enum LicenseEventActionType {
   RENEW = 'renew',
   SUSPENDED = 'suspended',
   PRORATA = 'prorata',
+  RECURRING = 'recurring',
 }
 
 export enum LicenseEventType {
