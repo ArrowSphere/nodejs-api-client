@@ -5,6 +5,7 @@ import {
 } from './entities/company';
 import { ContinentType, CountryType } from './entities/country';
 import { PartnertagType } from './entities/partnertag';
+import { SubscriptionType } from './entities/subscription';
 import { WorkgroupType } from './entities/workgroup';
 import {
   ErrorsSchema,
@@ -141,6 +142,7 @@ export enum SelectDataField {
   END_CUSTOMER = 'endCustomer',
   PARTNER = 'partner',
   PARTNERTAG = 'partnertag',
+  SUBSCRIPTION = 'subscription',
   WORKGROUP = 'workgroup',
 }
 
@@ -159,6 +161,7 @@ export type SelectAllResponseDataType = {
   [SelectDataField.END_CUSTOMER]?: EndCustomerType[];
   [SelectDataField.PARTNER]?: PartnerType[];
   [SelectDataField.PARTNERTAG]?: PartnertagType[];
+  [SelectDataField.SUBSCRIPTION]?: SubscriptionType[];
   [SelectDataField.WORKGROUP]?: WorkgroupType[];
 };
 
@@ -206,6 +209,7 @@ export type SelectOneResponseDataType = {
   [SelectDataField.END_CUSTOMER]?: EndCustomerType;
   [SelectDataField.PARTNER]?: PartnerType;
   [SelectDataField.PARTNERTAG]?: PartnertagType;
+  [SelectDataField.SUBSCRIPTION]?: SubscriptionType;
   [SelectDataField.WORKGROUP]?: WorkgroupType;
 };
 
@@ -236,7 +240,7 @@ export enum Queries {
 
 export type SelectOneQueryType = {
   [Queries.SELECT_ONE]: {
-    __args?: Omit<QueryVariablesType, QueryVariablesField.PAGINATION>;
+    __args?: QueryVariablesType;
     [SelectableField.DATA]: SelectOneResponseDataSchema;
     [SelectableField.ERRORS]?: ErrorsSchema;
   };

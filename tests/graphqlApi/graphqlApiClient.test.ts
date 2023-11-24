@@ -281,6 +281,9 @@ describe('GraphqlApiClient', () => {
             name: true,
           },
         },
+        {
+          perPage: 1,
+        },
       );
 
       expect(result).to.deep.equals(partnerCompany);
@@ -288,7 +291,7 @@ describe('GraphqlApiClient', () => {
       sinon.assert.calledWithExactly(
         graphQLClient.request,
         sinon.match(
-          '{selectOne (filters: {groups: [{items: [{name: "id", operator: "EQUALS", value: ["1"]}]}]}) { data { partner { id name } } errors { message } }}',
+          '{selectOne (filters: {groups: [{items: [{name: "id", operator: "EQUALS", value: ["1"]}]}]}, pagination: {page: 1, perPage: 1}) { data { partner { id name } } errors { message } }}',
         ),
       );
     });
@@ -350,6 +353,9 @@ describe('GraphqlApiClient', () => {
           id: true,
           name: true,
         },
+        {
+          page: 1,
+        },
       );
 
       expect(result).to.deep.equals(endCustomer);
@@ -357,7 +363,7 @@ describe('GraphqlApiClient', () => {
       sinon.assert.calledWithExactly(
         graphQLClient.request,
         sinon.match(
-          '{selectOne (filters: {groups: [{items: [{name: "id", operator: "EQUALS", value: ["2"]}]}]}) { data { endCustomer { id name } } errors { message } }}',
+          '{selectOne (filters: {groups: [{items: [{name: "id", operator: "EQUALS", value: ["2"]}]}]}, pagination: {page: 1}) { data { endCustomer { id name } } errors { message } }}',
         ),
       );
     });
