@@ -57,7 +57,7 @@ export type RegisterCheckReturnSyncStatusError = {
 };
 
 export type RegisterCheckReturnVendorStatus = {
-  code?: string;
+  code?: number;
   message?: string;
 };
 
