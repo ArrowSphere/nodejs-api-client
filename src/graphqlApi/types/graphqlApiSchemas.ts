@@ -14,14 +14,17 @@ import {
   SelectDataField,
   SelectableField,
 } from './graphqlApiQueries';
+import { ContactsType } from './entities/contact';
 
 export type PartnertagSchema = Schema<PartnertagType, boolean>;
 
 type MissingFieldsOfCompanySchema = {
+  contacts?: ContactsSchema;
   partnerTags?: PartnertagSchema;
 };
 
 type MissingFieldsOfEndCustomerSchema = {
+  contacts?: ContactsSchema;
   partnerTags?: PartnertagSchema;
   partner?: PartnerSchema;
 };
@@ -36,6 +39,7 @@ export type PartnerSchema = Merge<
   MissingFieldsOfCompanySchema
 >;
 
+export type ContactsSchema = Schema<ContactsType, boolean>;
 export type ArrowCompanySchema = Schema<ArrowCompanyType, boolean>;
 export type ContinentSchema = Schema<ContinentType, boolean>;
 export type CountrySchema = Schema<CountryType, boolean>;
