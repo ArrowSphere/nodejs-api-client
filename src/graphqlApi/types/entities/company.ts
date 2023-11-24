@@ -1,3 +1,4 @@
+import { ContactsType } from './contact';
 import { CountryType } from './country';
 import { PartnertagType } from './partnertag';
 import { WorkgroupType } from './workgroup';
@@ -13,6 +14,7 @@ type BaseCompanyType = {
   address2?: string;
   billingId?: string;
   city?: string;
+  contacts?: ContactsType[];
   createdAt?: string;
   deletedAt?: string;
   enabled?: boolean;
