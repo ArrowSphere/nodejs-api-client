@@ -10,9 +10,12 @@ import {
   ErrorsField,
   InputFilterValueField,
   InputFiltersField,
+  InputPaginationField,
+  InputPaginationType,
   InputSearchFilterField,
   Queries,
   QueryVariablesField,
+  QueryVariablesType,
   SelectAllQueryType,
   SelectAllResultType,
   SelectDataField,
@@ -73,6 +76,7 @@ export class GraphqlApiClient extends AbstractGraphQLClient {
   public async findOneById<T>(
     id: number,
     fieldSchema: SelectOneResponseDataSchema,
+    pagination?: InputPaginationType,
   ): Promise<T | null> {
     const keys: string[] = Object.keys(fieldSchema);
     if (keys.length === 0) {
@@ -81,23 +85,42 @@ export class GraphqlApiClient extends AbstractGraphQLClient {
 
     const type: keyof SelectOneResponseDataType = keys[0] as keyof SelectOneResponseDataType;
 
-    const query: SelectOneQueryType = {
-      [Queries.SELECT_ONE]: {
-        __args: {
-          [QueryVariablesField.FILTERS]: {
-            [InputSearchFilterField.GROUPS]: [
+    const queryArguments: QueryVariablesType = {
+      [QueryVariablesField.FILTERS]: {
+        [InputSearchFilterField.GROUPS]: [
+          {
+            [InputFiltersField.ITEMS]: [
               {
-                [InputFiltersField.ITEMS]: [
-                  {
-                    [InputFilterValueField.NAME]: 'id',
-                    [InputFilterValueField.OPERATOR]: ComparisonOperator.EQUALS,
-                    [InputFilterValueField.VALUE]: [`${id}`],
-                  },
-                ],
+                [InputFilterValueField.NAME]: 'id',
+                [InputFilterValueField.OPERATOR]: ComparisonOperator.EQUALS,
+                [InputFilterValueField.VALUE]: [`${id}`],
               },
             ],
           },
-        },
+        ],
+      },
+    };
+
+    if (
+      pagination?.[InputPaginationField.PER_PAGE] ||
+      pagination?.[InputPaginationField.PAGE]
+    ) {
+      queryArguments[QueryVariablesField.PAGINATION] = {
+        [InputPaginationField.PAGE]:
+          pagination?.[InputPaginationField.PAGE] ?? 1,
+      };
+      if (pagination?.[InputPaginationField.PER_PAGE]) {
+        queryArguments[QueryVariablesField.PAGINATION] = {
+          ...queryArguments[QueryVariablesField.PAGINATION],
+          [InputPaginationField.PER_PAGE]:
+            pagination?.[InputPaginationField.PER_PAGE],
+        };
+      }
+    }
+
+    const query: SelectOneQueryType = {
+      [Queries.SELECT_ONE]: {
+        __args: queryArguments,
         [SelectableField.DATA]: fieldSchema,
         [SelectableField.ERRORS]: {
           [ErrorsField.MESSAGE]: true,
@@ -129,27 +152,42 @@ export class GraphqlApiClient extends AbstractGraphQLClient {
   public async findEndCustomerById(
     id: number,
     fields: EndCustomerSchema,
+    pagination?: InputPaginationType,
   ): Promise<EndCustomerType | null> {
-    return await this.findOneById<EndCustomerType>(id, {
-      [SelectDataField.END_CUSTOMER]: fields,
-    });
+    return await this.findOneById<EndCustomerType>(
+      id,
+      {
+        [SelectDataField.END_CUSTOMER]: fields,
+      },
+      pagination,
+    );
   }
 
   public async findPartnerById(
     id: number,
     fields: PartnerSchema,
+    pagination?: InputPaginationType,
   ): Promise<PartnerType | null> {
-    return await this.findOneById<PartnerType>(id, {
-      [SelectDataField.PARTNER]: fields,
-    });
+    return await this.findOneById<PartnerType>(
+      id,
+      {
+        [SelectDataField.PARTNER]: fields,
+      },
+      pagination,
+    );
   }
 
   public async findArrowCompanyById(
     id: number,
     fields: ArrowCompanySchema,
+    pagination?: InputPaginationType,
   ): Promise<ArrowCompanyType | null> {
-    return await this.findOneById<ArrowCompanyType>(id, {
-      [SelectDataField.ARROW_COMPANY]: fields,
-    });
+    return await this.findOneById<ArrowCompanyType>(
+      id,
+      {
+        [SelectDataField.ARROW_COMPANY]: fields,
+      },
+      pagination,
+    );
   }
 }
