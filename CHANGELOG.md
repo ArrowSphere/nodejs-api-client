@@ -3,6 +3,15 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.69.2] - 2023-11-24
+
+### Fixed
+- Fixed the code type in RegisterCheckReturnVendorStatus as a number and not a string.
+
+### Changed
+- Add the isLocked key in the RegisterCheckReturnData.
+
+
 ## [3.69.1] - 2023-11-23
 
 ### Fixed

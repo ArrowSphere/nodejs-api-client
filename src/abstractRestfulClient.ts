@@ -70,18 +70,19 @@ export type RegisterCheckReturnSyncStatus = {
 
 export type RegisterCheckReturnData = {
   accountReference?: string;
-  creationDate?: string;
   classification?: string;
-  customerReference?: string;
+  creationDate?: string;
   customerName?: string;
-  resellerReference?: string;
-  resellerName?: string;
-  subscriptionReference?: string;
+  customerReference?: string;
+  isLocked?: boolean;
   marketplace?: string;
-  vendorSubscriptionId?: string;
-  vendorCode?: string;
+  resellerName?: string;
+  resellerReference?: string;
+  subscriptionReference?: string;
   syncStatus?: RegisterCheckReturnSyncStatus;
+  vendorCode?: string;
   vendorStatus?: RegisterCheckReturnVendorStatus;
+  vendorSubscriptionId?: string;
 };
 
 export type CheckStatusReturn = {
