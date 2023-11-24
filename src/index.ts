@@ -15,6 +15,7 @@ export * from './pagination';
 export * from './licenses/';
 export * from './notifications/';
 export * from './orders/';
+export * from './organisationUnit/';
 export * from './partner';
 export * from './publicApiClient';
 export * from './publicGraphQLClient';
