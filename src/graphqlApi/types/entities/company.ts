@@ -1,5 +1,7 @@
+import { ContactsType } from './contact';
 import { CountryType } from './country';
 import { PartnertagType } from './partnertag';
+import { SubscriptionType } from './subscription';
 import { WorkgroupType } from './workgroup';
 
 export type CompanyTypeType = {
@@ -13,6 +15,7 @@ type BaseCompanyType = {
   address2?: string;
   billingId?: string;
   city?: string;
+  contacts?: ContactsType[];
   createdAt?: string;
   deletedAt?: string;
   enabled?: boolean;
@@ -42,6 +45,7 @@ type CountableType = {
 export type PartnerType = BaseCompanyType & {
   country?: CountryType;
   type?: CompanyTypeType;
+  subscriptions?: SubscriptionType[];
   workgroup?: WorkgroupType;
   subscriptionsPendingCount?: CountableType;
   subscriptionsCount?: CountableType;
