@@ -1,5 +1,6 @@
 export * from './types/graphqlApiQueries';
 export * from './types/graphqlApiSchemas';
+export * from './types/entities/contact';
 export * from './types/entities/company';
 export * from './types/entities/country';
 export * from './types/entities/partnertag';
