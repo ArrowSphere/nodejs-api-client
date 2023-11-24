@@ -1,5 +1,7 @@
+import { ContactsType } from './contact';
 import { CountryType } from './country';
 import { PartnertagType } from './partnertag';
+import { SubscriptionType } from './subscription';
 import { WorkgroupType } from './workgroup';
 
 export type CompanyTypeType = {
@@ -13,6 +15,7 @@ type BaseCompanyType = {
   address2?: string;
   billingId?: string;
   city?: string;
+  contacts?: ContactsType[];
   createdAt?: string;
   deletedAt?: string;
   enabled?: boolean;
@@ -27,6 +30,7 @@ type BaseCompanyType = {
   resellerId?: number;
   state?: string;
   vatNumber?: string;
+  workgroup?: WorkgroupType;
   zip?: string;
 };
 
@@ -40,16 +44,18 @@ type CountableType = {
 };
 
 export type PartnerType = BaseCompanyType & {
+  contactsCount?: CountableType;
   country?: CountryType;
-  type?: CompanyTypeType;
-  workgroup?: WorkgroupType;
-  subscriptionsPendingCount?: CountableType;
-  subscriptionsCount?: CountableType;
+  customersCount?: CountableType;
+  ordersCount?: CountableType;
   ordersNeedCount?: CountableType;
   reportsCount?: CountableType;
-  ordersCount?: CountableType;
-  customersCount?: CountableType;
-  contactsCount?: CountableType;
+  subscriptions?: SubscriptionType[];
+  subscriptionsCount?: CountableType;
+  subscriptionsPendingCount?: CountableType;
+  type?: CompanyTypeType;
 };
 
-export type ArrowCompanyType = Omit<BaseCompanyType, 'partnerTags'>;
+export type ArrowCompanyType = Omit<BaseCompanyType, 'partnerTags'> & {
+  subscriptions?: SubscriptionType[];
+};

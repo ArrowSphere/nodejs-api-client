@@ -14,14 +14,24 @@ import {
   SelectDataField,
   SelectableField,
 } from './graphqlApiQueries';
+import { ContactsType } from './entities/contact';
+import { ProgramType } from '../../catalog';
+import { SubscriptionType } from './entities/subscription';
 
 export type PartnertagSchema = Schema<PartnertagType, boolean>;
 
 type MissingFieldsOfCompanySchema = {
+  contacts?: ContactsSchema;
   partnerTags?: PartnertagSchema;
+  subscriptions?: SubscriptionSchema;
+};
+
+type MissingFieldsOfArrowCompanySchema = {
+  subscriptions?: SubscriptionSchema;
 };
 
 type MissingFieldsOfEndCustomerSchema = {
+  contacts?: ContactsSchema;
   partnerTags?: PartnertagSchema;
   partner?: PartnerSchema;
 };
@@ -36,11 +46,18 @@ export type PartnerSchema = Merge<
   MissingFieldsOfCompanySchema
 >;
 
-export type ArrowCompanySchema = Schema<ArrowCompanyType, boolean>;
+export type ArrowCompanySchema = Merge<
+  Schema<ArrowCompanyType, boolean>,
+  MissingFieldsOfArrowCompanySchema
+>;
+
+export type ContactsSchema = Schema<ContactsType, boolean>;
 export type ContinentSchema = Schema<ContinentType, boolean>;
 export type CountrySchema = Schema<CountryType, boolean>;
 export type ErrorsSchema = Schema<ErrorsType, boolean>;
 export type PageSchema = Schema<PageType, boolean>;
+export type ProgramSchema = Schema<ProgramType, boolean>;
+export type SubscriptionSchema = Schema<SubscriptionType, boolean>;
 export type WorkgroupSchema = Schema<WorkgroupType, boolean>;
 
 export type SelectAllResultSchema = {
@@ -56,6 +73,7 @@ export type SelectAllResponseDataSchema = {
   [SelectDataField.END_CUSTOMER]?: EndCustomerSchema;
   [SelectDataField.PARTNER]?: PartnerSchema;
   [SelectDataField.PARTNERTAG]?: PartnertagSchema;
+  [SelectDataField.SUBSCRIPTION]?: SubscriptionSchema;
   [SelectDataField.WORKGROUP]?: WorkgroupSchema;
 };
 
@@ -71,6 +89,7 @@ export type SelectOneResponseDataSchema = {
   [SelectDataField.END_CUSTOMER]?: EndCustomerSchema;
   [SelectDataField.PARTNER]?: PartnerSchema;
   [SelectDataField.PARTNERTAG]?: PartnertagSchema;
+  [SelectDataField.SUBSCRIPTION]?: SubscriptionSchema;
   [SelectDataField.WORKGROUP]?: WorkgroupSchema;
 };
 
