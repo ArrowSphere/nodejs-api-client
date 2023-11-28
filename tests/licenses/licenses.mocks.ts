@@ -91,6 +91,8 @@ export const PAYLOAD_SCHEMA_LICENSE: GetData<GetLicenseResultData> = {
         },
       },
       [LicenseGetFields.COLUMN_ARROW_SUB_CATEGORIES]: ['string'],
+      [LicenseGetFields.COLUMN_ASSETS]: {},
+      [LicenseGetFields.COLUMN_PROMOTION]: {},
     },
   },
 };
@@ -146,6 +148,8 @@ export const PAYLOAD_SCHEMA_LICENSE_WITHOUT_OPTIONAL_FIELDS: GetData<GetLicenseR
           [BuySellFields.COLUMN_SELL]: 3,
         },
       },
+      [LicenseGetFields.COLUMN_ASSETS]: {},
+      [LicenseGetFields.COLUMN_PROMOTION]: {},
     },
   },
 };

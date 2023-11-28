@@ -17,6 +17,8 @@ import {
   SecurityFindResult,
   SecurityFindResultData,
 } from '../license/securityFindResult';
+import { PromotionData, PromotionFindResult } from './promotionFindResult';
+import { AssetsData, AssetsFindResult } from './assetsFindResult';
 
 export enum LicenseGetFields {
   COLUMN_LICENSE_ID = 'license_id',
@@ -51,6 +53,10 @@ export enum LicenseGetFields {
   COLUMN_PRICE = 'price',
   COLUMN_ARROW_SUB_CATEGORIES = 'arrowSubCategories',
   COLUMN_SECURITY = 'security',
+  COLUMN_NEXT_RENEWAL_DATE = 'nextRenewalDate',
+  COLUMN_PROMOTION = 'promotion',
+  COLUMN_ASSETS = 'assets',
+  COLUMN_VENDOR_BILLING_ID = 'vendorBillingId',
 }
 
 export type LicenseGetData = {
@@ -86,6 +92,10 @@ export type LicenseGetData = {
   [LicenseGetFields.COLUMN_ASSOCIATED_SUBSCRIPTION_PROGRAM]: string;
   [LicenseGetFields.COLUMN_PRICE]: LicensePriceGetData;
   [LicenseGetFields.COLUMN_ARROW_SUB_CATEGORIES]?: Array<string> | null;
+  [LicenseGetFields.COLUMN_NEXT_RENEWAL_DATE]?: string;
+  [LicenseGetFields.COLUMN_PROMOTION]?: PromotionData;
+  [LicenseGetFields.COLUMN_ASSETS]?: AssetsData;
+  [LicenseGetFields.COLUMN_VENDOR_BILLING_ID]?: string | null;
 };
 
 export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
@@ -121,6 +131,10 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
   readonly #associatedSubscriptionProgram: string;
   readonly #price: LicensePriceGetResult;
   readonly #arrowSubCategories?: Array<string> | null;
+  readonly #nextRenewalDate?: string;
+  readonly #promotion?: PromotionFindResult;
+  readonly #assets?: AssetsFindResult;
+  readonly #vendorBillingId?: string | null;
 
   public constructor(licenseGetDataInput: LicenseGetData) {
     super(licenseGetDataInput);
@@ -191,6 +205,16 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
     );
     this.#arrowSubCategories =
       licenseGetDataInput[LicenseGetFields.COLUMN_ARROW_SUB_CATEGORIES];
+    this.#nextRenewalDate =
+      licenseGetDataInput[LicenseGetFields.COLUMN_NEXT_RENEWAL_DATE];
+    this.#vendorBillingId =
+      licenseGetDataInput[LicenseGetFields.COLUMN_VENDOR_BILLING_ID];
+    this.#promotion = new PromotionFindResult(
+      licenseGetDataInput[LicenseGetFields.COLUMN_PROMOTION] || {},
+    );
+    this.#assets = new AssetsFindResult(
+      licenseGetDataInput[LicenseGetFields.COLUMN_ASSETS] || {},
+    );
   }
 
   public get id(): string {
@@ -321,6 +345,22 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
     return this.#arrowSubCategories;
   }
 
+  public get nextRenewalDate(): string | undefined {
+    return this.#nextRenewalDate;
+  }
+
+  get promotion(): PromotionFindResult | undefined {
+    return this.#promotion;
+  }
+
+  get assets(): AssetsFindResult | undefined {
+    return this.#assets;
+  }
+
+  get vendorBillingId(): string | null | undefined {
+    return this.#vendorBillingId;
+  }
+
   public toJSON(): LicenseGetData {
     return {
       [LicenseGetFields.COLUMN_LICENSE_ID]: this.id,
@@ -358,6 +398,10 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
         .associatedSubscriptionProgram,
       [LicenseGetFields.COLUMN_PRICE]: this.price.toJSON(),
       [LicenseGetFields.COLUMN_ARROW_SUB_CATEGORIES]: this.arrowSubCategories,
+      [LicenseGetFields.COLUMN_NEXT_RENEWAL_DATE]: this.nextRenewalDate,
+      [LicenseGetFields.COLUMN_VENDOR_BILLING_ID]: this.vendorBillingId,
+      [LicenseGetFields.COLUMN_PROMOTION]: this.promotion?.toJSON(),
+      [LicenseGetFields.COLUMN_ASSETS]: this.assets?.toJSON(),
     };
   }
 }
