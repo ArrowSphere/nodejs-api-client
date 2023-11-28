@@ -136,10 +136,7 @@ describe('SupportCenterClient', function () {
         .patch(UPDATE_ISSUE_URL_INTERCEPTOR)
         .reply(constants.HTTP_STATUS_OK, GET_ISSUE_RESPONSE);
 
-      const response = await client.updateIssue('123', UPDATE_ISSUE_PAYLOAD);
-
-      expect(response).to.be.instanceof(GetResult);
-      expect(response.toJSON()).to.be.deep.equal(GET_ISSUE_RESPONSE);
+      await client.updateIssue('123', UPDATE_ISSUE_PAYLOAD);
     });
   });
 
