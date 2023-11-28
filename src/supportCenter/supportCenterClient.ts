@@ -81,7 +81,7 @@ export class SupportCenterClient extends AbstractRestfulClient {
   ): Promise<GetResult<Issue>> {
     this.path = `/issues/${issueId}`;
 
-    return new GetResult(Issue, await this.patch(payload, parameters));
+    return await this.patch(payload, parameters);
   }
 
   public async listIssueComments(
