@@ -65,6 +65,10 @@ describe('SupportCenterClient', function () {
     .getSupportCenterClient()
     .setUrl(SUPPORT_CENTER_MOCK_URL);
 
+  afterEach(() => {
+    nock.cleanAll();
+  });
+
   describe('list topics', function () {
     it('call the get method', async function () {
       nock(SUPPORT_CENTER_MOCK_URL)
@@ -137,6 +141,8 @@ describe('SupportCenterClient', function () {
         .reply(constants.HTTP_STATUS_OK, GET_ISSUE_RESPONSE);
 
       await client.updateIssue('123', UPDATE_ISSUE_PAYLOAD);
+
+      expect(nock.isDone()).to.be.true;
     });
   });
 
