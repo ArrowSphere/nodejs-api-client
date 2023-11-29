@@ -66,12 +66,27 @@ export const GET_EVENTS_QUERY: LicensesEventGetEventsQueryType = {
         perPage: 20,
       },
       searchBody: {
+        aggregatorFilter: ['event.partnerRef'],
+        exclusionFilters: [
+          {
+            names: 'event.orderRef',
+            values: ['XSP999'],
+          },
+        ],
         filters: [
           {
             names: 'event.actionType',
             values: ['renew'],
           },
         ],
+        highlight: true,
+        keywordByFields: [
+          {
+            name: 'event.customer.name',
+            values: ['The compant'],
+          },
+        ],
+        keywords: 'Office',
         sort: [
           {
             name: 'event.customer.name',
@@ -138,4 +153,4 @@ export const GET_EVENTS_QUERY: LicensesEventGetEventsQueryType = {
 };
 
 export const GET_EVENTS_GQL =
-  '{getEvents (paginate: {page: 1, perPage: 20}, searchBody: {filters: [{names: "event.actionType", values: ["renew"]}], sort: [{name: "event.customer.name", order: "asc"}]}) { events { event { friendlyName id partnerRef orderRef createdAt marketplace vendor { name code } uom periodicity term trial statusCode actionType eventDetails { message source } user { name email } quantity { current requested } offer { name arrowsphereSku } priceband { arrowsphereSku vendorSku } reseller { name ref } customer { name ref } } } pagination { currentPage perPage total totalPage } }}';
+  '{getEvents (paginate: {page: 1, perPage: 20}, searchBody: {aggregatorFilter: ["event.partnerRef"], exclusionFilters: [{names: "event.orderRef", values: ["XSP999"]}], filters: [{names: "event.actionType", values: ["renew"]}], highlight: true, keywordByFields: [{name: "event.customer.name", values: ["The compant"]}], keywords: "Office", sort: [{name: "event.customer.name", order: "asc"}]}) { events { event { friendlyName id partnerRef orderRef createdAt marketplace vendor { name code } uom periodicity term trial statusCode actionType eventDetails { message source } user { name email } quantity { current requested } offer { name arrowsphereSku } priceband { arrowsphereSku vendorSku } reseller { name ref } customer { name ref } } } pagination { currentPage perPage total totalPage } }}';

@@ -73,13 +73,35 @@ export type LicensesEventInputFiltersType = {
   [LicensesEventInputFiltersField.VALUES]?: string | string[];
 };
 
+export enum LicensesEventInputKeywordByFieldsField {
+  NAME = 'name',
+  VALUES = 'values',
+  OPERATOR = 'operator',
+}
+
+export type LicensesEventInputKeywordByFieldsType = {
+  [LicensesEventInputKeywordByFieldsField.NAME]: string;
+  [LicensesEventInputKeywordByFieldsField.VALUES]: string[];
+  [LicensesEventInputKeywordByFieldsField.OPERATOR]?: string;
+};
+
 export enum LicensesEvenInputSearchBodyField {
+  AGGREGATOR_FILTER = 'aggregatorFilter',
+  EXCLUSION_FILTERS = 'exclusionFilters',
   FILTERS = 'filters',
+  HIGHLIGHT = 'highlight',
+  KEYWORD_BY_FIELD = 'keywordByFields',
+  KEYWORDS = 'keywords',
   SORT = 'sort',
 }
 
 export type LicensesEventInputSearchBodyType = {
+  [LicensesEvenInputSearchBodyField.AGGREGATOR_FILTER]?: string[];
+  [LicensesEvenInputSearchBodyField.EXCLUSION_FILTERS]?: LicensesEventInputFiltersType[];
   [LicensesEvenInputSearchBodyField.FILTERS]?: LicensesEventInputFiltersType[];
+  [LicensesEvenInputSearchBodyField.HIGHLIGHT]?: boolean;
+  [LicensesEvenInputSearchBodyField.KEYWORD_BY_FIELD]?: LicensesEventInputKeywordByFieldsType[];
+  [LicensesEvenInputSearchBodyField.KEYWORDS]?: string;
   [LicensesEvenInputSearchBodyField.SORT]?: LicensesEventInputSortType[];
 };
 
