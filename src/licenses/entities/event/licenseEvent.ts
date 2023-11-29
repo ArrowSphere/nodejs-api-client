@@ -61,65 +61,65 @@ export const LicenseEventStatusActionCodes: Partial<
 };
 
 export interface LicenseEventVendor {
-  name: string;
-  code: string;
+  name?: string;
+  code?: string;
 }
 
 export interface LicenseEventCustomer {
-  name: string;
-  ref: string;
+  name?: string;
+  ref?: string;
 }
 
 export interface LicenseEventReseller {
-  name: string;
-  ref: string;
+  name?: string;
+  ref?: string;
 }
 
 export interface LicenseEventPriceband {
-  vendorSku: string;
-  arrowsphereSku: string;
+  vendorSku?: string;
+  arrowsphereSku?: string;
 }
 
 export interface LicenseEventOffer {
-  arrowsphereSku: string;
-  name: string;
+  arrowsphereSku?: string;
+  name?: string;
   isManualProvisioning?: boolean | null;
 }
 
 export interface LicenseEventQuantity {
-  current: number;
-  requested: number | null;
+  current?: number;
+  requested?: number | null;
 }
 
 export interface LicenseEventUser {
-  name: string;
-  email: string;
+  name?: string;
+  email?: string;
 }
 
 export interface LicenseEventDetails {
-  message: string;
-  source: string | null;
+  message?: string;
+  source?: string | null;
 }
 
 export interface LicenseEvent {
-  id: number;
-  partnerRef: string;
-  orderRef: string;
-  createdAt: string;
-  customer: LicenseEventCustomer;
-  reseller: LicenseEventReseller;
-  marketplace: string;
-  friendlyName: string;
-  vendor: LicenseEventVendor;
-  priceband: LicenseEventPriceband;
-  offer: LicenseEventOffer;
-  uom: string;
-  periodicity: number;
-  term: number;
-  trial: boolean;
-  quantity: LicenseEventQuantity;
-  statusCode: string;
-  user: LicenseEventUser;
-  actionType: LicenseEventActionType;
-  eventDetails: LicenseEventDetails;
+  id?: number;
+  partnerRef?: string;
+  orderRef?: string;
+  createdAt?: string;
+  customer?: LicenseEventCustomer;
+  reseller?: LicenseEventReseller;
+  marketplace?: string;
+  friendlyName?: string;
+  vendor?: LicenseEventVendor;
+  priceband?: LicenseEventPriceband;
+  offer?: LicenseEventOffer;
+  uom?: string;
+  periodicity?: number;
+  term?: number;
+  trial?: boolean;
+  quantity?: LicenseEventQuantity;
+  statusCode?: string;
+  user?: LicenseEventUser;
+  actionType?: LicenseEventActionType;
+  eventDetails?: LicenseEventDetails;
 }
