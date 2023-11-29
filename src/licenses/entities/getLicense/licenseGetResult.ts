@@ -64,6 +64,7 @@ export enum LicenseGetFields {
   COLUMN_PRICE_BAND = 'priceBand',
   COLUMN_VENDOR_CODE = 'vendorCode',
   COLUMN_RATES = 'rates',
+  COLUMN_ORGANIZATION_UNIT_ID = 'organizationUnitId',
 }
 
 export type LicenseGetData = {
@@ -107,6 +108,7 @@ export type LicenseGetData = {
   [LicenseGetFields.COLUMN_PRICE_BAND]?: PriceBandData;
   [LicenseGetFields.COLUMN_VENDOR_CODE]?: string;
   [LicenseGetFields.COLUMN_RATES]?: RatesGetData;
+  [LicenseGetFields.COLUMN_ORGANIZATION_UNIT_ID]?: number;
 };
 
 export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
@@ -150,6 +152,7 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
   readonly #priceBand?: PriceBandGetResult;
   readonly #vendorCode?: string;
   readonly #rates?: RatesGetResult;
+  readonly #organizationUnitId?: number;
 
   public constructor(licenseGetDataInput: LicenseGetData) {
     super(licenseGetDataInput);
@@ -253,6 +256,8 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
           licenseGetDataInput[LicenseGetFields.COLUMN_RATES] as RatesGetData,
         )
       : undefined;
+    this.#organizationUnitId =
+      licenseGetDataInput[LicenseGetFields.COLUMN_ORGANIZATION_UNIT_ID];
   }
 
   public get id(): string {
@@ -415,6 +420,10 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
     return this.#rates;
   }
 
+  get organizationUnitId(): number | undefined {
+    return this.#organizationUnitId;
+  }
+
   public toJSON(): LicenseGetData {
     return {
       [LicenseGetFields.COLUMN_LICENSE_ID]: this.id,
@@ -462,6 +471,7 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
       [LicenseGetFields.COLUMN_PRICE_BAND]: this.priceBand?.toJSON(),
       [LicenseGetFields.COLUMN_VENDOR_CODE]: this.vendorCode,
       [LicenseGetFields.COLUMN_RATES]: this.rates?.toJSON(),
+      [LicenseGetFields.COLUMN_ORGANIZATION_UNIT_ID]: this.organizationUnitId,
     };
   }
 }
