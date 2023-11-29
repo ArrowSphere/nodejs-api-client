@@ -304,10 +304,12 @@ export type LicenseFindRawPayload = {
 
 export type UpdateSeatsData = {
   [LicenseGetFields.COLUMN_SEATS]: number;
+  [LicenseGetFields.COLUMN_ORGANIZATION_UNIT_ID]: number;
 } & ExtraInformationType;
 
 export type PutFriendlyName = {
   [LicenseGetFields.COLUMN_FRIENDLY_NAME]: string;
+  [LicenseGetFields.COLUMN_ORGANIZATION_UNIT_ID]: number;
 } & ExtraInformationType;
 
 export type PutReactivate = ExtraInformationType;
