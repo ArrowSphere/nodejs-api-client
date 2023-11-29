@@ -5,6 +5,7 @@ import {
   AccountType,
   CheckAggType,
   CheckByDateType,
+  CheckByGroupType,
   CheckCountByDateAggType,
   ChecksByStandardType,
   CheckType,
@@ -130,7 +131,16 @@ export type FilterSchema = {
   values?: FilterValuesSchema;
 };
 
-type CheckCountByDateAggSchema = Schema<CheckCountByDateAggType, boolean>;
+export type CheckByGroupSchema = Schema<CheckByGroupType, boolean>;
+
+type MissingFieldsInCheckCountByDateAggSchema = {
+  byGroup?: CheckByGroupSchema;
+};
+
+type CheckCountByDateAggSchema = Merge<
+  Schema<CheckCountByDateAggType, boolean>,
+  MissingFieldsInCheckCountByDateAggSchema
+>;
 
 type MissingFieldsInCheckAggSchema = {
   data?: CheckCountByDateAggSchema;

@@ -129,8 +129,14 @@ export type SeveritiesAggType = {
 /**
  * Check Aggregation Types
  */
+export type CheckByGroupType = {
+  groupName: string;
+  score: string;
+};
+
 export type CheckCountByDateAggType = {
   accounts?: number;
+  byGroup?: CheckByGroupType[];
   customers?: number;
   date?: string;
   partners?: number;
