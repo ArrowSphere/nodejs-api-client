@@ -101,12 +101,10 @@ export type LicensesEventGetEventsQueryType = {
 };
 
 export type LicensesEventGetEventsResponseType = {
-  [LicensesEventGetEventsResponseField.DATA]: {
-    [LicensesEventQueries.GET_EVENTS]?: {
-      [LicensesEventGetEventsQueryField.EVENTS]?: LicensesEventGetEventsResponseDataType[];
-    };
+  [LicensesEventQueries.GET_EVENTS]?: {
+    [LicensesEventGetEventsQueryField.EVENTS]?: LicensesEventGetEventsResponseDataType[];
+    [LicensesEventGetEventsResponseField.PAGINATION]?: LicensesEventPageType;
   };
-  [LicensesEventGetEventsResponseField.PAGINATION]?: LicensesEventPageType;
 };
 
 export type LicensesEventGetEventsResponseDataType = {
