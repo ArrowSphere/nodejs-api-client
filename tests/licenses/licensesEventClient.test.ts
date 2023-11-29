@@ -50,11 +50,9 @@ describe('LicensesEventClient', () => {
       const query = '{getEvents { event {}}}';
 
       const expectedResult: LicensesEventGetEventsResponseType = {
-        [LicensesEventGetEventsResponseField.DATA]: {
-          [LicensesEventQueries.GET_EVENTS]: {
-            [LicensesEventGetEventsQueryField.EVENTS]:
-              LicensesEventQueryMock.EVENTS_SAMPLE,
-          },
+        [LicensesEventQueries.GET_EVENTS]: {
+          [LicensesEventGetEventsQueryField.EVENTS]:
+            LicensesEventQueryMock.EVENTS_SAMPLE,
         },
       };
 
@@ -96,17 +94,15 @@ describe('LicensesEventClient', () => {
   describe('getEvents', () => {
     it('makes a graphql POST request on the specified URL to getEvents', async () => {
       const expectedResult: LicensesEventGetEventsResponseType = {
-        [LicensesEventGetEventsResponseField.DATA]: {
-          [LicensesEventQueries.GET_EVENTS]: {
-            [LicensesEventGetEventsQueryField.EVENTS]:
-              LicensesEventQueryMock.EVENTS_SAMPLE,
+        [LicensesEventQueries.GET_EVENTS]: {
+          [LicensesEventGetEventsQueryField.EVENTS]:
+            LicensesEventQueryMock.EVENTS_SAMPLE,
+          [LicensesEventGetEventsResponseField.PAGINATION]: {
+            currentPage: 1,
+            perPage: 2,
+            total: 11,
+            totalPage: 2,
           },
-        },
-        [LicensesEventGetEventsResponseField.PAGINATION]: {
-          currentPage: 1,
-          perPage: 2,
-          total: 11,
-          totalPage: 2,
         },
       };
 

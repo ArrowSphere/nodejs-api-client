@@ -1,18 +1,18 @@
 import { LicenseEvent } from './licenseEvent';
 
 export interface LicenseEventPagination {
-  perPage: number;
-  currentPage: number;
-  totalPage: number;
-  total: number;
-  next: string;
-  previous: string;
+  perPage?: number;
+  currentPage?: number;
+  totalPage?: number;
+  total?: number;
+  next?: string;
+  previous?: string;
 }
 
 export interface PaginatedLicenseEvents {
-  filters: LicenseEventFilters[];
-  pagination: LicenseEventPagination;
-  events: Array<{ event: LicenseEvent }>;
+  filters?: LicenseEventFilters[];
+  pagination?: LicenseEventPagination;
+  events?: Array<{ event: LicenseEvent }>;
 }
 
 export interface LicenseEventFilters {
