@@ -209,12 +209,18 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
       licenseGetDataInput[LicenseGetFields.COLUMN_NEXT_RENEWAL_DATE];
     this.#vendorBillingId =
       licenseGetDataInput[LicenseGetFields.COLUMN_VENDOR_BILLING_ID];
-    this.#promotion = new PromotionFindResult(
-      licenseGetDataInput[LicenseGetFields.COLUMN_PROMOTION] || {},
-    );
-    this.#assets = new AssetsFindResult(
-      licenseGetDataInput[LicenseGetFields.COLUMN_ASSETS] || {},
-    );
+    this.#promotion = licenseGetDataInput[LicenseGetFields.COLUMN_PROMOTION]
+      ? new PromotionFindResult(
+          licenseGetDataInput[
+            LicenseGetFields.COLUMN_PROMOTION
+          ] as PromotionData,
+        )
+      : undefined;
+    this.#assets = licenseGetDataInput[LicenseGetFields.COLUMN_ASSETS]
+      ? new AssetsFindResult(
+          licenseGetDataInput[LicenseGetFields.COLUMN_ASSETS] as AssetsData,
+        )
+      : undefined;
   }
 
   public get id(): string {
