@@ -1,4 +1,9 @@
-import { GetResult, Parameters, PublicApiClient } from '../../src';
+import {
+  GetResult,
+  Parameters,
+  PublicApiClient,
+  SaveOrderEavsInputType,
+} from '../../src';
 import nock from 'nock';
 import { expect } from 'chai';
 import {
@@ -139,6 +144,29 @@ describe('OrdersClient', () => {
       const result = await orderClient.getOrder('XSPO123');
       expect(result).to.be.instanceof(GetResult);
       expect(result.toJSON()).to.eql(PAYLOAD_ORDERS_WITHOUT_OPTIONAL);
+    });
+  });
+
+  describe('saveOrderEavs', () => {
+    it('calls the saveOrderEavs method', async () => {
+      const orderReference = 'XSP12345';
+      const saveOrderEavsData: SaveOrderEavsInputType = {
+        eavs: [
+          {
+            eavkeyName: 'order_comment_1',
+            tableName: 'ORDER_INFO',
+            value: 'The comment one',
+          },
+        ],
+      };
+
+      nock(ORDERS_MOCK_URL)
+        .post(`/orders/${orderReference}/saveOrderEavs`)
+        .reply(201);
+
+      await client.saveOrderEavs(orderReference, saveOrderEavsData);
+
+      expect(nock.isDone()).to.be.true;
     });
   });
 });
