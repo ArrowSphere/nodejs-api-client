@@ -10,6 +10,7 @@ import {
   LicensesClient,
   PostUpgrade,
   PublicApiClient,
+  RateTypeEnum,
   SaveBillingCommentsInputType,
 } from '../../src';
 import {
@@ -45,7 +46,9 @@ import {
   PAYLOAD_LICENSE_CONVERSION_SKU,
   PAYLOAD_LICENSE_EXISTING_CONVERSION_SKU,
   PAYLOAD_LICENSE_GET_CREDENTIALS,
+  PAYLOAD_LICENSE_GET_PRICING_RATE,
   PAYLOAD_LICENSE_HISTORY,
+  PAYLOAD_LICENSE_POST_SCHEDULE_TASKS,
   PAYLOAD_SCHEMA_LICENSE,
   PAYLOAD_SCHEMA_LICENSE_WITHOUT_OPTIONAL_FIELDS,
 } from './licenses.mocks';
@@ -81,6 +84,9 @@ export const LICENSE_MOCK_URL_CONVERSION_SKU_LICENSE =
 export const LICENSE_MOCK_URL_EXISTING_CONVERSION_SKU_LICENSE =
   '/licenses/XSP123456/conversion/existing';
 export const LICENSE_MOCK_URL_GET_CREDENTIALS = '/licenses/12343/credentials';
+export const LICENSE_MOCK_URL_PRICING_RATE = '/licenses/XSP12343/pricing-rate';
+export const LICENSE_MOCK_URL_SCHEDULE_TASKS =
+  '/licenses/XSP12343/scheduledTasks';
 /**
  * Mock license data to be used in tests and returned by mocks
  */
@@ -984,6 +990,63 @@ describe('LicensesClient', () => {
 
       await licensesClient.getCredentials('12343');
       expect(nock.isDone()).to.be.true;
+    });
+  });
+
+  describe('getPricingRate', () => {
+    const licensesClient = new PublicApiClient()
+      .getLicensesClient()
+      .setUrl(LICENSES_MOCK_URL);
+    it('should call getPricingRate', async () => {
+      nock(LICENSES_MOCK_URL)
+        .get(LICENSE_MOCK_URL_PRICING_RATE)
+        .reply(200, PAYLOAD_LICENSE_GET_PRICING_RATE);
+
+      const result = await licensesClient.getPricingRate('XSP12343');
+      expect(nock.isDone()).to.be.true;
+      expect(result.data.toJSON()).to.be.eqls(
+        PAYLOAD_LICENSE_GET_PRICING_RATE.data,
+      );
+    });
+  });
+
+  describe('setPricingRate', () => {
+    const licensesClient = new PublicApiClient()
+      .getLicensesClient()
+      .setUrl(LICENSES_MOCK_URL);
+    it('should call setPricingRate', async () => {
+      nock(LICENSES_MOCK_URL).post(LICENSE_MOCK_URL_PRICING_RATE).reply(204);
+
+      await licensesClient.setPricingRate('XSP12343', {
+        rateType: RateTypeEnum.DISCOUNT,
+        rateValue: 10,
+        applyOnNextBillingPeriod: true,
+      });
+
+      expect(nock.isDone()).to.be.true;
+    });
+  });
+
+  describe('scheduleTasks', () => {
+    const licensesClient = new PublicApiClient()
+      .getLicensesClient()
+      .setUrl(LICENSES_MOCK_URL);
+    it('should call scheduleTasks method', async () => {
+      nock(LICENSES_MOCK_URL)
+        .post(LICENSE_MOCK_URL_SCHEDULE_TASKS)
+        .reply(200, PAYLOAD_LICENSE_POST_SCHEDULE_TASKS);
+
+      const result = await licensesClient.scheduleTasks('XSP12343', {
+        periodicity: 720,
+        term: 720,
+        seats: 10,
+        executionDate: '2023-01-01',
+      });
+
+      expect(nock.isDone()).to.be.true;
+      expect(result.data.toJSON()).to.be.eqls(
+        PAYLOAD_LICENSE_POST_SCHEDULE_TASKS.data,
+      );
     });
   });
 });

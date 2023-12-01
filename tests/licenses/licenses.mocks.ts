@@ -21,6 +21,12 @@ import {
 } from '../../src';
 import { ExtraDataFields } from '../../src/licenses/entities/getLicense/extraDataGetResult';
 import { CredentialsResultType } from '../../src/licenses/entities/license/credentialsResult';
+import {
+  CompanyTypeEnum,
+  GetPricingRateData,
+  RateTypeEnum,
+  ScheduleTaskData,
+} from '../../build';
 
 export const PAYLOAD_SCHEMA_LICENSE: GetData<GetLicenseResultData> = {
   status: 200,
@@ -262,5 +268,31 @@ export const PAYLOAD_LICENSE_GET_CREDENTIALS: GetData<CredentialsResultType> = {
     passwordResetUrl:
       'http://test/CloudManagement.UI/data/InstancePassword/XXXXXXX',
     url: 'http://test/mdm/mdm_XXXXXXX',
+  },
+};
+
+export const PAYLOAD_LICENSE_GET_PRICING_RATE: GetData<GetPricingRateData> = {
+  status: 200,
+  data: {
+    id: 1234,
+    rate: 0.1,
+    start_date: '2021-01-01',
+    end_date: '2021-12-31',
+    created_at: '2021-01-01',
+    rateType: {
+      id: 1234,
+      name: RateTypeEnum.DISCOUNT,
+    },
+    companyType: {
+      id: 1234,
+      type: CompanyTypeEnum.MSP_CUSTOMER,
+    },
+  },
+};
+
+export const PAYLOAD_LICENSE_POST_SCHEDULE_TASKS: GetData<ScheduleTaskData> = {
+  status: 200,
+  data: {
+    scheduleTaskId: 123456,
   },
 };

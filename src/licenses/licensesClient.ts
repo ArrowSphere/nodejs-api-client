@@ -58,6 +58,11 @@ import {
   LicenseConversionSkuResult,
 } from './entities/license/licenseConversionSkuResult';
 import { CredentialsResult } from './entities/license/credentialsResult';
+import { ScheduleTasksResult } from './entities/schedule/scheduleTasksResult';
+import {
+  GetPricingRateResult,
+  RateTypeEnum,
+} from './entities/pricingRate/getPricingRateResult';
 
 /**
  * Parameters passable to the request for refining search.
@@ -338,6 +343,19 @@ export type SaveBillingCommentsInputType = {
   [SaveBillingCommentsInputFields.COLUMN_COMMENT_TWO]?: string | null;
 };
 
+export type ScheduleTasks = {
+  periodicity: number;
+  term: number;
+  seats: number;
+  executionDate: string;
+};
+
+export type LicensePricingRate = {
+  rateType: RateTypeEnum;
+  rateValue: number;
+  applyOnNextBillingPeriod: boolean;
+};
+
 export class LicensesClient extends AbstractRestfulClient {
   /**
    * The base path of the API
@@ -418,6 +436,16 @@ export class LicensesClient extends AbstractRestfulClient {
    * The path to retrieve license credentials
    */
   private GET_LICENSE_CREDENTIALS = '/credentials';
+
+  /**
+   * The path of schedule tasks on a license
+   */
+  private SCHEDULE_TASKS_PATH = '/scheduledTasks';
+
+  /**
+   * The path to get/set pricing rate on a license
+   */
+  private PRICING_RATE_PATH = '/pricing-rate';
 
   /**
    * Returns the raw result from the find endpoint call
@@ -704,6 +732,38 @@ export class LicensesClient extends AbstractRestfulClient {
     this.path = `/${licenseReference}${this.GET_LICENSE_CREDENTIALS}`;
 
     return new GetResult(CredentialsResult, await this.get(parameters));
+  }
+
+  public async getPricingRate(
+    licenseReference: string,
+    parameters: Parameters = {},
+  ): Promise<GetResult<GetPricingRateResult>> {
+    this.path = `/${licenseReference}${this.PRICING_RATE_PATH}`;
+
+    return new GetResult(GetPricingRateResult, await this.get(parameters));
+  }
+
+  public async setPricingRate(
+    licenseReference: string,
+    payload: LicensePricingRate,
+    parameters: Parameters = {},
+  ): Promise<void> {
+    this.path = `/${licenseReference}${this.PRICING_RATE_PATH}`;
+
+    return await this.post(payload, parameters);
+  }
+
+  public async scheduleTasks(
+    licenseReference: string,
+    payload: ScheduleTasks,
+    parameters: Parameters = {},
+  ): Promise<GetResult<ScheduleTasksResult>> {
+    this.path = `/${licenseReference}${this.SCHEDULE_TASKS_PATH}`;
+
+    return new GetResult(
+      ScheduleTasksResult,
+      await this.post(payload, parameters),
+    );
   }
 
   private createFilters(
