@@ -114,6 +114,23 @@ export type CreateOrderProductType = {
   };
 };
 
+export enum SaveOrderEavsInputFields {
+  COLUMN_EAVS = 'eavs',
+  COLUMN_EAVKEY_NAME = 'eavkeyName',
+  COLUMN_TABLE_NAME = 'tableName',
+  COLUMN_VALUE = 'value',
+}
+
+export type OrderEavsInputType = {
+  [SaveOrderEavsInputFields.COLUMN_EAVKEY_NAME]: string;
+  [SaveOrderEavsInputFields.COLUMN_TABLE_NAME]: string;
+  [SaveOrderEavsInputFields.COLUMN_VALUE]: string | boolean | null;
+};
+
+export type SaveOrderEavsInputType = {
+  [SaveOrderEavsInputFields.COLUMN_EAVS]: OrderEavsInputType[];
+};
+
 export class OrdersClient extends AbstractRestfulClient {
   /**
    * The base path of the API
@@ -145,5 +162,15 @@ export class OrdersClient extends AbstractRestfulClient {
     this.path = `/${orderReference}`;
 
     return new GetResult(DataListOrders, await this.get(parameters));
+  }
+
+  public async saveOrderEavs(
+    orderReference: string,
+    saveOrderEavsData: SaveOrderEavsInputType,
+    parameters: Parameters = {},
+  ): Promise<void> {
+    this.path = `/${orderReference}/saveOrderEavs`;
+
+    await this.post(saveOrderEavsData, parameters);
   }
 }
