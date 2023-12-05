@@ -15,6 +15,7 @@ import {
   OrderGetFields,
   SecurityFindResultFields,
 } from '../../src';
+import { ExtraDataFields } from '../../src/licenses/entities/getLicense/extraDataFindResult';
 
 export const PAYLOAD_SCHEMA_LICENSE: GetData<GetLicenseResultData> = {
   status: 200,
@@ -93,6 +94,13 @@ export const PAYLOAD_SCHEMA_LICENSE: GetData<GetLicenseResultData> = {
       [LicenseGetFields.COLUMN_ARROW_SUB_CATEGORIES]: ['string'],
       [LicenseGetFields.COLUMN_ASSETS]: {},
       [LicenseGetFields.COLUMN_PROMOTION]: {},
+      [LicenseGetFields.COLUMN_EXTRA_DATA]: [
+        {
+          [ExtraDataFields.EAV_KEY_NAME]: 'order_comment_1',
+          [ExtraDataFields.TABLE_NAME]: 'ORDER_INFO',
+          [ExtraDataFields.VALUE]: 'Commeent one',
+        },
+      ],
     },
   },
 };

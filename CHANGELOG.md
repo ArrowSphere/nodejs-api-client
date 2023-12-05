@@ -5,7 +5,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [3.71.0] - 2023-12-01
 
-### Fixed
+### Changed
 - Adds save order eavs
 
 ## [3.70.6] - 2023-11-30
