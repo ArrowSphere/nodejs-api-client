@@ -19,6 +19,7 @@ import {
 } from '../license/securityFindResult';
 import { PromotionData, PromotionFindResult } from './promotionFindResult';
 import { AssetsData, AssetsFindResult } from './assetsFindResult';
+import { ExtraData, ExtraDataFindResult } from './extraDataFindResult';
 
 export enum LicenseGetFields {
   COLUMN_LICENSE_ID = 'license_id',
@@ -57,6 +58,7 @@ export enum LicenseGetFields {
   COLUMN_PROMOTION = 'promotion',
   COLUMN_ASSETS = 'assets',
   COLUMN_VENDOR_BILLING_ID = 'vendorBillingId',
+  COLUMN_EXTRA_DATA = 'extraData',
 }
 
 export type LicenseGetData = {
@@ -96,6 +98,7 @@ export type LicenseGetData = {
   [LicenseGetFields.COLUMN_PROMOTION]?: PromotionData;
   [LicenseGetFields.COLUMN_ASSETS]?: AssetsData;
   [LicenseGetFields.COLUMN_VENDOR_BILLING_ID]?: string | null;
+  [LicenseGetFields.COLUMN_EXTRA_DATA]?: ExtraData[];
 };
 
 export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
@@ -135,6 +138,7 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
   readonly #promotion?: PromotionFindResult;
   readonly #assets?: AssetsFindResult;
   readonly #vendorBillingId?: string | null;
+  readonly #extraData?: ExtraDataFindResult[];
 
   public constructor(licenseGetDataInput: LicenseGetData) {
     super(licenseGetDataInput);
@@ -221,6 +225,9 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
           licenseGetDataInput[LicenseGetFields.COLUMN_ASSETS] as AssetsData,
         )
       : undefined;
+    this.#extraData = licenseGetDataInput[
+      LicenseGetFields.COLUMN_EXTRA_DATA
+    ]?.map((result: ExtraData) => new ExtraDataFindResult(result));
   }
 
   public get id(): string {
@@ -367,6 +374,10 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
     return this.#vendorBillingId;
   }
 
+  get extraData(): ExtraDataFindResult[] | undefined {
+    return this.#extraData;
+  }
+
   public toJSON(): LicenseGetData {
     return {
       [LicenseGetFields.COLUMN_LICENSE_ID]: this.id,
@@ -408,6 +419,9 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
       [LicenseGetFields.COLUMN_VENDOR_BILLING_ID]: this.vendorBillingId,
       [LicenseGetFields.COLUMN_PROMOTION]: this.promotion?.toJSON(),
       [LicenseGetFields.COLUMN_ASSETS]: this.assets?.toJSON(),
+      [LicenseGetFields.COLUMN_EXTRA_DATA]: this.extraData?.map(
+        (extraData: ExtraDataFindResult) => extraData.toJSON(),
+      ),
     };
   }
 }
