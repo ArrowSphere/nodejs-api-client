@@ -1,0 +1,38 @@
+import { AbstractEntity } from '../../../abstractEntity';
+import {
+  SaleConstraintsFindResult,
+  SaleConstraintsFindResultData,
+} from '../offer/priceband/saleConstraintsFindResult';
+
+export enum PriceBandDataFields {
+  SALE_CONTRAINSTS = 'saleConstraints',
+}
+
+export type PriceBandData = {
+  [PriceBandDataFields.SALE_CONTRAINSTS]?: SaleConstraintsFindResultData;
+};
+
+export class PriceBandGetResult extends AbstractEntity<PriceBandData> {
+  readonly #saleContrainsts?: SaleConstraintsFindResult;
+
+  public constructor(data: PriceBandData) {
+    super(data);
+
+    this.#saleContrainsts =
+      data[PriceBandDataFields.SALE_CONTRAINSTS] !== undefined
+        ? new SaleConstraintsFindResult(
+            data[
+              PriceBandDataFields.SALE_CONTRAINSTS
+            ] as SaleConstraintsFindResultData,
+          )
+        : undefined;
+  }
+
+  public toJSON(): PriceBandData {
+    return {
+      [PriceBandDataFields.SALE_CONTRAINSTS]: this.#saleContrainsts
+        ? this.#saleContrainsts.toJSON()
+        : undefined,
+    };
+  }
+}
