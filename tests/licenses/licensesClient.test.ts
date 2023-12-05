@@ -10,6 +10,7 @@ import {
   LicensesClient,
   PostUpgrade,
   PublicApiClient,
+  SaveOrderEavsInputType,
 } from '../../src';
 import {
   FindData,
@@ -898,6 +899,30 @@ describe('LicensesClient', () => {
       );
 
       expect(result.data.toJSON()).to.be.eqls(upgradeResult);
+    });
+  });
+
+  describe('saveOrderEavs', () => {
+    it('calls the saveOrderEavs method', async () => {
+      const licenseReference = 'XSP12345';
+      const saveOrderEavsData: SaveOrderEavsInputType = {
+        eavs: [
+          {
+            eavkeyName: 'order_comment_1',
+            tableName: 'ORDER_INFO',
+            value: 'The comment one',
+          },
+        ],
+      };
+
+      nock(LICENSES_MOCK_URL)
+        .post(`/licenses/${licenseReference}/saveOrderEavs`)
+        .reply(201);
+
+      client.setPerPage(0);
+      await client.saveOrderEavs(licenseReference, saveOrderEavsData);
+
+      expect(nock.isDone()).to.be.true;
     });
   });
 });
