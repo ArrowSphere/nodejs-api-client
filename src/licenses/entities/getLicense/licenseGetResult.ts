@@ -20,6 +20,7 @@ import {
 import { PromotionData, PromotionFindResult } from './promotionFindResult';
 import { AssetsData, AssetsFindResult } from './assetsFindResult';
 import { ExtraData, ExtraDataFindResult } from './extraDataFindResult';
+import { PriceBandData, PriceBandGetResult } from './priceBandGetResult';
 
 export enum LicenseGetFields {
   COLUMN_LICENSE_ID = 'license_id',
@@ -59,6 +60,7 @@ export enum LicenseGetFields {
   COLUMN_ASSETS = 'assets',
   COLUMN_VENDOR_BILLING_ID = 'vendorBillingId',
   COLUMN_EXTRA_DATA = 'extraData',
+  COLUMN_PRICE_BAND = 'priceBand',
 }
 
 export type LicenseGetData = {
@@ -99,6 +101,7 @@ export type LicenseGetData = {
   [LicenseGetFields.COLUMN_ASSETS]?: AssetsData;
   [LicenseGetFields.COLUMN_VENDOR_BILLING_ID]?: string | null;
   [LicenseGetFields.COLUMN_EXTRA_DATA]?: ExtraData[];
+  [LicenseGetFields.COLUMN_PRICE_BAND]?: PriceBandData;
 };
 
 export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
@@ -139,6 +142,7 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
   readonly #assets?: AssetsFindResult;
   readonly #vendorBillingId?: string | null;
   readonly #extraData?: ExtraDataFindResult[];
+  readonly #priceBand?: PriceBandGetResult;
 
   public constructor(licenseGetDataInput: LicenseGetData) {
     super(licenseGetDataInput);
@@ -228,6 +232,14 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
     this.#extraData = licenseGetDataInput[
       LicenseGetFields.COLUMN_EXTRA_DATA
     ]?.map((result: ExtraData) => new ExtraDataFindResult(result));
+    this.#priceBand =
+      licenseGetDataInput[LicenseGetFields.COLUMN_PRICE_BAND] !== undefined
+        ? new PriceBandGetResult(
+            licenseGetDataInput[
+              LicenseGetFields.COLUMN_PRICE_BAND
+            ] as PriceBandData,
+          )
+        : undefined;
   }
 
   public get id(): string {
@@ -378,6 +390,10 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
     return this.#extraData;
   }
 
+  get priceBand(): PriceBandGetResult | undefined {
+    return this.#priceBand;
+  }
+
   public toJSON(): LicenseGetData {
     return {
       [LicenseGetFields.COLUMN_LICENSE_ID]: this.id,
@@ -422,6 +438,7 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
       [LicenseGetFields.COLUMN_EXTRA_DATA]: this.extraData?.map(
         (extraData: ExtraDataFindResult) => extraData.toJSON(),
       ),
+      [LicenseGetFields.COLUMN_PRICE_BAND]: this.priceBand?.toJSON(),
     };
   }
 }
