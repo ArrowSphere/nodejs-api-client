@@ -13,12 +13,12 @@ export type PriceBandData = {
 };
 
 export class PriceBandGetResult extends AbstractEntity<PriceBandData> {
-  readonly #saleContrainsts?: SaleConstraintsFindResult;
+  readonly #saleConstraints?: SaleConstraintsFindResult;
 
   public constructor(data: PriceBandData) {
     super(data);
 
-    this.#saleContrainsts =
+    this.#saleConstraints =
       data[PriceBandDataFields.SALE_CONTRAINSTS] !== undefined
         ? new SaleConstraintsFindResult(
             data[
@@ -30,8 +30,8 @@ export class PriceBandGetResult extends AbstractEntity<PriceBandData> {
 
   public toJSON(): PriceBandData {
     return {
-      [PriceBandDataFields.SALE_CONTRAINSTS]: this.#saleContrainsts
-        ? this.#saleContrainsts.toJSON()
+      [PriceBandDataFields.SALE_CONTRAINSTS]: this.#saleConstraints
+        ? this.#saleConstraints.toJSON()
         : undefined,
     };
   }
