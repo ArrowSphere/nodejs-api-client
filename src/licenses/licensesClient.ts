@@ -323,6 +323,23 @@ export type PostUpgrade = {
   quantity: number;
 };
 
+export enum SaveOrderEavsInputFields {
+  COLUMN_EAVS = 'eavs',
+  COLUMN_EAVKEY_NAME = 'eavkeyName',
+  COLUMN_TABLE_NAME = 'tableName',
+  COLUMN_VALUE = 'value',
+}
+
+export type OrderEavsInputType = {
+  [SaveOrderEavsInputFields.COLUMN_EAVKEY_NAME]: string;
+  [SaveOrderEavsInputFields.COLUMN_TABLE_NAME]: string;
+  [SaveOrderEavsInputFields.COLUMN_VALUE]: string | null;
+};
+
+export type SaveOrderEavsInputType = {
+  [SaveOrderEavsInputFields.COLUMN_EAVS]: OrderEavsInputType[];
+};
+
 export class LicensesClient extends AbstractRestfulClient {
   /**
    * The base path of the API
@@ -383,6 +400,11 @@ export class LicensesClient extends AbstractRestfulClient {
    * The path of reactivate license auto-renew
    */
   private UPGRADE_PATH = '/conversion';
+
+  /**
+   * The path to save the license order eavs
+   */
+  private SAVE_ORDER_EAVS_PATH = '/saveOrderEavs';
 
   /**
    * Returns the raw result from the find endpoint call
@@ -601,6 +623,16 @@ export class LicensesClient extends AbstractRestfulClient {
     this.path = `/${licenseReference}${this.UPGRADE_PATH}`;
 
     return new GetResult(UpgradeResult, await this.post(payload, parameters));
+  }
+
+  public async saveOrderEavs(
+    licenseReference: string,
+    saveOrderEavsData: SaveOrderEavsInputType,
+    parameters: Parameters = {},
+  ): Promise<void> {
+    this.path = `/${licenseReference}${this.SAVE_ORDER_EAVS_PATH}`;
+
+    await this.post(saveOrderEavsData, parameters);
   }
 
   private createFilters(
