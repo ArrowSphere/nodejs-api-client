@@ -5,11 +5,15 @@ import {
   ActionsGetFields,
   ActiveSeatsFindResultFields,
   BuySellFields,
+  ConversionSkuExistingResultData,
+  ConversionSkuResultData,
   GetData,
   GetLicenseResultData,
   HistoryNoteFields,
   LicenceHistoryResultData,
   LicenceHistoryResultFields,
+  LicenseConversionSkuFields,
+  LicenseConversionSkuResultData,
   LicenseGetFields,
   LicensePriceGetFields,
   OrderGetFields,
@@ -201,5 +205,39 @@ export const PAYLOAD_LICENSE_HISTORY: GetData<LicenceHistoryResultData> = {
   status: 200,
   data: {
     [LicenceHistoryResultFields.COLUMN_ACTIONS]: [HISTORY_PAYLOAD],
+  },
+};
+
+export const CONVERSION_SKU_PAYLOAD: ConversionSkuResultData[] = [
+  {
+    billingCycle: 720,
+    name: 'Office 365 E3',
+    sku: 'CFQ7TTC0LF8R:0001',
+    term: 8640,
+  },
+];
+
+export const PAYLOAD_LICENSE_CONVERSION_SKU: GetData<LicenseConversionSkuResultData> = {
+  status: 200,
+  data: {
+    [LicenseConversionSkuFields.COLUMN_OFFERS]: CONVERSION_SKU_PAYLOAD,
+  },
+};
+
+export const CONVERSION_SKU_EXISTING_PAYLOAD: ConversionSkuExistingResultData[] = [
+  {
+    billingCycle: 720,
+    licenseReference: 'XSP5046568',
+    name: 'Office 365 E3',
+    seats: 1,
+    sku: 'CFQ7TTC0LF8R:0001',
+    term: 8640,
+  },
+];
+
+export const PAYLOAD_LICENSE_CONVERSION_SKU_EXISTING: GetData<LicenseConversionSkuResultData> = {
+  status: 200,
+  data: {
+    [LicenseConversionSkuFields.COLUMN_OFFERS]: CONVERSION_SKU_EXISTING_PAYLOAD,
   },
 };

@@ -42,6 +42,8 @@ import {
   SecurityFindResultFields,
 } from '../../src';
 import {
+  PAYLOAD_LICENSE_CONVERSION_SKU,
+  PAYLOAD_LICENSE_CONVERSION_SKU_EXISTING,
   PAYLOAD_LICENSE_HISTORY,
   PAYLOAD_SCHEMA_LICENSE,
   PAYLOAD_SCHEMA_LICENSE_WITHOUT_OPTIONAL_FIELDS,
@@ -73,6 +75,10 @@ export const LICENSE_MOCK_URL_CANCEL_AUTO_RENEW_LICENSE =
 export const LICENSE_MOCK_URL_REACTIVATE_AUTO_RENEW_LICENSE =
   '/licenses/XSP123456/autorenew/reactivate';
 export const LICENSE_MOCK_URL_UPGRADE_LICENSE = '/licenses/XSP123456/upgrade';
+export const LICENSE_MOCK_URL_CONVERSION_SKU_LICENSE =
+  '/licenses/XSP123456/conversion/sku';
+export const LICENSE_MOCK_URL_CONVERSION_SKU_EXISTING_LICENSE =
+  '/licenses/XSP123456/conversion/existing';
 
 /**
  * Mock license data to be used in tests and returned by mocks
@@ -922,6 +928,36 @@ describe('LicensesClient', () => {
       client.setPerPage(0);
       await client.saveOrderEavs(licenseReference, saveOrderEavsData);
 
+      expect(nock.isDone()).to.be.true;
+    });
+  });
+
+  describe('getConversionSku', () => {
+    const getLicenseHistory = new PublicApiClient()
+      .getLicensesClient()
+      .setUrl(LICENSES_MOCK_URL);
+
+    it('call getConversionSku method', async () => {
+      nock(LICENSES_MOCK_URL)
+        .get(LICENSE_MOCK_URL_CONVERSION_SKU_LICENSE)
+        .reply(200, PAYLOAD_LICENSE_CONVERSION_SKU);
+
+      await getLicenseHistory.getConversionSku('XSP123456');
+      expect(nock.isDone()).to.be.true;
+    });
+  });
+
+  describe('getConversionSkuExisting', () => {
+    const getLicenseHistory = new PublicApiClient()
+      .getLicensesClient()
+      .setUrl(LICENSES_MOCK_URL);
+
+    it('call getConversionSkuExisting method', async () => {
+      nock(LICENSES_MOCK_URL)
+        .get(LICENSE_MOCK_URL_CONVERSION_SKU_EXISTING_LICENSE)
+        .reply(200, PAYLOAD_LICENSE_CONVERSION_SKU_EXISTING);
+
+      await getLicenseHistory.getConversionSkuExisting('XSP123456');
       expect(nock.isDone()).to.be.true;
     });
   });
