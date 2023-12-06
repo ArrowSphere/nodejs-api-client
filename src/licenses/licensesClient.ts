@@ -53,6 +53,7 @@ import { LicenseGetFields } from './entities/getLicense/licenseGetResult';
 import { GetLicenseResult } from './entities/getResult/getLicenseResult';
 import { LicenceHistoryResult } from './entities/history/licenceHistoryResult';
 import { UpgradeResult } from './entities/license/upgradeResult';
+import { LicenseConversionSkuResult } from './entities/license/licenseConversionSkuResult';
 
 /**
  * Parameters passable to the request for refining search.
@@ -407,6 +408,16 @@ export class LicensesClient extends AbstractRestfulClient {
   private SAVE_ORDER_EAVS_PATH = '/saveOrderEavs';
 
   /**
+   * The path of license all available skus
+   */
+  private GET_LICENSE_CONVERSION_SKU = '/conversion/sku';
+
+  /**
+   * The path of license all existing skus
+   */
+  private GET_LICENSE_EXISTING_CONVERSION_SKU = '/conversion/existing';
+
+  /**
    * Returns the raw result from the find endpoint call
    *
    * @param postData - Find payload
@@ -633,6 +644,30 @@ export class LicensesClient extends AbstractRestfulClient {
     this.path = `/${licenseReference}${this.SAVE_ORDER_EAVS_PATH}`;
 
     await this.post(saveOrderEavsData, parameters);
+  }
+
+  public async getConversionSku(
+    licenseReference: string,
+    parameters: Parameters = {},
+  ): Promise<GetResult<LicenseConversionSkuResult>> {
+    this.path = `/${licenseReference}${this.GET_LICENSE_CONVERSION_SKU}`;
+
+    return new GetResult(
+      LicenseConversionSkuResult,
+      await this.get(parameters),
+    );
+  }
+
+  public async getExistingConversionSku(
+    licenseReference: string,
+    parameters: Parameters = {},
+  ): Promise<GetResult<LicenseConversionSkuResult>> {
+    this.path = `/${licenseReference}${this.GET_LICENSE_EXISTING_CONVERSION_SKU}`;
+
+    return new GetResult(
+      LicenseConversionSkuResult,
+      await this.get(parameters),
+    );
   }
 
   private createFilters(

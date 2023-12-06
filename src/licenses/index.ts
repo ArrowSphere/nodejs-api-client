@@ -16,6 +16,8 @@ export * from './entities/history/actionHistoryResult';
 export * from './entities/history/licenceHistoryResult';
 export * from './entities/license/activeSeatsFindResult';
 export * from './entities/license/configFindResult';
+export * from './entities/license/conversionSkuResult';
+export * from './entities/license/licenseConversionSkuResult';
 export * from './entities/license/licenseFindResult';
 export * from './entities/request/licenseRequest';
 export * from './entities/license/priceFindResult';
