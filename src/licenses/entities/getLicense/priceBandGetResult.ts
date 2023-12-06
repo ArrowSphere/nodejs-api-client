@@ -28,10 +28,14 @@ export class PriceBandGetResult extends AbstractEntity<PriceBandData> {
         : undefined;
   }
 
+  get saleConstraints(): SaleConstraintsFindResult | undefined {
+    return this.#saleConstraints;
+  }
+
   public toJSON(): PriceBandData {
     return {
-      [PriceBandDataFields.SALE_CONTRAINSTS]: this.#saleConstraints
-        ? this.#saleConstraints.toJSON()
+      [PriceBandDataFields.SALE_CONTRAINSTS]: this.saleConstraints
+        ? this.saleConstraints.toJSON()
         : undefined,
     };
   }
