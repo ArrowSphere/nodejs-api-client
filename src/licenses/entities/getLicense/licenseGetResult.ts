@@ -438,7 +438,7 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
       [LicenseGetFields.COLUMN_EXTRA_DATA]: this.extraData?.map(
         (extraData: ExtraDataFindResult) => extraData.toJSON(),
       ),
-      [LicenseGetFields.COLUMN_PRICE_BAND]: this.#priceBand?.toJSON(),
+      [LicenseGetFields.COLUMN_PRICE_BAND]: this.priceBand?.toJSON(),
     };
   }
 }
