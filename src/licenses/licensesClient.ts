@@ -48,12 +48,15 @@ import {
   SecurityFindResultDataKeywords,
   SecurityFindResultDataSortParameters,
 } from './entities/license/securityFindResult';
-import { GetResult } from '../getResult';
+import { GetResult, GetResultFields } from '../getResult';
 import { LicenseGetFields } from './entities/getLicense/licenseGetResult';
 import { GetLicenseResult } from './entities/getResult/getLicenseResult';
 import { LicenceHistoryResult } from './entities/history/licenceHistoryResult';
 import { UpgradeResult } from './entities/license/upgradeResult';
-import { LicenseConversionSkuResult } from './entities/license/licenseConversionSkuResult';
+import {
+  LicenseConversionSkuFields,
+  LicenseConversionSkuResult,
+} from './entities/license/licenseConversionSkuResult';
 
 /**
  * Parameters passable to the request for refining search.
@@ -652,10 +655,17 @@ export class LicensesClient extends AbstractRestfulClient {
   ): Promise<GetResult<LicenseConversionSkuResult>> {
     this.path = `/${licenseReference}${this.GET_LICENSE_CONVERSION_SKU}`;
 
-    return new GetResult(
-      LicenseConversionSkuResult,
-      await this.get(parameters),
-    );
+    const response = await this.get(parameters);
+
+    //A workaround, the public api endpoint is not returning "data" in the payload
+    response[GetResultFields.COLUMN_DATA] = {
+      [LicenseConversionSkuFields.COLUMN_OFFERS]:
+        LicenseConversionSkuFields.COLUMN_OFFERS in response
+          ? response[LicenseConversionSkuFields.COLUMN_OFFERS]
+          : [],
+    };
+
+    return new GetResult(LicenseConversionSkuResult, response);
   }
 
   public async getExistingConversionSku(
@@ -664,10 +674,17 @@ export class LicensesClient extends AbstractRestfulClient {
   ): Promise<GetResult<LicenseConversionSkuResult>> {
     this.path = `/${licenseReference}${this.GET_LICENSE_EXISTING_CONVERSION_SKU}`;
 
-    return new GetResult(
-      LicenseConversionSkuResult,
-      await this.get(parameters),
-    );
+    const response = await this.get(parameters);
+
+    //A workaround, the public api endpoint is not returning "data" in the payload
+    response[GetResultFields.COLUMN_DATA] = {
+      [LicenseConversionSkuFields.COLUMN_OFFERS]:
+        LicenseConversionSkuFields.COLUMN_OFFERS in response
+          ? response[LicenseConversionSkuFields.COLUMN_OFFERS]
+          : [],
+    };
+
+    return new GetResult(LicenseConversionSkuResult, response);
   }
 
   private createFilters(
