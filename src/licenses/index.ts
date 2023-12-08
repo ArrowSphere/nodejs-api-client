@@ -21,6 +21,7 @@ export * from './entities/license/licenseConversionSkuResult';
 export * from './entities/license/licenseFindResult';
 export * from './entities/request/licenseRequest';
 export * from './entities/license/priceFindResult';
+export * from './entities/license/upgradeResult';
 export * from './entities/license/warningFindResult';
 export * from './entities/offer/actionFlagsFindResult';
 export * from './entities/offer/offerFindResult';
