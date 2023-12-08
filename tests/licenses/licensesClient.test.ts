@@ -908,6 +908,21 @@ describe('LicensesClient', () => {
     });
   });
 
+  describe('upgradeToExisting', () => {
+    const getLicenseClient = new PublicApiClient()
+      .getLicensesClient()
+      .setUrl(LICENSES_MOCK_URL);
+
+    it('calls the upgradeToExisting method', async () => {
+      nock(LICENSES_MOCK_URL)
+        .post('/licenses/XSP123/conversion/XSP456')
+        .reply(201);
+
+      await getLicenseClient.upgradeToExisting('XSP123', 'XSP456', 2);
+      expect(nock.isDone()).to.be.true;
+    });
+  });
+
   describe('saveOrderEavs', () => {
     it('calls the saveOrderEavs method', async () => {
       const licenseReference = 'XSP12345';
