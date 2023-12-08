@@ -639,6 +639,17 @@ export class LicensesClient extends AbstractRestfulClient {
     return new GetResult(UpgradeResult, await this.post(payload, parameters));
   }
 
+  public async upgradeToExisting(
+    licenseReference: string,
+    targetLicenseReference: string,
+    quantity: number,
+    parameters: Parameters = {},
+  ): Promise<void> {
+    this.path = `/${licenseReference}${this.UPGRADE_PATH}/${targetLicenseReference}`;
+
+    await this.post({ quantity }, parameters);
+  }
+
   public async saveOrderEavs(
     licenseReference: string,
     saveOrderEavsData: SaveOrderEavsInputType,
