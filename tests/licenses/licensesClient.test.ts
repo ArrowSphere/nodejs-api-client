@@ -55,6 +55,10 @@ import {
 } from '../../src/licenses/entities/license/upgradeResult';
 import { Axios } from 'axios';
 import sinon from 'sinon';
+import {
+  PartialResponse,
+  PartialResponseFields,
+} from '../../src/partialResponse';
 
 export const LICENSES_MOCK_URL = 'https://licenses.localhost';
 export const LICENSES_FIND_ENDPOINT = new RegExp('/licenses/v2/find.*');
@@ -287,6 +291,12 @@ const PAYLOAD_SCHEMA = Joi.object({
   ),
 });
 
+const PAYLOAD_UPDATE_LICENSE = {
+  [LicenseGetFields.COLUMN_FRIENDLY_NAME]: 'My customer License',
+  [LicenseGetFields.COLUMN_SEATS]: 3,
+  [LicenseGetFields.COLUMN_ORGANIZATION_UNIT_ID]: 28,
+};
+
 const PAYLOAD_UPDATE_SEATS = {
   [LicenseGetFields.COLUMN_SEATS]: 3,
 };
@@ -294,6 +304,14 @@ const PAYLOAD_UPDATE_SEATS = {
 const PAYLOAD_UPDATE_SEATS_JOI = Joi.object({
   [LicenseGetFields.COLUMN_SEATS]: Joi.number(),
 });
+
+const PARTIAL_RESPONSE_UPDATE_LICENSE = {
+  [PartialResponseFields.COLUMN_STATUS]: 202,
+  [PartialResponseFields.COLUMN_ERROR]: 'Accepted',
+  [PartialResponseFields.COLUMN_MESSAGES]: [
+    'Warning: The desired seat count 10 exceeded the maximum seat count allowed per License 5',
+  ],
+};
 
 describe('LicensesClient', () => {
   const client = new PublicApiClient()
@@ -731,6 +749,41 @@ describe('LicensesClient', () => {
       expect(result.toJSON()).to.eql(
         PAYLOAD_SCHEMA_LICENSE_WITHOUT_OPTIONAL_FIELDS,
       );
+    });
+  });
+
+  describe('updateLicense', () => {
+    const getLicenseClient = new PublicApiClient()
+      .getLicensesClient()
+      .setUrl(LICENSES_MOCK_URL);
+
+    it('calls the get method and returns its result', async () => {
+      nock(LICENSES_MOCK_URL).patch(LICENSE_MOCK_URL_LICENSE).reply(204);
+
+      const response = await getLicenseClient.updateLicense(
+        '123456',
+        PAYLOAD_UPDATE_LICENSE,
+      );
+
+      expect(response).to.not.instanceOf(PartialResponse);
+      expect(nock.isDone()).to.be.true;
+    });
+
+    it('calls the get method and returns its result with partial success', async () => {
+      nock(LICENSES_MOCK_URL)
+        .patch(LICENSE_MOCK_URL_LICENSE)
+        .reply(202, PARTIAL_RESPONSE_UPDATE_LICENSE);
+
+      const response = await getLicenseClient.updateLicense(
+        '123456',
+        PAYLOAD_UPDATE_LICENSE,
+      );
+
+      expect(response).to.instanceOf(PartialResponse);
+      expect((response as PartialResponse).toJSON()).to.be.deep.equals(
+        PARTIAL_RESPONSE_UPDATE_LICENSE,
+      );
+      expect(nock.isDone()).to.be.true;
     });
   });
 
