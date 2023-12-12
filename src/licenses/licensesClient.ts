@@ -57,6 +57,7 @@ import {
   LicenseConversionSkuFields,
   LicenseConversionSkuResult,
 } from './entities/license/licenseConversionSkuResult';
+import { CredentialsResult } from './entities/license/credentialsResult';
 
 /**
  * Parameters passable to the request for refining search.
@@ -327,21 +328,14 @@ export type PostUpgrade = {
   quantity: number;
 };
 
-export enum SaveOrderEavsInputFields {
-  COLUMN_EAVS = 'eavs',
-  COLUMN_EAVKEY_NAME = 'eavkeyName',
-  COLUMN_TABLE_NAME = 'tableName',
-  COLUMN_VALUE = 'value',
+export enum SaveBillingCommentsInputFields {
+  COLUMN_COMMENT_ONE = 'comment1',
+  COLUMN_COMMENT_TWO = 'comment2',
 }
 
-export type OrderEavsInputType = {
-  [SaveOrderEavsInputFields.COLUMN_EAVKEY_NAME]: string;
-  [SaveOrderEavsInputFields.COLUMN_TABLE_NAME]: string;
-  [SaveOrderEavsInputFields.COLUMN_VALUE]: string | null;
-};
-
-export type SaveOrderEavsInputType = {
-  [SaveOrderEavsInputFields.COLUMN_EAVS]: OrderEavsInputType[];
+export type SaveBillingCommentsInputType = {
+  [SaveBillingCommentsInputFields.COLUMN_COMMENT_ONE]?: string;
+  [SaveBillingCommentsInputFields.COLUMN_COMMENT_TWO]?: string;
 };
 
 export class LicensesClient extends AbstractRestfulClient {
@@ -408,7 +402,7 @@ export class LicensesClient extends AbstractRestfulClient {
   /**
    * The path to save the license order eavs
    */
-  private SAVE_ORDER_EAVS_PATH = '/saveOrderEavs';
+  private SAVE_BILLING_COMMENTS_PATH = '/billingComments';
 
   /**
    * The path of license all available skus
@@ -419,6 +413,11 @@ export class LicensesClient extends AbstractRestfulClient {
    * The path of license all existing skus
    */
   private GET_LICENSE_EXISTING_CONVERSION_SKU = '/conversion/existing';
+
+  /**
+   * The path to retrieve license credentials
+   */
+  private GET_LICENSE_CREDENTIALS = '/credentials';
 
   /**
    * Returns the raw result from the find endpoint call
@@ -650,14 +649,14 @@ export class LicensesClient extends AbstractRestfulClient {
     await this.post({ quantity }, parameters);
   }
 
-  public async saveOrderEavs(
+  public async saveBillingComments(
     licenseReference: string,
-    saveOrderEavsData: SaveOrderEavsInputType,
+    payload: SaveBillingCommentsInputType,
     parameters: Parameters = {},
   ): Promise<void> {
-    this.path = `/${licenseReference}${this.SAVE_ORDER_EAVS_PATH}`;
+    this.path = `/${licenseReference}${this.SAVE_BILLING_COMMENTS_PATH}`;
 
-    await this.post(saveOrderEavsData, parameters);
+    await this.post(payload, parameters);
   }
 
   public async getConversionSku(
@@ -696,6 +695,15 @@ export class LicensesClient extends AbstractRestfulClient {
     };
 
     return new GetResult(LicenseConversionSkuResult, response);
+  }
+
+  public async getCredentials(
+    licenseReference: string,
+    parameters: Parameters = {},
+  ): Promise<GetResult<CredentialsResult>> {
+    this.path = `/${licenseReference}${this.GET_LICENSE_CREDENTIALS}`;
+
+    return new GetResult(CredentialsResult, await this.get(parameters));
   }
 
   private createFilters(
