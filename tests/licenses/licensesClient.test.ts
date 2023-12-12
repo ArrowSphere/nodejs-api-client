@@ -10,7 +10,7 @@ import {
   LicensesClient,
   PostUpgrade,
   PublicApiClient,
-  SaveOrderEavsInputType,
+  SaveBillingCommentsInputType,
 } from '../../src';
 import {
   FindData,
@@ -44,6 +44,7 @@ import {
 import {
   PAYLOAD_LICENSE_CONVERSION_SKU,
   PAYLOAD_LICENSE_EXISTING_CONVERSION_SKU,
+  PAYLOAD_LICENSE_GET_CREDENTIALS,
   PAYLOAD_LICENSE_HISTORY,
   PAYLOAD_SCHEMA_LICENSE,
   PAYLOAD_SCHEMA_LICENSE_WITHOUT_OPTIONAL_FIELDS,
@@ -79,7 +80,7 @@ export const LICENSE_MOCK_URL_CONVERSION_SKU_LICENSE =
   '/licenses/XSP123456/conversion/sku';
 export const LICENSE_MOCK_URL_EXISTING_CONVERSION_SKU_LICENSE =
   '/licenses/XSP123456/conversion/existing';
-
+export const LICENSE_MOCK_URL_GET_CREDENTIALS = '/licenses/12343/credentials';
 /**
  * Mock license data to be used in tests and returned by mocks
  */
@@ -923,32 +924,27 @@ describe('LicensesClient', () => {
     });
   });
 
-  describe('saveOrderEavs', () => {
-    it('calls the saveOrderEavs method', async () => {
+  describe('saveBillingComments', () => {
+    it('calls the saveBillingComments method', async () => {
       const licenseReference = 'XSP12345';
-      const saveOrderEavsData: SaveOrderEavsInputType = {
-        eavs: [
-          {
-            eavkeyName: 'order_comment_1',
-            tableName: 'ORDER_INFO',
-            value: 'The comment one',
-          },
-        ],
+      const payload: SaveBillingCommentsInputType = {
+        comment1: 'The comment 1',
+        comment2: 'The comment 2',
       };
 
       nock(LICENSES_MOCK_URL)
-        .post(`/licenses/${licenseReference}/saveOrderEavs`)
+        .post(`/licenses/${licenseReference}/billingComments`)
         .reply(201);
 
       client.setPerPage(0);
-      await client.saveOrderEavs(licenseReference, saveOrderEavsData);
+      await client.saveBillingComments(licenseReference, payload);
 
       expect(nock.isDone()).to.be.true;
     });
   });
 
   describe('getConversionSku', () => {
-    const getLicenseHistory = new PublicApiClient()
+    const licensesClient = new PublicApiClient()
       .getLicensesClient()
       .setUrl(LICENSES_MOCK_URL);
 
@@ -957,13 +953,13 @@ describe('LicensesClient', () => {
         .get(LICENSE_MOCK_URL_CONVERSION_SKU_LICENSE)
         .reply(200, PAYLOAD_LICENSE_CONVERSION_SKU);
 
-      await getLicenseHistory.getConversionSku('XSP123456');
+      await licensesClient.getConversionSku('XSP123456');
       expect(nock.isDone()).to.be.true;
     });
   });
 
   describe('getExistingConversionSku', () => {
-    const getLicenseHistory = new PublicApiClient()
+    const licensesClient = new PublicApiClient()
       .getLicensesClient()
       .setUrl(LICENSES_MOCK_URL);
 
@@ -972,7 +968,21 @@ describe('LicensesClient', () => {
         .get(LICENSE_MOCK_URL_EXISTING_CONVERSION_SKU_LICENSE)
         .reply(200, PAYLOAD_LICENSE_EXISTING_CONVERSION_SKU);
 
-      await getLicenseHistory.getExistingConversionSku('XSP123456');
+      await licensesClient.getExistingConversionSku('XSP123456');
+      expect(nock.isDone()).to.be.true;
+    });
+  });
+
+  describe('getCredentials', () => {
+    const licensesClient = new PublicApiClient()
+      .getLicensesClient()
+      .setUrl(LICENSES_MOCK_URL);
+    it('call get method', async () => {
+      nock(LICENSES_MOCK_URL)
+        .get(LICENSE_MOCK_URL_GET_CREDENTIALS)
+        .reply(200, PAYLOAD_LICENSE_GET_CREDENTIALS);
+
+      await licensesClient.getCredentials('12343');
       expect(nock.isDone()).to.be.true;
     });
   });
