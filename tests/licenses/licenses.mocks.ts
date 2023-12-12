@@ -19,7 +19,8 @@ import {
   OrderGetFields,
   SecurityFindResultFields,
 } from '../../src';
-import { ExtraDataFields } from '../../src/licenses/entities/getLicense/extraDataFindResult';
+import { ExtraDataFields } from '../../src/licenses/entities/getLicense/extraDataGetResult';
+import { CredentialsResultType } from '../../src/licenses/entities/license/credentialsResult';
 
 export const PAYLOAD_SCHEMA_LICENSE: GetData<GetLicenseResultData> = {
   status: 200,
@@ -100,11 +101,15 @@ export const PAYLOAD_SCHEMA_LICENSE: GetData<GetLicenseResultData> = {
       [LicenseGetFields.COLUMN_PROMOTION]: {},
       [LicenseGetFields.COLUMN_EXTRA_DATA]: [
         {
-          [ExtraDataFields.EAV_KEY_NAME]: 'order_comment_1',
-          [ExtraDataFields.TABLE_NAME]: 'ORDER_INFO',
-          [ExtraDataFields.VALUE]: 'Commeent one',
+          [ExtraDataFields.COLUMN_NAME]: 'order_comment_1',
+          [ExtraDataFields.COLUMN_VALUE]: 'Comment one',
+        },
+        {
+          [ExtraDataFields.COLUMN_NAME]: 'DOMAIN_NAME',
+          [ExtraDataFields.COLUMN_VALUE]: 'thecompany.microsoft.com',
         },
       ],
+      [LicenseGetFields.COLUMN_VENDOR_CODE]: 'Microsoft',
     },
   },
 };
@@ -239,5 +244,15 @@ export const PAYLOAD_LICENSE_EXISTING_CONVERSION_SKU: GetData<LicenseConversionS
   status: 200,
   data: {
     [LicenseConversionSkuFields.COLUMN_OFFERS]: EXISTING_CONVERSION_SKU_PAYLOAD,
+  },
+};
+
+export const PAYLOAD_LICENSE_GET_CREDENTIALS: GetData<CredentialsResultType> = {
+  status: 200,
+  data: {
+    username: 'admin',
+    passwordResetUrl:
+      'http://test/CloudManagement.UI/data/InstancePassword/XXXXXXX',
+    url: 'http://test/mdm/mdm_XXXXXXX',
   },
 };
