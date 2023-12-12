@@ -19,7 +19,12 @@ import {
   OrderGetFields,
   SecurityFindResultFields,
 } from '../../src';
-import { ExtraDataFields } from '../../src/licenses/entities/getLicense/extraDataFindResult';
+import {
+  ExtraDataCompanyDetailFields,
+  ExtraDataEavFields,
+  ExtraDataFields,
+} from '../../src/licenses/entities/getLicense/extraDataGetResult';
+import { CredentialsResultType } from '../../src/licenses/entities/license/credentialsResult';
 
 export const PAYLOAD_SCHEMA_LICENSE: GetData<GetLicenseResultData> = {
   status: 200,
@@ -98,13 +103,21 @@ export const PAYLOAD_SCHEMA_LICENSE: GetData<GetLicenseResultData> = {
       [LicenseGetFields.COLUMN_ARROW_SUB_CATEGORIES]: ['string'],
       [LicenseGetFields.COLUMN_ASSETS]: {},
       [LicenseGetFields.COLUMN_PROMOTION]: {},
-      [LicenseGetFields.COLUMN_EXTRA_DATA]: [
-        {
-          [ExtraDataFields.EAV_KEY_NAME]: 'order_comment_1',
-          [ExtraDataFields.TABLE_NAME]: 'ORDER_INFO',
-          [ExtraDataFields.VALUE]: 'Commeent one',
-        },
-      ],
+      [LicenseGetFields.COLUMN_EXTRA_DATA]: {
+        [ExtraDataFields.EAVS]: [
+          {
+            [ExtraDataEavFields.EAV_KEY_NAME]: 'order_comment_1',
+            [ExtraDataEavFields.TABLE_NAME]: 'ORDER_INFO',
+            [ExtraDataEavFields.VALUE]: 'Commeent one',
+          },
+        ],
+        [ExtraDataFields.COMPANY_DETAILS]: [
+          {
+            [ExtraDataCompanyDetailFields.NAME]: 'DOMAIN_NAME',
+            [ExtraDataCompanyDetailFields.VALUE]: 'thecompany.microsoft.com',
+          },
+        ],
+      },
     },
   },
 };
@@ -239,5 +252,15 @@ export const PAYLOAD_LICENSE_EXISTING_CONVERSION_SKU: GetData<LicenseConversionS
   status: 200,
   data: {
     [LicenseConversionSkuFields.COLUMN_OFFERS]: EXISTING_CONVERSION_SKU_PAYLOAD,
+  },
+};
+
+export const PAYLOAD_LICENSE_GET_CREDENTIALS: GetData<CredentialsResultType> = {
+  status: 200,
+  data: {
+    username: 'admin',
+    passwordResetUrl:
+      'http://test/CloudManagement.UI/data/InstancePassword/XXXXXXX',
+    url: 'http://test/mdm/mdm_XXXXXXX',
   },
 };
