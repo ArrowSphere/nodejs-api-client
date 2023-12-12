@@ -7,7 +7,7 @@ export * from './entities/findResult';
 export * from './entities/getLicense/actionMessagesGetResult';
 export * from './entities/getLicense/actionsGetResult';
 export * from './entities/getLicense/buySellFindResult';
-export * from './entities/getLicense/extraDataFindResult';
+export * from './entities/getLicense/extraDataGetResult';
 export * from './entities/getLicense/licenseGetResult';
 export * from './entities/getLicense/licensePriceGetResult';
 export * from './entities/getLicense/orderGetResult';
