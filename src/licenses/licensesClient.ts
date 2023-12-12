@@ -57,6 +57,7 @@ import {
   LicenseConversionSkuFields,
   LicenseConversionSkuResult,
 } from './entities/license/licenseConversionSkuResult';
+import { CredentialsResult } from './entities/license/credentialsResult';
 
 /**
  * Parameters passable to the request for refining search.
@@ -421,6 +422,11 @@ export class LicensesClient extends AbstractRestfulClient {
   private GET_LICENSE_EXISTING_CONVERSION_SKU = '/conversion/existing';
 
   /**
+   * The path to retrieve license credentials
+   */
+  private GET_LICENSE_CREDENTIALS = '/credentials';
+
+  /**
    * Returns the raw result from the find endpoint call
    *
    * @param postData - Find payload
@@ -696,6 +702,15 @@ export class LicensesClient extends AbstractRestfulClient {
     };
 
     return new GetResult(LicenseConversionSkuResult, response);
+  }
+
+  public async getCredentials(
+    licenseReference: string,
+    parameters: Parameters = {},
+  ): Promise<GetResult<CredentialsResult>> {
+    this.path = `/${licenseReference}${this.GET_LICENSE_CREDENTIALS}`;
+
+    return new GetResult(CredentialsResult, await this.get(parameters));
   }
 
   private createFilters(
