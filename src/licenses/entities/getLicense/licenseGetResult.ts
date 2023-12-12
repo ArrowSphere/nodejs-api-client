@@ -19,7 +19,7 @@ import {
 } from '../license/securityFindResult';
 import { PromotionData, PromotionFindResult } from './promotionFindResult';
 import { AssetsData, AssetsFindResult } from './assetsFindResult';
-import { ExtraData, ExtraDataFindResult } from './extraDataFindResult';
+import { ExtraDataResult, ExtraDataType } from './extraDataGetResult';
 import { PriceBandData, PriceBandGetResult } from './priceBandGetResult';
 
 export enum LicenseGetFields {
@@ -61,6 +61,7 @@ export enum LicenseGetFields {
   COLUMN_VENDOR_BILLING_ID = 'vendorBillingId',
   COLUMN_EXTRA_DATA = 'extraData',
   COLUMN_PRICE_BAND = 'priceBand',
+  COLUMN_VENDOR_CODE = 'vendorCode',
 }
 
 export type LicenseGetData = {
@@ -100,8 +101,9 @@ export type LicenseGetData = {
   [LicenseGetFields.COLUMN_PROMOTION]?: PromotionData;
   [LicenseGetFields.COLUMN_ASSETS]?: AssetsData;
   [LicenseGetFields.COLUMN_VENDOR_BILLING_ID]?: string | null;
-  [LicenseGetFields.COLUMN_EXTRA_DATA]?: ExtraData[];
+  [LicenseGetFields.COLUMN_EXTRA_DATA]?: ExtraDataType[];
   [LicenseGetFields.COLUMN_PRICE_BAND]?: PriceBandData;
+  [LicenseGetFields.COLUMN_VENDOR_CODE]?: string;
 };
 
 export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
@@ -141,8 +143,9 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
   readonly #promotion?: PromotionFindResult;
   readonly #assets?: AssetsFindResult;
   readonly #vendorBillingId?: string | null;
-  readonly #extraData?: ExtraDataFindResult[];
+  readonly #extraData?: ExtraDataResult[];
   readonly #priceBand?: PriceBandGetResult;
+  readonly #vendorCode?: string;
 
   public constructor(licenseGetDataInput: LicenseGetData) {
     super(licenseGetDataInput);
@@ -231,7 +234,7 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
       : undefined;
     this.#extraData = licenseGetDataInput[
       LicenseGetFields.COLUMN_EXTRA_DATA
-    ]?.map((result: ExtraData) => new ExtraDataFindResult(result));
+    ]?.map((e: ExtraDataType): ExtraDataResult => new ExtraDataResult(e));
     this.#priceBand =
       licenseGetDataInput[LicenseGetFields.COLUMN_PRICE_BAND] !== undefined
         ? new PriceBandGetResult(
@@ -240,6 +243,7 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
             ] as PriceBandData,
           )
         : undefined;
+    this.#vendorCode = licenseGetDataInput[LicenseGetFields.COLUMN_VENDOR_CODE];
   }
 
   public get id(): string {
@@ -386,12 +390,16 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
     return this.#vendorBillingId;
   }
 
-  get extraData(): ExtraDataFindResult[] | undefined {
+  get extraData(): ExtraDataResult[] | undefined {
     return this.#extraData;
   }
 
   get priceBand(): PriceBandGetResult | undefined {
     return this.#priceBand;
+  }
+
+  get vendorCode(): string | undefined {
+    return this.#vendorCode;
   }
 
   public toJSON(): LicenseGetData {
@@ -436,9 +444,10 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
       [LicenseGetFields.COLUMN_PROMOTION]: this.promotion?.toJSON(),
       [LicenseGetFields.COLUMN_ASSETS]: this.assets?.toJSON(),
       [LicenseGetFields.COLUMN_EXTRA_DATA]: this.extraData?.map(
-        (extraData: ExtraDataFindResult) => extraData.toJSON(),
+        (e: ExtraDataResult): ExtraDataType => e.toJSON(),
       ),
       [LicenseGetFields.COLUMN_PRICE_BAND]: this.priceBand?.toJSON(),
+      [LicenseGetFields.COLUMN_VENDOR_CODE]: this.vendorCode,
     };
   }
 }
