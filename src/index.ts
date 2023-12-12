@@ -11,6 +11,7 @@ export * from './exception/';
 export * from './general/';
 export * from './getResult';
 export * from './graphqlApi';
+export * from './partialResponse';
 export * from './pagination';
 export * from './licenses/';
 export * from './notifications/';

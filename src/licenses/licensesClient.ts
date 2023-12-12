@@ -63,6 +63,8 @@ import {
   GetPricingRateResult,
   RateTypeEnum,
 } from './entities/pricingRate/getPricingRateResult';
+import { PartialResponse, PartialResponseData } from '../partialResponse';
+import { constants } from 'http2';
 
 /**
  * Parameters passable to the request for refining search.
@@ -308,14 +310,18 @@ export type LicenseFindRawPayload = {
   [LicenseFindParameters.DATA_HIGHLIGHT]?: boolean;
 };
 
+export type UpdateLicenseData = {
+  [LicenseGetFields.COLUMN_FRIENDLY_NAME]?: string;
+  [LicenseGetFields.COLUMN_SEATS]?: number;
+  [LicenseGetFields.COLUMN_ORGANIZATION_UNIT_ID]?: number;
+} & ExtraInformationType;
+
 export type UpdateSeatsData = {
   [LicenseGetFields.COLUMN_SEATS]: number;
-  [LicenseGetFields.COLUMN_ORGANIZATION_UNIT_ID]: number;
 } & ExtraInformationType;
 
 export type PutFriendlyName = {
   [LicenseGetFields.COLUMN_FRIENDLY_NAME]: string;
-  [LicenseGetFields.COLUMN_ORGANIZATION_UNIT_ID]: number;
 } & ExtraInformationType;
 
 export type PutReactivate = ExtraInformationType;
@@ -577,6 +583,23 @@ export class LicensesClient extends AbstractRestfulClient {
     this.path = `/${licenseReference}`;
 
     return new GetResult(GetLicenseResult, await this.get(parameters));
+  }
+
+  public async updateLicense(
+    licenseReference: string,
+    payload: UpdateLicenseData,
+    parameters: Parameters = {},
+  ): Promise<void | PartialResponse> {
+    this.path = `/${licenseReference}`;
+
+    const response = await this.patch<undefined | PartialResponseData>(
+      payload,
+      parameters,
+    );
+
+    if (response && response.status == constants.HTTP_STATUS_PARTIAL_CONTENT) {
+      return new PartialResponse(response);
+    }
   }
 
   public updateSeats(
