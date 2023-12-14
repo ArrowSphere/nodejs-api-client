@@ -8,4 +8,5 @@ export * from './entities/orders/products/program/productProgram';
 export * from './entities/orders/products/products';
 export * from '../shared/extraInformation/additionalExtraInformation';
 export * from './entities/referenceLink';
+export * from './types/orderStatus';
 export * from './ordersClient';
