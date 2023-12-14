@@ -122,6 +122,11 @@ export const MOCK_RESULT_DATA: {
     [LicenseFindResultFields.COLUMN_MARKETPLACE]: 'marketplace',
     [LicenseFindResultFields.COLUMN_MESSAGE]: 'message',
     [LicenseFindResultFields.COLUMN_OFFER]: 'offer',
+    [LicenseFindResultFields.COLUMN_OFFER_ARROWSPHERE_SKU]: 'offer_sku',
+    [LicenseFindResultFields.COLUMN_NEXT_RENEWAL_DATE]: new Date().toISOString(),
+    [LicenseFindResultFields.COLUMN_ORDER_REF]: 'order_ref',
+    [LicenseFindResultFields.COLUMN_PRICEBAND_VENDOR_SKU]:
+      'priceband_vendor_sku',
     [LicenseFindResultFields.COLUMN_PARENT_LINE_ID]: 2,
     [LicenseFindResultFields.COLUMN_PARENT_ORDER_REF]: 'parent_order_ref',
     [LicenseFindResultFields.COLUMN_PARTNER_REF]: 'partner_ref',
