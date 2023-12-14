@@ -1,7 +1,8 @@
 import sinon from 'sinon';
-import { LicenseRequestClient } from '../../src/licenses';
-import { PublicApiClient } from '../../src';
+import { LicenseRequestClient, LicenseRequestType } from '../../src/licenses';
+import { OrderStatusEnum, PublicApiClient } from '../../src';
 import { Axios } from 'axios';
+import { expect } from 'chai';
 
 describe('LicenseRequestClient', () => {
   const licenseRequestClient: LicenseRequestClient = new PublicApiClient()
@@ -20,24 +21,52 @@ describe('LicenseRequestClient', () => {
   describe('getLastRequests', () => {
     it('makes a graphql POST request on the specified URL /licenses/XSP123/request', async () => {
       const expectedResult = {
-        data: {
-          data: [
-            {
-              licenseReference: 'XSP4289490',
-              action: 'updateFriendlyName',
-              status: 'In progress',
-              userName: 'API xCP',
-              createdAt: '2023-10-31 16:51:00',
-            },
-          ],
-        },
         status: 200,
+        data: [
+          {
+            licenseReference: 'XSP4806212',
+            action: 'conversionToExistingOrigin',
+            message:
+              'Microsoft subscription cannot be converted to product CFQ7TTC0LDPB:0001',
+            status: OrderStatusEnum.INTERNAL_WARNING,
+            userName: 'michel',
+            createdAt: '2023-12-13 16:14:51',
+            updatedAt: '2023-12-13 16:17:16',
+          },
+        ],
       };
 
-      axiosClient.request.resolves(expectedResult);
+      axiosClient.request.resolves({
+        status: expectedResult.status,
+        data: {
+          ...expectedResult,
+        },
+      });
 
-      await licenseRequestClient.getLastRequests('XSP123');
+      const response: LicenseRequestType[] = await licenseRequestClient.getLastRequests(
+        'XSP123',
+      );
 
+      expect(response).to.deep.equal(expectedResult.data);
+      axiosClient.request.calledOnceWithExactly(sinon.match('XSP123'));
+    });
+
+    it('makes a graphql POST request on the specified URL /licenses/XSP123/request and should return empty response', async () => {
+      const expectedResult = {
+        status: 200,
+        data: [],
+      };
+
+      axiosClient.request.resolves({
+        status: expectedResult.status,
+        data: {},
+      });
+
+      const response: LicenseRequestType[] = await licenseRequestClient.getLastRequests(
+        'XSP123',
+      );
+
+      expect(response).to.deep.equal([]);
       axiosClient.request.calledOnceWithExactly(sinon.match('XSP123'));
     });
   });
