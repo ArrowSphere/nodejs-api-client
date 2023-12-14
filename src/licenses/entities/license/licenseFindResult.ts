@@ -73,6 +73,10 @@ export enum LicenseFindResultFields {
   COLUMN_MARKETPLACE = 'marketplace',
   COLUMN_MESSAGE = 'message',
   COLUMN_OFFER = 'offer',
+  COLUMN_OFFER_ARROWSPHERE_SKU = 'offer_arrowsphere_sku',
+  COLUMN_ORDER_REF = 'order_ref',
+  COLUMN_PRICEBAND_VENDOR_SKU = 'priceband_vendor_sku',
+  COLUMN_NEXT_RENEWAL_DATE = 'next_renewal_date',
   COLUMN_PARENT_LINE_ID = 'parent_line_id',
   COLUMN_PARENT_ORDER_REF = 'parent_order_ref',
   COLUMN_PARTNER_REF = 'partner_ref',
@@ -121,6 +125,10 @@ export type LicenseFindResultData = {
   [LicenseFindResultFields.COLUMN_MARKETPLACE]: string;
   [LicenseFindResultFields.COLUMN_MESSAGE]: string;
   [LicenseFindResultFields.COLUMN_OFFER]: string;
+  [LicenseFindResultFields.COLUMN_OFFER_ARROWSPHERE_SKU]: string;
+  [LicenseFindResultFields.COLUMN_ORDER_REF]: string;
+  [LicenseFindResultFields.COLUMN_PRICEBAND_VENDOR_SKU]: string;
+  [LicenseFindResultFields.COLUMN_NEXT_RENEWAL_DATE]: string;
   [LicenseFindResultFields.COLUMN_PARENT_LINE_ID]: number | null;
   [LicenseFindResultFields.COLUMN_PARENT_ORDER_REF]: string | null;
   [LicenseFindResultFields.COLUMN_PARTNER_REF]: string;
@@ -166,6 +174,10 @@ export type LicenceFindDataKeywords = {
   [LicenseFindResultFields.COLUMN_MARKETPLACE]?: DataKeywords;
   [LicenseFindResultFields.COLUMN_MESSAGE]?: DataKeywords;
   [LicenseFindResultFields.COLUMN_OFFER]?: DataKeywords;
+  [LicenseFindResultFields.COLUMN_OFFER_ARROWSPHERE_SKU]?: DataKeywords;
+  [LicenseFindResultFields.COLUMN_ORDER_REF]?: DataKeywords;
+  [LicenseFindResultFields.COLUMN_PRICEBAND_VENDOR_SKU]?: DataKeywords;
+  [LicenseFindResultFields.COLUMN_NEXT_RENEWAL_DATE]?: DataKeywords;
   [LicenseFindResultFields.COLUMN_PARENT_LINE_ID]?: DataKeywords;
   [LicenseFindResultFields.COLUMN_PARENT_ORDER_REF]?: DataKeywords;
   [LicenseFindResultFields.COLUMN_PARTNER_REF]?: DataKeywords;
@@ -210,6 +222,10 @@ export type LicenceFindDataSortParameters = {
   [LicenseFindResultFields.COLUMN_MARKETPLACE]?: SortParameters;
   [LicenseFindResultFields.COLUMN_MESSAGE]?: SortParameters;
   [LicenseFindResultFields.COLUMN_OFFER]?: SortParameters;
+  [LicenseFindResultFields.COLUMN_OFFER_ARROWSPHERE_SKU]?: SortParameters;
+  [LicenseFindResultFields.COLUMN_ORDER_REF]?: SortParameters;
+  [LicenseFindResultFields.COLUMN_PRICEBAND_VENDOR_SKU]?: SortParameters;
+  [LicenseFindResultFields.COLUMN_NEXT_RENEWAL_DATE]?: SortParameters;
   [LicenseFindResultFields.COLUMN_PARENT_LINE_ID]?: SortParameters;
   [LicenseFindResultFields.COLUMN_PARENT_ORDER_REF]?: SortParameters;
   [LicenseFindResultFields.COLUMN_PARTNER_REF]?: SortParameters;
@@ -254,6 +270,10 @@ export type LicenceFindDataFiltersParameters = {
   [LicenseFindResultFields.COLUMN_MARKETPLACE]?: FiltersParameters;
   [LicenseFindResultFields.COLUMN_MESSAGE]?: FiltersParameters;
   [LicenseFindResultFields.COLUMN_OFFER]?: FiltersParameters;
+  [LicenseFindResultFields.COLUMN_OFFER_ARROWSPHERE_SKU]?: FiltersParameters;
+  [LicenseFindResultFields.COLUMN_ORDER_REF]?: FiltersParameters;
+  [LicenseFindResultFields.COLUMN_PRICEBAND_VENDOR_SKU]?: FiltersParameters;
+  [LicenseFindResultFields.COLUMN_NEXT_RENEWAL_DATE]?: FiltersParameters;
   [LicenseFindResultFields.COLUMN_PARENT_LINE_ID]?: FiltersParameters;
   [LicenseFindResultFields.COLUMN_PARENT_ORDER_REF]?: FiltersParameters;
   [LicenseFindResultFields.COLUMN_PARTNER_REF]?: FiltersParameters;
@@ -319,6 +339,10 @@ export class LicenseFindResult extends AbstractEntity<LicenseFindResultData> {
   readonly #marketplace: string;
   readonly #message: string;
   readonly #offer: string;
+  readonly #offerArrowsphereSku: string;
+  readonly #orderRef: string;
+  readonly #pricebandVendorSku: string;
+  readonly #nextRenewalDate: string;
   readonly #parentLineId: number | null;
   readonly #parentOrderRef: string | null;
   readonly #partnerRef: string;
@@ -386,6 +410,13 @@ export class LicenseFindResult extends AbstractEntity<LicenseFindResultData> {
     this.#marketplace = data[LicenseFindResultFields.COLUMN_MARKETPLACE];
     this.#message = data[LicenseFindResultFields.COLUMN_MESSAGE];
     this.#offer = data[LicenseFindResultFields.COLUMN_OFFER];
+    this.#offerArrowsphereSku =
+      data[LicenseFindResultFields.COLUMN_OFFER_ARROWSPHERE_SKU];
+    this.#orderRef = data[LicenseFindResultFields.COLUMN_ORDER_REF];
+    this.#pricebandVendorSku =
+      data[LicenseFindResultFields.COLUMN_PRICEBAND_VENDOR_SKU];
+    this.#nextRenewalDate =
+      data[LicenseFindResultFields.COLUMN_NEXT_RENEWAL_DATE];
     this.#parentLineId = data[LicenseFindResultFields.COLUMN_PARENT_LINE_ID];
     this.#parentOrderRef =
       data[LicenseFindResultFields.COLUMN_PARENT_ORDER_REF];
@@ -513,6 +544,22 @@ export class LicenseFindResult extends AbstractEntity<LicenseFindResultData> {
     return this.#offer;
   }
 
+  public get offerArrowsphereSku(): string {
+    return this.#offerArrowsphereSku;
+  }
+
+  public get orderRef(): string {
+    return this.#orderRef;
+  }
+
+  public get pricebandVendorSku(): string {
+    return this.#pricebandVendorSku;
+  }
+
+  public get nextRenewalDate(): string {
+    return this.#nextRenewalDate;
+  }
+
   public get parentLineId(): number | null {
     return this.#parentLineId;
   }
@@ -637,6 +684,12 @@ export class LicenseFindResult extends AbstractEntity<LicenseFindResultData> {
       [LicenseFindResultFields.COLUMN_MARKETPLACE]: this.marketplace,
       [LicenseFindResultFields.COLUMN_MESSAGE]: this.message,
       [LicenseFindResultFields.COLUMN_OFFER]: this.offer,
+      [LicenseFindResultFields.COLUMN_OFFER_ARROWSPHERE_SKU]: this
+        .offerArrowsphereSku,
+      [LicenseFindResultFields.COLUMN_ORDER_REF]: this.orderRef,
+      [LicenseFindResultFields.COLUMN_PRICEBAND_VENDOR_SKU]: this
+        .pricebandVendorSku,
+      [LicenseFindResultFields.COLUMN_NEXT_RENEWAL_DATE]: this.nextRenewalDate,
       [LicenseFindResultFields.COLUMN_PARENT_LINE_ID]: this.parentLineId,
       [LicenseFindResultFields.COLUMN_PARENT_ORDER_REF]: this.parentOrderRef,
       [LicenseFindResultFields.COLUMN_PARTNER_REF]: this.partnerRef,

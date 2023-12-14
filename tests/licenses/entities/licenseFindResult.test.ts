@@ -35,6 +35,11 @@ export const MOCK_LICENSE_DATA_WITHOUT_OPTIONAL_DATA_INPUT: LicenseFindResultDat
   [LicenseFindResultFields.COLUMN_MARKETPLACE]: 'marketplace',
   [LicenseFindResultFields.COLUMN_MESSAGE]: 'message',
   [LicenseFindResultFields.COLUMN_OFFER]: 'offer',
+  [LicenseFindResultFields.COLUMN_OFFER_ARROWSPHERE_SKU]:
+    'offer_arrowsphere_sku',
+  [LicenseFindResultFields.COLUMN_ORDER_REF]: 'order_ref',
+  [LicenseFindResultFields.COLUMN_PRICEBAND_VENDOR_SKU]: 'priceband_vendor_sku',
+  [LicenseFindResultFields.COLUMN_NEXT_RENEWAL_DATE]: 'next_renewal_date',
   [LicenseFindResultFields.COLUMN_PARENT_LINE_ID]: 2,
   [LicenseFindResultFields.COLUMN_PARENT_ORDER_REF]: 'parent_order_ref',
   [LicenseFindResultFields.COLUMN_PARTNER_REF]: 'partner_ref',
@@ -93,6 +98,11 @@ export const MOCK_LICENSE_DATA_WITHOUT_OPTIONAL_DATA_RESPONSE: LicenseFindResult
   [LicenseFindResultFields.COLUMN_MARKETPLACE]: 'marketplace',
   [LicenseFindResultFields.COLUMN_MESSAGE]: 'message',
   [LicenseFindResultFields.COLUMN_OFFER]: 'offer',
+  [LicenseFindResultFields.COLUMN_OFFER_ARROWSPHERE_SKU]:
+    'offer_arrowsphere_sku',
+  [LicenseFindResultFields.COLUMN_ORDER_REF]: 'order_ref',
+  [LicenseFindResultFields.COLUMN_PRICEBAND_VENDOR_SKU]: 'priceband_vendor_sku',
+  [LicenseFindResultFields.COLUMN_NEXT_RENEWAL_DATE]: 'next_renewal_date',
   [LicenseFindResultFields.COLUMN_PARENT_LINE_ID]: 2,
   [LicenseFindResultFields.COLUMN_PARENT_ORDER_REF]: 'parent_order_ref',
   [LicenseFindResultFields.COLUMN_PARTNER_REF]: 'partner_ref',
