@@ -20,6 +20,7 @@ type BaseCompanyType = {
   deletedAt?: string;
   enabled?: boolean;
   erpId?: string;
+  extraInformations?: CompanyExtraInformation[];
   id?: number;
   internalReference?: string;
   locked?: boolean;
@@ -41,6 +42,17 @@ export type EndCustomerType = BaseCompanyType & {
 type CountableType = {
   id?: number;
   total?: number;
+};
+
+export type CompanyExtraInformation = {
+  id?: number;
+  companyId?: number;
+  code?: string;
+  label?: string;
+  name?: string;
+  type?: string;
+  value?: string;
+  programName?: string;
 };
 
 export type PartnerType = BaseCompanyType & {

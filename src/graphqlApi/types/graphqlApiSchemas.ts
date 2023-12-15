@@ -1,6 +1,7 @@
 import { Merge, Schema } from 'type-fest';
 import {
   ArrowCompanyType,
+  CompanyExtraInformation,
   EndCustomerType,
   PartnerType,
 } from './entities/company';
@@ -22,15 +23,18 @@ export type PartnertagSchema = Schema<PartnertagType, boolean>;
 
 type MissingFieldsOfCompanySchema = {
   contacts?: ContactsSchema;
+  extraInformations?: CompanyExtraInformationSchema;
   partnerTags?: PartnertagSchema;
   subscriptions?: SubscriptionSchema;
 };
 
 type MissingFieldsOfArrowCompanySchema = {
+  extraInformations?: CompanyExtraInformationSchema;
   subscriptions?: SubscriptionSchema;
 };
 
 type MissingFieldsOfEndCustomerSchema = {
+  extraInformations?: CompanyExtraInformationSchema;
   contacts?: ContactsSchema;
   partnerTags?: PartnertagSchema;
   partner?: PartnerSchema;
@@ -51,6 +55,10 @@ export type ArrowCompanySchema = Merge<
   MissingFieldsOfArrowCompanySchema
 >;
 
+export type CompanyExtraInformationSchema = Schema<
+  CompanyExtraInformation,
+  boolean
+>;
 export type ContactsSchema = Schema<ContactsType, boolean>;
 export type ContinentSchema = Schema<ContinentType, boolean>;
 export type CountrySchema = Schema<CountryType, boolean>;

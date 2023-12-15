@@ -143,6 +143,16 @@ export const SELECT_ALL_END_CUSTOMER_QUERY: SelectAllQueryType = {
         state: true,
         vatNumber: true,
         zip: true,
+        extraInformations: {
+          id: true,
+          companyId: true,
+          code: true,
+          label: true,
+          name: true,
+          type: true,
+          value: true,
+          programName: true,
+        },
       },
     },
 
@@ -163,7 +173,7 @@ export const SELECT_ALL_END_CUSTOMER_QUERY: SelectAllQueryType = {
 };
 
 export const SELECT_ALL_END_CUSTOMER_GQL =
-  '{selectAll (filters: {groups: [{items: [{name: "deletedAt", operator: "IS_NULL"}]}, {items: [{name: "locked", operator: "IS_NULL"}, {name: "locked", value: ["1"], operator: "DIFFERENT"}], logicalOperator: "OR"}]}, exclusionFilters: {groups: [{items: [{name: "partnertags.label", value: ["TIER2"], operator: "EQUALS"}]}]}, aggregatorFilter: ["id"], pagination: {page: 1, perPage: 20}, queryModifier: "DISTINCT", sort: [{name: "name", direction: "ASC"}, {name: "createdAt", direction: "DESC"}]) { data { endCustomer { acronym address1 address2 billingId city contacts { id active communicationEmail effectiveDate email erpId firstname lastname locked phone status tseAccountStatus username type { id name } role { id name } } createdAt deletedAt enabled erpId id internalReference locked name partner { acronym country { code2 code3 id lat lng name phoneCode } id partnerRef workgroup { code id name } partnerTags { id label description createdAt } } partnerRef partnerTags { createdAt description id label } phone state vatNumber zip } } errors { code message } pagination { currentPage perPage previous next total totalPage totalPages } }}';
+  '{selectAll (filters: {groups: [{items: [{name: "deletedAt", operator: "IS_NULL"}]}, {items: [{name: "locked", operator: "IS_NULL"}, {name: "locked", value: ["1"], operator: "DIFFERENT"}], logicalOperator: "OR"}]}, exclusionFilters: {groups: [{items: [{name: "partnertags.label", value: ["TIER2"], operator: "EQUALS"}]}]}, aggregatorFilter: ["id"], pagination: {page: 1, perPage: 20}, queryModifier: "DISTINCT", sort: [{name: "name", direction: "ASC"}, {name: "createdAt", direction: "DESC"}]) { data { endCustomer { acronym address1 address2 billingId city contacts { id active communicationEmail effectiveDate email erpId firstname lastname locked phone status tseAccountStatus username type { id name } role { id name } } createdAt deletedAt enabled erpId id internalReference locked name partner { acronym country { code2 code3 id lat lng name phoneCode } id partnerRef workgroup { code id name } partnerTags { id label description createdAt } } partnerRef partnerTags { createdAt description id label } phone state vatNumber zip extraInformations { id companyId code label name type value programName } } } errors { code message } pagination { currentPage perPage previous next total totalPage totalPages } }}';
 
 export const SELECT_ALL_PARTNERS_QUERY: SelectAllQueryType = {
   [Queries.SELECT_ALL]: {
@@ -283,6 +293,16 @@ export const SELECT_ALL_PARTNERS_QUERY: SelectAllQueryType = {
             name: true,
           },
         },
+        extraInformations: {
+          id: true,
+          companyId: true,
+          code: true,
+          label: true,
+          name: true,
+          type: true,
+          value: true,
+          programName: true,
+        },
       },
     },
 
@@ -303,7 +323,7 @@ export const SELECT_ALL_PARTNERS_QUERY: SelectAllQueryType = {
 };
 
 export const SELECT_ALL_PARTNERS_GQL =
-  '{selectAll (filters: {groups: [{items: [{name: "locked", operator: "IS_NULL"}, {name: "locked", value: ["1"], operator: "DIFFERENT"}], logicalOperator: "OR"}, {items: [{name: "id", value: ["SELECT DISTINCT compcustomer_companyid_customer FROM COMPANY_CUSTOMER"], exclusion: true}]}]}, aggregatorFilter: ["id"], pagination: {page: 1, perPage: 4}, sort: [{name: "id", direction: "ASC"}]) { data { partner { id partnerTags { id label description createdAt } workgroup { code } enabled subscriptionsPendingCount { total } subscriptionsCount { total } ordersCount { total } ordersNeedCount { total } contactsCount { total } customersCount { total } reportsCount { total } createdAt name contacts { id active communicationEmail effectiveDate email erpId firstname lastname locked phone status tseAccountStatus username type { id name } role { id name } } subscriptions { id localContact { id firstname lastname phone email } program { id internalName name } } } } errors { code message } pagination { currentPage perPage previous next total totalPage totalPages } }}';
+  '{selectAll (filters: {groups: [{items: [{name: "locked", operator: "IS_NULL"}, {name: "locked", value: ["1"], operator: "DIFFERENT"}], logicalOperator: "OR"}, {items: [{name: "id", value: ["SELECT DISTINCT compcustomer_companyid_customer FROM COMPANY_CUSTOMER"], exclusion: true}]}]}, aggregatorFilter: ["id"], pagination: {page: 1, perPage: 4}, sort: [{name: "id", direction: "ASC"}]) { data { partner { id partnerTags { id label description createdAt } workgroup { code } enabled subscriptionsPendingCount { total } subscriptionsCount { total } ordersCount { total } ordersNeedCount { total } contactsCount { total } customersCount { total } reportsCount { total } createdAt name contacts { id active communicationEmail effectiveDate email erpId firstname lastname locked phone status tseAccountStatus username type { id name } role { id name } } subscriptions { id localContact { id firstname lastname phone email } program { id internalName name } } extraInformations { id companyId code label name type value programName } } } errors { code message } pagination { currentPage perPage previous next total totalPage totalPages } }}';
 
 export const SELECT_ONE_END_CUSTOMER_QUERY: SelectOneQueryType = {
   [Queries.SELECT_ONE]: {
@@ -384,6 +404,16 @@ export const SELECT_ONE_END_CUSTOMER_QUERY: SelectOneQueryType = {
         state: true,
         vatNumber: true,
         zip: true,
+        extraInformations: {
+          id: true,
+          companyId: true,
+          code: true,
+          label: true,
+          name: true,
+          type: true,
+          value: true,
+          programName: true,
+        },
       },
     },
     errors: {
@@ -394,4 +424,4 @@ export const SELECT_ONE_END_CUSTOMER_QUERY: SelectOneQueryType = {
 };
 
 export const SELECT_ONE_END_CUSTOMER_GQL =
-  '{selectOne (filters: {groups: [{items: [{name: "id", value: ["123"], operator: "EQUALS"}]}, {items: [{name: "locked", operator: "IS_NULL"}, {name: "locked", value: ["1"], operator: "IS_NULL"}], logicalOperator: "OR"}]}, options: {skipPartition: true}) { data { endCustomer { acronym address1 address2 billingId city createdAt deletedAt enabled erpId id internalReference locked name partner { acronym country { code2 code3 id lat lng name phoneCode } id partnerRef workgroup { code id name } } partnerRef partnerTags { createdAt description id label } phone state vatNumber zip } } errors { code message } }}';
+  '{selectOne (filters: {groups: [{items: [{name: "id", value: ["123"], operator: "EQUALS"}]}, {items: [{name: "locked", operator: "IS_NULL"}, {name: "locked", value: ["1"], operator: "IS_NULL"}], logicalOperator: "OR"}]}, options: {skipPartition: true}) { data { endCustomer { acronym address1 address2 billingId city createdAt deletedAt enabled erpId id internalReference locked name partner { acronym country { code2 code3 id lat lng name phoneCode } id partnerRef workgroup { code id name } } partnerRef partnerTags { createdAt description id label } phone state vatNumber zip extraInformations { id companyId code label name type value programName } } } errors { code message } }}';
