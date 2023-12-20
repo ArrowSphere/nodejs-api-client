@@ -59,6 +59,12 @@ import {
 } from '../../src/licenses/entities/license/upgradeResult';
 import { Axios } from 'axios';
 import sinon from 'sinon';
+import {
+  ActionTypes,
+  BulkAutoRenewBody,
+  BulkBodyArgument,
+  BulkBodyFields,
+} from '../../src/licenses/types/bulkArguments';
 
 export const LICENSES_MOCK_URL = 'https://licenses.localhost';
 export const LICENSES_FIND_ENDPOINT = new RegExp('/licenses/v2/find.*');
@@ -87,6 +93,8 @@ export const LICENSE_MOCK_URL_GET_CREDENTIALS = '/licenses/12343/credentials';
 export const LICENSE_MOCK_URL_PRICING_RATE = '/licenses/XSP12343/pricing-rate';
 export const LICENSE_MOCK_URL_SCHEDULE_TASKS =
   '/licenses/XSP12343/scheduledTasks';
+export const LICENSE_MOCK_URL_BULK = '/licenses/bulk';
+
 /**
  * Mock license data to be used in tests and returned by mocks
  */
@@ -1047,6 +1055,28 @@ describe('LicensesClient', () => {
       expect(result.data.toJSON()).to.be.eqls(
         PAYLOAD_LICENSE_POST_SCHEDULE_TASKS.data,
       );
+    });
+  });
+
+  describe('bulkAction', () => {
+    it('calls the post method with the updated configs', async () => {
+      const inputData: BulkBodyArgument = {
+        [BulkBodyFields.ACTION_TYPE]: ActionTypes.AUTO_RENEW,
+        [BulkBodyFields.LICENSES]: ['XSP56T5434', 'XSP56T5435'],
+        [BulkBodyFields.AUTO_RENEW_STATUS]: true,
+        [BulkBodyFields.SPECIAL_PRICE_RATE_VALUE]: '20',
+      };
+
+      const postData: BulkAutoRenewBody = {
+        [BulkBodyFields.ACTION_TYPE]: inputData.actionType,
+        [BulkBodyFields.LICENSES]: inputData.licenses,
+        [BulkBodyFields.AUTO_RENEW_STATUS]: inputData.autoRenewStatus,
+      };
+
+      nock(LICENSES_MOCK_URL).post(LICENSE_MOCK_URL_BULK).reply(200, postData);
+
+      const result = await client.bulkAction(inputData);
+      expect(result).to.eqls(postData);
     });
   });
 });

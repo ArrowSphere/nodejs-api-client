@@ -63,6 +63,13 @@ import {
   GetPricingRateResult,
   RateTypeEnum,
 } from './entities/pricingRate/getPricingRateResult';
+import {
+  ActionTypes,
+  BulkBodyArgument,
+  BulkSetRateBody,
+  BulkAutoRenewBody,
+  BulkBodyFields,
+} from './types/bulkArguments';
 
 /**
  * Parameters passable to the request for refining search.
@@ -356,6 +363,8 @@ export type LicensePricingRate = {
   applyOnNextBillingPeriod: boolean;
 };
 
+//export type BulkArguments = BulkBodyArgument;
+
 export class LicensesClient extends AbstractRestfulClient {
   /**
    * The base path of the API
@@ -446,6 +455,11 @@ export class LicensesClient extends AbstractRestfulClient {
    * The path to get/set pricing rate on a license
    */
   private PRICING_RATE_PATH = '/pricing-rate';
+
+  /**
+   * The path to apply bulk action on license(s)
+   */
+  private BULK_PATH = '/bulk';
 
   /**
    * Returns the raw result from the find endpoint call
@@ -555,6 +569,37 @@ export class LicensesClient extends AbstractRestfulClient {
       [ConfigFindResultFields.COLUMN_SCOPE]: config.scope,
       [ConfigFindResultFields.COLUMN_STATE]: config.state,
     };
+
+    return await this.post(postData);
+  }
+
+  public async bulkAction(
+    bulkData: BulkBodyArgument,
+  ): Promise<BulkSetRateBody | BulkAutoRenewBody> {
+    this.path = this.BULK_PATH;
+
+    let postData = {
+      [BulkBodyFields.ACTION_TYPE]: bulkData.actionType,
+      [BulkBodyFields.LICENSES]: bulkData.licenses,
+    };
+
+    if (bulkData.actionType == ActionTypes.AUTO_RENEW) {
+      const postAutoRenewData: BulkAutoRenewBody = {
+        ...postData,
+        [BulkBodyFields.AUTO_RENEW_STATUS]: bulkData.autoRenewStatus,
+      };
+      postData = postAutoRenewData;
+    } else if (bulkData.actionType == ActionTypes.SET_RATE) {
+      const postSetRateData: BulkSetRateBody = {
+        ...postData,
+        [BulkBodyFields.SPECIAL_PRICE_RATE_TYPE]: bulkData.specialPriceRateType,
+        [BulkBodyFields.SPECIAL_PRICE_RATE_VALUE]:
+          bulkData.specialPriceRateValue,
+        [BulkBodyFields.SPECIAL_RATE_EFFECTIVE_APPLICATION_DATE]:
+          bulkData.specialRateEffectiveApplicationDate,
+      };
+      postData = postSetRateData;
+    }
 
     return await this.post(postData);
   }
