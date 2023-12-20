@@ -87,13 +87,17 @@ export const PAYLOAD_SCHEMA_LICENSE: GetData<GetLicenseResultData> = {
         'associated_subscription_program',
       [LicenseGetFields.COLUMN_PRICE]: {
         [LicensePriceGetFields.COLUMN_CURRENCY]: 'CURRENCY',
+        [LicensePriceGetFields.COLUMN_PRICEBAND_ARROWSPHERE_SKU]:
+          'MSCSP_CFQ7TTC0LH16-0001_FR_EUR_1_720_8640',
         [LicensePriceGetFields.COLUMN_UNIT]: {
           [BuySellFields.COLUMN_BUY]: 2,
           [BuySellFields.COLUMN_SELL]: 3,
+          [BuySellFields.COLUMN_LIST]: 3.5,
         },
         [LicensePriceGetFields.COLUMN_TOTAL]: {
           [BuySellFields.COLUMN_BUY]: 2,
           [BuySellFields.COLUMN_SELL]: 3,
+          [BuySellFields.COLUMN_LIST]: 3.5,
         },
       },
       [LicenseGetFields.COLUMN_ARROW_SUB_CATEGORIES]: ['string'],
@@ -156,13 +160,17 @@ export const PAYLOAD_SCHEMA_LICENSE_WITHOUT_OPTIONAL_FIELDS: GetData<GetLicenseR
         'associated_subscription_program',
       [LicenseGetFields.COLUMN_PRICE]: {
         [LicensePriceGetFields.COLUMN_CURRENCY]: 'CURRENCY',
+        [LicensePriceGetFields.COLUMN_PRICEBAND_ARROWSPHERE_SKU]:
+          'MSCSP_CFQ7TTC0LH16-0001_FR_EUR_1_720_8640',
         [LicensePriceGetFields.COLUMN_UNIT]: {
           [BuySellFields.COLUMN_BUY]: 2,
           [BuySellFields.COLUMN_SELL]: 3,
+          [BuySellFields.COLUMN_LIST]: 3.5,
         },
         [LicensePriceGetFields.COLUMN_TOTAL]: {
           [BuySellFields.COLUMN_BUY]: 2,
           [BuySellFields.COLUMN_SELL]: 3,
+          [BuySellFields.COLUMN_LIST]: 3.5,
         },
       },
       [LicenseGetFields.COLUMN_ASSETS]: {},
