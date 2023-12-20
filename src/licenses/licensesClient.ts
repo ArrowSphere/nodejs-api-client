@@ -65,6 +65,13 @@ import {
 } from './entities/pricingRate/getPricingRateResult';
 import { PartialResponse, PartialResponseData } from '../partialResponse';
 import { constants } from 'http2';
+import {
+  ActionTypes,
+  BulkBodyArgument,
+  BulkSetRateBody,
+  BulkAutoRenewBody,
+  BulkBodyFields,
+} from './types/bulkArguments';
 
 /**
  * Parameters passable to the request for refining search.
@@ -456,6 +463,11 @@ export class LicensesClient extends AbstractRestfulClient {
   private PRICING_RATE_PATH = '/pricing-rate';
 
   /**
+   * The path to apply bulk action on license(s)
+   */
+  private BULK_PATH = '/bulk';
+
+  /**
    * Returns the raw result from the find endpoint call
    *
    * @param postData - Find payload
@@ -563,6 +575,35 @@ export class LicensesClient extends AbstractRestfulClient {
       [ConfigFindResultFields.COLUMN_SCOPE]: config.scope,
       [ConfigFindResultFields.COLUMN_STATE]: config.state,
     };
+
+    return await this.post(postData);
+  }
+
+  public async bulkAction(bulkData: BulkBodyArgument): Promise<void> {
+    this.path = this.BULK_PATH;
+
+    let postData = {
+      [BulkBodyFields.ACTION_TYPE]: bulkData.actionType,
+      [BulkBodyFields.LICENSES]: bulkData.licenses,
+    };
+
+    if (bulkData.actionType == ActionTypes.AUTO_RENEW) {
+      const postAutoRenewData: BulkAutoRenewBody = {
+        ...postData,
+        [BulkBodyFields.AUTO_RENEW_STATUS]: bulkData.autoRenewStatus,
+      };
+      postData = postAutoRenewData;
+    } else if (bulkData.actionType == ActionTypes.SET_RATE) {
+      const postSetRateData: BulkSetRateBody = {
+        ...postData,
+        [BulkBodyFields.SPECIAL_PRICE_RATE_TYPE]: bulkData.specialPriceRateType,
+        [BulkBodyFields.SPECIAL_PRICE_RATE_VALUE]:
+          bulkData.specialPriceRateValue,
+        [BulkBodyFields.SPECIAL_RATE_EFFECTIVE_APPLICATION_DATE]:
+          bulkData.specialRateEffectiveApplicationDate,
+      };
+      postData = postSetRateData;
+    }
 
     return await this.post(postData);
   }

@@ -470,6 +470,10 @@ export abstract class AbstractRestfulClient extends AbstractHttpClient {
       ] = `${this.perPage}`;
     }
 
+    // to keep client stateless
+    this.page = 1;
+    this.perPage = 0;
+
     return params;
   }
 }
