@@ -41,3 +41,4 @@ export * from './licenseRequestClient';
 export * from './licensesClient';
 export * from './entities/license/securityFindResult';
 export * from './licensesEventClient';
+export * from './types/bulkArguments';
