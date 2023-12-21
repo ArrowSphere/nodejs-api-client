@@ -248,12 +248,11 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
           )
         : undefined;
     this.#vendorCode = licenseGetDataInput[LicenseGetFields.COLUMN_VENDOR_CODE];
-    this.#rates =
-      licenseGetDataInput[LicenseGetFields.COLUMN_RATES] !== undefined
-        ? new RatesGetResult(
-            licenseGetDataInput[LicenseGetFields.COLUMN_RATES] as RatesGetData,
-          )
-        : undefined;
+    this.#rates = licenseGetDataInput[LicenseGetFields.COLUMN_RATES]
+      ? new RatesGetResult(
+          licenseGetDataInput[LicenseGetFields.COLUMN_RATES] as RatesGetData,
+        )
+      : undefined;
   }
 
   public get id(): string {
