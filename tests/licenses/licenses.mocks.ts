@@ -25,6 +25,7 @@ import {
 } from '../../src';
 import { ExtraDataFields } from '../../src/licenses/entities/getLicense/extraDataGetResult';
 import { CredentialsResultType } from '../../src/licenses/entities/license/credentialsResult';
+import { RatesDataFields } from '../../src/licenses/entities/getLicense/ratesGetResult';
 
 export const PAYLOAD_SCHEMA_LICENSE: GetData<GetLicenseResultData> = {
   status: 200,
@@ -118,6 +119,10 @@ export const PAYLOAD_SCHEMA_LICENSE: GetData<GetLicenseResultData> = {
         },
       ],
       [LicenseGetFields.COLUMN_VENDOR_CODE]: 'Microsoft',
+      [LicenseGetFields.COLUMN_RATES]: {
+        [RatesDataFields.COLUMN_ARROW_SELL_RATE]: 0.1,
+        [RatesDataFields.COLUMN_MSP_SELL_RATE]: 0.05,
+      },
     },
   },
 };
