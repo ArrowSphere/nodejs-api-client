@@ -18,15 +18,13 @@ import {
   LicensePriceGetFields,
   OrderGetFields,
   SecurityFindResultFields,
-} from '../../src';
-import { ExtraDataFields } from '../../src/licenses/entities/getLicense/extraDataGetResult';
-import { CredentialsResultType } from '../../src/licenses/entities/license/credentialsResult';
-import {
   CompanyTypeEnum,
   GetPricingRateData,
   RateTypeEnum,
   ScheduleTaskData,
-} from '../../build';
+} from '../../src';
+import { ExtraDataFields } from '../../src/licenses/entities/getLicense/extraDataGetResult';
+import { CredentialsResultType } from '../../src/licenses/entities/license/credentialsResult';
 
 export const PAYLOAD_SCHEMA_LICENSE: GetData<GetLicenseResultData> = {
   status: 200,
