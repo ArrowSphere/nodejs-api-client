@@ -32,6 +32,7 @@ export enum CustomerContactFields {
   COLUMN_ROLE = 'role',
   COLUMN_IS_ACTIVE = 'isActive',
   COLUMN_XCP_INVITATION = 'xcpInvitation',
+  COLUMN_ORGANIZATION_UNIT_ID = 'organizationUnitId',
 }
 
 export type CustomerContactType = {
@@ -45,6 +46,7 @@ export type CustomerContactType = {
   [CustomerContactFields.COLUMN_ROLE]: string;
   [CustomerContactFields.COLUMN_IS_ACTIVE]: boolean;
   [CustomerContactFields.COLUMN_XCP_INVITATION]?: CustomerContactXcpInvitationType;
+  [CustomerContactFields.COLUMN_ORGANIZATION_UNIT_ID]?: number;
 };
 
 export class CustomerContact extends AbstractEntity<CustomerContactType> {
@@ -58,6 +60,7 @@ export class CustomerContact extends AbstractEntity<CustomerContactType> {
   readonly #role: string;
   readonly #isActive: boolean;
   readonly #xcpInvitation?: CustomerContactXcpInvitation;
+  readonly #organizationUnitId?: number;
 
   public constructor(getCustomerContactDataInput: CustomerContactType) {
     super(getCustomerContactDataInput);
@@ -87,6 +90,10 @@ export class CustomerContact extends AbstractEntity<CustomerContactType> {
           ] as CustomerContactXcpInvitationType,
         )
       : undefined;
+    this.#organizationUnitId =
+      getCustomerContactDataInput[
+        CustomerContactFields.COLUMN_ORGANIZATION_UNIT_ID
+      ];
   }
 
   get reference(): string {
@@ -129,6 +136,10 @@ export class CustomerContact extends AbstractEntity<CustomerContactType> {
     return this.#xcpInvitation;
   }
 
+  get organizationUnitId(): number | undefined {
+    return this.#organizationUnitId;
+  }
+
   public toJSON(): CustomerContactType {
     return {
       [CustomerContactFields.COLUMN_REFERENCE]: this.reference,
@@ -141,6 +152,8 @@ export class CustomerContact extends AbstractEntity<CustomerContactType> {
       [CustomerContactFields.COLUMN_ROLE]: this.role,
       [CustomerContactFields.COLUMN_IS_ACTIVE]: this.isActive,
       [CustomerContactFields.COLUMN_XCP_INVITATION]: this.xcpInvitation,
+      [CustomerContactFields.COLUMN_ORGANIZATION_UNIT_ID]: this
+        .organizationUnitId,
     };
   }
 }

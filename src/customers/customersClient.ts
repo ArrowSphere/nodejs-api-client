@@ -21,6 +21,7 @@ export enum CustomerContactPayloadFields {
   COLUMN_USERNAME = 'username',
   COLUMN_TYPE = 'type',
   COLUMN_ROLE = 'role',
+  COLUMN_ORGANIZATION_UNIT_ID = 'organizationUnitId',
 }
 
 export type PostCustomerContactPayload = {
@@ -31,6 +32,7 @@ export type PostCustomerContactPayload = {
   [CustomerContactPayloadFields.COLUMN_PHONE]: string;
   [CustomerContactPayloadFields.COLUMN_TYPE]: CustomerContactTypeType;
   [CustomerContactPayloadFields.COLUMN_ROLE]: CustomerContactRoleType;
+  [CustomerContactPayloadFields.COLUMN_ORGANIZATION_UNIT_ID]?: number;
 };
 
 export type PostCustomerContact = {
