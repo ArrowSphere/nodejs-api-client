@@ -155,6 +155,7 @@ export const PAYLOAD_GET_CUSTOMER_CONTACT_LIST = {
       [CustomerContactFields.COLUMN_XCP_INVITATION]: {
         [CustomerContactXcpInvitationFields.COLUMN_POLICY]: 'policy_admin',
       },
+      [CustomerContactFields.COLUMN_ORGANIZATION_UNIT_ID]: 42,
     },
   ],
 };
@@ -187,5 +188,6 @@ export const PAYLOAD_GET_CUSTOMER_CONTACT = {
     [CustomerContactFields.COLUMN_XCP_INVITATION]: {
       [CustomerContactXcpInvitationFields.COLUMN_POLICY]: 'policy_admin',
     },
+    [CustomerContactFields.COLUMN_ORGANIZATION_UNIT_ID]: 42,
   },
 };
