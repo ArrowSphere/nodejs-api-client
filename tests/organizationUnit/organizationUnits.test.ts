@@ -1,4 +1,10 @@
-import { PublicApiClient, GetResult, OrganizationUnitClient } from '../../src';
+import {
+  GetResult,
+  OrganizationUnitClient,
+  OrganizationUnitClientActionFields,
+  OrganizationUnitClientActionType,
+  PublicApiClient,
+} from '../../src';
 import nock from 'nock';
 import { expect } from 'chai';
 import {
@@ -15,7 +21,10 @@ import { beforeEach } from 'mocha';
 export const ORGANIZATION_UNIT_MOCK_URL = 'https://organizationUnits.localhost';
 export const ORGANIZATION_UNIT_DEFAULT = '/partners/organizationUnits';
 export const ORGANIZATION_UNIT_WITH_PARAMETERS = new RegExp(
-  '/partners/organizationUnits/*',
+  '/partners/organizationUnits/*/*',
+);
+export const ORGANIZATION_UNIT_NEW_ENDPOINT_WITH_PARAMETERS = new RegExp(
+  '/organizationUnit/*',
 );
 
 let client: OrganizationUnitClient;
@@ -96,6 +105,27 @@ describe('organizationUnits', () => {
         .reply(204);
 
       await client.deleteOne('XSPOU17727');
+
+      expect(nock.isDone()).to.be.true;
+    });
+  });
+
+  describe('patchAllOrganizationUnit', () => {
+    it('calls the patch all method', async () => {
+      nock(ORGANIZATION_UNIT_MOCK_URL)
+        .patch(ORGANIZATION_UNIT_NEW_ENDPOINT_WITH_PARAMETERS)
+        .reply(204);
+
+      const payload: OrganizationUnitClientActionType = {
+        licenses: ['XSPLI17727'],
+        users: ['XSPOU17727'],
+      };
+
+      await client.patchAll(
+        OrganizationUnitClientActionFields.ACTION_ATTACH,
+        42,
+        payload,
+      );
 
       expect(nock.isDone()).to.be.true;
     });

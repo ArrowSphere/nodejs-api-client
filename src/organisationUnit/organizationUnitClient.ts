@@ -11,6 +11,16 @@ export type OrganizationUnitPayloadType = {
   [OrganizationUnitPayloadFields.COLUMN_NAME]: string;
 };
 
+export enum OrganizationUnitClientActionFields {
+  ACTION_ATTACH = 'attach',
+  ACTION_DETACH = 'detach',
+}
+
+export type OrganizationUnitClientActionType = {
+  licenses: string[];
+  users: string[];
+};
+
 export class OrganizationUnitClient extends AbstractRestfulClient {
   protected basePath = '/partners/organizationUnits';
 
@@ -64,5 +74,17 @@ export class OrganizationUnitClient extends AbstractRestfulClient {
     this.path = `/${organizationUnitRef}`;
 
     return await this.delete(parameters);
+  }
+
+  public async patchAll(
+    action: OrganizationUnitClientActionFields,
+    organizationUnitId: number,
+    payload: OrganizationUnitClientActionType,
+    parameters: Parameters = {},
+  ): Promise<void> {
+    this.basePath = '/organizationUnit';
+    this.path = `/${action}/${organizationUnitId}`;
+
+    return await this.patch(payload, parameters);
   }
 }
