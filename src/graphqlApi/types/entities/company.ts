@@ -1,5 +1,6 @@
 import { ContactsType } from './contact';
 import { CountryType } from './country';
+import { OrdersType } from './order';
 import { PartnertagType } from './partnertag';
 import { SubscriptionType } from './subscription';
 import { WorkgroupType } from './workgroup';
@@ -25,6 +26,7 @@ type BaseCompanyType = {
   internalReference?: string;
   locked?: boolean;
   name?: string;
+  orders?: OrdersType[];
   partnerRef?: string;
   partnerTags?: PartnertagType[];
   phone?: string;

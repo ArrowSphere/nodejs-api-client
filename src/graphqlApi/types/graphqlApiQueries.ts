@@ -199,6 +199,7 @@ export type SelectOneResultType = {
   [Queries.SELECT_ONE]: {
     [SelectableField.DATA]?: SelectOneResponseDataType;
     [SelectableField.ERRORS]?: ErrorsType;
+    [SelectableField.PAGINATION]?: PageType;
   };
 };
 
@@ -243,6 +244,7 @@ export type SelectOneQueryType = {
     __args?: QueryVariablesType;
     [SelectableField.DATA]: SelectOneResponseDataSchema;
     [SelectableField.ERRORS]?: ErrorsSchema;
+    [SelectableField.PAGINATION]?: PageSchema;
   };
 };
 
