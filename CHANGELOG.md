@@ -3,6 +3,11 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.83.0] - 2023-12-28
+
+### Added
+- add organization unit endpoint for updating in mass
+
 ## [3.82.0] - 2023-12-29
 
 ### Added
