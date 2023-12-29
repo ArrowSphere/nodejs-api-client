@@ -22,6 +22,7 @@ import { AssetsData, AssetsFindResult } from './assetsFindResult';
 import { ExtraDataResult, ExtraDataType } from './extraDataGetResult';
 import { PriceBandData, PriceBandGetResult } from './priceBandGetResult';
 import { RatesGetData, RatesGetResult } from './ratesGetResult';
+import { RelationGetData, RelationGetResult } from './relationGetResult';
 
 export enum LicenseGetFields {
   COLUMN_LICENSE_ID = 'license_id',
@@ -65,6 +66,7 @@ export enum LicenseGetFields {
   COLUMN_VENDOR_CODE = 'vendorCode',
   COLUMN_RATES = 'rates',
   COLUMN_ORGANIZATION_UNIT_ID = 'organizationUnitId',
+  COLUMN_RELATION = 'relation',
 }
 
 export type LicenseGetData = {
@@ -109,6 +111,7 @@ export type LicenseGetData = {
   [LicenseGetFields.COLUMN_VENDOR_CODE]?: string;
   [LicenseGetFields.COLUMN_RATES]?: RatesGetData;
   [LicenseGetFields.COLUMN_ORGANIZATION_UNIT_ID]?: number;
+  [LicenseGetFields.COLUMN_RELATION]?: RelationGetData[];
 };
 
 export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
@@ -153,6 +156,7 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
   readonly #vendorCode?: string;
   readonly #rates?: RatesGetResult;
   readonly #organizationUnitId?: number;
+  readonly #relation?: RelationGetResult[];
 
   public constructor(licenseGetDataInput: LicenseGetData) {
     super(licenseGetDataInput);
@@ -258,6 +262,11 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
       : undefined;
     this.#organizationUnitId =
       licenseGetDataInput[LicenseGetFields.COLUMN_ORGANIZATION_UNIT_ID];
+    this.#relation = licenseGetDataInput[LicenseGetFields.COLUMN_RELATION]
+      ? licenseGetDataInput[LicenseGetFields.COLUMN_RELATION]?.map(
+          (v: RelationGetData): RelationGetResult => new RelationGetResult(v),
+        )
+      : undefined;
   }
 
   public get id(): string {
@@ -424,6 +433,10 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
     return this.#organizationUnitId;
   }
 
+  get relation(): RelationGetResult[] | undefined {
+    return this.#relation;
+  }
+
   public toJSON(): LicenseGetData {
     return {
       [LicenseGetFields.COLUMN_LICENSE_ID]: this.id,
@@ -472,6 +485,9 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
       [LicenseGetFields.COLUMN_VENDOR_CODE]: this.vendorCode,
       [LicenseGetFields.COLUMN_RATES]: this.rates?.toJSON(),
       [LicenseGetFields.COLUMN_ORGANIZATION_UNIT_ID]: this.organizationUnitId,
+      [LicenseGetFields.COLUMN_RELATION]: this.relation?.map(
+        (v: RelationGetResult): RelationGetData => v.toJSON(),
+      ),
     };
   }
 }
