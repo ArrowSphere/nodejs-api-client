@@ -22,6 +22,7 @@ import {
   GetPricingRateData,
   RateTypeEnum,
   ScheduleTaskData,
+  RelationGetDataFields,
 } from '../../src';
 import { ExtraDataFields } from '../../src/licenses/entities/getLicense/extraDataGetResult';
 import { CredentialsResultType } from '../../src/licenses/entities/license/credentialsResult';
@@ -124,6 +125,12 @@ export const PAYLOAD_SCHEMA_LICENSE: GetData<GetLicenseResultData> = {
         [RatesGetDataFields.COLUMN_TYPE]: RateTypeEnum.DISCOUNT,
         [RatesGetDataFields.COLUMN_LAST_UPDATE]: '2021-01-01',
       },
+      [LicenseGetFields.COLUMN_RELATION]: [
+        {
+          [RelationGetDataFields.COLUMN_PARTNER_REF]: 'XSP12345',
+          [RelationGetDataFields.COLUMN_TYPE]: 'sibling',
+        },
+      ],
     },
   },
 };
