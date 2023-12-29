@@ -9,6 +9,7 @@ export * from './entities/getLicense/actionsGetResult';
 export * from './entities/getLicense/buySellFindResult';
 export * from './entities/getLicense/extraDataGetResult';
 export * from './entities/getLicense/licenseGetResult';
+export * from './entities/getLicense/relationGetResult';
 export * from './entities/getLicense/ratesGetResult';
 export * from './entities/getLicense/licensePriceGetResult';
 export * from './entities/getLicense/orderGetResult';
