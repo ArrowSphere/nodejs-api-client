@@ -135,6 +135,7 @@ export const PAYLOAD_SCHEMA_LICENSE: GetData<GetLicenseResultData> = {
           [RelationGetDataFields.COLUMN_TYPE]: 'sibling',
         },
       ],
+      [LicenseGetFields.COLUMN_MARKET_SEGMENT]: 'Corporate',
     },
   },
 };
