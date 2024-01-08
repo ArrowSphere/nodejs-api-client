@@ -20,6 +20,7 @@ export * from './organisationUnit/';
 export * from './partner';
 export * from './publicApiClient';
 export * from './publicGraphQLClient';
+export * from './quotes';
 export * from './shared/';
 export * from './security/';
 export * from './subscriptions/';

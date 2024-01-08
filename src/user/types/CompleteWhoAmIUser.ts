@@ -5,6 +5,7 @@ export enum CompleteWhoAmIUserFields {
   COLUMN_FIRSTNAME = 'firstname',
   COLUMN_LASTNAME = 'lastname',
   COLUMN_LOGIN = 'login',
+  COLUMN_PHONE_NUMBER = 'phoneNumber',
   COLUMN_POLICIES = 'policies',
   COLUMN_REFERENCE = 'reference',
   COLUMN_RIGHTS = 'rights',
@@ -17,6 +18,7 @@ export type CompleteWhoAmIUserData = {
   [CompleteWhoAmIUserFields.COLUMN_FIRSTNAME]?: string;
   [CompleteWhoAmIUserFields.COLUMN_LASTNAME]?: string;
   [CompleteWhoAmIUserFields.COLUMN_LOGIN]?: string;
+  [CompleteWhoAmIUserFields.COLUMN_PHONE_NUMBER]?: string;
   [CompleteWhoAmIUserFields.COLUMN_POLICIES]: string[];
   [CompleteWhoAmIUserFields.COLUMN_REFERENCE]: string;
   [CompleteWhoAmIUserFields.COLUMN_RIGHTS]: string[];
@@ -33,6 +35,7 @@ export class CompleteWhoAmIUser extends AbstractEntity<CompleteWhoAmIUserData> {
     this.#lastname = data[CompleteWhoAmIUserFields.COLUMN_LASTNAME];
     this.#login = data[CompleteWhoAmIUserFields.COLUMN_LOGIN];
     this.#policies = data[CompleteWhoAmIUserFields.COLUMN_POLICIES];
+    this.#phoneNumber = data[CompleteWhoAmIUserFields.COLUMN_PHONE_NUMBER];
     this.#reference = data[CompleteWhoAmIUserFields.COLUMN_REFERENCE];
     this.#rights = data[CompleteWhoAmIUserFields.COLUMN_RIGHTS];
     this.#scopes = data[CompleteWhoAmIUserFields.COLUMN_SCOPES];
@@ -43,6 +46,7 @@ export class CompleteWhoAmIUser extends AbstractEntity<CompleteWhoAmIUserData> {
   readonly #firstname?: string;
   readonly #lastname?: string;
   readonly #login?: string;
+  readonly #phoneNumber?: string;
   readonly #policies: string[];
   readonly #reference: string;
   readonly #rights: string[];
@@ -63,6 +67,10 @@ export class CompleteWhoAmIUser extends AbstractEntity<CompleteWhoAmIUserData> {
 
   get login(): string | undefined {
     return this.#login;
+  }
+
+  get phoneNumber(): string | undefined {
+    return this.#phoneNumber;
   }
 
   get policies(): string[] {
@@ -91,6 +99,7 @@ export class CompleteWhoAmIUser extends AbstractEntity<CompleteWhoAmIUserData> {
       [CompleteWhoAmIUserFields.COLUMN_FIRSTNAME]: this.firstname,
       [CompleteWhoAmIUserFields.COLUMN_LASTNAME]: this.lastname,
       [CompleteWhoAmIUserFields.COLUMN_LOGIN]: this.login,
+      [CompleteWhoAmIUserFields.COLUMN_PHONE_NUMBER]: this.phoneNumber,
       [CompleteWhoAmIUserFields.COLUMN_POLICIES]: this.policies,
       [CompleteWhoAmIUserFields.COLUMN_REFERENCE]: this.reference,
       [CompleteWhoAmIUserFields.COLUMN_RIGHTS]: this.rights,

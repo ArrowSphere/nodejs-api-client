@@ -75,7 +75,7 @@ export abstract class AbstractGraphQLClient extends AbstractHttpClient {
     return url.toString();
   }
 
-  protected stringifyQuery(query: any): string {
+  protected stringifyQuery(query: unknown): string {
     const graphqlQuery: string = jsonToGraphQLQuery(query);
 
     return `{${graphqlQuery}}`;
