@@ -6,6 +6,7 @@ export enum OrganizationUnitFields {
   COLUMN_NAME = 'name',
   COLUMN_COUNT_USERS = 'countUsers',
   COLUMN_COUNT_CUSTOMERS = 'countCustomers',
+  COLUMN_COUNT_LICENSES = 'countLicenses',
 }
 
 export type OrganizationUnitType = {
@@ -14,6 +15,7 @@ export type OrganizationUnitType = {
   [OrganizationUnitFields.COLUMN_NAME]: string;
   [OrganizationUnitFields.COLUMN_COUNT_USERS]?: number;
   [OrganizationUnitFields.COLUMN_COUNT_CUSTOMERS]?: number;
+  [OrganizationUnitFields.COLUMN_COUNT_LICENSES]?: number;
 };
 
 export class OrganizationUnit extends AbstractEntity<OrganizationUnitType> {
@@ -22,6 +24,7 @@ export class OrganizationUnit extends AbstractEntity<OrganizationUnitType> {
   readonly #name: string;
   readonly #countUsers?: number;
   readonly #countCustomers?: number;
+  readonly #countLicenses?: number;
 
   public constructor(organizationUnitInput: OrganizationUnitType) {
     super(organizationUnitInput);
@@ -37,6 +40,8 @@ export class OrganizationUnit extends AbstractEntity<OrganizationUnitType> {
       organizationUnitInput[OrganizationUnitFields.COLUMN_COUNT_USERS];
     this.#countCustomers =
       organizationUnitInput[OrganizationUnitFields.COLUMN_COUNT_CUSTOMERS];
+    this.#countLicenses =
+      organizationUnitInput[OrganizationUnitFields.COLUMN_COUNT_LICENSES];
   }
 
   get organizationUnitRef(): string {
@@ -59,6 +64,10 @@ export class OrganizationUnit extends AbstractEntity<OrganizationUnitType> {
     return this.#countCustomers;
   }
 
+  get countLicenses(): number | undefined {
+    return this.#countLicenses;
+  }
+
   public toJSON(): OrganizationUnitType {
     return {
       [OrganizationUnitFields.COLUMN_ORGANIZATION_UNIT_REF]: this
@@ -67,6 +76,7 @@ export class OrganizationUnit extends AbstractEntity<OrganizationUnitType> {
       [OrganizationUnitFields.COLUMN_NAME]: this.name,
       [OrganizationUnitFields.COLUMN_COUNT_USERS]: this.countUsers,
       [OrganizationUnitFields.COLUMN_COUNT_CUSTOMERS]: this.countCustomers,
+      [OrganizationUnitFields.COLUMN_COUNT_LICENSES]: this.countLicenses,
     };
   }
 }
