@@ -17,3 +17,4 @@
 | name                | ```string``` | "Administration service" | Name of the organization unit                           |
 | countUsers          | ```number``` | 7                        | (optional) Number of users in the organization unit     |
 | countCustomers      | ```number``` | 11                       | (optional) Number of customers in the organization unit |
+| countLicenses       | ```number``` | 11                       | (optional) Number of licenses in the organization unit  |

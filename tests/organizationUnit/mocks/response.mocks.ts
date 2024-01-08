@@ -17,6 +17,7 @@ export const ORGANIZATION_UNIT_RESPONSE_LIST_MOCK: GetData<OrganizationUnitListT
       [OrganizationUnitFields.COLUMN_NAME]: 'MyCompany',
       [OrganizationUnitFields.COLUMN_COUNT_USERS]: 1,
       [OrganizationUnitFields.COLUMN_COUNT_CUSTOMERS]: 3,
+      [OrganizationUnitFields.COLUMN_COUNT_LICENSES]: 42,
     },
     {
       [OrganizationUnitFields.COLUMN_ORGANIZATION_UNIT_REF]: 'XSPOU17728',
@@ -24,6 +25,7 @@ export const ORGANIZATION_UNIT_RESPONSE_LIST_MOCK: GetData<OrganizationUnitListT
       [OrganizationUnitFields.COLUMN_NAME]: 'MyCompany2',
       [OrganizationUnitFields.COLUMN_COUNT_USERS]: 2,
       [OrganizationUnitFields.COLUMN_COUNT_CUSTOMERS]: 4,
+      [OrganizationUnitFields.COLUMN_COUNT_LICENSES]: 42,
     },
   ],
   [GetResultFields.COLUMN_PAGINATION]: {
@@ -53,6 +55,7 @@ export const ORGANIZATION_UNIT_GET_RESPONSE_MOCK: GetData<OrganizationUnitType> 
     [OrganizationUnitFields.COLUMN_NAME]: 'MyOrganizationUnit',
     [OrganizationUnitFields.COLUMN_COUNT_USERS]: 1,
     [OrganizationUnitFields.COLUMN_COUNT_CUSTOMERS]: 3,
+    [OrganizationUnitFields.COLUMN_COUNT_LICENSES]: 42,
   },
 };
 
