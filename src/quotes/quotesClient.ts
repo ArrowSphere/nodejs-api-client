@@ -1,0 +1,30 @@
+import { AbstractRestfulClient, Parameters } from '../abstractRestfulClient';
+import { GetResult } from '../getResult';
+import { QuoteRequest } from './entities/QuoteRequest';
+
+export type RequestQuoteRequestType = {
+  agreeToReceiveCommunications: boolean;
+  agreeSharingInformation: boolean;
+  comments: string;
+  company: string;
+  country: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  sku: string;
+  vendor: string;
+};
+
+export class QuotesClient extends AbstractRestfulClient {
+  protected basePath = '/quotes';
+
+  public async requestQuote(
+    postData: RequestQuoteRequestType,
+    parameters: Parameters = {},
+  ): Promise<GetResult<QuoteRequest>> {
+    this.path = '/request';
+
+    return new GetResult(QuoteRequest, await this.post(postData, parameters));
+  }
+}
