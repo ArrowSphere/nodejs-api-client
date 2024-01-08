@@ -3,6 +3,11 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.89.0] - 2024.01.11
+
+### Added
+- [Organization Unit] add countLicenses fields to get List organization unit
+
 ## [3.88.0] - 2024.01.08
 
 ### Added
