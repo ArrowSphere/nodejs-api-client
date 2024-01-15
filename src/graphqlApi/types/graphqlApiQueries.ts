@@ -5,7 +5,9 @@ import {
 } from './entities/company';
 import { ContinentType, CountryType } from './entities/country';
 import { PartnertagType } from './entities/partnertag';
+import { SubscribedProgramType } from './entities/program';
 import { SubscriptionType } from './entities/subscription';
+import { VendorsType } from './entities/vendor';
 import { WorkgroupType } from './entities/workgroup';
 import {
   ErrorsSchema,
@@ -142,7 +144,9 @@ export enum SelectDataField {
   END_CUSTOMER = 'endCustomer',
   PARTNER = 'partner',
   PARTNERTAG = 'partnertag',
+  SUBSCRIBED_PROGRAM = 'subscribedProgram',
   SUBSCRIPTION = 'subscription',
+  VENDOR = 'vendor',
   WORKGROUP = 'workgroup',
 }
 
@@ -161,7 +165,9 @@ export type SelectAllResponseDataType = {
   [SelectDataField.END_CUSTOMER]?: EndCustomerType[];
   [SelectDataField.PARTNER]?: PartnerType[];
   [SelectDataField.PARTNERTAG]?: PartnertagType[];
+  [SelectDataField.SUBSCRIBED_PROGRAM]?: SubscribedProgramType[];
   [SelectDataField.SUBSCRIPTION]?: SubscriptionType[];
+  [SelectDataField.VENDOR]?: VendorsType[];
   [SelectDataField.WORKGROUP]?: WorkgroupType[];
 };
 
@@ -210,7 +216,9 @@ export type SelectOneResponseDataType = {
   [SelectDataField.END_CUSTOMER]?: EndCustomerType;
   [SelectDataField.PARTNER]?: PartnerType;
   [SelectDataField.PARTNERTAG]?: PartnertagType;
+  [SelectDataField.SUBSCRIBED_PROGRAM]?: SubscribedProgramType;
   [SelectDataField.SUBSCRIPTION]?: SubscriptionType;
+  [SelectDataField.VENDOR]?: VendorsType;
   [SelectDataField.WORKGROUP]?: WorkgroupType;
 };
 
