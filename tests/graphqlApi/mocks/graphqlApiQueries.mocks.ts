@@ -345,6 +345,16 @@ export const SELECT_ALL_PARTNERS_QUERY: SelectAllQueryType = {
             },
           },
         },
+        subscribedPrograms: {
+          availabilityEndedAt: true,
+          availabilityStartedAt: true,
+          companyId: true,
+          internalName: true,
+          subscriptionEndedAt: true,
+          id: true,
+          vendorCode: true,
+          vendorName: true,
+        },
       },
     },
 
@@ -365,7 +375,7 @@ export const SELECT_ALL_PARTNERS_QUERY: SelectAllQueryType = {
 };
 
 export const SELECT_ALL_PARTNERS_GQL =
-  '{selectAll (filters: {groups: [{items: [{name: "locked", operator: "IS_NULL"}, {name: "locked", value: ["1"], operator: "DIFFERENT"}], logicalOperator: "OR"}, {items: [{name: "id", value: ["SELECT DISTINCT compcustomer_companyid_customer FROM COMPANY_CUSTOMER"], exclusion: true}]}]}, aggregatorFilter: ["id"], pagination: {page: 1, perPage: 4}, sort: [{name: "id", direction: "ASC"}]) { data { partner { id partnerTags { id label description createdAt } workgroup { code } enabled subscriptionsPendingCount { total } subscriptionsCount { total } ordersCount { total } ordersNeedCount { total } contactsCount { total } customersCount { total } reportsCount { total } createdAt name contacts { id active communicationEmail effectiveDate email erpId firstname lastname locked phone status tseAccountStatus username type { id name } role { id name } } subscriptions { id localContact { id firstname lastname phone email } program { id internalName name } } extraInformations { id companyId code label name type value programName } orders { id items { id priceRates { id createdAt endedAt rate startedAt companyType { id type } type { id name } } } } } } errors { code message } pagination { currentPage perPage previous next total totalPage totalPages } }}';
+  '{selectAll (filters: {groups: [{items: [{name: "locked", operator: "IS_NULL"}, {name: "locked", value: ["1"], operator: "DIFFERENT"}], logicalOperator: "OR"}, {items: [{name: "id", value: ["SELECT DISTINCT compcustomer_companyid_customer FROM COMPANY_CUSTOMER"], exclusion: true}]}]}, aggregatorFilter: ["id"], pagination: {page: 1, perPage: 4}, sort: [{name: "id", direction: "ASC"}]) { data { partner { id partnerTags { id label description createdAt } workgroup { code } enabled subscriptionsPendingCount { total } subscriptionsCount { total } ordersCount { total } ordersNeedCount { total } contactsCount { total } customersCount { total } reportsCount { total } createdAt name contacts { id active communicationEmail effectiveDate email erpId firstname lastname locked phone status tseAccountStatus username type { id name } role { id name } } subscriptions { id localContact { id firstname lastname phone email } program { id internalName name } } extraInformations { id companyId code label name type value programName } orders { id items { id priceRates { id createdAt endedAt rate startedAt companyType { id type } type { id name } } } } subscribedPrograms { availabilityEndedAt availabilityStartedAt companyId internalName subscriptionEndedAt id vendorCode vendorName } } } errors { code message } pagination { currentPage perPage previous next total totalPage totalPages } }}';
 
 export const SELECT_ONE_END_CUSTOMER_QUERY: SelectOneQueryType = {
   [Queries.SELECT_ONE]: {
@@ -488,3 +498,75 @@ export const SELECT_ONE_END_CUSTOMER_QUERY: SelectOneQueryType = {
 
 export const SELECT_ONE_END_CUSTOMER_GQL =
   '{selectOne (filters: {groups: [{items: [{name: "id", value: ["123"], operator: "EQUALS"}]}, {items: [{name: "locked", operator: "IS_NULL"}, {name: "locked", value: ["1"], operator: "IS_NULL"}], logicalOperator: "OR"}]}, options: {skipPartition: true}) { data { endCustomer { acronym address1 address2 billingId city createdAt deletedAt enabled erpId id internalReference locked name partner { acronym country { code2 code3 id lat lng name phoneCode } id partnerRef workgroup { code id name } } partnerRef partnerTags { createdAt description id label } phone state vatNumber zip extraInformations { id companyId code label name type value programName } orders { id items { id priceRates { id createdAt endedAt rate startedAt companyType { id type } type { id name } } } } } } errors { code message } }}';
+
+export const SELECT_ALL_SUBSCRIBED_PROGRAM_QUERY: SelectAllQueryType = {
+  [Queries.SELECT_ALL]: {
+    __args: {
+      aggregatorFilter: ['companyId', 'internalName'],
+      pagination: {
+        page: 1,
+        perPage: 1000,
+      },
+      sort: [
+        {
+          name: 'vendorName',
+          direction: Direction.ASC,
+        },
+      ],
+    },
+    data: {
+      subscribedProgram: {
+        id: true,
+        availabilityEndedAt: true,
+        availabilityStartedAt: true,
+        companyId: true,
+        internalName: true,
+        subscriptionEndedAt: true,
+        partner: {
+          id: true,
+          name: true,
+          address1: true,
+          city: true,
+          zip: true,
+          phone: true,
+        },
+        program: {
+          id: true,
+          internalName: true,
+          name: true,
+        },
+        subscription: {
+          id: true,
+        },
+        vendor: {
+          id: true,
+          name: true,
+          identifier: true,
+          licenseUrl: true,
+          logoLarge: true,
+          logoSmall: true,
+          logoStandard: true,
+          url: true,
+        },
+        vendorCode: true,
+        vendorName: true,
+      },
+    },
+    errors: {
+      code: true,
+      message: true,
+    },
+    pagination: {
+      currentPage: true,
+      perPage: true,
+      previous: true,
+      next: true,
+      total: true,
+      totalPage: true,
+      totalPages: true,
+    },
+  },
+};
+
+export const SELECT_ALL_SUBSCRIBED_PROGRAM_GQL =
+  '{selectAll (aggregatorFilter: ["companyId", "internalName"], pagination: {page: 1, perPage: 1000}, sort: [{name: "vendorName", direction: "ASC"}]) { data { subscribedProgram { id availabilityEndedAt availabilityStartedAt companyId internalName subscriptionEndedAt partner { id name address1 city zip phone } program { id internalName name } subscription { id } vendor { id name identifier licenseUrl logoLarge logoSmall logoStandard url } vendorCode vendorName } } errors { code message } pagination { currentPage perPage previous next total totalPage totalPages } }}';

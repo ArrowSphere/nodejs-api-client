@@ -20,6 +20,8 @@ import { ProgramType } from '../../catalog';
 import { SubscriptionType } from './entities/subscription';
 import { SpecialPriceRateType } from './entities/specialPriceRate';
 import { OrderItemsType, OrdersType } from './entities/order';
+import { VendorsType } from './entities/vendor';
+import { SubscribedProgramType } from './entities/program';
 
 export type PartnertagSchema = Schema<PartnertagType, boolean>;
 
@@ -28,6 +30,7 @@ type MissingFieldsOfCompanySchema = {
   extraInformations?: CompanyExtraInformationSchema;
   orders?: OrdersSchema;
   partnerTags?: PartnertagSchema;
+  subscribedPrograms?: SubscribedProgramSchema;
   subscriptions?: SubscriptionSchema;
 };
 
@@ -90,7 +93,9 @@ export type ErrorsSchema = Schema<ErrorsType, boolean>;
 export type PageSchema = Schema<PageType, boolean>;
 export type ProgramSchema = Schema<ProgramType, boolean>;
 export type SpecialPriceRateSchema = Schema<SpecialPriceRateType, boolean>;
+export type SubscribedProgramSchema = Schema<SubscribedProgramType, boolean>;
 export type SubscriptionSchema = Schema<SubscriptionType, boolean>;
+export type VendorSchema = Schema<VendorsType, boolean>;
 export type WorkgroupSchema = Schema<WorkgroupType, boolean>;
 
 export type SelectAllResultSchema = {
@@ -106,7 +111,9 @@ export type SelectAllResponseDataSchema = {
   [SelectDataField.END_CUSTOMER]?: EndCustomerSchema;
   [SelectDataField.PARTNER]?: PartnerSchema;
   [SelectDataField.PARTNERTAG]?: PartnertagSchema;
+  [SelectDataField.SUBSCRIBED_PROGRAM]?: SubscribedProgramSchema;
   [SelectDataField.SUBSCRIPTION]?: SubscriptionSchema;
+  [SelectDataField.VENDOR]?: VendorSchema;
   [SelectDataField.WORKGROUP]?: WorkgroupSchema;
 };
 
@@ -122,7 +129,9 @@ export type SelectOneResponseDataSchema = {
   [SelectDataField.END_CUSTOMER]?: EndCustomerSchema;
   [SelectDataField.PARTNER]?: PartnerSchema;
   [SelectDataField.PARTNERTAG]?: PartnertagSchema;
+  [SelectDataField.SUBSCRIBED_PROGRAM]?: SubscribedProgramSchema;
   [SelectDataField.SUBSCRIPTION]?: SubscriptionSchema;
+  [SelectDataField.VENDOR]?: VendorSchema;
   [SelectDataField.WORKGROUP]?: WorkgroupSchema;
 };
 
