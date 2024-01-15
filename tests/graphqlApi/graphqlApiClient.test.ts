@@ -213,6 +213,62 @@ describe('GraphqlApiClient', () => {
     });
   });
 
+  describe('selectAll SubscribedProgram', () => {
+    it('makes a graphql POST request on the specified URL to selectAll SubscribedProgram', async () => {
+      const expectedResult: SelectAllResultType = {
+        [Queries.SELECT_ALL]: {
+          [SelectableField.DATA]: {
+            [SelectDataField.SUBSCRIBED_PROGRAM]: [
+              {
+                id: 1,
+                availabilityEndedAt: '',
+                availabilityStartedAt: '2020-01-09 00:00:00',
+                companyId: 1,
+                internalName: 'ALIBABA-RESELLER',
+                subscriptionEndedAt: '',
+                vendorCode: 'alibabacloud',
+                vendorName: 'Alibaba Cloud',
+              },
+              {
+                id: 2,
+                availabilityEndedAt: '',
+                availabilityStartedAt: '2016-04-12 00:00:00',
+                companyId: 1,
+                internalName: 'MSCSP',
+                subscriptionEndedAt: '',
+                vendorCode: 'Microsoft',
+                vendorName: 'Microsoft',
+              },
+            ],
+          },
+          [SelectableField.ERRORS]: undefined,
+          [SelectableField.PAGINATION]: {
+            currentPage: 1,
+            next: 2,
+            perPage: 4,
+            previous: 0,
+            total: 30,
+            totalPage: 4,
+            totalPages: 8,
+          },
+        },
+      };
+
+      graphQLClient.request.resolves(expectedResult);
+
+      const result: SelectAllResultType | null = await client.selectAll(
+        GraphqlApiQueryMock.SELECT_ALL_SUBSCRIBED_PROGRAM_QUERY,
+      );
+
+      sinon.assert.calledWithExactly(
+        graphQLClient.request,
+        sinon.match(GraphqlApiQueryMock.SELECT_ALL_SUBSCRIBED_PROGRAM_GQL),
+      );
+
+      expect(result).to.deep.equals(expectedResult);
+    });
+  });
+
   describe('selectOne', () => {
     it('makes a graphql POST request on the specified URL selectOne', async () => {
       const expectedResult: SelectOneResultType = {
