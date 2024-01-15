@@ -2,6 +2,7 @@ import { ContactsType } from './contact';
 import { CountryType } from './country';
 import { OrdersType } from './order';
 import { PartnertagType } from './partnertag';
+import { SubscribedProgramType } from './program';
 import { SubscriptionType } from './subscription';
 import { WorkgroupType } from './workgroup';
 
@@ -64,6 +65,7 @@ export type PartnerType = BaseCompanyType & {
   ordersCount?: CountableType;
   ordersNeedCount?: CountableType;
   reportsCount?: CountableType;
+  subscribedPrograms?: SubscribedProgramType[];
   subscriptions?: SubscriptionType[];
   subscriptionsCount?: CountableType;
   subscriptionsPendingCount?: CountableType;
