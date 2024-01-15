@@ -56,6 +56,7 @@ export enum LicensesEventInputSortField {
 export type LicensesEventInputSortType = {
   [LicensesEventInputSortField.ORDER]?: LicensesEventSortDirection;
   [LicensesEventInputSortField.NAME]?: string;
+  [LicensesEventInputKeywordByFieldsField.OPERATOR]?: string;
 };
 
 export enum LicensesEventQueryArgumentField {
@@ -66,11 +67,13 @@ export enum LicensesEventQueryArgumentField {
 export enum LicensesEventInputFiltersField {
   NAMES = 'names',
   VALUES = 'values',
+  OPERATOR = 'operator',
 }
 
 export type LicensesEventInputFiltersType = {
   [LicensesEventInputFiltersField.NAMES]?: string;
   [LicensesEventInputFiltersField.VALUES]?: string | string[];
+  [LicensesEventInputFiltersField.OPERATOR]?: string;
 };
 
 export enum LicensesEventInputKeywordByFieldsField {
