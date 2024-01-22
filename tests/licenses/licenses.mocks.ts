@@ -54,6 +54,7 @@ export const PAYLOAD_SCHEMA_LICENSE: GetData<GetLicenseResultData> = {
       [LicenseGetFields.COLUMN_ACTIVATION_DATETIME]: 'activation_datetime',
       [LicenseGetFields.COLUMN_EXPIRY_DATETIME]: 'expiry_datetime',
       [LicenseGetFields.COLUMN_AUTO_RENEW]: true,
+      [LicenseGetFields.COLUMN_MARKETPLACE]: 'FR',
       [LicenseGetFields.COLUMN_MESSAGE]: 'message',
       [LicenseGetFields.COLUMN_ACTIONS]: {
         [ActionsGetFields.COLUMN_HISTORY]: 'history',
@@ -165,6 +166,7 @@ export const PAYLOAD_SCHEMA_LICENSE_WITHOUT_OPTIONAL_FIELDS: GetData<GetLicenseR
       },
       [LicenseGetFields.COLUMN_ACTIVATION_DATETIME]: 'activation_datetime',
       [LicenseGetFields.COLUMN_EXPIRY_DATETIME]: 'expiry_datetime',
+      [LicenseGetFields.COLUMN_MARKETPLACE]: 'FR',
       [LicenseGetFields.COLUMN_MESSAGE]: 'message',
       [LicenseGetFields.COLUMN_ORDER_REFERENCE]: 'reference',
       [LicenseGetFields.COLUMN_ORDER]: {
