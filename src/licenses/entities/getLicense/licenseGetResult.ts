@@ -41,6 +41,7 @@ export enum LicenseGetFields {
   COLUMN_ACTIVATION_DATETIME = 'activation_datetime',
   COLUMN_EXPIRY_DATETIME = 'expiry_datetime',
   COLUMN_AUTO_RENEW = 'autoRenew',
+  COLUMN_MARKETPLACE = 'marketplace',
   COLUMN_MESSAGE = 'message',
   COLUMN_ACTIONS = 'actions',
   COLUMN_ACTION_MESSAGES = 'actionMessages',
@@ -64,6 +65,7 @@ export enum LicenseGetFields {
   COLUMN_EXTRA_DATA = 'extraData',
   COLUMN_PRICE_BAND = 'priceBand',
   COLUMN_VENDOR_CODE = 'vendorCode',
+  COLUMN_VENDOR_SKU = 'vendorSku',
   COLUMN_RATES = 'rates',
   COLUMN_ORGANIZATION_UNIT_ID = 'organizationUnitId',
   COLUMN_RELATION = 'relation',
@@ -88,6 +90,7 @@ export type LicenseGetData = {
   [LicenseGetFields.COLUMN_ACTIVATION_DATETIME]: string | null;
   [LicenseGetFields.COLUMN_EXPIRY_DATETIME]: string | null;
   [LicenseGetFields.COLUMN_AUTO_RENEW]?: boolean;
+  [LicenseGetFields.COLUMN_MARKETPLACE]: string;
   [LicenseGetFields.COLUMN_MESSAGE]: string;
   [LicenseGetFields.COLUMN_ACTIONS]?: ActionsGetData;
   [LicenseGetFields.COLUMN_ACTION_MESSAGES]?: Array<ActionMessagesGetResultData>;
@@ -110,6 +113,7 @@ export type LicenseGetData = {
   [LicenseGetFields.COLUMN_EXTRA_DATA]?: ExtraDataType[];
   [LicenseGetFields.COLUMN_PRICE_BAND]?: PriceBandData;
   [LicenseGetFields.COLUMN_VENDOR_CODE]?: string;
+  [LicenseGetFields.COLUMN_VENDOR_SKU]?: string;
   [LicenseGetFields.COLUMN_RATES]?: RatesGetData;
   [LicenseGetFields.COLUMN_ORGANIZATION_UNIT_ID]?: number;
   [LicenseGetFields.COLUMN_RELATION]?: RelationGetData[];
@@ -134,6 +138,7 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
   readonly #activation_datetime: string | null;
   readonly #expiry_datetime: string | null;
   readonly #autoRenew?: boolean;
+  readonly #marketplace: string;
   readonly #message: string;
   readonly #actions?: ActionsGetResult;
   readonly #actionMessages?: Array<ActionMessagesGetResult>;
@@ -156,6 +161,7 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
   readonly #extraData?: ExtraDataResult[];
   readonly #priceBand?: PriceBandGetResult;
   readonly #vendorCode?: string;
+  readonly #vendorSku?: string;
   readonly #rates?: RatesGetResult;
   readonly #organizationUnitId?: number;
   readonly #relation?: RelationGetResult[];
@@ -195,6 +201,8 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
     this.#expiry_datetime =
       licenseGetDataInput[LicenseGetFields.COLUMN_EXPIRY_DATETIME];
     this.#autoRenew = licenseGetDataInput[LicenseGetFields.COLUMN_AUTO_RENEW];
+    this.#marketplace =
+      licenseGetDataInput[LicenseGetFields.COLUMN_MARKETPLACE];
     this.#message = licenseGetDataInput[LicenseGetFields.COLUMN_MESSAGE];
     this.#actions = licenseGetDataInput[LicenseGetFields.COLUMN_ACTIONS]
       ? new ActionsGetResult(
@@ -258,6 +266,7 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
           )
         : undefined;
     this.#vendorCode = licenseGetDataInput[LicenseGetFields.COLUMN_VENDOR_CODE];
+    this.#vendorSku = licenseGetDataInput[LicenseGetFields.COLUMN_VENDOR_SKU];
     this.#rates = licenseGetDataInput[LicenseGetFields.COLUMN_RATES]
       ? new RatesGetResult(
           licenseGetDataInput[LicenseGetFields.COLUMN_RATES] as RatesGetData,
@@ -340,6 +349,10 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
 
   public get autoRenew(): boolean | undefined {
     return this.#autoRenew;
+  }
+
+  public get marketplace(): string {
+    return this.#marketplace;
   }
 
   public get message(): string {
@@ -430,6 +443,10 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
     return this.#vendorCode;
   }
 
+  get vendorSku(): string | undefined {
+    return this.#vendorSku;
+  }
+
   get rates(): RatesGetResult | undefined {
     return this.#rates;
   }
@@ -465,6 +482,7 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
       [LicenseGetFields.COLUMN_ACTIVATION_DATETIME]: this.activationDatetime,
       [LicenseGetFields.COLUMN_EXPIRY_DATETIME]: this.expiryDatetime,
       [LicenseGetFields.COLUMN_AUTO_RENEW]: this.autoRenew,
+      [LicenseGetFields.COLUMN_MARKETPLACE]: this.#marketplace,
       [LicenseGetFields.COLUMN_MESSAGE]: this.message,
       [LicenseGetFields.COLUMN_ACTIONS]: this.actions?.toJSON(),
       [LicenseGetFields.COLUMN_ACTION_MESSAGES]: this.actionMessages?.map(
@@ -492,6 +510,7 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
       ),
       [LicenseGetFields.COLUMN_PRICE_BAND]: this.priceBand?.toJSON(),
       [LicenseGetFields.COLUMN_VENDOR_CODE]: this.vendorCode,
+      [LicenseGetFields.COLUMN_VENDOR_SKU]: this.vendorSku,
       [LicenseGetFields.COLUMN_RATES]: this.rates?.toJSON(),
       [LicenseGetFields.COLUMN_ORGANIZATION_UNIT_ID]: this.organizationUnitId,
       [LicenseGetFields.COLUMN_RELATION]: this.relation?.map(

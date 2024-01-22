@@ -60,6 +60,7 @@ import {
 import { CredentialsResult } from './entities/license/credentialsResult';
 import { ScheduleTasksResult } from './entities/schedule/scheduleTasksResult';
 import {
+  CompanyTypeEnum,
   GetPricingRateResult,
   RateTypeEnum,
 } from './entities/pricingRate/getPricingRateResult';
@@ -71,6 +72,7 @@ import {
   BulkSetRateBody,
   BulkAutoRenewBody,
   BulkBodyFields,
+  SpecialPriceRateActive,
 } from './types/bulkArguments';
 
 /**
@@ -369,6 +371,12 @@ export type LicensePricingRate = {
   rateType: RateTypeEnum;
   rateValue: number;
   applyOnNextBillingPeriod: boolean;
+};
+
+export type GetLicensePricingRate = {
+  orderItemId: number;
+  companyType: CompanyTypeEnum;
+  activeTime: SpecialPriceRateActive;
 };
 
 export class LicensesClient extends AbstractRestfulClient {
@@ -798,15 +806,6 @@ export class LicensesClient extends AbstractRestfulClient {
     this.path = `/${licenseReference}${this.GET_LICENSE_CREDENTIALS}`;
 
     return new GetResult(CredentialsResult, await this.get(parameters));
-  }
-
-  public async getPricingRate(
-    licenseReference: string,
-    parameters: Parameters = {},
-  ): Promise<GetResult<GetPricingRateResult>> {
-    this.path = `/${licenseReference}${this.PRICING_RATE_PATH}`;
-
-    return new GetResult(GetPricingRateResult, await this.get(parameters));
   }
 
   public async setPricingRate(

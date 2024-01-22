@@ -29,6 +29,12 @@ export enum BulkBodyFields {
   SPECIAL_RATE_EFFECTIVE_APPLICATION_DATE = 'specialRateEffectiveApplicationDate',
 }
 
+export enum SpecialPriceRateActive {
+  ACTIVE_CURRENTLY = 1,
+  ACTIVE_LATER = 2,
+  ACTIVE_PERIOD = 3,
+}
+
 export type BulkBodyArgument = {
   [BulkBodyFields.ACTION_TYPE]: ActionTypes;
   [BulkBodyFields.LICENSES]: string[];
