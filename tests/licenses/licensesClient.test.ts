@@ -53,7 +53,6 @@ import {
   PAYLOAD_LICENSE_CONVERSION_SKU,
   PAYLOAD_LICENSE_EXISTING_CONVERSION_SKU,
   PAYLOAD_LICENSE_GET_CREDENTIALS,
-  PAYLOAD_LICENSE_GET_PRICING_RATE,
   PAYLOAD_LICENSE_HISTORY,
   PAYLOAD_LICENSE_POST_SCHEDULE_TASKS,
   PAYLOAD_SCHEMA_LICENSE,
@@ -1055,23 +1054,6 @@ describe('LicensesClient', () => {
 
       await licensesClient.getCredentials('12343');
       expect(nock.isDone()).to.be.true;
-    });
-  });
-
-  describe('getPricingRate', () => {
-    const licensesClient = new PublicApiClient()
-      .getLicensesClient()
-      .setUrl(LICENSES_MOCK_URL);
-    it('should call getPricingRate', async () => {
-      nock(LICENSES_MOCK_URL)
-        .get(LICENSE_MOCK_URL_PRICING_RATE)
-        .reply(200, PAYLOAD_LICENSE_GET_PRICING_RATE);
-
-      const result = await licensesClient.getPricingRate('XSP12343');
-      expect(nock.isDone()).to.be.true;
-      expect(result.data.toJSON()).to.be.eqls(
-        PAYLOAD_LICENSE_GET_PRICING_RATE.data,
-      );
     });
   });
 

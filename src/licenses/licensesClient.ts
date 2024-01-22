@@ -61,7 +61,6 @@ import { CredentialsResult } from './entities/license/credentialsResult';
 import { ScheduleTasksResult } from './entities/schedule/scheduleTasksResult';
 import {
   CompanyTypeEnum,
-  GetPricingRateResult,
   RateTypeEnum,
 } from './entities/pricingRate/getPricingRateResult';
 import { PartialResponse, PartialResponseData } from '../partialResponse';
