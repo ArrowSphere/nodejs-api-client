@@ -11,7 +11,15 @@ export enum CompleteWhoAmIUserFields {
   COLUMN_RIGHTS = 'rights',
   COLUMN_SCOPES = 'scopes',
   COLUMN_XAP_USERNAME = 'xapUsername',
+  COLUMN_CAN_IMPERSONATE = 'canImpersonate',
 }
+
+export type ImpersonableUser = {
+  username: string;
+  firstname: string;
+  lastname: string;
+  company: string;
+};
 
 export type CompleteWhoAmIUserData = {
   [CompleteWhoAmIUserFields.COLUMN_EMAIL]?: string;
@@ -24,6 +32,7 @@ export type CompleteWhoAmIUserData = {
   [CompleteWhoAmIUserFields.COLUMN_RIGHTS]: string[];
   [CompleteWhoAmIUserFields.COLUMN_SCOPES]: string[];
   [CompleteWhoAmIUserFields.COLUMN_XAP_USERNAME]: string;
+  [CompleteWhoAmIUserFields.COLUMN_CAN_IMPERSONATE]: ImpersonableUser[];
 };
 
 export class CompleteWhoAmIUser extends AbstractEntity<CompleteWhoAmIUserData> {
@@ -40,6 +49,8 @@ export class CompleteWhoAmIUser extends AbstractEntity<CompleteWhoAmIUserData> {
     this.#rights = data[CompleteWhoAmIUserFields.COLUMN_RIGHTS];
     this.#scopes = data[CompleteWhoAmIUserFields.COLUMN_SCOPES];
     this.#xapUsername = data[CompleteWhoAmIUserFields.COLUMN_XAP_USERNAME];
+    this.#canImpersonate =
+      data[CompleteWhoAmIUserFields.COLUMN_CAN_IMPERSONATE];
   }
 
   readonly #email?: string;
@@ -52,6 +63,7 @@ export class CompleteWhoAmIUser extends AbstractEntity<CompleteWhoAmIUserData> {
   readonly #rights: string[];
   readonly #scopes: string[];
   readonly #xapUsername: string;
+  readonly #canImpersonate: ImpersonableUser[];
 
   get email(): string | undefined {
     return this.#email;
@@ -93,6 +105,10 @@ export class CompleteWhoAmIUser extends AbstractEntity<CompleteWhoAmIUserData> {
     return this.#xapUsername;
   }
 
+  get canImpersonate(): ImpersonableUser[] {
+    return this.#canImpersonate;
+  }
+
   public toJSON(): CompleteWhoAmIUserData {
     return {
       [CompleteWhoAmIUserFields.COLUMN_EMAIL]: this.email,
@@ -105,6 +121,7 @@ export class CompleteWhoAmIUser extends AbstractEntity<CompleteWhoAmIUserData> {
       [CompleteWhoAmIUserFields.COLUMN_RIGHTS]: this.rights,
       [CompleteWhoAmIUserFields.COLUMN_SCOPES]: this.scopes,
       [CompleteWhoAmIUserFields.COLUMN_XAP_USERNAME]: this.xapUsername,
+      [CompleteWhoAmIUserFields.COLUMN_CAN_IMPERSONATE]: this.canImpersonate,
     };
   }
 }

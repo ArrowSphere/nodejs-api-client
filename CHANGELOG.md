@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.91.0] - 2024-01-23
+
+### Added
+
+- [partners] Added the `canImpersonate` field to the `/partners/users/rights` endpoint response
+
 ## [3.90.0] - 2024.01.11
 
 ### Added
@@ -31,7 +37,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [3.85.0] - 2024-01-05
 
 ### Added
-- [license] Add Merket Segment to License 
+- [license] Add Market Segment to License
 
 ## [3.84.1] - 2024-01-05
 
@@ -77,7 +83,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [3.79.0] - 2023-12-20
 
 ### Changed
-- [license] Add new columns price.priceBandArrowsphereSku, price.unit.list and price.total.list 
+- [license] Add new columns price.priceBandArrowsphereSku, price.unit.list and price.total.list
 
 ## [3.78.0] - 2023-12-15
 
@@ -755,7 +761,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Update type CreateOrderInputType, Add Fields discount and uplift
 - Endpoint List Order :
   - add Pagination
-  - Fields Partner was optional 
+  - Fields Partner was optional
 - Endpoint Get Order :
   - Update generated URL
   - Fields Partner was optional
