@@ -105,8 +105,8 @@ enum ReportName {
 }
 
 export type ReportsAggType = {
-  reportName: ReportName;
-  reportUrl: string;
+  name: ReportName;
+  statusCode: number;
 };
 
 /**
