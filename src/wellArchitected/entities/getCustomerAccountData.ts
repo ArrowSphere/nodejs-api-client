@@ -4,6 +4,7 @@ import {
   MonthlyTrendAggType,
   WellArchitectedPaginationType,
   WellArchitectedPeriodType,
+  ReportsAggType,
   ScoreResultType,
   ScoresAggType,
   SeveritiesAggType,
@@ -17,6 +18,7 @@ export enum GetCustomerAccountDataFields {
   COLUMN_MONTHLY_TREND_AGG = 'monthlyTrendAgg',
   COLUMN_PAGINATION = 'pagination',
   COLUMN_PERIOD = 'period',
+  COLUMN_REPORTS_AGG = 'reportsAgg',
   COLUMN_RESULTS = 'results',
   COLUMN_SCORES_AGG = 'scoresAgg',
   COLUMN_SEVERITIES_AGG = 'severitiesAgg',
@@ -29,6 +31,7 @@ export type GetCustomerAccountDataType = {
   [GetCustomerAccountDataFields.COLUMN_MONTHLY_TREND_AGG]?: MonthlyTrendAggType;
   [GetCustomerAccountDataFields.COLUMN_PAGINATION]?: WellArchitectedPaginationType;
   [GetCustomerAccountDataFields.COLUMN_PERIOD]?: WellArchitectedPeriodType;
+  [GetCustomerAccountDataFields.COLUMN_REPORTS_AGG]?: ReportsAggType[];
   [GetCustomerAccountDataFields.COLUMN_RESULTS]?: ScoreResultType[];
   [GetCustomerAccountDataFields.COLUMN_SCORES_AGG]?: ScoresAggType;
   [GetCustomerAccountDataFields.COLUMN_SEVERITIES_AGG]?: SeveritiesAggType;
@@ -45,6 +48,7 @@ export class GetCustomerAccountData extends AbstractEntity<GetCustomerAccountDat
   readonly #monthlyTrendAgg?: MonthlyTrendAggType;
   readonly #pagination?: WellArchitectedPaginationType;
   readonly #period?: WellArchitectedPeriodType;
+  readonly #reportsAgg?: ReportsAggType[];
   readonly #results?: ScoreResultType[];
   readonly #scoresAgg?: ScoresAggType;
   readonly #severitiesAgg?: SeveritiesAggType;
@@ -68,6 +72,10 @@ export class GetCustomerAccountData extends AbstractEntity<GetCustomerAccountDat
       ];
     this.#period =
       getCustomerAccountDataInput[GetCustomerAccountDataFields.COLUMN_PERIOD];
+    this.#reportsAgg =
+      getCustomerAccountDataInput[
+        GetCustomerAccountDataFields.COLUMN_REPORTS_AGG
+      ];
     this.#results =
       getCustomerAccountDataInput[GetCustomerAccountDataFields.COLUMN_RESULTS];
     this.#scoresAgg =
@@ -108,6 +116,10 @@ export class GetCustomerAccountData extends AbstractEntity<GetCustomerAccountDat
     return this.#scoresAgg;
   }
 
+  get reportsAgg(): ReportsAggType[] | undefined {
+    return this.#reportsAgg;
+  }
+
   get results(): ScoreResultType[] | undefined {
     return this.#results;
   }
@@ -132,6 +144,7 @@ export class GetCustomerAccountData extends AbstractEntity<GetCustomerAccountDat
       [GetCustomerAccountDataFields.COLUMN_PAGINATION]: this.pagination,
       [GetCustomerAccountDataFields.COLUMN_PERIOD]: this.period,
       [GetCustomerAccountDataFields.COLUMN_SCORES_AGG]: this.scoresAgg,
+      [GetCustomerAccountDataFields.COLUMN_REPORTS_AGG]: this.reportsAgg,
       [GetCustomerAccountDataFields.COLUMN_RESULTS]: this.results,
       [GetCustomerAccountDataFields.COLUMN_SEVERITIES_AGG]: this.severitiesAgg,
       [GetCustomerAccountDataFields.COLUMN_STANDARDS_AGG]: this.standardsAgg,
