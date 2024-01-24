@@ -21,6 +21,7 @@ import {
   PartnerAggType,
   PartnerByDateAggType,
   RegistrationType,
+  ReportsAggType,
   ScoreByDateAggType,
   ScoreByMonthAggType,
   ScoreByMonthSeverityType,
@@ -295,3 +296,5 @@ type PartnerAggSchema = Merge<
 export type PartnersAggSchema = {
   partners?: PartnerAggSchema;
 };
+
+export type ReportsAggSchema = Schema<ReportsAggType, boolean>;

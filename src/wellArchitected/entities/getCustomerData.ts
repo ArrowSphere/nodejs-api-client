@@ -7,6 +7,7 @@ import {
   WellArchitectedPaginationType,
   WellArchitectedPeriodType,
   ChecksAggType,
+  ReportsAggType,
   ScoresAggType,
   StandardWithCheckType,
 } from '../types/wellArchitectedGraphQLTypes';
@@ -18,6 +19,7 @@ export enum GetCustomerDataFields {
   COLUMN_MONTHLY_TREND_AGG = 'monthlyTrendAgg',
   COLUMN_PAGINATION = 'pagination',
   COLUMN_PERIOD = 'period',
+  COLUMN_REPORTS_AGG = 'reportsAgg',
   COLUMN_RESULTS = 'results',
   COLUMN_SCORES_AGG = 'scoresAgg',
   COLUMN_SEVERITIES_AGG = 'severitiesAgg',
@@ -31,6 +33,7 @@ export type GetCustomerDataType = {
   [GetCustomerDataFields.COLUMN_MONTHLY_TREND_AGG]?: MonthlyTrendAggType;
   [GetCustomerDataFields.COLUMN_PAGINATION]?: WellArchitectedPaginationType;
   [GetCustomerDataFields.COLUMN_PERIOD]?: WellArchitectedPeriodType;
+  [GetCustomerDataFields.COLUMN_REPORTS_AGG]?: ReportsAggType[];
   [GetCustomerDataFields.COLUMN_RESULTS]?: ScoreResultType[];
   [GetCustomerDataFields.COLUMN_SCORES_AGG]?: ScoresAggType;
   [GetCustomerDataFields.COLUMN_SEVERITIES_AGG]?: SeveritiesAggType;
@@ -48,6 +51,7 @@ export class GetCustomerData extends AbstractEntity<GetCustomerDataType> {
   readonly #monthlyTrendAgg?: MonthlyTrendAggType;
   readonly #pagination?: WellArchitectedPaginationType;
   readonly #period?: WellArchitectedPeriodType;
+  readonly #reportsAgg?: ReportsAggType[];
   readonly #results?: ScoreResultType[];
   readonly #scoresAgg?: ScoresAggType;
   readonly #severitiesAgg?: SeveritiesAggType;
@@ -66,6 +70,8 @@ export class GetCustomerData extends AbstractEntity<GetCustomerDataType> {
     this.#pagination =
       getCustomerDataInput[GetCustomerDataFields.COLUMN_PAGINATION];
     this.#period = getCustomerDataInput[GetCustomerDataFields.COLUMN_PERIOD];
+    this.#reportsAgg =
+      getCustomerDataInput[GetCustomerDataFields.COLUMN_REPORTS_AGG];
     this.#results = getCustomerDataInput[GetCustomerDataFields.COLUMN_RESULTS];
     this.#scoresAgg =
       getCustomerDataInput[GetCustomerDataFields.COLUMN_SCORES_AGG];
@@ -99,6 +105,10 @@ export class GetCustomerData extends AbstractEntity<GetCustomerDataType> {
     return this.#period;
   }
 
+  get reportsAgg(): ReportsAggType[] | undefined {
+    return this.#reportsAgg;
+  }
+
   get results(): ScoreResultType[] | undefined {
     return this.#results;
   }
@@ -126,6 +136,7 @@ export class GetCustomerData extends AbstractEntity<GetCustomerDataType> {
       [GetCustomerDataFields.COLUMN_MONTHLY_TREND_AGG]: this.monthlyTrendAgg,
       [GetCustomerDataFields.COLUMN_PAGINATION]: this.pagination,
       [GetCustomerDataFields.COLUMN_PERIOD]: this.period,
+      [GetCustomerDataFields.COLUMN_REPORTS_AGG]: this.#reportsAgg,
       [GetCustomerDataFields.COLUMN_RESULTS]: this.results,
       [GetCustomerDataFields.COLUMN_SCORES_AGG]: this.scoresAgg,
       [GetCustomerDataFields.COLUMN_SEVERITIES_AGG]: this.severitiesAgg,
