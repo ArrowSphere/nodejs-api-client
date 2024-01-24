@@ -11,6 +11,7 @@ import {
   MonthlyTrendAggSchema,
   PaginationSchema,
   PeriodsSchema,
+  ReportsAggSchema,
   ScoreResultSchema,
   ScoresAggSchema,
   SeveritiesAggSchema,
@@ -36,6 +37,7 @@ export type GetPartnerDataQuery = {
     [GetPartnerDataFields.COLUMN_MONTHLY_TREND_AGG]?: MonthlyTrendAggSchema;
     [GetPartnerDataFields.COLUMN_PAGINATION]?: PaginationSchema;
     [GetPartnerDataFields.COLUMN_PERIOD]?: PeriodsSchema;
+    [GetPartnerDataFields.COLUMN_REPORTS_AGG]?: ReportsAggSchema;
     [GetPartnerDataFields.COLUMN_RESULTS]?: ScoreResultSchema;
     [GetPartnerDataFields.COLUMN_SCORES_AGG]?: ScoresAggSchema;
     [GetPartnerDataFields.COLUMN_SEVERITIES_AGG]?: SeveritiesAggSchema;
@@ -53,6 +55,7 @@ export type GetCustomerDataQuery = {
     [GetCustomerDataFields.COLUMN_MONTHLY_TREND_AGG]?: MonthlyTrendAggSchema;
     [GetCustomerDataFields.COLUMN_PAGINATION]?: PaginationSchema;
     [GetCustomerDataFields.COLUMN_PERIOD]?: PeriodsSchema;
+    [GetCustomerDataFields.COLUMN_REPORTS_AGG]?: ReportsAggSchema;
     [GetCustomerDataFields.COLUMN_RESULTS]?: ScoreResultSchema;
     [GetCustomerDataFields.COLUMN_SCORES_AGG]?: ScoresAggSchema;
     [GetCustomerDataFields.COLUMN_SEVERITIES_AGG]?: SeveritiesAggSchema;
@@ -71,6 +74,7 @@ export type GetCustomerAccountDataQuery = {
     [GetCustomerAccountDataFields.COLUMN_MONTHLY_TREND_AGG]?: MonthlyTrendAggSchema;
     [GetCustomerAccountDataFields.COLUMN_PAGINATION]?: PaginationSchema;
     [GetCustomerAccountDataFields.COLUMN_PERIOD]?: PeriodsSchema;
+    [GetCustomerAccountDataFields.COLUMN_REPORTS_AGG]?: ReportsAggSchema;
     [GetCustomerAccountDataFields.COLUMN_RESULTS]?: ScoreResultSchema;
     [GetCustomerAccountDataFields.COLUMN_SCORES_AGG]?: ScoresAggSchema;
     [GetCustomerAccountDataFields.COLUMN_SEVERITIES_AGG]?: SeveritiesAggSchema;
@@ -91,6 +95,7 @@ export type GetAdminDataQuery = {
     [GetAdminDataFields.COLUMN_PARTNERS_AGG]?: PartnersAggSchema;
     [GetAdminDataFields.COLUMN_PAGINATION]?: PaginationSchema;
     [GetAdminDataFields.COLUMN_PERIOD]?: PeriodsSchema;
+    [GetAdminDataFields.COLUMN_REPORTS_AGG]?: ReportsAggSchema;
     [GetAdminDataFields.COLUMN_RESULTS]?: ScoreResultSchema;
     [GetAdminDataFields.COLUMN_SCORES_AGG]?: ScoresAggSchema;
     [GetAdminDataFields.COLUMN_SEVERITIES_AGG]?: SeveritiesAggSchema;

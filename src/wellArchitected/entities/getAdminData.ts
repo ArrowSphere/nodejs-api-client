@@ -6,6 +6,7 @@ import {
   WellArchitectedPaginationType,
   PartnersAggType,
   WellArchitectedPeriodType,
+  ReportsAggType,
   ScoreResultType,
   ScoresAggType,
   SeveritiesAggType,
@@ -19,6 +20,7 @@ export enum GetAdminDataFields {
   COLUMN_PARTNERS_AGG = 'partnersAgg',
   COLUMN_PAGINATION = 'pagination',
   COLUMN_PERIOD = 'period',
+  COLUMN_REPORTS_AGG = 'reportsAgg',
   COLUMN_RESULTS = 'results',
   COLUMN_SCORES_AGG = 'scoresAgg',
   COLUMN_SEVERITIES_AGG = 'severitiesAgg',
@@ -32,6 +34,7 @@ export type GetAdminDataType = {
   [GetAdminDataFields.COLUMN_PAGINATION]?: WellArchitectedPaginationType;
   [GetAdminDataFields.COLUMN_PERIOD]?: WellArchitectedPeriodType;
   [GetAdminDataFields.COLUMN_RESULTS]?: ScoreResultType[];
+  [GetAdminDataFields.COLUMN_REPORTS_AGG]?: ReportsAggType[];
   [GetAdminDataFields.COLUMN_SCORES_AGG]?: ScoresAggType;
   [GetAdminDataFields.COLUMN_SEVERITIES_AGG]?: SeveritiesAggType;
 };
@@ -47,6 +50,7 @@ export class GetAdminData extends AbstractEntity<GetAdminDataType> {
   readonly #partnersAgg?: PartnersAggType;
   readonly #period?: WellArchitectedPeriodType;
   readonly #pagination?: WellArchitectedPaginationType;
+  readonly #reportsAgg?: ReportsAggType[];
   readonly #results?: ScoreResultType[];
   readonly #scoresAgg?: ScoresAggType;
   readonly #severitiesAgg?: SeveritiesAggType;
@@ -63,6 +67,7 @@ export class GetAdminData extends AbstractEntity<GetAdminDataType> {
       getAdminDataInput[GetAdminDataFields.COLUMN_PARTNERS_AGG];
     this.#period = getAdminDataInput[GetAdminDataFields.COLUMN_PERIOD];
     this.#pagination = getAdminDataInput[GetAdminDataFields.COLUMN_PAGINATION];
+    this.#reportsAgg = getAdminDataInput[GetAdminDataFields.COLUMN_REPORTS_AGG];
     this.#results = getAdminDataInput[GetAdminDataFields.COLUMN_RESULTS];
     this.#scoresAgg = getAdminDataInput[GetAdminDataFields.COLUMN_SCORES_AGG];
     this.#severitiesAgg =
@@ -93,6 +98,10 @@ export class GetAdminData extends AbstractEntity<GetAdminDataType> {
     return this.#pagination;
   }
 
+  get reportsAgg(): ReportsAggType[] | undefined {
+    return this.#reportsAgg;
+  }
+
   get results(): ScoreResultType[] | undefined {
     return this.#results;
   }
@@ -113,6 +122,7 @@ export class GetAdminData extends AbstractEntity<GetAdminDataType> {
       [GetAdminDataFields.COLUMN_PARTNERS_AGG]: this.partnersAgg,
       [GetAdminDataFields.COLUMN_PERIOD]: this.period,
       [GetAdminDataFields.COLUMN_PAGINATION]: this.pagination,
+      [GetAdminDataFields.COLUMN_REPORTS_AGG]: this.reportsAgg,
       [GetAdminDataFields.COLUMN_RESULTS]: this.results,
       [GetAdminDataFields.COLUMN_SCORES_AGG]: this.scoresAgg,
       [GetAdminDataFields.COLUMN_SEVERITIES_AGG]: this.severitiesAgg,

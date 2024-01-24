@@ -99,6 +99,16 @@ export type ScoreResultType = {
   registration?: RegistrationType;
 };
 
+enum ReportName {
+  SUSTAINABILITY_BEGESV4,
+  SUSTAINABILITY_GHG,
+}
+
+export type ReportsAggType = {
+  reportName: ReportName;
+  reportUrl: string;
+};
+
 /**
  * Generic Types
  */

@@ -1,3 +1,5 @@
+import { EnumType } from 'json-to-graphql-query';
+
 /**
  * For field __args
  */
@@ -17,6 +19,11 @@ export enum PaginateFields {
   PER_PAGE = 'perPage',
 }
 
+export enum ReportName {
+  SUSTAINABILITY_BEGESV4 = 'SUSTAINABILITY_BEGESV4',
+  SUSTAINABILITY_GHG = 'SUSTAINABILITY_GHG',
+}
+
 export enum SearchBodyFields {
   FILTERS = 'filters',
   EXCLUSION_FILTERS = 'exclusionFilters',
@@ -25,6 +32,7 @@ export enum SearchBodyFields {
   MARKETPLACE = 'marketplace',
   MONTHLY_TREND_PERIOD = 'monthlyTrendPeriod',
   PERIOD = 'period',
+  REPORTS = 'reports',
 }
 
 export enum SearchFilterFields {
@@ -100,6 +108,7 @@ export type SearchBodyArgument = {
   [SearchBodyFields.MARKETPLACE]?: string[][];
   [SearchBodyFields.MONTHLY_TREND_PERIOD]?: PeriodInputArgument;
   [SearchBodyFields.PERIOD]?: PeriodInputArgument;
+  [SearchBodyFields.REPORTS]?: EnumType[];
   [SearchBodyFields.SORT]?: SortArgument[];
   [SearchBodyFields.SUBSCRIPTION_REFERENCE]?: string[][];
 };

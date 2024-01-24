@@ -6,6 +6,7 @@ import {
   MonthlyTrendAggType,
   WellArchitectedPaginationType,
   WellArchitectedPeriodType,
+  ReportsAggType,
   ScoreResultType,
   ScoresAggType,
   SeveritiesAggType,
@@ -19,6 +20,7 @@ export enum GetPartnerDataFields {
   COLUMN_MONTHLY_TREND_AGG = 'monthlyTrendAgg',
   COLUMN_PAGINATION = 'pagination',
   COLUMN_PERIOD = 'period',
+  COLUMN_REPORTS_AGG = 'reportsAgg',
   COLUMN_RESULTS = 'results',
   COLUMN_SCORES_AGG = 'scoresAgg',
   COLUMN_SEVERITIES_AGG = 'severitiesAgg',
@@ -31,6 +33,7 @@ export type GetPartnerDataType = {
   [GetPartnerDataFields.COLUMN_MONTHLY_TREND_AGG]?: MonthlyTrendAggType;
   [GetPartnerDataFields.COLUMN_PAGINATION]?: WellArchitectedPaginationType;
   [GetPartnerDataFields.COLUMN_PERIOD]?: WellArchitectedPeriodType;
+  [GetPartnerDataFields.COLUMN_REPORTS_AGG]?: ReportsAggType[];
   [GetPartnerDataFields.COLUMN_RESULTS]?: ScoreResultType[];
   [GetPartnerDataFields.COLUMN_SCORES_AGG]?: ScoresAggType;
   [GetPartnerDataFields.COLUMN_SEVERITIES_AGG]?: SeveritiesAggType;
@@ -47,6 +50,7 @@ export class GetPartnerData extends AbstractEntity<GetPartnerDataType> {
   readonly #monthlyTrendAgg?: MonthlyTrendAggType;
   readonly #period?: WellArchitectedPeriodType;
   readonly #pagination?: WellArchitectedPaginationType;
+  readonly #reportsAgg?: ReportsAggType[];
   readonly #results?: ScoreResultType[];
   readonly #scoresAgg?: ScoresAggType;
   readonly #severitiesAgg?: SeveritiesAggType;
@@ -65,6 +69,8 @@ export class GetPartnerData extends AbstractEntity<GetPartnerDataType> {
     this.#period = getPartnerDataInput[GetPartnerDataFields.COLUMN_PERIOD];
     this.#pagination =
       getPartnerDataInput[GetPartnerDataFields.COLUMN_PAGINATION];
+    this.#reportsAgg =
+      getPartnerDataInput[GetPartnerDataFields.COLUMN_REPORTS_AGG];
     this.#results = getPartnerDataInput[GetPartnerDataFields.COLUMN_RESULTS];
     this.#scoresAgg =
       getPartnerDataInput[GetPartnerDataFields.COLUMN_SCORES_AGG];
@@ -96,6 +102,10 @@ export class GetPartnerData extends AbstractEntity<GetPartnerDataType> {
     return this.#pagination;
   }
 
+  get reportsAgg(): ReportsAggType[] | undefined {
+    return this.#reportsAgg;
+  }
+
   get results(): ScoreResultType[] | undefined {
     return this.#results;
   }
@@ -116,6 +126,7 @@ export class GetPartnerData extends AbstractEntity<GetPartnerDataType> {
       [GetPartnerDataFields.COLUMN_MONTHLY_TREND_AGG]: this.monthlyTrendAgg,
       [GetPartnerDataFields.COLUMN_PERIOD]: this.period,
       [GetPartnerDataFields.COLUMN_PAGINATION]: this.pagination,
+      [GetPartnerDataFields.COLUMN_REPORTS_AGG]: this.#reportsAgg,
       [GetPartnerDataFields.COLUMN_RESULTS]: this.results,
       [GetPartnerDataFields.COLUMN_SCORES_AGG]: this.scoresAgg,
       [GetPartnerDataFields.COLUMN_SEVERITIES_AGG]: this.severitiesAgg,
