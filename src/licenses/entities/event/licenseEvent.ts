@@ -14,18 +14,21 @@ export enum LicenseEventActionType {
 }
 
 export enum LicenseEventType {
+  ACKNOWLEDGED = 'acknowledged',
   ACTIVATION_FAILURE = 'activation_failure',
   ACTIVATION_SUCCESS = 'activation_success',
   CANCELLED = 'cancelled',
   CREATED = 'created',
+  PENDING = 'pending',
   PREPARATION = 'preparation',
+  REJECTED = 'rejected',
   SUSPENDED = 'suspended',
   TRANSFERRED = 'transferred',
   TRANSMISSION_FAILURE = 'transmission_failure',
   TRANSMISSION_IN_PROGRESS = 'transmission_in_progress',
   TRANSMISSION_SUCCESS = 'transmission_success',
   UPDATED = 'updated',
-  PENDING = 'pending',
+  VALIDATED = 'validated',
 }
 
 export enum LicenseEventStatusCode {
