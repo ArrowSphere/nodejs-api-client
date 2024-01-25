@@ -80,12 +80,14 @@ export enum LicensesEventInputKeywordByFieldsField {
   NAME = 'name',
   VALUES = 'values',
   OPERATOR = 'operator',
+  TYPE = 'type',
 }
 
 export type LicensesEventInputKeywordByFieldsType = {
   [LicensesEventInputKeywordByFieldsField.NAME]: string;
   [LicensesEventInputKeywordByFieldsField.VALUES]: string[];
   [LicensesEventInputKeywordByFieldsField.OPERATOR]?: string;
+  [LicensesEventInputKeywordByFieldsField.TYPE]?: string;
 };
 
 export enum LicensesEvenInputSearchBodyField {
