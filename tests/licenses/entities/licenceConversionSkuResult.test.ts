@@ -10,6 +10,7 @@ describe('License Conversion Sku', () => {
       offers: [
         {
           billingCycle: 720,
+          endDate: '2021-12-31T23:59:59Z',
           licenseReference: 'XSP5046568',
           name: 'Office 365 E3',
           seats: 1,
