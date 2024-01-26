@@ -7,10 +7,12 @@ export enum ConversionSkuResultFields {
   COLUMN_SEATS = 'seats',
   COLUMN_SKU = 'sku',
   COLUMN_TERM = 'term',
+  COLUMN_END_DATE = 'endDate',
 }
 
 export type ConversionSkuExistingResultData = {
   [ConversionSkuResultFields.COLUMN_BILLING_CYCLE]: number;
+  [ConversionSkuResultFields.COLUMN_END_DATE]?: string;
   [ConversionSkuResultFields.COLUMN_LICENSE_REFERENCE]?: string;
   [ConversionSkuResultFields.COLUMN_NAME]: string;
   [ConversionSkuResultFields.COLUMN_SEATS]?: number;
@@ -27,6 +29,7 @@ export type ConversionSkuResultData = {
 
 export class ConversionSkuResult extends AbstractEntity<ConversionSkuExistingResultData> {
   readonly #billingCycle: number;
+  readonly #endDate?: string;
   readonly #licenseReference?: string;
   readonly #name: string;
   readonly #seats?: number;
@@ -37,6 +40,8 @@ export class ConversionSkuResult extends AbstractEntity<ConversionSkuExistingRes
     super(data);
 
     this.#billingCycle = data[ConversionSkuResultFields.COLUMN_BILLING_CYCLE];
+    this.#endDate =
+      data[ConversionSkuResultFields.COLUMN_END_DATE] ?? undefined;
     this.#licenseReference =
       data[ConversionSkuResultFields.COLUMN_LICENSE_REFERENCE] ?? undefined;
     this.#name = data[ConversionSkuResultFields.COLUMN_NAME];
@@ -47,6 +52,10 @@ export class ConversionSkuResult extends AbstractEntity<ConversionSkuExistingRes
 
   public get billingCycle(): number {
     return this.#billingCycle;
+  }
+
+  public get endDate(): string | undefined {
+    return this.#endDate;
   }
 
   public get licenseReference(): string | undefined {
@@ -81,6 +90,7 @@ export class ConversionSkuResult extends AbstractEntity<ConversionSkuExistingRes
 
     return {
       [ConversionSkuResultFields.COLUMN_BILLING_CYCLE]: this.billingCycle,
+      [ConversionSkuResultFields.COLUMN_END_DATE]: this.endDate,
       [ConversionSkuResultFields.COLUMN_LICENSE_REFERENCE]: this
         .licenseReference,
       [ConversionSkuResultFields.COLUMN_NAME]: this.name,
