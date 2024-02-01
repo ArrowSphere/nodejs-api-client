@@ -35,7 +35,7 @@ export type OrderProductsType = {
   [OrderProductsFields.COLUMN_ARROWSUBCATEGORIES]?: Array<string>;
   [OrderProductsFields.COLUMN_IS_TRIAL]: boolean;
   [OrderProductsFields.COLUMN_PRICES]: ProductPricesType;
-  [OrderProductsFields.COLUMN_SUBSCRIPTION]: ReferenceLinkType;
+  [OrderProductsFields.COLUMN_SUBSCRIPTION]?: ReferenceLinkType;
   [OrderProductsFields.COLUMN_LICENSE]: ReferenceLinkType;
   [OrderProductsFields.COLUMN_NAME]: string;
   [OrderProductsFields.COLUMN_CLASSIFICATION]: string;
@@ -53,7 +53,7 @@ export class OrderProduct extends AbstractEntity<OrderProductsType> {
   readonly #arrowSubCategories?: Array<string>;
   readonly #isTrial: boolean;
   readonly #prices: ProductPrices;
-  readonly #subscription: ReferenceLink;
+  readonly #subscription?: ReferenceLink;
   readonly #license: ReferenceLink;
   readonly #name: string;
   readonly #classification: string;
@@ -77,9 +77,15 @@ export class OrderProduct extends AbstractEntity<OrderProductsType> {
     this.#prices = new ProductPrices(
       getOrderProducts[OrderProductsFields.COLUMN_PRICES],
     );
-    this.#subscription = new ReferenceLink(
-      getOrderProducts[OrderProductsFields.COLUMN_SUBSCRIPTION],
-    );
+    this.#subscription = getOrderProducts[
+      OrderProductsFields.COLUMN_SUBSCRIPTION
+    ]
+      ? new ReferenceLink(
+          getOrderProducts[
+            OrderProductsFields.COLUMN_SUBSCRIPTION
+          ] as ReferenceLinkType,
+        )
+      : undefined;
     this.#license = new ReferenceLink(
       getOrderProducts[OrderProductsFields.COLUMN_LICENSE] as ReferenceLinkType,
     );
@@ -121,7 +127,7 @@ export class OrderProduct extends AbstractEntity<OrderProductsType> {
   get prices(): ProductPrices {
     return this.#prices;
   }
-  get subscription(): ReferenceLink {
+  get subscription(): ReferenceLink | undefined {
     return this.#subscription;
   }
   get license(): ReferenceLink {
@@ -151,7 +157,7 @@ export class OrderProduct extends AbstractEntity<OrderProductsType> {
       [OrderProductsFields.COLUMN_ARROWSUBCATEGORIES]: this.arrowSubCategories,
       [OrderProductsFields.COLUMN_IS_TRIAL]: this.isTrial,
       [OrderProductsFields.COLUMN_PRICES]: this.prices.toJSON(),
-      [OrderProductsFields.COLUMN_SUBSCRIPTION]: this.subscription.toJSON(),
+      [OrderProductsFields.COLUMN_SUBSCRIPTION]: this.subscription?.toJSON(),
       [OrderProductsFields.COLUMN_LICENSE]: this.license.toJSON(),
       [OrderProductsFields.COLUMN_NAME]: this.name,
       [OrderProductsFields.COLUMN_CLASSIFICATION]: this.classification,
