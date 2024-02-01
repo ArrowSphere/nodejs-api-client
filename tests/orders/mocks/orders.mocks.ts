@@ -126,10 +126,6 @@ export const PAYLOAD_ORDERS_WITHOUT_OPTIONAL: GetData<DataListOrdersType> = {
               [ProductPricesFields.COLUMN_PERIODICITY_CODE]: 8640,
               [ProductPricesFields.COLUMN_TERM_CODE]: 8640,
             },
-            [OrderProductsFields.COLUMN_SUBSCRIPTION]: {
-              [ReferenceLinkFields.COLUMN_REFERENCE]: 'XSPS7896',
-              [ReferenceLinkFields.COLUMN_LINK]: '/api/subscriptions/XSPS7896',
-            },
             [OrderProductsFields.COLUMN_LICENSE]: {
               [ReferenceLinkFields.COLUMN_REFERENCE]: 'XSP87708',
               [ReferenceLinkFields.COLUMN_LINK]: '/api/licenses/XSP87708',
