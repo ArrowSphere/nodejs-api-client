@@ -2,6 +2,7 @@ import axios, {
   AxiosInstance,
   AxiosRequestConfig,
   AxiosResponse,
+  InternalAxiosRequestConfig,
   RawAxiosRequestHeaders,
 } from 'axios';
 import { cloneDeep } from 'lodash';
@@ -29,8 +30,9 @@ export class AxiosSingleton {
   }
 
   private static _initializedRequestInterceptor(): void {
-    this._axiosInstance.interceptors.request.use((req) =>
-      this._handleRequest(req, this._isLogging),
+    this._axiosInstance.interceptors.request.use(
+      (req: InternalAxiosRequestConfig) =>
+        this._handleRequest(req, this._isLogging),
     );
   }
 
@@ -45,9 +47,9 @@ export class AxiosSingleton {
    * @param isLogging - Must log
    */
   private static _handleRequest(
-    request: AxiosRequestConfig,
+    request: InternalAxiosRequestConfig,
     isLogging = false,
-  ): AxiosRequestConfig {
+  ): InternalAxiosRequestConfig {
     if (isLogging) {
       console.info(
         'AXIOS - Request : ',
