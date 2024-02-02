@@ -1,6 +1,6 @@
 import { PublicApiClient } from '../../src';
 import { expect } from 'chai';
-import { Axios, AxiosResponse } from 'axios';
+import { Axios, AxiosHeaders, AxiosResponse } from 'axios';
 import sinon from 'sinon';
 
 export const CUSTOMERS_MOCK_URL = 'https://customers.localhost';
@@ -28,8 +28,10 @@ describe('PartnerClient', () => {
           status: 201,
         },
         statusText: 'success',
-        headers: {},
-        config: {},
+        headers: new AxiosHeaders({}),
+        config: {
+          headers: new AxiosHeaders({}),
+        },
       };
 
       axiosClient.request.resolves(expectedResult);

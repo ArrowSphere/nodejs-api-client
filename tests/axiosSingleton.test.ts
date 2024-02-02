@@ -1,28 +1,29 @@
 import { expect } from 'chai';
-import { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { AxiosHeaders, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import { AxiosSingleton } from '../src';
 
-const REQUEST: AxiosRequestConfig = {
+const REQUEST: InternalAxiosRequestConfig = {
   url: 'testUrl',
   method: 'GET',
-  headers: {
+  headers: new AxiosHeaders({
     test: 'key',
     apiKey: 'myTestRequestAPIKEY',
-  },
+  }),
 };
 
-const REQUEST_RESULT: AxiosRequestConfig = {
+const REQUEST_RESULT: InternalAxiosRequestConfig = {
   url: 'testUrl',
   method: 'GET',
-  headers: {
+  headers: new AxiosHeaders({
     test: 'key',
     apiKey: '****************************IKEY',
-  },
+  }),
 };
 
-const REQUEST_WITHOUT_HEADERS: AxiosRequestConfig = {
+const REQUEST_WITHOUT_HEADERS: InternalAxiosRequestConfig = {
   url: 'testUrl',
   method: 'GET',
+  headers: new AxiosHeaders(),
 };
 
 const RESPONSE: AxiosResponse = {
