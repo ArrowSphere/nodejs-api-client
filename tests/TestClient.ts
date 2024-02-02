@@ -1,10 +1,10 @@
 import { AbstractRestfulClient, ConfigurationsClient } from '../src';
-import { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import { URL, URLSearchParams } from 'url';
 
 export type ExpectFunctionParameters = {
   queryParameters?: URLSearchParams;
-  config?: AxiosRequestConfig;
+  config?: InternalAxiosRequestConfig;
 };
 
 export const MOCK_URL = 'https://localhost';
@@ -81,7 +81,7 @@ export class TestClient extends AbstractRestfulClient {
 
 export const axiosExpectInterceptor = (
   expectation: (params: ExpectFunctionParameters) => void,
-) => (config: AxiosRequestConfig): AxiosRequestConfig => {
+) => (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
   const urlObject = new URL(config.url || '');
   const queryParameters = urlObject.searchParams;
 
