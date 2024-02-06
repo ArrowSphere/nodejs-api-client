@@ -251,6 +251,7 @@ export const CONVERSION_SKU_PAYLOAD: ConversionSkuResultData[] = [
     name: 'Office 365 E3',
     sku: 'CFQ7TTC0LF8R:0001',
     term: 8640,
+    totalBuyPrice: 400.2,
   },
 ];
 
@@ -264,11 +265,14 @@ export const PAYLOAD_LICENSE_CONVERSION_SKU: GetData<LicenseConversionSkuResultD
 export const EXISTING_CONVERSION_SKU_PAYLOAD: ConversionSkuExistingResultData[] = [
   {
     billingCycle: 720,
+    endDate: '2023-06-08T10:34:28+00:00',
+    friendlyName: 'XSP30064|MS-0A-O365-BUSINESS|XSP30070|XSP174',
     licenseReference: 'XSP5046568',
     name: 'Office 365 E3',
     seats: 1,
     sku: 'CFQ7TTC0LF8R:0001',
     term: 8640,
+    totalBuyPrice: 400.2,
   },
 ];
 

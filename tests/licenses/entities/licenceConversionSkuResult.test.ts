@@ -11,11 +11,13 @@ describe('License Conversion Sku', () => {
         {
           billingCycle: 720,
           endDate: '2021-12-31T23:59:59Z',
+          friendlyName: 'Office 365 E3',
           licenseReference: 'XSP5046568',
           name: 'Office 365 E3',
           seats: 1,
           sku: 'CFQ7TTC0LF8R:0001',
           term: 8640,
+          totalBuyPrice: 400.2,
         },
       ],
     };
@@ -32,6 +34,7 @@ describe('License Conversion Sku', () => {
           name: 'Office 365 E3',
           sku: 'CFQ7TTC0LF8R:0001',
           term: 8640,
+          totalBuyPrice: 400.2,
         },
       ],
     };
