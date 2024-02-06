@@ -3,6 +3,11 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.95.0] - 2024.02.06
+
+### Added
+- [licenses] add properties friendlyName, totalBuyPrice to licenses conversion sku payload
+
 ## [3.94.3] - 2024.02.01
 
 ### Fixed
