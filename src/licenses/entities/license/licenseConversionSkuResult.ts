@@ -1,6 +1,5 @@
 import { AbstractEntity } from '../../../abstractEntity';
 import {
-  ConversionSkuExistingResultData,
   ConversionSkuResult,
   ConversionSkuResultData,
 } from './conversionSkuResult';
@@ -10,9 +9,7 @@ export enum LicenseConversionSkuFields {
 }
 
 export type LicenseConversionSkuResultData = {
-  [LicenseConversionSkuFields.COLUMN_OFFERS]:
-    | ConversionSkuExistingResultData[]
-    | ConversionSkuResultData[];
+  [LicenseConversionSkuFields.COLUMN_OFFERS]: ConversionSkuResultData[];
 };
 
 export class LicenseConversionSkuResult extends AbstractEntity<LicenseConversionSkuResultData> {
@@ -22,8 +19,7 @@ export class LicenseConversionSkuResult extends AbstractEntity<LicenseConversion
     super(data);
 
     this.#offers = data[LicenseConversionSkuFields.COLUMN_OFFERS].map(
-      (result: ConversionSkuExistingResultData) =>
-        new ConversionSkuResult(result),
+      (result: ConversionSkuResultData) => new ConversionSkuResult(result),
     );
   }
 

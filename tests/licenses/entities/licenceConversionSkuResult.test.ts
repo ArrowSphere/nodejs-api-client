@@ -10,14 +10,17 @@ describe('License Conversion Sku', () => {
       offers: [
         {
           billingCycle: 720,
-          endDate: '2021-12-31T23:59:59Z',
-          friendlyName: 'Office 365 E3',
-          licenseReference: 'XSP5046568',
-          name: 'Office 365 E3',
-          seats: 1,
+          classification: 'SaaS',
+          currency: 'EUR',
+          offerName: 'Office 365 E3',
+          minQuantity: 1,
+          priceBandArrowsphereSku:
+            'XSP30064|MS-0A-O365-BUSINESS|XSP30070|XSP174',
+          sellPrice: 410.2,
           sku: 'CFQ7TTC0LF8R:0001',
           term: 8640,
-          totalBuyPrice: 400.2,
+          uom: 'LICENSE',
+          vendorCode: 'Microsoft',
         },
       ],
     };
@@ -31,10 +34,17 @@ describe('License Conversion Sku', () => {
       offers: [
         {
           billingCycle: 720,
-          name: 'Office 365 E3',
+          classification: 'SaaS',
+          currency: 'EUR',
+          offerName: 'Office 365 E3',
+          minQuantity: 1,
+          priceBandArrowsphereSku:
+            'XSP30064|MS-0A-O365-BUSINESS|XSP30070|XSP174',
+          sellPrice: 410.2,
           sku: 'CFQ7TTC0LF8R:0001',
           term: 8640,
-          totalBuyPrice: 400.2,
+          uom: 'LICENSE',
+          vendorCode: 'Microsoft',
         },
       ],
     };
