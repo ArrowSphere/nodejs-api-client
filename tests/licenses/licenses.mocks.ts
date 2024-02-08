@@ -5,7 +5,6 @@ import {
   ActionsGetFields,
   ActiveSeatsFindResultFields,
   BuySellFields,
-  ConversionSkuExistingResultData,
   ConversionSkuResultData,
   GetData,
   GetLicenseResultData,
@@ -248,10 +247,16 @@ export const PAYLOAD_LICENSE_HISTORY: GetData<LicenceHistoryResultData> = {
 export const CONVERSION_SKU_PAYLOAD: ConversionSkuResultData[] = [
   {
     billingCycle: 720,
-    name: 'Office 365 E3',
+    classification: 'SaaS',
+    currency: 'EUR',
+    offerName: 'Office 365 E3',
+    minQuantity: 1,
+    priceBandArrowsphereSku: 'XSP30064|MS-0A-O365-BUSINESS|XSP30070|XSP174',
+    sellPrice: 410.2,
     sku: 'CFQ7TTC0LF8R:0001',
     term: 8640,
-    totalBuyPrice: 400.2,
+    uom: 'LICENSE',
+    vendorCode: 'Microsoft',
   },
 ];
 
@@ -262,17 +267,20 @@ export const PAYLOAD_LICENSE_CONVERSION_SKU: GetData<LicenseConversionSkuResultD
   },
 };
 
-export const EXISTING_CONVERSION_SKU_PAYLOAD: ConversionSkuExistingResultData[] = [
+export const EXISTING_CONVERSION_SKU_PAYLOAD: ConversionSkuResultData[] = [
   {
-    billingCycle: 720,
+    buyPrice: 400.2,
+    classification: 'SaaS',
+    currency: 'EUR',
     endDate: '2023-06-08T10:34:28+00:00',
     friendlyName: 'XSP30064|MS-0A-O365-BUSINESS|XSP30070|XSP174',
-    licenseReference: 'XSP5046568',
-    name: 'Office 365 E3',
+    offerName: 'Office 365 E3',
+    partnerRef: 'XSP5046568',
+    priceBandArrowsphereSku: 'XSP30064|MS-0A-O365-BUSINESS|XSP30070|XSP174',
     seats: 1,
     sku: 'CFQ7TTC0LF8R:0001',
-    term: 8640,
-    totalBuyPrice: 400.2,
+    uom: 'LICENSE',
+    vendorCode: 'Microsoft',
   },
 ];
 
