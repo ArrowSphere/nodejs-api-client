@@ -7,6 +7,10 @@ import { AbstractEntity } from '../../abstractEntity';
 import { LicensesClient, LicenseFindRawPayload } from '../licensesClient';
 import { OfferFindResult, OfferFindResultData } from './offer/offerFindResult';
 import { Parameters } from '../../abstractRestfulClient';
+import {
+  EndCustomerOrganizationUnitFindResult,
+  EndCustomerOrganizationUnitFindResultType,
+} from './endCustomerOrganizationUnit/endCustomerOrganizationUnitFindResult';
 
 export type FindData = {
   pagination: {
@@ -17,6 +21,7 @@ export type FindData = {
   results: Array<{
     license: LicenseFindResultData;
     offer?: OfferFindResultData;
+    endCustomerOrganizationUnit?: EndCustomerOrganizationUnitFindResultType;
   }>;
   filters: Array<FilterFindResultData>;
 };
@@ -45,6 +50,7 @@ export class FindResult extends AbstractEntity<FindData> {
   readonly #results: Array<{
     license: LicenseFindResultData;
     offer?: OfferFindResultData;
+    endCustomerOrganizationUnit?: EndCustomerOrganizationUnitFindResultType;
   }>;
   readonly #filters: Array<FilterFindResultData>;
   readonly #client: LicensesClient;
@@ -83,6 +89,11 @@ export class FindResult extends AbstractEntity<FindData> {
       offer: result.offer
         ? new OfferFindResult(result.offer).toJSON()
         : undefined,
+      endCustomerOrganizationUnit: result.endCustomerOrganizationUnit
+        ? new EndCustomerOrganizationUnitFindResult(
+            result.endCustomerOrganizationUnit,
+          ).toJSON()
+        : undefined,
     }));
 
     this.#filters = data.filters.map((filter) =>
@@ -95,7 +106,11 @@ export class FindResult extends AbstractEntity<FindData> {
    * @returns Generator|{@link LicenseFindResult}[]
    */
   public *getResultsForCurrentPage(): Generator<
-    { license: LicenseFindResultData; offer?: OfferFindResultData },
+    {
+      license: LicenseFindResultData;
+      offer?: OfferFindResultData;
+      endCustomerOrganizationUnit?: EndCustomerOrganizationUnitFindResultType;
+    },
     void,
     undefined
   > {
@@ -108,7 +123,11 @@ export class FindResult extends AbstractEntity<FindData> {
    * @returns Generator|{@link LicenseFindResult}[]
    */
   public async *getResults(): AsyncGenerator<
-    { license: LicenseFindResultData; offer?: OfferFindResultData },
+    {
+      license: LicenseFindResultData;
+      offer?: OfferFindResultData;
+      endCustomerOrganizationUnit?: EndCustomerOrganizationUnitFindResultType;
+    },
     void,
     undefined
   > {
@@ -135,6 +154,11 @@ export class FindResult extends AbstractEntity<FindData> {
           license: new LicenseFindResult(result.license).toJSON(),
           offer: result.offer
             ? new OfferFindResult(result.offer).toJSON()
+            : undefined,
+          endCustomerOrganizationUnit: result.endCustomerOrganizationUnit
+            ? new EndCustomerOrganizationUnitFindResult(
+                result.endCustomerOrganizationUnit,
+              ).toJSON()
             : undefined,
         };
       }

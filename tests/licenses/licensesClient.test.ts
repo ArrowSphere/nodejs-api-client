@@ -67,6 +67,10 @@ import {
   BulkBodyFields,
 } from '../../src/licenses/types/bulkArguments';
 import { constants } from 'http2';
+import {
+  EndCustomerOrganizationUnitFindResultFields,
+  EndCustomerOrganizationUnitFindResultType,
+} from '../../src/licenses/entities/endCustomerOrganizationUnit/endCustomerOrganizationUnitFindResult';
 
 export const LICENSES_MOCK_URL = 'https://licenses.localhost';
 export const LICENSES_FIND_ENDPOINT = new RegExp('/licenses/v2/find.*');
@@ -103,6 +107,7 @@ export const LICENSE_MOCK_URL_BULK = '/licenses/bulk';
 export const MOCK_RESULT_DATA: {
   license: LicenseFindResultData;
   offer: OfferFindResultData;
+  endCustomerOrganizationUnit: EndCustomerOrganizationUnitFindResultType;
 } = {
   license: {
     [LicenseFindResultFields.COLUMN_HIGHLIGHT]: {},
@@ -219,6 +224,13 @@ export const MOCK_RESULT_DATA: {
       },
     },
     [OfferFindResultFields.COLUMN_ARROW_SUB_CATEGORIES]: ['NCE'],
+  },
+  endCustomerOrganizationUnit: {
+    [EndCustomerOrganizationUnitFindResultFields.COLUMN_NAME]: 'name',
+    [EndCustomerOrganizationUnitFindResultFields.COLUMN_ORGANIZATION_UNIT_REF]:
+      '123456',
+    [EndCustomerOrganizationUnitFindResultFields.COLUMN_LAST_UPDATE]:
+      '10-10-10',
   },
 };
 
@@ -371,6 +383,9 @@ describe('LicensesClient', () => {
           },
         },
       },
+      endCustomerOrganizationUnit: {
+        [EndCustomerOrganizationUnitFindResultFields.COLUMN_NAME]: 'test',
+      },
     },
     [LicenseFindParameters.DATA_EXCLUSION_FILTERS]: {
       license: {
@@ -387,6 +402,9 @@ describe('LicensesClient', () => {
           },
         },
       },
+      endCustomerOrganizationUnit: {
+        [EndCustomerOrganizationUnitFindResultFields.COLUMN_NAME]: 'test',
+      },
     },
     [LicenseFindParameters.DATA_SORT]: {
       license: {
@@ -398,6 +416,10 @@ describe('LicensesClient', () => {
           [PriceBandFindResultFields.COLUMN_CURRENCY]:
             LicenseFindParameters.SORT_ASCENDING,
         },
+      },
+      endCustomerOrganizationUnit: {
+        [EndCustomerOrganizationUnitFindResultFields.COLUMN_NAME]:
+          LicenseFindParameters.SORT_ASCENDING,
       },
     },
     [LicenseFindParameters.DATA_HIGHLIGHT]: true,
@@ -573,6 +595,24 @@ describe('LicensesClient', () => {
       ).not.to.be.rejected;
     });
 
+    it('works without endCustomerOrganizationUnit filters', () => {
+      nock(LICENSES_MOCK_URL)
+        .post(LICENSES_FIND_ENDPOINT)
+        .reply(() => {
+          return [204];
+        });
+      expect(
+        client.find({
+          ...standardPayload,
+          [LicenseFindParameters.DATA_FILTERS]: {
+            endCustomerOrganizationUnit:
+              standardPayload[LicenseFindParameters.DATA_FILTERS]
+                ?.endCustomerOrganizationUnit,
+          },
+        }),
+      ).not.to.be.rejected;
+    });
+
     it('works without offer exclusion filters', () => {
       nock(LICENSES_MOCK_URL)
         .post(LICENSES_FIND_ENDPOINT)
@@ -609,6 +649,24 @@ describe('LicensesClient', () => {
       ).not.to.be.rejected;
     });
 
+    it('works without endCustomerOrganizationUnit exclusion filters', () => {
+      nock(LICENSES_MOCK_URL)
+        .post(LICENSES_FIND_ENDPOINT)
+        .reply(() => {
+          return [204];
+        });
+      expect(
+        client.find({
+          ...standardPayload,
+          [LicenseFindParameters.DATA_EXCLUSION_FILTERS]: {
+            endCustomerOrganizationUnit:
+              standardPayload[LicenseFindParameters.DATA_EXCLUSION_FILTERS]
+                ?.endCustomerOrganizationUnit,
+          },
+        }),
+      ).not.to.be.rejected;
+    });
+
     it('works without license sort', () => {
       nock(LICENSES_MOCK_URL)
         .post(LICENSES_FIND_ENDPOINT)
@@ -636,6 +694,24 @@ describe('LicensesClient', () => {
           ...standardPayload,
           [LicenseFindParameters.DATA_SORT]: {
             offer: standardPayload[LicenseFindParameters.DATA_SORT]?.offer,
+          },
+        }),
+      ).not.to.be.rejected;
+    });
+
+    it('works without endCustomerOrganizationUnit sort', () => {
+      nock(LICENSES_MOCK_URL)
+        .post(LICENSES_FIND_ENDPOINT)
+        .reply(() => {
+          return [204];
+        });
+      expect(
+        client.find({
+          ...standardPayload,
+          [LicenseFindParameters.DATA_SORT]: {
+            endCustomerOrganizationUnit:
+              standardPayload[LicenseFindParameters.DATA_SORT]
+                ?.endCustomerOrganizationUnit,
           },
         }),
       ).not.to.be.rejected;
