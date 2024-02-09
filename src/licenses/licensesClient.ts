@@ -73,6 +73,10 @@ import {
   BulkBodyFields,
   SpecialPriceRateActive,
 } from './types/bulkArguments';
+import {
+  EndCustomerOrganizationUnitFiltersParameters,
+  EndCustomerOrganizationUnitSortParameters,
+} from './entities/endCustomerOrganizationUnit/endCustomerOrganizationUnitFindResult';
 
 /**
  * Parameters passable to the request for refining search.
@@ -194,21 +198,28 @@ export enum LicenseFindParameters {
   FILTERS_LTE = 'lte',
 }
 
-export type BaseParameters<LicenseType, OfferType> = {
+export type BaseParameters<
+  LicenseType,
+  OfferType,
+  endCustomerOrganizationUnitType
+> = {
   license?: LicenseType;
   offer?: OfferType;
+  endCustomerOrganizationUnit?: endCustomerOrganizationUnitType;
 };
 
-type KeyParent = 'license' | 'offer';
+type KeyParent = 'license' | 'offer' | 'endCustomerOrganizationUnit';
 
 export type LicenseSortParameters = BaseParameters<
   LicenceFindDataSortParameters,
-  OfferFindResultDataSortParameters
+  OfferFindResultDataSortParameters,
+  EndCustomerOrganizationUnitSortParameters
 >;
 
 export type LicenseFiltersParameters = BaseParameters<
   LicenceFindDataFiltersParameters,
-  OfferFindResultDataFiltersParameters
+  OfferFindResultDataFiltersParameters,
+  EndCustomerOrganizationUnitFiltersParameters
 >;
 
 /**
@@ -270,6 +281,10 @@ export type LicenseRawSortParametersOffer = {
     | ActionFlagsFindResultDataSortParameters
     | PriceBandFindResultDataSortParameters
     | undefined;
+};
+
+export type LicenseRawSortParametersEndCustomerOrganizationUnit = {
+  [field: string]: SortParameters | undefined;
 };
 
 export type FiltersCompareValue = {
@@ -529,6 +544,7 @@ export class LicensesClient extends AbstractRestfulClient {
       rawLicensePayload.filters = {
         ...this.createFilters(postData.filters, 'license'),
         ...this.createFilters(postData.filters, 'offer'),
+        ...this.createFilters(postData.filters, 'endCustomerOrganizationUnit'),
       };
     }
 
@@ -537,6 +553,10 @@ export class LicensesClient extends AbstractRestfulClient {
       rawLicensePayload.exclusionFilters = {
         ...this.createFilters(postData.exclusionFilters, 'license'),
         ...this.createFilters(postData.exclusionFilters, 'offer'),
+        ...this.createFilters(
+          postData.exclusionFilters,
+          'endCustomerOrganizationUnit',
+        ),
       };
     }
 
@@ -545,11 +565,15 @@ export class LicensesClient extends AbstractRestfulClient {
       rawLicensePayload.sort = {
         ...this.createFilters(postData.sort, 'license'),
         ...this.createFilters(postData.sort, 'offer'),
+        ...this.createFilters(postData.sort, 'endCustomerOrganizationUnit'),
       } as {
         license?: LicenseRawSortParametersLicense;
         offer?: LicenseRawSortParametersOffer;
+        endCustomerOrganizationUnit?: LicenseRawSortParametersEndCustomerOrganizationUnit;
       };
     }
+
+    console.info('RAW_LICENSE_PAYLOAD => ', rawLicensePayload);
 
     const response = await this.findRaw(rawLicensePayload, parameters);
 
@@ -831,9 +855,9 @@ export class LicensesClient extends AbstractRestfulClient {
   }
 
   private createFilters(
-    parameters: string | BaseParameters<unknown, unknown>,
+    parameters: string | BaseParameters<unknown, unknown, unknown>,
     keyParent: KeyParent,
-  ): BaseParameters<unknown, unknown> {
+  ): BaseParameters<unknown, unknown, unknown> {
     let appropriateParameters: unknown;
 
     if (typeof parameters === 'object') {
@@ -851,14 +875,14 @@ export class LicensesClient extends AbstractRestfulClient {
         const subAcc: Record<string, unknown> = Object.entries(
           value as LicenseFiltersParameters,
         ).reduce((generatedArr: Record<string, unknown>, [i, val]) => {
-          let recursiveArr: BaseParameters<unknown, unknown>;
+          let recursiveArr: BaseParameters<unknown, unknown, unknown>;
           const newKey = keyParent + '.' + key + '.' + i;
           if (typeof val !== 'object') {
             generatedArr[`${newKey}`] = val;
             return generatedArr;
           } else {
             recursiveArr = this.createFilters(
-              val as string | BaseParameters<unknown, unknown>,
+              val as string | BaseParameters<unknown, unknown, unknown>,
               newKey as KeyParent,
             );
           }
