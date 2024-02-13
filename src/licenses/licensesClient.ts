@@ -673,6 +673,13 @@ export class LicensesClient extends AbstractRestfulClient {
       };
       postData = postSetRateData;
     }
+    /*else if (bulkData.actionType == ActionTypes.UPLOAD_CHANGES) {
+      const postUploadChangesData: BulkUploadChangesBody = {
+        ...postData,
+        [BulkBodyFields.FILE]: bulkData.file,
+      };
+      postData = postUploadChangesData;
+    }*/
 
     return await this.post(postData);
   }
