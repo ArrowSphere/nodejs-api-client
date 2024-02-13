@@ -27,6 +27,7 @@ export * from './subscriptions/';
 export * from './supportCenter/';
 export * from './securityScore/';
 export * from './user/';
+export * from './billing/';
 
 export { WellArchitected };
 import * as WellArchitected from './wellArchitected';
