@@ -70,6 +70,7 @@ import {
   BulkBodyArgument,
   BulkSetRateBody,
   BulkAutoRenewBody,
+  BulkUploadChangesBody,
   BulkBodyFields,
   SpecialPriceRateActive,
 } from './types/bulkArguments';
@@ -634,6 +635,12 @@ export class LicensesClient extends AbstractRestfulClient {
           bulkData.specialRateEffectiveApplicationDate,
       };
       postData = postSetRateData;
+    } else if (bulkData.actionType == ActionTypes.UPLOAD_CHANGES) {
+      const postUploadChangesData: BulkUploadChangesBody = {
+        ...postData,
+        [BulkBodyFields.FILE]: bulkData.file,
+      };
+      postData = postUploadChangesData;
     }
 
     return await this.post(postData);
