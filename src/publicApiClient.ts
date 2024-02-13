@@ -23,6 +23,7 @@ import { RegisterClient, StandardsClient } from './security';
 import { PartnerClient } from './partner';
 import { OrganizationUnitClient } from './organisationUnit';
 import { QuotesClient } from './quotes';
+import { BillingClient } from './billing';
 
 /**
  * Public API Client class, should be the main entry point for your calls
@@ -277,6 +278,13 @@ export class PublicApiClient extends AbstractRestfulClient {
     const client: OrganizationUnitClient = new OrganizationUnitClient(
       configuration,
     );
+    this.applyConfig(client);
+
+    return client;
+  }
+
+  public getBillingClient(configuration?: ConfigurationsClient): BillingClient {
+    const client: BillingClient = new BillingClient(configuration);
     this.applyConfig(client);
 
     return client;
