@@ -51,13 +51,6 @@ export class BillingClient extends AbstractRestfulClient {
    */
   protected basePath = '/billing/erp';
 
-  /**
-   * Generates a billing export asynchronously.
-   *
-   * @param {BillingGenerateExportAsyncRequestPayload} payload - The request payload for generating the export.
-   *
-   * @return {Promise<GetResult<BillingExportAsyncRequest>>} - A promise that resolves to the result of the export request.
-   */
   public async generateExportAsync(
     payload: BillingGenerateExportAsyncRequestPayload,
   ): Promise<GetResult<BillingExportAsyncRequest>> {
