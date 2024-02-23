@@ -573,8 +573,6 @@ export class LicensesClient extends AbstractRestfulClient {
       };
     }
 
-    console.info('RAW_LICENSE_PAYLOAD => ', rawLicensePayload);
-
     const response = await this.findRaw(rawLicensePayload, parameters);
 
     return new FindResult(response, this, rawLicensePayload, parameters);

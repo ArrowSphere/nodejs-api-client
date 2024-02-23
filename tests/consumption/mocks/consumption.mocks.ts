@@ -9,6 +9,8 @@ import {
   ConsumptionFields,
   ConsumptionDownloadRequestFields,
   ConsumptionDownloadRequestType,
+  ConsumptionBudgetFields,
+  ConsumptionBudgetType,
 } from '../../../src';
 
 export const GET_CONSUMPTION_MONTHLY_PARAMETERS = {
@@ -137,4 +139,14 @@ export const CONSUMPTION_REQUEST_DOWNLOAD_RESPONSE: ConsumptionDownloadRequestTy
   [ConsumptionDownloadRequestFields.COLUMN_REF]: '1234567890',
   [ConsumptionDownloadRequestFields.COLUMN_LINK]: undefined,
   [ConsumptionDownloadRequestFields.COLUMN_LINK_EXPIRATION_DATE]: undefined,
+};
+
+export const GET_BUDGET_SETTINGS_RESPONSE: GetData<ConsumptionBudgetType> = {
+  [GetResultFields.COLUMN_STATUS]: 200,
+  [GetResultFields.COLUMN_DATA]: {
+    [ConsumptionBudgetFields.COLUMN_BUDGET_TYPE]: 'CONSUMED',
+    [ConsumptionBudgetFields.COLUMN_NOTIFICATIONS]: [80, 90],
+    [ConsumptionBudgetFields.COLUMN_SEND_NOTIFICATION]: true,
+    [ConsumptionBudgetFields.COLUMN_THRESHOLD]: 1000,
+  },
 };

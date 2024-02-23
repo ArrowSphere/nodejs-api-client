@@ -64,7 +64,8 @@ export enum LicenseGetFields {
   COLUMN_VENDOR_BILLING_ID = 'vendorBillingId',
   COLUMN_EXTRA_DATA = 'extraData',
   COLUMN_PRICE_BAND = 'priceBand',
-  COLUMN_VENDOR_CODE = 'vendorCode',
+  COLUMN_VENDOR_CODE = 'vendorCode', //Does not exist in the public-api
+  COLUMN_VENDOR_CODE_2 = 'vendor_code',
   COLUMN_VENDOR_SKU = 'vendorSku',
   COLUMN_RATES = 'rates',
   COLUMN_ORGANIZATION_UNIT_ID = 'organizationUnitId',
@@ -113,6 +114,7 @@ export type LicenseGetData = {
   [LicenseGetFields.COLUMN_EXTRA_DATA]?: ExtraDataType[];
   [LicenseGetFields.COLUMN_PRICE_BAND]?: PriceBandData;
   [LicenseGetFields.COLUMN_VENDOR_CODE]?: string;
+  [LicenseGetFields.COLUMN_VENDOR_CODE_2]?: string;
   [LicenseGetFields.COLUMN_VENDOR_SKU]?: string;
   [LicenseGetFields.COLUMN_RATES]?: RatesGetData;
   [LicenseGetFields.COLUMN_ORGANIZATION_UNIT_ID]?: number;
@@ -161,6 +163,7 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
   readonly #extraData?: ExtraDataResult[];
   readonly #priceBand?: PriceBandGetResult;
   readonly #vendorCode?: string;
+  readonly #vendor_code?: string;
   readonly #vendorSku?: string;
   readonly #rates?: RatesGetResult;
   readonly #organizationUnitId?: number;
@@ -266,6 +269,8 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
           )
         : undefined;
     this.#vendorCode = licenseGetDataInput[LicenseGetFields.COLUMN_VENDOR_CODE];
+    this.#vendor_code =
+      licenseGetDataInput[LicenseGetFields.COLUMN_VENDOR_CODE_2];
     this.#vendorSku = licenseGetDataInput[LicenseGetFields.COLUMN_VENDOR_SKU];
     this.#rates = licenseGetDataInput[LicenseGetFields.COLUMN_RATES]
       ? new RatesGetResult(
@@ -439,8 +444,15 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
     return this.#priceBand;
   }
 
+  /*
+   * @deprecated use vendor_code() instead
+   */
   get vendorCode(): string | undefined {
     return this.#vendorCode;
+  }
+
+  get vendor_code(): string | undefined {
+    return this.#vendor_code;
   }
 
   get vendorSku(): string | undefined {
@@ -510,6 +522,7 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
       ),
       [LicenseGetFields.COLUMN_PRICE_BAND]: this.priceBand?.toJSON(),
       [LicenseGetFields.COLUMN_VENDOR_CODE]: this.vendorCode,
+      [LicenseGetFields.COLUMN_VENDOR_CODE_2]: this.vendor_code,
       [LicenseGetFields.COLUMN_VENDOR_SKU]: this.vendorSku,
       [LicenseGetFields.COLUMN_RATES]: this.rates?.toJSON(),
       [LicenseGetFields.COLUMN_ORGANIZATION_UNIT_ID]: this.organizationUnitId,
