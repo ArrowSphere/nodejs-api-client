@@ -4,6 +4,7 @@ import {
   PartnerType,
 } from './entities/company';
 import { ContinentType, CountryType } from './entities/country';
+import { LicenseBudgetType } from './entities/licenseBudget';
 import { PartnertagType } from './entities/partnertag';
 import { SubscribedProgramType } from './entities/program';
 import { SubscriptionType } from './entities/subscription';
@@ -141,6 +142,7 @@ export enum SelectDataField {
   CONTINENT = 'continent',
   COUNTRY = 'country',
   END_CUSTOMER = 'endCustomer',
+  LICENSE_BUDGET = 'licenseBudget',
   PARTNER = 'partner',
   PARTNERTAG = 'partnertag',
   SUBSCRIBED_PROGRAM = 'subscribedProgram',
@@ -161,6 +163,7 @@ export type SelectAllResponseDataType = {
   [SelectDataField.CONTINENT]?: ContinentType[];
   [SelectDataField.COUNTRY]?: CountryType[];
   [SelectDataField.END_CUSTOMER]?: EndCustomerType[];
+  [SelectDataField.LICENSE_BUDGET]?: LicenseBudgetType[];
   [SelectDataField.PARTNER]?: PartnerType[];
   [SelectDataField.PARTNERTAG]?: PartnertagType[];
   [SelectDataField.SUBSCRIBED_PROGRAM]?: SubscribedProgramType[];
@@ -211,6 +214,7 @@ export type SelectOneResponseDataType = {
   [SelectDataField.CONTINENT]?: ContinentType;
   [SelectDataField.COUNTRY]?: CountryType;
   [SelectDataField.END_CUSTOMER]?: EndCustomerType;
+  [SelectDataField.LICENSE_BUDGET]?: LicenseBudgetType;
   [SelectDataField.PARTNER]?: PartnerType;
   [SelectDataField.PARTNERTAG]?: PartnertagType;
   [SelectDataField.SUBSCRIBED_PROGRAM]?: SubscribedProgramType;
