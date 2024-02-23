@@ -22,6 +22,10 @@ import { SpecialPriceRateType } from './entities/specialPriceRate';
 import { OrderItemsType, OrdersType } from './entities/order';
 import { VendorsType } from './entities/vendor';
 import { SubscribedProgramType } from './entities/program';
+import {
+  LicenseBudgetNotificationType,
+  LicenseBudgetType,
+} from './entities/licenseBudget';
 
 export type PartnertagSchema = Schema<PartnertagType, boolean>;
 
@@ -55,6 +59,15 @@ type MissingFieldsOfOrderItemSchema = {
 type MissingFieldsOfOrdersSchema = {
   items?: OrderItemsSchema;
 };
+
+type MissingFieldsOfLicenseBudgetSchema = {
+  notifications?: LicenseBudgetNotificationSchema;
+};
+
+export type LicenseBudgetSchema = Merge<
+  Schema<LicenseBudgetType, boolean>,
+  MissingFieldsOfLicenseBudgetSchema
+>;
 
 export type OrderItemsSchema = Merge<
   Schema<OrderItemsType, boolean>,
@@ -90,6 +103,10 @@ export type ContactsSchema = Schema<ContactsType, boolean>;
 export type ContinentSchema = Schema<ContinentType, boolean>;
 export type CountrySchema = Schema<CountryType, boolean>;
 export type ErrorsSchema = Schema<ErrorsType, boolean>;
+export type LicenseBudgetNotificationSchema = Schema<
+  LicenseBudgetNotificationType,
+  boolean
+>;
 export type PageSchema = Schema<PageType, boolean>;
 export type ProgramSchema = Schema<ProgramType, boolean>;
 export type SpecialPriceRateSchema = Schema<SpecialPriceRateType, boolean>;
@@ -109,6 +126,7 @@ export type SelectAllResponseDataSchema = {
   [SelectDataField.CONTINENT]?: ContinentSchema;
   [SelectDataField.COUNTRY]?: CountrySchema;
   [SelectDataField.END_CUSTOMER]?: EndCustomerSchema;
+  [SelectDataField.LICENSE_BUDGET]?: LicenseBudgetSchema;
   [SelectDataField.PARTNER]?: PartnerSchema;
   [SelectDataField.PARTNERTAG]?: PartnertagSchema;
   [SelectDataField.SUBSCRIBED_PROGRAM]?: SubscribedProgramSchema;
@@ -126,6 +144,7 @@ export type SelectOneResponseDataSchema = {
   [SelectDataField.CONTINENT]?: ContinentSchema;
   [SelectDataField.COUNTRY]?: CountrySchema;
   [SelectDataField.END_CUSTOMER]?: EndCustomerSchema;
+  [SelectDataField.LICENSE_BUDGET]?: LicenseBudgetSchema;
   [SelectDataField.PARTNER]?: PartnerSchema;
   [SelectDataField.PARTNERTAG]?: PartnertagSchema;
   [SelectDataField.SUBSCRIBED_PROGRAM]?: SubscribedProgramSchema;
