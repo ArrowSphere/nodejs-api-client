@@ -3,6 +3,7 @@ export * from './types/graphqlApiSchemas';
 export * from './types/entities/contact';
 export * from './types/entities/company';
 export * from './types/entities/country';
+export * from './types/entities/licenseBudget';
 export * from './types/entities/order';
 export * from './types/entities/partnertag';
 export * from './types/entities/subscription';

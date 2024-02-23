@@ -120,6 +120,7 @@ export const PAYLOAD_SCHEMA_LICENSE: GetData<GetLicenseResultData> = {
         },
       ],
       [LicenseGetFields.COLUMN_VENDOR_CODE]: 'Microsoft',
+      [LicenseGetFields.COLUMN_VENDOR_CODE_2]: 'Microsoft',
       [LicenseGetFields.COLUMN_RATES]: {
         [RatesGetDataFields.COLUMN_RATE]: 0.1,
         [RatesGetDataFields.COLUMN_TYPE]: RateTypeEnum.DISCOUNT,
