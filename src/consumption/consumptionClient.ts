@@ -3,6 +3,10 @@ import { ConsumptionBI } from './entities/bi/consumptionBI';
 import { GetResult } from '../getResult';
 import { Consumption } from './entities/consumption/consumption';
 import { ConsumptionDownloadRequest } from './entities/consumption/consumptionDownloadRequest';
+import {
+  ConsumptionBudget,
+  ConsumptionBudgetType,
+} from './entities/consumption/consumptionBudget';
 
 export type ConsumptionDownloadRequestPayload = {
   customer: string;
@@ -51,5 +55,27 @@ export class ConsumptionClient extends AbstractRestfulClient {
     this.path = '/v2/downloadRequest';
 
     return new ConsumptionDownloadRequest(await this.post(payload));
+  }
+
+  public async updateBudgetSettings(
+    licenseReference: string,
+    payload: ConsumptionBudgetType,
+    parameters: Parameters = {},
+  ): Promise<GetResult<ConsumptionBudget>> {
+    this.path = `/license/${licenseReference}/budget`;
+
+    return new GetResult(
+      ConsumptionBudget,
+      await this.patch(payload, parameters),
+    );
+  }
+
+  public async getBudgetSettings(
+    licenseReference: string,
+    parameters: Parameters = {},
+  ): Promise<GetResult<ConsumptionBudget>> {
+    this.path = `/license/${licenseReference}/budget`;
+
+    return new GetResult(ConsumptionBudget, await this.get(parameters));
   }
 }
