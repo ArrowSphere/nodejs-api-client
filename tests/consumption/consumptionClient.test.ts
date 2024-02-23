@@ -3,6 +3,7 @@ import nock from 'nock';
 import { constants } from 'http2';
 import { expect } from 'chai';
 import {
+  GET_BUDGET_SETTINGS_RESPONSE,
   GET_CONSUMPTION_BI_PARAMETERS,
   GET_CONSUMPTION_BI_RESPONSE,
   GET_CONSUMPTION_BI_RESPONSE_WITHOUT_DATA,
@@ -17,6 +18,8 @@ import {
   Consumption,
   GetResult,
   ConsumptionDownloadRequest,
+  ConsumptionBudget,
+  GetResultFields,
 } from '../../src';
 
 export const CONSUMPTION_MOCK_URL = 'https://consumption.localhost';
@@ -121,6 +124,49 @@ describe('ConsumptionClient', () => {
       expect(response.data).to.be.instanceof(ConsumptionBI);
       expect(response.toJSON()).to.be.deep.equals(
         GET_CONSUMPTION_BI_RESPONSE_WITHOUT_DATA,
+      );
+    });
+  });
+
+  describe('getBudgetSettings', () => {
+    it('call the get method getBudgetSettings', async () => {
+      const licenseReference = 'XSP123456';
+
+      nock(CONSUMPTION_MOCK_URL)
+        .get(`/consumption/license/${licenseReference}/budget`)
+        .reply(constants.HTTP_STATUS_OK, GET_BUDGET_SETTINGS_RESPONSE);
+
+      const response: GetResult<ConsumptionBudget> = await client.getBudgetSettings(
+        licenseReference,
+      );
+
+      expect(response).to.be.instanceof(GetResult);
+      expect(response.data).to.be.instanceof(ConsumptionBudget);
+      expect(response.toJSON()).to.be.deep.equals(GET_BUDGET_SETTINGS_RESPONSE);
+    });
+  });
+
+  describe('updateBudgetSettings', () => {
+    it('call the get method getBudgetSettings', async () => {
+      const licenseReference = 'XSP123456';
+
+      nock(CONSUMPTION_MOCK_URL)
+        .patch(`/consumption/license/${licenseReference}/budget`)
+        .reply(
+          constants.HTTP_STATUS_OK,
+          GET_BUDGET_SETTINGS_RESPONSE[GetResultFields.COLUMN_DATA],
+        );
+
+      const payload = GET_BUDGET_SETTINGS_RESPONSE[GetResultFields.COLUMN_DATA];
+      const response:
+        | ConsumptionBudget
+        | undefined = await client.updateBudgetSettings(
+        licenseReference,
+        payload,
+      );
+
+      expect(response).to.be.deep.equals(
+        GET_BUDGET_SETTINGS_RESPONSE[GetResultFields.COLUMN_DATA],
       );
     });
   });
