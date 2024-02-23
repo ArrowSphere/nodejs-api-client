@@ -14,6 +14,7 @@ import {
   EndCustomerType,
   ErrorsField,
   GraphqlApiClient,
+  LicenseBudgetType,
   PartnerType,
   Queries,
   SelectAllQueryType,
@@ -457,6 +458,51 @@ describe('GraphqlApiClient', () => {
         sinon.match(
           '{selectOne (filters: {groups: [{items: [{name: "id", operator: "EQUALS", value: ["3"]}]}]}) { data { arrowCompany { id name } } errors { message } }}',
         ),
+      );
+    });
+  });
+
+  describe('findLicenseBudgetByLicenseId', () => {
+    it('makes a graphql POST request on the specified URL selectOne', async () => {
+      const licenseBudget: LicenseBudgetType = {
+        id: 3,
+        threshold: 6500.0,
+        type: 'CONSUMED',
+        notifications: [
+          {
+            id: 37954,
+            name: '50',
+          },
+          {
+            id: 37955,
+            name: '75',
+          },
+          {
+            id: 37956,
+            name: '90',
+          },
+        ],
+      };
+
+      const expectedResult: SelectOneResultType = {
+        [Queries.SELECT_ONE]: {
+          [SelectableField.DATA]: {
+            [SelectDataField.LICENSE_BUDGET]: licenseBudget,
+          },
+        },
+      };
+
+      graphQLClient.request.resolves(expectedResult);
+
+      const result: SelectOneResultType | null = await client.selectOne(
+        GraphqlApiQueryMock.SELECT_ONE_LICENSE_BUDGET_QUERY,
+      );
+
+      expect(result).to.deep.equals(expectedResult);
+
+      sinon.assert.calledWithExactly(
+        graphQLClient.request,
+        sinon.match(GraphqlApiQueryMock.SELECT_ONE_LICENSE_BUDGET_GQL),
       );
     });
   });
