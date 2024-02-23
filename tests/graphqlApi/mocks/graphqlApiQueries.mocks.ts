@@ -570,3 +570,45 @@ export const SELECT_ALL_SUBSCRIBED_PROGRAM_QUERY: SelectAllQueryType = {
 
 export const SELECT_ALL_SUBSCRIBED_PROGRAM_GQL =
   '{selectAll (aggregatorFilter: ["companyId", "internalName"], pagination: {page: 1, perPage: 1000}, sort: [{name: "vendorName", direction: "ASC"}]) { data { subscribedProgram { id availabilityEndedAt availabilityStartedAt companyId internalName subscriptionEndedAt partner { id name address1 city zip phone } program { id internalName name } subscription { id } vendor { id name identifier licenseUrl logoLarge logoSmall logoStandard url } vendorCode vendorName } } errors { code message } pagination { currentPage perPage previous next total totalPage totalPages } }}';
+
+export const SELECT_ONE_LICENSE_BUDGET_QUERY: SelectOneQueryType = {
+  [Queries.SELECT_ONE]: {
+    __args: {
+      filters: {
+        groups: [
+          {
+            items: [
+              {
+                name: 'licenseId',
+                value: ['123'],
+                operator: ComparisonOperator.EQUALS,
+              },
+            ],
+          },
+        ],
+      },
+      pagination: {
+        page: 1,
+        perPage: 1000,
+      },
+    },
+    data: {
+      licenseBudget: {
+        id: true,
+        threshold: true,
+        type: true,
+        notifications: {
+          id: true,
+          name: true,
+        },
+      },
+    },
+    errors: {
+      code: true,
+      message: true,
+    },
+  },
+};
+
+export const SELECT_ONE_LICENSE_BUDGET_GQL =
+  '{selectOne (filters: {groups: [{items: [{name: "licenseId", value: ["123"], operator: "EQUALS"}]}]}, pagination: {page: 1, perPage: 1000}) { data { licenseBudget { id threshold type notifications { id name } } } errors { code message } }}';
