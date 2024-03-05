@@ -5,6 +5,10 @@ import {
   AdditionalExtraInformation,
   AdditionalExtraInformationType,
 } from '../../../shared';
+import {
+  OrganizationUnit,
+  OrganizationUnitType,
+} from '../../../organisationUnit';
 
 export enum CustomerFields {
   COLUMN_REFERENCE = 'Reference',
@@ -28,6 +32,7 @@ export enum CustomerFields {
   COLUMN_DELETED_AT = 'DeletedAt',
   COLUMN_DETAILS = 'Details',
   COLUMN_EXTRA_INFORMATION = 'extraInformation',
+  COLUMN_ORGANISATION_UNIT = 'OrganisationUnit',
 }
 
 export type CustomerType = {
@@ -52,6 +57,7 @@ export type CustomerType = {
   [CustomerFields.COLUMN_DELETED_AT]?: string | null;
   [CustomerFields.COLUMN_DETAILS]: DetailsType;
   [CustomerFields.COLUMN_EXTRA_INFORMATION]?: AdditionalExtraInformationType;
+  [CustomerFields.COLUMN_ORGANISATION_UNIT]?: OrganizationUnitType;
 };
 
 export class Customer extends AbstractEntity<CustomerType> {
@@ -76,6 +82,7 @@ export class Customer extends AbstractEntity<CustomerType> {
   readonly #deletedAt?: string | null;
   readonly #details: Details;
   readonly #extraInformation?: AdditionalExtraInformation;
+  readonly #organisationUnit?: OrganizationUnit;
 
   public constructor(getCustomersDataInput: CustomerType) {
     super(getCustomersDataInput);
@@ -119,6 +126,15 @@ export class Customer extends AbstractEntity<CustomerType> {
           getCustomersDataInput[
             CustomerFields.COLUMN_EXTRA_INFORMATION
           ] as AdditionalExtraInformationType,
+        )
+      : undefined;
+    this.#organisationUnit = getCustomersDataInput[
+      CustomerFields.COLUMN_ORGANISATION_UNIT
+    ]
+      ? new OrganizationUnit(
+          getCustomersDataInput[
+            CustomerFields.COLUMN_ORGANISATION_UNIT
+          ] as OrganizationUnitType,
         )
       : undefined;
   }
@@ -207,6 +223,10 @@ export class Customer extends AbstractEntity<CustomerType> {
     return this.#extraInformation;
   }
 
+  get OrganisationUnit(): OrganizationUnit | undefined {
+    return this.#organisationUnit;
+  }
+
   public toJSON(): CustomerType {
     return {
       [CustomerFields.COLUMN_REFERENCE]: this.Reference,
@@ -230,6 +250,7 @@ export class Customer extends AbstractEntity<CustomerType> {
       [CustomerFields.COLUMN_DETAILS]: this.Details.toJSON(),
       [CustomerFields.COLUMN_DELETED_AT]: this.DeletedAt,
       [CustomerFields.COLUMN_EXTRA_INFORMATION]: this.ExtraInformation?.toJSON(),
+      [CustomerFields.COLUMN_ORGANISATION_UNIT]: this.OrganisationUnit?.toJSON(),
     };
   }
 }

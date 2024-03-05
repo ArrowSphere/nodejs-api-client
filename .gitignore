@@ -12,3 +12,4 @@ node_modules/
 
 # Yarn
 yarn-error.log
+yarn.lock
