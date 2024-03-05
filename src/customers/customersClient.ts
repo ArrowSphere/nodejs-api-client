@@ -109,6 +109,28 @@ export class CustomersClient extends AbstractRestfulClient {
     return new GetResult(DataCustomers, await this.get(parameters));
   }
 
+  public async getCustomerByRef(
+    customerRef: string,
+    parameters: Parameters = {},
+  ): Promise<GetResult<DataCustomers>> {
+    this.path = `/${customerRef}`;
+    const dataCustomers = await this.getCustomers(parameters);
+
+    const {
+      data: { customers },
+    } = dataCustomers;
+
+    if (customers.length === 0) {
+      throw new Error('customer not found');
+    }
+
+    if (customers.length > 1) {
+      throw new Error('customers length should equal to 1');
+    }
+
+    return dataCustomers;
+  }
+
   public async getCustomerOrders(
     customerRef: string,
     perPage = 25,
