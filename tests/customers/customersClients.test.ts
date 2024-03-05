@@ -95,6 +95,37 @@ describe('CustomersClients', () => {
     });
   });
 
+  describe('getCustomerByRef', () => {
+    const client = new PublicApiClient()
+      .getCustomersClient()
+      .setUrl(CUSTOMERS_MOCK_URL);
+
+    const ref = 'ref';
+
+    it('call get method without parameters', async () => {
+      nock(CUSTOMERS_MOCK_URL)
+        .get(CUSTOMERS_GET_CUSTOMERS_URL)
+        .reply(200, PAYLOAD_GET_CUSTOMERS);
+
+      const result = await client.getCustomerByRef(ref);
+      expect(result).to.be.instanceof(GetResult);
+      expect(result.toJSON()).to.eql(PAYLOAD_GET_CUSTOMERS);
+    });
+
+    it('call get method with parameters', async () => {
+      nock(CUSTOMERS_MOCK_URL)
+        .get(CUSTOMERS_GET_CUSTOMERS_URL)
+        .reply(200, PAYLOAD_GET_CUSTOMERS);
+
+      const parameters: Parameters = {
+        email: 'test.test@test.test',
+      };
+      const result = await client.getCustomerByRef(ref, parameters);
+      expect(result).to.be.instanceof(GetResult);
+      expect(result.toJSON()).to.eql(PAYLOAD_GET_CUSTOMERS);
+    });
+  });
+
   describe('getCustomerOrders', () => {
     const client = new PublicApiClient()
       .getCustomersClient()
@@ -342,7 +373,9 @@ describe('CustomersClients', () => {
             customers: [
               {
                 Reference: 'XSP123',
+                WorkgroupCode: 'FR',
                 CompanyName: 'Company Test 1',
+                CompanyAcronym: 'CMPNTEST1',
                 PartnerCompanyId: '',
                 AddressLine1: 'Address 1',
                 AddressLine2: 'Address 2',
@@ -356,7 +389,9 @@ describe('CustomersClients', () => {
                 Headcount: 0,
                 TaxNumber: '',
                 Ref: '',
+                RegistrationNumber: '0A1B2C3D4E5F6G7H8I9J',
                 BillingId: '',
+                Type: 'MSP',
                 InternalReference: '',
                 Contact: {
                   FirstName: 'Me',

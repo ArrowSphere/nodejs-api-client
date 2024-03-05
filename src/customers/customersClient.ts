@@ -111,6 +111,15 @@ export class CustomersClient extends AbstractRestfulClient {
     return new GetResult(DataCustomers, await this.get(parameters));
   }
 
+  public async getCustomerByRef(
+    customerRef: string,
+    parameters: Parameters = {},
+  ): Promise<GetResult<DataCustomers>> {
+    this.path = `/${customerRef}`;
+
+    return await this.getCustomers(parameters);
+  }
+
   public async getCustomerOrders(
     customerRef: string,
     perPage = 25,
