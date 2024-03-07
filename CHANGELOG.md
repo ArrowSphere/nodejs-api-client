@@ -3,6 +3,11 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.101.0] - 2024.03.07
+
+### Added
+- [customer] add customer by Ref Api Call
+
 ## [3.100.0] - 2024.02.27
 
 ### Added
