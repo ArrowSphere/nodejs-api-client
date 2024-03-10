@@ -640,10 +640,16 @@ export class LicensesClient extends AbstractRestfulClient {
   public async updateConfig(
     reference: string,
     config: ConfigFindResult,
-  ): Promise<ConfigFindResult> {
-    const rawResponse = await this.updateConfigRaw(reference, config);
+  ): Promise<GetResult<ConfigFindResult>> {
+    this.path = `/${reference}${this.CONFIGS_PATH}`;
 
-    return new ConfigFindResult(rawResponse);
+    const postData: ConfigFindResultData = {
+      [ConfigFindResultFields.COLUMN_NAME]: config.name,
+      [ConfigFindResultFields.COLUMN_SCOPE]: config.scope,
+      [ConfigFindResultFields.COLUMN_STATE]: config.state,
+    };
+
+    return new GetResult(ConfigFindResult, await this.post(postData));
   }
 
   public async getLicense(
