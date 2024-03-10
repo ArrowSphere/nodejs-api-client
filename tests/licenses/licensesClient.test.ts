@@ -48,6 +48,7 @@ import {
   UpgradeResultType,
   PartialResponse,
   PartialResponseFields,
+  GetData,
 } from '../../src';
 import {
   PAYLOAD_LICENSE_CONVERSION_SKU,
@@ -790,7 +791,7 @@ describe('LicensesClient', () => {
     });
   });
 
-  describe('findUpdateConfig', () => {
+  describe('updateConfig', () => {
     it('calls the post method with the update config', async () => {
       const postData: ConfigFindResultData = {
         [ConfigFindResultFields.COLUMN_NAME]: 'purchaseReservations',
@@ -798,23 +799,29 @@ describe('LicensesClient', () => {
         [ConfigFindResultFields.COLUMN_STATE]: 'enabled',
       };
 
-      const config = new ConfigFindResult(postData);
+      const config: ConfigFindResult = new ConfigFindResult(postData);
 
-      const response: ConfigFindResultData = {
-        [ConfigFindResultFields.COLUMN_NAME]: 'purchaseReservations',
-        [ConfigFindResultFields.COLUMN_SCOPE]: 'role',
-        [ConfigFindResultFields.COLUMN_STATE]: 'enabled',
+      const response: GetData<ConfigFindResultData> = {
+        data: {
+          [ConfigFindResultFields.COLUMN_NAME]: 'purchaseReservations',
+          [ConfigFindResultFields.COLUMN_SCOPE]: 'role',
+          [ConfigFindResultFields.COLUMN_STATE]: 'enabled',
+        },
+        status: 200,
       };
 
       nock(LICENSES_MOCK_URL)
         .post(LICENSES_CONFIG_FIND_ENDPOINT)
         .reply(200, response);
 
-      const result = await client.updateConfig('XSP1234', config);
-      expect(result).to.be.instanceOf(ConfigFindResult);
-      expect(result.name).to.be.equal(config.name);
-      expect(result.scope).to.be.equal(config.scope);
-      expect(result.state).to.be.equal(config.state);
+      const result: GetResult<ConfigFindResult> = await client.updateConfig(
+        'XSP1234',
+        config,
+      );
+
+      const resultData: GetData<ConfigFindResultData> = result.toJSON();
+      expect(result).to.be.instanceOf(GetResult);
+      expect(resultData.data).to.be.deep.equals(config.toJSON());
     });
   });
 
