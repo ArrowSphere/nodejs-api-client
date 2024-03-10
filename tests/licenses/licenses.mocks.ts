@@ -22,6 +22,8 @@ import {
   RateTypeEnum,
   ScheduleTaskData,
   RelationGetDataFields,
+  ConfigFindResultFields,
+  WarningFindResultFields,
 } from '../../src';
 import { ExtraDataFields } from '../../src/licenses/entities/getLicense/extraDataGetResult';
 import { CredentialsResultType } from '../../src/licenses/entities/license/credentialsResult';
@@ -137,6 +139,20 @@ export const PAYLOAD_SCHEMA_LICENSE: GetData<GetLicenseResultData> = {
         },
       ],
       [LicenseGetFields.COLUMN_MARKET_SEGMENT]: 'Corporate',
+      [LicenseGetFields.COLUMN_CONFIGS]: [
+        {
+          [ConfigFindResultFields.COLUMN_NAME]: 'purchaseReservations',
+          [ConfigFindResultFields.COLUMN_SCOPE]: 'role',
+          [ConfigFindResultFields.COLUMN_STATE]: 'enabled',
+        },
+      ],
+      [LicenseGetFields.COLUMN_WARNINGS]: [
+        {
+          [WarningFindResultFields.COLUMN_KEY]: 'PEC ratio issue',
+          [WarningFindResultFields.COLUMN_MESSAGE]:
+            'current value is 0 instead of 0.15',
+        },
+      ],
     },
   },
 };
