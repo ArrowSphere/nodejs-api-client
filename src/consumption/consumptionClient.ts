@@ -7,6 +7,7 @@ import {
   ConsumptionBudget,
   ConsumptionBudgetType,
 } from './entities/consumption/consumptionBudget';
+import { ConsumptionDailyPrediction } from './entities/consumption/consumptionDailyPrediction';
 
 export type ConsumptionDownloadRequestPayload = {
   customer: string;
@@ -77,5 +78,18 @@ export class ConsumptionClient extends AbstractRestfulClient {
     this.path = `/license/${licenseReference}/budget`;
 
     return new GetResult(ConsumptionBudget, await this.get(parameters));
+  }
+
+  public async getLicenseDailyPredictions(
+    licenseReference: string,
+    parameters: Parameters = {},
+  ): Promise<GetResult<ConsumptionDailyPrediction>> {
+    this.basePath = '/licenses';
+    this.path = `/${licenseReference}/predictions/daily`;
+
+    return new GetResult(
+      ConsumptionDailyPrediction,
+      await this.get(parameters),
+    );
   }
 }
