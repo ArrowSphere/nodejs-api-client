@@ -23,6 +23,14 @@ import { ExtraDataResult, ExtraDataType } from './extraDataGetResult';
 import { PriceBandData, PriceBandGetResult } from './priceBandGetResult';
 import { RatesGetData, RatesGetResult } from './ratesGetResult';
 import { RelationGetData, RelationGetResult } from './relationGetResult';
+import {
+  ConfigFindResult,
+  ConfigFindResultData,
+} from '../license/configFindResult';
+import {
+  WarningFindResult,
+  WarningFindResultData,
+} from '../license/warningFindResult';
 
 export enum LicenseGetFields {
   COLUMN_LICENSE_ID = 'license_id',
@@ -71,6 +79,8 @@ export enum LicenseGetFields {
   COLUMN_ORGANIZATION_UNIT_ID = 'organizationUnitId',
   COLUMN_RELATION = 'relation',
   COLUMN_MARKET_SEGMENT = 'marketSegment',
+  COLUMN_CONFIGS = 'configs',
+  COLUMN_WARNINGS = 'warnings',
 }
 
 export type LicenseGetData = {
@@ -120,6 +130,8 @@ export type LicenseGetData = {
   [LicenseGetFields.COLUMN_ORGANIZATION_UNIT_ID]?: number;
   [LicenseGetFields.COLUMN_RELATION]?: RelationGetData[];
   [LicenseGetFields.COLUMN_MARKET_SEGMENT]?: string | null;
+  [LicenseGetFields.COLUMN_CONFIGS]?: Array<ConfigFindResultData> | null;
+  [LicenseGetFields.COLUMN_WARNINGS]?: Array<WarningFindResultData> | null;
 };
 
 export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
@@ -169,6 +181,8 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
   readonly #organizationUnitId?: number;
   readonly #relation?: RelationGetResult[];
   readonly #marketSegment?: string | null;
+  readonly #configs?: Array<ConfigFindResult> | null;
+  readonly #warnings?: Array<WarningFindResult> | null;
 
   public constructor(licenseGetDataInput: LicenseGetData) {
     super(licenseGetDataInput);
@@ -286,6 +300,14 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
       : undefined;
     this.#marketSegment =
       licenseGetDataInput[LicenseGetFields.COLUMN_MARKET_SEGMENT];
+    this.#configs = licenseGetDataInput[LicenseGetFields.COLUMN_CONFIGS]?.map(
+      (configData: ConfigFindResultData): ConfigFindResult =>
+        new ConfigFindResult(configData),
+    );
+    this.#warnings = licenseGetDataInput[LicenseGetFields.COLUMN_WARNINGS]?.map(
+      (warningData: WarningFindResultData): WarningFindResult =>
+        new WarningFindResult(warningData),
+    );
   }
 
   public get id(): string {
@@ -475,6 +497,14 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
     return this.#marketSegment;
   }
 
+  public get configs(): Array<ConfigFindResult> | null | undefined {
+    return this.#configs;
+  }
+
+  public get warnings(): Array<WarningFindResult> | null | undefined {
+    return this.#warnings;
+  }
+
   public toJSON(): LicenseGetData {
     return {
       [LicenseGetFields.COLUMN_LICENSE_ID]: this.id,
@@ -530,6 +560,12 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
         (v: RelationGetResult): RelationGetData => v.toJSON(),
       ),
       [LicenseGetFields.COLUMN_MARKET_SEGMENT]: this.marketSegment,
+      [LicenseGetFields.COLUMN_CONFIGS]: this.configs?.map(
+        (config: ConfigFindResult) => config.toJSON(),
+      ),
+      [LicenseGetFields.COLUMN_WARNINGS]: this.warnings?.map(
+        (warning: WarningFindResult) => warning.toJSON(),
+      ),
     };
   }
 }

@@ -12,6 +12,7 @@ import {
   GET_CONSUMPTION_RESPONSE,
   CONSUMPTION_REQUEST_DOWNLOAD_PAYLOAD,
   CONSUMPTION_REQUEST_DOWNLOAD_RESPONSE,
+  GET_LICENSE_DAILY_PREDICTIONS_RESPONSE,
 } from './mocks/consumption.mocks';
 import {
   ConsumptionBI,
@@ -21,6 +22,7 @@ import {
   ConsumptionBudget,
   GetResultFields,
 } from '../../src';
+import { ConsumptionDailyPrediction } from '../../src/consumption/entities/consumption/consumptionDailyPrediction';
 
 export const CONSUMPTION_MOCK_URL = 'https://consumption.localhost';
 export const GET_CONSUMPTION_MONTHLY_URL = new RegExp(
@@ -163,6 +165,29 @@ describe('ConsumptionClient', () => {
       expect(response).to.be.instanceof(GetResult);
       expect(response.data).to.be.instanceof(ConsumptionBudget);
       expect(response.toJSON()).to.be.deep.equals(GET_BUDGET_SETTINGS_RESPONSE);
+    });
+  });
+
+  describe('getLicenseDailyPredictions', () => {
+    it('call the get method getLicenseDailyPredictions', async () => {
+      const licenseReference = 'XSP123456';
+
+      nock(CONSUMPTION_MOCK_URL)
+        .get(`/licenses/${licenseReference}/predictions/daily`)
+        .reply(
+          constants.HTTP_STATUS_OK,
+          GET_LICENSE_DAILY_PREDICTIONS_RESPONSE,
+        );
+
+      const response: GetResult<ConsumptionDailyPrediction> = await client.getLicenseDailyPredictions(
+        licenseReference,
+      );
+
+      expect(response).to.be.instanceof(GetResult);
+      expect(response.data).to.be.instanceof(ConsumptionDailyPrediction);
+      expect(response.toJSON()).to.be.deep.equals(
+        GET_LICENSE_DAILY_PREDICTIONS_RESPONSE,
+      );
     });
   });
 });
