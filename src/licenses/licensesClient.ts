@@ -77,6 +77,7 @@ import {
   EndCustomerOrganizationUnitFiltersParameters,
   EndCustomerOrganizationUnitSortParameters,
 } from './entities/endCustomerOrganizationUnit/endCustomerOrganizationUnitFindResult';
+import { ConsumptionDailyPrediction } from '../consumption';
 
 /**
  * Parameters passable to the request for refining search.
@@ -640,10 +641,16 @@ export class LicensesClient extends AbstractRestfulClient {
   public async updateConfig(
     reference: string,
     config: ConfigFindResult,
-  ): Promise<ConfigFindResult> {
-    const rawResponse = await this.updateConfigRaw(reference, config);
+  ): Promise<GetResult<ConfigFindResult>> {
+    this.path = `/${reference}${this.CONFIGS_PATH}`;
 
-    return new ConfigFindResult(rawResponse);
+    const postData: ConfigFindResultData = {
+      [ConfigFindResultFields.COLUMN_NAME]: config.name,
+      [ConfigFindResultFields.COLUMN_SCOPE]: config.scope,
+      [ConfigFindResultFields.COLUMN_STATE]: config.state,
+    };
+
+    return new GetResult(ConfigFindResult, await this.post(postData));
   }
 
   public async getLicense(
@@ -849,6 +856,18 @@ export class LicensesClient extends AbstractRestfulClient {
     return new GetResult(
       ScheduleTasksResult,
       await this.post(payload, parameters),
+    );
+  }
+
+  public async getLicenseDailyPredictions(
+    licenseReference: string,
+    parameters: Parameters = {},
+  ): Promise<GetResult<ConsumptionDailyPrediction>> {
+    this.path = `/${licenseReference}/predictions/daily`;
+
+    return new GetResult(
+      ConsumptionDailyPrediction,
+      await this.get(parameters),
     );
   }
 
