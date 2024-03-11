@@ -48,6 +48,8 @@ import {
   UpgradeResultType,
   PartialResponse,
   PartialResponseFields,
+  GetData,
+  ConsumptionDailyPrediction,
 } from '../../src';
 import {
   PAYLOAD_LICENSE_CONVERSION_SKU,
@@ -71,6 +73,7 @@ import {
   EndCustomerOrganizationUnitFindResultFields,
   EndCustomerOrganizationUnitFindResultType,
 } from '../../src/licenses/entities/endCustomerOrganizationUnit/endCustomerOrganizationUnitFindResult';
+import { GET_LICENSE_DAILY_PREDICTIONS_RESPONSE } from '../consumption/mocks/consumption.mocks';
 
 export const LICENSES_MOCK_URL = 'https://licenses.localhost';
 export const LICENSES_FIND_ENDPOINT = new RegExp('/licenses/v2/find.*');
@@ -790,7 +793,7 @@ describe('LicensesClient', () => {
     });
   });
 
-  describe('findUpdateConfig', () => {
+  describe('updateConfig', () => {
     it('calls the post method with the update config', async () => {
       const postData: ConfigFindResultData = {
         [ConfigFindResultFields.COLUMN_NAME]: 'purchaseReservations',
@@ -798,23 +801,29 @@ describe('LicensesClient', () => {
         [ConfigFindResultFields.COLUMN_STATE]: 'enabled',
       };
 
-      const config = new ConfigFindResult(postData);
+      const config: ConfigFindResult = new ConfigFindResult(postData);
 
-      const response: ConfigFindResultData = {
-        [ConfigFindResultFields.COLUMN_NAME]: 'purchaseReservations',
-        [ConfigFindResultFields.COLUMN_SCOPE]: 'role',
-        [ConfigFindResultFields.COLUMN_STATE]: 'enabled',
+      const response: GetData<ConfigFindResultData> = {
+        data: {
+          [ConfigFindResultFields.COLUMN_NAME]: 'purchaseReservations',
+          [ConfigFindResultFields.COLUMN_SCOPE]: 'role',
+          [ConfigFindResultFields.COLUMN_STATE]: 'enabled',
+        },
+        status: 200,
       };
 
       nock(LICENSES_MOCK_URL)
         .post(LICENSES_CONFIG_FIND_ENDPOINT)
         .reply(200, response);
 
-      const result = await client.updateConfig('XSP1234', config);
-      expect(result).to.be.instanceOf(ConfigFindResult);
-      expect(result.name).to.be.equal(config.name);
-      expect(result.scope).to.be.equal(config.scope);
-      expect(result.state).to.be.equal(config.state);
+      const result: GetResult<ConfigFindResult> = await client.updateConfig(
+        'XSP1234',
+        config,
+      );
+
+      const resultData: GetData<ConfigFindResultData> = result.toJSON();
+      expect(result).to.be.instanceOf(GetResult);
+      expect(resultData.data).to.be.deep.equals(config.toJSON());
     });
   });
 
@@ -1223,6 +1232,29 @@ describe('LicensesClient', () => {
 
       const result = await client.bulkAction(inputData);
       expect(result).to.eqls(postData);
+    });
+  });
+
+  describe('getLicenseDailyPredictions', () => {
+    it('call the get method getLicenseDailyPredictions', async () => {
+      const licenseReference = 'XSP123456';
+
+      nock(LICENSES_MOCK_URL)
+        .get(`/licenses/${licenseReference}/predictions/daily`)
+        .reply(
+          constants.HTTP_STATUS_OK,
+          GET_LICENSE_DAILY_PREDICTIONS_RESPONSE,
+        );
+
+      const response: GetResult<ConsumptionDailyPrediction> = await client.getLicenseDailyPredictions(
+        licenseReference,
+      );
+
+      expect(response).to.be.instanceof(GetResult);
+      expect(response.data).to.be.instanceof(ConsumptionDailyPrediction);
+      expect(response.toJSON()).to.be.deep.equals(
+        GET_LICENSE_DAILY_PREDICTIONS_RESPONSE,
+      );
     });
   });
 });
