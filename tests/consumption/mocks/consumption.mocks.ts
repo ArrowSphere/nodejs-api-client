@@ -12,6 +12,11 @@ import {
   ConsumptionBudgetFields,
   ConsumptionBudgetType,
 } from '../../../src';
+import {
+  ConsumptionDailyPredictionFields,
+  ConsumptionDailyPredictionType,
+  DailyPredictionFields,
+} from '../../../src/consumption/entities/consumption/consumptionDailyPrediction';
 
 export const GET_CONSUMPTION_MONTHLY_PARAMETERS = {
   billingMonthStart: '2020-10',
@@ -148,5 +153,25 @@ export const GET_BUDGET_SETTINGS_RESPONSE: GetData<ConsumptionBudgetType> = {
     [ConsumptionBudgetFields.COLUMN_NOTIFICATIONS]: [80, 90],
     [ConsumptionBudgetFields.COLUMN_SEND_NOTIFICATION]: true,
     [ConsumptionBudgetFields.COLUMN_THRESHOLD]: 1000,
+  },
+};
+
+export const GET_LICENSE_DAILY_PREDICTIONS_RESPONSE: GetData<ConsumptionDailyPredictionType> = {
+  [GetResultFields.COLUMN_STATUS]: 200,
+  [GetResultFields.COLUMN_DATA]: {
+    [ConsumptionDailyPredictionFields.COLUMN_CURRENCY]: 'EUR',
+    [ConsumptionDailyPredictionFields.COLUMN_UPDATED_AT]:
+      '2021-10-01T00:00:00Z',
+    [ConsumptionDailyPredictionFields.COLUMN_LICENSE_REFERENCE]: 'XSP123456',
+    [ConsumptionDailyPredictionFields.COLUMN_PREDICTIONS]: [
+      {
+        [DailyPredictionFields.COLUMN_DATE]: '2021-10-01',
+        [DailyPredictionFields.COLUMN_AMOUNT]: 195.22,
+      },
+      {
+        [DailyPredictionFields.COLUMN_DATE]: '2021-10-02',
+        [DailyPredictionFields.COLUMN_AMOUNT]: 200.5,
+      },
+    ],
   },
 };
