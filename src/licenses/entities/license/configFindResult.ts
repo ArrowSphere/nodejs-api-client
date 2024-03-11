@@ -6,6 +6,16 @@ import {
 import { AbstractEntity } from '../../../abstractEntity';
 import { Rules } from 'validatorjs';
 
+export enum LicenseConfigNamesEnum {
+  PURCHASE_RESERVATIONS = 'purchaseReservations',
+}
+
+export enum LicenseConfigStatesEnum {
+  DISABLED = 'disabled',
+  ENABLED = 'enabled',
+  PENDING = 'pending',
+}
+
 export enum ConfigFindResultFields {
   COLUMN_NAME = 'name',
   COLUMN_SCOPE = 'scope',
