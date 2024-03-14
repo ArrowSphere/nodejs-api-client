@@ -3,6 +3,10 @@ import {
   CustomerContactXcpInvitation,
   CustomerContactXcpInvitationType,
 } from './customerContactXcpInvitation';
+import {
+  CustomerContactOrganizationUnit,
+  CustomerContactOrganizationUnitType,
+} from './customerContactOrganizationUnit';
 
 export type CustomerContactRoleType = CustomerContactRoleEnum | string;
 export enum CustomerContactRoleEnum {
@@ -33,6 +37,7 @@ export enum CustomerContactFields {
   COLUMN_IS_ACTIVE = 'isActive',
   COLUMN_XCP_INVITATION = 'xcpInvitation',
   COLUMN_ORGANIZATION_UNIT_ID = 'organizationUnitId',
+  COLUMN_ORGANIZATION_UNITS = 'organizationUnits',
 }
 
 export type CustomerContactType = {
@@ -47,6 +52,9 @@ export type CustomerContactType = {
   [CustomerContactFields.COLUMN_IS_ACTIVE]: boolean;
   [CustomerContactFields.COLUMN_XCP_INVITATION]?: CustomerContactXcpInvitationType;
   [CustomerContactFields.COLUMN_ORGANIZATION_UNIT_ID]?: number;
+  [CustomerContactFields.COLUMN_ORGANIZATION_UNITS]:
+    | CustomerContactOrganizationUnitType[]
+    | [];
 };
 
 export class CustomerContact extends AbstractEntity<CustomerContactType> {
@@ -61,6 +69,7 @@ export class CustomerContact extends AbstractEntity<CustomerContactType> {
   readonly #isActive: boolean;
   readonly #xcpInvitation?: CustomerContactXcpInvitation;
   readonly #organizationUnitId?: number;
+  readonly #organizationUnits: CustomerContactOrganizationUnit[] | [];
 
   public constructor(getCustomerContactDataInput: CustomerContactType) {
     super(getCustomerContactDataInput);
@@ -94,6 +103,12 @@ export class CustomerContact extends AbstractEntity<CustomerContactType> {
       getCustomerContactDataInput[
         CustomerContactFields.COLUMN_ORGANIZATION_UNIT_ID
       ];
+
+    this.#organizationUnits = getCustomerContactDataInput[
+      CustomerContactFields.COLUMN_ORGANIZATION_UNITS
+    ].map((organizationUnit: CustomerContactOrganizationUnitType) => {
+      return new CustomerContactOrganizationUnit(organizationUnit);
+    });
   }
 
   get reference(): string {
@@ -132,12 +147,16 @@ export class CustomerContact extends AbstractEntity<CustomerContactType> {
     return this.#isActive;
   }
 
-  get xcpInvitation(): CustomerContactXcpInvitationType | undefined {
+  get xcpInvitation(): CustomerContactXcpInvitation | undefined {
     return this.#xcpInvitation;
   }
 
   get organizationUnitId(): number | undefined {
     return this.#organizationUnitId;
+  }
+
+  get organizationUnits(): CustomerContactOrganizationUnit[] | [] {
+    return this.#organizationUnits;
   }
 
   public toJSON(): CustomerContactType {
@@ -154,6 +173,11 @@ export class CustomerContact extends AbstractEntity<CustomerContactType> {
       [CustomerContactFields.COLUMN_XCP_INVITATION]: this.xcpInvitation,
       [CustomerContactFields.COLUMN_ORGANIZATION_UNIT_ID]: this
         .organizationUnitId,
+      [CustomerContactFields.COLUMN_ORGANIZATION_UNITS]: this.organizationUnits.map(
+        (organizationUnit: CustomerContactOrganizationUnit) => {
+          return organizationUnit.toJSON();
+        },
+      ),
     };
   }
 }
