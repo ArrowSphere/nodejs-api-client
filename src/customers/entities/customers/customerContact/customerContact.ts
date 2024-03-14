@@ -132,7 +132,7 @@ export class CustomerContact extends AbstractEntity<CustomerContactType> {
     return this.#isActive;
   }
 
-  get xcpInvitation(): CustomerContactXcpInvitationType | undefined {
+  get xcpInvitation(): CustomerContactXcpInvitation | undefined {
     return this.#xcpInvitation;
   }
 
