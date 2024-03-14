@@ -14,6 +14,7 @@ import {
   PostCustomerInvitationFields,
 } from '../../../src';
 import { CustomerContactXcpInvitationFields } from '../../../src/customers/entities/customers/customerContact/customerContactXcpInvitation';
+import { CustomerContactOrganizationUnitFields } from '../../../src/customers/entities/customers/customerContact/customerContactOrganizationUnit';
 
 export const PAYLOAD_GET_CUSTOMERS = {
   [GetResultFields.COLUMN_STATUS]: 200,
@@ -156,6 +157,16 @@ export const PAYLOAD_GET_CUSTOMER_CONTACT_LIST = {
         [CustomerContactXcpInvitationFields.COLUMN_POLICY]: 'policy_admin',
       },
       [CustomerContactFields.COLUMN_ORGANIZATION_UNIT_ID]: 42,
+      [CustomerContactFields.COLUMN_ORGANIZATION_UNITS]: [
+        {
+          [CustomerContactOrganizationUnitFields.COLUMN_ID]: 1,
+          [CustomerContactOrganizationUnitFields.COLUMN_NAME]: 'OU nama 1',
+        },
+        {
+          [CustomerContactOrganizationUnitFields.COLUMN_ID]: 2,
+          [CustomerContactOrganizationUnitFields.COLUMN_NAME]: 'OU name 2',
+        },
+      ],
     },
   ],
 };
@@ -170,6 +181,7 @@ export const PAYLOAD_POST_CUSTOMER_CONTACT = {
     [CustomerContactFields.COLUMN_USERNAME]: 'username',
     [CustomerContactFields.COLUMN_TYPE]: 'type',
     [CustomerContactFields.COLUMN_ROLE]: 'role',
+    [CustomerContactFields.COLUMN_ORGANIZATION_UNITS]: [],
   },
 };
 
@@ -189,5 +201,15 @@ export const PAYLOAD_GET_CUSTOMER_CONTACT = {
       [CustomerContactXcpInvitationFields.COLUMN_POLICY]: 'policy_admin',
     },
     [CustomerContactFields.COLUMN_ORGANIZATION_UNIT_ID]: 42,
+    [CustomerContactFields.COLUMN_ORGANIZATION_UNITS]: [
+      {
+        [CustomerContactOrganizationUnitFields.COLUMN_ID]: 1,
+        [CustomerContactOrganizationUnitFields.COLUMN_NAME]: 'OU nama 1',
+      },
+      {
+        [CustomerContactOrganizationUnitFields.COLUMN_ID]: 2,
+        [CustomerContactOrganizationUnitFields.COLUMN_NAME]: 'OU name 2',
+      },
+    ],
   },
 };
