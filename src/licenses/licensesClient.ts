@@ -370,6 +370,19 @@ export enum SaveBillingCommentsInputFields {
   COLUMN_COMMENT_TWO = 'comment2',
 }
 
+export enum SaveSpecialBidInputFields {
+  COLUMN_ARW_RATE_VALUE = 'arwRateValue',
+  COLUMN_MSP_RATE_VALUE = 'mspRateValue',
+}
+
+export enum RewriteRateHistoryInputFields {
+  COLUMN_COMPANY_TYPE = 'companyType',
+  COLUMN_DATE_END = 'dateEnd',
+  COLUMN_DATE_START = 'dateStart',
+  COLUMN_RATE_TYPE = 'rateType',
+  COLUMN_RATE = 'rate',
+}
+
 export type SaveBillingCommentsInputType = {
   [SaveBillingCommentsInputFields.COLUMN_COMMENT_ONE]?: string | null;
   [SaveBillingCommentsInputFields.COLUMN_COMMENT_TWO]?: string | null;
@@ -392,6 +405,19 @@ export type GetLicensePricingRate = {
   orderItemId: number;
   companyType: CompanyTypeEnum;
   activeTime: SpecialPriceRateActive;
+};
+
+export type SaveSpecialBidInputType = {
+  [SaveSpecialBidInputFields.COLUMN_ARW_RATE_VALUE]: number;
+  [SaveSpecialBidInputFields.COLUMN_MSP_RATE_VALUE]?: number;
+};
+
+export type RewriteRateHistoryInputType = {
+  [RewriteRateHistoryInputFields.COLUMN_COMPANY_TYPE]: CompanyTypeEnum;
+  [RewriteRateHistoryInputFields.COLUMN_DATE_END]?: string;
+  [RewriteRateHistoryInputFields.COLUMN_DATE_START]: string;
+  [RewriteRateHistoryInputFields.COLUMN_RATE_TYPE]: string;
+  [RewriteRateHistoryInputFields.COLUMN_RATE]: number;
 };
 
 export class LicensesClient extends AbstractRestfulClient {
@@ -459,6 +485,16 @@ export class LicensesClient extends AbstractRestfulClient {
    * The path to save the license order eavs
    */
   private SAVE_BILLING_COMMENTS_PATH = '/billingComments';
+
+  /**
+   * The path to save the license special bid
+   */
+  private SAVE_SPECIAL_BID_PATH = '/special-bid';
+
+  /**
+   * The path to rewrite the license rate history
+   */
+  private REWRITE_RATE_HISTORY_PATH = '/rewrite-rate-history';
 
   /**
    * The path of license all available skus
@@ -872,6 +908,26 @@ export class LicensesClient extends AbstractRestfulClient {
       ConsumptionDailyPrediction,
       await this.get(parameters),
     );
+  }
+
+  public async saveSpecialdBid(
+    licenseReference: string,
+    payload: SaveSpecialBidInputType,
+    parameters: Parameters = {},
+  ): Promise<void> {
+    this.path = `/${licenseReference}${this.SAVE_SPECIAL_BID_PATH}`;
+
+    await this.post(payload, parameters);
+  }
+
+  public async rewriteRateHistory(
+    licenseReference: string,
+    payload: RewriteRateHistoryInputType,
+    parameters: Parameters = {},
+  ): Promise<void> {
+    this.path = `/${licenseReference}${this.REWRITE_RATE_HISTORY_PATH}`;
+
+    await this.post(payload, parameters);
   }
 
   private createFilters(
