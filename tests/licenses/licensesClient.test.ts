@@ -50,6 +50,9 @@ import {
   PartialResponseFields,
   GetData,
   ConsumptionDailyPrediction,
+  SaveSpecialBidInputType,
+  RewriteRateHistoryInputType,
+  CompanyTypeEnum,
 } from '../../src';
 import {
   PAYLOAD_LICENSE_CONVERSION_SKU,
@@ -1255,6 +1258,47 @@ describe('LicensesClient', () => {
       expect(response.toJSON()).to.be.deep.equals(
         GET_LICENSE_DAILY_PREDICTIONS_RESPONSE,
       );
+    });
+  });
+
+  describe('saveSpecialBid', () => {
+    it('calls the saveSpecialBid method', async () => {
+      const licenseReference = 'XSP12345';
+      const payload: SaveSpecialBidInputType = {
+        arwRateValue: 10,
+        mspRateValue: 2,
+      };
+
+      nock(LICENSES_MOCK_URL)
+        .post(`/licenses/${licenseReference}/special-bid`)
+        .reply(201);
+
+      client.setPerPage(0);
+      await client.saveSpecialdBid(licenseReference, payload);
+
+      expect(nock.isDone()).to.be.true;
+    });
+  });
+
+  describe('rewriteRateHistory', () => {
+    it('calls the rewriteRateHistory method', async () => {
+      const licenseReference = 'XSP12345';
+      const payload: RewriteRateHistoryInputType = {
+        companyType: CompanyTypeEnum.ARROW,
+        dateEnd: '2023-01-01',
+        dateStart: '2023-12-31',
+        rateType: 'discount',
+        rateValue: 10,
+      };
+
+      nock(LICENSES_MOCK_URL)
+        .post(`/licenses/${licenseReference}/rewrite-rate-history`)
+        .reply(201);
+
+      client.setPerPage(0);
+      await client.rewriteRateHistory(licenseReference, payload);
+
+      expect(nock.isDone()).to.be.true;
     });
   });
 });
