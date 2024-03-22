@@ -2,8 +2,10 @@ import { AbstractEntity } from '../../../../abstractEntity';
 import { BannerV2, BannerV2Type } from './banner/banner';
 import { LandingPageV2, LandingPageV2Type } from './landingPage/landingPage';
 import { Rules, RulesType } from '../../campaign/rules/rules';
+import { DownloadUrls } from './banner/downloadUrls';
 
 export enum CampaignV2Fields {
+  COLUMN_DOWNLOAD_URLS = 'downloadUrls',
   COLUMN_REFERENCE = 'reference',
   COLUMN_NAME = 'name',
   COLUMN_CATEGORY = 'category',
@@ -19,6 +21,7 @@ export enum CampaignV2Fields {
 }
 
 export type CampaignV2Type = {
+  [CampaignV2Fields.COLUMN_DOWNLOAD_URLS]?: DownloadUrls;
   [CampaignV2Fields.COLUMN_REFERENCE]: string;
   [CampaignV2Fields.COLUMN_NAME]: string;
   [CampaignV2Fields.COLUMN_CATEGORY]?: string;
@@ -34,6 +37,7 @@ export type CampaignV2Type = {
 };
 
 export class CampaignV2 extends AbstractEntity<CampaignV2Type> {
+  readonly #downloadUrls?: DownloadUrls;
   readonly #reference: string;
   readonly #name: string;
   readonly #category?: string;
@@ -49,6 +53,7 @@ export class CampaignV2 extends AbstractEntity<CampaignV2Type> {
 
   constructor(campaignInput: CampaignV2Type) {
     super(campaignInput);
+    this.#downloadUrls = campaignInput[CampaignV2Fields.COLUMN_DOWNLOAD_URLS];
     this.#reference = campaignInput[CampaignV2Fields.COLUMN_REFERENCE];
     this.#name = campaignInput[CampaignV2Fields.COLUMN_NAME];
     this.#category = campaignInput[CampaignV2Fields.COLUMN_CATEGORY];
@@ -66,6 +71,10 @@ export class CampaignV2 extends AbstractEntity<CampaignV2Type> {
     this.#landingPage = new LandingPageV2(
       campaignInput[CampaignV2Fields.COLUMN_LANDING_PAGE],
     );
+  }
+
+  get downloadUrls(): DownloadUrls | undefined {
+    return this.#downloadUrls;
   }
 
   get reference(): string {
@@ -118,6 +127,7 @@ export class CampaignV2 extends AbstractEntity<CampaignV2Type> {
 
   public toJSON(): CampaignV2Type {
     return {
+      [CampaignV2Fields.COLUMN_DOWNLOAD_URLS]: this.downloadUrls,
       [CampaignV2Fields.COLUMN_REFERENCE]: this.reference,
       [CampaignV2Fields.COLUMN_NAME]: this.name,
       [CampaignV2Fields.COLUMN_CATEGORY]: this.category,
