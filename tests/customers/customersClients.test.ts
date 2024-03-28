@@ -10,6 +10,7 @@ import {
   APIResponseResourceCreated,
   APIResponseError,
   APIResponseCustomerUpdated,
+  DataCustomersFields,
 } from '../../src/';
 import { expect } from 'chai';
 import { PAYLOAD_ORDERS } from '../orders/mocks/orders.mocks';
@@ -92,6 +93,82 @@ describe('CustomersClients', () => {
       expect(result.toJSON()).to.eql(
         PAYLOAD_GET_CUSTOMERS_WITHOUT_OPTIONAL_FIELDS,
       );
+    });
+  });
+
+  describe('getCustomerByRef', () => {
+    const client = new PublicApiClient()
+      .getCustomersClient()
+      .setUrl(CUSTOMERS_MOCK_URL);
+
+    const ref = 'ref';
+
+    it('call get method without parameters', async () => {
+      nock(CUSTOMERS_MOCK_URL)
+        .get(CUSTOMERS_GET_CUSTOMERS_URL)
+        .reply(200, PAYLOAD_GET_CUSTOMERS);
+
+      const result = await client.getCustomerByRef(ref);
+      expect(result).to.be.instanceof(GetResult);
+      expect(result.toJSON()).to.eql(PAYLOAD_GET_CUSTOMERS);
+    });
+
+    it('call get method with parameters', async () => {
+      nock(CUSTOMERS_MOCK_URL)
+        .get(CUSTOMERS_GET_CUSTOMERS_URL)
+        .reply(200, PAYLOAD_GET_CUSTOMERS);
+
+      const parameters: Parameters = {
+        email: 'test.test@test.test',
+      };
+      const result = await client.getCustomerByRef(ref, parameters);
+      expect(result).to.be.instanceof(GetResult);
+      expect(result.toJSON()).to.eql(PAYLOAD_GET_CUSTOMERS);
+    });
+
+    it('call get method having more than one customer as a response', async () => {
+      const getCustomers = {
+        ...PAYLOAD_GET_CUSTOMERS,
+        [GetResultFields.COLUMN_DATA]: {
+          [DataCustomersFields.COLUMN_CUSTOMERS]: [
+            PAYLOAD_GET_CUSTOMERS.data.customers[0],
+            PAYLOAD_GET_CUSTOMERS.data.customers[0],
+          ],
+        },
+      };
+
+      nock(CUSTOMERS_MOCK_URL)
+        .get(CUSTOMERS_GET_CUSTOMERS_URL)
+        .reply(200, getCustomers);
+
+      try {
+        await client.getCustomerByRef(ref);
+        expect.fail('Expected method to throw an error');
+      } catch (error) {
+        expect((error as Error).message).to.equal(
+          'customers length should equal to 1',
+        );
+      }
+    });
+
+    it('call get method having 0 customer as a response', async () => {
+      const getCustomers = {
+        ...PAYLOAD_GET_CUSTOMERS,
+        [GetResultFields.COLUMN_DATA]: {
+          [DataCustomersFields.COLUMN_CUSTOMERS]: [],
+        },
+      };
+
+      nock(CUSTOMERS_MOCK_URL)
+        .get(CUSTOMERS_GET_CUSTOMERS_URL)
+        .reply(200, getCustomers);
+
+      try {
+        await client.getCustomerByRef(ref);
+        expect.fail('Expected method to throw an error');
+      } catch (error) {
+        expect((error as Error).message).to.equal('customer not found');
+      }
     });
   });
 
