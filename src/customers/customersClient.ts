@@ -22,6 +22,7 @@ export enum CustomerContactPayloadFields {
   COLUMN_TYPE = 'type',
   COLUMN_ROLE = 'role',
   COLUMN_ORGANIZATION_UNIT_ID = 'organizationUnitId',
+  COLUMN_ORGANIZATION_UNIT_IDS = 'organizationUnitIds',
 }
 
 export type PostCustomerContactPayload = {
@@ -33,6 +34,7 @@ export type PostCustomerContactPayload = {
   [CustomerContactPayloadFields.COLUMN_TYPE]: CustomerContactTypeType;
   [CustomerContactPayloadFields.COLUMN_ROLE]: CustomerContactRoleType;
   [CustomerContactPayloadFields.COLUMN_ORGANIZATION_UNIT_ID]?: number;
+  [CustomerContactPayloadFields.COLUMN_ORGANIZATION_UNIT_IDS]?: number[];
 };
 
 export type PostCustomerContact = {
@@ -137,6 +139,7 @@ export class CustomersClient extends AbstractRestfulClient {
     parameters: Parameters = {},
   ): Promise<GetResult<CustomerContactList>> {
     this.path = `/${customerReference}/contacts`;
+
     return new GetResult(CustomerContactList, await this.get(parameters));
   }
 

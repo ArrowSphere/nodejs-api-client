@@ -14,13 +14,13 @@ import {
 import { expect } from 'chai';
 import { PAYLOAD_ORDERS } from '../orders/mocks/orders.mocks';
 import {
-  PAYLOAD_GET_CUSTOMER_CONTACT,
+  PAYLOAD_CUSTOMER_CONTACT,
   PAYLOAD_GET_CUSTOMER_CONTACT_LIST,
   PAYLOAD_GET_CUSTOMER_INVITATION,
   PAYLOAD_GET_CUSTOMERS,
   PAYLOAD_GET_CUSTOMERS_WITHOUT_OPTIONAL_FIELDS,
-  PAYLOAD_POST_CUSTOMER_CONTACT,
   PAYLOAD_POST_CUSTOMER_INVITATION,
+  RESPONSE_CUSTOMER_CONTACT,
 } from './mocks/customers.mocks';
 import { Axios } from 'axios';
 import sinon from 'sinon';
@@ -183,15 +183,15 @@ describe('CustomersClients', () => {
     it('call post to create new customer contact', async () => {
       nock(CUSTOMERS_MOCK_URL)
         .post(CUSTOMERS_GET_CUSTOMER_CONTACT_URL)
-        .reply(200, PAYLOAD_POST_CUSTOMER_CONTACT);
+        .reply(200, RESPONSE_CUSTOMER_CONTACT);
 
       const result = await client.postCustomerContact(
         'REF',
-        PAYLOAD_POST_CUSTOMER_CONTACT[GetResultFields.COLUMN_DATA],
+        PAYLOAD_CUSTOMER_CONTACT,
       );
 
       expect(result).to.be.instanceof(GetResult);
-      expect(result.toJSON()).to.eql(PAYLOAD_POST_CUSTOMER_CONTACT);
+      expect(result.toJSON()).to.eql(RESPONSE_CUSTOMER_CONTACT);
     });
   });
 
@@ -203,12 +203,12 @@ describe('CustomersClients', () => {
     it('call get customer contact details', async () => {
       nock(CUSTOMERS_MOCK_URL)
         .get(CUSTOMERS_GET_CUSTOMER_CONTACT_URL)
-        .reply(200, PAYLOAD_GET_CUSTOMER_CONTACT);
+        .reply(200, RESPONSE_CUSTOMER_CONTACT);
 
       const result = await client.getCustomerContact('REF', 'REF');
 
       expect(result).to.be.instanceof(GetResult);
-      expect(result.toJSON()).to.eql(PAYLOAD_GET_CUSTOMER_CONTACT);
+      expect(result.toJSON()).to.eql(RESPONSE_CUSTOMER_CONTACT);
     });
   });
 
@@ -220,16 +220,16 @@ describe('CustomersClients', () => {
     it('call patch to update customer contact', async () => {
       nock(CUSTOMERS_MOCK_URL)
         .patch(CUSTOMERS_GET_CUSTOMER_CONTACT_URL)
-        .reply(200, PAYLOAD_POST_CUSTOMER_CONTACT);
+        .reply(200, RESPONSE_CUSTOMER_CONTACT);
 
       const result = await client.patchCustomerContact(
         'REF',
         'REF',
-        PAYLOAD_POST_CUSTOMER_CONTACT[GetResultFields.COLUMN_DATA],
+        PAYLOAD_CUSTOMER_CONTACT,
       );
 
       expect(result).to.be.instanceof(GetResult);
-      expect(result.toJSON()).to.eql(PAYLOAD_POST_CUSTOMER_CONTACT);
+      expect(result.toJSON()).to.eql(RESPONSE_CUSTOMER_CONTACT);
     });
   });
 
