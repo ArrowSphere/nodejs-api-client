@@ -1,15 +1,19 @@
 import {
+  AdditionalExtraInformationFields,
   CompanyFields,
   ContactFields,
-  CustomerFields,
   CustomerContactFields,
+  CustomerContactPayloadFields,
+  CustomerContactType,
+  CustomerFields,
   DataCustomersFields,
   DataInvitationFields,
   DetailsFields,
+  GetData,
   GetResultFields,
   InvitationContactFields,
   PaginationFields,
-  AdditionalExtraInformationFields,
+  PostCustomerContactPayload,
   PostCustomerInvitation,
   PostCustomerInvitationFields,
 } from '../../../src';
@@ -171,24 +175,22 @@ export const PAYLOAD_GET_CUSTOMER_CONTACT_LIST = {
   ],
 };
 
-export const PAYLOAD_POST_CUSTOMER_CONTACT = {
-  [GetResultFields.COLUMN_STATUS]: 200,
-  [GetResultFields.COLUMN_DATA]: {
-    [CustomerContactFields.COLUMN_FIRST_NAME]: 'firstName',
-    [CustomerContactFields.COLUMN_LAST_NAME]: 'lastName',
-    [CustomerContactFields.COLUMN_EMAIL]: 'email',
-    [CustomerContactFields.COLUMN_PHONE]: 'phone',
-    [CustomerContactFields.COLUMN_USERNAME]: 'username',
-    [CustomerContactFields.COLUMN_TYPE]: 'type',
-    [CustomerContactFields.COLUMN_ROLE]: 'role',
-    [CustomerContactFields.COLUMN_ORGANIZATION_UNITS]: [],
-  },
+export const PAYLOAD_CUSTOMER_CONTACT: PostCustomerContactPayload = {
+  [CustomerContactPayloadFields.COLUMN_FIRST_NAME]: 'firstName',
+  [CustomerContactPayloadFields.COLUMN_LAST_NAME]: 'lastName',
+  [CustomerContactPayloadFields.COLUMN_EMAIL]: 'email',
+  [CustomerContactPayloadFields.COLUMN_PHONE]: 'phone',
+  [CustomerContactPayloadFields.COLUMN_USERNAME]: 'username',
+  [CustomerContactPayloadFields.COLUMN_TYPE]: 'type',
+  [CustomerContactPayloadFields.COLUMN_ROLE]: 'role',
+  [CustomerContactPayloadFields.COLUMN_ORGANIZATION_UNIT_ID]: 1,
+  [CustomerContactPayloadFields.COLUMN_ORGANIZATION_UNIT_IDS]: [123456, 789101],
 };
 
-export const PAYLOAD_GET_CUSTOMER_CONTACT = {
+export const RESPONSE_CUSTOMER_CONTACT: GetData<CustomerContactType> = {
   [GetResultFields.COLUMN_STATUS]: 200,
   [GetResultFields.COLUMN_DATA]: {
-    [CustomerContactFields.COLUMN_REFERENCE]: 'REF',
+    [CustomerContactFields.COLUMN_REFERENCE]: 'REF123456',
     [CustomerContactFields.COLUMN_FIRST_NAME]: 'firstName',
     [CustomerContactFields.COLUMN_LAST_NAME]: 'lastName',
     [CustomerContactFields.COLUMN_EMAIL]: 'email',
@@ -197,14 +199,11 @@ export const PAYLOAD_GET_CUSTOMER_CONTACT = {
     [CustomerContactFields.COLUMN_TYPE]: 'type',
     [CustomerContactFields.COLUMN_ROLE]: 'role',
     [CustomerContactFields.COLUMN_IS_ACTIVE]: true,
-    [CustomerContactFields.COLUMN_XCP_INVITATION]: {
-      [CustomerContactXcpInvitationFields.COLUMN_POLICY]: 'policy_admin',
-    },
-    [CustomerContactFields.COLUMN_ORGANIZATION_UNIT_ID]: 42,
+    [CustomerContactFields.COLUMN_ORGANIZATION_UNIT_ID]: 1,
     [CustomerContactFields.COLUMN_ORGANIZATION_UNITS]: [
       {
         [CustomerContactOrganizationUnitFields.COLUMN_ID]: 1,
-        [CustomerContactOrganizationUnitFields.COLUMN_NAME]: 'OU nama 1',
+        [CustomerContactOrganizationUnitFields.COLUMN_NAME]: 'OU name 1',
       },
       {
         [CustomerContactOrganizationUnitFields.COLUMN_ID]: 2,

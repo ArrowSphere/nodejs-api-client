@@ -3,32 +3,32 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.105.0] - 2024.04.03
+
+### Added
+- [Customers Contact] add field `organizationUnitIds` in customer contact payload
+
 ## [3.104.0] - 2024.03.25
 
 ### Added
-
-- [licenses] add endpoints to save special bid and rewrite rate hostory
+- [licenses] add endpoints to save special bid and rewrite rate history
 
 ## [3.103.0] - 2024.03.22
 
 ### Added
-
 - [campaign] add downloadUrls field on campaign
 
 ## [3.101.0] - 2024.03.19
 
 ### Added
-
 - [customer/contact] add organization object in customer contact payload
 
 ### Updated
-
 - Add sommes configs for IDE
 
 ## [3.101.0] - 2024.03.19
 
 ### Added
-
 - [licenses] add new field configs and warnings
 - [licenses] add new endpoint to get daily consumption predictions
 
@@ -38,7 +38,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [3.100.0] - 2024.02.27
 
 ### Added
-
 - [consumption] add endpoint to get and update budget settings
 - [graphql-api] add license budget
 - [licenses] add new field vendor_code 
@@ -46,10 +45,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [3.99.0] - 2024.02.20
 
 ### Added
-
 - [billing] add generate billing export async
 
 ## [3.98.0] - 2024-02-14
+
 ### Added
 - [Well Architected] Add the Reports to the different schema
 
@@ -57,7 +56,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Updated
 - [licenses] update filters and keywords for licenses
-
 
 ## [3.96.0] - 2024.02.06
 
