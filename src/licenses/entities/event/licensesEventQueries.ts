@@ -70,6 +70,13 @@ export enum LicensesEventInputFiltersField {
   OPERATOR = 'operator',
 }
 
+export enum FieldType {
+  NUMBER = 'number',
+  BOOLEAN = 'boolean',
+  TEXT = 'text',
+  DATE = 'date',
+}
+
 export type LicensesEventInputFiltersType = {
   [LicensesEventInputFiltersField.NAMES]?: string;
   [LicensesEventInputFiltersField.VALUES]?: string | string[];
@@ -80,12 +87,14 @@ export enum LicensesEventInputKeywordByFieldsField {
   NAME = 'name',
   VALUES = 'values',
   OPERATOR = 'operator',
+  FIELD_TYPE = 'fieldType',
 }
 
 export type LicensesEventInputKeywordByFieldsType = {
   [LicensesEventInputKeywordByFieldsField.NAME]: string;
   [LicensesEventInputKeywordByFieldsField.VALUES]: string[];
   [LicensesEventInputKeywordByFieldsField.OPERATOR]?: string;
+  [LicensesEventInputKeywordByFieldsField.FIELD_TYPE]?: FieldType;
 };
 
 export enum LicensesEvenInputSearchBodyField {
