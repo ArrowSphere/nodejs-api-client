@@ -78,6 +78,7 @@ import {
   EndCustomerOrganizationUnitSortParameters,
 } from './entities/endCustomerOrganizationUnit/endCustomerOrganizationUnitFindResult';
 import { ConsumptionDailyPrediction } from '../consumption';
+import { GetSchedulesTasksResult } from './entities/schedule/getSchedulesTasksResult';
 
 /**
  * Parameters passable to the request for refining search.
@@ -903,6 +904,15 @@ export class LicensesClient extends AbstractRestfulClient {
       ScheduleTasksResult,
       await this.post(payload, parameters),
     );
+  }
+
+  public async getSchedulesTasks(
+    licenseReference: string,
+    parameters: Parameters = {},
+  ): Promise<GetResult<GetSchedulesTasksResult>> {
+    this.path = `/${licenseReference}${this.SCHEDULE_TASKS_PATH}`;
+
+    return new GetResult(GetSchedulesTasksResult, await this.get(parameters));
   }
 
   public async getLicenseDailyPredictions(
