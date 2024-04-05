@@ -24,6 +24,8 @@ import {
   RelationGetDataFields,
   ConfigFindResultFields,
   WarningFindResultFields,
+  GetSchedulesTasksResultData,
+  GetSchedulesTasksResultFields,
 } from '../../src';
 import { ExtraDataFields } from '../../src/licenses/entities/getLicense/extraDataGetResult';
 import { CredentialsResultType } from '../../src/licenses/entities/license/credentialsResult';
@@ -342,4 +344,20 @@ export const PAYLOAD_LICENSE_POST_SCHEDULE_TASKS: GetData<ScheduleTaskData> = {
   data: {
     scheduleTaskId: 123456,
   },
+};
+
+export const PAYLOAD_GET_SCHEDULES_TASKS: GetSchedulesTasksResultData = {
+  [GetSchedulesTasksResultFields.COLUMN_SCHEDULES_TASKS]: [
+    {
+      createdAt: '2024-04-07T20:26:08+00:00',
+      executionDate: '2025-04-06T20:23:52+00:00',
+      periodicity: 720,
+      scheduleTaskId: 612386,
+      seats: 2,
+      status: 'In Progress',
+      statusCode: '66',
+      term: 8640,
+      updatedAt: '2024-04-07T20:27:09+00:00',
+    },
+  ],
 };
