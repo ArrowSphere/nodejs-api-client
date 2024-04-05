@@ -78,6 +78,10 @@ import {
   EndCustomerOrganizationUnitSortParameters,
 } from './entities/endCustomerOrganizationUnit/endCustomerOrganizationUnitFindResult';
 import { ConsumptionDailyPrediction } from '../consumption';
+import {
+  GetSchedulesTasksResult,
+  GetSchedulesTasksResultFields,
+} from './entities/schedule/getSchedulesTasksResult';
 
 /**
  * Parameters passable to the request for refining search.
@@ -903,6 +907,23 @@ export class LicensesClient extends AbstractRestfulClient {
       ScheduleTasksResult,
       await this.post(payload, parameters),
     );
+  }
+
+  public async getSchedulesTasks(
+    licenseReference: string,
+    parameters: Parameters = {},
+  ): Promise<GetResult<GetSchedulesTasksResult>> {
+    this.path = `/${licenseReference}${this.SCHEDULE_TASKS_PATH}`;
+
+    const response = await this.get(parameters);
+
+    const column: string = GetSchedulesTasksResultFields.COLUMN_SCHEDULED_TASKS;
+    //A workaround, the public api endpoint is not returning "data" in the payload
+    response[GetResultFields.COLUMN_DATA] = {
+      [column]: column in response ? response[column] : [],
+    };
+
+    return new GetResult(GetSchedulesTasksResult, response);
   }
 
   public async getLicenseDailyPredictions(
