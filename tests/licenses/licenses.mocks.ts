@@ -29,10 +29,14 @@ import {
   GetScheduleTaskResultData,
   GetScheduledTasksResultData,
   GetScheduledTasksResultFields,
+  GetScheduleTaskResultFields,
+  GetResultFields,
+  UpdateScheduledTaskRequestType,
 } from '../../src';
 import { ExtraDataFields } from '../../src/licenses/entities/getLicense/extraDataGetResult';
 import { CredentialsResultType } from '../../src/licenses/entities/license/credentialsResult';
 import { RatesGetDataFields } from '../../src/licenses/entities/getLicense/ratesGetResult';
+import { constants } from 'http2';
 
 export const PAYLOAD_SCHEMA_LICENSE: GetData<GetLicenseResultData> = {
   status: 200,
@@ -369,4 +373,28 @@ export const PAYLOAD_GET_SCHEDULES_TASKS: GetSchedulesTasksResultData = {
 
 export const PAYLOAD_GET_SCHEDULED_TASKS: GetScheduledTasksResultData = {
   [GetScheduledTasksResultFields.COLUMN_SCHEDULED_TASKS]: PAYLOAD_SCHEDULES_TASKS,
+};
+
+export const PAYLOAD_LICENSE_PATCH_SCHEDULED_TASK: UpdateScheduledTaskRequestType = {
+  [GetScheduleTaskResultFields.COLUMN_PERIODICITY]: 720,
+  [GetScheduleTaskResultFields.COLUMN_SEATS]: 2,
+  [GetScheduleTaskResultFields.COLUMN_TERM]: 8640,
+};
+
+export const LICENSE_SCHEDULED_TASK_GET_RESPONSE: GetData<GetScheduleTaskResultData> = {
+  [GetResultFields.COLUMN_STATUS]: constants.HTTP_STATUS_OK,
+  [GetResultFields.COLUMN_DATA]: {
+    [GetScheduleTaskResultFields.COLUMN_CREATED_AT]:
+      '2024-04-07T20:26:08+00:00',
+    [GetScheduleTaskResultFields.COLUMN_EXECUTION_DATE]:
+      '2025-04-06T20:23:52+00:00',
+    [GetScheduleTaskResultFields.COLUMN_PERIODICITY]: 720,
+    [GetScheduleTaskResultFields.COLUMN_SCHEDULE_TASK_ID]: 612386,
+    [GetScheduleTaskResultFields.COLUMN_SEATS]: 2,
+    [GetScheduleTaskResultFields.COLUMN_STATUS]: 'In Progress',
+    [GetScheduleTaskResultFields.COLUMN_STATUS_CODE]: '66',
+    [GetScheduleTaskResultFields.COLUMN_TERM]: 8640,
+    [GetScheduleTaskResultFields.COLUMN_UPDATED_AT]:
+      '2024-04-07T20:27:09+00:00',
+  },
 };
