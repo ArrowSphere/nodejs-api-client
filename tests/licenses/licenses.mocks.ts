@@ -26,6 +26,7 @@ import {
   WarningFindResultFields,
   GetSchedulesTasksResultData,
   GetSchedulesTasksResultFields,
+  GetScheduleTaskResultData,
 } from '../../src';
 import { ExtraDataFields } from '../../src/licenses/entities/getLicense/extraDataGetResult';
 import { CredentialsResultType } from '../../src/licenses/entities/license/credentialsResult';
@@ -361,3 +362,8 @@ export const PAYLOAD_GET_SCHEDULES_TASKS: GetSchedulesTasksResultData = {
     },
   ],
 };
+
+export const PAYLOAD_SCHEDULES_TASKS: GetScheduleTaskResultData[] =
+  PAYLOAD_GET_SCHEDULES_TASKS[
+    GetSchedulesTasksResultFields.COLUMN_SCHEDULES_TASKS
+  ];

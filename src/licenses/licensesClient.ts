@@ -919,12 +919,18 @@ export class LicensesClient extends AbstractRestfulClient {
 
     //A workaround, the public api endpoint is not returning "schedulesTasks" in the payload
     //@todo: remove this workaround when the public api endpoint is fixed
-    response[GetResultFields.COLUMN_DATA] = {
-      [GetSchedulesTasksResultFields.COLUMN_SCHEDULES_TASKS]:
-        GetResultFields.COLUMN_DATA in response
-          ? response[GetResultFields.COLUMN_DATA]
-          : [],
-    };
+    if (
+      !response[GetResultFields.COLUMN_DATA]?.[
+        GetSchedulesTasksResultFields.COLUMN_SCHEDULES_TASKS
+      ]
+    ) {
+      response[GetResultFields.COLUMN_DATA] = {
+        [GetSchedulesTasksResultFields.COLUMN_SCHEDULES_TASKS]:
+          GetResultFields.COLUMN_DATA in response
+            ? response[GetResultFields.COLUMN_DATA]
+            : [],
+      };
+    }
 
     return new GetResult(GetSchedulesTasksResult, response);
   }
