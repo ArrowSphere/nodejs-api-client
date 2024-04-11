@@ -54,13 +54,16 @@ import {
   RewriteRateHistoryInputType,
   CompanyTypeEnum,
   GetSchedulesTasksResult,
+  GetScheduleTaskResult,
 } from '../../src';
 import {
   PAYLOAD_GET_SCHEDULES_TASKS,
+  LICENSE_SCHEDULED_TASKS_GET_RESPONSE,
   PAYLOAD_LICENSE_CONVERSION_SKU,
   PAYLOAD_LICENSE_EXISTING_CONVERSION_SKU,
   PAYLOAD_LICENSE_GET_CREDENTIALS,
   PAYLOAD_LICENSE_HISTORY,
+  PAYLOAD_LICENSE_PATCH_SCHEDULED_TASKS,
   PAYLOAD_LICENSE_POST_SCHEDULE_TASKS,
   PAYLOAD_SCHEDULES_TASKS,
   PAYLOAD_SCHEMA_LICENSE,
@@ -108,6 +111,8 @@ export const LICENSE_MOCK_URL_GET_CREDENTIALS = '/licenses/12343/credentials';
 export const LICENSE_MOCK_URL_PRICING_RATE = '/licenses/XSP12343/pricing-rate';
 export const LICENSE_MOCK_URL_SCHEDULE_TASKS =
   '/licenses/XSP12343/scheduledTasks';
+export const LICENSE_MOCK_URL_SCHEDULED_TASKS =
+  '/licenses/XSP12343/scheduledTasks/12345';
 export const LICENSE_MOCK_URL_BULK = '/licenses/bulk';
 
 /**
@@ -1236,6 +1241,58 @@ describe('LicensesClient', () => {
       expect(response.toJSON().data).to.be.deep.equals(
         PAYLOAD_GET_SCHEDULES_TASKS,
       );
+    });
+  });
+
+  describe('updateScheduledTasks', () => {
+    const licensesClient = new PublicApiClient()
+      .getLicensesClient()
+      .setUrl(LICENSES_MOCK_URL);
+    it('call the patch method', async function () {
+      nock(LICENSES_MOCK_URL)
+        .patch(LICENSE_MOCK_URL_SCHEDULED_TASKS)
+        .reply(constants.HTTP_STATUS_NO_CONTENT);
+
+      await licensesClient.updateScheduledTasks(
+        'XSP12343',
+        12345,
+        PAYLOAD_LICENSE_PATCH_SCHEDULED_TASKS,
+      );
+      expect(nock.isDone()).to.be.true;
+    });
+  });
+
+  describe('getScheduledTasks', () => {
+    const licensesClient = new PublicApiClient()
+      .getLicensesClient()
+      .setUrl(LICENSES_MOCK_URL);
+    it('call the get method', async function () {
+      nock(LICENSES_MOCK_URL)
+        .get(LICENSE_MOCK_URL_SCHEDULED_TASKS)
+        .reply(constants.HTTP_STATUS_OK, LICENSE_SCHEDULED_TASKS_GET_RESPONSE);
+
+      const response: GetResult<GetScheduleTaskResult> = await licensesClient.getScheduledTasks(
+        'XSP12343',
+        12345,
+      );
+      expect(response).to.be.instanceof(GetResult);
+      expect(response.toJSON()).to.be.deep.equal(
+        LICENSE_SCHEDULED_TASKS_GET_RESPONSE,
+      );
+    });
+  });
+
+  describe('deleteScheduledTasks', () => {
+    const licensesClient = new PublicApiClient()
+      .getLicensesClient()
+      .setUrl(LICENSES_MOCK_URL);
+    it('call the delete method', async function () {
+      nock(LICENSES_MOCK_URL)
+        .delete(LICENSE_MOCK_URL_SCHEDULED_TASKS)
+        .reply(constants.HTTP_STATUS_NO_CONTENT);
+
+      await licensesClient.deleteScheduledTasks('XSP12343', 12345);
+      expect(nock.isDone()).to.be.true;
     });
   });
 

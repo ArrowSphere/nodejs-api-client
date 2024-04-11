@@ -82,6 +82,7 @@ import {
   GetSchedulesTasksResult,
   GetSchedulesTasksResultFields,
 } from './entities/schedule/getSchedulesTasksResult';
+import { GetScheduleTaskResult } from './entities/schedule/getScheduleTaskResult';
 
 /**
  * Parameters passable to the request for refining search.
@@ -398,6 +399,8 @@ export type ScheduleTasks = {
   seats: number;
   executionDate: string;
 };
+
+export type ScheduledTasksRequestType = Omit<ScheduleTasks, 'executionDate'>;
 
 export type LicensePricingRate = {
   rateType: RateTypeEnum;
@@ -933,6 +936,37 @@ export class LicensesClient extends AbstractRestfulClient {
     }
 
     return new GetResult(GetSchedulesTasksResult, response);
+  }
+
+  public async updateScheduledTasks(
+    licenseReference: string,
+    scheduledTaskId: number,
+    payload: ScheduledTasksRequestType,
+    parameters: Parameters = {},
+  ): Promise<void> {
+    this.path = `/${licenseReference}${this.SCHEDULE_TASKS_PATH}/${scheduledTaskId}`;
+
+    return await this.patch(payload, parameters);
+  }
+
+  public async getScheduledTasks(
+    licenseReference: string,
+    scheduledTaskId: number,
+    parameters: Parameters = {},
+  ): Promise<GetResult<GetScheduleTaskResult>> {
+    this.path = `/${licenseReference}${this.SCHEDULE_TASKS_PATH}/${scheduledTaskId}`;
+
+    return new GetResult(GetScheduleTaskResult, await this.get(parameters));
+  }
+
+  public async deleteScheduledTasks(
+    licenseReference: string,
+    scheduledTaskId: number,
+    parameters: Parameters = {},
+  ): Promise<void> {
+    this.path = `/${licenseReference}${this.SCHEDULE_TASKS_PATH}/${scheduledTaskId}`;
+
+    return this.delete(parameters);
   }
 
   public async getLicenseDailyPredictions(
