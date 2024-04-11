@@ -3,6 +3,11 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.109.0] - 2024.04.15
+
+### Added
+- [License schedules tasks] Update/Get/Delete scheduled tasks
+
 ## [3.108.1] - 2024.04.12
 
 ### Fixed
