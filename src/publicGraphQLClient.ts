@@ -4,6 +4,7 @@ import { SecurityScoreGraphQLClient } from './securityScore';
 import { GraphqlApiClient } from './graphqlApi';
 import { WellArchitectedGraphQLClient } from './wellArchitected';
 import { LicensesEventClient } from './licenses/licensesEventClient';
+import { UserGraphqlClient } from './user';
 
 export class PublicGraphQLClient extends AbstractGraphQLClient {
   public getCatalogGraphQLClient(): CatalogGraphQLClient {
@@ -36,6 +37,13 @@ export class PublicGraphQLClient extends AbstractGraphQLClient {
 
   public getLicensesEventClient(): LicensesEventClient {
     const client = new LicensesEventClient();
+    this.applyConfig(client);
+
+    return client;
+  }
+
+  public getUserGraphqlApiClient(): UserGraphqlClient {
+    const client = new UserGraphqlClient();
     this.applyConfig(client);
 
     return client;
