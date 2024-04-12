@@ -37,6 +37,7 @@ export * from './entities/offer/priceband/priceBandPriceFindResult';
 export * from './entities/offer/priceband/saleConstraintsFindResult';
 export * from './entities/offer/priceband/identifiers/arrowsphereFindResult';
 export * from './entities/schedule/getScheduleTaskResult';
+export * from './entities/schedule/getScheduledTasksResult';
 export * from './entities/schedule/getSchedulesTasksResult';
 export * from './entities/schedule/scheduleTasksResult';
 export * from './entities/pricingRate/getPricingRateResult';
