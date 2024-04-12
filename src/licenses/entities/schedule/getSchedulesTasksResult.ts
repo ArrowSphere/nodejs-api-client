@@ -12,6 +12,9 @@ export type GetSchedulesTasksResultData = {
   [GetSchedulesTasksResultFields.COLUMN_SCHEDULES_TASKS]: GetScheduleTaskResultData[];
 };
 
+/**
+ * @deprecated Use GetScheduledTasksResult instead
+ */
 export class GetSchedulesTasksResult extends AbstractEntity<GetSchedulesTasksResultData> {
   readonly #scheduledTasks: GetScheduleTaskResult[];
 

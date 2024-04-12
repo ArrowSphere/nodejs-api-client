@@ -82,6 +82,10 @@ import {
   GetSchedulesTasksResult,
   GetSchedulesTasksResultFields,
 } from './entities/schedule/getSchedulesTasksResult';
+import {
+  GetScheduledTasksResult,
+  GetScheduledTasksResultFields,
+} from './entities/schedule/getScheduledTasksResult';
 
 /**
  * Parameters passable to the request for refining search.
@@ -909,6 +913,9 @@ export class LicensesClient extends AbstractRestfulClient {
     );
   }
 
+  /**
+   * @deprecated Use getScheduledTasks instead
+   */
   public async getSchedulesTasks(
     licenseReference: string,
     parameters: Parameters = {},
@@ -917,22 +924,38 @@ export class LicensesClient extends AbstractRestfulClient {
 
     const response = await this.get(parameters);
 
-    //A workaround, the public api endpoint is not returning "schedulesTasks" in the payload
-    //@todo: remove this workaround when the public api endpoint is fixed
+    //A workaround, the public api endpoint now is returning "scheduledTasks" instead of "schedulesTasks"
+    //@todo: remove this workaround when the xsp-web is ready
     if (
       !response[GetResultFields.COLUMN_DATA]?.[
         GetSchedulesTasksResultFields.COLUMN_SCHEDULES_TASKS
+      ] &&
+      response[GetResultFields.COLUMN_DATA]?.[
+        GetScheduledTasksResultFields.COLUMN_SCHEDULED_TASKS
       ]
     ) {
       response[GetResultFields.COLUMN_DATA] = {
         [GetSchedulesTasksResultFields.COLUMN_SCHEDULES_TASKS]:
           GetResultFields.COLUMN_DATA in response
-            ? response[GetResultFields.COLUMN_DATA]
+            ? response[GetResultFields.COLUMN_DATA][
+                GetScheduledTasksResultFields.COLUMN_SCHEDULED_TASKS
+              ]
             : [],
       };
     }
 
     return new GetResult(GetSchedulesTasksResult, response);
+  }
+
+  public async getScheduledTasks(
+    licenseReference: string,
+    parameters: Parameters = {},
+  ): Promise<GetResult<GetScheduledTasksResult>> {
+    this.path = `/${licenseReference}${this.SCHEDULE_TASKS_PATH}`;
+
+    const response = await this.get(parameters);
+
+    return new GetResult(GetScheduledTasksResult, response);
   }
 
   public async getLicenseDailyPredictions(
