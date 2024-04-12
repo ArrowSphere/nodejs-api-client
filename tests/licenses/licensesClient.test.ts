@@ -54,15 +54,16 @@ import {
   RewriteRateHistoryInputType,
   CompanyTypeEnum,
   GetSchedulesTasksResult,
+  GetScheduledTasksResult,
 } from '../../src';
 import {
+  PAYLOAD_GET_SCHEDULED_TASKS,
   PAYLOAD_GET_SCHEDULES_TASKS,
   PAYLOAD_LICENSE_CONVERSION_SKU,
   PAYLOAD_LICENSE_EXISTING_CONVERSION_SKU,
   PAYLOAD_LICENSE_GET_CREDENTIALS,
   PAYLOAD_LICENSE_HISTORY,
   PAYLOAD_LICENSE_POST_SCHEDULE_TASKS,
-  PAYLOAD_SCHEDULES_TASKS,
   PAYLOAD_SCHEMA_LICENSE,
   PAYLOAD_SCHEMA_LICENSE_WITHOUT_OPTIONAL_FIELDS,
 } from './licenses.mocks';
@@ -1198,27 +1199,7 @@ describe('LicensesClient', () => {
       .getLicensesClient()
       .setUrl(LICENSES_MOCK_URL);
 
-    it('should call getSchedulesTasks method (v1 without "schedulesTasks")', async () => {
-      const licenseReference = 'XSP123456';
-
-      nock(LICENSES_MOCK_URL)
-        .get(`/licenses/${licenseReference}/scheduledTasks`)
-        .reply(constants.HTTP_STATUS_OK, {
-          status: 200,
-          data: PAYLOAD_SCHEDULES_TASKS,
-        });
-
-      const response: GetResult<GetSchedulesTasksResult> = await licensesClient.getSchedulesTasks(
-        licenseReference,
-      );
-
-      expect(response).to.be.instanceof(GetResult);
-      expect(response.toJSON().data).to.be.deep.equals(
-        PAYLOAD_GET_SCHEDULES_TASKS,
-      );
-    });
-
-    it('should call getSchedulesTasks method (v2 with "schedulesTasks")', async () => {
+    it('should call getSchedulesTasks method (v1 with "schedulesTasks")', async () => {
       const licenseReference = 'XSP123456';
 
       nock(LICENSES_MOCK_URL)
@@ -1235,6 +1216,52 @@ describe('LicensesClient', () => {
       expect(response).to.be.instanceof(GetResult);
       expect(response.toJSON().data).to.be.deep.equals(
         PAYLOAD_GET_SCHEDULES_TASKS,
+      );
+    });
+
+    it('should call getSchedulesTasks method (v2 with "scheduledTasks")', async () => {
+      const licenseReference = 'XSP123456';
+
+      nock(LICENSES_MOCK_URL)
+        .get(`/licenses/${licenseReference}/scheduledTasks`)
+        .reply(constants.HTTP_STATUS_OK, {
+          status: 200,
+          data: PAYLOAD_GET_SCHEDULED_TASKS,
+        });
+
+      const response: GetResult<GetSchedulesTasksResult> = await licensesClient.getSchedulesTasks(
+        licenseReference,
+      );
+
+      expect(response).to.be.instanceof(GetResult);
+      expect(response.toJSON().data).to.be.deep.equals(
+        PAYLOAD_GET_SCHEDULES_TASKS,
+      );
+    });
+  });
+
+  describe('getScheduledTasks', () => {
+    const licensesClient = new PublicApiClient()
+      .getLicensesClient()
+      .setUrl(LICENSES_MOCK_URL);
+
+    it('should call getScheduledTasks method', async () => {
+      const licenseReference = 'XSP123456';
+
+      nock(LICENSES_MOCK_URL)
+        .get(`/licenses/${licenseReference}/scheduledTasks`)
+        .reply(constants.HTTP_STATUS_OK, {
+          status: 200,
+          data: PAYLOAD_GET_SCHEDULED_TASKS,
+        });
+
+      const response: GetResult<GetScheduledTasksResult> = await licensesClient.getScheduledTasks(
+        licenseReference,
+      );
+
+      expect(response).to.be.instanceof(GetResult);
+      expect(response.toJSON().data).to.be.deep.equals(
+        PAYLOAD_GET_SCHEDULED_TASKS,
       );
     });
   });
