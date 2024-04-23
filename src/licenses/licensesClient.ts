@@ -587,6 +587,10 @@ export class LicensesClient extends AbstractRestfulClient {
       rawLicensePayload.keywords = {
         ...this.createKeywords(postData.keywords, 'license'),
         ...this.createKeywords(postData.keywords, 'offer'),
+        ...this.createKeywords(
+          postData.keywords,
+          'endCustomerOrganizationUnit',
+        ),
       };
     }
 
