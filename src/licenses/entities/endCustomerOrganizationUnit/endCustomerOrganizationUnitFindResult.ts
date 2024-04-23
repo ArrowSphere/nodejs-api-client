@@ -1,5 +1,9 @@
 import { AbstractEntity } from '../../../abstractEntity';
-import { FiltersParameters, SortParameters } from '../../licensesClient';
+import {
+  DataKeywords,
+  FiltersParameters,
+  SortParameters,
+} from '../../licensesClient';
 
 export enum EndCustomerOrganizationUnitFindResultFields {
   COLUMN_ORGANIZATION_UNIT_REF = 'organizationUnitRef',
@@ -11,6 +15,12 @@ export type EndCustomerOrganizationUnitFindResultType = {
   [EndCustomerOrganizationUnitFindResultFields.COLUMN_ORGANIZATION_UNIT_REF]: string;
   [EndCustomerOrganizationUnitFindResultFields.COLUMN_NAME]: string;
   [EndCustomerOrganizationUnitFindResultFields.COLUMN_LAST_UPDATE]: string;
+};
+
+export type EndCustomerOrganisationUnitDataKeywords = {
+  [EndCustomerOrganizationUnitFindResultFields.COLUMN_ORGANIZATION_UNIT_REF]?: DataKeywords;
+  [EndCustomerOrganizationUnitFindResultFields.COLUMN_NAME]?: DataKeywords;
+  [EndCustomerOrganizationUnitFindResultFields.COLUMN_LAST_UPDATE]?: DataKeywords;
 };
 
 export type EndCustomerOrganizationUnitSortParameters = {
