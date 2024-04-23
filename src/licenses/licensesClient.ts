@@ -4,7 +4,9 @@
 import {
   AbstractRestfulClient,
   ExtraInformationType,
+  FileUploadKeys,
   Parameters,
+  PayloadWithFile,
 } from '../abstractRestfulClient';
 import { FindConfig, FindData, FindResult } from './entities/findResult';
 import {
@@ -692,14 +694,14 @@ export class LicensesClient extends AbstractRestfulClient {
           bulkData.specialRateEffectiveApplicationDate,
       };
       postData = postSetRateData;
-    }
-    /*else if (bulkData.actionType == ActionTypes.UPLOAD_CHANGES) {
-      const postUploadChangesData: BulkUploadChangesBody = {
-        ...postData,
-        [BulkBodyFields.FILE]: bulkData.file,
+    } else if (bulkData.actionType == ActionTypes.UPLOAD_CHANGES) {
+      const payload: PayloadWithFile = {
+        [FileUploadKeys.Fields]: postData,
+        [FileUploadKeys.File]: bulkData[BulkBodyFields.FILE],
       };
-      postData = postUploadChangesData;
-    }*/
+
+      return await this.postFile(payload);
+    }
 
     return await this.post(postData);
   }

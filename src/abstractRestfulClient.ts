@@ -8,6 +8,7 @@ import {
   Headers,
   HttpClientSecurity,
 } from './AbstractHttpClient';
+import { File } from 'node:buffer';
 
 /**
  * Lists of available query parameters for the API call
@@ -44,7 +45,16 @@ export type Parameters = Record<
   string | string[] | number | number[] | boolean | null | undefined
 >;
 
+export enum FileUploadKeys {
+  Fields = 'fields',
+  File = 'file',
+}
+
 export type Payload = Record<string, unknown> | Array<Payload>;
+export interface PayloadWithFile {
+  [FileUploadKeys.Fields]?: Record<string, unknown>;
+  [FileUploadKeys.File]?: File;
+}
 
 export type Options = {
   isAdmin?: boolean;
@@ -274,7 +284,7 @@ export abstract class AbstractRestfulClient extends AbstractHttpClient {
   }
 
   /**
-   * Sends a POST request and returns the response
+   * Sends a POST request including file with header form/multipart and returns the response
    * @returns Promise\<AxiosResponse['data']\>
    * @param payload - Payload to be sent in the POST body
    * @param parameters - Query parameters to be sent in the request
@@ -294,6 +304,59 @@ export abstract class AbstractRestfulClient extends AbstractHttpClient {
 
     try {
       const response = await this.client.post(url, payload, config);
+      return this.getResponse(response, options);
+    } catch (error) {
+      if (error instanceof PublicApiClientException) {
+        const { mustRetry } = await this.handleError(error);
+
+        if (mustRetry) {
+          const config: AxiosRequestConfig = {
+            headers: this.prepareHeaders(headers),
+          };
+          const response = await this.client.post(url, payload, config);
+          return this.getResponse(response, options);
+        }
+      }
+      throw error;
+    }
+  }
+  /**
+   * Sends a POST request and returns the response
+   * @returns Promise\<AxiosResponse['data']\>
+   * @param payload - Payload to be sent in the POST body
+   * @param parameters - Query parameters to be sent in the request
+   * @param headers - Headers to be sent in the request
+   * @param options - Options to send
+   */
+  protected async postFile(
+    payload: PayloadWithFile,
+    parameters: Parameters = {},
+    headers: Headers = {},
+    options: Options = {},
+  ): Promise<AxiosResponse['data']> {
+    if (!payload[FileUploadKeys.File]) {
+      throw new Error('File upload required');
+    }
+
+    // will force axios to append header 'multipart/form-data' and will attach a boundary automatically
+    headers['Content-Type'] = (undefined as unknown) as string;
+
+    const url: string = this.generateUrl(parameters, options);
+    const config: AxiosRequestConfig = {
+      headers: this.prepareHeaders(headers),
+    };
+
+    const formData: FormData = new FormData();
+    formData.append(FileUploadKeys.File, payload[FileUploadKeys.File]);
+    for (const [key, value] of Object.entries(
+      payload[FileUploadKeys.Fields] ?? {},
+    )) {
+      console.log(`${key}: ${value}`);
+      formData.set(key, value);
+    }
+
+    try {
+      const response = await this.client.post(url, formData, config);
       return this.getResponse(response, options);
     } catch (error) {
       if (error instanceof PublicApiClientException) {
