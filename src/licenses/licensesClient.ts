@@ -74,6 +74,7 @@ import {
   SpecialPriceRateActive,
 } from './types/bulkArguments';
 import {
+  EndCustomerOrganisationUnitDataKeywords,
   EndCustomerOrganizationUnitFiltersParameters,
   EndCustomerOrganizationUnitSortParameters,
 } from './entities/endCustomerOrganizationUnit/endCustomerOrganizationUnitFindResult';
@@ -249,6 +250,7 @@ export type DataKeywords = {
 export type LicenseKeywordsParameters = {
   license?: LicenceFindDataKeywords;
   offer?: OfferFindResultDataKeywords;
+  endCustomerOrganizationUnit?: EndCustomerOrganisationUnitDataKeywords;
 };
 
 export type LicenseRawKeywordsParametersLicence = {
@@ -587,6 +589,10 @@ export class LicensesClient extends AbstractRestfulClient {
       rawLicensePayload.keywords = {
         ...this.createKeywords(postData.keywords, 'license'),
         ...this.createKeywords(postData.keywords, 'offer'),
+        ...this.createKeywords(
+          postData.keywords,
+          'endCustomerOrganizationUnit',
+        ),
       };
     }
 
@@ -1072,13 +1078,12 @@ export class LicensesClient extends AbstractRestfulClient {
 
   private createKeywords(
     parameters: string | LicenseKeywordsParameters,
-    keyParent: string,
+    keyParent: KeyParent,
   ): LicenseKeywordsParameters {
     let appropriateParameters;
 
     if (typeof parameters === 'object') {
-      appropriateParameters =
-        keyParent === 'license' ? parameters.license : parameters.offer;
+      appropriateParameters = parameters[keyParent];
     } else {
       appropriateParameters = parameters;
     }
@@ -1108,7 +1113,7 @@ export class LicensesClient extends AbstractRestfulClient {
           } else {
             recursiveArr = this.createKeywords(
               val as string | LicenseKeywordsParameters,
-              newKey,
+              newKey as KeyParent,
             );
           }
 
