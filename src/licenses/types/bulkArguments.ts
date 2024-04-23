@@ -1,4 +1,5 @@
 import type { Except } from 'type-fest';
+import { File } from 'node:buffer';
 
 export enum ActionTypes {
   SET_RATE = 'setRate',
@@ -44,7 +45,7 @@ export type BulkBodyArgument = {
   [BulkBodyFields.SPECIAL_PRICE_RATE_TYPE]?: SpecialPriceRateTypes;
   [BulkBodyFields.SPECIAL_PRICE_RATE_VALUE]?: string;
   [BulkBodyFields.SPECIAL_RATE_EFFECTIVE_APPLICATION_DATE]?: SpecialRateEffectiveApplicationDate;
-  // [BulkBodyFields.FILE]?: File;
+  [BulkBodyFields.FILE]?: File;
 };
 
 export type BulkAutoRenewBody = Except<
@@ -63,6 +64,7 @@ export type BulkSetRateBody = Except<
 export type BulkUploadChangesBody = Except<
   BulkBodyArgument,
   BulkBodyFields.AUTO_RENEW_STATUS &
+    BulkBodyFields.FILE &
     BulkBodyFields.SPECIAL_PRICE_RATE_TYPE &
     BulkBodyFields.SPECIAL_PRICE_RATE_VALUE &
     BulkBodyFields.SPECIAL_RATE_EFFECTIVE_APPLICATION_DATE
