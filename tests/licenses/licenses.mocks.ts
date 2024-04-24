@@ -110,11 +110,13 @@ export const PAYLOAD_SCHEMA_LICENSE: GetData<GetLicenseResultData> = {
           [BuySellFields.COLUMN_BUY]: 2,
           [BuySellFields.COLUMN_SELL]: 3,
           [BuySellFields.COLUMN_LIST]: 3.5,
+          [BuySellFields.COLUMN_INIT]: 2.1,
         },
         [LicensePriceGetFields.COLUMN_TOTAL]: {
           [BuySellFields.COLUMN_BUY]: 2,
           [BuySellFields.COLUMN_SELL]: 3,
           [BuySellFields.COLUMN_LIST]: 3.5,
+          [BuySellFields.COLUMN_INIT]: 2.1,
         },
       },
       [LicenseGetFields.COLUMN_ARROW_SUB_CATEGORIES]: ['string'],
