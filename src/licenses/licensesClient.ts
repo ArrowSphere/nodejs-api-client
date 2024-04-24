@@ -81,14 +81,7 @@ import {
   EndCustomerOrganizationUnitSortParameters,
 } from './entities/endCustomerOrganizationUnit/endCustomerOrganizationUnitFindResult';
 import { ConsumptionDailyPrediction } from '../consumption';
-import {
-  GetSchedulesTasksResult,
-  GetSchedulesTasksResultFields,
-} from './entities/schedule/getSchedulesTasksResult';
-import {
-  GetScheduledTasksResult,
-  GetScheduledTasksResultFields,
-} from './entities/schedule/getScheduledTasksResult';
+import { GetScheduledTasksResult } from './entities/schedule/getScheduledTasksResult';
 import { GetScheduleTaskResult } from './entities/schedule/getScheduleTaskResult';
 
 /**
@@ -925,40 +918,6 @@ export class LicensesClient extends AbstractRestfulClient {
       ScheduleTasksResult,
       await this.post(payload, parameters),
     );
-  }
-
-  /**
-   * @deprecated Use getScheduledTasks instead
-   */
-  public async getSchedulesTasks(
-    licenseReference: string,
-    parameters: Parameters = {},
-  ): Promise<GetResult<GetSchedulesTasksResult>> {
-    this.path = `/${licenseReference}${this.SCHEDULE_TASKS_PATH}`;
-
-    const response = await this.get(parameters);
-
-    //A workaround, the public api endpoint now is returning "scheduledTasks" instead of "schedulesTasks"
-    //@todo: remove this workaround when the xsp-web is ready
-    if (
-      !response[GetResultFields.COLUMN_DATA]?.[
-        GetSchedulesTasksResultFields.COLUMN_SCHEDULES_TASKS
-      ] &&
-      response[GetResultFields.COLUMN_DATA]?.[
-        GetScheduledTasksResultFields.COLUMN_SCHEDULED_TASKS
-      ]
-    ) {
-      response[GetResultFields.COLUMN_DATA] = {
-        [GetSchedulesTasksResultFields.COLUMN_SCHEDULES_TASKS]:
-          GetResultFields.COLUMN_DATA in response
-            ? response[GetResultFields.COLUMN_DATA][
-                GetScheduledTasksResultFields.COLUMN_SCHEDULED_TASKS
-              ]
-            : [],
-      };
-    }
-
-    return new GetResult(GetSchedulesTasksResult, response);
   }
 
   public async getScheduledTasks(
