@@ -24,8 +24,6 @@ import {
   RelationGetDataFields,
   ConfigFindResultFields,
   WarningFindResultFields,
-  GetSchedulesTasksResultData,
-  GetSchedulesTasksResultFields,
   GetScheduleTaskResultData,
   GetScheduledTasksResultData,
   GetScheduledTasksResultFields,
@@ -368,10 +366,6 @@ const PAYLOAD_SCHEDULES_TASKS: GetScheduleTaskResultData[] = [
     updatedAt: '2024-04-07T20:27:09+00:00',
   },
 ];
-
-export const PAYLOAD_GET_SCHEDULES_TASKS: GetSchedulesTasksResultData = {
-  [GetSchedulesTasksResultFields.COLUMN_SCHEDULES_TASKS]: PAYLOAD_SCHEDULES_TASKS,
-};
 
 export const PAYLOAD_GET_SCHEDULED_TASKS: GetScheduledTasksResultData = {
   [GetScheduledTasksResultFields.COLUMN_SCHEDULED_TASKS]: PAYLOAD_SCHEDULES_TASKS,
