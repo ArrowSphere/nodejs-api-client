@@ -408,10 +408,11 @@ export type ScheduleTasks = {
   executionDate: string;
 };
 
-export type UpdateScheduledTaskRequestType = Omit<
-  ScheduleTasks,
-  'executionDate'
->;
+export type UpdateScheduledTaskRequestType = {
+  periodicity?: number;
+  term?: number;
+  seats?: number;
+};
 
 export type LicensePricingRate = {
   rateType: RateTypeEnum;
