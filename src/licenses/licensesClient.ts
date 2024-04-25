@@ -402,9 +402,9 @@ export type SaveBillingCommentsInputType = {
 };
 
 export type ScheduleTasks = {
-  periodicity: number;
-  term: number;
-  seats: number;
+  periodicity?: number;
+  term?: number;
+  seats?: number;
   executionDate: string;
 };
 

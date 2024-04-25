@@ -51,12 +51,12 @@ export enum CustomerFields {
   COLUMN_PARTNER_TAGS_LABEL = 'label',
 }
 
-type CompanyReseller = {
+export type CompanyReseller = {
   [CustomerFields.COLUMN_REF]: string;
   [CustomerFields.COLUMN_COMPANY_NAME]: string;
 };
 
-type PartnerTags = {
+export type PartnerTags = {
   [CustomerFields.COLUMN_PARTNER_TAGS_LABEL]: string;
 };
 
