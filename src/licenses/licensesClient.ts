@@ -664,7 +664,11 @@ export class LicensesClient extends AbstractRestfulClient {
   }
 
   public async bulkAction(bulkData: BulkBodyArgument): Promise<void> {
+    console.log('old path', this.path);
+    console.log('bulk path', this.BULK_PATH);
     this.path = this.BULK_PATH;
+
+    console.log(this.path);
 
     let postData = {
       [BulkBodyFields.ACTION_TYPE]: bulkData.actionType,
