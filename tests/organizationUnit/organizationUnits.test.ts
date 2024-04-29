@@ -19,12 +19,12 @@ import { constants } from 'http2';
 import { beforeEach } from 'mocha';
 
 export const ORGANIZATION_UNIT_MOCK_URL = 'https://organizationUnits.localhost';
-export const ORGANIZATION_UNIT_DEFAULT = '/partners/organizationUnits';
+export const ORGANIZATION_UNIT_DEFAULT = '/organizationUnits';
 export const ORGANIZATION_UNIT_WITH_PARAMETERS = new RegExp(
-  '/partners/organizationUnits/*/*',
+  '/organizationUnits/*/*',
 );
 export const ORGANIZATION_UNIT_NEW_ENDPOINT_WITH_PARAMETERS = new RegExp(
-  '/organizationUnit/*',
+  '/organizationUnits/*',
 );
 
 let client: OrganizationUnitClient;
