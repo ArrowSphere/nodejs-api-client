@@ -22,7 +22,7 @@ export type OrganizationUnitClientActionType = {
 };
 
 export class OrganizationUnitClient extends AbstractRestfulClient {
-  protected basePath = '/partners/organizationUnits';
+  protected basePath = '/organizationUnits';
 
   public async getList(
     perPage = 25,
@@ -82,7 +82,6 @@ export class OrganizationUnitClient extends AbstractRestfulClient {
     payload: OrganizationUnitClientActionType,
     parameters: Parameters = {},
   ): Promise<void> {
-    this.basePath = '/organizationUnit';
     this.path = `/${action}/${organizationUnitRef}`;
 
     const response = await this.patch<void>(payload, parameters);
