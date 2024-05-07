@@ -22,6 +22,7 @@ import {
   SelectDataField,
   SelectOneResultType,
   SelectableField,
+  UserHistoryType,
 } from '../../src/graphqlApi';
 
 describe('GraphqlApiClient', () => {
@@ -503,6 +504,51 @@ describe('GraphqlApiClient', () => {
       sinon.assert.calledWithExactly(
         graphQLClient.request,
         sinon.match(GraphqlApiQueryMock.SELECT_ONE_LICENSE_BUDGET_GQL),
+      );
+    });
+  });
+
+  describe('GetUserHistory', () => {
+    it('makes a graphql POST request on the specified URL to selectAll paginated user history', async () => {
+      const userHistories: UserHistoryType[] = [
+        {
+          action: 'User impersonated',
+          createdAt: '2017-04-04 14:44:44',
+          description: '-',
+          impactedUser: {
+            contact: {
+              firstname: 'Thomas',
+              lastname: 'Andersen',
+            },
+          },
+          originatorUser: {
+            contact: {
+              firstname: 'Adyl',
+              lastname: 'IT',
+            },
+          },
+        },
+      ];
+
+      const expectedResult: SelectAllResultType = {
+        [Queries.SELECT_ALL]: {
+          [SelectableField.DATA]: {
+            [SelectDataField.USER_HISTORY]: userHistories,
+          },
+        },
+      };
+
+      graphQLClient.request.resolves(expectedResult);
+
+      const result: SelectAllResultType | null = await client.selectAll(
+        GraphqlApiQueryMock.SELECT_USER_HISTORY_QUERY,
+      );
+
+      expect(result).to.deep.equals(expectedResult);
+
+      sinon.assert.calledWithExactly(
+        graphQLClient.request,
+        sinon.match(GraphqlApiQueryMock.SELECT_USER_HISTORY_GQL),
       );
     });
   });
