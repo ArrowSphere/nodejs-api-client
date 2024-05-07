@@ -8,6 +8,7 @@ import { LicenseBudgetType } from './entities/licenseBudget';
 import { PartnertagType } from './entities/partnertag';
 import { SubscribedProgramType } from './entities/program';
 import { SubscriptionType } from './entities/subscription';
+import { UserHistoryType, UserType } from './entities/user';
 import { WorkgroupType } from './entities/workgroup';
 import {
   ErrorsSchema,
@@ -147,6 +148,8 @@ export enum SelectDataField {
   PARTNERTAG = 'partnertag',
   SUBSCRIBED_PROGRAM = 'subscribedProgram',
   SUBSCRIPTION = 'subscription',
+  USER = 'user',
+  USER_HISTORY = 'userHistory',
   WORKGROUP = 'workgroup',
 }
 
@@ -168,6 +171,8 @@ export type SelectAllResponseDataType = {
   [SelectDataField.PARTNERTAG]?: PartnertagType[];
   [SelectDataField.SUBSCRIBED_PROGRAM]?: SubscribedProgramType[];
   [SelectDataField.SUBSCRIPTION]?: SubscriptionType[];
+  [SelectDataField.USER]?: UserType[];
+  [SelectDataField.USER_HISTORY]?: UserHistoryType[];
   [SelectDataField.WORKGROUP]?: WorkgroupType[];
 };
 
@@ -219,6 +224,8 @@ export type SelectOneResponseDataType = {
   [SelectDataField.PARTNERTAG]?: PartnertagType;
   [SelectDataField.SUBSCRIBED_PROGRAM]?: SubscribedProgramType;
   [SelectDataField.SUBSCRIPTION]?: SubscriptionType;
+  [SelectDataField.USER]?: UserType;
+  [SelectDataField.USER_HISTORY]?: UserHistoryType;
   [SelectDataField.WORKGROUP]?: WorkgroupType;
 };
 

@@ -612,3 +612,107 @@ export const SELECT_ONE_LICENSE_BUDGET_QUERY: SelectOneQueryType = {
 
 export const SELECT_ONE_LICENSE_BUDGET_GQL =
   '{selectOne (filters: {groups: [{items: [{name: "licenseId", value: ["123"], operator: "EQUALS"}]}]}, pagination: {page: 1, perPage: 1000}) { data { licenseBudget { id threshold type notifications { id name } } } errors { code message } }}';
+
+export const SELECT_USER_HISTORY_QUERY: SelectAllQueryType = {
+  [Queries.SELECT_ALL]: {
+    __args: {
+      filters: {
+        groups: [
+          {
+            items: [
+              {
+                name: 'impactedUser.contact.username',
+                value: ['099d9076a611ee24f83b0dc89c076a4f'],
+                operator: ComparisonOperator.EQUALS,
+              },
+            ],
+          },
+        ],
+      },
+      pagination: {
+        page: 1,
+        perPage: 5,
+      },
+    },
+    data: {
+      userHistory: {
+        action: true,
+        createdAt: true,
+        description: true,
+        impactedUser: {
+          contact: {
+            firstname: true,
+            lastname: true,
+          },
+        },
+        originatorUser: {
+          contact: {
+            firstname: true,
+            lastname: true,
+          },
+        },
+      },
+    },
+    errors: {
+      code: true,
+      message: true,
+    },
+    pagination: {
+      currentPage: true,
+      perPage: true,
+      total: true,
+    },
+  },
+};
+
+export const SELECT_USER_HISTORY_GQL =
+  '{selectAll (filters: {groups: [{items: [{name: "impactedUser.contact.username", value: ["099d9076a611ee24f83b0dc89c076a4f"], operator: "EQUALS"}]}]}, pagination: {page: 1, perPage: 5}) { data { userHistory { action createdAt description impactedUser { contact { firstname lastname } } originatorUser { contact { firstname lastname } } } } errors { code message } pagination { currentPage perPage total } }}';
+
+export const SELECT_USER_QUERY: SelectAllQueryType = {
+  [Queries.SELECT_ALL]: {
+    __args: {
+      filters: {
+        groups: [
+          {
+            items: [
+              {
+                name: 'id',
+                value: ['123'],
+                operator: ComparisonOperator.EQUALS,
+              },
+            ],
+          },
+        ],
+      },
+      pagination: {
+        page: 1,
+        perPage: 3,
+      },
+    },
+    data: {
+      user: {
+        allowDirectLogin: true,
+        validatedAt: true,
+        extraData: {
+          canBeDeleted: true,
+        },
+        contact: {
+          firstname: true,
+          lastname: true,
+        },
+      },
+    },
+    errors: {
+      code: true,
+      message: true,
+    },
+    pagination: {
+      currentPage: true,
+      perPage: true,
+      total: true,
+    },
+  },
+};
+
+export const SELECT_USER_GQL =
+  '{selectAll (filters: {groups: [{items: [{name: "id", value: ["123"], operator: "EQUALS"}]}]}, pagination: {page: 1, perPage: 3}) { data { user { allowDirectLogin validatedAt extraData { canBeDeleted } contact { firstname lastname } } } errors { code message } pagination { currentPage perPage total } }}';
