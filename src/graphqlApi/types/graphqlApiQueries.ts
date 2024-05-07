@@ -147,6 +147,7 @@ export enum SelectDataField {
   PARTNERTAG = 'partnertag',
   SUBSCRIBED_PROGRAM = 'subscribedProgram',
   SUBSCRIPTION = 'subscription',
+  USER_HISTORY = 'userHistory',
   WORKGROUP = 'workgroup',
 }
 
