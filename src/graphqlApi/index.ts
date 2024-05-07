@@ -8,6 +8,7 @@ export * from './types/entities/order';
 export * from './types/entities/partnertag';
 export * from './types/entities/subscription';
 export * from './types/entities/specialPriceRate';
+export * from './types/entities/user';
 export * from './types/entities/vendor';
 export * from './types/entities/workgroup';
 export * from './graphqlApiClient';
