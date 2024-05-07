@@ -26,6 +26,7 @@ import {
   LicenseBudgetNotificationType,
   LicenseBudgetType,
 } from './entities/licenseBudget';
+import { UserHistoryType, UserType } from './entities/user';
 
 export type PartnertagSchema = Schema<PartnertagType, boolean>;
 
@@ -112,6 +113,8 @@ export type ProgramSchema = Schema<ProgramType, boolean>;
 export type SpecialPriceRateSchema = Schema<SpecialPriceRateType, boolean>;
 export type SubscribedProgramSchema = Schema<SubscribedProgramType, boolean>;
 export type SubscriptionSchema = Schema<SubscriptionType, boolean>;
+export type UserSchema = Schema<UserType, boolean>;
+export type UserHistorySchema = Schema<UserHistoryType, boolean>;
 export type VendorSchema = Schema<VendorsType, boolean>;
 export type WorkgroupSchema = Schema<WorkgroupType, boolean>;
 
@@ -131,6 +134,8 @@ export type SelectAllResponseDataSchema = {
   [SelectDataField.PARTNERTAG]?: PartnertagSchema;
   [SelectDataField.SUBSCRIBED_PROGRAM]?: SubscribedProgramSchema;
   [SelectDataField.SUBSCRIPTION]?: SubscriptionSchema;
+  [SelectDataField.USER]?: UserSchema;
+  [SelectDataField.USER_HISTORY]?: UserHistorySchema;
   [SelectDataField.WORKGROUP]?: WorkgroupSchema;
 };
 
@@ -149,6 +154,8 @@ export type SelectOneResponseDataSchema = {
   [SelectDataField.PARTNERTAG]?: PartnertagSchema;
   [SelectDataField.SUBSCRIBED_PROGRAM]?: SubscribedProgramSchema;
   [SelectDataField.SUBSCRIPTION]?: SubscriptionSchema;
+  [SelectDataField.USER]?: UserSchema;
+  [SelectDataField.USER_HISTORY]?: UserHistorySchema;
   [SelectDataField.WORKGROUP]?: WorkgroupSchema;
 };
 
