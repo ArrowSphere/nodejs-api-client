@@ -26,7 +26,7 @@ import {
   WarningFindResultFields,
   GetScheduleTaskResultData,
   GetScheduledTasksResultData,
-  GetScheduledTasksResultFields,
+  GetUserImpersonationsResultFields,
   GetScheduleTaskResultFields,
   GetResultFields,
   UpdateScheduledTaskRequestType,
@@ -400,7 +400,7 @@ const PAYLOAD_SCHEDULES_TASKS: GetScheduleTaskResultData[] = [
 ];
 
 export const PAYLOAD_GET_SCHEDULED_TASKS: GetScheduledTasksResultData = {
-  [GetScheduledTasksResultFields.COLUMN_SCHEDULED_TASKS]: PAYLOAD_SCHEDULES_TASKS,
+  [GetUserImpersonationsResultFields.COLUMN_SCHEDULED_TASKS]: PAYLOAD_SCHEDULES_TASKS,
 };
 
 export const PAYLOAD_LICENSE_PATCH_SCHEDULED_TASK: UpdateScheduledTaskRequestType = {

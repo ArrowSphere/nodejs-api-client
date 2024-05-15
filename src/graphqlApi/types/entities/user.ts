@@ -1,9 +1,11 @@
 import { ContactsType } from './contact';
+import { PartnertagType } from './partnertag';
 
 export type UserType = {
   id?: number;
   allowDirectLogin?: boolean;
   contact?: ContactsType;
+  userTags?: PartnertagType[];
   validatedAt?: string;
 };
 
