@@ -354,6 +354,7 @@ export const SELECT_ALL_PARTNERS_QUERY: SelectAllQueryType = {
           id: true,
           vendorCode: true,
           vendorName: true,
+          workgroupCode: true,
         },
       },
     },
@@ -375,7 +376,7 @@ export const SELECT_ALL_PARTNERS_QUERY: SelectAllQueryType = {
 };
 
 export const SELECT_ALL_PARTNERS_GQL =
-  '{selectAll (filters: {groups: [{items: [{name: "locked", operator: "IS_NULL"}, {name: "locked", value: ["1"], operator: "DIFFERENT"}], logicalOperator: "OR"}, {items: [{name: "id", value: ["SELECT DISTINCT compcustomer_companyid_customer FROM COMPANY_CUSTOMER"], exclusion: true}]}]}, aggregatorFilter: ["id"], pagination: {page: 1, perPage: 4}, sort: [{name: "id", direction: "ASC"}]) { data { partner { id partnerTags { id label description createdAt } workgroup { code } enabled subscriptionsPendingCount { total } subscriptionsCount { total } ordersCount { total } ordersNeedCount { total } contactsCount { total } customersCount { total } reportsCount { total } createdAt name contacts { id active communicationEmail effectiveDate email erpId firstname lastname locked phone status tseAccountStatus username type { id name } role { id name } } subscriptions { id localContact { id firstname lastname phone email } program { id internalName name } } extraInformations { id companyId code label name type value programName } orders { id items { id priceRates { id createdAt endedAt rate startedAt companyType { id type } type { id name } } } } subscribedPrograms { availabilityEndedAt availabilityStartedAt companyId internalName subscriptionEndedAt id vendorCode vendorName } } } errors { code message } pagination { currentPage perPage previous next total totalPage totalPages } }}';
+  '{selectAll (filters: {groups: [{items: [{name: "locked", operator: "IS_NULL"}, {name: "locked", value: ["1"], operator: "DIFFERENT"}], logicalOperator: "OR"}, {items: [{name: "id", value: ["SELECT DISTINCT compcustomer_companyid_customer FROM COMPANY_CUSTOMER"], exclusion: true}]}]}, aggregatorFilter: ["id"], pagination: {page: 1, perPage: 4}, sort: [{name: "id", direction: "ASC"}]) { data { partner { id partnerTags { id label description createdAt } workgroup { code } enabled subscriptionsPendingCount { total } subscriptionsCount { total } ordersCount { total } ordersNeedCount { total } contactsCount { total } customersCount { total } reportsCount { total } createdAt name contacts { id active communicationEmail effectiveDate email erpId firstname lastname locked phone status tseAccountStatus username type { id name } role { id name } } subscriptions { id localContact { id firstname lastname phone email } program { id internalName name } } extraInformations { id companyId code label name type value programName } orders { id items { id priceRates { id createdAt endedAt rate startedAt companyType { id type } type { id name } } } } subscribedPrograms { availabilityEndedAt availabilityStartedAt companyId internalName subscriptionEndedAt id vendorCode vendorName workgroupCode } } } errors { code message } pagination { currentPage perPage previous next total totalPage totalPages } }}';
 
 export const SELECT_ONE_END_CUSTOMER_QUERY: SelectOneQueryType = {
   [Queries.SELECT_ONE]: {
@@ -696,6 +697,10 @@ export const SELECT_USER_QUERY: SelectAllQueryType = {
         contact: {
           firstname: true,
           lastname: true,
+          organizationUnits: {
+            id: true,
+            name: true,
+          },
         },
       },
     },
@@ -712,4 +717,4 @@ export const SELECT_USER_QUERY: SelectAllQueryType = {
 };
 
 export const SELECT_USER_GQL =
-  '{selectAll (filters: {groups: [{items: [{name: "id", value: ["123"], operator: "EQUALS"}]}]}, pagination: {page: 1, perPage: 3}) { data { user { allowDirectLogin validatedAt contact { firstname lastname } } } errors { code message } pagination { currentPage perPage total } }}';
+  '{selectAll (filters: {groups: [{items: [{name: "id", value: ["123"], operator: "EQUALS"}]}]}, pagination: {page: 1, perPage: 3}) { data { user { allowDirectLogin validatedAt contact { firstname lastname organizationUnits { id name } } } } errors { code message } pagination { currentPage perPage total } }}';
