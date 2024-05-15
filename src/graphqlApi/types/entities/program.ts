@@ -22,4 +22,5 @@ export type SubscribedProgramType = {
   vendor?: VendorsType;
   vendorCode?: string;
   vendorName?: string;
+  workgroupCode?: string;
 };
