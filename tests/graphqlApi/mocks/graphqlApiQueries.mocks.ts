@@ -696,6 +696,10 @@ export const SELECT_USER_QUERY: SelectAllQueryType = {
         contact: {
           firstname: true,
           lastname: true,
+          organizationUnits: {
+            id: true,
+            name: true,
+          },
         },
       },
     },
@@ -712,4 +716,4 @@ export const SELECT_USER_QUERY: SelectAllQueryType = {
 };
 
 export const SELECT_USER_GQL =
-  '{selectAll (filters: {groups: [{items: [{name: "id", value: ["123"], operator: "EQUALS"}]}]}, pagination: {page: 1, perPage: 3}) { data { user { allowDirectLogin validatedAt contact { firstname lastname } } } errors { code message } pagination { currentPage perPage total } }}';
+  '{selectAll (filters: {groups: [{items: [{name: "id", value: ["123"], operator: "EQUALS"}]}]}, pagination: {page: 1, perPage: 3}) { data { user { allowDirectLogin validatedAt contact { firstname lastname organizationUnits { id name } } } } errors { code message } pagination { currentPage perPage total } }}';
