@@ -27,6 +27,7 @@ import {
   LicenseBudgetType,
 } from './entities/licenseBudget';
 import { UserHistoryType, UserType } from './entities/user';
+import { OrganizationUnitsType } from './entities/organizationUnit';
 
 export type PartnertagSchema = Schema<PartnertagType, boolean>;
 
@@ -61,9 +62,27 @@ type MissingFieldsOfOrdersSchema = {
   items?: OrderItemsSchema;
 };
 
+type MissingFieldsOfContactSchema = {
+  organizationUnits?: OrganizationUnitSchema;
+};
+
+type MissingFieldsOfUserSchema = {
+  contact?: ContactsSchema;
+};
+
 type MissingFieldsOfLicenseBudgetSchema = {
   notifications?: LicenseBudgetNotificationSchema;
 };
+
+export type ContactsSchema = Merge<
+  Schema<ContactsType, boolean>,
+  MissingFieldsOfContactSchema
+>;
+
+export type UserSchema = Merge<
+  Schema<UserType, boolean>,
+  MissingFieldsOfUserSchema
+>;
 
 export type LicenseBudgetSchema = Merge<
   Schema<LicenseBudgetType, boolean>,
@@ -100,7 +119,6 @@ export type CompanyExtraInformationSchema = Schema<
   boolean
 >;
 
-export type ContactsSchema = Schema<ContactsType, boolean>;
 export type ContinentSchema = Schema<ContinentType, boolean>;
 export type CountrySchema = Schema<CountryType, boolean>;
 export type ErrorsSchema = Schema<ErrorsType, boolean>;
@@ -108,12 +126,12 @@ export type LicenseBudgetNotificationSchema = Schema<
   LicenseBudgetNotificationType,
   boolean
 >;
+export type OrganizationUnitSchema = Schema<OrganizationUnitsType, boolean>;
 export type PageSchema = Schema<PageType, boolean>;
 export type ProgramSchema = Schema<ProgramType, boolean>;
 export type SpecialPriceRateSchema = Schema<SpecialPriceRateType, boolean>;
 export type SubscribedProgramSchema = Schema<SubscribedProgramType, boolean>;
 export type SubscriptionSchema = Schema<SubscriptionType, boolean>;
-export type UserSchema = Schema<UserType, boolean>;
 export type UserHistorySchema = Schema<UserHistoryType, boolean>;
 export type VendorSchema = Schema<VendorsType, boolean>;
 export type WorkgroupSchema = Schema<WorkgroupType, boolean>;
