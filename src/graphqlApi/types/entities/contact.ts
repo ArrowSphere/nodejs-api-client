@@ -1,3 +1,5 @@
+import { OrganizationUnitsType } from './organizationUnit';
+
 export type ContactsType = {
   id?: number;
   active?: boolean;
@@ -8,6 +10,7 @@ export type ContactsType = {
   firstname?: string;
   lastname?: string;
   locked?: boolean;
+  organizationUnits?: OrganizationUnitsType[];
   phone?: string;
   status?: string;
   tseAccountStatus?: string;

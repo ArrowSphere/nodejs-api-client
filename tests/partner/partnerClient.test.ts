@@ -1,16 +1,24 @@
-import { PublicApiClient } from '../../src';
+import {
+  PublicApiClient,
+  UpdateScopeUserPayload,
+  UpdateScopeUserPayloadFields,
+} from '../../src';
 import { expect } from 'chai';
 import { Axios, AxiosResponse } from 'axios';
 import sinon from 'sinon';
+import nock from 'nock';
 
-export const CUSTOMERS_MOCK_URL = 'https://customers.localhost';
+const PARTNERS_MOCK_URL = 'https://partners.localhost';
+const PARTNER_REFERENCE = 'XSP123456';
+const USER_REFERENCE = 'XSP999';
+const BASE_PATH = `/partners/${PARTNER_REFERENCE}/users/${USER_REFERENCE}`;
 
 describe('PartnerClient', () => {
-  describe('deletePartner', () => {
-    const client = new PublicApiClient()
-      .getPartnerClient()
-      .setUrl(CUSTOMERS_MOCK_URL);
+  const client = new PublicApiClient()
+    .getPartnerClient()
+    .setUrl(PARTNERS_MOCK_URL);
 
+  describe('deletePartner', () => {
     let axiosClient: sinon.SinonStubbedInstance<Axios>;
 
     beforeEach(() => {
@@ -37,6 +45,124 @@ describe('PartnerClient', () => {
       const result = await client.deletePartner('XSP123');
 
       expect(result).to.be.deep.equals(expectedResult.data);
+    });
+  });
+
+  describe('patchUser', () => {
+    it('calls the patchUser method', async () => {
+      nock(PARTNERS_MOCK_URL).patch(BASE_PATH).reply(204);
+
+      await client.patchUser(PARTNER_REFERENCE, USER_REFERENCE, {});
+      expect(nock.isDone()).to.be.true;
+    });
+  });
+
+  describe('lockUser', () => {
+    it('calls the lockUser method', async () => {
+      nock(PARTNERS_MOCK_URL).patch(BASE_PATH).reply(204);
+
+      await client.lockUser(PARTNER_REFERENCE, USER_REFERENCE, {});
+      expect(nock.isDone()).to.be.true;
+    });
+  });
+
+  describe('unlockUser', () => {
+    it('calls the unlockUser method', async () => {
+      nock(PARTNERS_MOCK_URL).patch(BASE_PATH).reply(204);
+
+      await client.unlockUser(PARTNER_REFERENCE, USER_REFERENCE, {});
+      expect(nock.isDone()).to.be.true;
+    });
+  });
+
+  describe('allowDirectLoginUser', () => {
+    it('calls the allowDirectLoginUser method', async () => {
+      nock(PARTNERS_MOCK_URL).patch(BASE_PATH).reply(204);
+
+      await client.allowDirectLoginUser(PARTNER_REFERENCE, USER_REFERENCE, {});
+      expect(nock.isDone()).to.be.true;
+    });
+  });
+
+  describe('blockDirectLoginUser', () => {
+    it('calls the blockDirectLoginUser method', async () => {
+      nock(PARTNERS_MOCK_URL).patch(BASE_PATH).reply(204);
+
+      await client.blockDirectLoginUser(PARTNER_REFERENCE, USER_REFERENCE, {});
+      expect(nock.isDone()).to.be.true;
+    });
+  });
+
+  describe('disableMfaUser', () => {
+    it('calls the disableMfaUser method', async () => {
+      nock(PARTNERS_MOCK_URL).patch(BASE_PATH).reply(204);
+
+      await client.disableMfaUser(PARTNER_REFERENCE, USER_REFERENCE, {});
+      expect(nock.isDone()).to.be.true;
+    });
+  });
+
+  describe('disableAliasUser', () => {
+    it('calls the disableAliasUser method', async () => {
+      nock(PARTNERS_MOCK_URL).patch(BASE_PATH).reply(204);
+
+      await client.disableAliasUser(
+        PARTNER_REFERENCE,
+        USER_REFERENCE,
+        'microsoftopenid_123xqdsrrezvsd',
+      );
+      expect(nock.isDone()).to.be.true;
+    });
+  });
+
+  describe('validateUser', () => {
+    it('calls the validateUser method', async () => {
+      nock(PARTNERS_MOCK_URL).patch(BASE_PATH).reply(204);
+
+      await client.validateUser(PARTNER_REFERENCE, USER_REFERENCE, {});
+      expect(nock.isDone()).to.be.true;
+    });
+  });
+
+  describe('unlockInsecureLoginUser', () => {
+    it('calls the unlockInsecureLoginUser method', async () => {
+      nock(PARTNERS_MOCK_URL).patch(BASE_PATH).reply(204);
+
+      await client.unlockInsecureLoginUser(
+        PARTNER_REFERENCE,
+        USER_REFERENCE,
+        {},
+      );
+      expect(nock.isDone()).to.be.true;
+    });
+  });
+
+  describe('disableMfaUser', () => {
+    it('calls the disableMfaUser method', async () => {
+      nock(PARTNERS_MOCK_URL).patch(BASE_PATH).reply(204);
+
+      await client.disableMfaUser(PARTNER_REFERENCE, USER_REFERENCE, {});
+      expect(nock.isDone()).to.be.true;
+    });
+  });
+
+  describe('updateScopeUser', () => {
+    it('calls the updateScopeUser method', async () => {
+      nock(PARTNERS_MOCK_URL).patch(`${BASE_PATH}/scope`).reply(204);
+
+      const payload: UpdateScopeUserPayload = {
+        [UpdateScopeUserPayloadFields.COLUMN_ENTITIES]: ['UK', 'IE'],
+        [UpdateScopeUserPayloadFields.COLUMN_IMPERSONATIONS]: [
+          'user1@the-company.com',
+        ],
+        [UpdateScopeUserPayloadFields.COLUMN_ORGANIZATIONUNIT]: 'XSPOU123456',
+        [UpdateScopeUserPayloadFields.COLUMN_PROGRAMS]: ['MSCSP'],
+        [UpdateScopeUserPayloadFields.COLUMN_ROLE]: 'ext_msp',
+        [UpdateScopeUserPayloadFields.COLUMN_TAGS]: ['TIER1'],
+      };
+
+      await client.updateScopeUser(PARTNER_REFERENCE, USER_REFERENCE, payload);
+      expect(nock.isDone()).to.be.true;
     });
   });
 });
