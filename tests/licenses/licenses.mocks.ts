@@ -26,13 +26,13 @@ import {
   WarningFindResultFields,
   GetScheduleTaskResultData,
   GetScheduledTasksResultData,
-  GetScheduledTasksResultFields,
   GetScheduleTaskResultFields,
   GetResultFields,
   UpdateScheduledTaskRequestType,
   LicenceCouponCodeHistoryResultData,
   LicenceCouponCodeHistoryResultFields,
   SaleConstraintsFindResultFields,
+  GetScheduledTasksResultFields,
 } from '../../src';
 import { ExtraDataFields } from '../../src/licenses/entities/getLicense/extraDataGetResult';
 import { CredentialsResultType } from '../../src/licenses/entities/license/credentialsResult';
