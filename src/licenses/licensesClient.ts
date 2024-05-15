@@ -535,7 +535,7 @@ export class LicensesClient extends AbstractRestfulClient {
   /**
    * The path to apply bulk action on license(s)
    */
-  private BULK_PATH = '/bulk';
+  private BULK_PATH = '/bulk-action';
 
   /**
    * Returns the raw result from the find endpoint call
@@ -699,6 +699,8 @@ export class LicensesClient extends AbstractRestfulClient {
 
       return await this.postFile(payload);
     }
+
+    console.log('postData', postData);
 
     return await this.post(postData);
   }
