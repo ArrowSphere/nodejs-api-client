@@ -1,4 +1,5 @@
 import {
+  DataPartner,
   GetResult,
   PublicApiClient,
   UpdateScopeUserPayload,
@@ -6,15 +7,20 @@ import {
 } from '../../src';
 import { expect } from 'chai';
 import { Axios, AxiosResponse } from 'axios';
+import { constants } from 'http2';
 import sinon from 'sinon';
 import nock from 'nock';
-import { constants } from 'http2';
 import { GetUserImpersonationsResult } from '../../src/partner/types/getUserImpersonationsResult';
+import {
+  PARTNER_CREATE_RESPONSE,
+  PARTNER_CREATE_REQUEST,
+} from './mocks/create.mocks';
 
 const PARTNERS_MOCK_URL = 'https://partners.localhost';
 const PARTNER_REFERENCE = 'XSP123456';
 const USER_REFERENCE = 'XSP999';
 const BASE_PATH = `/partners/${PARTNER_REFERENCE}/users/${USER_REFERENCE}`;
+const PARTNER = '/partners/v1/register';
 
 describe('PartnerClient', () => {
   const client = new PublicApiClient()
@@ -198,6 +204,27 @@ describe('PartnerClient', () => {
       expect(response.toJSON().data).to.be.deep.equals(
         PAYLOAD_GET_USER_IMPERSONATIONS,
       );
+    });
+  });
+
+  describe('postPartner', () => {
+    const client = new PublicApiClient()
+      .getPartnerClient()
+      .setUrl(PARTNERS_MOCK_URL);
+
+    it('should call the post method', async () => {
+      nock(PARTNERS_MOCK_URL)
+        .post(PARTNER)
+        .reply(constants.HTTP_STATUS_OK, PARTNER_CREATE_RESPONSE);
+
+      const response: GetResult<DataPartner> = await client.postPartner(
+        PARTNER_CREATE_REQUEST,
+      );
+
+      console.log('response', response);
+
+      expect(response).to.be.instanceof(GetResult);
+      expect(response.toJSON()).to.be.deep.equal(PARTNER_CREATE_RESPONSE);
     });
   });
 });
