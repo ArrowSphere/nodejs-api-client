@@ -1,4 +1,4 @@
-import { AbstractEntity } from "../../../../abstractEntity";
+import { AbstractEntity } from '../../../../abstractEntity';
 
 export enum AddressFields {
   COLUMN_LINE1 = 'line1',
