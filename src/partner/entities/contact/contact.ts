@@ -1,6 +1,6 @@
-import { AbstractEntity } from "../../../abstractEntity";
+import { AbstractEntity } from '../../../abstractEntity';
 
-export enum ContactFields {
+export enum PartnerContactFields {
   COLUMN_REFERENCE = 'reference',
   COLUMN_FIRSTNAME = 'firstname',
   COLUMN_LASTNAME = 'lastname',
@@ -9,16 +9,16 @@ export enum ContactFields {
   COLUMN_TYPE = 'type',
 }
 
-export type ContactType = {
-  [ContactFields.COLUMN_REFERENCE]: string;
-  [ContactFields.COLUMN_FIRSTNAME]: string;
-  [ContactFields.COLUMN_LASTNAME]: string;
-  [ContactFields.COLUMN_PHONE]: string;
-  [ContactFields.COLUMN_EMAIL]: string;
-  [ContactFields.COLUMN_TYPE]: string;
+export type PartnerContactType = {
+  [PartnerContactFields.COLUMN_REFERENCE]: string;
+  [PartnerContactFields.COLUMN_FIRSTNAME]: string;
+  [PartnerContactFields.COLUMN_LASTNAME]: string;
+  [PartnerContactFields.COLUMN_PHONE]: string;
+  [PartnerContactFields.COLUMN_EMAIL]: string;
+  [PartnerContactFields.COLUMN_TYPE]: string;
 };
 
-export class Contact extends AbstractEntity<ContactType> {
+export class PartnerContact extends AbstractEntity<PartnerContactType> {
   readonly #reference: string;
   readonly #firstname: string;
   readonly #lastname: string;
@@ -26,15 +26,15 @@ export class Contact extends AbstractEntity<ContactType> {
   readonly #email: string;
   readonly #type: string;
 
-  public constructor(contactInput: ContactType) {
+  public constructor(contactInput: PartnerContactType) {
     super(contactInput);
 
-    this.#reference = contactInput[ContactFields.COLUMN_REFERENCE];
-    this.#firstname = contactInput[ContactFields.COLUMN_FIRSTNAME];
-    this.#lastname = contactInput[ContactFields.COLUMN_LASTNAME];
-    this.#phone = contactInput[ContactFields.COLUMN_PHONE];
-    this.#email = contactInput[ContactFields.COLUMN_EMAIL];
-    this.#type = contactInput[ContactFields.COLUMN_TYPE];
+    this.#reference = contactInput[PartnerContactFields.COLUMN_REFERENCE];
+    this.#firstname = contactInput[PartnerContactFields.COLUMN_FIRSTNAME];
+    this.#lastname = contactInput[PartnerContactFields.COLUMN_LASTNAME];
+    this.#phone = contactInput[PartnerContactFields.COLUMN_PHONE];
+    this.#email = contactInput[PartnerContactFields.COLUMN_EMAIL];
+    this.#type = contactInput[PartnerContactFields.COLUMN_TYPE];
   }
 
   get reference(): string {
@@ -61,14 +61,14 @@ export class Contact extends AbstractEntity<ContactType> {
     return this.#type;
   }
 
-  public toJSON(): ContactType {
+  public toJSON(): PartnerContactType {
     return {
-      [ContactFields.COLUMN_REFERENCE]: this.reference,
-      [ContactFields.COLUMN_FIRSTNAME]: this.firstname,
-      [ContactFields.COLUMN_LASTNAME]: this.lastname,
-      [ContactFields.COLUMN_PHONE]: this.phone,
-      [ContactFields.COLUMN_EMAIL]: this.email,
-      [ContactFields.COLUMN_TYPE]: this.type,
+      [PartnerContactFields.COLUMN_REFERENCE]: this.reference,
+      [PartnerContactFields.COLUMN_FIRSTNAME]: this.firstname,
+      [PartnerContactFields.COLUMN_LASTNAME]: this.lastname,
+      [PartnerContactFields.COLUMN_PHONE]: this.phone,
+      [PartnerContactFields.COLUMN_EMAIL]: this.email,
+      [PartnerContactFields.COLUMN_TYPE]: this.type,
     };
   }
 }

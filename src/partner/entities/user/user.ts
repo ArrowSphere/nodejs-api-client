@@ -1,24 +1,24 @@
-import { AbstractEntity } from "../../../abstractEntity";
+import { AbstractEntity } from '../../../abstractEntity';
 
-export enum UserFields {
+export enum PartnerUserFields {
   COLUMN_REFERENCE = 'reference',
   COLUMN_LOGIN = 'login',
 }
 
-export type UserType = {
-  [UserFields.COLUMN_REFERENCE]: string;
-  [UserFields.COLUMN_LOGIN]: string;
+export type PartnerUserType = {
+  [PartnerUserFields.COLUMN_REFERENCE]: string;
+  [PartnerUserFields.COLUMN_LOGIN]: string;
 };
 
-export class User extends AbstractEntity<UserType> {
+export class PartnerUser extends AbstractEntity<PartnerUserType> {
   readonly #reference: string;
   readonly #login: string;
 
-  public constructor(userInput: UserType) {
+  public constructor(userInput: PartnerUserType) {
     super(userInput);
 
-    this.#reference = userInput[UserFields.COLUMN_REFERENCE];
-    this.#login = userInput[UserFields.COLUMN_LOGIN];
+    this.#reference = userInput[PartnerUserFields.COLUMN_REFERENCE];
+    this.#login = userInput[PartnerUserFields.COLUMN_LOGIN];
   }
 
   get reference(): string {
@@ -29,10 +29,10 @@ export class User extends AbstractEntity<UserType> {
     return this.#login;
   }
 
-  public toJSON(): UserType {
+  public toJSON(): PartnerUserType {
     return {
-      [UserFields.COLUMN_REFERENCE]: this.reference,
-      [UserFields.COLUMN_LOGIN]: this.login,
+      [PartnerUserFields.COLUMN_REFERENCE]: this.reference,
+      [PartnerUserFields.COLUMN_LOGIN]: this.login,
     };
   }
 }

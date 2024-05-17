@@ -10,13 +10,13 @@ export enum PartnerFields {
   RECAPTCHA_TOKEN = 'recaptchaToken',
 }
 
-export enum PartnerUserFields {
+export enum PartnerUserPayloadFields {
   LOGIN = 'login',
   PASSWORD = 'password',
   GLOBAL_ID = 'globalID',
 }
 
-export enum PartnerContactFields {
+export enum PartnerContactPayloadFields {
   TITLE = 'title',
   FIRST_NAME = 'firstName',
   LAST_NAME = 'lastName',
@@ -35,7 +35,7 @@ export enum PartnerAddressFields {
   COUNTRY_CODE = 'countryCode',
 }
 
-export enum PartnerCompanyFields {
+export enum PartnerCompanyPayloadFields {
   ACRONYM = 'acronym',
   INTERNAL_REFERENCE = 'internalReference',
   NAME = 'name',
@@ -49,20 +49,20 @@ export enum PartnerCompanyFields {
   VAT_NUMBER = 'vatNumber',
 }
 
-export type PartnerUser = {
-  [PartnerUserFields.LOGIN]: string;
-  [PartnerUserFields.PASSWORD]: string;
-  [PartnerUserFields.GLOBAL_ID]: string;
+export type PartnerUserPayload = {
+  [PartnerUserPayloadFields.LOGIN]: string;
+  [PartnerUserPayloadFields.PASSWORD]: string;
+  [PartnerUserPayloadFields.GLOBAL_ID]: string;
 };
 
-export type PartnerContact = {
-  [PartnerContactFields.TITLE]: string;
-  [PartnerContactFields.FIRST_NAME]: string;
-  [PartnerContactFields.LAST_NAME]: string;
-  [PartnerContactFields.PHONE]: string;
-  [PartnerContactFields.EMAIL]: string;
-  [PartnerContactFields.TYPE]: string;
-  [PartnerContactFields.COUNTRY]: string;
+export type PartnerContactPayload = {
+  [PartnerContactPayloadFields.TITLE]: string;
+  [PartnerContactPayloadFields.FIRST_NAME]: string;
+  [PartnerContactPayloadFields.LAST_NAME]: string;
+  [PartnerContactPayloadFields.PHONE]: string;
+  [PartnerContactPayloadFields.EMAIL]: string;
+  [PartnerContactPayloadFields.TYPE]: string;
+  [PartnerContactPayloadFields.COUNTRY]: string;
 };
 
 export type PartnerAddress = {
@@ -74,28 +74,27 @@ export type PartnerAddress = {
   [PartnerAddressFields.COUNTRY_CODE]: string;
 };
 
-export type PartnerCompany = {
-  [PartnerCompanyFields.ACRONYM]: string;
-  [PartnerCompanyFields.INTERNAL_REFERENCE]: string;
-  [PartnerCompanyFields.NAME]: string;
-  [PartnerCompanyFields.PHONE]: string;
-  [PartnerCompanyFields.NUMBER_OF_EMPLOYEE]: number;
-  [PartnerCompanyFields.CORPORATE_EMAIL]: string;
-  [PartnerCompanyFields.CORPORATE_WEBSITE]: string;
-  [PartnerCompanyFields.ADDRESS]: PartnerAddress;
-  [PartnerCompanyFields.BILLING_ADDRESS]: PartnerAddress;
-  [PartnerCompanyFields.REGISTRATION_NUMBER]: string;
-  [PartnerCompanyFields.VAT_NUMBER]: string;
+export type PartnerCompanyPayload = {
+  [PartnerCompanyPayloadFields.ACRONYM]: string;
+  [PartnerCompanyPayloadFields.INTERNAL_REFERENCE]: string;
+  [PartnerCompanyPayloadFields.NAME]: string;
+  [PartnerCompanyPayloadFields.PHONE]: string;
+  [PartnerCompanyPayloadFields.NUMBER_OF_EMPLOYEE]: number;
+  [PartnerCompanyPayloadFields.CORPORATE_EMAIL]: string;
+  [PartnerCompanyPayloadFields.CORPORATE_WEBSITE]: string;
+  [PartnerCompanyPayloadFields.ADDRESS]: PartnerAddress;
+  [PartnerCompanyPayloadFields.BILLING_ADDRESS]: PartnerAddress;
+  [PartnerCompanyPayloadFields.REGISTRATION_NUMBER]: string;
+  [PartnerCompanyPayloadFields.VAT_NUMBER]: string;
 };
 
 export type PostPartnerPayload = {
   [PartnerFields.REGISTRATION_TYPE]: string;
-  [PartnerFields.USER]: PartnerUser;
-  [PartnerFields.CONTACT]: PartnerContact;
-  [PartnerFields.COMPANY]: PartnerCompany;
+  [PartnerFields.USER]: PartnerUserPayload;
+  [PartnerFields.CONTACT]: PartnerContactPayload;
+  [PartnerFields.COMPANY]: PartnerCompanyPayload;
   [PartnerFields.RECAPTCHA_TOKEN]: string;
 };
-
 
 export class PartnerClient extends AbstractRestfulClient {
   protected basePath = '/partners';

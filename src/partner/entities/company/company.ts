@@ -1,7 +1,7 @@
-import { AbstractEntity } from "../../../abstractEntity";
-import { Address, AddressType } from "./address/address";
+import { AbstractEntity } from '../../../abstractEntity';
+import { Address, AddressType } from './address/address';
 
-export enum CompanyFields {
+export enum PartnerCompanyFields {
   COLUMN_REFERENCE = 'reference',
   COLUMN_NAME = 'name',
   COLUMN_ACRONYM = 'acronym',
@@ -13,10 +13,10 @@ export enum CompanyFields {
   COLUMN_VAT_NUMBER = 'vatNumber',
   COLUMN_REGISTRATION_NUMBER = 'registrationNumber',
   COLUMN_ADDRESS = 'address',
-  COLUMN_BILLING_ADDRESS = 'billingAddress'
+  COLUMN_BILLING_ADDRESS = 'billingAddress',
 }
 
-export type CompanyType = {
+export type PartnerCompanyType = {
   reference: string;
   name: string;
   acronym: string;
@@ -31,7 +31,7 @@ export type CompanyType = {
   billingAddress: AddressType;
 };
 
-export class Company extends AbstractEntity<CompanyType> {
+export class PartnerCompany extends AbstractEntity<PartnerCompanyType> {
   readonly #reference: string;
   readonly #name: string;
   readonly #acronym: string;
@@ -45,20 +45,28 @@ export class Company extends AbstractEntity<CompanyType> {
   readonly #address: Address;
   readonly #billingAddress: Address;
 
-  public constructor(companyData: CompanyType) {
+  public constructor(companyData: PartnerCompanyType) {
     super(companyData);
-    this.#reference = companyData[CompanyFields.COLUMN_REFERENCE];
-    this.#name = companyData[CompanyFields.COLUMN_NAME];
-    this.#acronym = companyData[CompanyFields.COLUMN_ACRONYM];
-    this.#internalReference = companyData[CompanyFields.COLUMN_INTERNAL_REFERENCE];
-    this.#phone = companyData[CompanyFields.COLUMN_PHONE];
-    this.#numberOfEmployee = companyData[CompanyFields.COLUMN_NUMBER_OF_EMPLOYEE];
-    this.#corporateEmail = companyData[CompanyFields.COLUMN_CORPORATE_EMAIL];
-    this.#website = companyData[CompanyFields.COLUMN_WEBSITE];
-    this.#vatNumber = companyData[CompanyFields.COLUMN_VAT_NUMBER];
-    this.#registrationNumber = companyData[CompanyFields.COLUMN_REGISTRATION_NUMBER];
-    this.#address = new Address(companyData[CompanyFields.COLUMN_ADDRESS]);
-    this.#billingAddress = new Address(companyData[CompanyFields.COLUMN_BILLING_ADDRESS]);
+    this.#reference = companyData[PartnerCompanyFields.COLUMN_REFERENCE];
+    this.#name = companyData[PartnerCompanyFields.COLUMN_NAME];
+    this.#acronym = companyData[PartnerCompanyFields.COLUMN_ACRONYM];
+    this.#internalReference =
+      companyData[PartnerCompanyFields.COLUMN_INTERNAL_REFERENCE];
+    this.#phone = companyData[PartnerCompanyFields.COLUMN_PHONE];
+    this.#numberOfEmployee =
+      companyData[PartnerCompanyFields.COLUMN_NUMBER_OF_EMPLOYEE];
+    this.#corporateEmail =
+      companyData[PartnerCompanyFields.COLUMN_CORPORATE_EMAIL];
+    this.#website = companyData[PartnerCompanyFields.COLUMN_WEBSITE];
+    this.#vatNumber = companyData[PartnerCompanyFields.COLUMN_VAT_NUMBER];
+    this.#registrationNumber =
+      companyData[PartnerCompanyFields.COLUMN_REGISTRATION_NUMBER];
+    this.#address = new Address(
+      companyData[PartnerCompanyFields.COLUMN_ADDRESS],
+    );
+    this.#billingAddress = new Address(
+      companyData[PartnerCompanyFields.COLUMN_BILLING_ADDRESS],
+    );
   }
 
   get reference(): string {
@@ -109,20 +117,21 @@ export class Company extends AbstractEntity<CompanyType> {
     return this.#billingAddress;
   }
 
-  public toJSON(): CompanyType {
+  public toJSON(): PartnerCompanyType {
     return {
-      [CompanyFields.COLUMN_REFERENCE]: this.reference,
-      [CompanyFields.COLUMN_NAME]: this.name,
-      [CompanyFields.COLUMN_ACRONYM]: this.acronym,
-      [CompanyFields.COLUMN_INTERNAL_REFERENCE]: this.internalReference,
-      [CompanyFields.COLUMN_PHONE]: this.phone,
-      [CompanyFields.COLUMN_NUMBER_OF_EMPLOYEE]: this.numberOfEmployee,
-      [CompanyFields.COLUMN_CORPORATE_EMAIL]: this.corporateEmail,
-      [CompanyFields.COLUMN_WEBSITE]: this.website,
-      [CompanyFields.COLUMN_VAT_NUMBER]: this.vatNumber,
-      [CompanyFields.COLUMN_REGISTRATION_NUMBER]: this.registrationNumber,
-      [CompanyFields.COLUMN_ADDRESS]: this.address.toJSON(),
-      [CompanyFields.COLUMN_BILLING_ADDRESS]: this.billingAddress.toJSON(),
+      [PartnerCompanyFields.COLUMN_REFERENCE]: this.reference,
+      [PartnerCompanyFields.COLUMN_NAME]: this.name,
+      [PartnerCompanyFields.COLUMN_ACRONYM]: this.acronym,
+      [PartnerCompanyFields.COLUMN_INTERNAL_REFERENCE]: this.internalReference,
+      [PartnerCompanyFields.COLUMN_PHONE]: this.phone,
+      [PartnerCompanyFields.COLUMN_NUMBER_OF_EMPLOYEE]: this.numberOfEmployee,
+      [PartnerCompanyFields.COLUMN_CORPORATE_EMAIL]: this.corporateEmail,
+      [PartnerCompanyFields.COLUMN_WEBSITE]: this.website,
+      [PartnerCompanyFields.COLUMN_VAT_NUMBER]: this.vatNumber,
+      [PartnerCompanyFields.COLUMN_REGISTRATION_NUMBER]: this
+        .registrationNumber,
+      [PartnerCompanyFields.COLUMN_ADDRESS]: this.address.toJSON(),
+      [PartnerCompanyFields.COLUMN_BILLING_ADDRESS]: this.billingAddress.toJSON(),
     };
   }
 }

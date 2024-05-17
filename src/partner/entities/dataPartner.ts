@@ -1,19 +1,25 @@
-import { AbstractEntity } from "../../abstractEntity";
-import { Company, CompanyType } from "./company/company";
-import { Contact, ContactType } from "./contact/contact";
-import { User, UserType } from "./user/user";
+import { AbstractEntity } from '../../abstractEntity';
+import {
+  PartnerCompany as Company,
+  PartnerCompanyType as CompanyType,
+} from './company/company';
+import {
+  PartnerContact as Contact,
+  PartnerContactType as ContactType,
+} from './contact/contact';
+import { PartnerUser as User, PartnerUserType as UserType } from './user/user';
 
 export enum DataPartnerFields {
   COLUMN_USER = 'user',
   COLUMN_CONTACT = 'contact',
-  COLUMN_COMPANY = 'company'
+  COLUMN_COMPANY = 'company',
 }
 
 export type DataPartnerType = {
   [DataPartnerFields.COLUMN_USER]: UserType;
   [DataPartnerFields.COLUMN_CONTACT]: ContactType;
   [DataPartnerFields.COLUMN_COMPANY]: CompanyType;
-}
+};
 
 export class DataPartner extends AbstractEntity<DataPartnerType> {
   readonly #user: User;
@@ -23,8 +29,12 @@ export class DataPartner extends AbstractEntity<DataPartnerType> {
   public constructor(dataPartnerInput: DataPartnerType) {
     super(dataPartnerInput);
     this.#user = new User(dataPartnerInput[DataPartnerFields.COLUMN_USER]);
-    this.#contact = new Contact(dataPartnerInput[DataPartnerFields.COLUMN_CONTACT]);
-    this.#company = new Company(dataPartnerInput[DataPartnerFields.COLUMN_COMPANY]);
+    this.#contact = new Contact(
+      dataPartnerInput[DataPartnerFields.COLUMN_CONTACT],
+    );
+    this.#company = new Company(
+      dataPartnerInput[DataPartnerFields.COLUMN_COMPANY],
+    );
   }
 
   get user(): User {
