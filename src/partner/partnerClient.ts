@@ -23,7 +23,7 @@ export enum PartnerContactPayloadFields {
   PHONE = 'phone',
   EMAIL = 'email',
   TYPE = 'type',
-  COUNTRY = 'country',
+  //   COUNTRY = 'country',
 }
 
 export enum PartnerAddressFields {
@@ -50,9 +50,9 @@ export enum PartnerCompanyPayloadFields {
 }
 
 export type PartnerUserPayload = {
-  [PartnerUserPayloadFields.LOGIN]: string;
+  [PartnerUserPayloadFields.LOGIN]?: string;
   [PartnerUserPayloadFields.PASSWORD]: string;
-  [PartnerUserPayloadFields.GLOBAL_ID]: string;
+  [PartnerUserPayloadFields.GLOBAL_ID]?: string;
 };
 
 export type PartnerContactPayload = {
@@ -62,7 +62,7 @@ export type PartnerContactPayload = {
   [PartnerContactPayloadFields.PHONE]: string;
   [PartnerContactPayloadFields.EMAIL]: string;
   [PartnerContactPayloadFields.TYPE]: string;
-  [PartnerContactPayloadFields.COUNTRY]: string;
+  //   [PartnerContactPayloadFields.COUNTRY]: string;
 };
 
 export type PartnerAddress = {
@@ -92,7 +92,7 @@ export type PostPartnerPayload = {
   [PartnerFields.REGISTRATION_TYPE]: string;
   [PartnerFields.USER]: PartnerUserPayload;
   [PartnerFields.CONTACT]: PartnerContactPayload;
-  [PartnerFields.COMPANY]: PartnerCompanyPayload;
+  [PartnerFields.COMPANY]?: PartnerCompanyPayload;
   [PartnerFields.RECAPTCHA_TOKEN]: string;
 };
 
