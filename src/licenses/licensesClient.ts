@@ -83,6 +83,7 @@ import {
 import { ConsumptionDailyPrediction } from '../consumption';
 import { GetScheduledTasksResult } from './entities/schedule/getScheduledTasksResult';
 import { GetScheduleTaskResult } from './entities/schedule/getScheduleTaskResult';
+import { LicenceCouponCodeHistoryResult } from './entities/history/licenceCouponCodeHistoryResult';
 
 /**
  * Parameters passable to the request for refining search.
@@ -478,6 +479,11 @@ export class LicensesClient extends AbstractRestfulClient {
   private GET_LICENSE_HISTORY_PATH = '/history';
 
   /**
+   * The path of license coupon code history
+   */
+  private GET_LICENSE_COUPON_CODE_HISTORY_PATH = '/couponCodeHistory';
+
+  /**
    * The path of cancel license auto-renew
    */
   private CANCEL_AUTO_RENEW_PATH = '/autorenew/cancel';
@@ -797,6 +803,18 @@ export class LicensesClient extends AbstractRestfulClient {
     this.path = `/${licenseReference}${this.GET_LICENSE_HISTORY_PATH}`;
 
     return new GetResult(LicenceHistoryResult, await this.get(parameters));
+  }
+
+  public async getCouponCodeHistory(
+    licenseReference: string,
+    parameters: Parameters = {},
+  ): Promise<GetResult<LicenceCouponCodeHistoryResult>> {
+    this.path = `/${licenseReference}${this.GET_LICENSE_COUPON_CODE_HISTORY_PATH}`;
+
+    return new GetResult(
+      LicenceCouponCodeHistoryResult,
+      await this.get(parameters),
+    );
   }
 
   public async cancelAutoRenew(
