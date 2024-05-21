@@ -67,6 +67,7 @@ import {
   PAYLOAD_LICENSE_POST_SCHEDULE_TASKS,
   PAYLOAD_SCHEMA_LICENSE,
   PAYLOAD_SCHEMA_LICENSE_WITHOUT_OPTIONAL_FIELDS,
+  PAYLOAD_LICENSE_COUPON_CODE_HISTORY,
 } from './licenses.mocks';
 import { Axios } from 'axios';
 import sinon from 'sinon';
@@ -97,6 +98,8 @@ export const LICENSE_MOCK_URL_CANCEL_LICENSE = '/licenses/XSP123456/cancel';
 export const LICENSE_MOCK_URL_UPDATE_FRIENDLYNAME =
   '/licenses/123456/friendlyName';
 export const LICENSE_MOCK_URL_GET_HISTORY = '/licenses/12343/history';
+export const LICENSE_MOCK_URL_GET_COUPON_CODE_HISTORY =
+  '/licenses/12343/couponCodeHistory';
 export const LICENSE_MOCK_URL_CANCEL_AUTO_RENEW_LICENSE =
   '/licenses/XSP123456/autorenew/cancel';
 export const LICENSE_MOCK_URL_REACTIVATE_AUTO_RENEW_LICENSE =
@@ -1383,6 +1386,20 @@ describe('LicensesClient', () => {
       client.setPerPage(0);
       await client.rewriteRateHistory(licenseReference, payload);
 
+      expect(nock.isDone()).to.be.true;
+    });
+  });
+
+  describe('getLicenseCouponCodeHistory', () => {
+    const getLicenseCouponCodeHistory = new PublicApiClient()
+      .getLicensesClient()
+      .setUrl(LICENSES_MOCK_URL);
+    it('call get method', async () => {
+      nock(LICENSES_MOCK_URL)
+        .get(LICENSE_MOCK_URL_GET_COUPON_CODE_HISTORY)
+        .reply(200, PAYLOAD_LICENSE_COUPON_CODE_HISTORY);
+
+      await getLicenseCouponCodeHistory.getCouponCodeHistory('12343');
       expect(nock.isDone()).to.be.true;
     });
   });
