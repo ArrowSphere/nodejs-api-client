@@ -30,6 +30,8 @@ import {
   GetScheduleTaskResultFields,
   GetResultFields,
   UpdateScheduledTaskRequestType,
+  LicenceCouponCodeHistoryResultData,
+  LicenceCouponCodeHistoryResultFields,
 } from '../../src';
 import { ExtraDataFields } from '../../src/licenses/entities/getLicense/extraDataGetResult';
 import { CredentialsResultType } from '../../src/licenses/entities/license/credentialsResult';
@@ -267,6 +269,22 @@ export const PAYLOAD_LICENSE_HISTORY: GetData<LicenceHistoryResultData> = {
   status: 200,
   data: {
     [LicenceHistoryResultFields.COLUMN_ACTIONS]: [HISTORY_PAYLOAD],
+  },
+};
+
+export const PAYLOAD_LICENSE_COUPON_CODE_HISTORY: GetData<LicenceCouponCodeHistoryResultData> = {
+  status: 200,
+  data: {
+    [LicenceCouponCodeHistoryResultFields.COLUMN_COUPON_CODES]: [
+      {
+        code: 'AFSDFF12312',
+        updated_at: '2024-05-01T00:00:00Z',
+      },
+      {
+        code: 'ZEESDFF19009',
+        updated_at: '2024-03-02`T00:00:00Z',
+      },
+    ],
   },
 };
 
