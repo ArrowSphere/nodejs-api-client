@@ -14,6 +14,7 @@ export * from './entities/getLicense/relationGetResult';
 export * from './entities/getLicense/ratesGetResult';
 export * from './entities/getLicense/licensePriceGetResult';
 export * from './entities/getLicense/orderGetResult';
+export * from './entities/getLicense/priceBandGetResult';
 export * from './entities/getResult/getLicenseResult';
 export * from './entities/history/actionHistoryResult';
 export * from './entities/history/licenceHistoryResult';
