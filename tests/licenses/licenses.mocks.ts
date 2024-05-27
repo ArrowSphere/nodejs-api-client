@@ -32,11 +32,13 @@ import {
   UpdateScheduledTaskRequestType,
   LicenceCouponCodeHistoryResultData,
   LicenceCouponCodeHistoryResultFields,
+  SaleConstraintsFindResultFields,
 } from '../../src';
 import { ExtraDataFields } from '../../src/licenses/entities/getLicense/extraDataGetResult';
 import { CredentialsResultType } from '../../src/licenses/entities/license/credentialsResult';
 import { RatesGetDataFields } from '../../src/licenses/entities/getLicense/ratesGetResult';
 import { constants } from 'http2';
+import { PriceBandDataFields } from '../../src/licenses/entities/getLicense/priceBandGetResult';
 
 export const PAYLOAD_SCHEMA_LICENSE: GetData<GetLicenseResultData> = {
   status: 200,
@@ -164,6 +166,18 @@ export const PAYLOAD_SCHEMA_LICENSE: GetData<GetLicenseResultData> = {
             'current value is 0 instead of 0.15',
         },
       ],
+      [LicenseGetFields.COLUMN_PRICE_BAND]: {
+        [PriceBandDataFields.COLUMN_SALE_CONTRAINSTS]: {
+          [SaleConstraintsFindResultFields.COLUMN_MIN_QUANTITY]: 1,
+          [SaleConstraintsFindResultFields.COLUMN_MAX_QUANTITY]: 9999,
+        },
+        [PriceBandDataFields.COLUMN_ATTRIBUTES]: [
+          {
+            name: 'attribute_1',
+            value: '2',
+          },
+        ],
+      },
     },
   },
 };
