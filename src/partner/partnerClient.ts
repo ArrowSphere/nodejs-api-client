@@ -79,11 +79,11 @@ export type PartnerCompanyPayload = {
   [PartnerCompanyPayloadFields.INTERNAL_REFERENCE]: string;
   [PartnerCompanyPayloadFields.NAME]: string;
   [PartnerCompanyPayloadFields.PHONE]: string;
-  [PartnerCompanyPayloadFields.NUMBER_OF_EMPLOYEE]: number;
+  [PartnerCompanyPayloadFields.NUMBER_OF_EMPLOYEE]?: number;
   [PartnerCompanyPayloadFields.CORPORATE_EMAIL]: string;
   [PartnerCompanyPayloadFields.CORPORATE_WEBSITE]: string;
   [PartnerCompanyPayloadFields.ADDRESS]: PartnerAddress;
-  [PartnerCompanyPayloadFields.BILLING_ADDRESS]: PartnerAddress;
+  [PartnerCompanyPayloadFields.BILLING_ADDRESS]?: PartnerAddress;
   [PartnerCompanyPayloadFields.REGISTRATION_NUMBER]: string;
   [PartnerCompanyPayloadFields.VAT_NUMBER]: string;
 };
