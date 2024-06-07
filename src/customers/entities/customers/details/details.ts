@@ -6,7 +6,7 @@ export enum DetailsFields {
   COLUMN_ORACLE_ONLINE_KEY = 'OracleOnlineKey',
   COLUMN_IBM_CE_ID = 'IBMCeId',
   COLUMN_MASS_360_RESELLER_ID = 'Maas360ResellerId',
-  COLUMN_TENANT_ID = 'TenantId',
+  COLUMN_TENANT_ID = 'TenantID',
 }
 
 export type DetailsType = {
