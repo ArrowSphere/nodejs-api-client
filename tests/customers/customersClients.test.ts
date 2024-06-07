@@ -10,6 +10,7 @@ import {
   APIResponseResourceCreated,
   APIResponseError,
   APIResponseCustomerUpdated,
+  PostCustomerMigrationPayload,
 } from '../../src/';
 import { expect } from 'chai';
 import { PAYLOAD_ORDERS } from '../orders/mocks/orders.mocks';
@@ -36,6 +37,9 @@ export const CUSTOMERS_GET_CUSTOMER_INVITATION_URL = new RegExp(
 
 export const CUSTOMERS_GET_CUSTOMER_CONTACT_URL = new RegExp(
   '/customers/REF/contacts.*',
+);
+export const CUSTOMERS_POST_CUSTOMERS_MIGRATION_URL = new RegExp(
+  '/customers/REF/migration',
 );
 
 describe('CustomersClients', () => {
@@ -466,6 +470,49 @@ describe('CustomersClients', () => {
 
       expect(result).to.be.instanceof(GetResult);
       expect(result.toJSON()).to.eql(PAYLOAD_GET_CUSTOMER_INVITATION);
+    });
+  });
+
+  describe('postCustomerMigration', () => {
+    const client = new PublicApiClient()
+      .getCustomersClient()
+      .setUrl(CUSTOMERS_MOCK_URL);
+
+    const migrationPayload: PostCustomerMigrationPayload = {
+      program: 'program',
+    };
+
+    it('call post customer migration method to create a migration', async () => {
+      nock(CUSTOMERS_MOCK_URL)
+        .post(CUSTOMERS_POST_CUSTOMERS_MIGRATION_URL)
+        .reply(202);
+
+      const result = await client.postCustomerMigration(
+        'REF',
+        migrationPayload,
+        {},
+      );
+
+      expect(result).to.equal('');
+    });
+
+    it('call migration customer should fail', async () => {
+      const expectedResult: APIResponseError = {
+        status: 400,
+        error: 'Bad value for program',
+      };
+
+      nock(CUSTOMERS_MOCK_URL)
+        .post(CUSTOMERS_POST_CUSTOMERS_MIGRATION_URL)
+        .reply(400, expectedResult);
+
+      try {
+        await client.postCustomerMigration('REF', migrationPayload, {});
+      } catch (error) {
+        expect((error as Error).message).to.equal(
+          'Error: status code: 400. URL: https://customers.localhost',
+        );
+      }
     });
   });
 });

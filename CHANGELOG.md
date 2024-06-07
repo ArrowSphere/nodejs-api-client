@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.120.0] - 2024.06.11
+
+### Added
+- [customers] Adds endpoint migration
+- Added a Makefile to manage build, install, clean and test/test-unit commands
+
 ## [3.119.0] - 2024.06.10
 
 ### Added

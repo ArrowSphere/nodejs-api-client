@@ -13,6 +13,26 @@ import { CustomerFields, CustomerType } from './entities/customers/customer';
 import { ContactFields } from './entities/customers/contact/contact';
 import { AxiosResponse } from 'axios';
 
+export enum CustomerMigrationAttributeFields {
+  NAME = 'name',
+  VALUE = 'value',
+}
+
+export enum CustomerMigrationPayloadFields {
+  PROGRAM = 'program',
+  ATTRIBUTES = 'attributes',
+}
+
+export type PostCustomerMigrationAttribute = {
+  [CustomerMigrationAttributeFields.NAME]: string;
+  [CustomerMigrationAttributeFields.VALUE]: string;
+};
+
+export type PostCustomerMigrationPayload = {
+  [CustomerMigrationPayloadFields.PROGRAM]: string;
+  [CustomerMigrationPayloadFields.ATTRIBUTES]?: PostCustomerMigrationAttribute[];
+};
+
 export enum CustomerContactPayloadFields {
   COLUMN_FIRST_NAME = 'firstName',
   COLUMN_LAST_NAME = 'lastName',
@@ -88,6 +108,10 @@ export type APIResponseCustomerUpdated = {
   data: {
     customers: CustomerType[];
   };
+};
+
+export type APIResponseCustomerMigration = {
+  status: number;
 };
 
 export interface APIResponseError {
@@ -227,5 +251,16 @@ export class CustomersClient extends AbstractRestfulClient {
     this.path = `/invitations`;
 
     return new GetResult(DataInvitation, await this.post(payload, parameters));
+  }
+
+  public async postCustomerMigration(
+    customerReference: string,
+    payload: PostCustomerMigrationPayload,
+    parameters: Parameters = {},
+    returnAxiosData = false,
+  ): Promise<APIResponseCustomerMigration | APIResponseError> {
+    this.path = `/${customerReference}/migration`;
+
+    return await this.post(payload, parameters, {}, { returnAxiosData });
   }
 }
