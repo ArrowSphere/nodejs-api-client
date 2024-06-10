@@ -25,6 +25,7 @@ import {
   UserHistoryType,
   UserType,
 } from '../../src/graphqlApi';
+import { QuoteType } from '../../src/graphqlApi/types/entities/quote';
 
 describe('GraphqlApiClient', () => {
   const client = new GraphqlApiClient().setUrl(GRAPHQL_API_MOCK_URL);
@@ -586,6 +587,69 @@ describe('GraphqlApiClient', () => {
       sinon.assert.calledWithExactly(
         graphQLClient.request,
         sinon.match(GraphqlApiQueryMock.SELECT_USER_GQL),
+      );
+    });
+  });
+
+  describe('GetQuotes', () => {
+    it('makes a graphql POST request on the specified URL to selectAll paginated quotes', async () => {
+      const quotes: QuoteType[] = [
+        {
+          id: 1,
+          arrowCompany: {
+            id: 1,
+            name: 'Arrow ECS',
+          },
+          commitmentAmountTotal: 1000,
+          createdAt: '2017-04-04 14:44:44',
+          endCustomer: {
+            id: 1,
+            name: 'Company 1',
+          },
+          items: [
+            {
+              id: 1,
+              name: 'Item 1',
+              program: {
+                id: 1,
+                name: 'Program 1',
+              },
+              reference: 'REF1',
+              vendorName: 'Vendor 1',
+              vendorNamesSerialized: 'Vendor 1',
+            },
+          ],
+          partner: {
+            id: 1,
+            name: 'Company 1',
+            currency: {
+              name: 'Euro',
+            },
+          },
+          promotionCode: 'PROMO1',
+          reference: 'REF1',
+        },
+      ];
+
+      const expectedResult: SelectAllResultType = {
+        [Queries.SELECT_ALL]: {
+          [SelectableField.DATA]: {
+            [SelectDataField.QUOTE]: quotes,
+          },
+        },
+      };
+
+      graphQLClient.request.resolves(expectedResult);
+
+      const result: SelectAllResultType | null = await client.selectAll(
+        GraphqlApiQueryMock.SELECT_QUOTES_QUERY,
+      );
+
+      expect(result).to.deep.equals(expectedResult);
+
+      sinon.assert.calledWithExactly(
+        graphQLClient.request,
+        sinon.match(GraphqlApiQueryMock.SELECT_QUOTES_GQL),
       );
     });
   });
