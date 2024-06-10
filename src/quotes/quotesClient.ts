@@ -27,4 +27,13 @@ export class QuotesClient extends AbstractRestfulClient {
 
     return new GetResult(QuoteRequest, await this.post(postData, parameters));
   }
+
+  public async deleteQuote(
+    quoteReference: string,
+    parameters: Parameters = {},
+  ): Promise<void> {
+    this.path = `/${quoteReference}`;
+
+    return await this.delete(parameters);
+  }
 }

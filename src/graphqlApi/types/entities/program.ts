@@ -2,7 +2,7 @@ import { PartnerType } from './company';
 import { SubscriptionType } from './subscription';
 import { VendorsType } from './vendor';
 
-export type ProgramType = {
+export type GraphqlApiProgramType = {
   id?: number;
   internalName?: string;
   name?: string;
@@ -17,7 +17,7 @@ export type SubscribedProgramType = {
   internalName?: string;
   subscriptionEndedAt?: string;
   partner?: PartnerType;
-  program?: ProgramType;
+  program?: GraphqlApiProgramType;
   subscription?: SubscriptionType;
   vendor?: VendorsType;
   vendorCode?: string;
