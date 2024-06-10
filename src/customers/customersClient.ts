@@ -13,14 +13,24 @@ import { CustomerFields, CustomerType } from './entities/customers/customer';
 import { ContactFields } from './entities/customers/contact/contact';
 import { AxiosResponse } from 'axios';
 
+export enum CustomerMigrationAttributeFields {
+  NAME = 'name',
+  VALUE = 'value',
+}
+
 export enum CustomerMigrationPayloadFields {
   PROGRAM = 'program',
-  EXTRA_INFORMATION = 'extraInformation',
+  ATTRIBUTES = 'attributes',
 }
+
+export type PostCustomerMigrationAttribute = {
+  [CustomerMigrationAttributeFields.NAME]: string;
+  [CustomerMigrationAttributeFields.VALUE]: string;
+};
 
 export type PostCustomerMigrationPayload = {
   [CustomerMigrationPayloadFields.PROGRAM]: string;
-  [CustomerMigrationPayloadFields.EXTRA_INFORMATION]?: Record<string, string>;
+  [CustomerMigrationPayloadFields.ATTRIBUTES]?: PostCustomerMigrationAttribute[];
 };
 
 export enum CustomerContactPayloadFields {
