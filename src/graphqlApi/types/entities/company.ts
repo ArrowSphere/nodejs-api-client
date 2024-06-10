@@ -1,5 +1,6 @@
 import { ContactsType } from './contact';
 import { CountryType } from './country';
+import { CurrencyType } from './currency';
 import { OrdersType } from './order';
 import { PartnertagType } from './partnertag';
 import { SubscribedProgramType } from './program';
@@ -61,6 +62,7 @@ export type CompanyExtraInformation = {
 export type PartnerType = BaseCompanyType & {
   contactsCount?: CountableType;
   country?: CountryType;
+  currency?: CurrencyType;
   customersCount?: CountableType;
   ordersCount?: CountableType;
   ordersNeedCount?: CountableType;
