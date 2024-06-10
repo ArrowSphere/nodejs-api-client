@@ -3,6 +3,13 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.119.0] - 2024.06.10
+
+### Added
+- [partners] Add function to manage users (disable mfa, lock, unlock, unlock insecure login, update scope)
+- [graphql-api] Get users update historic
+- [licenses] Get license credentials
+
 ## [3.118.1] - 2024.06.07
 
 ### Fixed
