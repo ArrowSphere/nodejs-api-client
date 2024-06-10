@@ -28,11 +28,14 @@ import {
 } from './entities/licenseBudget';
 import { UserHistoryType, UserType } from './entities/user';
 import { OrganizationUnitsType } from './entities/organizationUnit';
+import { CurrencyType } from './entities/currency';
+import { QuoteItemType, QuoteType } from './entities/quote';
 
 export type PartnertagSchema = Schema<PartnertagType, boolean>;
 
 type MissingFieldsOfCompanySchema = {
   contacts?: ContactsSchema;
+  currency?: CurrencySchema;
   extraInformations?: CompanyExtraInformationSchema;
   orders?: OrdersSchema;
   partnerTags?: PartnertagSchema;
@@ -74,6 +77,27 @@ type MissingFieldsOfUserSchema = {
 type MissingFieldsOfLicenseBudgetSchema = {
   notifications?: LicenseBudgetNotificationSchema;
 };
+
+type MissingFieldsOfQuoteSchema = {
+  arrowCompany?: ArrowCompanySchema;
+  endCustomer?: EndCustomerSchema;
+  items?: QuoteItemSchema;
+  partner?: PartnerSchema;
+};
+
+type MissingFieldsOfQuoteItemSchema = {
+  program?: LicenseBudgetNotificationSchema;
+};
+
+export type QuoteItemSchema = Merge<
+  Schema<QuoteItemType, boolean>,
+  MissingFieldsOfQuoteItemSchema
+>;
+
+export type QuoteSchema = Merge<
+  Schema<QuoteType, boolean>,
+  MissingFieldsOfQuoteSchema
+>;
 
 export type ContactsSchema = Merge<
   Schema<ContactsType, boolean>,
@@ -122,6 +146,7 @@ export type CompanyExtraInformationSchema = Schema<
 
 export type ContinentSchema = Schema<ContinentType, boolean>;
 export type CountrySchema = Schema<CountryType, boolean>;
+export type CurrencySchema = Schema<CurrencyType, boolean>;
 export type ErrorsSchema = Schema<ErrorsType, boolean>;
 export type LicenseBudgetNotificationSchema = Schema<
   LicenseBudgetNotificationType,
@@ -151,10 +176,12 @@ export type SelectAllResponseDataSchema = {
   [SelectDataField.LICENSE_BUDGET]?: LicenseBudgetSchema;
   [SelectDataField.PARTNER]?: PartnerSchema;
   [SelectDataField.PARTNERTAG]?: PartnertagSchema;
+  [SelectDataField.QUOTE]?: QuoteSchema;
   [SelectDataField.SUBSCRIBED_PROGRAM]?: SubscribedProgramSchema;
   [SelectDataField.SUBSCRIPTION]?: SubscriptionSchema;
   [SelectDataField.USER]?: UserSchema;
   [SelectDataField.USER_HISTORY]?: UserHistorySchema;
+  [SelectDataField.VENDOR]?: VendorSchema;
   [SelectDataField.WORKGROUP]?: WorkgroupSchema;
 };
 
@@ -171,10 +198,12 @@ export type SelectOneResponseDataSchema = {
   [SelectDataField.LICENSE_BUDGET]?: LicenseBudgetSchema;
   [SelectDataField.PARTNER]?: PartnerSchema;
   [SelectDataField.PARTNERTAG]?: PartnertagSchema;
+  [SelectDataField.QUOTE]?: QuoteSchema;
   [SelectDataField.SUBSCRIBED_PROGRAM]?: SubscribedProgramSchema;
   [SelectDataField.SUBSCRIPTION]?: SubscriptionSchema;
   [SelectDataField.USER]?: UserSchema;
   [SelectDataField.USER_HISTORY]?: UserHistorySchema;
+  [SelectDataField.VENDOR]?: VendorSchema;
   [SelectDataField.WORKGROUP]?: WorkgroupSchema;
 };
 
