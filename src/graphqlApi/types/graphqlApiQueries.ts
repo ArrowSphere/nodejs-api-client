@@ -152,7 +152,6 @@ export enum SelectDataField {
   SUBSCRIPTION = 'subscription',
   USER = 'user',
   USER_HISTORY = 'userHistory',
-  VENDOR = 'vendor',
   WORKGROUP = 'workgroup',
 }
 
