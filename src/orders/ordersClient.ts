@@ -41,6 +41,7 @@ export enum CreateOrderInputFields {
   COLUMN_COTERMINOSITY_DATE = 'coterminosityDate',
   COLUMN_COTERMINOSITY_SUBSCRIPTION_REF = 'coterminositySubscriptionRef',
   COLUMN_PROMOTION_ID = 'promotionId',
+  COLUMN_ORGANIZATION_UNIT_REF = 'organizationUnitRef',
 }
 
 export enum scenarioType {
@@ -60,6 +61,7 @@ export type CreateOrderInputType = {
   [CreateOrderInputFields.COLUMN_EXTRA_INFORMATION]?: {
     programs: { [key: string]: { [name: string]: string } };
   };
+  [CreateOrderInputFields.COLUMN_ORGANIZATION_UNIT_REF]?: string;
 };
 
 export type CreateOrderProductType = {
