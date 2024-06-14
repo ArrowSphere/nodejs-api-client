@@ -1,5 +1,4 @@
 import type { Except } from 'type-fest';
-import { File } from 'node:buffer';
 
 export enum ActionTypes {
   SET_RATE = 'setRate',
@@ -29,7 +28,8 @@ export enum BulkBodyFields {
   SPECIAL_PRICE_RATE_TYPE = 'specialPriceRateType',
   SPECIAL_PRICE_RATE_VALUE = 'specialPriceRateValue',
   SPECIAL_RATE_EFFECTIVE_APPLICATION_DATE = 'specialRateEffectiveApplicationDate',
-  FILE = 'file',
+  FILE_BASE64 = 'fileBase64',
+  FILE_NAME = 'fileName',
 }
 
 export enum SpecialPriceRateActive {
@@ -40,32 +40,29 @@ export enum SpecialPriceRateActive {
 
 export type BulkBodyArgument = {
   [BulkBodyFields.ACTION_TYPE]: ActionTypes;
-  [BulkBodyFields.LICENSES]: string[];
+  [BulkBodyFields.LICENSES]?: string[];
   [BulkBodyFields.AUTO_RENEW_STATUS]?: AutoRenewStatuses;
   [BulkBodyFields.SPECIAL_PRICE_RATE_TYPE]?: SpecialPriceRateTypes;
   [BulkBodyFields.SPECIAL_PRICE_RATE_VALUE]?: string;
   [BulkBodyFields.SPECIAL_RATE_EFFECTIVE_APPLICATION_DATE]?: SpecialRateEffectiveApplicationDate;
-  [BulkBodyFields.FILE]?: File;
+  [BulkBodyFields.FILE_BASE64]?: string;
+  [BulkBodyFields.FILE_NAME]?: string;
 };
 
 export type BulkAutoRenewBody = Except<
   BulkBodyArgument,
-  BulkBodyFields.SPECIAL_PRICE_RATE_TYPE &
+  BulkBodyFields.LICENSES &
+    BulkBodyFields.SPECIAL_PRICE_RATE_TYPE &
     BulkBodyFields.SPECIAL_PRICE_RATE_VALUE &
-    BulkBodyFields.SPECIAL_RATE_EFFECTIVE_APPLICATION_DATE &
-    BulkBodyFields.FILE
+    BulkBodyFields.SPECIAL_RATE_EFFECTIVE_APPLICATION_DATE
 >;
 
 export type BulkSetRateBody = Except<
   BulkBodyArgument,
-  BulkBodyFields.AUTO_RENEW_STATUS & BulkBodyFields.FILE
+  BulkBodyFields.LICENSES & BulkBodyFields.AUTO_RENEW_STATUS
 >;
 
 export type BulkUploadChangesBody = Except<
   BulkBodyArgument,
-  BulkBodyFields.AUTO_RENEW_STATUS &
-    BulkBodyFields.FILE &
-    BulkBodyFields.SPECIAL_PRICE_RATE_TYPE &
-    BulkBodyFields.SPECIAL_PRICE_RATE_VALUE &
-    BulkBodyFields.SPECIAL_RATE_EFFECTIVE_APPLICATION_DATE
+  BulkBodyFields.FILE_BASE64 & BulkBodyFields.FILE_NAME
 >;
