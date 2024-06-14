@@ -4,9 +4,7 @@
 import {
   AbstractRestfulClient,
   ExtraInformationType,
-  FileUploadKeys,
   Parameters,
-  PayloadWithFile,
 } from '../abstractRestfulClient';
 import { FindConfig, FindData, FindResult } from './entities/findResult';
 import {
@@ -74,6 +72,7 @@ import {
   BulkAutoRenewBody,
   BulkBodyFields,
   SpecialPriceRateActive,
+  BulkUploadChangesBody,
 } from './types/bulkArguments';
 import {
   EndCustomerOrganisationUnitDataKeywords,
@@ -541,7 +540,7 @@ export class LicensesClient extends AbstractRestfulClient {
   /**
    * The path to apply bulk action on license(s)
    */
-  private BULK_PATH = '/bulk-action';
+  private BULK_PATH = '/v2/bulk-action';
 
   /**
    * Returns the raw result from the find endpoint call
@@ -672,20 +671,19 @@ export class LicensesClient extends AbstractRestfulClient {
   public async bulkAction(bulkData: BulkBodyArgument): Promise<void> {
     this.path = this.BULK_PATH;
 
-    let postData = {
-      [BulkBodyFields.ACTION_TYPE]: bulkData.actionType,
-      [BulkBodyFields.LICENSES]: bulkData.licenses,
-    };
+    let postData: BulkBodyArgument;
 
     if (bulkData.actionType == ActionTypes.AUTO_RENEW) {
       const postAutoRenewData: BulkAutoRenewBody = {
-        ...postData,
+        [BulkBodyFields.ACTION_TYPE]: bulkData.actionType,
+        [BulkBodyFields.LICENSES]: bulkData.licenses,
         [BulkBodyFields.AUTO_RENEW_STATUS]: bulkData.autoRenewStatus,
       };
       postData = postAutoRenewData;
     } else if (bulkData.actionType == ActionTypes.SET_RATE) {
       const postSetRateData: BulkSetRateBody = {
-        ...postData,
+        [BulkBodyFields.ACTION_TYPE]: bulkData.actionType,
+        [BulkBodyFields.LICENSES]: bulkData.licenses,
         [BulkBodyFields.SPECIAL_PRICE_RATE_TYPE]: bulkData.specialPriceRateType,
         [BulkBodyFields.SPECIAL_PRICE_RATE_VALUE]:
           bulkData.specialPriceRateValue,
@@ -694,12 +692,14 @@ export class LicensesClient extends AbstractRestfulClient {
       };
       postData = postSetRateData;
     } else if (bulkData.actionType == ActionTypes.UPLOAD_CHANGES) {
-      const payload: PayloadWithFile = {
-        [FileUploadKeys.Fields]: postData,
-        [FileUploadKeys.File]: bulkData[BulkBodyFields.FILE],
+      const postUploadChanges: BulkUploadChangesBody = {
+        [BulkBodyFields.ACTION_TYPE]: bulkData[BulkBodyFields.ACTION_TYPE],
+        [BulkBodyFields.FILE_BASE64]: bulkData[BulkBodyFields.FILE_BASE64],
+        [BulkBodyFields.FILE_NAME]: bulkData[BulkBodyFields.FILE_NAME],
       };
-
-      return await this.postFile(payload);
+      postData = postUploadChanges;
+    } else {
+      throw new Error('actionType does not exist');
     }
 
     return await this.post(postData);
