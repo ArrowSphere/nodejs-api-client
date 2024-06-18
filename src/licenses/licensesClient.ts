@@ -540,7 +540,7 @@ export class LicensesClient extends AbstractRestfulClient {
   /**
    * The path to apply bulk action on license(s)
    */
-  private BULK_PATH = '/v2/bulk-action';
+  private BULK_PATH = '/bulk-action';
 
   /**
    * Returns the raw result from the find endpoint call
