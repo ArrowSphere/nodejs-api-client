@@ -115,7 +115,7 @@ export const LICENSE_MOCK_URL_SCHEDULE_TASKS =
   '/licenses/XSP12343/scheduledTasks';
 export const LICENSE_MOCK_URL_SCHEDULED_TASKS =
   '/licenses/XSP12343/scheduledTasks/12345';
-export const LICENSE_MOCK_URL_BULK = '/licenses/v2/bulk-action';
+export const LICENSE_MOCK_URL_BULK = '/licenses/bulk-action';
 
 /**
  * Mock license data to be used in tests and returned by mocks
