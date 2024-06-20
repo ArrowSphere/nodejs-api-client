@@ -25,6 +25,7 @@ export enum ReportName {
 }
 
 export enum SearchBodyFields {
+  PILLAR = 'pillar',
   FILTERS = 'filters',
   EXCLUSION_FILTERS = 'exclusionFilters',
   SORT = 'sort',
@@ -103,6 +104,7 @@ export type PaginateArgument = {
 };
 
 export type SearchBodyArgument = {
+  [SearchBodyFields.PILLAR]?: string;
   [SearchBodyFields.EXCLUSION_FILTERS]?: SearchFilterArgument[];
   [SearchBodyFields.FILTERS]?: SearchFilterArgument[];
   [SearchBodyFields.MARKETPLACE]?: string[][];
