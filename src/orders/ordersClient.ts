@@ -42,6 +42,7 @@ export enum CreateOrderInputFields {
   COLUMN_COTERMINOSITY_SUBSCRIPTION_REF = 'coterminositySubscriptionRef',
   COLUMN_PROMOTION_ID = 'promotionId',
   COLUMN_ORGANIZATION_UNIT_REF = 'organizationUnitRef',
+  COLUMN_EAVS = 'eavs',
 }
 
 export enum scenarioType {
@@ -114,6 +115,7 @@ export type CreateOrderProductType = {
       [CreateOrderInputFields.COLUMN_PRICE_EXCHANGE_RATE]?: number;
     };
   };
+  [CreateOrderInputFields.COLUMN_EAVS]?: Record<string, string>;
 };
 
 export class OrdersClient extends AbstractRestfulClient {
