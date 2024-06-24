@@ -29,6 +29,10 @@ export const CreateOrderPartialInputPayload: CreateOrderInputType = {
       [CreateOrderInputFields.COLUMN_SUBSCRIPTION]: {
         [CreateOrderInputFields.COLUMN_REFERENCE]: 'XSPS12348',
       },
+      [CreateOrderInputFields.COLUMN_EAVS]: {
+        eav1: 'value1',
+        eav2: 'value2',
+      },
     },
   ],
 };
