@@ -23,7 +23,7 @@ export class QuoteRequest extends AbstractEntity<QuoteRequestType> {
 
   public toJSON(): QuoteRequestType {
     return {
-      [QuoteRequestFields.MESSAGE]: this.#message,
+      [QuoteRequestFields.MESSAGE]: this.message,
     };
   }
 }
