@@ -5,7 +5,7 @@ import { QuoteRequest } from './entities/QuoteRequest';
 export type RequestQuoteRequestType = {
   agreeToReceiveCommunications: boolean;
   agreeSharingInformation: boolean;
-  comments: string;
+  comments?: string;
   company: string;
   country: string;
   email: string;
@@ -16,6 +16,11 @@ export type RequestQuoteRequestType = {
   vendor: string;
 };
 
+export type RequestQuoteIbmRequestType = {
+  endCustomerRef?: string;
+  reference?: string;
+};
+
 export class QuotesClient extends AbstractRestfulClient {
   protected basePath = '/quotes';
 
@@ -24,6 +29,16 @@ export class QuotesClient extends AbstractRestfulClient {
     parameters: Parameters = {},
   ): Promise<GetResult<QuoteRequest>> {
     this.path = '/request';
+
+    return new GetResult(QuoteRequest, await this.post(postData, parameters));
+  }
+
+  public async requestQuoteForVendor(
+    vendor: string,
+    postData: RequestQuoteIbmRequestType,
+    parameters: Parameters = {},
+  ): Promise<GetResult<QuoteRequest>> {
+    this.path = `/request/${vendor}`;
 
     return new GetResult(QuoteRequest, await this.post(postData, parameters));
   }
