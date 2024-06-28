@@ -3,10 +3,15 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.125.0] - 2024.07.28
+
+### Modified
+- [partners] Add partner register
+
 ## [3.124.0] - 2024.06.25
 
 ### Modified
-- [orders] Add dynamic eav attributes for products in create order payload 
+- [orders] Add dynamic eav attributes for products in create order payload
 
 ## [3.123.1] - 2024.06.12
 
@@ -163,7 +168,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - [consumption] add endpoint to get and update budget settings
 - [graphql-api] add license budget
-- [licenses] add new field vendor_code 
+- [licenses] add new field vendor_code
 
 ## [3.99.0] - 2024.02.20
 

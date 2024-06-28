@@ -5,6 +5,7 @@ import axios, {
   RawAxiosRequestHeaders,
 } from 'axios';
 import { cloneDeep } from 'lodash';
+import { PostPartnerPayload } from './partner';
 
 export type AxiosSingletonConfiguration = {
   isLogging?: boolean;
@@ -88,6 +89,10 @@ export class AxiosSingleton {
       const apiKey = tempRequest.headers?.apiKey as string;
       (tempRequest.headers as RawAxiosRequestHeaders).apiKey =
         '****************************' + apiKey.substring(apiKey.length - 4);
+    }
+
+    if (tempRequest.data?.user.password) {
+      (tempRequest.data as PostPartnerPayload).user.password = '***********';
     }
 
     return tempRequest;
