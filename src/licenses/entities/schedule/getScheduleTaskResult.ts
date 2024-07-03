@@ -17,7 +17,7 @@ export enum GetScheduleTaskResultFields {
   COLUMN_STATUS_CODE = 'statusCode',
   COLUMN_TERM = 'term',
   COLUMN_UPDATED_AT = 'updatedAt',
-  COLUMN_COTERMINOSITY_DATE = 'cotermiosityDate',
+  COLUMN_COTERMINOSITY_DATE = 'coterminosityDate',
 }
 
 export type GetScheduleTaskResultData = {
