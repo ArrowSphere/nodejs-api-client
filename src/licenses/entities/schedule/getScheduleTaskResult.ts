@@ -17,6 +17,7 @@ export enum GetScheduleTaskResultFields {
   COLUMN_STATUS_CODE = 'statusCode',
   COLUMN_TERM = 'term',
   COLUMN_UPDATED_AT = 'updatedAt',
+  COLUMN_COTERMINOSITY_DATE = 'cotermiosityDate',
 }
 
 export type GetScheduleTaskResultData = {
@@ -29,6 +30,7 @@ export type GetScheduleTaskResultData = {
   [GetScheduleTaskResultFields.COLUMN_STATUS_CODE]: string;
   [GetScheduleTaskResultFields.COLUMN_TERM]: number;
   [GetScheduleTaskResultFields.COLUMN_UPDATED_AT]: string;
+  [GetScheduleTaskResultFields.COLUMN_COTERMINOSITY_DATE]: string;
 };
 
 export class GetScheduleTaskResult extends AbstractEntity<GetScheduleTaskResultData> {
@@ -41,6 +43,7 @@ export class GetScheduleTaskResult extends AbstractEntity<GetScheduleTaskResultD
   readonly #statusCode: string;
   readonly #term: number;
   readonly #updatedAt: string;
+  readonly #coterminosityDate: string;
 
   public constructor(dataInput: GetScheduleTaskResultData) {
     super(dataInput);
@@ -58,6 +61,8 @@ export class GetScheduleTaskResult extends AbstractEntity<GetScheduleTaskResultD
       dataInput[GetScheduleTaskResultFields.COLUMN_STATUS_CODE];
     this.#term = dataInput[GetScheduleTaskResultFields.COLUMN_TERM];
     this.#updatedAt = dataInput[GetScheduleTaskResultFields.COLUMN_UPDATED_AT];
+    this.#coterminosityDate =
+      dataInput[GetScheduleTaskResultFields.COLUMN_COTERMINOSITY_DATE];
   }
 
   public get createdAt(): string {
@@ -96,6 +101,10 @@ export class GetScheduleTaskResult extends AbstractEntity<GetScheduleTaskResultD
     return this.#updatedAt;
   }
 
+  public get coterminosityDate(): string {
+    return this.#coterminosityDate;
+  }
+
   public toJSON(): GetScheduleTaskResultData {
     return {
       [GetScheduleTaskResultFields.COLUMN_CREATED_AT]: this.createdAt,
@@ -108,6 +117,8 @@ export class GetScheduleTaskResult extends AbstractEntity<GetScheduleTaskResultD
       [GetScheduleTaskResultFields.COLUMN_STATUS_CODE]: this.statusCode,
       [GetScheduleTaskResultFields.COLUMN_TERM]: this.term,
       [GetScheduleTaskResultFields.COLUMN_UPDATED_AT]: this.updatedAt,
+      [GetScheduleTaskResultFields.COLUMN_COTERMINOSITY_DATE]: this
+        .coterminosityDate,
     };
   }
 }
