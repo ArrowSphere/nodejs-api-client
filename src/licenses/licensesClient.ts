@@ -395,6 +395,7 @@ export type SaveBillingCommentsInputType = {
 };
 
 export type ScheduleTasks = {
+  coterminaosityDate?: string;
   periodicity?: number;
   term?: number;
   seats?: number;
