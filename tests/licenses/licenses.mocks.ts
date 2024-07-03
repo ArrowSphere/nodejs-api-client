@@ -396,6 +396,7 @@ const PAYLOAD_SCHEDULES_TASKS: GetScheduleTaskResultData[] = [
     statusCode: '66',
     term: 8640,
     updatedAt: '2024-04-07T20:27:09+00:00',
+    coterminosityDate: '2025-04-06T20:23:52+00:00',
   },
 ];
 
@@ -424,5 +425,7 @@ export const LICENSE_SCHEDULED_TASK_GET_RESPONSE: GetData<GetScheduleTaskResultD
     [GetScheduleTaskResultFields.COLUMN_TERM]: 8640,
     [GetScheduleTaskResultFields.COLUMN_UPDATED_AT]:
       '2024-04-07T20:27:09+00:00',
+    [GetScheduleTaskResultFields.COLUMN_COTERMINOSITY_DATE]:
+      '2025-04-06T20:23:52+00:00',
   },
 };
