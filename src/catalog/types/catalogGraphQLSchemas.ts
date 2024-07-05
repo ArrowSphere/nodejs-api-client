@@ -33,6 +33,7 @@ type MissingFieldsOfProductSchema = {
   attributesParameters?: AttributesParametersSchema;
   baseOfferPrimaries?: IdentifiersSchema;
   conversionOfferPrimaries?: IdentifiersSchema;
+  defaultPriceBand?: PriceBandSchema;
   relatedOffers?: RelatedOfferSchema;
   priceBand?: PriceBandSchema;
   promotions?: PromotionSchema;
