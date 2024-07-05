@@ -44,6 +44,7 @@ export const PAYLOAD_SCHEMA_LICENSE: GetData<GetLicenseResultData> = {
   status: 200,
   data: {
     license: {
+      [LicenseGetFields.COLUMN_CLASSIFICATION]: 'SaaS',
       [LicenseGetFields.COLUMN_LICENSE_ID]: '123456',
       [LicenseGetFields.COLUMN_PARENT_LICENSE_ID]: 'parent_license_id',
       [LicenseGetFields.COLUMN_FRIENDLY_NAME]: 'friendly_name',
@@ -186,6 +187,7 @@ export const PAYLOAD_SCHEMA_LICENSE_WITHOUT_OPTIONAL_FIELDS: GetData<GetLicenseR
   status: 200,
   data: {
     license: {
+      [LicenseGetFields.COLUMN_CLASSIFICATION]: 'SaaS',
       [LicenseGetFields.COLUMN_LICENSE_ID]: '123456',
       [LicenseGetFields.COLUMN_PARENT_LICENSE_ID]: 'parent_license_id',
       [LicenseGetFields.COLUMN_FRIENDLY_NAME]: 'friendly_name',
