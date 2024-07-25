@@ -22,6 +22,7 @@ import {
   SelectDataField,
   SelectOneResultType,
   SelectableField,
+  SpecialPriceRateType,
   UserHistoryType,
   UserType,
 } from '../../src/graphqlApi';
@@ -650,6 +651,47 @@ describe('GraphqlApiClient', () => {
       sinon.assert.calledWithExactly(
         graphQLClient.request,
         sinon.match(GraphqlApiQueryMock.SELECT_QUOTES_GQL),
+      );
+    });
+  });
+
+  describe('GetSpecialPriceRate', () => {
+    it('makes a graphql POST request on the specified URL to selectAll paginated specialPriceRate', async () => {
+      const quotes: SpecialPriceRateType[] = [
+        {
+          id: 1,
+          companyType: {
+            type: 'MSP',
+          },
+          createdAt: '2017-04-04 14:44:44',
+          endedAt: undefined,
+          rate: 0.12,
+          startedAt: '',
+          type: {
+            name: 'discount',
+          },
+        },
+      ];
+
+      const expectedResult: SelectAllResultType = {
+        [Queries.SELECT_ALL]: {
+          [SelectableField.DATA]: {
+            [SelectDataField.QUOTE]: quotes,
+          },
+        },
+      };
+
+      graphQLClient.request.resolves(expectedResult);
+
+      const result: SelectAllResultType | null = await client.selectAll(
+        GraphqlApiQueryMock.SELECT_SPECIAL_PRICE_RATE_QUERY,
+      );
+
+      expect(result).to.deep.equals(expectedResult);
+
+      sinon.assert.calledWithExactly(
+        graphQLClient.request,
+        sinon.match(GraphqlApiQueryMock.SELECT_SPECIAL_PRICE_RATE_GQL),
       );
     });
   });

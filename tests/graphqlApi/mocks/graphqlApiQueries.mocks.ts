@@ -811,3 +811,60 @@ export const SELECT_QUOTES_QUERY: SelectAllQueryType = {
 
 export const SELECT_QUOTES_GQL =
   '{selectAll (aggregatorFilter: ["id"], filters: {groups: [{items: [{name: "updatedAt", value: ["2024-01-01 00:00:00", "2024-06-11 23:59:59"], operator: "BETWEEN"}]}]}, pagination: {page: 1, perPage: 15}, sort: [{name: "createdAt", direction: "DESC"}]) { data { quote { id arrowCompany { id name workgroup { code } } commitmentAmountTotal createdAt endCustomer { id name } items { id name program { id name } reference vendorName vendorNamesSerialized } partner { id name currency { id name symbol } } promotionCode reference status totalRecurringPrice updatedAt } } errors { code message } pagination { currentPage perPage total } }}';
+
+export const SELECT_SPECIAL_PRICE_RATE_QUERY: SelectAllQueryType = {
+  [Queries.SELECT_ALL]: {
+    __args: {
+      filters: {
+        groups: [
+          {
+            items: [
+              {
+                name: 'orderItem.id',
+                value: ['5102652'],
+                operator: ComparisonOperator.EQUALS,
+              },
+            ],
+          },
+        ],
+      },
+      pagination: {
+        page: 1,
+        perPage: 15,
+      },
+      sort: [
+        {
+          name: 'createdAt',
+          direction: Direction.DESC,
+        },
+      ],
+    },
+    data: {
+      specialPriceRate: {
+        id: true,
+        companyType: {
+          type: true,
+        },
+        createdAt: true,
+        endedAt: true,
+        rate: true,
+        startedAt: true,
+        type: {
+          name: true,
+        },
+      },
+    },
+    errors: {
+      code: true,
+      message: true,
+    },
+    pagination: {
+      currentPage: true,
+      perPage: true,
+      total: true,
+    },
+  },
+};
+
+export const SELECT_SPECIAL_PRICE_RATE_GQL =
+  '{selectAll (filters: {groups: [{items: [{name: "orderItem.id", value: ["5102652"], operator: "EQUALS"}]}]}, pagination: {page: 1, perPage: 15}, sort: [{name: "createdAt", direction: "DESC"}]) { data { specialPriceRate { id companyType { type } createdAt endedAt rate startedAt type { name } } } errors { code message } pagination { currentPage perPage total } }}';

@@ -1,4 +1,5 @@
 import { CompanyTypeType } from './company';
+import { OrderItemsType } from './order';
 
 export type SpecialPriceRateType = {
   id?: number;
@@ -7,6 +8,7 @@ export type SpecialPriceRateType = {
   rate?: number;
   startedAt?: string;
   companyType?: CompanyTypeType;
+  orderItem?: OrderItemsType;
   type?: SubscriptionRateType;
 };
 

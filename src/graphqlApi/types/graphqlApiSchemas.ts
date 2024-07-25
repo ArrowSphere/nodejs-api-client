@@ -177,6 +177,7 @@ export type SelectAllResponseDataSchema = {
   [SelectDataField.PARTNER]?: PartnerSchema;
   [SelectDataField.PARTNERTAG]?: PartnertagSchema;
   [SelectDataField.QUOTE]?: QuoteSchema;
+  [SelectDataField.SPECIAL_PRICE_RATE]?: SpecialPriceRateSchema;
   [SelectDataField.SUBSCRIBED_PROGRAM]?: SubscribedProgramSchema;
   [SelectDataField.SUBSCRIPTION]?: SubscriptionSchema;
   [SelectDataField.USER]?: UserSchema;
@@ -198,6 +199,7 @@ export type SelectOneResponseDataSchema = {
   [SelectDataField.PARTNER]?: PartnerSchema;
   [SelectDataField.PARTNERTAG]?: PartnertagSchema;
   [SelectDataField.QUOTE]?: QuoteSchema;
+  [SelectDataField.SPECIAL_PRICE_RATE]?: SpecialPriceRateSchema;
   [SelectDataField.SUBSCRIBED_PROGRAM]?: SubscribedProgramSchema;
   [SelectDataField.SUBSCRIPTION]?: SubscriptionSchema;
   [SelectDataField.USER]?: UserSchema;
