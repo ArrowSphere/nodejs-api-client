@@ -8,6 +8,7 @@ import { LicenseBudgetType } from './entities/licenseBudget';
 import { PartnertagType } from './entities/partnertag';
 import { SubscribedProgramType } from './entities/program';
 import { QuoteType } from './entities/quote';
+import { SpecialPriceRateType } from './entities/specialPriceRate';
 import { SubscriptionType } from './entities/subscription';
 import { UserHistoryType, UserType } from './entities/user';
 import { WorkgroupType } from './entities/workgroup';
@@ -148,6 +149,7 @@ export enum SelectDataField {
   PARTNER = 'partner',
   PARTNERTAG = 'partnertag',
   QUOTE = 'quote',
+  SPECIAL_PRICE_RATE = 'specialPriceRate',
   SUBSCRIBED_PROGRAM = 'subscribedProgram',
   SUBSCRIPTION = 'subscription',
   USER = 'user',
@@ -172,6 +174,7 @@ export type SelectAllResponseDataType = {
   [SelectDataField.PARTNER]?: PartnerType[];
   [SelectDataField.PARTNERTAG]?: PartnertagType[];
   [SelectDataField.QUOTE]?: QuoteType[];
+  [SelectDataField.SPECIAL_PRICE_RATE]?: SpecialPriceRateType[];
   [SelectDataField.SUBSCRIBED_PROGRAM]?: SubscribedProgramType[];
   [SelectDataField.SUBSCRIPTION]?: SubscriptionType[];
   [SelectDataField.USER]?: UserType[];
@@ -226,6 +229,7 @@ export type SelectOneResponseDataType = {
   [SelectDataField.PARTNER]?: PartnerType;
   [SelectDataField.PARTNERTAG]?: PartnertagType;
   [SelectDataField.QUOTE]?: QuoteType;
+  [SelectDataField.SPECIAL_PRICE_RATE]?: SpecialPriceRateType;
   [SelectDataField.SUBSCRIBED_PROGRAM]?: SubscribedProgramType;
   [SelectDataField.SUBSCRIPTION]?: SubscriptionType;
   [SelectDataField.USER]?: UserType;
