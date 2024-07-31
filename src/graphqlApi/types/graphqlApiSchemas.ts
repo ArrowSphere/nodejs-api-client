@@ -29,7 +29,7 @@ import {
 import { UserHistoryType, UserType } from './entities/user';
 import { OrganizationUnitsType } from './entities/organizationUnit';
 import { CurrencyType } from './entities/currency';
-import { QuoteItemType, QuoteType } from './entities/quote';
+import { ItemData, QuoteItemType, QuoteType } from './entities/quote';
 
 export type PartnertagSchema = Schema<PartnertagType, boolean>;
 
@@ -87,12 +87,15 @@ type MissingFieldsOfQuoteSchema = {
 
 type MissingFieldsOfQuoteItemSchema = {
   program?: LicenseBudgetNotificationSchema;
+  itemData?: ItemDataSchema;
 };
 
 export type QuoteItemSchema = Merge<
   Schema<QuoteItemType, boolean>,
   MissingFieldsOfQuoteItemSchema
 >;
+
+export type ItemDataSchema = Schema<ItemData, boolean>;
 
 export type QuoteSchema = Merge<
   Schema<QuoteType, boolean>,
