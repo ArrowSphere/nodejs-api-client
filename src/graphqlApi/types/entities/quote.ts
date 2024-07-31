@@ -27,4 +27,14 @@ export type QuoteItemType = {
   reference?: string;
   vendorName?: string;
   vendorNamesSerialized?: string;
+  itemData?: ItemData;
+};
+
+export type ItemData = {
+  id: string;
+  offerName: string;
+  publicPrice: number;
+  currency: string;
+  arrowRateType: string;
+  partnerRateType: string;
 };
