@@ -644,7 +644,6 @@ describe('GraphqlApiClient', () => {
       const result: SelectAllResultType | null = await client.selectAll(
         GraphqlApiQueryMock.SELECT_QUOTES_QUERY,
       );
-
       expect(result).to.deep.equals(expectedResult);
 
       sinon.assert.calledWithExactly(
