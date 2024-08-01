@@ -33,6 +33,7 @@ import {
 } from '../license/warningFindResult';
 
 export enum LicenseGetFields {
+  COLUMN_ADDITIONAL_INFORMATION = 'additional_information',
   COLUMN_CLASSIFICATION = 'classification',
   COLUMN_LICENSE_ID = 'license_id',
   COLUMN_PARENT_LICENSE_ID = 'parent_license_id',
@@ -85,6 +86,7 @@ export enum LicenseGetFields {
 }
 
 export type LicenseGetData = {
+  [LicenseGetFields.COLUMN_ADDITIONAL_INFORMATION]?: Record<string, unknown>;
   [LicenseGetFields.COLUMN_CLASSIFICATION]: string;
   [LicenseGetFields.COLUMN_LICENSE_ID]: string;
   [LicenseGetFields.COLUMN_PARENT_LICENSE_ID]: string | null;
@@ -137,6 +139,7 @@ export type LicenseGetData = {
 };
 
 export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
+  readonly #additionalInformation?: Record<string, unknown>;
   readonly #classification: string;
   readonly #license_id: string;
   readonly #parent_license_id: string | null;
@@ -190,6 +193,8 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
   public constructor(licenseGetDataInput: LicenseGetData) {
     super(licenseGetDataInput);
 
+    this.#additionalInformation =
+      licenseGetDataInput[LicenseGetFields.COLUMN_ADDITIONAL_INFORMATION];
     this.#classification =
       licenseGetDataInput[LicenseGetFields.COLUMN_CLASSIFICATION];
     this.#license_id = licenseGetDataInput[LicenseGetFields.COLUMN_LICENSE_ID];
@@ -317,6 +322,10 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
 
   public get classification(): string {
     return this.#classification;
+  }
+
+  public get additionalInformation(): Record<string, unknown> | undefined {
+    return this.#additionalInformation;
   }
 
   public get id(): string {
@@ -516,6 +525,8 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
 
   public toJSON(): LicenseGetData {
     return {
+      [LicenseGetFields.COLUMN_ADDITIONAL_INFORMATION]: this
+        .additionalInformation,
       [LicenseGetFields.COLUMN_CLASSIFICATION]: this.classification,
       [LicenseGetFields.COLUMN_LICENSE_ID]: this.id,
       [LicenseGetFields.COLUMN_PARENT_LICENSE_ID]: this.parentLicenseId,

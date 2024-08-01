@@ -168,7 +168,7 @@ export const PAYLOAD_SCHEMA_LICENSE: GetData<GetLicenseResultData> = {
         },
       ],
       [LicenseGetFields.COLUMN_PRICE_BAND]: {
-        [PriceBandDataFields.COLUMN_SALE_CONTRAINSTS]: {
+        [PriceBandDataFields.COLUMN_SALE_CONSTRAINTS]: {
           [SaleConstraintsFindResultFields.COLUMN_MIN_QUANTITY]: 1,
           [SaleConstraintsFindResultFields.COLUMN_MAX_QUANTITY]: 9999,
         },
