@@ -37,10 +37,10 @@ export class QuotesClient extends AbstractRestfulClient {
     vendor: string,
     postData: RequestQuoteIbmRequestType,
     parameters: Parameters = {},
-  ): Promise<GetResult<QuoteRequest>> {
+  ): Promise<void> {
     this.path = `/request/${vendor}`;
 
-    return new GetResult(QuoteRequest, await this.post(postData, parameters));
+    return await this.post(postData, parameters);
   }
 
   public async deleteQuote(
