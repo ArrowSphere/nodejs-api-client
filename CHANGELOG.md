@@ -3,10 +3,15 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.128.1] - 2024.08.05
+
+### Fixed
+- [quotes] Fixes endpoint request for quote response
+
 ## [3.128.0] - 2024.07.30
 
 ### Added
-- [graphql-api] Add endpoint request for quote
+- [quotes] Add endpoint request for quote
 
 ## [3.127.0] - 2024.07.16
 
