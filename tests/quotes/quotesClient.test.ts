@@ -81,24 +81,13 @@ describe('QuotesClient', () => {
       .getQuotesClient()
       .setUrl(QUOTES_MOCK_URL);
     it('should call requestQuoteForIbm method', async () => {
-      const PAYLOAD_RESPONSE = {
-        status: 200,
-        data: {
-          message:
-            'Your reference as been sent successfully to the vendor IBM.',
-        },
-      };
+      nock(QUOTES_MOCK_URL).post('/quotes/request/ibm').reply(204);
 
-      nock(QUOTES_MOCK_URL)
-        .post('/quotes/request/ibm')
-        .reply(200, PAYLOAD_RESPONSE);
-
-      const result = await quoteClient.requestQuoteForVendor('ibm', {
+      await quoteClient.requestQuoteForVendor('ibm', {
         reference: 'XSP123456',
       });
 
       expect(nock.isDone()).to.be.true;
-      expect(result.data.toJSON()).to.be.eqls(PAYLOAD_RESPONSE.data);
     });
   });
 });
