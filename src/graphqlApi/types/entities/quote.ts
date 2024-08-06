@@ -34,6 +34,8 @@ export type ItemData = {
   id?: string;
   offerName?: string;
   publicPrice?: number;
+  buyPrice?: number;
+  sellPrice?: number;
   currency?: string;
   arrowRateType?: string;
   partnerRateType?: string;
