@@ -16,3 +16,4 @@ export * from './types/entities/user';
 export * from './types/entities/vendor';
 export * from './types/entities/workgroup';
 export * from './graphqlApiClient';
+export * from './types/entities/quoteVersion';

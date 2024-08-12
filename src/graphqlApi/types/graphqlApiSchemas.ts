@@ -30,6 +30,7 @@ import { UserHistoryType, UserType } from './entities/user';
 import { OrganizationUnitsType } from './entities/organizationUnit';
 import { CurrencyType } from './entities/currency';
 import { ItemData, QuoteItemType, QuoteType } from './entities/quote';
+import { QuoteVersion } from './entities/quoteVersion';
 
 export type PartnertagSchema = Schema<PartnertagType, boolean>;
 
@@ -55,6 +56,7 @@ type MissingFieldsOfEndCustomerSchema = {
   orders?: OrdersSchema;
   partnerTags?: PartnertagSchema;
   partner?: PartnerSchema;
+  country?: CountrySchema;
 };
 
 type MissingFieldsOfOrderItemSchema = {
@@ -83,6 +85,8 @@ type MissingFieldsOfQuoteSchema = {
   endCustomer?: EndCustomerSchema;
   items?: QuoteItemSchema;
   partner?: PartnerSchema;
+  versions?: QuoteVersionSchema;
+  lastVersion?: QuoteVersionSchema;
 };
 
 type MissingFieldsOfQuoteItemSchema = {
@@ -94,6 +98,14 @@ export type QuoteItemSchema = Merge<
   Schema<QuoteItemType, boolean>,
   MissingFieldsOfQuoteItemSchema
 >;
+export type QuoteVersionSchema = Merge<
+  Schema<QuoteVersion, boolean>,
+  MissingFieldsOfQuoteVersionSchema
+>;
+
+type MissingFieldsOfQuoteVersionSchema = {
+  items?: QuoteItemSchema;
+};
 
 export type ItemDataSchema = Schema<ItemData, boolean>;
 
