@@ -12,17 +12,19 @@ import {
   EndCustomerOrganizationUnitFindResultType,
 } from './endCustomerOrganizationUnit/endCustomerOrganizationUnitFindResult';
 
+export type FindResultItem = {
+  license: LicenseFindResultData;
+  offer?: OfferFindResultData;
+  endCustomerOrganizationUnit?: EndCustomerOrganizationUnitFindResultType;
+};
+
 export type FindData = {
   pagination: {
     currentPage: number;
     totalPage: number;
     total: number;
   };
-  results: Array<{
-    license: LicenseFindResultData;
-    offer?: OfferFindResultData;
-    endCustomerOrganizationUnit?: EndCustomerOrganizationUnitFindResultType;
-  }>;
+  results: Array<FindResultItem>;
   filters: Array<FilterFindResultData>;
 };
 
