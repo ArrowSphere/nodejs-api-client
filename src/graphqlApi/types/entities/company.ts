@@ -40,6 +40,7 @@ type BaseCompanyType = {
 };
 
 export type EndCustomerType = BaseCompanyType & {
+  country?: CountryType;
   partner?: PartnerType;
 };
 

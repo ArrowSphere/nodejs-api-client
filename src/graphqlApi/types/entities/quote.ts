@@ -1,5 +1,6 @@
 import { ArrowCompanyType, EndCustomerType, PartnerType } from './company';
 import { GraphqlApiProgramType } from './program';
+import { QuoteVersion } from './quoteVersion';
 
 export type EavType = {
   value?: string;
@@ -13,21 +14,23 @@ export type QuoteType = {
   endCustomer?: EndCustomerType;
   items?: QuoteItemType[];
   partner?: PartnerType;
+  versions?: QuoteVersion[];
   promotionCode?: string;
   reference?: string;
   status?: string;
   totalRecurringPrice?: number;
   updatedAt?: string;
+  lastVersion?: QuoteVersion;
 };
 
 export type QuoteItemType = {
   id?: number;
+  itemData?: ItemData;
   name?: string;
   program?: GraphqlApiProgramType;
   reference?: string;
   vendorName?: string;
   vendorNamesSerialized?: string;
-  itemData?: ItemData;
 };
 
 export type ItemData = {
