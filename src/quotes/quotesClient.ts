@@ -1,6 +1,7 @@
 import { AbstractRestfulClient, Parameters } from '../abstractRestfulClient';
 import { GetResult } from '../getResult';
 import { QuoteRequest } from './entities/QuoteRequest';
+import { ValidateQuoteResult } from './entities/ValidateQuoteResult';
 
 export type RequestQuoteRequestType = {
   agreeToReceiveCommunications: boolean;
@@ -50,5 +51,14 @@ export class QuotesClient extends AbstractRestfulClient {
     this.path = `/${quoteReference}`;
 
     return await this.delete(parameters);
+  }
+
+  public async validateQuote(
+    quoteReference: string,
+    parameters: Parameters = {},
+  ): Promise<GetResult<ValidateQuoteResult>> {
+    this.path = `/request/${quoteReference}/validate`;
+
+    return new GetResult(ValidateQuoteResult, await this.get(parameters));
   }
 }
