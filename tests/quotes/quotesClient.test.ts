@@ -90,4 +90,32 @@ describe('QuotesClient', () => {
       expect(nock.isDone()).to.be.true;
     });
   });
+
+  describe('validateQuote', () => {
+    const quoteReference = 'XSP123456';
+
+    const quoteClient = new PublicApiClient()
+      .getQuotesClient()
+      .setUrl(QUOTES_MOCK_URL);
+
+    it('should call validateQuote method', async () => {
+      const PAYLOAD_RESPONSE = {
+        status: 200,
+        data: {
+          link: `/api/quotes/${quoteReference}`,
+          reference: `XSPQ${quoteReference}`,
+          status: 'Validated',
+        },
+      };
+
+      nock(QUOTES_MOCK_URL)
+        .get(`/quotes/request/${quoteReference}/validate`)
+        .reply(200, PAYLOAD_RESPONSE);
+
+      const result = await quoteClient.validateQuote(quoteReference);
+
+      expect(nock.isDone()).to.be.true;
+      expect(result.data.toJSON()).to.be.eqls(PAYLOAD_RESPONSE.data);
+    });
+  });
 });
