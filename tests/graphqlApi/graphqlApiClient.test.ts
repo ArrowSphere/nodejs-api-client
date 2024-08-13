@@ -466,7 +466,7 @@ describe('GraphqlApiClient', () => {
   });
 
   describe('findLicenseBudgetByLicenseId', () => {
-    it('makes a graphql POST request on the specified URL selectOne', async () => {
+    it('makes a graphql POST request on the specified URL selectOne LicenseBudget', async () => {
       const licenseBudget: LicenseBudgetType = {
         id: 3,
         threshold: 6500.0,
