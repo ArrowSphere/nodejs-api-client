@@ -42,6 +42,12 @@ export type ItemData = {
   currency?: string;
   arrowRateType?: string;
   partnerRateType?: string;
+  arrowBuyPrice?: number;
+  arrowCotermBuyPrice?: number;
+  resellerBuyPrice?: number;
+  resellerCotermBuyPrice?: number;
+  endCustomerBuyPrice?: number;
+  endCustomerCotermBuyPrice?: number;
   billingTerm?: number;
   billingCycle?: number;
   arrowRateValue?: number;
