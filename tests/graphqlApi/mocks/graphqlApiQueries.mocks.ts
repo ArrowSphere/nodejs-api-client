@@ -806,6 +806,12 @@ export const SELECT_QUOTES_QUERY: SelectAllQueryType = {
               sellPrice: true,
               currency: true,
               arrowRateType: true,
+              arrowBuyPrice: true,
+              arrowCotermBuyPrice: true,
+              resellerBuyPrice: true,
+              resellerCotermBuyPrice: true,
+              endCustomerBuyPrice: true,
+              endCustomerCotermBuyPrice: true,
               partnerRateType: true,
               billingTerm: true,
               billingCycle: true,
@@ -879,6 +885,7 @@ export const SELECT_QUOTES_QUERY: SelectAllQueryType = {
             partnerRateValue: true,
             arrowSpherePriceBandSku: true,
             licenseAgreementType: true,
+            classification: true,
             mainLogoUrl: true,
             squareLogoUrl: true,
             marketplace: true,
@@ -916,4 +923,4 @@ export const SELECT_QUOTES_QUERY: SelectAllQueryType = {
 };
 
 export const SELECT_QUOTES_GQL =
-  '{selectAll (aggregatorFilter: ["id"], filters: {groups: [{items: [{name: "updatedAt", value: ["2024-01-01 00:00:00", "2024-06-11 23:59:59"], operator: "BETWEEN"}]}]}, pagination: {page: 1, perPage: 15}, sort: [{name: "createdAt", direction: "DESC"}]) { data { quote { id arrowCompany { id name workgroup { code } } commitmentAmountTotal createdAt endCustomer { id name country { code2 code3 id lat lng name phoneCode } partner { country { code2 code3 id lat lng name phoneCode } } } versions { id version updatedAt createdAt items { id name itemData { id offerName publicPrice buyPrice sellPrice currency arrowRateType partnerRateType billingTerm billingCycle arrowRateValue partnerRateValue arrowSpherePriceBandSku licenseAgreementType mainLogoUrl squareLogoUrl marketplace creationDate quantity orderingType } } } lastVersion { id version updatedAt createdAt items { id name itemData { id offerName publicPrice buyPrice sellPrice currency arrowRateType partnerRateType billingTerm billingCycle arrowRateValue partnerRateValue arrowSpherePriceBandSku licenseAgreementType mainLogoUrl squareLogoUrl marketplace creationDate quantity orderingType } } } items { id name program { id name } reference vendorName vendorNamesSerialized itemData { id offerName publicPrice buyPrice sellPrice currency arrowRateType partnerRateType billingTerm billingCycle arrowRateValue partnerRateValue arrowSpherePriceBandSku licenseAgreementType mainLogoUrl squareLogoUrl marketplace creationDate quantity orderingType } } partner { id name currency { id name symbol } } promotionCode reference status totalRecurringPrice updatedAt } } errors { code message } pagination { currentPage perPage total } }}';
+  '{selectAll (aggregatorFilter: ["id"], filters: {groups: [{items: [{name: "updatedAt", value: ["2024-01-01 00:00:00", "2024-06-11 23:59:59"], operator: "BETWEEN"}]}]}, pagination: {page: 1, perPage: 15}, sort: [{name: "createdAt", direction: "DESC"}]) { data { quote { id arrowCompany { id name workgroup { code } } commitmentAmountTotal createdAt endCustomer { id name country { code2 code3 id lat lng name phoneCode } partner { country { code2 code3 id lat lng name phoneCode } } } versions { id version updatedAt createdAt items { id name itemData { id offerName publicPrice buyPrice sellPrice currency arrowRateType arrowBuyPrice arrowCotermBuyPrice resellerBuyPrice resellerCotermBuyPrice endCustomerBuyPrice endCustomerCotermBuyPrice partnerRateType billingTerm billingCycle arrowRateValue partnerRateValue arrowSpherePriceBandSku licenseAgreementType mainLogoUrl squareLogoUrl marketplace creationDate quantity orderingType } } } lastVersion { id version updatedAt createdAt items { id name itemData { id offerName publicPrice buyPrice sellPrice currency arrowRateType partnerRateType billingTerm billingCycle arrowRateValue partnerRateValue arrowSpherePriceBandSku licenseAgreementType mainLogoUrl squareLogoUrl marketplace creationDate quantity orderingType } } } items { id name program { id name } reference vendorName vendorNamesSerialized itemData { id offerName publicPrice buyPrice sellPrice currency arrowRateType partnerRateType billingTerm billingCycle arrowRateValue partnerRateValue arrowSpherePriceBandSku licenseAgreementType classification mainLogoUrl squareLogoUrl marketplace creationDate quantity orderingType } } partner { id name currency { id name symbol } } promotionCode reference status totalRecurringPrice updatedAt } } errors { code message } pagination { currentPage perPage total } }}';
