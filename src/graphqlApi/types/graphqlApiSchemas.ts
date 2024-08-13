@@ -16,12 +16,14 @@ import {
   SelectableField,
 } from './graphqlApiQueries';
 import { ContactsType } from './entities/contact';
-import { ProgramType } from '../../catalog';
 import { SubscriptionType } from './entities/subscription';
 import { SpecialPriceRateType } from './entities/specialPriceRate';
 import { OrderItemsType, OrdersType } from './entities/order';
 import { VendorsType } from './entities/vendor';
-import { SubscribedProgramType } from './entities/program';
+import {
+  GraphqlApiProgramType,
+  SubscribedProgramType,
+} from './entities/program';
 import {
   LicenseBudgetNotificationType,
   LicenseBudgetType,
@@ -90,7 +92,7 @@ type MissingFieldsOfQuoteSchema = {
 };
 
 type MissingFieldsOfQuoteItemSchema = {
-  program?: LicenseBudgetNotificationSchema;
+  program?: GraphqlApiProgramSchema;
   itemData?: ItemDataSchema;
 };
 
@@ -178,7 +180,7 @@ export type LicenseBudgetNotificationSchema = Schema<
 >;
 export type OrganizationUnitSchema = Schema<OrganizationUnitsType, boolean>;
 export type PageSchema = Schema<PageType, boolean>;
-export type ProgramSchema = Schema<ProgramType, boolean>;
+export type GraphqlApiProgramSchema = Schema<GraphqlApiProgramType, boolean>;
 export type SpecialPriceRateSchema = Schema<SpecialPriceRateType, boolean>;
 export type SubscribedProgramSchema = Schema<SubscribedProgramType, boolean>;
 export type SubscriptionSchema = Schema<SubscriptionType, boolean>;

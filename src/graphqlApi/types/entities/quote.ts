@@ -1,4 +1,5 @@
 import { ArrowCompanyType, EndCustomerType, PartnerType } from './company';
+import { ContactsType } from './contact';
 import { GraphqlApiProgramType } from './program';
 import { QuoteVersion } from './quoteVersion';
 
@@ -12,6 +13,7 @@ export type QuoteType = {
   commitmentAmountTotal?: number;
   createdAt?: string;
   endCustomer?: EndCustomerType;
+  endCustomerContact?: ContactsType;
   items?: QuoteItemType[];
   partner?: PartnerType;
   versions?: QuoteVersion[];
@@ -42,12 +44,19 @@ export type ItemData = {
   currency?: string;
   arrowRateType?: string;
   partnerRateType?: string;
+  arrowBuyPrice?: number;
+  arrowCotermBuyPrice?: number;
+  resellerBuyPrice?: number;
+  resellerCotermBuyPrice?: number;
+  endCustomerBuyPrice?: number;
+  endCustomerCotermBuyPrice?: number;
   billingTerm?: number;
   billingCycle?: number;
   arrowRateValue?: number;
   partnerRateValue?: number;
   arrowSpherePriceBandSku?: number;
   licenseAgreementType?: string;
+  classification?: string;
   mainLogoUrl?: string;
   squareLogoUrl?: string;
   marketplace?: string;
