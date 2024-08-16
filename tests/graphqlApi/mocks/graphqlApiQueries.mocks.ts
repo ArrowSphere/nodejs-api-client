@@ -308,6 +308,13 @@ export const SELECT_ALL_PARTNERS_QUERY: SelectAllQueryType = {
             phone: true,
             email: true,
           },
+          partnerContact: {
+            id: true,
+            firstname: true,
+            lastname: true,
+            phone: true,
+            email: true,
+          },
           program: {
             id: true,
             internalName: true,
@@ -376,7 +383,7 @@ export const SELECT_ALL_PARTNERS_QUERY: SelectAllQueryType = {
 };
 
 export const SELECT_ALL_PARTNERS_GQL =
-  '{selectAll (filters: {groups: [{items: [{name: "locked", operator: "IS_NULL"}, {name: "locked", value: ["1"], operator: "DIFFERENT"}], logicalOperator: "OR"}, {items: [{name: "id", value: ["SELECT DISTINCT compcustomer_companyid_customer FROM COMPANY_CUSTOMER"], exclusion: true}]}]}, aggregatorFilter: ["id"], pagination: {page: 1, perPage: 4}, sort: [{name: "id", direction: "ASC"}]) { data { partner { id partnerTags { id label description createdAt } workgroup { code } enabled subscriptionsPendingCount { total } subscriptionsCount { total } ordersCount { total } ordersNeedCount { total } contactsCount { total } customersCount { total } reportsCount { total } createdAt name contacts { id active communicationEmail effectiveDate email erpId firstname lastname locked phone status tseAccountStatus username type { id name } role { id name } } subscriptions { id localContact { id firstname lastname phone email } program { id internalName name } } extraInformations { id companyId code label name type value programName } orders { id items { id priceRates { id createdAt endedAt rate startedAt companyType { id type } type { id name } } } } subscribedPrograms { availabilityEndedAt availabilityStartedAt companyId internalName subscriptionEndedAt id vendorCode vendorName workgroupCode } } } errors { code message } pagination { currentPage perPage previous next total totalPage totalPages } }}';
+  '{selectAll (filters: {groups: [{items: [{name: "locked", operator: "IS_NULL"}, {name: "locked", value: ["1"], operator: "DIFFERENT"}], logicalOperator: "OR"}, {items: [{name: "id", value: ["SELECT DISTINCT compcustomer_companyid_customer FROM COMPANY_CUSTOMER"], exclusion: true}]}]}, aggregatorFilter: ["id"], pagination: {page: 1, perPage: 4}, sort: [{name: "id", direction: "ASC"}]) { data { partner { id partnerTags { id label description createdAt } workgroup { code } enabled subscriptionsPendingCount { total } subscriptionsCount { total } ordersCount { total } ordersNeedCount { total } contactsCount { total } customersCount { total } reportsCount { total } createdAt name contacts { id active communicationEmail effectiveDate email erpId firstname lastname locked phone status tseAccountStatus username type { id name } role { id name } } subscriptions { id localContact { id firstname lastname phone email } partnerContact { id firstname lastname phone email } program { id internalName name } } extraInformations { id companyId code label name type value programName } orders { id items { id priceRates { id createdAt endedAt rate startedAt companyType { id type } type { id name } } } } subscribedPrograms { availabilityEndedAt availabilityStartedAt companyId internalName subscriptionEndedAt id vendorCode vendorName workgroupCode } } } errors { code message } pagination { currentPage perPage previous next total totalPage totalPages } }}';
 
 export const SELECT_ONE_END_CUSTOMER_QUERY: SelectOneQueryType = {
   [Queries.SELECT_ONE]: {
@@ -790,6 +797,13 @@ export const SELECT_QUOTES_QUERY: SelectAllQueryType = {
             },
           },
         },
+        endCustomerContact: {
+          id: true,
+          firstname: true,
+          lastname: true,
+          phone: true,
+          email: true,
+        },
         versions: {
           id: true,
           version: true,
@@ -866,6 +880,17 @@ export const SELECT_QUOTES_QUERY: SelectAllQueryType = {
           program: {
             id: true,
             name: true,
+            internalName: true,
+            vendor: {
+              id: true,
+              name: true,
+              identifier: true,
+              licenseUrl: true,
+              logoLarge: true,
+              logoSmall: true,
+              logoStandard: true,
+              url: true,
+            },
           },
           reference: true,
           vendorName: true,
@@ -923,4 +948,4 @@ export const SELECT_QUOTES_QUERY: SelectAllQueryType = {
 };
 
 export const SELECT_QUOTES_GQL =
-  '{selectAll (aggregatorFilter: ["id"], filters: {groups: [{items: [{name: "updatedAt", value: ["2024-01-01 00:00:00", "2024-06-11 23:59:59"], operator: "BETWEEN"}]}]}, pagination: {page: 1, perPage: 15}, sort: [{name: "createdAt", direction: "DESC"}]) { data { quote { id arrowCompany { id name workgroup { code } } commitmentAmountTotal createdAt endCustomer { id name country { code2 code3 id lat lng name phoneCode } partner { country { code2 code3 id lat lng name phoneCode } } } versions { id version updatedAt createdAt items { id name itemData { id offerName publicPrice buyPrice sellPrice currency arrowRateType arrowBuyPrice arrowCotermBuyPrice resellerBuyPrice resellerCotermBuyPrice endCustomerBuyPrice endCustomerCotermBuyPrice partnerRateType billingTerm billingCycle arrowRateValue partnerRateValue arrowSpherePriceBandSku licenseAgreementType mainLogoUrl squareLogoUrl marketplace creationDate quantity orderingType } } } lastVersion { id version updatedAt createdAt items { id name itemData { id offerName publicPrice buyPrice sellPrice currency arrowRateType partnerRateType billingTerm billingCycle arrowRateValue partnerRateValue arrowSpherePriceBandSku licenseAgreementType mainLogoUrl squareLogoUrl marketplace creationDate quantity orderingType } } } items { id name program { id name } reference vendorName vendorNamesSerialized itemData { id offerName publicPrice buyPrice sellPrice currency arrowRateType partnerRateType billingTerm billingCycle arrowRateValue partnerRateValue arrowSpherePriceBandSku licenseAgreementType classification mainLogoUrl squareLogoUrl marketplace creationDate quantity orderingType } } partner { id name currency { id name symbol } } promotionCode reference status totalRecurringPrice updatedAt } } errors { code message } pagination { currentPage perPage total } }}';
+  '{selectAll (aggregatorFilter: ["id"], filters: {groups: [{items: [{name: "updatedAt", value: ["2024-01-01 00:00:00", "2024-06-11 23:59:59"], operator: "BETWEEN"}]}]}, pagination: {page: 1, perPage: 15}, sort: [{name: "createdAt", direction: "DESC"}]) { data { quote { id arrowCompany { id name workgroup { code } } commitmentAmountTotal createdAt endCustomer { id name country { code2 code3 id lat lng name phoneCode } partner { country { code2 code3 id lat lng name phoneCode } } } endCustomerContact { id firstname lastname phone email } versions { id version updatedAt createdAt items { id name itemData { id offerName publicPrice buyPrice sellPrice currency arrowRateType arrowBuyPrice arrowCotermBuyPrice resellerBuyPrice resellerCotermBuyPrice endCustomerBuyPrice endCustomerCotermBuyPrice partnerRateType billingTerm billingCycle arrowRateValue partnerRateValue arrowSpherePriceBandSku licenseAgreementType mainLogoUrl squareLogoUrl marketplace creationDate quantity orderingType } } } lastVersion { id version updatedAt createdAt items { id name itemData { id offerName publicPrice buyPrice sellPrice currency arrowRateType partnerRateType billingTerm billingCycle arrowRateValue partnerRateValue arrowSpherePriceBandSku licenseAgreementType mainLogoUrl squareLogoUrl marketplace creationDate quantity orderingType } } } items { id name program { id name internalName vendor { id name identifier licenseUrl logoLarge logoSmall logoStandard url } } reference vendorName vendorNamesSerialized itemData { id offerName publicPrice buyPrice sellPrice currency arrowRateType partnerRateType billingTerm billingCycle arrowRateValue partnerRateValue arrowSpherePriceBandSku licenseAgreementType classification mainLogoUrl squareLogoUrl marketplace creationDate quantity orderingType } } partner { id name currency { id name symbol } } promotionCode reference status totalRecurringPrice updatedAt } } errors { code message } pagination { currentPage perPage total } }}';
