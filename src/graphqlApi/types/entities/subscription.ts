@@ -6,5 +6,6 @@ export type SubscriptionType = {
   id?: number;
   company?: PartnerType;
   localContact?: ContactsType;
+  partnerContact?: ContactsType;
   program?: GraphqlApiProgramType;
 };
