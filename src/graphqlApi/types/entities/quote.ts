@@ -1,4 +1,5 @@
 import { ArrowCompanyType, EndCustomerType, PartnerType } from './company';
+import { ContactsType } from './contact';
 import { GraphqlApiProgramType } from './program';
 import { QuoteVersion } from './quoteVersion';
 
@@ -12,6 +13,7 @@ export type QuoteType = {
   commitmentAmountTotal?: number;
   createdAt?: string;
   endCustomer?: EndCustomerType;
+  endCustomerContact?: ContactsType;
   items?: QuoteItemType[];
   partner?: PartnerType;
   versions?: QuoteVersion[];
