@@ -64,7 +64,7 @@ export type SearchBodyArgument = {
   quantity?: number;
   resellerRef?: string;
   restricted?: boolean;
-  sort?: SortArgument;
+  sort?: SortArgument | SortArgument[];
   topOffers?: boolean;
 };
 
