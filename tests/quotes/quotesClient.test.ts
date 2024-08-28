@@ -1,5 +1,9 @@
-import { PublicApiClient } from '../../src';
 import { expect } from 'chai';
+import {
+  CreateQuoteRequestType,
+  PublicApiClient,
+  PublishQuoteRequestType,
+} from '../../src';
 import { Axios, AxiosResponse } from 'axios';
 import sinon from 'sinon';
 import nock from 'nock';
@@ -113,6 +117,104 @@ describe('QuotesClient', () => {
         .reply(200, PAYLOAD_RESPONSE);
 
       const result = await quoteClient.validateQuote(quoteReference);
+
+      expect(nock.isDone()).to.be.true;
+      expect(result.data.toJSON()).to.be.eqls(PAYLOAD_RESPONSE.data);
+    });
+  });
+
+  describe('createQuote', () => {
+    const quoteReference = 'XSP123456';
+
+    const quoteClient = new PublicApiClient()
+      .getQuotesClient()
+      .setUrl(QUOTES_MOCK_URL);
+
+    it('should call publishQuote method', async () => {
+      const PAYLOAD_RESPONSE = {
+        status: 200,
+        data: {
+          link: `/api/quotes/${quoteReference}`,
+          reference: `XSPQ${quoteReference}`,
+          status: 'In progress',
+        },
+      };
+
+      nock(QUOTES_MOCK_URL).post('/quotes').reply(200, PAYLOAD_RESPONSE);
+
+      const payload: CreateQuoteRequestType = {
+        customer: {
+          reference: 'XSP123456',
+        },
+        items: [
+          {
+            arrowSpherePriceBandSku:
+              'MSCSP_CFQ7TTC0LDPB-0001_FR_EUR_1_720_8640',
+            quantity: 2,
+            prices: {
+              customer: {
+                rate: {
+                  rateType: 'discount',
+                  value: 0.01,
+                },
+                value: 0,
+              },
+            },
+          },
+        ],
+      };
+
+      const result = await quoteClient.createQuote(payload);
+
+      expect(nock.isDone()).to.be.true;
+      expect(result.data.toJSON()).to.be.eqls(PAYLOAD_RESPONSE.data);
+    });
+  });
+
+  describe('publishQuote', () => {
+    const quoteReference = 'XSP123456';
+
+    const quoteClient = new PublicApiClient()
+      .getQuotesClient()
+      .setUrl(QUOTES_MOCK_URL);
+
+    it('should call publishQuote method', async () => {
+      const PAYLOAD_RESPONSE = {
+        status: 200,
+        data: {
+          link: `/api/quotes/${quoteReference}`,
+          reference: `XSPQ${quoteReference}`,
+          status: 'In progress',
+        },
+      };
+
+      nock(QUOTES_MOCK_URL)
+        .post(`/quotes/request/${quoteReference}/publish`)
+        .reply(200, PAYLOAD_RESPONSE);
+
+      const payload: PublishQuoteRequestType = {
+        customer: {
+          reference: 'XSP123456',
+        },
+        items: [
+          {
+            arrowSpherePriceBandSku:
+              'MSCSP_CFQ7TTC0LDPB-0001_FR_EUR_1_720_8640',
+            quantity: 2,
+            prices: {
+              customer: {
+                rate: {
+                  rateType: 'discount',
+                  value: 0.06,
+                },
+                value: 0,
+              },
+            },
+          },
+        ],
+      };
+
+      const result = await quoteClient.publishQuote(quoteReference, payload);
 
       expect(nock.isDone()).to.be.true;
       expect(result.data.toJSON()).to.be.eqls(PAYLOAD_RESPONSE.data);
