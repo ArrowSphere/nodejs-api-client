@@ -35,7 +35,7 @@ export type PaginatedProductsType = {
 
 export type FiltersType = {
   name?: string;
-  values?: FiltersValuesType;
+  values?: FiltersValuesType | FiltersValuesType[];
 };
 
 export type FiltersValuesType = {
