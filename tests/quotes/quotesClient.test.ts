@@ -202,7 +202,7 @@ describe('QuotesClient', () => {
               'MSCSP_CFQ7TTC0LDPB-0001_FR_EUR_1_720_8640',
             quantity: 2,
             prices: {
-              customer: {
+              partner: {
                 rate: {
                   rateType: 'discount',
                   value: 0.06,
@@ -212,6 +212,9 @@ describe('QuotesClient', () => {
             },
           },
         ],
+        startDate: '2021-01-01 10:00:00',
+        endDate: '2021-01-31 10:00:00',
+        name: 'The quote name',
       };
 
       const result = await quoteClient.publishQuote(quoteReference, payload);
