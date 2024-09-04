@@ -40,7 +40,7 @@ type QuoteArrowPricesType = {
 };
 
 type QuotePricesType = {
-  customer: QuoteCustomerPricesType;
+  customer?: QuoteCustomerPricesType;
   partner?: QuoteCustomerPricesType;
   arrow?: QuoteArrowPricesType;
 };
@@ -54,6 +54,9 @@ type QuoteItemType = {
 export type PublishQuoteRequestType = {
   customer?: QuoteCustomerType;
   items: QuoteItemType[];
+  startDate?: string;
+  endDate?: string;
+  name?: string;
 };
 
 export type CreateQuoteRequestType = {
