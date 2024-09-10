@@ -91,7 +91,7 @@ export class AxiosSingleton {
         '****************************' + apiKey.substring(apiKey.length - 4);
     }
 
-    if (tempRequest.data?.user.password) {
+    if (tempRequest.data?.user?.password) {
       (tempRequest.data as PostPartnerPayload).user.password = '***********';
     }
 

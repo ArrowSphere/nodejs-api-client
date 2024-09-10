@@ -25,6 +25,38 @@ const REQUEST_WITHOUT_HEADERS: AxiosRequestConfig = {
   method: 'GET',
 };
 
+const REQUEST_WITHOUT_USER: AxiosRequestConfig = {
+  url: 'testUrl',
+  method: 'GET',
+  data: {
+    other: 'other',
+  },
+};
+
+const REQUEST_WITH_USER: AxiosRequestConfig = {
+  url: 'testUrl',
+  method: 'GET',
+  data: {
+    user: { other: 'other' },
+  },
+};
+
+const REQUEST_WITH_USER_PASSWORD: AxiosRequestConfig = {
+  url: 'testUrl',
+  method: 'GET',
+  data: {
+    user: { password: 'pass' },
+  },
+};
+
+const CLEAN_REQUEST_WITH_USER_PASSWORD: AxiosRequestConfig = {
+  url: 'testUrl',
+  method: 'GET',
+  data: {
+    user: { password: '***********' },
+  },
+};
+
 const RESPONSE: AxiosResponse = {
   data: {},
   config: REQUEST,
@@ -103,6 +135,26 @@ describe('axiosSingleton', function () {
       );
 
       expect(response).to.deep.equals(REQUEST_WITHOUT_HEADERS);
+    });
+
+    it('should be call without user', function () {
+      const response = AxiosSingleton['cleanRequestLog'](REQUEST_WITHOUT_USER);
+
+      expect(response).to.deep.equals(REQUEST_WITHOUT_USER);
+    });
+
+    it('should be call with user', function () {
+      const response = AxiosSingleton['cleanRequestLog'](REQUEST_WITH_USER);
+
+      expect(response).to.deep.equals(REQUEST_WITH_USER);
+    });
+
+    it('should be call with user password', function () {
+      const response = AxiosSingleton['cleanRequestLog'](
+        REQUEST_WITH_USER_PASSWORD,
+      );
+
+      expect(response).to.deep.equals(CLEAN_REQUEST_WITH_USER_PASSWORD);
     });
   });
 
