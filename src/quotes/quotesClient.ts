@@ -61,7 +61,7 @@ export type PublishQuoteRequestType = {
 
 export type CreateQuoteRequestType = {
   customer?: QuoteCustomerType;
-  items: QuoteItemType[];
+  items?: QuoteItemType[];
   promotionCode?: string;
 };
 
