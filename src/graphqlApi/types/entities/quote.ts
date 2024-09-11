@@ -12,9 +12,12 @@ export type QuoteType = {
   arrowCompany?: ArrowCompanyType;
   commitmentAmountTotal?: number;
   createdAt?: string;
+  dateBegin?: string;
+  dateEnd?: string;
   endCustomer?: EndCustomerType;
   endCustomerContact?: ContactsType;
   items?: QuoteItemType[];
+  name?: string;
   partner?: PartnerType;
   versions?: QuoteVersion[];
   promotionCode?: string;
