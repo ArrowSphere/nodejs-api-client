@@ -33,6 +33,7 @@ import { OrganizationUnitsType } from './entities/organizationUnit';
 import { CurrencyType } from './entities/currency';
 import { ItemData, QuoteItemType, QuoteType } from './entities/quote';
 import { QuoteVersion } from './entities/quoteVersion';
+import { Comment } from './entities/comment';
 
 export type PartnertagSchema = Schema<PartnertagType, boolean>;
 
@@ -85,6 +86,7 @@ type MissingFieldsOfLicenseBudgetSchema = {
 type MissingFieldsOfQuoteSchema = {
   arrowCompany?: ArrowCompanySchema;
   endCustomer?: EndCustomerSchema;
+  comments?: CommentSchema;
   items?: QuoteItemSchema;
   partner?: PartnerSchema;
   versions?: QuoteVersionSchema;
@@ -94,20 +96,23 @@ type MissingFieldsOfQuoteSchema = {
 type MissingFieldsOfQuoteItemSchema = {
   program?: GraphqlApiProgramSchema;
   itemData?: ItemDataSchema;
+  version?: QuoteVersionSchema;
+};
+type MissingFieldsOfCommentSchema = {
+  user?: UserSchema;
 };
 
 export type QuoteItemSchema = Merge<
   Schema<QuoteItemType, boolean>,
   MissingFieldsOfQuoteItemSchema
 >;
-export type QuoteVersionSchema = Merge<
-  Schema<QuoteVersion, boolean>,
-  MissingFieldsOfQuoteVersionSchema
+
+export type CommentSchema = Merge<
+  Schema<Comment, boolean>,
+  MissingFieldsOfCommentSchema
 >;
 
-type MissingFieldsOfQuoteVersionSchema = {
-  items?: QuoteItemSchema;
-};
+export type QuoteVersionSchema = Schema<QuoteVersion, boolean>;
 
 type MissingFieldsOfCountrySchema = {
   continent?: ContinentSchema;
