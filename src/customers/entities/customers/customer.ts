@@ -43,6 +43,8 @@ export enum CustomerFields {
   COLUMN_INTERNAL_REFERENCE = 'InternalReference',
   COLUMN_CONTACT = 'Contact',
   COLUMN_DELETED_AT = 'DeletedAt',
+  COLUMN_XAC_RESELLER_ID = 'XacResellerId',
+  COLUMN_XAC_END_CUSTOMER_ID = 'XacEndCustomerId',
   COLUMN_DETAILS = 'Details',
   COLUMN_EXTRA_INFORMATION = 'extraInformation',
   COLUMN_ORGANISATION_UNIT = 'OrganisationUnit',
@@ -93,6 +95,8 @@ export type CustomerType = {
   [CustomerFields.COLUMN_INTERNAL_REFERENCE]: string;
   [CustomerFields.COLUMN_CONTACT]: ContactType;
   [CustomerFields.COLUMN_DELETED_AT]?: string | null;
+  [CustomerFields.COLUMN_XAC_RESELLER_ID]?: number;
+  [CustomerFields.COLUMN_XAC_END_CUSTOMER_ID]?: number;
   [CustomerFields.COLUMN_DETAILS]: DetailsType;
   [CustomerFields.COLUMN_EXTRA_INFORMATION]?: AdditionalExtraInformationType;
   [CustomerFields.COLUMN_ORGANISATION_UNIT]?: OrganizationUnitType;
@@ -133,6 +137,8 @@ export class Customer extends AbstractEntity<CustomerType> {
   readonly #internalReference: string;
   readonly #contact: Contact;
   readonly #deletedAt?: string | null;
+  readonly #xacResellerId?: number;
+  readonly #xacEndCustomerId?: number;
   readonly #details: Details;
   readonly #extraInformation?: AdditionalExtraInformation;
   readonly #organisationUnit?: OrganizationUnit;
@@ -193,6 +199,10 @@ export class Customer extends AbstractEntity<CustomerType> {
       getCustomersDataInput[CustomerFields.COLUMN_CONTACT],
     );
     this.#deletedAt = getCustomersDataInput[CustomerFields.COLUMN_DELETED_AT];
+    this.#xacResellerId =
+      getCustomersDataInput[CustomerFields.COLUMN_XAC_RESELLER_ID];
+    this.#xacEndCustomerId =
+      getCustomersDataInput[CustomerFields.COLUMN_XAC_END_CUSTOMER_ID];
     this.#details = new Details(
       getCustomersDataInput[CustomerFields.COLUMN_DETAILS],
     );
@@ -351,6 +361,14 @@ export class Customer extends AbstractEntity<CustomerType> {
     return this.#deletedAt;
   }
 
+  get XacResellerId(): number | undefined {
+    return this.#xacResellerId;
+  }
+
+  get XacEndCustomerId(): number | undefined {
+    return this.#xacEndCustomerId;
+  }
+
   get ExtraInformation(): AdditionalExtraInformation | undefined {
     return this.#extraInformation;
   }
@@ -402,6 +420,8 @@ export class Customer extends AbstractEntity<CustomerType> {
       [CustomerFields.COLUMN_CONTACT]: this.Contact.toJSON(),
       [CustomerFields.COLUMN_DETAILS]: this.Details.toJSON(),
       [CustomerFields.COLUMN_DELETED_AT]: this.DeletedAt,
+      [CustomerFields.COLUMN_XAC_RESELLER_ID]: this.XacResellerId,
+      [CustomerFields.COLUMN_XAC_END_CUSTOMER_ID]: this.XacEndCustomerId,
       [CustomerFields.COLUMN_EXTRA_INFORMATION]: this.ExtraInformation?.toJSON(),
       [CustomerFields.COLUMN_ORGANISATION_UNIT]: this.OrganisationUnit?.toJSON(),
       [CustomerFields.COLUMN_RESELLER]: this.Reseller,
