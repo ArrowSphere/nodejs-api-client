@@ -257,6 +257,10 @@ export enum PricesTypeKeys {
   BUY_KEY = 'buy',
   SELL_KEY = 'sell',
   PUBLIC_KEY = 'public',
+  ARROW_PRICE_KEY = 'arrowPrice',
+  PARTNER_PRICE_KEY = 'partnerPrice',
+  ENDCUSTOMER_PRICE_KEY = 'endCustomPrice',
+  RETAIL_KEY = 'public',
   VENDOR_PRICING_SOURCE_KEY = 'vendorPricingSource',
 }
 
@@ -264,6 +268,10 @@ export type PricesType = {
   [PricesTypeKeys.BUY_KEY]?: string;
   [PricesTypeKeys.SELL_KEY]?: string;
   [PricesTypeKeys.PUBLIC_KEY]?: string;
+  [PricesTypeKeys.ARROW_PRICE_KEY]?: string;
+  [PricesTypeKeys.PARTNER_PRICE_KEY]?: string;
+  [PricesTypeKeys.ENDCUSTOMER_PRICE_KEY]?: string;
+  [PricesTypeKeys.RETAIL_KEY]?: string;
   [PricesTypeKeys.VENDOR_PRICING_SOURCE_KEY]?: VendorPricingSourceType;
 };
 
