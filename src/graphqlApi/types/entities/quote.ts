@@ -12,9 +12,12 @@ export type QuoteType = {
   arrowCompany?: ArrowCompanyType;
   commitmentAmountTotal?: number;
   createdAt?: string;
+  dateBegin?: string;
+  dateEnd?: string;
   endCustomer?: EndCustomerType;
   endCustomerContact?: ContactsType;
   items?: QuoteItemType[];
+  name?: string;
   partner?: PartnerType;
   versions?: QuoteVersion[];
   promotionCode?: string;
@@ -54,7 +57,7 @@ export type ItemData = {
   billingCycle?: number;
   arrowRateValue?: number;
   partnerRateValue?: number;
-  arrowSpherePriceBandSku?: number;
+  arrowSpherePriceBandSku?: string;
   licenseAgreementType?: string;
   classification?: string;
   mainLogoUrl?: string;
