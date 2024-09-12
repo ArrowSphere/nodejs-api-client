@@ -119,7 +119,7 @@ export class QuotesClient extends AbstractRestfulClient {
     postData: PublishQuoteRequestType,
     parameters: Parameters = {},
   ): Promise<GetResult<PutQuoteResult>> {
-    this.path = `/request/${quoteReference}/publish`;
+    this.path = `/${quoteReference}/publish`;
 
     return new GetResult(PutQuoteResult, await this.post(postData, parameters));
   }

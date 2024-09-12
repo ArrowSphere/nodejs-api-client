@@ -130,7 +130,7 @@ describe('QuotesClient', () => {
       .getQuotesClient()
       .setUrl(QUOTES_MOCK_URL);
 
-    it('should call publishQuote method', async () => {
+    it('should call createQuote method', async () => {
       const PAYLOAD_RESPONSE = {
         status: 200,
         data: {
@@ -189,7 +189,7 @@ describe('QuotesClient', () => {
       };
 
       nock(QUOTES_MOCK_URL)
-        .post(`/quotes/request/${quoteReference}/publish`)
+        .post(`/quotes/${quoteReference}/publish`)
         .reply(200, PAYLOAD_RESPONSE);
 
       const payload: PublishQuoteRequestType = {
