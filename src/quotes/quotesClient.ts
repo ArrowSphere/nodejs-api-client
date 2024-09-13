@@ -100,7 +100,7 @@ export class QuotesClient extends AbstractRestfulClient {
     quoteReference: string,
     parameters: Parameters = {},
   ): Promise<GetResult<PutQuoteResult>> {
-    this.path = `/request/${quoteReference}/validate`;
+    this.path = `/${quoteReference}/validate`;
 
     return new GetResult(PutQuoteResult, await this.get(parameters));
   }
