@@ -113,7 +113,7 @@ describe('QuotesClient', () => {
       };
 
       nock(QUOTES_MOCK_URL)
-        .get(`/quotes/request/${quoteReference}/validate`)
+        .get(`/quotes/${quoteReference}/validate`)
         .reply(200, PAYLOAD_RESPONSE);
 
       const result = await quoteClient.validateQuote(quoteReference);
