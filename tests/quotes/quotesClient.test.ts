@@ -1,5 +1,6 @@
 import { expect } from 'chai';
 import {
+  CreateCommentType,
   CreateQuoteRequestType,
   PublicApiClient,
   PublishQuoteRequestType,
@@ -221,6 +222,74 @@ describe('QuotesClient', () => {
 
       expect(nock.isDone()).to.be.true;
       expect(result.data.toJSON()).to.be.eqls(PAYLOAD_RESPONSE.data);
+    });
+  });
+
+  describe('createQuoteComment', () => {
+    const quoteReference = 'XSP123456';
+    const bodyMessage = 'random test body message';
+
+    const quoteClient = new PublicApiClient()
+      .getQuotesClient()
+      .setUrl(QUOTES_MOCK_URL);
+
+    it('should call addCommentToQuote method', async () => {
+      const PAYLOAD_RESPONSE = {
+        status: 200,
+        data: {
+          body: bodyMessage,
+        },
+      };
+
+      nock(QUOTES_MOCK_URL)
+        .post(`/quotes/${quoteReference}/comments`)
+        .reply(200, PAYLOAD_RESPONSE);
+
+      const payload: CreateCommentType = {
+        body: bodyMessage,
+      };
+
+      const result = await quoteClient.addCommentToQuote(
+        quoteReference,
+        payload,
+      );
+
+      expect(nock.isDone()).to.be.true;
+      expect(result.data.toJSON()).to.be.eqls(PAYLOAD_RESPONSE.data);
+    });
+  });
+
+  describe('deleteQuoteComment', () => {
+    let axiosClient: sinon.SinonStubbedInstance<Axios>;
+
+    beforeEach(() => {
+      axiosClient = sinon.stub(Axios.prototype);
+    });
+
+    afterEach(() => {
+      sinon.restore();
+    });
+
+    it('should successfully delete a quote comment', async () => {
+      const commentId = '123';
+      const expectedResult: AxiosResponse = {
+        status: 201,
+        data: {
+          status: 201,
+        },
+        statusText: 'success',
+        headers: {},
+        config: {},
+      };
+
+      axiosClient.request.resolves(expectedResult);
+
+      const result = await client.deleteQuoteComment(
+        QUOTE_REFERENCE,
+        commentId,
+      );
+
+      expect(result).to.be.deep.equals(expectedResult.data);
     });
   });
 });
