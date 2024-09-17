@@ -2,6 +2,7 @@ import { AbstractRestfulClient, Parameters } from '../abstractRestfulClient';
 import { GetResult } from '../getResult';
 import { QuoteRequest } from './entities/QuoteRequest';
 import { PutQuoteResult } from './entities/PutQuoteResult';
+import { QuoteComments } from './entities/QuoteComments';
 
 export type RequestQuoteRequestType = {
   agreeToReceiveCommunications: boolean;
@@ -65,6 +66,10 @@ export type CreateQuoteRequestType = {
   promotionCode?: string;
 };
 
+export type CreateCommentType = {
+  body: string;
+};
+
 export class QuotesClient extends AbstractRestfulClient {
   protected basePath = '/quotes';
 
@@ -122,5 +127,25 @@ export class QuotesClient extends AbstractRestfulClient {
     this.path = `/${quoteReference}/publish`;
 
     return new GetResult(PutQuoteResult, await this.post(postData, parameters));
+  }
+
+  public async addCommentToQuote(
+    quoteReference: string,
+    postData: CreateCommentType,
+    parameters: Parameters = {},
+  ): Promise<GetResult<QuoteComments>> {
+    this.path = `/${quoteReference}/comments`;
+
+    return new GetResult(QuoteComments, await this.post(postData, parameters));
+  }
+
+  public async deleteQuoteComment(
+    quoteReference: string,
+    commentId: string,
+    parameters: Parameters = {},
+  ): Promise<void> {
+    this.path = `/${quoteReference}/comments/${commentId}`;
+
+    return await this.delete(parameters);
   }
 }
