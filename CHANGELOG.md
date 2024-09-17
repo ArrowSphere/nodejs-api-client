@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [3.140.0] - 2024.09.17
 
 ### Added
-- [quotes] add post and delete endpoints for quote comments context
+- [quotes] add Post and Delete endpoints for quote comments context
 
 ## [3.139.4] - 2024.09.13
 
