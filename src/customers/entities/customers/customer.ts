@@ -43,6 +43,7 @@ export enum CustomerFields {
   COLUMN_INTERNAL_REFERENCE = 'InternalReference',
   COLUMN_CONTACT = 'Contact',
   COLUMN_DELETED_AT = 'DeletedAt',
+  COLUMN_CREATED_AT = 'CreatedAt',
   COLUMN_DETAILS = 'Details',
   COLUMN_EXTRA_INFORMATION = 'extraInformation',
   COLUMN_ORGANISATION_UNIT = 'OrganisationUnit',
@@ -93,6 +94,7 @@ export type CustomerType = {
   [CustomerFields.COLUMN_INTERNAL_REFERENCE]: string;
   [CustomerFields.COLUMN_CONTACT]: ContactType;
   [CustomerFields.COLUMN_DELETED_AT]?: string | null;
+  [CustomerFields.COLUMN_CREATED_AT]?: string | null;
   [CustomerFields.COLUMN_DETAILS]: DetailsType;
   [CustomerFields.COLUMN_EXTRA_INFORMATION]?: AdditionalExtraInformationType;
   [CustomerFields.COLUMN_ORGANISATION_UNIT]?: OrganizationUnitType;
