@@ -54,7 +54,11 @@ export type GetPriceBandQuery = Merge<
 
 export type GetPriceBandsQuery = Merge<
   { __args: QueryPriceBandArguments },
-  { priceBands: PriceBandSchema }
+  {
+    priceBands: PriceBandSchema;
+    filters?: FiltersSchema;
+    pagination?: PaginationSchema;
+  }
 >;
 
 export type GetExchangeRatesQuery = Merge<
