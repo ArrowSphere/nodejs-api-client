@@ -13,7 +13,7 @@ export type QuoteType = {
   arrowCompany?: ArrowCompanyType;
   commitmentAmountTotal?: number;
   createdAt?: string;
-  comments?: Comment;
+  comments?: Comment[];
   dateBegin?: string;
   dateEnd?: string;
   endCustomer?: EndCustomerType;
