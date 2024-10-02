@@ -3,6 +3,11 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.142.0] - 2024.10.02
+
+### Added
+- [graphQl priceBand] Added pagination and filters properties in outpout payload type of graphQl priceband.
+
 ## [3.141.0] - 2024.09.11
 
 ### Added
