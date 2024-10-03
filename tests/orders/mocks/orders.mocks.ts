@@ -14,7 +14,10 @@ import {
   ProductProgramFields,
   ReferenceLinkFields,
   SharedContactFields,
+  UpdateOrderInputFields,
+  UpdateOrderType,
 } from '../../../src';
+import { UpdateOrderResultData } from '../../../src/orders/entities/orders/updateOrderResult';
 
 export const PAYLOAD_ORDERS: GetData<DataListOrdersType> = {
   [GetResultFields.COLUMN_STATUS]: 200,
@@ -87,6 +90,7 @@ export const PAYLOAD_ORDERS: GetData<DataListOrdersType> = {
             },
           },
         },
+        [OrderFields.COLUMN_ORGANIZATION_UNIT_REF]: 'XSPOU123',
       },
     ],
   },
@@ -145,5 +149,16 @@ export const PAYLOAD_ORDERS_WITHOUT_OPTIONAL: GetData<DataListOrdersType> = {
         ],
       },
     ],
+  },
+};
+
+export const PAYLOAD_UPDATE_ORDER: UpdateOrderType = {
+  [UpdateOrderInputFields.COLUMN_PO_NUMBER]: 'PO_NUMBER',
+};
+
+export const PAYLOAD_UPDATE_ORDER_RESULT: GetData<UpdateOrderResultData> = {
+  [GetResultFields.COLUMN_STATUS]: 200,
+  [GetResultFields.COLUMN_DATA]: {
+    message: 'Order with reference {orderReference} has been updated',
   },
 };

@@ -2,6 +2,7 @@ import { AbstractRestfulClient, Parameters } from '../abstractRestfulClient';
 import { GetResult } from '../getResult';
 import { DataListOrders } from './entities/dataListOrders';
 import { ReferenceLink } from './entities/referenceLink';
+import { UpdateOrderResult } from './entities/orders/updateOrderResult';
 
 export enum CreateOrderInputFields {
   COLUMN_CUSTOMER = 'customer',
@@ -118,6 +119,14 @@ export type CreateOrderProductType = {
   [CreateOrderInputFields.COLUMN_EAVS]?: Record<string, string>;
 };
 
+export enum UpdateOrderInputFields {
+  COLUMN_PO_NUMBER = 'PO_number',
+}
+
+export type UpdateOrderType = {
+  [UpdateOrderInputFields.COLUMN_PO_NUMBER]: string;
+};
+
 export class OrdersClient extends AbstractRestfulClient {
   /**
    * The base path of the API
@@ -149,5 +158,18 @@ export class OrdersClient extends AbstractRestfulClient {
     this.path = `/${orderReference}`;
 
     return new GetResult(DataListOrders, await this.get(parameters));
+  }
+
+  public async updateOrder(
+    orderReference: string,
+    payload: UpdateOrderType,
+    parameters: Parameters = {},
+  ): Promise<GetResult<UpdateOrderResult>> {
+    this.path = `/${orderReference}`;
+
+    return new GetResult(
+      UpdateOrderResult,
+      await this.patch(payload, parameters),
+    );
   }
 }

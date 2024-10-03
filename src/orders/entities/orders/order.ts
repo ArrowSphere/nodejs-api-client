@@ -18,6 +18,7 @@ export enum OrderFields {
   COLUMN_PONUMBER = 'ponumber',
   COLUMN_PRODUCTS = 'products',
   COLUMN_EXTRA_INFORMATION = 'extraInformation',
+  COLUMN_ORGANIZATION_UNIT_REF = 'organizationUnitRef',
 }
 
 export type OrderType = {
@@ -31,6 +32,7 @@ export type OrderType = {
   [OrderFields.COLUMN_PONUMBER]: string;
   [OrderFields.COLUMN_PRODUCTS]: Array<OrderProductsType>;
   [OrderFields.COLUMN_EXTRA_INFORMATION]?: AdditionalExtraInformationType;
+  [OrderFields.COLUMN_ORGANIZATION_UNIT_REF]?: string;
 };
 
 export class Order extends AbstractEntity<OrderType> {
@@ -44,6 +46,7 @@ export class Order extends AbstractEntity<OrderType> {
   readonly #ponumber: string;
   readonly #products: Array<OrderProduct>;
   readonly #extraInformation?: AdditionalExtraInformation;
+  readonly #organizationUnitRef?: string;
 
   public constructor(getOrderDataInput: OrderType) {
     super(getOrderDataInput);
@@ -76,6 +79,9 @@ export class Order extends AbstractEntity<OrderType> {
           ] as AdditionalExtraInformationType,
         )
       : undefined;
+
+    this.#organizationUnitRef =
+      getOrderDataInput[OrderFields.COLUMN_ORGANIZATION_UNIT_REF];
   }
 
   get reference(): string {
@@ -110,6 +116,10 @@ export class Order extends AbstractEntity<OrderType> {
     return this.#extraInformation;
   }
 
+  get organizationUnitRef(): string | undefined {
+    return this.#organizationUnitRef;
+  }
+
   public toJSON(): OrderType {
     return {
       [OrderFields.COLUMN_REFERENCE]: this.reference,
@@ -124,6 +134,7 @@ export class Order extends AbstractEntity<OrderType> {
         order.toJSON(),
       ),
       [OrderFields.COLUMN_EXTRA_INFORMATION]: this.extraInformation?.toJSON(),
+      [OrderFields.COLUMN_ORGANIZATION_UNIT_REF]: this.organizationUnitRef,
     };
   }
 }
