@@ -4,6 +4,8 @@ import { expect } from 'chai';
 import {
   PAYLOAD_ORDERS,
   PAYLOAD_ORDERS_WITHOUT_OPTIONAL,
+  PAYLOAD_UPDATE_ORDER,
+  PAYLOAD_UPDATE_ORDER_RESULT,
 } from './mocks/orders.mocks';
 import {
   CreateOrderFullInputPayload,
@@ -15,6 +17,7 @@ import {
 export const ORDERS_MOCK_URL = 'https://orders.localhost/index.php/api';
 export const ORDERS_CREATE = '/orders';
 export const GET_ORDERS_URL = new RegExp('/orders.*');
+export const UPDATE_ORDERS_URL = new RegExp('/orders.*');
 
 describe('OrdersClient', () => {
   const client = new PublicApiClient()
@@ -139,6 +142,25 @@ describe('OrdersClient', () => {
       const result = await orderClient.getOrder('XSPO123');
       expect(result).to.be.instanceof(GetResult);
       expect(result.toJSON()).to.eql(PAYLOAD_ORDERS_WITHOUT_OPTIONAL);
+    });
+  });
+
+  describe('updateOrder', async () => {
+    const orderClient = new PublicApiClient()
+      .getOrdersClient()
+      .setUrl(ORDERS_MOCK_URL);
+
+    it('Should update order', async () => {
+      nock(ORDERS_MOCK_URL)
+        .patch(UPDATE_ORDERS_URL)
+        .reply(200, PAYLOAD_UPDATE_ORDER_RESULT);
+
+      const result = await orderClient.updateOrder(
+        'XSPO123',
+        PAYLOAD_UPDATE_ORDER,
+      );
+      expect(result).to.be.instanceof(GetResult);
+      expect(result.toJSON()).to.eql(PAYLOAD_UPDATE_ORDER_RESULT);
     });
   });
 });

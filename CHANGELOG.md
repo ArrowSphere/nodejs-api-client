@@ -3,6 +3,13 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.145.0] - 2024.10.04
+
+### Added
+- [orders] Added organizationUnitRef property in order entity
+- [orders] Added endpoint to update an order
+- [organization unit] Added countOrders in organizationUnit entity
+
 ## [3.144.0] - 2024.10.03
 
 ### Added
