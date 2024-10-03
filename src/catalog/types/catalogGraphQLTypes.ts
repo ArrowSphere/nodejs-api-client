@@ -15,6 +15,8 @@ export type GetPriceBandType = {
 export type GetPriceBandsType = {
   getPriceBands: {
     priceBands: PriceBandType[];
+    filters?: Array<FiltersType>;
+    pagination?: PaginationType;
   };
 };
 
