@@ -28,7 +28,7 @@ import {
   LicenseBudgetNotificationType,
   LicenseBudgetType,
 } from './entities/licenseBudget';
-import { UserHistoryType, UserType } from './entities/user';
+import { UserHistoryType, UserRole, UserType } from './entities/user';
 import { OrganizationUnitsType } from './entities/organizationUnit';
 import { CurrencyType } from './entities/currency';
 import { ItemData, QuoteItemType, QuoteType } from './entities/quote';
@@ -77,6 +77,7 @@ type MissingFieldsOfContactSchema = {
 type MissingFieldsOfUserSchema = {
   contact?: ContactsSchema;
   userTags?: PartnertagSchema;
+  role?: UserRoleSchema;
 };
 
 type MissingFieldsOfLicenseBudgetSchema = {
@@ -119,6 +120,8 @@ type MissingFieldsOfCountrySchema = {
 };
 
 export type ItemDataSchema = Schema<ItemData, boolean>;
+
+export type UserRoleSchema = Schema<UserRole, boolean>;
 
 export type QuoteSchema = Merge<
   Schema<QuoteType, boolean>,

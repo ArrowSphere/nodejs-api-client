@@ -44,6 +44,7 @@ export type QuoteItemType = {
 export type ItemData = {
   id?: string;
   offerName?: string;
+  customTermEndDate?: string;
   publicPrice?: number;
   buyPrice?: number;
   sellPrice?: number;

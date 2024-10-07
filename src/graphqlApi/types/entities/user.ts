@@ -5,6 +5,7 @@ export type UserType = {
   id?: number;
   allowDirectLogin?: boolean;
   contact?: ContactsType;
+  role?: UserRole;
   userTags?: PartnertagType[];
   validatedAt?: string;
 };
@@ -16,4 +17,9 @@ export type UserHistoryType = {
   description?: string;
   impactedUser?: UserType;
   originatorUser?: UserType;
+};
+
+export type UserRole = {
+  id?: number;
+  name?: string;
 };
