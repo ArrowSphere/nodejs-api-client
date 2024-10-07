@@ -44,6 +44,7 @@ export type QuoteItemType = {
 export type ItemData = {
   id?: string;
   offerName?: string;
+  customTermEndDate?: string;
   publicPrice?: number;
   buyPrice?: number;
   sellPrice?: number;
@@ -52,9 +53,21 @@ export type ItemData = {
   partnerRateType?: string;
   arrowBuyPrice?: number;
   arrowCotermBuyPrice?: number;
+  /**
+   * this field will be delete shortly
+   * Use 'partnerBuyPrice' instead.
+   * @deprecated
+   */
   resellerBuyPrice?: number;
+  /**
+   * this field will be delete shortly
+   * Use 'partnerCotermBuyPrice' instead.
+   * @deprecated
+   */
   resellerCotermBuyPrice?: number;
   endCustomerBuyPrice?: number;
+  partnerCotermBuyPrice?: number;
+  partnerBuyPrice?: number;
   endCustomerCotermBuyPrice?: number;
   billingTerm?: number;
   billingCycle?: number;
