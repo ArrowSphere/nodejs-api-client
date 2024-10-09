@@ -24,6 +24,8 @@ import { PartnerClient } from './partner';
 import { OrganizationUnitClient } from './organisationUnit';
 import { QuotesClient } from './quotes';
 import { BillingClient } from './billing';
+import { AnalyticsClient } from './analytics';
+import { ReportsClient } from './reports';
 
 /**
  * Public API Client class, should be the main entry point for your calls
@@ -285,6 +287,22 @@ export class PublicApiClient extends AbstractRestfulClient {
 
   public getBillingClient(configuration?: ConfigurationsClient): BillingClient {
     const client: BillingClient = new BillingClient(configuration);
+    this.applyConfig(client);
+
+    return client;
+  }
+
+  public getAnalyticsClient(
+    configuration?: ConfigurationsClient,
+  ): AnalyticsClient {
+    const client: AnalyticsClient = new AnalyticsClient(configuration);
+    this.applyConfig(client);
+
+    return client;
+  }
+
+  public getReportsClient(configuration?: ConfigurationsClient): ReportsClient {
+    const client: ReportsClient = new ReportsClient(configuration);
     this.applyConfig(client);
 
     return client;
