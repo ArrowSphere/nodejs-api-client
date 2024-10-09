@@ -28,6 +28,9 @@ export * from './supportCenter/';
 export * from './securityScore/';
 export * from './user/';
 export * from './billing/';
+export * from './analytics/';
+export * from './reports/';
+export * from './orderSoftware/';
 
 export { WellArchitected };
 import * as WellArchitected from './wellArchitected';
