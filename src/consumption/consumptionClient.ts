@@ -7,6 +7,8 @@ import {
   ConsumptionBudget,
   ConsumptionBudgetType,
 } from './entities/consumption/consumptionBudget';
+import { Classification } from './entities/consumption/classification';
+import { Costs } from './entities/consumption/costs';
 
 export type ConsumptionDownloadRequestPayload = {
   customer: string;
@@ -77,5 +79,19 @@ export class ConsumptionClient extends AbstractRestfulClient {
     this.path = `/license/${licenseReference}/budget`;
 
     return new GetResult(ConsumptionBudget, await this.get(parameters));
+  }
+
+  public async getClassification(): Promise<GetResult<Classification>> {
+    this.path = '/classification';
+
+    return new GetResult(Classification, await this.get());
+  }
+
+  public async getCosts(groupByProgram: boolean): Promise<GetResult<Costs>> {
+    this.path = '/costs';
+
+    const parameter = groupByProgram ? { groupByProgram: true } : {};
+
+    return new GetResult(Costs, await this.get(parameter));
   }
 }

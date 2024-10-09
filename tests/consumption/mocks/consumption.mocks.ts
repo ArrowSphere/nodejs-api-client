@@ -17,6 +17,11 @@ import {
   ConsumptionDailyPredictionType,
   DailyPredictionFields,
 } from '../../../src/consumption/entities/consumption/consumptionDailyPrediction';
+import { ClassificationFields } from '../../../src/consumption/entities/consumption/classification';
+import {
+  CostsFields,
+  CostsType,
+} from '../../../src/consumption/entities/consumption/costs';
 
 export const GET_CONSUMPTION_MONTHLY_PARAMETERS = {
   billingMonthStart: '2020-10',
@@ -174,4 +179,24 @@ export const GET_LICENSE_DAILY_PREDICTIONS_RESPONSE: GetData<ConsumptionDailyPre
       },
     ],
   },
+};
+
+export const GET_CLASSIFICATION = {
+  [GetResultFields.COLUMN_DATA]: {
+    [ClassificationFields.COLUMN_CLASSIFICATIONS]: ['IAAS', 'SAAS'],
+  },
+  [GetResultFields.COLUMN_STATUS]: 200,
+};
+
+export const GET_COSTS: GetData<CostsType> = {
+  [GetResultFields.COLUMN_DATA]: {
+    [CostsFields.COLUMN_COSTS]: {
+      VCSP: {
+        resellerTotalPrice: 0,
+        currency: 'USD',
+        vendor: 'vendor',
+      },
+    },
+  },
+  [GetResultFields.COLUMN_STATUS]: 200,
 };
