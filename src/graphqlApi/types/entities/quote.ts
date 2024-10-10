@@ -73,6 +73,8 @@ export type ItemData = {
   billingCycle?: number;
   arrowRateValue?: number;
   partnerRateValue?: number;
+  vendorRateType?: string;
+  vendorUplift?: string;
   arrowSpherePriceBandSku?: string;
   licenseAgreementType?: string;
   classification?: string;
