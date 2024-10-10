@@ -74,7 +74,7 @@ export type ItemData = {
   arrowRateValue?: number;
   partnerRateValue?: number;
   vendorRateType?: string;
-  vendorUplift?: string;
+  vendorUplift?: number;
   arrowSpherePriceBandSku?: string;
   licenseAgreementType?: string;
   classification?: string;
