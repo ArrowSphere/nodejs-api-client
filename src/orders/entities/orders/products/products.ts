@@ -23,6 +23,7 @@ export enum OrderProductsFields {
   COLUMN_CLASSIFICATION = 'classification',
   COLUMN_PROGRAM = 'program',
   COLUMN_IDENTIFIERS = 'identifiers',
+  COLUMN_ORGANIZATION_UNIT_REF = 'organizationUnitRef',
 }
 
 export type OrderProductsType = {
@@ -41,6 +42,7 @@ export type OrderProductsType = {
   [OrderProductsFields.COLUMN_CLASSIFICATION]: string;
   [OrderProductsFields.COLUMN_PROGRAM]: ProductProgramType;
   [OrderProductsFields.COLUMN_IDENTIFIERS]: ProductIdentifiersType;
+  [OrderProductsFields.COLUMN_ORGANIZATION_UNIT_REF]?: string;
 };
 
 export class OrderProduct extends AbstractEntity<OrderProductsType> {
@@ -59,6 +61,7 @@ export class OrderProduct extends AbstractEntity<OrderProductsType> {
   readonly #classification: string;
   readonly #program: ProductProgram;
   readonly #identifier: ProductIdentifiers;
+  readonly #organizationUnitRef?: string;
 
   public constructor(getOrderProducts: OrderProductsType) {
     super(getOrderProducts);
@@ -98,6 +101,8 @@ export class OrderProduct extends AbstractEntity<OrderProductsType> {
     this.#identifier = new ProductIdentifiers(
       getOrderProducts[OrderProductsFields.COLUMN_IDENTIFIERS],
     );
+    this.#organizationUnitRef =
+      getOrderProducts[OrderProductsFields.COLUMN_ORGANIZATION_UNIT_REF];
   }
 
   get sku(): string {
@@ -145,6 +150,9 @@ export class OrderProduct extends AbstractEntity<OrderProductsType> {
   get identifier(): ProductIdentifiers {
     return this.#identifier;
   }
+  get organizationUnitRef(): string | undefined {
+    return this.#organizationUnitRef;
+  }
 
   public toJSON(): OrderProductsType {
     return {
@@ -163,6 +171,8 @@ export class OrderProduct extends AbstractEntity<OrderProductsType> {
       [OrderProductsFields.COLUMN_CLASSIFICATION]: this.classification,
       [OrderProductsFields.COLUMN_PROGRAM]: this.program.toJSON(),
       [OrderProductsFields.COLUMN_IDENTIFIERS]: this.identifier.toJSON(),
+      [OrderProductsFields.COLUMN_ORGANIZATION_UNIT_REF]: this
+        .organizationUnitRef,
     };
   }
 }

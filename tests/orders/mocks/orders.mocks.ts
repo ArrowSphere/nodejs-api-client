@@ -81,6 +81,7 @@ export const PAYLOAD_ORDERS: GetData<DataListOrdersType> = {
                 [IdentifiersVendorFields.COLUMN_SKU]: 'sku',
               },
             },
+            [OrderProductsFields.COLUMN_ORGANIZATION_UNIT_REF]: 'XSPOU321',
           },
         ],
         [OrderFields.COLUMN_EXTRA_INFORMATION]: {
