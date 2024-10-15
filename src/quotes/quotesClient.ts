@@ -28,7 +28,7 @@ type QuoteCustomerType = {
 };
 type QuoteRateType = {
   rateType: 'discount' | 'uplift';
-  value: number;
+  fixedPrice: number;
 };
 
 type QuoteCustomerPricesType = {
