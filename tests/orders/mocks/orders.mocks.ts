@@ -18,6 +18,7 @@ import {
   UpdateOrderInputType,
 } from '../../../src';
 import { UpdateOrderResultData } from '../../../src/orders/entities/orders/updateOrderResult';
+import { PriceBandFields } from '../../../src/orders/entities/orders/products/priceBand/priceBand';
 
 export const PAYLOAD_ORDERS: GetData<DataListOrdersType> = {
   [GetResultFields.COLUMN_STATUS]: 200,
@@ -82,6 +83,13 @@ export const PAYLOAD_ORDERS: GetData<DataListOrdersType> = {
               },
             },
             [OrderProductsFields.COLUMN_ORGANIZATION_UNIT_REF]: 'XSPOU321',
+            [OrderProductsFields.COLUMN_PRICE_BAND]: {
+              [PriceBandFields.COLUMN_ATTRIBUTES]: [
+                { name: 'Attribute1', value: 'value1' },
+                { name: 'Attribute2', value: 'value2' },
+                { name: 'Attribute3', value: 'value3' },
+              ],
+            },
           },
         ],
         [OrderFields.COLUMN_EXTRA_INFORMATION]: {

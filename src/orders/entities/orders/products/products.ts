@@ -6,6 +6,7 @@ import {
   ProductIdentifiers,
   ProductIdentifiersType,
 } from './identifiers/productIdentifiers';
+import { PriceBand, PriceBandType } from './priceBand/priceBand';
 
 export enum OrderProductsFields {
   COLUMN_SKU = 'sku',
@@ -24,6 +25,7 @@ export enum OrderProductsFields {
   COLUMN_PROGRAM = 'program',
   COLUMN_IDENTIFIERS = 'identifiers',
   COLUMN_ORGANIZATION_UNIT_REF = 'organizationUnitRef',
+  COLUMN_PRICE_BAND = 'priceBand',
 }
 
 export type OrderProductsType = {
@@ -43,6 +45,7 @@ export type OrderProductsType = {
   [OrderProductsFields.COLUMN_PROGRAM]: ProductProgramType;
   [OrderProductsFields.COLUMN_IDENTIFIERS]: ProductIdentifiersType;
   [OrderProductsFields.COLUMN_ORGANIZATION_UNIT_REF]?: string;
+  [OrderProductsFields.COLUMN_PRICE_BAND]?: PriceBandType;
 };
 
 export class OrderProduct extends AbstractEntity<OrderProductsType> {
@@ -62,6 +65,7 @@ export class OrderProduct extends AbstractEntity<OrderProductsType> {
   readonly #program: ProductProgram;
   readonly #identifier: ProductIdentifiers;
   readonly #organizationUnitRef?: string;
+  readonly #priceBand?: PriceBand;
 
   public constructor(getOrderProducts: OrderProductsType) {
     super(getOrderProducts);
@@ -103,6 +107,11 @@ export class OrderProduct extends AbstractEntity<OrderProductsType> {
     );
     this.#organizationUnitRef =
       getOrderProducts[OrderProductsFields.COLUMN_ORGANIZATION_UNIT_REF];
+    this.#priceBand = getOrderProducts[OrderProductsFields.COLUMN_PRICE_BAND]
+      ? new PriceBand(
+          getOrderProducts[OrderProductsFields.COLUMN_PRICE_BAND] as PriceBand,
+        )
+      : undefined;
   }
 
   get sku(): string {
@@ -153,6 +162,9 @@ export class OrderProduct extends AbstractEntity<OrderProductsType> {
   get organizationUnitRef(): string | undefined {
     return this.#organizationUnitRef;
   }
+  get priceBand(): PriceBand | undefined {
+    return this.#priceBand;
+  }
 
   public toJSON(): OrderProductsType {
     return {
@@ -173,6 +185,7 @@ export class OrderProduct extends AbstractEntity<OrderProductsType> {
       [OrderProductsFields.COLUMN_IDENTIFIERS]: this.identifier.toJSON(),
       [OrderProductsFields.COLUMN_ORGANIZATION_UNIT_REF]: this
         .organizationUnitRef,
+      [OrderProductsFields.COLUMN_PRICE_BAND]: this.priceBand?.toJSON(),
     };
   }
 }
