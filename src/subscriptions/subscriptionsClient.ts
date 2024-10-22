@@ -32,6 +32,17 @@ export type SubscriptionsListData = {
   };
 };
 
+export type SubscriptionCreationData = {
+  name: string;
+  level: string;
+  sku: string;
+  extraInformation?: {
+    programs: {
+      [programName: string]: Record<string, string>;
+    };
+  };
+};
+
 export class SubscriptionsClient extends AbstractRestfulClient {
   /**
    * The base path of the API
@@ -84,5 +95,11 @@ export class SubscriptionsClient extends AbstractRestfulClient {
     const response = await this.listRaw(postData);
 
     return new SubscriptionsListResult(response, this, postData);
+  }
+
+  public async addSubscription(
+    postData: SubscriptionCreationData,
+  ): Promise<void> {
+    return this.post(postData);
   }
 }

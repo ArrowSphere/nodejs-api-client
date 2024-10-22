@@ -19,10 +19,15 @@ import { ContactsType } from './entities/contact';
 import { SubscriptionType } from './entities/subscription';
 import { SpecialPriceRateType } from './entities/specialPriceRate';
 import { OrderItemsType, OrdersType } from './entities/order';
-import { VendorsType } from './entities/vendor';
 import {
   GraphqlApiProgramType,
+  ProgramBenefitType,
+  ProgramLevelType,
+  ProgramRequirementType,
+  ProgramLevelOptionGroupType,
+  ProgramLevelOptionType,
   SubscribedProgramType,
+  SubscriptionExtraFieldType,
 } from './entities/program';
 import {
   LicenseBudgetNotificationType,
@@ -201,13 +206,47 @@ export type LicenseBudgetNotificationSchema = Schema<
 >;
 export type OrganizationUnitSchema = Schema<OrganizationUnitsType, boolean>;
 export type PageSchema = Schema<PageType, boolean>;
-export type GraphqlApiProgramSchema = Schema<GraphqlApiProgramType, boolean>;
+export type ProgramBenefitSchema = Schema<ProgramBenefitType, boolean>;
+export type ProgramLevelOptionSchema = Schema<ProgramLevelOptionType, boolean>;
+export type ProgramRequirementSchema = Schema<ProgramRequirementType, boolean>;
+export type ProgramLevelSchema = Schema<ProgramLevelType, boolean>;
+
+type MissingFieldsOfProgramLevelOptionGroupSchema = {
+  programLevelOptions?: ProgramLevelOptionSchema;
+};
+
+export type ProgramLevelOptionGroupSchema = Merge<
+  Schema<ProgramLevelOptionGroupType, boolean>,
+  MissingFieldsOfProgramLevelOptionGroupSchema
+>;
+
+export type SubscriptionExtraFieldSchema = Schema<
+  SubscriptionExtraFieldType,
+  boolean
+>;
+
+export type MissingFieldsOfLevelSchema = {
+  benefits?: ProgramBenefitSchema;
+  programLevelOptionGroups?: ProgramLevelOptionGroupSchema;
+  requirements?: ProgramRequirementSchema;
+};
+
+export type MissingFieldsOfProgramSchema = {
+  levels?: Merge<
+    Schema<ProgramLevelSchema, boolean>,
+    MissingFieldsOfLevelSchema
+  >;
+  subscriptionExtraFields?: SubscriptionExtraFieldSchema;
+};
+export type GraphqlApiProgramSchema = Merge<
+  Schema<GraphqlApiProgramType, boolean>,
+  MissingFieldsOfProgramSchema
+>;
 export type ReportStatusSchema = Schema<GraphqlApiReportStatusType, boolean>;
 export type SpecialPriceRateSchema = Schema<SpecialPriceRateType, boolean>;
 export type SubscribedProgramSchema = Schema<SubscribedProgramType, boolean>;
 export type SubscriptionSchema = Schema<SubscriptionType, boolean>;
 export type UserHistorySchema = Schema<UserHistoryType, boolean>;
-export type VendorSchema = Schema<VendorsType, boolean>;
 export type WorkgroupSchema = Schema<WorkgroupType, boolean>;
 
 export type SelectAllResultSchema = {
@@ -225,6 +264,7 @@ export type SelectAllResponseDataSchema = {
   [SelectDataField.PARTNER]?: PartnerSchema;
   [SelectDataField.PARTNERTAG]?: PartnertagSchema;
   [SelectDataField.PROGRAM]?: GraphqlApiProgramSchema;
+  [SelectDataField.PROGRAM_LEVEL_OPTION_GROUP]?: ProgramLevelOptionGroupSchema;
   [SelectDataField.QUOTE]?: QuoteSchema;
   [SelectDataField.REPORT]?: ReportSchema;
   [SelectDataField.REPORT_STATUS]?: ReportStatusSchema;

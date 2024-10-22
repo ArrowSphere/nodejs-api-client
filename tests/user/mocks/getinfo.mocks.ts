@@ -14,6 +14,7 @@ export const PAYLOAD_USER: GetData<CompleteWhoAmIResponseData> = {
     [CompleteWhoAmIResponseFields.COLUMN_COMPANY]: {
       [CompleteWhoAmICompanyFields.COLUMN_COMPANY_RESTRICTED]: false,
       [CompleteWhoAmICompanyFields.COLUMN_COUNTRY_CODE]: 'MyCompany',
+      [CompleteWhoAmICompanyFields.COLUMN_ERP_ID]: '42',
       [CompleteWhoAmICompanyFields.COLUMN_HAS_ACCESS_TO_XCM]: true,
       [CompleteWhoAmICompanyFields.COLUMN_HAS_ACCESS_TO_XCP]: true,
       [CompleteWhoAmICompanyFields.COLUMN_IS_PROTECTED]: true,
