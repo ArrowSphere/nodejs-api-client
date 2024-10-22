@@ -222,6 +222,7 @@ export type SelectOneResultSchema = {
 
 export type SelectOneResponseDataSchema = {
   [SelectDataField.ARROW_COMPANY]?: ArrowCompanySchema;
+  [SelectDataField.AVAILABLE_PROGRAM]?: GraphqlApiProgramSchema;
   [SelectDataField.CONTINENT]?: ContinentSchema;
   [SelectDataField.COUNTRY]?: CountrySchema;
   [SelectDataField.END_CUSTOMER]?: EndCustomerSchema;
