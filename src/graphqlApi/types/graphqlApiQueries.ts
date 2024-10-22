@@ -9,6 +9,7 @@ import { LicenseBudgetType } from './entities/licenseBudget';
 import { PartnertagType } from './entities/partnertag';
 import {
   GraphqlApiProgramType,
+  ProgramLevelOptionGroupType,
   SubscribedProgramType,
 } from './entities/program';
 import { QuoteType } from './entities/quote';
@@ -160,6 +161,7 @@ export enum SelectDataField {
   PARTNER = 'partner',
   PARTNERTAG = 'partnertag',
   PROGRAM = 'program',
+  PROGRAM_LEVEL_OPTION_GROUP = 'programLevelOptionGroup',
   QUOTE = 'quote',
   REPORT = 'report',
   REPORT_STATUS = 'reportStatus',
@@ -188,6 +190,7 @@ export type SelectAllResponseDataType = {
   [SelectDataField.PARTNER]?: PartnerType[];
   [SelectDataField.PARTNERTAG]?: PartnertagType[];
   [SelectDataField.PROGRAM]?: GraphqlApiProgramType[];
+  [SelectDataField.PROGRAM_LEVEL_OPTION_GROUP]?: ProgramLevelOptionGroupType[];
   [SelectDataField.QUOTE]?: QuoteType[];
   [SelectDataField.REPORT]?: GraphqlApiReportType[];
   [SelectDataField.REPORT_STATUS]?: GraphqlApiReportStatusType[];
@@ -272,6 +275,7 @@ export type SelectOneResponseDataType = {
   [SelectDataField.PARTNER]?: PartnerType;
   [SelectDataField.PARTNERTAG]?: PartnertagType;
   [SelectDataField.PROGRAM]?: GraphqlApiProgramType;
+  [SelectDataField.PROGRAM_LEVEL_OPTION_GROUP]?: ProgramLevelOptionGroupType;
   [SelectDataField.QUOTE]?: QuoteType;
   [SelectDataField.REPORT]?: GraphqlApiReportType;
   [SelectDataField.REPORT_STATUS]?: GraphqlApiReportStatusType;

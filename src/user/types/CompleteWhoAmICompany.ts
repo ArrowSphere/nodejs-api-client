@@ -3,6 +3,7 @@ import { AbstractEntity } from '../../abstractEntity';
 export enum CompleteWhoAmICompanyFields {
   COLUMN_COMPANY_RESTRICTED = 'companyRestricted',
   COLUMN_COUNTRY_CODE = 'countryCode',
+  COLUMN_ERP_ID = 'erpId',
   COLUMN_HAS_ACCESS_TO_XCM = 'hasAccessToXcm',
   COLUMN_HAS_ACCESS_TO_XCP = 'hasAccessToXcp',
   COLUMN_IS_PROTECTED = 'isProtected',
@@ -21,6 +22,7 @@ export type CompanyUnit = {
 export type CompleteWhoAmICompanyData = {
   [CompleteWhoAmICompanyFields.COLUMN_COMPANY_RESTRICTED]: boolean;
   [CompleteWhoAmICompanyFields.COLUMN_COUNTRY_CODE]: string;
+  [CompleteWhoAmICompanyFields.COLUMN_ERP_ID]: string;
   [CompleteWhoAmICompanyFields.COLUMN_HAS_ACCESS_TO_XCM]: boolean;
   [CompleteWhoAmICompanyFields.COLUMN_HAS_ACCESS_TO_XCP]: boolean;
   [CompleteWhoAmICompanyFields.COLUMN_IS_PROTECTED]: boolean;
@@ -38,6 +40,7 @@ export class CompleteWhoAmICompany extends AbstractEntity<CompleteWhoAmICompanyD
     this.#companyRestricted =
       data[CompleteWhoAmICompanyFields.COLUMN_COMPANY_RESTRICTED];
     this.#countryCode = data[CompleteWhoAmICompanyFields.COLUMN_COUNTRY_CODE];
+    this.#erpId = data[CompleteWhoAmICompanyFields.COLUMN_ERP_ID];
     this.#hasAccessToXcm =
       data[CompleteWhoAmICompanyFields.COLUMN_HAS_ACCESS_TO_XCM];
     this.#hasAccessToXcp =
@@ -52,6 +55,7 @@ export class CompleteWhoAmICompany extends AbstractEntity<CompleteWhoAmICompanyD
 
   readonly #companyRestricted: boolean;
   readonly #countryCode: string;
+  readonly #erpId: string;
   readonly #hasAccessToXcm: boolean;
   readonly #hasAccessToXcp: boolean;
   readonly #isProtected: boolean;
@@ -67,6 +71,10 @@ export class CompleteWhoAmICompany extends AbstractEntity<CompleteWhoAmICompanyD
 
   get countryCode(): string {
     return this.#countryCode;
+  }
+
+  get erpId(): string {
+    return this.#erpId;
   }
 
   get hasAccessToXcm(): boolean {
@@ -106,6 +114,7 @@ export class CompleteWhoAmICompany extends AbstractEntity<CompleteWhoAmICompanyD
       [CompleteWhoAmICompanyFields.COLUMN_COMPANY_RESTRICTED]: this
         .companyRestricted,
       [CompleteWhoAmICompanyFields.COLUMN_COUNTRY_CODE]: this.countryCode,
+      [CompleteWhoAmICompanyFields.COLUMN_ERP_ID]: this.erpId,
       [CompleteWhoAmICompanyFields.COLUMN_HAS_ACCESS_TO_XCM]: this
         .hasAccessToXcm,
       [CompleteWhoAmICompanyFields.COLUMN_HAS_ACCESS_TO_XCP]: this

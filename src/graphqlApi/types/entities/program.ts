@@ -5,8 +5,13 @@ import { VendorsType } from './vendor';
 export type GraphqlApiProgramType = {
   id?: number;
   bypassReport?: number;
+  description?: string;
   internalName?: string;
+  introduction?: string;
+  levels?: ProgramLevelType[];
   name?: string;
+  subscriptionExtraFields?: SubscriptionExtraFieldType[];
+  url?: string;
   vendor?: VendorsType;
   type?: GraphqlApiProgramTypeType;
 };
@@ -22,6 +27,47 @@ export type GraphqlApiProgramLevelType = {
   enabled?: boolean;
   internalName?: string;
   name?: string;
+};
+
+export type SubscriptionExtraFieldType = {
+  name?: string;
+  key?: string;
+  isMandatory?: boolean;
+  type?: string;
+  rule?: string;
+  description?: string;
+};
+
+export type ProgramLevelOptionGroupType = {
+  name?: string;
+  notAvailable?: boolean;
+  sku?: string;
+  programLevelOptions?: ProgramLevelOptionType[];
+};
+
+export type ProgramLevelOptionType = {
+  id?: number;
+  description?: string;
+  typeId?: number;
+};
+
+export type ProgramLevelType = {
+  internalName?: string;
+  name?: string;
+  benefits?: ProgramBenefitType[];
+  requirements?: ProgramRequirementType[];
+  programLevelOptionGroups?: ProgramLevelOptionGroupType[];
+};
+
+export type ProgramBenefitType = {
+  id?: number;
+  title?: string;
+  description?: string;
+};
+
+export type ProgramRequirementType = {
+  title?: string;
+  description?: string;
 };
 
 export type SubscribedProgramType = {
