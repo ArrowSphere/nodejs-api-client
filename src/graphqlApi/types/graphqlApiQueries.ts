@@ -6,7 +6,10 @@ import {
 import { ContinentType, CountryType } from './entities/country';
 import { LicenseBudgetType } from './entities/licenseBudget';
 import { PartnertagType } from './entities/partnertag';
-import { SubscribedProgramType } from './entities/program';
+import {
+  GraphqlApiProgramType,
+  SubscribedProgramType,
+} from './entities/program';
 import { QuoteType } from './entities/quote';
 import { SubscriptionType } from './entities/subscription';
 import { UserHistoryType, UserType } from './entities/user';
@@ -141,6 +144,7 @@ export enum SelectableField {
 
 export enum SelectDataField {
   ARROW_COMPANY = 'arrowCompany',
+  AVAILABLE_PROGRAM = 'availableProgram',
   CONTINENT = 'continent',
   COUNTRY = 'country',
   END_CUSTOMER = 'endCustomer',
@@ -219,6 +223,7 @@ export type SelectOneResultType = {
 
 export type SelectOneResponseDataType = {
   [SelectDataField.ARROW_COMPANY]?: ArrowCompanyType;
+  [SelectDataField.AVAILABLE_PROGRAM]?: GraphqlApiProgramType;
   [SelectDataField.CONTINENT]?: ContinentType;
   [SelectDataField.COUNTRY]?: CountryType;
   [SelectDataField.END_CUSTOMER]?: EndCustomerType;
