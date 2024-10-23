@@ -184,9 +184,9 @@ describe('QuotesClient', () => {
               customer: {
                 rate: {
                   rateType: 'discount',
-                  fixedPrice: 0.01,
+                  value: 0.01,
                 },
-                value: 0,
+                fixedPrice: 0,
               },
             },
           },
@@ -234,9 +234,9 @@ describe('QuotesClient', () => {
               partner: {
                 rate: {
                   rateType: 'discount',
-                  fixedPrice: 0.06,
+                  value: 0.06,
                 },
-                value: 0,
+                fixedPrice: 0,
               },
             },
           },
