@@ -27,18 +27,16 @@ type QuoteCustomerType = {
   reference: string;
 };
 type QuoteRateType = {
-  rateType: 'discount' | 'uplift';
-  fixedPrice: number;
+  rateType: 'discount' | 'fixed' | 'uplift';
+  value: number;
 };
 
 type QuoteCustomerPricesType = {
   rate: QuoteRateType;
-  value: number;
+  fixedPrice: number;
 };
 
-type QuoteArrowPricesType = {
-  value: number;
-};
+type QuoteArrowPricesType = QuoteCustomerPricesType;
 
 type QuotePricesType = {
   customer?: QuoteCustomerPricesType;
