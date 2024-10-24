@@ -3,6 +3,14 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.153.0] - 2024.10.24
+
+### Added
+- [Customer] Added CreatedAt field in Customer entity
+- [Consumption] Add new Endpoint to Consumption Client(classification, costs)
+- [Report] Creating Reports Client to support the Reports API (Get Reports, Get Report, Create Report, Validate Report)
+- [Analytics] Creating Analytics Client to support the Consumption Analytics API (GetMonthly)
+
 ## [3.152.0] - 2024.10.23
 
 ### Updated
