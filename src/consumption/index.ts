@@ -6,3 +6,5 @@ export * from './entities/consumption/consumptionDownloadRequest';
 export * from './entities/consumption/consumptionBudget';
 export * from './entities/consumption/consumptionDailyPrediction';
 export * from './consumptionClient';
+export * from './entities/consumption/classification';
+export * from './entities/consumption/costs';

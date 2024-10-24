@@ -43,6 +43,7 @@ export enum CustomerFields {
   COLUMN_INTERNAL_REFERENCE = 'InternalReference',
   COLUMN_CONTACT = 'Contact',
   COLUMN_DELETED_AT = 'DeletedAt',
+  COLUMN_CREATED_AT = 'CreatedAt',
   COLUMN_XAC_RESELLER_ID = 'XacResellerId',
   COLUMN_XAC_END_CUSTOMER_ID = 'XacEndCustomerId',
   COLUMN_DETAILS = 'Details',
@@ -95,6 +96,7 @@ export type CustomerType = {
   [CustomerFields.COLUMN_INTERNAL_REFERENCE]: string;
   [CustomerFields.COLUMN_CONTACT]: ContactType;
   [CustomerFields.COLUMN_DELETED_AT]?: string | null;
+  [CustomerFields.COLUMN_CREATED_AT]?: string | null;
   [CustomerFields.COLUMN_XAC_RESELLER_ID]?: number;
   [CustomerFields.COLUMN_XAC_END_CUSTOMER_ID]?: number;
   [CustomerFields.COLUMN_DETAILS]: DetailsType;
@@ -137,6 +139,7 @@ export class Customer extends AbstractEntity<CustomerType> {
   readonly #internalReference: string;
   readonly #contact: Contact;
   readonly #deletedAt?: string | null;
+  readonly #createdAt?: string | null;
   readonly #xacResellerId?: number;
   readonly #xacEndCustomerId?: number;
   readonly #details: Details;
@@ -199,6 +202,7 @@ export class Customer extends AbstractEntity<CustomerType> {
       getCustomersDataInput[CustomerFields.COLUMN_CONTACT],
     );
     this.#deletedAt = getCustomersDataInput[CustomerFields.COLUMN_DELETED_AT];
+    this.#createdAt = getCustomersDataInput[CustomerFields.COLUMN_CREATED_AT];
     this.#xacResellerId =
       getCustomersDataInput[CustomerFields.COLUMN_XAC_RESELLER_ID];
     this.#xacEndCustomerId =
@@ -361,6 +365,10 @@ export class Customer extends AbstractEntity<CustomerType> {
     return this.#deletedAt;
   }
 
+  get CreatedAt(): string | null | undefined {
+    return this.#createdAt;
+  }
+
   get XacResellerId(): number | undefined {
     return this.#xacResellerId;
   }
@@ -420,6 +428,7 @@ export class Customer extends AbstractEntity<CustomerType> {
       [CustomerFields.COLUMN_CONTACT]: this.Contact.toJSON(),
       [CustomerFields.COLUMN_DETAILS]: this.Details.toJSON(),
       [CustomerFields.COLUMN_DELETED_AT]: this.DeletedAt,
+      [CustomerFields.COLUMN_CREATED_AT]: this.CreatedAt,
       [CustomerFields.COLUMN_XAC_RESELLER_ID]: this.XacResellerId,
       [CustomerFields.COLUMN_XAC_END_CUSTOMER_ID]: this.XacEndCustomerId,
       [CustomerFields.COLUMN_EXTRA_INFORMATION]: this.ExtraInformation?.toJSON(),
