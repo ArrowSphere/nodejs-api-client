@@ -123,7 +123,9 @@ export const PAYLOAD_SCHEMA_LICENSE: GetData<GetLicenseResultData> = {
         },
       },
       [LicenseGetFields.COLUMN_ARROW_SUB_CATEGORIES]: ['string'],
-      [LicenseGetFields.COLUMN_ASSETS]: {},
+      [LicenseGetFields.COLUMN_ASSETS]: {
+        eula: 'eula',
+      },
       [LicenseGetFields.COLUMN_PROMOTION]: {},
       [LicenseGetFields.COLUMN_EXTRA_DATA]: [
         {
@@ -240,7 +242,9 @@ export const PAYLOAD_SCHEMA_LICENSE_WITHOUT_OPTIONAL_FIELDS: GetData<GetLicenseR
           [BuySellFields.COLUMN_LIST]: 3.5,
         },
       },
-      [LicenseGetFields.COLUMN_ASSETS]: {},
+      [LicenseGetFields.COLUMN_ASSETS]: {
+        eula: 'eula',
+      },
       [LicenseGetFields.COLUMN_PROMOTION]: {},
     },
   },
