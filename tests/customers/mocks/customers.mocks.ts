@@ -141,6 +141,7 @@ export const PAYLOAD_GET_CUSTOMER_INVITATION = {
       [InvitationContactFields.COLUMN_EMAIL]: 'email',
     },
     [DataInvitationFields.COLUMN_POLICY]: 'admin',
+    [DataInvitationFields.COLUMN_EXPIRED_AT]: '2025-10-28T15:10:00.000Z',
   },
 };
 
@@ -159,6 +160,10 @@ export const PAYLOAD_GET_CUSTOMER_CONTACT_LIST = {
       [CustomerContactFields.COLUMN_IS_ACTIVE]: true,
       [CustomerContactFields.COLUMN_XCP_INVITATION]: {
         [CustomerContactXcpInvitationFields.COLUMN_POLICY]: 'policy_admin',
+        [CustomerContactXcpInvitationFields.COLUMN_CREATED_AT]:
+          '2025-10-25T15:10:00.000Z',
+        [CustomerContactXcpInvitationFields.COLUMN_EXPIRED_AT]:
+          '2025-10-28T15:10:00.000Z',
       },
       [CustomerContactFields.COLUMN_ORGANIZATION_UNIT_ID]: 42,
       [CustomerContactFields.COLUMN_ORGANIZATION_UNITS]: [
@@ -199,6 +204,13 @@ export const RESPONSE_CUSTOMER_CONTACT: GetData<CustomerContactType> = {
     [CustomerContactFields.COLUMN_TYPE]: 'type',
     [CustomerContactFields.COLUMN_ROLE]: 'role',
     [CustomerContactFields.COLUMN_IS_ACTIVE]: true,
+    [CustomerContactFields.COLUMN_XCP_INVITATION]: {
+      [CustomerContactXcpInvitationFields.COLUMN_POLICY]: 'policy_admin',
+      [CustomerContactXcpInvitationFields.COLUMN_CREATED_AT]:
+        '2025-10-25T15:10:00.000Z',
+      [CustomerContactXcpInvitationFields.COLUMN_EXPIRED_AT]:
+        '2025-10-28T15:10:00.000Z',
+    },
     [CustomerContactFields.COLUMN_ORGANIZATION_UNIT_ID]: 1,
     [CustomerContactFields.COLUMN_ORGANIZATION_UNITS]: [
       {
