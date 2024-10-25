@@ -1,16 +1,17 @@
 import nock from 'nock';
 
 import {
+  APIResponseCustomerUpdated,
+  APIResponseError,
+  APIResponseResourceCreated,
+  CustomerContactFields,
+  DataInvitationFields,
   GetResult,
   GetResultFields,
   Parameters,
-  PublicApiClient,
-  DataInvitationFields,
-  PostCustomerPayload,
-  APIResponseResourceCreated,
-  APIResponseError,
-  APIResponseCustomerUpdated,
   PostCustomerMigrationPayload,
+  PostCustomerPayload,
+  PublicApiClient,
 } from '../../src/';
 import { expect } from 'chai';
 import { PAYLOAD_ORDERS } from '../orders/mocks/orders.mocks';
@@ -25,6 +26,7 @@ import {
 } from './mocks/customers.mocks';
 import { Axios } from 'axios';
 import sinon from 'sinon';
+import { cloneDeep } from 'lodash';
 
 export const CUSTOMERS_MOCK_URL = 'https://customers.localhost';
 export const CUSTOMERS_GET_CUSTOMERS_URL = new RegExp('/customers.*');
@@ -244,6 +246,34 @@ describe('CustomersClients', () => {
 
       expect(result).to.be.instanceof(GetResult);
       expect(result.toJSON()).to.eql(RESPONSE_CUSTOMER_CONTACT);
+    });
+
+    it('call get customer contact details without xcp invitation', async () => {
+      const response = cloneDeep(RESPONSE_CUSTOMER_CONTACT);
+      delete response.data[CustomerContactFields.COLUMN_XCP_INVITATION];
+
+      nock(CUSTOMERS_MOCK_URL)
+        .get(CUSTOMERS_GET_CUSTOMER_CONTACT_URL)
+        .reply(200, response);
+
+      const result = await client.getCustomerContact('REF', 'REF');
+
+      expect(result).to.be.instanceof(GetResult);
+      expect(result.toJSON()).to.eql(response);
+    });
+
+    it('call get customer contact details with empty xcp invitation values', async () => {
+      const response = cloneDeep(RESPONSE_CUSTOMER_CONTACT);
+      response.data.xcpInvitation = {};
+
+      nock(CUSTOMERS_MOCK_URL)
+        .get(CUSTOMERS_GET_CUSTOMER_CONTACT_URL)
+        .reply(200, response);
+
+      const result = await client.getCustomerContact('REF', 'REF');
+
+      expect(result).to.be.instanceof(GetResult);
+      expect(result.toJSON()).to.eql(response);
     });
   });
 

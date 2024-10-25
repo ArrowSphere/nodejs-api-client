@@ -170,7 +170,7 @@ export class CustomerContact extends AbstractEntity<CustomerContactType> {
       [CustomerContactFields.COLUMN_TYPE]: this.type,
       [CustomerContactFields.COLUMN_ROLE]: this.role,
       [CustomerContactFields.COLUMN_IS_ACTIVE]: this.isActive,
-      [CustomerContactFields.COLUMN_XCP_INVITATION]: this.xcpInvitation,
+      [CustomerContactFields.COLUMN_XCP_INVITATION]: this.xcpInvitation?.toJSON(),
       [CustomerContactFields.COLUMN_ORGANIZATION_UNIT_ID]: this
         .organizationUnitId,
       [CustomerContactFields.COLUMN_ORGANIZATION_UNITS]: this.organizationUnits.map(
