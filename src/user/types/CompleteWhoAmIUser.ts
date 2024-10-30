@@ -12,6 +12,7 @@ export enum CompleteWhoAmIUserFields {
   COLUMN_SCOPES = 'scopes',
   COLUMN_XAP_USERNAME = 'xapUsername',
   COLUMN_CAN_IMPERSONATE = 'canImpersonate',
+  COLUMN_HAS_LEGAL_DOCUMENT = 'hasLegalDocument',
 }
 
 export type ImpersonableUser = {
@@ -33,6 +34,7 @@ export type CompleteWhoAmIUserData = {
   [CompleteWhoAmIUserFields.COLUMN_SCOPES]: string[];
   [CompleteWhoAmIUserFields.COLUMN_XAP_USERNAME]: string;
   [CompleteWhoAmIUserFields.COLUMN_CAN_IMPERSONATE]: ImpersonableUser[];
+  [CompleteWhoAmIUserFields.COLUMN_HAS_LEGAL_DOCUMENT]?: boolean;
 };
 
 export class CompleteWhoAmIUser extends AbstractEntity<CompleteWhoAmIUserData> {
@@ -51,6 +53,8 @@ export class CompleteWhoAmIUser extends AbstractEntity<CompleteWhoAmIUserData> {
     this.#xapUsername = data[CompleteWhoAmIUserFields.COLUMN_XAP_USERNAME];
     this.#canImpersonate =
       data[CompleteWhoAmIUserFields.COLUMN_CAN_IMPERSONATE];
+    this.#hasLegalDocument =
+      data[CompleteWhoAmIUserFields.COLUMN_HAS_LEGAL_DOCUMENT];
   }
 
   readonly #email?: string;
@@ -64,6 +68,7 @@ export class CompleteWhoAmIUser extends AbstractEntity<CompleteWhoAmIUserData> {
   readonly #scopes: string[];
   readonly #xapUsername: string;
   readonly #canImpersonate: ImpersonableUser[];
+  readonly #hasLegalDocument?: boolean;
 
   get email(): string | undefined {
     return this.#email;
@@ -109,6 +114,10 @@ export class CompleteWhoAmIUser extends AbstractEntity<CompleteWhoAmIUserData> {
     return this.#canImpersonate;
   }
 
+  get hasLegalDocument(): boolean | undefined {
+    return this.#hasLegalDocument;
+  }
+
   public toJSON(): CompleteWhoAmIUserData {
     return {
       [CompleteWhoAmIUserFields.COLUMN_EMAIL]: this.email,
@@ -122,6 +131,8 @@ export class CompleteWhoAmIUser extends AbstractEntity<CompleteWhoAmIUserData> {
       [CompleteWhoAmIUserFields.COLUMN_SCOPES]: this.scopes,
       [CompleteWhoAmIUserFields.COLUMN_XAP_USERNAME]: this.xapUsername,
       [CompleteWhoAmIUserFields.COLUMN_CAN_IMPERSONATE]: this.canImpersonate,
+      [CompleteWhoAmIUserFields.COLUMN_HAS_LEGAL_DOCUMENT]: this
+        .hasLegalDocument,
     };
   }
 }
