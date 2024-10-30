@@ -7,6 +7,10 @@ import {
   ProductIdentifiersType,
 } from './identifiers/productIdentifiers';
 import { PriceBand, PriceBandType } from './priceBand/priceBand';
+import {
+  OrganizationUnit,
+  OrganizationUnitType,
+} from './organizationUnit/organizationUnit';
 
 export enum OrderProductsFields {
   COLUMN_SKU = 'sku',
@@ -25,6 +29,7 @@ export enum OrderProductsFields {
   COLUMN_PROGRAM = 'program',
   COLUMN_IDENTIFIERS = 'identifiers',
   COLUMN_ORGANIZATION_UNIT_REF = 'organizationUnitRef',
+  COLUMN_ORGANIZATION_UNIT = 'organizationUnit',
   COLUMN_PRICE_BAND = 'priceBand',
 }
 
@@ -45,6 +50,7 @@ export type OrderProductsType = {
   [OrderProductsFields.COLUMN_PROGRAM]: ProductProgramType;
   [OrderProductsFields.COLUMN_IDENTIFIERS]: ProductIdentifiersType;
   [OrderProductsFields.COLUMN_ORGANIZATION_UNIT_REF]?: string;
+  [OrderProductsFields.COLUMN_ORGANIZATION_UNIT]?: OrganizationUnitType;
   [OrderProductsFields.COLUMN_PRICE_BAND]?: PriceBandType;
 };
 
@@ -65,6 +71,7 @@ export class OrderProduct extends AbstractEntity<OrderProductsType> {
   readonly #program: ProductProgram;
   readonly #identifier: ProductIdentifiers;
   readonly #organizationUnitRef?: string;
+  readonly #organizationUnit?: OrganizationUnit;
   readonly #priceBand?: PriceBand;
 
   public constructor(getOrderProducts: OrderProductsType) {
@@ -107,6 +114,15 @@ export class OrderProduct extends AbstractEntity<OrderProductsType> {
     );
     this.#organizationUnitRef =
       getOrderProducts[OrderProductsFields.COLUMN_ORGANIZATION_UNIT_REF];
+    this.#organizationUnit = getOrderProducts[
+      OrderProductsFields.COLUMN_ORGANIZATION_UNIT
+    ]
+      ? new OrganizationUnit(
+          getOrderProducts[
+            OrderProductsFields.COLUMN_ORGANIZATION_UNIT
+          ] as OrganizationUnit,
+        )
+      : undefined;
     this.#priceBand = getOrderProducts[OrderProductsFields.COLUMN_PRICE_BAND]
       ? new PriceBand(
           getOrderProducts[OrderProductsFields.COLUMN_PRICE_BAND] as PriceBand,
@@ -165,6 +181,9 @@ export class OrderProduct extends AbstractEntity<OrderProductsType> {
   get priceBand(): PriceBand | undefined {
     return this.#priceBand;
   }
+  get organizationUnit(): OrganizationUnit | undefined {
+    return this.#organizationUnit;
+  }
 
   public toJSON(): OrderProductsType {
     return {
@@ -185,6 +204,7 @@ export class OrderProduct extends AbstractEntity<OrderProductsType> {
       [OrderProductsFields.COLUMN_IDENTIFIERS]: this.identifier.toJSON(),
       [OrderProductsFields.COLUMN_ORGANIZATION_UNIT_REF]: this
         .organizationUnitRef,
+      [OrderProductsFields.COLUMN_ORGANIZATION_UNIT]: this.organizationUnit?.toJSON(),
       [OrderProductsFields.COLUMN_PRICE_BAND]: this.priceBand?.toJSON(),
     };
   }
