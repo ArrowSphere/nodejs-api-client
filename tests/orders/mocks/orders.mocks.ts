@@ -19,6 +19,7 @@ import {
 } from '../../../src';
 import { UpdateOrderResultData } from '../../../src/orders/entities/orders/updateOrderResult';
 import { PriceBandFields } from '../../../src/orders/entities/orders/products/priceBand/priceBand';
+import { OrganizationUnitTypeFields } from '../../../src/orders/entities/orders/products/organizationUnit/organizationUnit';
 
 export const PAYLOAD_ORDERS: GetData<DataListOrdersType> = {
   [GetResultFields.COLUMN_STATUS]: 200,
@@ -83,6 +84,12 @@ export const PAYLOAD_ORDERS: GetData<DataListOrdersType> = {
               },
             },
             [OrderProductsFields.COLUMN_ORGANIZATION_UNIT_REF]: 'XSPOU321',
+            [OrderProductsFields.COLUMN_ORGANIZATION_UNIT]: {
+              [OrganizationUnitTypeFields.COLUMN_ORGANIZATION_UNIT_REF]:
+                'XSPOU321',
+              [OrganizationUnitTypeFields.COLUMN_NAME]:
+                'organization_unit_name',
+            },
             [OrderProductsFields.COLUMN_PRICE_BAND]: {
               [PriceBandFields.COLUMN_ATTRIBUTES]: [
                 { name: 'Attribute1', value: 'value1' },
