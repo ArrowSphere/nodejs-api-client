@@ -96,6 +96,7 @@ export type ProductType = {
   relatedOffers?: Array<RelatedOfferType>;
   resellers?: OfferResellersType;
   scope?: string;
+  billingSets?: Array<string>;
 };
 
 export type IdentifiersType = {
