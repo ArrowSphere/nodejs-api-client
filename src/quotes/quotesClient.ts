@@ -47,6 +47,7 @@ type QuotePricesType = {
 type QuoteItemType = {
   arrowSpherePriceBandSku: string;
   quantity: number;
+  coterminosityDate?: string;
   prices?: QuotePricesType;
 };
 
