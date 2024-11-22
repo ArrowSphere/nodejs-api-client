@@ -65,6 +65,7 @@ export type ItemData = {
    * @deprecated
    */
   resellerCotermBuyPrice?: number;
+  retailCotermBuyPrice?: number;
   endCustomerBuyPrice?: number;
   partnerCotermBuyPrice?: number;
   partnerBuyPrice?: number;
