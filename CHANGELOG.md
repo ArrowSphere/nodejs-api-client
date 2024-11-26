@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - [quotes] Added retailCotermBuyPrice in itemdata and  coterminosityDate in QuoteItemType
 
+
 ## [3.158.0] - 2024.11.22
 
 ### Added
