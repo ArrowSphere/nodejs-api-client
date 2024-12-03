@@ -22,7 +22,14 @@ import { OrderItemsType, OrdersType } from './entities/order';
 import { VendorsType } from './entities/vendor';
 import {
   GraphqlApiProgramType,
+  ProgramBenefitType,
+  ProgramLevelType,
+  ProgramRequirementType,
+  ProgramSkuPackAvailabilityType,
+  ProgramSkuPackType,
+  ProgramSkuType,
   SubscribedProgramType,
+  SubscriptionDetailKeyType,
 } from './entities/program';
 import {
   LicenseBudgetNotificationType,
@@ -185,7 +192,54 @@ export type LicenseBudgetNotificationSchema = Schema<
 >;
 export type OrganizationUnitSchema = Schema<OrganizationUnitsType, boolean>;
 export type PageSchema = Schema<PageType, boolean>;
-export type GraphqlApiProgramSchema = Schema<GraphqlApiProgramType, boolean>;
+export type ProgramBenefitSchema = Schema<ProgramBenefitType, boolean>;
+export type ProgramSkuSchema = Schema<ProgramSkuType, boolean>;
+export type ProgramRequirementSchema = Schema<ProgramRequirementType, boolean>;
+export type ProgramLevelSchema = Schema<ProgramLevelType, boolean>;
+
+type MissingFieldsOfProgramSkuPackSchema = {
+  programSkus?: ProgramSkuSchema;
+};
+
+type ProgramSkuPackSchema = Merge<
+  Schema<ProgramSkuPackType, boolean>,
+  MissingFieldsOfProgramSkuPackSchema
+>;
+
+type MissingFieldsOfProgramSkuPackAvailabilitySchema = {
+  programSkuPack?: ProgramSkuPackSchema;
+};
+
+export type ProgramSkuPackAvailabilitySchema = Merge<
+  Schema<
+    ProgramSkuPackAvailabilityType, // append programSkuPack <----------------------------------------------------
+    boolean
+  >,
+  MissingFieldsOfProgramSkuPackAvailabilitySchema
+>;
+
+export type SubscriptionDetailKeySchema = Schema<
+  SubscriptionDetailKeyType,
+  boolean
+>;
+
+export type MissingFieldsOfLevelSchema = {
+  benefits?: ProgramBenefitSchema;
+  programSkuPackAvailabilities?: ProgramSkuPackAvailabilitySchema;
+  requirements?: ProgramRequirementSchema;
+};
+
+export type MissingFieldsOfProgramSchema = {
+  levels?: Merge<
+    Schema<ProgramLevelSchema, boolean>,
+    MissingFieldsOfLevelSchema
+  >;
+  subscriptionDetailKeys?: SubscriptionDetailKeySchema;
+};
+export type GraphqlApiProgramSchema = Merge<
+  Schema<GraphqlApiProgramType, boolean>,
+  MissingFieldsOfProgramSchema
+>;
 export type SpecialPriceRateSchema = Schema<SpecialPriceRateType, boolean>;
 export type SubscribedProgramSchema = Schema<SubscribedProgramType, boolean>;
 export type SubscriptionSchema = Schema<SubscriptionType, boolean>;
@@ -207,6 +261,8 @@ export type SelectAllResponseDataSchema = {
   [SelectDataField.LICENSE_BUDGET]?: LicenseBudgetSchema;
   [SelectDataField.PARTNER]?: PartnerSchema;
   [SelectDataField.PARTNERTAG]?: PartnertagSchema;
+  [SelectDataField.PROGRAM]?: GraphqlApiProgramSchema;
+  [SelectDataField.PROGRAM_SKU_PACK_AVAILABILITY]?: ProgramSkuPackAvailabilitySchema;
   [SelectDataField.QUOTE]?: QuoteSchema;
   [SelectDataField.SUBSCRIBED_PROGRAM]?: SubscribedProgramSchema;
   [SelectDataField.SUBSCRIPTION]?: SubscriptionSchema;
@@ -228,6 +284,7 @@ export type SelectOneResponseDataSchema = {
   [SelectDataField.LICENSE_BUDGET]?: LicenseBudgetSchema;
   [SelectDataField.PARTNER]?: PartnerSchema;
   [SelectDataField.PARTNERTAG]?: PartnertagSchema;
+  [SelectDataField.PROGRAM]?: GraphqlApiProgramSchema;
   [SelectDataField.QUOTE]?: QuoteSchema;
   [SelectDataField.SUBSCRIBED_PROGRAM]?: SubscribedProgramSchema;
   [SelectDataField.SUBSCRIPTION]?: SubscriptionSchema;
