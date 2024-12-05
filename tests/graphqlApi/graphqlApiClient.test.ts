@@ -14,6 +14,7 @@ import {
   EndCustomerType,
   ErrorsField,
   GraphqlApiClient,
+  GraphqlApiProgramType,
   LicenseBudgetType,
   PartnerType,
   Queries,
@@ -649,6 +650,43 @@ describe('GraphqlApiClient', () => {
       sinon.assert.calledWithExactly(
         graphQLClient.request,
         sinon.match(GraphqlApiQueryMock.SELECT_QUOTES_GQL),
+      );
+    });
+  });
+
+  describe('GetPrograms', () => {
+    it('makes a graphql POST request on the specified URL to selectAll paginated programs', async () => {
+      const programs: GraphqlApiProgramType[] = [
+        {
+          id: 1,
+          internalName: 'Program 1',
+          name: 'Program 1',
+          vendor: {
+            id: 1,
+            name: 'Vendor 1',
+          },
+        },
+      ];
+
+      const expectedResult: SelectAllResultType = {
+        [Queries.SELECT_ALL]: {
+          [SelectableField.DATA]: {
+            [SelectDataField.PROGRAM]: programs,
+          },
+        },
+      };
+
+      graphQLClient.request.resolves(expectedResult);
+
+      const result: SelectAllResultType | null = await client.selectAll(
+        GraphqlApiQueryMock.SELECT_PROGRAMS_QUERY,
+      );
+
+      expect(result).to.deep.equals(expectedResult);
+
+      sinon.assert.calledWithExactly(
+        graphQLClient.request,
+        sinon.match(GraphqlApiQueryMock.SELECT_PROGRAMS_GQL),
       );
     });
   });
