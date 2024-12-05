@@ -6,7 +6,10 @@ import {
 import { ContinentType, CountryType } from './entities/country';
 import { LicenseBudgetType } from './entities/licenseBudget';
 import { PartnertagType } from './entities/partnertag';
-import { SubscribedProgramType } from './entities/program';
+import {
+  GraphqlApiProgramType,
+  SubscribedProgramType,
+} from './entities/program';
 import { QuoteType } from './entities/quote';
 import { SubscriptionType } from './entities/subscription';
 import { UserHistoryType, UserType } from './entities/user';
@@ -147,6 +150,7 @@ export enum SelectDataField {
   LICENSE_BUDGET = 'licenseBudget',
   PARTNER = 'partner',
   PARTNERTAG = 'partnertag',
+  PROGRAM = 'program',
   QUOTE = 'quote',
   SUBSCRIBED_PROGRAM = 'subscribedProgram',
   SUBSCRIPTION = 'subscription',
@@ -171,6 +175,7 @@ export type SelectAllResponseDataType = {
   [SelectDataField.LICENSE_BUDGET]?: LicenseBudgetType[];
   [SelectDataField.PARTNER]?: PartnerType[];
   [SelectDataField.PARTNERTAG]?: PartnertagType[];
+  [SelectDataField.PROGRAM]?: GraphqlApiProgramType[];
   [SelectDataField.QUOTE]?: QuoteType[];
   [SelectDataField.SUBSCRIBED_PROGRAM]?: SubscribedProgramType[];
   [SelectDataField.SUBSCRIPTION]?: SubscriptionType[];
@@ -225,6 +230,7 @@ export type SelectOneResponseDataType = {
   [SelectDataField.LICENSE_BUDGET]?: LicenseBudgetType;
   [SelectDataField.PARTNER]?: PartnerType;
   [SelectDataField.PARTNERTAG]?: PartnertagType;
+  [SelectDataField.PROGRAM]?: GraphqlApiProgramType;
   [SelectDataField.QUOTE]?: QuoteType;
   [SelectDataField.SUBSCRIBED_PROGRAM]?: SubscribedProgramType;
   [SelectDataField.SUBSCRIPTION]?: SubscriptionType;
