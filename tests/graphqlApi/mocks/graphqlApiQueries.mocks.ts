@@ -918,3 +918,56 @@ export const SELECT_QUOTES_QUERY: SelectAllQueryType = {
 
 export const SELECT_QUOTES_GQL =
   '{selectAll (aggregatorFilter: ["id"], filters: {groups: [{items: [{name: "updatedAt", value: ["2024-01-01 00:00:00", "2024-06-11 23:59:59"], operator: "BETWEEN"}]}]}, pagination: {page: 1, perPage: 15}, sort: [{name: "createdAt", direction: "DESC"}]) { data { quote { id arrowCompany { id name workgroup { code } } commitmentAmountTotal createdAt dateBegin dateEnd endCustomer { id name country { code2 code3 id lat lng name phoneCode } partner { country { code2 code3 id lat lng name phoneCode } } } endCustomerContact { id firstname lastname phone email } versions { id version updatedAt createdAt } lastVersion { id version updatedAt createdAt } comments { id body createdAt user { id contact { firstname lastname } } } items { id name program { id name internalName vendor { id name identifier licenseUrl logoLarge logoSmall logoStandard url } } reference vendorName vendorNamesSerialized itemData { id offerName customTermEndDate publicPrice buyPrice sellPrice currency arrowRateType partnerRateType billingTerm billingCycle arrowRateValue partnerRateValue vendorRateValue vendorRateType arrowSpherePriceBandSku licenseAgreementType classification mainLogoUrl squareLogoUrl marketplace creationDate quantity orderingType partnerBuyPrice partnerCotermBuyPrice retailCotermBuyPrice } version { id version updatedAt createdAt } } name partner { id name currency { id name symbol } } promotionCode reference status totalRecurringPrice updatedAt } } errors { code message } pagination { currentPage perPage total } }}';
+
+export const SELECT_PROGRAMS_QUERY: SelectAllQueryType = {
+  [Queries.SELECT_ALL]: {
+    __args: {
+      filters: {
+        groups: [
+          {
+            items: [
+              {
+                name: 'programAvailability.workgroup.code',
+                value: ['FR'],
+                operator: ComparisonOperator.EQUALS,
+              },
+            ],
+          },
+        ],
+      },
+      pagination: {
+        page: 1,
+        perPage: 25,
+      },
+    },
+    data: {
+      program: {
+        id: true,
+        internalName: true,
+        name: true,
+        vendor: {
+          id: true,
+          name: true,
+          identifier: true,
+          licenseUrl: true,
+          logoLarge: true,
+          logoSmall: true,
+          logoStandard: true,
+          url: true,
+        },
+      },
+    },
+    errors: {
+      code: true,
+      message: true,
+    },
+    pagination: {
+      currentPage: true,
+      perPage: true,
+      total: true,
+    },
+  },
+};
+
+export const SELECT_PROGRAMS_GQL =
+  '{selectAll (filters: {groups: [{items: [{name: "programAvailability.workgroup.code", value: ["FR"], operator: "EQUALS"}]}]}, pagination: {page: 1, perPage: 25}) { data { program { id internalName name vendor { id name identifier licenseUrl logoLarge logoSmall logoStandard url } } } errors { code message } pagination { currentPage perPage total } }}';

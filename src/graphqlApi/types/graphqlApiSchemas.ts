@@ -207,6 +207,7 @@ export type SelectAllResponseDataSchema = {
   [SelectDataField.LICENSE_BUDGET]?: LicenseBudgetSchema;
   [SelectDataField.PARTNER]?: PartnerSchema;
   [SelectDataField.PARTNERTAG]?: PartnertagSchema;
+  [SelectDataField.PROGRAM]?: GraphqlApiProgramSchema;
   [SelectDataField.QUOTE]?: QuoteSchema;
   [SelectDataField.SUBSCRIBED_PROGRAM]?: SubscribedProgramSchema;
   [SelectDataField.SUBSCRIPTION]?: SubscriptionSchema;
@@ -228,6 +229,7 @@ export type SelectOneResponseDataSchema = {
   [SelectDataField.LICENSE_BUDGET]?: LicenseBudgetSchema;
   [SelectDataField.PARTNER]?: PartnerSchema;
   [SelectDataField.PARTNERTAG]?: PartnertagSchema;
+  [SelectDataField.PROGRAM]?: GraphqlApiProgramSchema;
   [SelectDataField.QUOTE]?: QuoteSchema;
   [SelectDataField.SUBSCRIBED_PROGRAM]?: SubscribedProgramSchema;
   [SelectDataField.SUBSCRIPTION]?: SubscriptionSchema;
