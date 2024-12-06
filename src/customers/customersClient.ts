@@ -49,10 +49,10 @@ export type PostCustomerContactPayload = {
   [CustomerContactPayloadFields.COLUMN_FIRST_NAME]: string;
   [CustomerContactPayloadFields.COLUMN_LAST_NAME]: string;
   [CustomerContactPayloadFields.COLUMN_EMAIL]: string;
-  [CustomerContactPayloadFields.COLUMN_USERNAME]: string;
+  [CustomerContactPayloadFields.COLUMN_USERNAME]?: string;
   [CustomerContactPayloadFields.COLUMN_PHONE]: string;
-  [CustomerContactPayloadFields.COLUMN_TYPE]: CustomerContactTypeType;
-  [CustomerContactPayloadFields.COLUMN_ROLE]: CustomerContactRoleType;
+  [CustomerContactPayloadFields.COLUMN_TYPE]?: CustomerContactTypeType;
+  [CustomerContactPayloadFields.COLUMN_ROLE]?: CustomerContactRoleType;
   [CustomerContactPayloadFields.COLUMN_ORGANIZATION_UNIT_ID]?: number;
   [CustomerContactPayloadFields.COLUMN_ORGANIZATION_UNIT_IDS]?: number[];
 };
