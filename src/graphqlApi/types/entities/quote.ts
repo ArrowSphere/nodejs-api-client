@@ -68,8 +68,10 @@ export type ItemData = {
   retailCotermBuyPrice?: number;
   endCustomerBuyPrice?: number;
   partnerCotermBuyPrice?: number;
+  partnerBuyPriceWithoutPromotion?: number;
   partnerBuyPrice?: number;
   endCustomerCotermBuyPrice?: number;
+  partnerCotermBuyPriceWithoutPromotion?: number;
   billingTerm?: number;
   billingCycle?: number;
   arrowRateValue?: number;
