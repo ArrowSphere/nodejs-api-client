@@ -87,6 +87,12 @@ describe('CatalogGraphQLClient', () => {
       const products: ProductType[] = [
         {
           name: 'Office 365',
+          marketplace: 'FR',
+          defaultPriceBand: {
+            name: 'default',
+            isBuyable: true,
+            isEnabled: true,
+          },
         },
       ];
       const bodyResponse = {

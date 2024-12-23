@@ -196,6 +196,7 @@ export type PriceBandType = {
   family?: FamilyType;
   identifiers?: PriceBandIdentifiersType;
   isEnabled?: boolean;
+  isBuyable?: boolean;
   marketplace?: string;
   name?: string;
   orderingType?: string;
