@@ -4,7 +4,7 @@
     "type": "git",
     "url": "https://github.com/ArrowSphere/nodejs-api-client.git"
   },
-  "version": "3.179.0",
+  "version": "3.180.0-rc.ybo.1",
   "description": "Node.js client for ArrowSphere's public API",
   "main": "build/index.js",
   "types": "build/index.d.ts",
@@ -31,6 +31,7 @@
   "author": "ArrowSphere <support@arrowsphereconnect.com>",
   "license": "MIT",
   "devDependencies": {
+    "@types/validatorjs": "3.15.0",
     "@types/chai": "4.2.15",
     "@types/chai-as-promised": "7.1.3",
     "@types/lodash": "^4.14.191",
@@ -81,7 +82,6 @@
     "test": "tests"
   },
   "dependencies": {
-    "@types/validatorjs": "3.15.0",
     "axios": "1.1.3",
     "graphql": "^16.3.0",
     "graphql-request": "4.2.0",
