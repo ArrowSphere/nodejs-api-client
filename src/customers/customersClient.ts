@@ -245,6 +245,15 @@ export class CustomersClient extends AbstractRestfulClient {
     );
   }
 
+  public async reactivateCustomer(
+    customerRef: string,
+    parameters: Parameters = {},
+  ): Promise<void> {
+    this.path = `/${customerRef}`;
+
+    return await this.put({}, parameters);
+  }
+
   public async postCustomerInvitation(
     payload: PostCustomerInvitation,
     parameters: Parameters = {},

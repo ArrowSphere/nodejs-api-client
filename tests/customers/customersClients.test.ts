@@ -545,4 +545,15 @@ describe('CustomersClients', () => {
       }
     });
   });
+  describe('reactivatecustomer', () => {
+    const client = new PublicApiClient()
+      .getCustomersClient()
+      .setUrl(CUSTOMERS_MOCK_URL);
+
+    it('call put to reactivate customer', async () => {
+      nock(CUSTOMERS_MOCK_URL).put(CUSTOMERS_GET_CUSTOMERS_URL).reply(200);
+
+      await client.reactivateCustomer('REF');
+    });
+  });
 });
