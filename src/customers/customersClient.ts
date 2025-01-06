@@ -84,6 +84,7 @@ export type PostCustomerPayload = {
   [CustomerFields.COLUMN_BILLING_ID]?: string;
   [CustomerFields.COLUMN_INTERNAL_REFERENCE]?: string;
   [CustomerFields.COLUMN_CONTACT]?: PostCustomerContact;
+  [CustomerFields.COLUMN_REGISTRATION_NUMBER]?: string;
 };
 
 export enum PostCustomerInvitationFields {
