@@ -81,7 +81,13 @@ export type PostCustomerPayload = {
   [CustomerFields.COLUMN_HEADCOUNT]?: number;
   [CustomerFields.COLUMN_TAX_NUMBER]?: string;
   [CustomerFields.COLUMN_REF]?: string;
+  [CustomerFields.COLUMN_BILLING_ADDRESS_1]?: string;
+  [CustomerFields.COLUMN_BILLING_ADDRESS_2]?: string;
+  [CustomerFields.COLUMN_BILLING_CITY]?: string;
+  [CustomerFields.COLUMN_BILLING_COUNTRY_CODE]?: string;
   [CustomerFields.COLUMN_BILLING_ID]?: string;
+  [CustomerFields.COLUMN_BILLING_STATE]?: string;
+  [CustomerFields.COLUMN_BILLING_ZIP_CODE]?: string;
   [CustomerFields.COLUMN_INTERNAL_REFERENCE]?: string;
   [CustomerFields.COLUMN_CONTACT]?: PostCustomerContact;
   [CustomerFields.COLUMN_REGISTRATION_NUMBER]?: string;
