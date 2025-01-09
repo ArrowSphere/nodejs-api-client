@@ -5,6 +5,7 @@ export type UserType = {
   id?: number;
   allowDirectLogin?: boolean;
   contact?: ContactsType;
+  login?: string;
   userTags?: PartnertagType[];
   validatedAt?: string;
 };

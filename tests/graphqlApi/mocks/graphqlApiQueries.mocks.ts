@@ -700,6 +700,7 @@ export const SELECT_USER_QUERY: SelectAllQueryType = {
     data: {
       user: {
         allowDirectLogin: true,
+        login: true,
         validatedAt: true,
         contact: {
           firstname: true,
@@ -731,7 +732,7 @@ export const SELECT_USER_QUERY: SelectAllQueryType = {
 };
 
 export const SELECT_USER_GQL =
-  '{selectAll (filters: {groups: [{items: [{name: "id", value: ["123"], operator: "EQUALS"}]}]}, pagination: {page: 1, perPage: 3}) { data { user { allowDirectLogin validatedAt contact { firstname lastname organizationUnits { id name } } userTags { id label createdAt description labelsSerialized } } } errors { code message } pagination { currentPage perPage total } }}';
+  '{selectAll (filters: {groups: [{items: [{name: "id", value: ["123"], operator: "EQUALS"}]}]}, pagination: {page: 1, perPage: 3}) { data { user { allowDirectLogin login validatedAt contact { firstname lastname organizationUnits { id name } } userTags { id label createdAt description labelsSerialized } } } errors { code message } pagination { currentPage perPage total } }}';
 
 export const SELECT_QUOTES_QUERY: SelectAllQueryType = {
   [Queries.SELECT_ALL]: {
