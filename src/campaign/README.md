@@ -10,22 +10,23 @@ A campaign is the entity which holds information about the campaign.
 
 A Campaign page are managed by the `Campaign` entity.
 
-| Field      | Type              | Example                | Description              |
-|------------|-------------------|------------------------|--------------------------|
-| id         | ```number```      | 1                      | Contact id               |
-| banners    | ```Banners[]```   |                        | Contact id               |
-| category   | ```string```      | "BANNER"               | The Reseller             |
-| createdAt  | ```string```      | "01 Jan 1970 00:00:00" | Contact first name       |
-| deletedAt  | ```string```      | "01 Jan 1970 00:00:00" | Contact last name        |
-| endDate    | ```string```      | "01 Jan 1970 00:00:00" | Contact email            |
-| isActivated| ```boolean```     | true                   | Contact phone number     |
-| landingPage| ```LandingPage``` |                        | Contact erp id           |
-| name       | ```string```      | "Campaign Microsoft"   | Contact type             |
-| reference  | ```string```      | "c925ec6e-e029-4146"   | Ownership campaign rules |
-| rules      | ```Rules```       |                        | Contact status           |
-| startDate  | ```string```      | "01 Jan 1970 00:00:00" | Campaign beginning date  |
-| updatedAt  | ```string```      | "01 Jan 1970 00:00:00" | Campaign last edition    |
-| weight     | ```number```      | 12                     | Campaign weight          |
+| Field       | Type              | Example                | Description              |
+|-------------|-------------------|------------------------|--------------------------|
+| id          | ```number```      | 1                      | Contact id               |
+| banners     | ```Banners[]```   |                        | Contact id               |
+| category    | ```string```      | "BANNER"               | The Reseller             |
+| status      | ```string```      | "open                  | Bugfix status            |
+| createdAt   | ```string```      | "01 Jan 1970 00:00:00" | Contact first name       |
+| deletedAt   | ```string```      | "01 Jan 1970 00:00:00" | Contact last name        |
+| endDate     | ```string```      | "01 Jan 1970 00:00:00" | Contact email            |
+| isActivated | ```boolean```     | true                   | Contact phone number     |
+| landingPage | ```LandingPage``` |                        | Contact erp id           |
+| name        | ```string```      | "Campaign Microsoft"   | Contact type             |
+| reference   | ```string```      | "c925ec6e-e029-4146"   | Ownership campaign rules |
+| rules       | ```Rules```       |                        | Contact status           |
+| startDate   | ```string```      | "01 Jan 1970 00:00:00" | Campaign beginning date  |
+| updatedAt   | ```string```      | "01 Jan 1970 00:00:00" | Campaign last edition    |
+| weight      | ```number```      | 12                     | Campaign weight          |
  
 ### Banners
 

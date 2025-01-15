@@ -9,6 +9,7 @@ export enum CampaignV2Fields {
   COLUMN_REFERENCE = 'reference',
   COLUMN_NAME = 'name',
   COLUMN_CATEGORY = 'category',
+  COLUMN_STATUS = 'status',
   COLUMN_IS_ACTIVATED = 'isActivated',
   COLUMN_CREATED_AT = 'createdAt',
   COLUMN_UPDATED_AT = 'updatedAt',
@@ -24,6 +25,7 @@ export type CampaignV2Type = {
   [CampaignV2Fields.COLUMN_DOWNLOAD_URLS]?: DownloadUrls;
   [CampaignV2Fields.COLUMN_REFERENCE]: string;
   [CampaignV2Fields.COLUMN_NAME]: string;
+  [CampaignV2Fields.COLUMN_STATUS]?: string;
   [CampaignV2Fields.COLUMN_CATEGORY]?: string;
   [CampaignV2Fields.COLUMN_IS_ACTIVATED]?: boolean;
   [CampaignV2Fields.COLUMN_CREATED_AT]: string;
@@ -41,6 +43,7 @@ export class CampaignV2 extends AbstractEntity<CampaignV2Type> {
   readonly #reference: string;
   readonly #name: string;
   readonly #category?: string;
+  readonly #status?: string;
   readonly #isActivated?: boolean;
   readonly #createdAt: string;
   readonly #updatedAt: string;
@@ -71,6 +74,7 @@ export class CampaignV2 extends AbstractEntity<CampaignV2Type> {
     this.#landingPage = new LandingPageV2(
       campaignInput[CampaignV2Fields.COLUMN_LANDING_PAGE],
     );
+    this.#status = campaignInput[CampaignV2Fields.COLUMN_STATUS];
   }
 
   get downloadUrls(): DownloadUrls | undefined {
@@ -125,6 +129,10 @@ export class CampaignV2 extends AbstractEntity<CampaignV2Type> {
     return this.#landingPage;
   }
 
+  get status(): string | undefined {
+    return this.#status;
+  }
+
   public toJSON(): CampaignV2Type {
     return {
       [CampaignV2Fields.COLUMN_DOWNLOAD_URLS]: this.downloadUrls,
@@ -140,6 +148,7 @@ export class CampaignV2 extends AbstractEntity<CampaignV2Type> {
       [CampaignV2Fields.COLUMN_END_DATE]: this.endDate,
       [CampaignV2Fields.COLUMN_BANNER]: this.banner.toJSON(),
       [CampaignV2Fields.COLUMN_LANDING_PAGE]: this.landingPage.toJSON(),
+      [CampaignV2Fields.COLUMN_STATUS]: this.status,
     };
   }
 }

@@ -194,6 +194,7 @@ export const GET_ACTIVE_CAMPAIGNS_V2_OUTPUT: GetData<CampaignListType> = {
       [CampaignV2Fields.COLUMN_NAME]: 'Campaign Microsoft',
       [CampaignV2Fields.COLUMN_CATEGORY]: 'BANNER',
       [CampaignV2Fields.COLUMN_IS_ACTIVATED]: true,
+      [CampaignV2Fields.COLUMN_STATUS]: 'closed',
       [CampaignV2Fields.COLUMN_CREATED_AT]: '2021-06-25T16:00:00Z',
       [CampaignV2Fields.COLUMN_UPDATED_AT]: '2021-06-25T18:00:00Z',
       [CampaignV2Fields.COLUMN_DELETED_AT]: '2021-08-25T16:00:00Z',
@@ -895,6 +896,7 @@ export const GET_ACTIVE_CAMPAIGN_OUTPUT_WITHOUT_LANDING: GetData<CampaignType> =
     [CampaignFields.COLUMN_REFERENCE]: 'c925ec6e-e029-4146-8400-2867c7761743',
     [CampaignFields.COLUMN_NAME]: 'Campaign Microsoft',
     [CampaignFields.COLUMN_CATEGORY]: 'BANNER',
+    [CampaignFields.COLUMN_STATUS]: 'Open',
     [CampaignFields.COLUMN_IS_ACTIVATED]: true,
     [CampaignFields.COLUMN_CREATED_AT]: '2021-06-25T16:00:00Z',
     [CampaignFields.COLUMN_UPDATED_AT]: '2021-06-25T18:00:00Z',
@@ -933,6 +935,66 @@ export const GET_ACTIVE_CAMPAIGN_OUTPUT_WITHOUT_LANDING: GetData<CampaignType> =
           '6e3a0d7a-8651-4e47-89db-c5b2fbaff8f0',
       },
     },
+  },
+};
+export const GET_ACTIVE_CAMPAIGN_OUTPUT_WITHOUT_BANNER: GetData<CampaignType> = {
+  status: 200,
+  data: {
+    [CampaignFields.COLUMN_REFERENCE]: 'c925ec6e-e029-4146-8400-2867c7761743',
+    [CampaignFields.COLUMN_NAME]: 'Campaign Microsoft',
+    [CampaignFields.COLUMN_CATEGORY]: 'BANNER',
+    [CampaignFields.COLUMN_STATUS]: 'Open',
+    [CampaignFields.COLUMN_IS_ACTIVATED]: true,
+    [CampaignFields.COLUMN_CREATED_AT]: '2021-06-25T16:00:00Z',
+    [CampaignFields.COLUMN_UPDATED_AT]: '2021-06-25T18:00:00Z',
+    [CampaignFields.COLUMN_DELETED_AT]: '2021-08-25T16:00:00Z',
+    [CampaignFields.COLUMN_RULES]: {
+      [RulesFields.COLUMN_LOCATIONS]: ['MCP'],
+      [RulesFields.COLUMN_ROLES]: ['EXT_MSP', 'EXT_MSP_P'],
+      [RulesFields.COLUMN_MARKETPLACES]: ['FR', 'US'],
+      [RulesFields.COLUMN_SUBSCRIPTIONS]: ['MSCSP', 'DDPCaaS'],
+      [RulesFields.COLUMN_RESELLERS]: ['XSP12354', 'XSP256'],
+      [RulesFields.COLUMN_END_CUSTOMERS]: ['XSP45678', 'XSP789'],
+    },
+    [CampaignFields.COLUMN_WEIGHT]: 1,
+    [CampaignFields.COLUMN_START_DATE]: '2021-08-01',
+    [CampaignFields.COLUMN_END_DATE]: '2021-09-31',
+    [CampaignFields.COLUMN_LANDING_PAGE]: {
+      [LandingPageFields.COLUMN_HEADER]: {
+        [LandingPageHeaderFields.COLUMN_BACKGROUND_IMAGE_UUID]:
+          '0fed6621-fe0c-4290-813a-58217e37b3ae',
+        [LandingPageHeaderFields.COLUMN_VENDOR_LOGO_UUID]:
+          'e174e2a2-7545-4ef1-8f0c-122d0140cdea',
+      },
+      [LandingPageFields.COLUMN_BODY]: {
+        [LandingPageBodyFields.COLUMN_BACKGROUND_IMAGE_UUID]:
+          '6e3a0d7a-8651-4e47-89db-c5b2fbaff8f0',
+      },
+    },
+  },
+};
+export const GET_ACTIVE_CAMPAIGN_OUTPUT_WITHOUT_LANDING_PAGE: GetData<CampaignType> = {
+  status: 200,
+  data: {
+    [CampaignFields.COLUMN_REFERENCE]: 'c925ec6e-e029-4146-8400-2867c7761743',
+    [CampaignFields.COLUMN_NAME]: 'Campaign Microsoft',
+    [CampaignFields.COLUMN_CATEGORY]: 'BANNER',
+    [CampaignFields.COLUMN_STATUS]: 'Open',
+    [CampaignFields.COLUMN_IS_ACTIVATED]: true,
+    [CampaignFields.COLUMN_CREATED_AT]: '2021-06-25T16:00:00Z',
+    [CampaignFields.COLUMN_UPDATED_AT]: '2021-06-25T18:00:00Z',
+    [CampaignFields.COLUMN_DELETED_AT]: '2021-08-25T16:00:00Z',
+    [CampaignFields.COLUMN_RULES]: {
+      [RulesFields.COLUMN_LOCATIONS]: ['MCP'],
+      [RulesFields.COLUMN_ROLES]: ['EXT_MSP', 'EXT_MSP_P'],
+      [RulesFields.COLUMN_MARKETPLACES]: ['FR', 'US'],
+      [RulesFields.COLUMN_SUBSCRIPTIONS]: ['MSCSP', 'DDPCaaS'],
+      [RulesFields.COLUMN_RESELLERS]: ['XSP12354', 'XSP256'],
+      [RulesFields.COLUMN_END_CUSTOMERS]: ['XSP45678', 'XSP789'],
+    },
+    [CampaignFields.COLUMN_WEIGHT]: 1,
+    [CampaignFields.COLUMN_START_DATE]: '2021-08-01',
+    [CampaignFields.COLUMN_END_DATE]: '2021-09-31',
   },
 };
 
