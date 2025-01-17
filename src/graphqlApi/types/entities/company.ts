@@ -67,6 +67,7 @@ export type PartnerType = BaseCompanyType & {
   customersCount?: CountableType;
   ordersCount?: CountableType;
   ordersNeedCount?: CountableType;
+  ordersSaasCount?: CountableType;
   reportsCount?: CountableType;
   subscribedPrograms?: SubscribedProgramType[];
   subscriptions?: SubscriptionType[];
