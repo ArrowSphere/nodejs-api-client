@@ -70,7 +70,7 @@ export type SearchBodyArgument = {
 
 export type SearchProductFilterArgument = {
   name: string;
-  value: string | string[] | string[][];
+  value?: string | string[] | string[][] | null;
   operator?: OperatorArgument;
   filters?: SearchProductFilterArgument[];
 };
