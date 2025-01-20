@@ -8,6 +8,7 @@ export enum CampaignFields {
   COLUMN_NAME = 'name',
   COLUMN_CATEGORY = 'category',
   COLUMN_IS_ACTIVATED = 'isActivated',
+  COLUMN_STATUS = 'status',
   COLUMN_CREATED_AT = 'createdAt',
   COLUMN_UPDATED_AT = 'updatedAt',
   COLUMN_DELETED_AT = 'deletedAt',
@@ -20,10 +21,11 @@ export enum CampaignFields {
 }
 
 export type CampaignType = {
-  [CampaignFields.COLUMN_REFERENCE]: string;
+  [CampaignFields.COLUMN_REFERENCE]?: string;
   [CampaignFields.COLUMN_NAME]: string;
   [CampaignFields.COLUMN_CATEGORY]?: string;
   [CampaignFields.COLUMN_IS_ACTIVATED]?: boolean;
+  [CampaignFields.COLUMN_STATUS]?: string;
   [CampaignFields.COLUMN_CREATED_AT]: string;
   [CampaignFields.COLUMN_UPDATED_AT]: string;
   [CampaignFields.COLUMN_DELETED_AT]?: string;
@@ -31,14 +33,15 @@ export type CampaignType = {
   [CampaignFields.COLUMN_WEIGHT]?: number;
   [CampaignFields.COLUMN_START_DATE]?: string;
   [CampaignFields.COLUMN_END_DATE]?: string;
-  [CampaignFields.COLUMN_BANNERS]: BannersType[];
-  [CampaignFields.COLUMN_LANDING_PAGE]: LandingPageType;
+  [CampaignFields.COLUMN_BANNERS]?: BannersType[];
+  [CampaignFields.COLUMN_LANDING_PAGE]?: LandingPageType;
 };
 
 export class Campaign extends AbstractEntity<CampaignType> {
-  readonly #reference: string;
+  readonly #reference?: string;
   readonly #name: string;
   readonly #category?: string;
+  readonly #status?: string;
   readonly #isActivated?: boolean;
   readonly #createdAt: string;
   readonly #updatedAt: string;
@@ -47,8 +50,8 @@ export class Campaign extends AbstractEntity<CampaignType> {
   readonly #weight?: number;
   readonly #startDate?: string;
   readonly #endDate?: string;
-  readonly #banners: Banners[];
-  readonly #landingPage: LandingPage;
+  readonly #banners?: Banners[];
+  readonly #landingPage?: LandingPage;
 
   constructor(campaignInput: CampaignType) {
     super(campaignInput);
@@ -65,15 +68,18 @@ export class Campaign extends AbstractEntity<CampaignType> {
     this.#weight = campaignInput[CampaignFields.COLUMN_WEIGHT];
     this.#startDate = campaignInput[CampaignFields.COLUMN_START_DATE];
     this.#endDate = campaignInput[CampaignFields.COLUMN_END_DATE];
-    this.#banners = campaignInput[CampaignFields.COLUMN_BANNERS].map(
+    this.#banners = campaignInput[CampaignFields.COLUMN_BANNERS]?.map(
       (banner: BannersType) => new Banners(banner),
     );
-    this.#landingPage = new LandingPage(
-      campaignInput[CampaignFields.COLUMN_LANDING_PAGE],
-    );
+    this.#landingPage = campaignInput[CampaignFields.COLUMN_LANDING_PAGE]
+      ? new LandingPage(
+          campaignInput[CampaignFields.COLUMN_LANDING_PAGE] as LandingPageType,
+        )
+      : undefined;
+    this.#status = campaignInput[CampaignFields.COLUMN_STATUS];
   }
 
-  get reference(): string {
+  get reference(): string | undefined {
     return this.#reference;
   }
 
@@ -117,12 +123,16 @@ export class Campaign extends AbstractEntity<CampaignType> {
     return this.#endDate;
   }
 
-  get banners(): Banners[] {
+  get banners(): Banners[] | undefined {
     return this.#banners;
   }
 
-  get landingPage(): LandingPage {
+  get landingPage(): LandingPage | undefined {
     return this.#landingPage;
+  }
+
+  get status(): string | undefined {
+    return this.#status;
   }
 
   public toJSON(): CampaignType {
@@ -138,10 +148,11 @@ export class Campaign extends AbstractEntity<CampaignType> {
       [CampaignFields.COLUMN_WEIGHT]: this.weight,
       [CampaignFields.COLUMN_START_DATE]: this.startDate,
       [CampaignFields.COLUMN_END_DATE]: this.endDate,
-      [CampaignFields.COLUMN_BANNERS]: this.banners.map((banner: Banners) =>
+      [CampaignFields.COLUMN_BANNERS]: this.banners?.map((banner: Banners) =>
         banner.toJSON(),
       ),
-      [CampaignFields.COLUMN_LANDING_PAGE]: this.landingPage.toJSON(),
+      [CampaignFields.COLUMN_LANDING_PAGE]: this.landingPage?.toJSON(),
+      [CampaignFields.COLUMN_STATUS]: this.status,
     };
   }
 }
