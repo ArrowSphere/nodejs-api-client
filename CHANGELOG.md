@@ -3,6 +3,21 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.164.0] - 2025.01.21
+
+### Updated
+- [campaign] updated Campaign schema add field status
+- [campaign] updated CampaignV2 schema add field status
+
+### Added
+- [campaign] added delete endpoint
+- [campaign] added edit endpoint
+- [campaign] added create endpoint
+- [campaign] added duplicate endpoint
+- [campaign] added get List endpoint
+- [campaign assets] added get assets form uploader endpoint
+- [campaign assets] added delete assets endpoint
+
 ## [3.163.2] - 2025.01.21
 
 ### Updated
