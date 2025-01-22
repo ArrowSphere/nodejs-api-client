@@ -52,6 +52,12 @@ export enum scenarioType {
   PROVISION = 'provision',
 }
 
+export declare type OrderProgramsType = {
+  [key: string]: {
+    [name: string]: string;
+  };
+};
+
 export type CreateOrderInputType = {
   [CreateOrderInputFields.COLUMN_CUSTOMER]: {
     [CreateOrderInputFields.COLUMN_REFERENCE]: string;
@@ -61,7 +67,7 @@ export type CreateOrderInputType = {
   [CreateOrderInputFields.COLUMN_SCHEDULE_DATE]?: string;
   [CreateOrderInputFields.COLUMN_PRODUCTS]: Array<CreateOrderProductType>;
   [CreateOrderInputFields.COLUMN_EXTRA_INFORMATION]?: {
-    programs: { [key: string]: { [name: string]: string } };
+    programs: OrderProgramsType;
   };
   [CreateOrderInputFields.COLUMN_ORGANIZATION_UNIT_REF]?: string;
 };
