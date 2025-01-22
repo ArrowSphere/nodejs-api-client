@@ -27,6 +27,7 @@ export enum ProgramExtraInfoItemFields {
   TYPE = 'type',
   REGEX = 'regex',
   MANDATORY = 'mandatory',
+  DESCRIBTION = 'describtion',
 }
 
 export type ProgramType = {
@@ -56,6 +57,7 @@ export type ExtraInfoItemType = {
   [ProgramExtraInfoItemFields.TYPE]: string;
   [ProgramExtraInfoItemFields.REGEX]: string;
   [ProgramExtraInfoItemFields.MANDATORY]: boolean;
+  [ProgramExtraInfoItemFields.DESCRIBTION]?: string;
 };
 
 export class Program extends AbstractEntity<ProgramType> {
