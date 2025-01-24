@@ -16,7 +16,8 @@ export type ConsumptionDownloadRequestPayload = {
   dateStart: string;
   dateEnd: string;
   columns: Array<string>;
-  callbackURL: string;
+  callbackURL?: string;
+  source?: string;
 };
 
 export class ConsumptionClient extends AbstractRestfulClient {
