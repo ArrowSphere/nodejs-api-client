@@ -1,6 +1,7 @@
 import { AbstractEntity } from '../../abstractEntity';
 
 export enum CompleteWhoAmIUserFields {
+  COLUMN_CONTACT_RESTRICTED = 'contactRestricted',
   COLUMN_EMAIL = 'email',
   COLUMN_FIRSTNAME = 'firstname',
   COLUMN_LASTNAME = 'lastname',
@@ -23,6 +24,7 @@ export type ImpersonableUser = {
 };
 
 export type CompleteWhoAmIUserData = {
+  [CompleteWhoAmIUserFields.COLUMN_CONTACT_RESTRICTED]?: boolean;
   [CompleteWhoAmIUserFields.COLUMN_EMAIL]?: string;
   [CompleteWhoAmIUserFields.COLUMN_FIRSTNAME]?: string;
   [CompleteWhoAmIUserFields.COLUMN_LASTNAME]?: string;
@@ -41,6 +43,8 @@ export class CompleteWhoAmIUser extends AbstractEntity<CompleteWhoAmIUserData> {
   constructor(data: CompleteWhoAmIUserData) {
     super(data);
 
+    this.#contactRestricted =
+      data[CompleteWhoAmIUserFields.COLUMN_CONTACT_RESTRICTED];
     this.#email = data[CompleteWhoAmIUserFields.COLUMN_EMAIL];
     this.#firstname = data[CompleteWhoAmIUserFields.COLUMN_FIRSTNAME];
     this.#lastname = data[CompleteWhoAmIUserFields.COLUMN_LASTNAME];
@@ -57,6 +61,7 @@ export class CompleteWhoAmIUser extends AbstractEntity<CompleteWhoAmIUserData> {
       data[CompleteWhoAmIUserFields.COLUMN_HAS_LEGAL_DOCUMENT];
   }
 
+  readonly #contactRestricted?: boolean;
   readonly #email?: string;
   readonly #firstname?: string;
   readonly #lastname?: string;
@@ -69,6 +74,10 @@ export class CompleteWhoAmIUser extends AbstractEntity<CompleteWhoAmIUserData> {
   readonly #xapUsername: string;
   readonly #canImpersonate: ImpersonableUser[];
   readonly #hasLegalDocument?: boolean;
+
+  get contactRestricted(): boolean | undefined {
+    return this.#contactRestricted;
+  }
 
   get email(): string | undefined {
     return this.#email;
@@ -120,6 +129,8 @@ export class CompleteWhoAmIUser extends AbstractEntity<CompleteWhoAmIUserData> {
 
   public toJSON(): CompleteWhoAmIUserData {
     return {
+      [CompleteWhoAmIUserFields.COLUMN_CONTACT_RESTRICTED]: this
+        .contactRestricted,
       [CompleteWhoAmIUserFields.COLUMN_EMAIL]: this.email,
       [CompleteWhoAmIUserFields.COLUMN_FIRSTNAME]: this.firstname,
       [CompleteWhoAmIUserFields.COLUMN_LASTNAME]: this.lastname,

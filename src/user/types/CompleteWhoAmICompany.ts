@@ -1,6 +1,7 @@
 import { AbstractEntity } from '../../abstractEntity';
 
 export enum CompleteWhoAmICompanyFields {
+  COLUMN_COMPANY_RESTRICTED = 'companyRestricted',
   COLUMN_COUNTRY_CODE = 'countryCode',
   COLUMN_HAS_ACCESS_TO_XCM = 'hasAccessToXcm',
   COLUMN_HAS_ACCESS_TO_XCP = 'hasAccessToXcp',
@@ -18,6 +19,7 @@ export type CompanyUnit = {
 };
 
 export type CompleteWhoAmICompanyData = {
+  [CompleteWhoAmICompanyFields.COLUMN_COMPANY_RESTRICTED]: boolean;
   [CompleteWhoAmICompanyFields.COLUMN_COUNTRY_CODE]: string;
   [CompleteWhoAmICompanyFields.COLUMN_HAS_ACCESS_TO_XCM]: boolean;
   [CompleteWhoAmICompanyFields.COLUMN_HAS_ACCESS_TO_XCP]: boolean;
@@ -33,6 +35,8 @@ export class CompleteWhoAmICompany extends AbstractEntity<CompleteWhoAmICompanyD
   constructor(data: CompleteWhoAmICompanyData) {
     super(data);
 
+    this.#companyRestricted =
+      data[CompleteWhoAmICompanyFields.COLUMN_COMPANY_RESTRICTED];
     this.#countryCode = data[CompleteWhoAmICompanyFields.COLUMN_COUNTRY_CODE];
     this.#hasAccessToXcm =
       data[CompleteWhoAmICompanyFields.COLUMN_HAS_ACCESS_TO_XCM];
@@ -46,6 +50,7 @@ export class CompleteWhoAmICompany extends AbstractEntity<CompleteWhoAmICompanyD
     this.#unit = data[CompleteWhoAmICompanyFields.COLUMN_UNIT];
   }
 
+  readonly #companyRestricted: boolean;
   readonly #countryCode: string;
   readonly #hasAccessToXcm: boolean;
   readonly #hasAccessToXcp: boolean;
@@ -55,6 +60,10 @@ export class CompleteWhoAmICompany extends AbstractEntity<CompleteWhoAmICompanyD
   readonly #reference: string;
   readonly #tags: string[];
   readonly #unit: CompanyUnit;
+
+  get companyRestricted(): boolean {
+    return this.#companyRestricted;
+  }
 
   get countryCode(): string {
     return this.#countryCode;
@@ -94,6 +103,8 @@ export class CompleteWhoAmICompany extends AbstractEntity<CompleteWhoAmICompanyD
 
   public toJSON(): CompleteWhoAmICompanyData {
     return {
+      [CompleteWhoAmICompanyFields.COLUMN_COMPANY_RESTRICTED]: this
+        .companyRestricted,
       [CompleteWhoAmICompanyFields.COLUMN_COUNTRY_CODE]: this.countryCode,
       [CompleteWhoAmICompanyFields.COLUMN_HAS_ACCESS_TO_XCM]: this
         .hasAccessToXcm,

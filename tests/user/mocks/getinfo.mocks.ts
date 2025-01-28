@@ -12,6 +12,7 @@ export const PAYLOAD_USER: GetData<CompleteWhoAmIResponseData> = {
   [GetResultFields.COLUMN_STATUS]: 200,
   [GetResultFields.COLUMN_DATA]: {
     [CompleteWhoAmIResponseFields.COLUMN_COMPANY]: {
+      [CompleteWhoAmICompanyFields.COLUMN_COMPANY_RESTRICTED]: false,
       [CompleteWhoAmICompanyFields.COLUMN_COUNTRY_CODE]: 'MyCompany',
       [CompleteWhoAmICompanyFields.COLUMN_HAS_ACCESS_TO_XCM]: true,
       [CompleteWhoAmICompanyFields.COLUMN_HAS_ACCESS_TO_XCP]: true,
