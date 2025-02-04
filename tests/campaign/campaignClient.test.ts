@@ -7,6 +7,7 @@ import {
   Campaign,
   CampaignAssets,
   CampaignV2,
+  CampaignAssetsUpload,
 } from '../../src';
 import {
   GET_ACTIVE_CAMPAIGN_OUTPUT,
@@ -23,6 +24,7 @@ import {
   GET_DETAILS_CAMPAIGN_V2_MINIMAL_OUTPUT,
   GET_ACTIVE_CAMPAIGN_OUTPUT_WITHOUT_BANNER,
   GET_ACTIVE_CAMPAIGN_OUTPUT_WITHOUT_LANDING_PAGE,
+  GET_CAMPAIGN_AGGREGATIONS_OUTPUT,
 } from './mocks/campaign.mocks';
 import {
   GET_CAMPAIGN_ASSETS_FORM_OUTPUT,
@@ -30,6 +32,7 @@ import {
   GET_CAMPAIGN_ASSETS_PARAMETERS,
 } from './mocks/campaignAssets.mock';
 import { CampaignList } from '../../src/campaign/entities/v2/campaignList';
+import { CampaignAggragations } from '../../src/campaign/entities/campaign/campaignAggregation';
 
 export const CAMPAIGN_MOCK_URL = 'https://campaign.localhost';
 export const GET_ACTIVE_CAMPAIGN = new RegExp('/active.*');
@@ -39,6 +42,9 @@ export const POST_CREATE_CAMPAIGN = new RegExp('/campaigns');
 export const DELETE_CAMPAIGN = new RegExp('/campaigns.*');
 export const PUT_CAMPAIGN = new RegExp('/campaigns.*');
 export const GET_LIST_CAMPAIGN = new RegExp('/campaigns');
+export const GET_CAMPAIGN_AGGREGATIONS = new RegExp(
+  '/campaigns/aggregations/category',
+);
 export const GET_CAMPAIGN_ASSETS = new RegExp('/.*./assets');
 export const GET_CAMPAIGN_ASSETS_FORM = new RegExp('/.*./assets/upload');
 export const DELETE_CAMPAIGN_ASSETS = new RegExp('/.*./assets/.*');
@@ -170,7 +176,7 @@ describe('CampaignClient', () => {
         .get(GET_CAMPAIGN_ASSETS_FORM)
         .reply(200, GET_CAMPAIGN_ASSETS_FORM_OUTPUT);
 
-      const response: GetResult<CampaignAssets> = await client.getCampaignUploadAssetsForm(
+      const response: GetResult<CampaignAssetsUpload> = await client.getCampaignUploadAssetsForm(
         '0ce70536-a59d-4c21-b39d-272b034367fa',
       );
 
@@ -307,6 +313,25 @@ describe('CampaignClient', () => {
         GET_DETAILS_CAMPAIGN_V2_WITHOUT_FEATURE_ITEMS_OUTPUT,
       );
     });
+  });
+
+  describe('getCampaignAggregations', () => {
+    it('calls campaign category aggregation', async () => {
+      nock(CAMPAIGN_MOCK_URL)
+        .get(GET_CAMPAIGN_AGGREGATIONS)
+        .reply(200, GET_CAMPAIGN_AGGREGATIONS_OUTPUT);
+
+      const response: GetResult<CampaignAggragations> = await client.aggregationsCampaignsCategory(
+        ['banner'],
+      );
+      expect(response).to.be.instanceof(GetResult);
+      expect(response.toJSON()).to.be.deep.equals(
+        GET_CAMPAIGN_AGGREGATIONS_OUTPUT,
+      );
+    });
+  });
+
+  describe('duplicateCampaign', () => {
     it('calls the duplicate campaign', async () => {
       nock(CAMPAIGN_MOCK_URL)
         .post(POST_DUPLICATE_CAMPAIGN)
@@ -321,6 +346,9 @@ describe('CampaignClient', () => {
         GET_DETAILS_CAMPAIGN_V2_WITHOUT_FEATURE_ITEMS_OUTPUT,
       );
     });
+  });
+
+  describe('getCampaignList', () => {
     it('calls list campaigns', async () => {
       nock(CAMPAIGN_MOCK_URL)
         .get(GET_LIST_CAMPAIGN)
@@ -333,8 +361,13 @@ describe('CampaignClient', () => {
         GET_ACTIVE_CAMPAIGNS_V2_OUTPUT,
       );
     });
+  });
+
+  describe('createCampaign', () => {
     it('calls create campaign', async () => {
-      nock(CAMPAIGN_MOCK_URL).post(POST_CREATE_CAMPAIGN).reply(200);
+      nock(CAMPAIGN_MOCK_URL)
+        .post(POST_CREATE_CAMPAIGN)
+        .reply(200, GET_DETAILS_CAMPAIGN_V2_WITHOUT_FEATURE_ITEMS_OUTPUT);
 
       await client.createCampaign({
         name: 'Campaign name',
@@ -343,6 +376,9 @@ describe('CampaignClient', () => {
         status: 'active',
       });
     });
+  });
+
+  describe('updateCampaign', () => {
     it('calls update campaign', async () => {
       nock(CAMPAIGN_MOCK_URL).put(PUT_CAMPAIGN).reply(200);
 
@@ -353,6 +389,9 @@ describe('CampaignClient', () => {
         status: 'active',
       });
     });
+  });
+
+  describe('deleteCampaign', () => {
     it('calls delete campaign', async () => {
       nock(CAMPAIGN_MOCK_URL).delete(DELETE_CAMPAIGN).reply(200);
 

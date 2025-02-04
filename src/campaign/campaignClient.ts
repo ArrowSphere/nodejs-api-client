@@ -4,9 +4,8 @@ import { Campaign } from './entities/campaign/campaign';
 import { CampaignV2 } from './entities/v2/campaign/campaign';
 import { CampaignAssets } from './entities/campaignAssets/campaignAssets';
 import { CampaignList } from './entities/v2/campaignList';
-import { RulesType } from './entities/campaign/rules/rules';
-import { BannersType } from './entities/campaign/banners/banners';
-import { LandingPageType } from './entities/campaign/landingPage/landingPage';
+import { CampaignAggragations } from './entities/campaign/campaignAggregation';
+import { CampaignAssetsUpload } from './entities/campaignAssets/campaignAssetsUpload';
 
 export enum PostEmailCampaignFields {
   COLUMN_APPLICATION = 'application',
@@ -29,16 +28,115 @@ export enum CampaignInputFields {
   COLUMN_BANNERS = 'banners',
   COLUMN_LANDING_PAGE = 'landingPage',
 }
+
+export enum RulesInputFields {
+  COLUMN_LOCATIONS = 'locations',
+  COLUMN_ROLES = 'roles',
+  COLUMN_MARKETPLACES = 'marketplaces',
+  COLUMN_SUBSCRIPTIONS = 'subscriptions',
+  COLUMN_RESELLERS = 'resellers',
+  COLUMN_END_CUSTOMERS = 'endCustomers',
+}
+
+export type RulesInputType = {
+  [RulesInputFields.COLUMN_LOCATIONS]?: string[];
+  [RulesInputFields.COLUMN_ROLES]?: string[];
+  [RulesInputFields.COLUMN_MARKETPLACES]?: string[];
+  [RulesInputFields.COLUMN_SUBSCRIPTIONS]?: string[];
+  [RulesInputFields.COLUMN_RESELLERS]?: string[];
+  [RulesInputFields.COLUMN_END_CUSTOMERS]?: string[];
+};
+
+export enum BannersInputFields {
+  COLUMN_TYPE = 'type',
+  COLUMN_BUTTON_PLACEMENT = 'buttonPlacement',
+  COLUMN_BUTTON_TEXT = 'buttonText',
+  COLUMN_TEXT = 'text',
+  COLUMN_TEXT_COLOR = 'textColor',
+}
+
+export type BannersInputType = {
+  [BannersInputFields.COLUMN_TYPE]?: string;
+  [BannersInputFields.COLUMN_BUTTON_PLACEMENT]?: string;
+  [BannersInputFields.COLUMN_BUTTON_TEXT]?: string;
+  [BannersInputFields.COLUMN_TEXT]?: string;
+  [BannersInputFields.COLUMN_TEXT_COLOR]?: string;
+};
+
+export enum LandingPageHeaderInputFields {
+  COLUMN_BACKGROUND_COLOR = 'backgroundColor',
+  COLUMN_BASELINE = 'baseline',
+  COLUMN_CIRCLE_COLOR = 'circleColor',
+  COLUMN_TEXT_COLOR = 'textColor',
+  COLUMN_TITLE = 'title',
+}
+
+export type LandingPageHeaderInputType = {
+  [LandingPageHeaderInputFields.COLUMN_BACKGROUND_COLOR]?: string;
+  [LandingPageHeaderInputFields.COLUMN_BASELINE]?: string;
+  [LandingPageHeaderInputFields.COLUMN_TEXT_COLOR]?: string;
+  [LandingPageHeaderInputFields.COLUMN_CIRCLE_COLOR]?: string;
+  [LandingPageHeaderInputFields.COLUMN_TITLE]?: string;
+};
+
+export enum LandingPageBodyInputFields {
+  COLUMN_BUTTON_TEXT = 'buttonText',
+  COLUMN_CONTACT_EMAIL = 'contactEmail',
+  COLUMN_DESCRIPTION = 'description',
+  COLUMN_TITLE = 'title',
+  COLUMN_TYPE = 'type',
+  COLUMN_VIDEO_URL = 'videoUrl',
+}
+
+export type LandingPageBodyInputType = {
+  [LandingPageBodyInputFields.COLUMN_BUTTON_TEXT]?: string;
+  [LandingPageBodyInputFields.COLUMN_CONTACT_EMAIL]?: string;
+  [LandingPageBodyInputFields.COLUMN_DESCRIPTION]?: string;
+  [LandingPageBodyInputFields.COLUMN_TITLE]?: string;
+  [LandingPageBodyInputFields.COLUMN_TYPE]?: string;
+  [LandingPageBodyInputFields.COLUMN_VIDEO_URL]?: string;
+};
+
+export enum LandingPageFooterInputFields {
+  COLUMN_TITLE = 'title',
+  COLUMN_BACKGROUND_COLOR = 'backgroundColor',
+  COLUMN_BUTTON_TEXT = 'buttonText',
+  COLUMN_BUTTON_URL = 'buttonUrl',
+  COLUMN_TEXT_COLOR = 'textColor',
+}
+
+export type LandingPageFooterInputType = {
+  [LandingPageFooterInputFields.COLUMN_TITLE]?: string;
+  [LandingPageFooterInputFields.COLUMN_BACKGROUND_COLOR]?: string;
+  [LandingPageFooterInputFields.COLUMN_BUTTON_TEXT]?: string;
+  [LandingPageFooterInputFields.COLUMN_BUTTON_URL]?: string;
+  [LandingPageFooterInputFields.COLUMN_TEXT_COLOR]?: string;
+};
+
+export enum LandingPageInputFields {
+  COLUMN_URL = 'url',
+  COLUMN_HEADER = 'header',
+  COLUMN_BODY = 'body',
+  COLUMN_FOOTER = 'footer',
+}
+
+export type LandingPageInputType = {
+  [LandingPageInputFields.COLUMN_URL]?: string;
+  [LandingPageInputFields.COLUMN_HEADER]: LandingPageHeaderInputType;
+  [LandingPageInputFields.COLUMN_BODY]: LandingPageBodyInputType;
+  [LandingPageInputFields.COLUMN_FOOTER]?: LandingPageFooterInputType;
+};
+
 export type CampaignInputType = {
   [CampaignInputFields.COLUMN_NAME]: string;
   [CampaignInputFields.COLUMN_CATEGORY]?: string;
   [CampaignInputFields.COLUMN_IS_ACTIVATED]?: boolean;
   [CampaignInputFields.COLUMN_STATUS]?: string;
-  [CampaignInputFields.COLUMN_RULES]?: RulesType;
+  [CampaignInputFields.COLUMN_RULES]?: RulesInputType;
   [CampaignInputFields.COLUMN_START_DATE]?: string;
   [CampaignInputFields.COLUMN_END_DATE]?: string;
-  [CampaignInputFields.COLUMN_BANNERS]?: BannersType[];
-  [CampaignInputFields.COLUMN_LANDING_PAGE]?: LandingPageType;
+  [CampaignInputFields.COLUMN_BANNERS]?: BannersInputType[];
+  [CampaignInputFields.COLUMN_LANDING_PAGE]?: LandingPageInputType;
 };
 
 export type PostEmailCampaignMetadataType = {
@@ -118,10 +216,12 @@ export class CampaignClient extends AbstractRestfulClient {
     return new GetResult(CampaignList, await this.get(parameters));
   }
 
-  public async createCampaign(postData: CampaignInputType): Promise<void> {
+  public async createCampaign(
+    postData: CampaignInputType,
+  ): Promise<GetResult<CampaignV2>> {
     this.path = '/';
 
-    await this.post(postData);
+    return new GetResult(CampaignV2, await this.post(postData));
   }
 
   public async updateCampaign(
@@ -149,10 +249,10 @@ export class CampaignClient extends AbstractRestfulClient {
 
   public async getCampaignUploadAssetsForm(
     campaignReference: string,
-  ): Promise<GetResult<CampaignAssets>> {
+  ): Promise<GetResult<CampaignAssetsUpload>> {
     this.path = `/${campaignReference}/assets/upload`;
 
-    return new GetResult(CampaignAssets, await this.get());
+    return new GetResult(CampaignAssetsUpload, await this.get());
   }
 
   public async deleteAssets(
@@ -162,5 +262,13 @@ export class CampaignClient extends AbstractRestfulClient {
     this.path = `/${campaignReference}/assets/${assetReference}`;
 
     await this.delete();
+  }
+
+  public async aggregationsCampaignsCategory(
+    categories: string[],
+  ): Promise<GetResult<CampaignAggragations>> {
+    this.path = '/aggregations/category';
+
+    return new GetResult(CampaignAggragations, await this.get({ categories }));
   }
 }
