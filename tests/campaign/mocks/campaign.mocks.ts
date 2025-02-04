@@ -20,6 +20,7 @@ import {
 import { LandingPageHeaderV2Fields } from '../../../src/campaign/entities/v2/campaign/landingPage/landingPageHeader';
 import { LandingPageFooterFeatureItemFields } from '../../../src/campaign/entities/v2/campaign/landingPage/landingPageFooter/landingPageFooterFeatureItem';
 import { CampaignListType } from '../../../src/campaign/entities/v2/campaignList';
+import { CampaignAggragationsType } from '../../../src/campaign/entities/campaign/campaignAggregation';
 
 export const GET_ACTIVE_CAMPAIGN_PARAMETERS = {
   customer: 'XSP12345',
@@ -1002,5 +1003,30 @@ export const PAYLOAD_POST_CAMPAIGN_EMAIL: PostEmailCampaignType = {
   application: 'xcp',
   metadata: {
     domain: 'myportals.cloud',
+  },
+};
+
+export const GET_CAMPAIGN_AGGREGATIONS_OUTPUT: GetData<CampaignAggragationsType> = {
+  status: 200,
+  data: {
+    categoryAgg: {
+      categories: [
+        {
+          name: 'BANNER',
+          dateAgg: [
+            {
+              count: 127,
+              from: '2024-01',
+              dates: [
+                {
+                  date: '2021-08-01',
+                  count: 10,
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
   },
 };

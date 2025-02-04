@@ -8,7 +8,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Updated
 - [graphql-api] add contactRestricted & companyRestricted to connected user
 
-
 ## [3.165.1] - 2025.01.28
 
 ### Updated
