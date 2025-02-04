@@ -11,8 +11,11 @@ import { GraphQLClient } from 'graphql-request';
 import { GRAPHQL_API_MOCK_URL } from './mocks/graphqlApiQueries.mocks';
 import {
   ArrowCompanyType,
+  ContactsType,
   EndCustomerType,
   ErrorsField,
+  GetLocalContactResultType,
+  GetSpecialPriceRatesHistoryResultType,
   GraphqlApiClient,
   GraphqlApiProgramType,
   LicenseBudgetType,
@@ -21,8 +24,10 @@ import {
   SelectAllQueryType,
   SelectAllResultType,
   SelectDataField,
+  SelectOneByIdResultType,
   SelectOneResultType,
   SelectableField,
+  SpecialPriceRateType,
   UserHistoryType,
   UserType,
 } from '../../src/graphqlApi';
@@ -324,8 +329,8 @@ describe('GraphqlApiClient', () => {
         name: 'The Partner Company',
       };
 
-      const expectedResult: SelectOneResultType = {
-        [Queries.SELECT_ONE]: {
+      const expectedResult: SelectOneByIdResultType = {
+        [Queries.SELECT_ONE_BY_ID]: {
           [SelectableField.DATA]: {
             [SelectDataField.PARTNER]: partnerCompany,
           },
@@ -352,14 +357,14 @@ describe('GraphqlApiClient', () => {
       sinon.assert.calledWithExactly(
         graphQLClient.request,
         sinon.match(
-          '{selectOne (filters: {groups: [{items: [{name: "id", operator: "EQUALS", value: ["1"]}]}]}, pagination: {page: 1, perPage: 1}) { data { partner { id name } } errors { message } }}',
+          '{selectOneById (id: 1, filters: undefined, exclusionFilters: undefined, pagination: {page: 1, perPage: 1}) { data { partner { id name } } errors { message } }}',
         ),
       );
     });
 
     it('makes a graphql POST request on the specified URL findPartnerById and throw error', async () => {
-      const expectedResult: SelectOneResultType = {
-        [Queries.SELECT_ONE]: {
+      const expectedResult: SelectOneByIdResultType = {
+        [Queries.SELECT_ONE_BY_ID]: {
           [SelectableField.DATA]: {
             [SelectDataField.PARTNER]: {},
           },
@@ -385,7 +390,7 @@ describe('GraphqlApiClient', () => {
       sinon.assert.calledWithExactly(
         graphQLClient.request,
         sinon.match(
-          '{selectOne (filters: {groups: [{items: [{name: "id", operator: "EQUALS", value: ["1"]}]}]}) { data { partner { id name } } errors { message } }}',
+          '{selectOneById (id: 1, filters: undefined, exclusionFilters: undefined) { data { partner { id name } } errors { message } }}',
         ),
       );
     });
@@ -398,8 +403,8 @@ describe('GraphqlApiClient', () => {
         name: 'The End Company',
       };
 
-      const expectedResult: SelectOneResultType = {
-        [Queries.SELECT_ONE]: {
+      const expectedResult: SelectOneByIdResultType = {
+        [Queries.SELECT_ONE_BY_ID]: {
           [SelectableField.DATA]: {
             [SelectDataField.END_CUSTOMER]: endCustomer,
           },
@@ -424,7 +429,7 @@ describe('GraphqlApiClient', () => {
       sinon.assert.calledWithExactly(
         graphQLClient.request,
         sinon.match(
-          '{selectOne (filters: {groups: [{items: [{name: "id", operator: "EQUALS", value: ["2"]}]}]}, pagination: {page: 1}) { data { endCustomer { id name } } errors { message } }}',
+          '{selectOneById (id: 2, filters: undefined, exclusionFilters: undefined, pagination: {page: 1}) { data { endCustomer { id name } } errors { message } }}',
         ),
       );
     });
@@ -437,8 +442,8 @@ describe('GraphqlApiClient', () => {
         name: 'The Arrow Company',
       };
 
-      const expectedResult: SelectOneResultType = {
-        [Queries.SELECT_ONE]: {
+      const expectedResult: SelectOneByIdResultType = {
+        [Queries.SELECT_ONE_BY_ID]: {
           [SelectableField.DATA]: {
             [SelectDataField.ARROW_COMPANY]: arrowCompany,
           },
@@ -460,7 +465,7 @@ describe('GraphqlApiClient', () => {
       sinon.assert.calledWithExactly(
         graphQLClient.request,
         sinon.match(
-          '{selectOne (filters: {groups: [{items: [{name: "id", operator: "EQUALS", value: ["3"]}]}]}) { data { arrowCompany { id name } } errors { message } }}',
+          '{selectOneById (id: 3, filters: undefined, exclusionFilters: undefined) { data { arrowCompany { id name } } errors { message } }}',
         ),
       );
     });
@@ -687,6 +692,101 @@ describe('GraphqlApiClient', () => {
       sinon.assert.calledWithExactly(
         graphQLClient.request,
         sinon.match(GraphqlApiQueryMock.SELECT_PROGRAMS_GQL),
+      );
+    });
+  });
+
+  describe('getLocalContact', () => {
+    it('makes a graphql POST request on the specified URL getLocalContact', async () => {
+      const contact: ContactsType = {
+        id: 1,
+        lastname: 'The Lastname',
+        firstname: 'The Firstname',
+      };
+
+      const expectedResult: GetLocalContactResultType = {
+        [Queries.GET_LOCAL_CONTACT]: {
+          [SelectableField.DATA]: {
+            [SelectDataField.CONTACT]: contact,
+          },
+        },
+      };
+
+      graphQLClient.request.resolves(expectedResult);
+
+      const result: GetLocalContactResultType | null = await client.getLocalContact(
+        'MSCSP',
+        123,
+        {
+          id: true,
+          firstname: true,
+          lastname: true,
+        },
+      );
+
+      expect(result).to.deep.equals(expectedResult);
+
+      sinon.assert.calledWithExactly(
+        graphQLClient.request,
+        sinon.match(
+          '{getLocalContact (programInternalName: "MSCSP", partnerId: 123) { data { contact { id firstname lastname } } errors { message } }}',
+        ),
+      );
+    });
+  });
+
+  describe('getSpecialPriceRatesHistory', () => {
+    it('makes a graphql POST request on the specified URL getSpecialPriceRatesHistory', async () => {
+      const specialPriceRate: SpecialPriceRateType = {
+        id: 1,
+        rate: 0.6,
+        endedAt: '2020-01-09 00:00:00',
+        startedAt: '2016-04-12 00:00:00',
+      };
+
+      const expectedResult: GetSpecialPriceRatesHistoryResultType = {
+        [Queries.GET_SPECIAL_PRICE_RATES_HISTORY]: {
+          [SelectableField.DATA]: {
+            [SelectDataField.SPECIAL_PRICE_RATE]: specialPriceRate,
+          },
+        },
+      };
+
+      graphQLClient.request.resolves(expectedResult);
+
+      const result: GetSpecialPriceRatesHistoryResultType | null = await client.getSpecialPriceRatesHistory(
+        123456,
+        {
+          id: true,
+          rate: true,
+          endedAt: true,
+          startedAt: true,
+        },
+        {
+          total: true,
+          currentPage: true,
+          perPage: true,
+          totalPage: true,
+          totalPages: true,
+        },
+        {
+          pagination: {
+            page: 2,
+            perPage: 5,
+          },
+          options: {
+            skipPartition: true,
+          },
+        },
+      );
+
+      expect(result).to.deep.equals(expectedResult);
+
+      sinon.assert.calledWithExactly(
+        graphQLClient.request,
+        sinon.match(
+          '{getSpecialPriceRatesHistory (licenseId: 123456, pagination: {page: 2, perPage: 5}, options: {skipPartition: true}) { data { specialPriceRate { id rate endedAt startedAt } } errors { message } pagination { total currentPage perPage totalPage totalPages } }}',
+        ),
       );
     });
   });

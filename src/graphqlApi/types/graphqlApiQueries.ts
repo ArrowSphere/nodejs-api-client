@@ -3,6 +3,7 @@ import {
   EndCustomerType,
   PartnerType,
 } from './entities/company';
+import { ContactsType } from './entities/contact';
 import { ContinentType, CountryType } from './entities/country';
 import { LicenseBudgetType } from './entities/licenseBudget';
 import { PartnertagType } from './entities/partnertag';
@@ -11,14 +12,17 @@ import {
   SubscribedProgramType,
 } from './entities/program';
 import { QuoteType } from './entities/quote';
+import { SpecialPriceRateType } from './entities/specialPriceRate';
 import { SubscriptionType } from './entities/subscription';
 import { UserHistoryType, UserType } from './entities/user';
 import { WorkgroupType } from './entities/workgroup';
 import {
+  ContactsSchema,
   ErrorsSchema,
   PageSchema,
   SelectAllResponseDataSchema,
   SelectOneResponseDataSchema,
+  SpecialPriceRateSchema,
 } from './graphqlApiSchemas';
 
 /**
@@ -144,6 +148,7 @@ export enum SelectableField {
 
 export enum SelectDataField {
   ARROW_COMPANY = 'arrowCompany',
+  CONTACT = 'contact',
   CONTINENT = 'continent',
   COUNTRY = 'country',
   END_CUSTOMER = 'endCustomer',
@@ -152,6 +157,7 @@ export enum SelectDataField {
   PARTNERTAG = 'partnertag',
   PROGRAM = 'program',
   QUOTE = 'quote',
+  SPECIAL_PRICE_RATE = 'specialPriceRate',
   SUBSCRIBED_PROGRAM = 'subscribedProgram',
   SUBSCRIPTION = 'subscription',
   USER = 'user',
@@ -222,6 +228,32 @@ export type SelectOneResultType = {
   };
 };
 
+export type SelectOneByIdResultType = {
+  [Queries.SELECT_ONE_BY_ID]: {
+    [SelectableField.DATA]?: SelectOneResponseDataType;
+    [SelectableField.ERRORS]?: ErrorsType;
+    [SelectableField.PAGINATION]?: PageType;
+  };
+};
+
+export type GetLocalContactResultType = {
+  [Queries.GET_LOCAL_CONTACT]: {
+    [SelectableField.DATA]?: {
+      [SelectDataField.CONTACT]: ContactsType;
+    };
+    [SelectableField.ERRORS]?: ErrorsType;
+  };
+};
+
+export type GetSpecialPriceRatesHistoryResultType = {
+  [Queries.GET_SPECIAL_PRICE_RATES_HISTORY]: {
+    [SelectableField.DATA]?: {
+      [SelectDataField.SPECIAL_PRICE_RATE]: SpecialPriceRateType[];
+    };
+    [SelectableField.ERRORS]?: ErrorsType;
+  };
+};
+
 export type SelectOneResponseDataType = {
   [SelectDataField.ARROW_COMPANY]?: ArrowCompanyType;
   [SelectDataField.CONTINENT]?: ContinentType;
@@ -259,10 +291,29 @@ export type QueryVariablesType = {
   [QueryVariablesField.OPTIONS]?: InputQueryOptionsType;
 };
 
+export type SelectOneByIdQueryVariablesType = {
+  id: number;
+  [QueryVariablesField.EXCLUSION_FILTERS]?: InputSearchFilterType;
+  [QueryVariablesField.FILTERS]?: InputSearchFilterType;
+  [QueryVariablesField.PAGINATION]?: InputPaginationType;
+};
+
 export enum Queries {
   SELECT_ALL = 'selectAll',
   SELECT_ONE = 'selectOne',
+  SELECT_ONE_BY_ID = 'selectOneById',
+  GET_LOCAL_CONTACT = 'getLocalContact',
+  GET_SPECIAL_PRICE_RATES_HISTORY = 'getSpecialPriceRatesHistory',
 }
+
+export type SelectAllQueryType = {
+  [Queries.SELECT_ALL]: {
+    __args?: QueryVariablesType;
+    [SelectableField.DATA]: SelectAllResponseDataSchema;
+    [SelectableField.ERRORS]?: ErrorsSchema;
+    [SelectableField.PAGINATION]?: PageSchema;
+  };
+};
 
 export type SelectOneQueryType = {
   [Queries.SELECT_ONE]: {
@@ -273,10 +324,36 @@ export type SelectOneQueryType = {
   };
 };
 
-export type SelectAllQueryType = {
-  [Queries.SELECT_ALL]: {
-    __args?: QueryVariablesType;
-    [SelectableField.DATA]: SelectAllResponseDataSchema;
+export type SelectOneByIdQueryType = {
+  [Queries.SELECT_ONE_BY_ID]: {
+    __args: SelectOneByIdQueryVariablesType;
+    [SelectableField.DATA]: SelectOneResponseDataSchema;
+    [SelectableField.ERRORS]?: ErrorsSchema;
+    [SelectableField.PAGINATION]?: PageSchema;
+  };
+};
+
+export type GetLocalContactQueryType = {
+  [Queries.GET_LOCAL_CONTACT]: {
+    __args: {
+      programInternalName: string;
+      partnerId: number;
+    };
+    [SelectableField.DATA]: {
+      [SelectDataField.CONTACT]: ContactsSchema;
+    };
+    [SelectableField.ERRORS]?: ErrorsSchema;
+  };
+};
+
+export type GetSpecialPriceRatesHistoryQueryType = {
+  [Queries.GET_SPECIAL_PRICE_RATES_HISTORY]: {
+    __args: {
+      licenseId: number;
+    } & QueryVariablesType;
+    [SelectableField.DATA]: {
+      [SelectDataField.SPECIAL_PRICE_RATE]: SpecialPriceRateSchema;
+    };
     [SelectableField.ERRORS]?: ErrorsSchema;
     [SelectableField.PAGINATION]?: PageSchema;
   };
