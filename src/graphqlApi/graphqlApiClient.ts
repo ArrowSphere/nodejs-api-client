@@ -6,19 +6,22 @@ import {
 } from './types/entities/company';
 
 import {
-  ComparisonOperator,
   ErrorsField,
-  InputFilterValueField,
-  InputFiltersField,
+  GetLocalContactQueryType,
+  GetLocalContactResultType,
+  GetSpecialPriceRatesHistoryQueryType,
+  GetSpecialPriceRatesHistoryResultType,
   InputPaginationField,
   InputPaginationType,
-  InputSearchFilterField,
+  InputSearchFilterType,
   Queries,
   QueryVariablesField,
   QueryVariablesType,
   SelectAllQueryType,
   SelectAllResultType,
   SelectDataField,
+  SelectOneByIdQueryType,
+  SelectOneByIdQueryVariablesType,
   SelectOneQueryType,
   SelectOneResponseDataType,
   SelectOneResultType,
@@ -26,9 +29,12 @@ import {
 } from './types/graphqlApiQueries';
 import {
   ArrowCompanySchema,
+  ContactsSchema,
   EndCustomerSchema,
+  PageSchema,
   PartnerSchema,
   SelectOneResponseDataSchema,
+  SpecialPriceRateSchema,
 } from './types/graphqlApiSchemas';
 
 export class GraphqlApiClient extends AbstractGraphQLClient {
@@ -77,6 +83,8 @@ export class GraphqlApiClient extends AbstractGraphQLClient {
     id: number,
     fieldSchema: SelectOneResponseDataSchema,
     pagination?: InputPaginationType,
+    filters?: InputSearchFilterType,
+    exclusionFilters?: InputSearchFilterType,
   ): Promise<T | null> {
     const keys: string[] = Object.keys(fieldSchema);
     if (keys.length === 0) {
@@ -85,20 +93,10 @@ export class GraphqlApiClient extends AbstractGraphQLClient {
 
     const type: keyof SelectOneResponseDataType = keys[0] as keyof SelectOneResponseDataType;
 
-    const queryArguments: QueryVariablesType = {
-      [QueryVariablesField.FILTERS]: {
-        [InputSearchFilterField.GROUPS]: [
-          {
-            [InputFiltersField.ITEMS]: [
-              {
-                [InputFilterValueField.NAME]: 'id',
-                [InputFilterValueField.OPERATOR]: ComparisonOperator.EQUALS,
-                [InputFilterValueField.VALUE]: [`${id}`],
-              },
-            ],
-          },
-        ],
-      },
+    const queryArguments: SelectOneByIdQueryVariablesType = {
+      id,
+      filters,
+      exclusionFilters,
     };
 
     if (
@@ -118,8 +116,8 @@ export class GraphqlApiClient extends AbstractGraphQLClient {
       }
     }
 
-    const query: SelectOneQueryType = {
-      [Queries.SELECT_ONE]: {
+    const query: SelectOneByIdQueryType = {
+      [Queries.SELECT_ONE_BY_ID]: {
         __args: queryArguments,
         [SelectableField.DATA]: fieldSchema,
         [SelectableField.ERRORS]: {
@@ -135,18 +133,20 @@ export class GraphqlApiClient extends AbstractGraphQLClient {
     );
 
     if (
-      result?.[Queries.SELECT_ONE]?.[SelectableField.ERRORS]?.[
+      result?.[Queries.SELECT_ONE_BY_ID]?.[SelectableField.ERRORS]?.[
         ErrorsField.MESSAGE
       ]?.length
     ) {
       throw new Error(
-        result?.[Queries.SELECT_ONE]?.[SelectableField.ERRORS]?.[
+        result?.[Queries.SELECT_ONE_BY_ID]?.[SelectableField.ERRORS]?.[
           ErrorsField.MESSAGE
         ],
       );
     }
 
-    return result?.[Queries.SELECT_ONE]?.[SelectableField.DATA]?.[type] as T;
+    return result?.[Queries.SELECT_ONE_BY_ID]?.[SelectableField.DATA]?.[
+      type
+    ] as T;
   }
 
   public async findEndCustomerById(
@@ -188,6 +188,58 @@ export class GraphqlApiClient extends AbstractGraphQLClient {
         [SelectDataField.ARROW_COMPANY]: fields,
       },
       pagination,
+    );
+  }
+
+  public async getLocalContact(
+    programInternalName: string,
+    partnerId: number,
+    fieldSchema: ContactsSchema,
+  ): Promise<GetLocalContactResultType | null> {
+    const query: GetLocalContactQueryType = {
+      [Queries.GET_LOCAL_CONTACT]: {
+        __args: {
+          programInternalName,
+          partnerId,
+        },
+        [SelectableField.DATA]: {
+          contact: fieldSchema,
+        },
+        [SelectableField.ERRORS]: {
+          [ErrorsField.MESSAGE]: true,
+        },
+      },
+    };
+
+    return await this.find<GetLocalContactResultType>(
+      this.stringifyQuery(query),
+    );
+  }
+
+  public async getSpecialPriceRatesHistory(
+    licenseId: number,
+    fieldSchema: SpecialPriceRateSchema,
+    pagination?: PageSchema,
+    additionalParams?: QueryVariablesType,
+  ): Promise<GetSpecialPriceRatesHistoryResultType | null> {
+    const query: GetSpecialPriceRatesHistoryQueryType = {
+      [Queries.GET_SPECIAL_PRICE_RATES_HISTORY]: {
+        __args: {
+          licenseId,
+          ...additionalParams,
+        },
+        [SelectableField.DATA]: {
+          specialPriceRate: fieldSchema,
+        },
+        [SelectableField.ERRORS]: {
+          [ErrorsField.MESSAGE]: true,
+        },
+        [SelectableField.PAGINATION]: pagination,
+      },
+    };
+
+    return await this.find<GetSpecialPriceRatesHistoryResultType>(
+      this.stringifyQuery(query),
     );
   }
 }
