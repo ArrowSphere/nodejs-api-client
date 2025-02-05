@@ -25,7 +25,7 @@ export enum CampaignInputFields {
   COLUMN_RULES = 'rules',
   COLUMN_START_DATE = 'startDate',
   COLUMN_END_DATE = 'endDate',
-  COLUMN_BANNERS = 'banners',
+  COLUMN_BANNER = 'banner',
   COLUMN_LANDING_PAGE = 'landingPage',
 }
 
@@ -47,7 +47,7 @@ export type RulesInputType = {
   [RulesInputFields.COLUMN_END_CUSTOMERS]?: string[];
 };
 
-export enum BannersInputFields {
+export enum BannerInputFields {
   COLUMN_TYPE = 'type',
   COLUMN_BUTTON_PLACEMENT = 'buttonPlacement',
   COLUMN_BUTTON_TEXT = 'buttonText',
@@ -55,12 +55,12 @@ export enum BannersInputFields {
   COLUMN_TEXT_COLOR = 'textColor',
 }
 
-export type BannersInputType = {
-  [BannersInputFields.COLUMN_TYPE]?: string;
-  [BannersInputFields.COLUMN_BUTTON_PLACEMENT]?: string;
-  [BannersInputFields.COLUMN_BUTTON_TEXT]?: string;
-  [BannersInputFields.COLUMN_TEXT]?: string;
-  [BannersInputFields.COLUMN_TEXT_COLOR]?: string;
+export type BannerInputType = {
+  [BannerInputFields.COLUMN_TYPE]?: string;
+  [BannerInputFields.COLUMN_BUTTON_PLACEMENT]?: string;
+  [BannerInputFields.COLUMN_BUTTON_TEXT]?: string;
+  [BannerInputFields.COLUMN_TEXT]?: string;
+  [BannerInputFields.COLUMN_TEXT_COLOR]?: string;
 };
 
 export enum LandingPageHeaderInputFields {
@@ -135,7 +135,7 @@ export type CampaignInputType = {
   [CampaignInputFields.COLUMN_RULES]?: RulesInputType;
   [CampaignInputFields.COLUMN_START_DATE]?: string;
   [CampaignInputFields.COLUMN_END_DATE]?: string;
-  [CampaignInputFields.COLUMN_BANNERS]?: BannersInputType[];
+  [CampaignInputFields.COLUMN_BANNER]?: BannerInputType;
   [CampaignInputFields.COLUMN_LANDING_PAGE]?: LandingPageInputType;
 };
 

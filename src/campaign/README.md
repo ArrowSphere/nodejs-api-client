@@ -13,7 +13,7 @@ A Campaign page are managed by the `Campaign` entity.
 | Field       | Type              | Example                | Description              |
 |-------------|-------------------|------------------------|--------------------------|
 | id          | ```number```      | 1                      | Contact id               |
-| banners     | ```Banners[]```   |                        | Contact id               |
+| banners     | ```Banners[]```   |                        | List of Banner           |
 | category    | ```string```      | "BANNER"               | The Reseller             |
 | status      | ```string```      | "open                  | Bugfix status            |
 | createdAt   | ```string```      | "01 Jan 1970 00:00:00" | Contact first name       |
@@ -223,7 +223,7 @@ A ImageType data are managed by the `ImageType` entity.
 ## Usage
 
 It is possible to use the Campaign client to interact with the Campaign API.
-You can get it through the main entry point `PublicApiClient` and its method `getLicensesClient()`, or instanciate it directly.
+You can get it through the main entry point `PublicApiClient` and its method `getLicensesClient()`, or instantiate it directly.
 
 ### getActiveCampaign
 
