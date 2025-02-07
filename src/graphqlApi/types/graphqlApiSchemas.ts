@@ -34,6 +34,10 @@ import { CurrencyType } from './entities/currency';
 import { ItemData, QuoteItemType, QuoteType } from './entities/quote';
 import { QuoteVersion } from './entities/quoteVersion';
 import { Comment } from './entities/comment';
+import {
+  GraphqlApiReportItemType,
+  GraphqlApiReportType,
+} from './entities/report';
 
 export type PartnertagSchema = Schema<PartnertagType, boolean>;
 
@@ -150,6 +154,17 @@ export type OrdersSchema = Merge<
   MissingFieldsOfOrdersSchema
 >;
 
+type MissingFieldsOfReportSchema = {
+  items?: ReportItemSchema;
+};
+
+export type ReportSchema = Merge<
+  Schema<GraphqlApiReportType, boolean>,
+  MissingFieldsOfReportSchema
+>;
+
+export type ReportItemSchema = Schema<GraphqlApiReportItemType, boolean>;
+
 export type EndCustomerSchema = Merge<
   Schema<EndCustomerType, boolean>,
   MissingFieldsOfEndCustomerSchema
@@ -209,6 +224,7 @@ export type SelectAllResponseDataSchema = {
   [SelectDataField.PARTNERTAG]?: PartnertagSchema;
   [SelectDataField.PROGRAM]?: GraphqlApiProgramSchema;
   [SelectDataField.QUOTE]?: QuoteSchema;
+  [SelectDataField.REPORT]?: ReportSchema;
   [SelectDataField.SUBSCRIBED_PROGRAM]?: SubscribedProgramSchema;
   [SelectDataField.SUBSCRIPTION]?: SubscriptionSchema;
   [SelectDataField.USER]?: UserSchema;
@@ -231,6 +247,7 @@ export type SelectOneResponseDataSchema = {
   [SelectDataField.PARTNERTAG]?: PartnertagSchema;
   [SelectDataField.PROGRAM]?: GraphqlApiProgramSchema;
   [SelectDataField.QUOTE]?: QuoteSchema;
+  [SelectDataField.REPORT]?: ReportSchema;
   [SelectDataField.SUBSCRIBED_PROGRAM]?: SubscribedProgramSchema;
   [SelectDataField.SUBSCRIPTION]?: SubscriptionSchema;
   [SelectDataField.USER]?: UserSchema;
