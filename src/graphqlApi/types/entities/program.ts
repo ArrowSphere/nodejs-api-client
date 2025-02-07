@@ -9,6 +9,13 @@ export type GraphqlApiProgramType = {
   vendor?: VendorsType;
 };
 
+export type GraphqlApiProgramLevelType = {
+  id?: number;
+  enabled?: boolean;
+  internalName?: string;
+  name?: string;
+};
+
 export type SubscribedProgramType = {
   id?: number;
   availabilityEndedAt?: string;

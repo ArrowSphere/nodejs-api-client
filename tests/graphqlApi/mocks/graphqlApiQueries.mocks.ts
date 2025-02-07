@@ -977,3 +977,79 @@ export const SELECT_PROGRAMS_QUERY: SelectAllQueryType = {
 
 export const SELECT_PROGRAMS_GQL =
   '{selectAll (filters: {groups: [{items: [{name: "programAvailability.workgroup.code", value: ["FR"], operator: "EQUALS"}]}]}, pagination: {page: 1, perPage: 25}) { data { program { id internalName name vendor { id name identifier licenseUrl logoLarge logoSmall logoStandard url } } } errors { code message } pagination { currentPage perPage total } }}';
+
+export const SELECT_REPORTS_QUERY: SelectAllQueryType = {
+  [Queries.SELECT_ALL]: {
+    __args: {
+      filters: {
+        groups: [
+          {
+            items: [
+              {
+                name: 'lastUpdatedAt',
+                value: ['2024-11-06', '2025-02-07'],
+                operator: ComparisonOperator.BETWEEN,
+              },
+              {
+                name: 'subscription.program.type.name',
+                value: ['Software'],
+                operator: ComparisonOperator.EQUALS,
+              },
+            ],
+          },
+        ],
+      },
+      pagination: {
+        page: 1,
+        perPage: 15,
+      },
+    },
+    data: {
+      report: {
+        id: true,
+        reportMonth: true,
+        lastUpdatedAt: true,
+        subscription: {
+          partnerId: true,
+          company: {
+            name: true,
+            workgroup: {
+              code: true,
+            },
+          },
+          program: {
+            internalName: true,
+          },
+          level: {
+            name: true,
+          },
+        },
+        status: {
+          id: true,
+          name: true,
+        },
+        order: {
+          totalAmount: true,
+          unit: {
+            symbol: true,
+          },
+        },
+        quantitySum: {
+          total: true,
+        },
+      },
+    },
+    errors: {
+      code: true,
+      message: true,
+    },
+    pagination: {
+      currentPage: true,
+      perPage: true,
+      total: true,
+    },
+  },
+};
+
+export const SELECT_REPORTS_GQL =
+  '{selectAll (filters: {groups: [{items: [{name: "lastUpdatedAt", value: ["2024-11-06", "2025-02-07"], operator: "BETWEEN"}, {name: "subscription.program.type.name", value: ["Software"], operator: "EQUALS"}]}]}, pagination: {page: 1, perPage: 15}) { data { report { id reportMonth lastUpdatedAt subscription { partnerId company { name workgroup { code } } program { internalName } level { name } } status { id name } order { totalAmount unit { symbol } } quantitySum { total } } } errors { code message } pagination { currentPage perPage total } }}';
