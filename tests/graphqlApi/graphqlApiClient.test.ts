@@ -18,6 +18,7 @@ import {
   GetSpecialPriceRatesHistoryResultType,
   GraphqlApiClient,
   GraphqlApiProgramType,
+  GraphqlApiReportType,
   LicenseBudgetType,
   PartnerType,
   Queries,
@@ -787,6 +788,67 @@ describe('GraphqlApiClient', () => {
         sinon.match(
           '{getSpecialPriceRatesHistory (licenseId: 123456, pagination: {page: 2, perPage: 5}, options: {skipPartition: true}) { data { specialPriceRate { id rate endedAt startedAt } } errors { message } pagination { total currentPage perPage totalPage totalPages } }}',
         ),
+      );
+    });
+  });
+
+  describe('GetReports', () => {
+    it('makes a graphql POST request on the specified URL to selectAll paginated reports', async () => {
+      const reports: GraphqlApiReportType[] = [
+        {
+          id: 1,
+          lastUpdatedAt: '2024-12-24 12:00:03',
+          reportMonth: '2024-12-24 00:00:00',
+          subscription: {
+            partnerId: 'PS-001',
+            company: {
+              name: 'The company name',
+              workgroup: {
+                code: 'FR',
+              },
+            },
+            program: {
+              internalName: 'MSCSP',
+            },
+            level: {
+              name: '223',
+            },
+          },
+          status: {
+            id: 1,
+            name: 'In progress',
+          },
+          order: {
+            totalAmount: 234.5,
+            unit: {
+              symbol: 'E',
+            },
+          },
+          quantitySum: {
+            total: 26,
+          },
+        },
+      ];
+
+      const expectedResult: SelectAllResultType = {
+        [Queries.SELECT_ALL]: {
+          [SelectableField.DATA]: {
+            [SelectDataField.REPORT]: reports,
+          },
+        },
+      };
+
+      graphQLClient.request.resolves(expectedResult);
+
+      const result: SelectAllResultType | null = await client.selectAll(
+        GraphqlApiQueryMock.SELECT_REPORTS_QUERY,
+      );
+
+      expect(result).to.deep.equals(expectedResult);
+
+      sinon.assert.calledWithExactly(
+        graphQLClient.request,
+        sinon.match(GraphqlApiQueryMock.SELECT_REPORTS_GQL),
       );
     });
   });

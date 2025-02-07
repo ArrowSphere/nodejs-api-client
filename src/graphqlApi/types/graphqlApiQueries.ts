@@ -12,6 +12,10 @@ import {
   SubscribedProgramType,
 } from './entities/program';
 import { QuoteType } from './entities/quote';
+import {
+  GraphqlApiReportStatusType,
+  GraphqlApiReportType,
+} from './entities/report';
 import { SpecialPriceRateType } from './entities/specialPriceRate';
 import { SubscriptionType } from './entities/subscription';
 import { UserHistoryType, UserType } from './entities/user';
@@ -157,6 +161,8 @@ export enum SelectDataField {
   PARTNERTAG = 'partnertag',
   PROGRAM = 'program',
   QUOTE = 'quote',
+  REPORT = 'report',
+  REPORT_STATUS = 'reportStatus',
   SPECIAL_PRICE_RATE = 'specialPriceRate',
   SUBSCRIBED_PROGRAM = 'subscribedProgram',
   SUBSCRIPTION = 'subscription',
@@ -183,6 +189,8 @@ export type SelectAllResponseDataType = {
   [SelectDataField.PARTNERTAG]?: PartnertagType[];
   [SelectDataField.PROGRAM]?: GraphqlApiProgramType[];
   [SelectDataField.QUOTE]?: QuoteType[];
+  [SelectDataField.REPORT]?: GraphqlApiReportType[];
+  [SelectDataField.REPORT_STATUS]?: GraphqlApiReportStatusType[];
   [SelectDataField.SUBSCRIBED_PROGRAM]?: SubscribedProgramType[];
   [SelectDataField.SUBSCRIPTION]?: SubscriptionType[];
   [SelectDataField.USER]?: UserType[];
@@ -265,6 +273,8 @@ export type SelectOneResponseDataType = {
   [SelectDataField.PARTNERTAG]?: PartnertagType;
   [SelectDataField.PROGRAM]?: GraphqlApiProgramType;
   [SelectDataField.QUOTE]?: QuoteType;
+  [SelectDataField.REPORT]?: GraphqlApiReportType;
+  [SelectDataField.REPORT_STATUS]?: GraphqlApiReportStatusType;
   [SelectDataField.SUBSCRIBED_PROGRAM]?: SubscribedProgramType;
   [SelectDataField.SUBSCRIPTION]?: SubscriptionType;
   [SelectDataField.USER]?: UserType;

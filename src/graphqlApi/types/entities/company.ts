@@ -1,4 +1,5 @@
 import { ContactsType } from './contact';
+import { CountableType } from './counting';
 import { CountryType } from './country';
 import { CurrencyType } from './currency';
 import { OrdersType } from './order';
@@ -42,11 +43,6 @@ type BaseCompanyType = {
 export type EndCustomerType = BaseCompanyType & {
   country?: CountryType;
   partner?: PartnerType;
-};
-
-type CountableType = {
-  id?: number;
-  total?: number;
 };
 
 export type CompanyExtraInformation = {
