@@ -852,4 +852,53 @@ describe('GraphqlApiClient', () => {
       );
     });
   });
+  describe('selectAll Subscriptions', () => {
+    it('makes a graphql POST request on the specified URL to selectAll Subscriptions', async () => {
+      const expectedResult: SelectAllResultType = {
+        [Queries.SELECT_ALL]: {
+          [SelectableField.DATA]: {
+            [SelectDataField.SUBSCRIPTION]: [
+              {
+                id: 1,
+                program: {
+                  name: 'Program 1',
+                  internalName: 'PP1',
+                },
+                startedAt: '2020-01-09 00:00:00',
+                endedAt: '',
+                orderId: '123',
+                partnerId: '123',
+                userNote: '',
+                level: {
+                  name: 'Level 1',
+                },
+              },
+            ],
+          },
+          [SelectableField.ERRORS]: undefined,
+          [SelectableField.PAGINATION]: {
+            currentPage: 1,
+            next: 2,
+            perPage: 100,
+            total: 30,
+            totalPage: 4,
+            totalPages: 8,
+          },
+        },
+      };
+
+      graphQLClient.request.resolves(expectedResult);
+
+      const result: SelectAllResultType | null = await client.selectAll(
+        GraphqlApiQueryMock.SELECT_ALL_SUBSCRIPTIONS_QUERY,
+      );
+
+      sinon.assert.calledWithExactly(
+        graphQLClient.request,
+        sinon.match(GraphqlApiQueryMock.SELECT_ALL_SUBSCRIPTIONS_GQL),
+      );
+
+      expect(result).to.deep.equals(expectedResult);
+    });
+  });
 });

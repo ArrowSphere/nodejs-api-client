@@ -4,9 +4,17 @@ import { VendorsType } from './vendor';
 
 export type GraphqlApiProgramType = {
   id?: number;
+  bypassReport?: number;
   internalName?: string;
   name?: string;
   vendor?: VendorsType;
+  type?: GraphqlApiProgramTypeType;
+};
+
+export type GraphqlApiProgramTypeType = {
+  id?: number;
+  accronym?: string;
+  name?: string;
 };
 
 export type GraphqlApiProgramLevelType = {
