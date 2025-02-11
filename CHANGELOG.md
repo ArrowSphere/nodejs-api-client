@@ -3,10 +3,14 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.170.0] - 2025.02.11
+
+### Added
+- [graphql-api] add entities report reportStatus
+
 ## [3.169.0] - 2025.02.07
 
 ### Added
-- [order] Define a new type for programs
 - [graphql-api] add queries getLocalContact, getSpecialPriceRatesHistory
 ### Updated
 - [graphql-api] update query findOneById
