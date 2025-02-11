@@ -8,6 +8,7 @@ export enum CreateOrderInputFields {
   COLUMN_CUSTOMER = 'customer',
   COLUMN_REFERENCE = 'reference',
   COLUMN_PO_NUMBER = 'ponumber',
+  COLUMN_END_CUSTOMER_PO_NUMBER = 'endCustomerPONumber',
   COLUMN_PRODUCTS = 'products',
   COLUMN_ARROW_SPHERE_PRICE_BAND_SKU = 'arrowSpherePriceBandSku',
   COLUMN_SKU = 'sku',
@@ -62,6 +63,7 @@ export type CreateOrderInputType = {
   [CreateOrderInputFields.COLUMN_CUSTOMER]: {
     [CreateOrderInputFields.COLUMN_REFERENCE]: string;
     [CreateOrderInputFields.COLUMN_PO_NUMBER]?: string;
+    [CreateOrderInputFields.COLUMN_END_CUSTOMER_PO_NUMBER]?: string;
   };
   [CreateOrderInputFields.COLUMN_SCENARIO]?: scenarioType;
   [CreateOrderInputFields.COLUMN_SCHEDULE_DATE]?: string;
