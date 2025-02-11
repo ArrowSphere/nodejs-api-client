@@ -8,6 +8,7 @@ export enum CreateOrderInputFields {
   COLUMN_CUSTOMER = 'customer',
   COLUMN_REFERENCE = 'reference',
   COLUMN_PO_NUMBER = 'ponumber',
+  COLUMN_END_CUSTOMER_PO_NUMBER = 'endCustomerPONumber',
   COLUMN_PRODUCTS = 'products',
   COLUMN_ARROW_SPHERE_PRICE_BAND_SKU = 'arrowSpherePriceBandSku',
   COLUMN_SKU = 'sku',
