@@ -949,8 +949,14 @@ export const SELECT_PROGRAMS_QUERY: SelectAllQueryType = {
     data: {
       program: {
         id: true,
+        bypassReport: true,
         internalName: true,
         name: true,
+        type: {
+          id: true,
+          accronym: true,
+          name: true,
+        },
         vendor: {
           id: true,
           name: true,
@@ -976,7 +982,7 @@ export const SELECT_PROGRAMS_QUERY: SelectAllQueryType = {
 };
 
 export const SELECT_PROGRAMS_GQL =
-  '{selectAll (filters: {groups: [{items: [{name: "programAvailability.workgroup.code", value: ["FR"], operator: "EQUALS"}]}]}, pagination: {page: 1, perPage: 25}) { data { program { id internalName name vendor { id name identifier licenseUrl logoLarge logoSmall logoStandard url } } } errors { code message } pagination { currentPage perPage total } }}';
+  '{selectAll (filters: {groups: [{items: [{name: "programAvailability.workgroup.code", value: ["FR"], operator: "EQUALS"}]}]}, pagination: {page: 1, perPage: 25}) { data { program { id bypassReport internalName name type { id accronym name } vendor { id name identifier licenseUrl logoLarge logoSmall logoStandard url } } } errors { code message } pagination { currentPage perPage total } }}';
 
 export const SELECT_REPORTS_QUERY: SelectAllQueryType = {
   [Queries.SELECT_ALL]: {
@@ -1053,3 +1059,94 @@ export const SELECT_REPORTS_QUERY: SelectAllQueryType = {
 
 export const SELECT_REPORTS_GQL =
   '{selectAll (filters: {groups: [{items: [{name: "lastUpdatedAt", value: ["2024-11-06", "2025-02-07"], operator: "BETWEEN"}, {name: "subscription.program.type.name", value: ["Software"], operator: "EQUALS"}]}]}, pagination: {page: 1, perPage: 15}) { data { report { id reportMonth lastUpdatedAt subscription { partnerId company { name workgroup { code } } program { internalName } level { name } } status { id name } order { totalAmount unit { symbol } } quantitySum { total } } } errors { code message } pagination { currentPage perPage total } }}';
+
+export const SELECT_ALL_SUBSCRIPTIONS_QUERY: SelectAllQueryType = {
+  [Queries.SELECT_ALL]: {
+    __args: {
+      filters: {
+        groups: [
+          {
+            items: [
+              {
+                name: 'validatedAt',
+                operator: ComparisonOperator.IS_NULL,
+                exclusion: true,
+              },
+              {
+                name: 'endedAt',
+                operator: ComparisonOperator.GREAT_THAN,
+                value: ['2024-01-01 00:00:00'],
+              },
+              {
+                name: 'bypassReport',
+                operator: ComparisonOperator.EQUALS,
+                value: ['1'],
+              },
+              {
+                name: 'program.type.name',
+                operator: ComparisonOperator.EQUALS,
+                value: ['Software'],
+              },
+              {
+                name: 'autoReporting',
+                operator: ComparisonOperator.EQUALS,
+                value: ['0'],
+              },
+            ],
+            logicalOperator: LogicalOperator.AND,
+          },
+        ],
+      },
+      pagination: {
+        page: 1,
+        perPage: 1000,
+      },
+      sort: [
+        {
+          name: 'program.name',
+          direction: Direction.ASC,
+        },
+        {
+          name: 'level.name',
+          direction: Direction.ASC,
+        },
+        {
+          name: 'startedAt',
+          direction: Direction.ASC,
+        },
+      ],
+    },
+    data: {
+      subscription: {
+        id: true,
+        program: {
+          internalName: true,
+          name: true,
+        },
+        startedAt: true,
+        orderId: true,
+        partnerId: true,
+        userNote: true,
+        level: {
+          name: true,
+        },
+      },
+    },
+    errors: {
+      code: true,
+      message: true,
+    },
+    pagination: {
+      currentPage: true,
+      perPage: true,
+      previous: true,
+      next: true,
+      total: true,
+      totalPage: true,
+      totalPages: true,
+    },
+  },
+};
+
+export const SELECT_ALL_SUBSCRIPTIONS_GQL =
+  '{selectAll (aggregatorFilter: ["companyId", "internalName"], pagination: {page: 1, perPage: 1000}, sort: [{name: "vendorName", direction: "ASC"}]) { data { subscribedProgram { id availabilityEndedAt availabilityStartedAt companyId internalName subscriptionEndedAt partner { id name address1 city zip phone } program { id internalName name } subscription { id } vendor { id name identifier licenseUrl logoLarge logoSmall logoStandard url } vendorCode vendorName } } errors { code message } pagination { currentPage perPage previous next total totalPage totalPages } }}';
