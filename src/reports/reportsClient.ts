@@ -83,4 +83,13 @@ export class ReportsClient extends AbstractRestfulClient {
       await this.patch(parameters),
     );
   }
+
+  public async deleteReport(
+    reportReference: string,
+    parameters: Parameters = {},
+  ): Promise<void> {
+    this.path = `/${reportReference}`;
+
+    return await this.delete(parameters);
+  }
 }
