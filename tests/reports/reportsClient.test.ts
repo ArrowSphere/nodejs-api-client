@@ -6,6 +6,8 @@ import {
   PAYLOAD_LIST,
   PAYLOAD_VALIDATE,
 } from './mocks/reports.mocks';
+import { Axios, AxiosResponse } from 'axios';
+import sinon from 'sinon';
 
 export const REPORT_MOCK_URL = 'https://reports.localhost/index.php/api';
 export const REPORT_PATH = '/reports';
@@ -14,6 +16,36 @@ describe('ReportsClient', () => {
   const client = new PublicApiClient()
     .getReportsClient()
     .setUrl(REPORT_MOCK_URL);
+
+  describe('deleteQuote', () => {
+    let axiosClient: sinon.SinonStubbedInstance<Axios>;
+
+    beforeEach(() => {
+      axiosClient = sinon.stub(Axios.prototype);
+    });
+
+    afterEach(() => {
+      sinon.restore();
+    });
+
+    it('should succesfully delete a quote', async () => {
+      const expectedResult: AxiosResponse = {
+        status: 201,
+        data: {
+          status: 201,
+        },
+        statusText: 'success',
+        headers: {},
+        config: {},
+      };
+
+      axiosClient.request.resolves(expectedResult);
+
+      const result = await client.deleteReport('XSPR123');
+
+      expect(result).to.be.deep.equals(expectedResult.data);
+    });
+  });
 
   describe('create', async () => {
     it('Should create new Report', async () => {
