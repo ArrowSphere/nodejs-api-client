@@ -1013,18 +1013,16 @@ export const GET_CAMPAIGN_AGGREGATIONS_OUTPUT: GetData<CampaignAggragationsType>
       categories: [
         {
           name: 'BANNER',
-          dateAgg: [
-            {
-              count: 127,
-              from: '2024-01',
-              dates: [
-                {
-                  date: '2021-08-01',
-                  count: 10,
-                },
-              ],
-            },
-          ],
+          dateAgg: {
+            count: 127,
+            from: '2024-01',
+            dates: [
+              {
+                date: '2021-08-01',
+                count: 10,
+              },
+            ],
+          },
         },
       ],
     },
