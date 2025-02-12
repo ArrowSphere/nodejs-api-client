@@ -349,8 +349,15 @@ export type ExchangeRateValueType = {
   value: number;
 };
 
+export enum AttributesParameterType {
+  STANDARD = 'STANDARD',
+  INTERNAL = 'INTERNAL',
+  READ_ONLY = 'READ_ONLY',
+}
+
 export type AttributesParameters = {
   name?: string;
   label?: string;
   position?: number;
+  type?: AttributesParameterType;
 };
