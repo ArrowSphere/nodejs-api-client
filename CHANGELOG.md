@@ -3,6 +3,11 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.172.1] - 2025.02.12
+
+### Updated
+- [campaign] update field dateAgg to DateAggType instead of DateAggType[] in CategoryType schema
+
 ## [3.172.0] - 2025.02.11
 
 ### Updated
