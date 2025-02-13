@@ -72,7 +72,7 @@ describe('CatalogGraphQLClient', () => {
       },
     };
 
-    it.skip('makes a graphql POST request on the specified URL calling findByQuery', async () => {
+    it('makes a graphql POST request on the specified URL calling findByQuery', async () => {
       nock(CATALOG_GRAPHQL_URL).post(CATALOG_POST_URL).reply(200, bodyResponse);
 
       await client.findByQuery(preparedQuery);
