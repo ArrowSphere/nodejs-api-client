@@ -202,6 +202,14 @@ export class CustomersClient extends AbstractRestfulClient {
     return new GetResult(CustomerContact, await this.get(parameters));
   }
 
+  public async deleteCustomer(
+    customerReference: string,
+    parameters: Parameters = {},
+  ): Promise<void> {
+    this.path = `/${customerReference}`;
+    return await this.delete(parameters);
+  }
+
   public async deleteCustomerContact(
     customerReference: string,
     contactReference: string,
@@ -278,5 +286,14 @@ export class CustomersClient extends AbstractRestfulClient {
     this.path = `/${customerReference}/migration`;
 
     return await this.post(payload, parameters, {}, { returnAxiosData });
+  }
+
+  public async postReconciliationCustomers(
+    program: string,
+    parameters: Parameters = {},
+  ): Promise<void> {
+    this.path = '/reconciliation';
+
+    await this.post({ program }, parameters);
   }
 }
