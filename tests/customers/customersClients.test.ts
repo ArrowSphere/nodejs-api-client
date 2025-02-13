@@ -298,6 +298,18 @@ describe('CustomersClients', () => {
     });
   });
 
+  describe('deleteCustomer', () => {
+    const client = new PublicApiClient()
+      .getCustomersClient()
+      .setUrl(CUSTOMERS_MOCK_URL);
+
+    it('call delete customer', async () => {
+      nock(CUSTOMERS_MOCK_URL).delete(CUSTOMERS_GET_CUSTOMERS_URL).reply(200);
+
+      await client.deleteCustomer('REF');
+    });
+  });
+
   describe('deleteCustomerContact', () => {
     const client = new PublicApiClient()
       .getCustomersClient()
@@ -554,6 +566,18 @@ describe('CustomersClients', () => {
       nock(CUSTOMERS_MOCK_URL).put(CUSTOMERS_GET_CUSTOMERS_URL).reply(200);
 
       await client.reactivateCustomer('REF');
+    });
+  });
+
+  describe('postReconciliationCustomers', () => {
+    const client = new PublicApiClient()
+      .getCustomersClient()
+      .setUrl(CUSTOMERS_MOCK_URL);
+
+    it('call reconciliate customers', async () => {
+      nock(CUSTOMERS_MOCK_URL).post('/customers/reconciliation').reply(200);
+
+      await client.postReconciliationCustomers('MSCSP');
     });
   });
 });
