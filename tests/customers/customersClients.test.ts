@@ -298,6 +298,18 @@ describe('CustomersClients', () => {
     });
   });
 
+  describe('deleteCustomer', () => {
+    const client = new PublicApiClient()
+      .getCustomersClient()
+      .setUrl(CUSTOMERS_MOCK_URL);
+
+    it('call delete customer', async () => {
+      nock(CUSTOMERS_MOCK_URL).delete(CUSTOMERS_GET_CUSTOMERS_URL).reply(200);
+
+      await client.deleteCustomer('REF');
+    });
+  });
+
   describe('deleteCustomerContact', () => {
     const client = new PublicApiClient()
       .getCustomersClient()
