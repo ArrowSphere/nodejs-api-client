@@ -1,3 +1,4 @@
+import { OrganizationUnitsType } from './organizationUnit';
 import { ContactsType } from './contact';
 import { CountableType } from './counting';
 import { CountryType } from './country';
@@ -42,7 +43,10 @@ type BaseCompanyType = {
 
 export type EndCustomerType = BaseCompanyType & {
   country?: CountryType;
+  orderCount?: CountableType;
+  organizationUnit?: OrganizationUnitsType;
   partner?: PartnerType;
+  reportCount?: CountableType;
 };
 
 export type CompanyExtraInformation = {
