@@ -1,4 +1,5 @@
 import { AbstractEntity } from '../../abstractEntity';
+import { XcpInvitation, XcpInvitationType } from './xcpInvitation';
 
 export enum ContactFields {
   COLUMN_ID = 'id',
@@ -12,6 +13,8 @@ export enum ContactFields {
   COLUMN_TYPE = 'type',
   COLUMN_ROLE = 'role',
   COLUMN_STATUS = 'status',
+  COLUMN_XAP_USERNAME = 'xapUsername',
+  COLUMN_XCP_INVITATION = 'xcpInvitation',
 }
 
 export type ContactType = {
@@ -26,6 +29,8 @@ export type ContactType = {
   [ContactFields.COLUMN_TYPE]: string;
   [ContactFields.COLUMN_ROLE]: string;
   [ContactFields.COLUMN_STATUS]: string;
+  [ContactFields.COLUMN_XAP_USERNAME]?: string;
+  [ContactFields.COLUMN_XCP_INVITATION]?: XcpInvitationType;
 };
 
 export class Contact extends AbstractEntity<ContactType> {
@@ -40,6 +45,8 @@ export class Contact extends AbstractEntity<ContactType> {
   readonly #type: string;
   readonly #role: string;
   readonly #status: string;
+  readonly #xapUsername?: string;
+  readonly #xcpInvitation?: XcpInvitation;
 
   public constructor(contactDataInput: ContactType) {
     super(contactDataInput);
@@ -55,6 +62,14 @@ export class Contact extends AbstractEntity<ContactType> {
     this.#type = contactDataInput[ContactFields.COLUMN_TYPE];
     this.#role = contactDataInput[ContactFields.COLUMN_ROLE];
     this.#status = contactDataInput[ContactFields.COLUMN_STATUS];
+    this.#xapUsername = contactDataInput[ContactFields.COLUMN_XAP_USERNAME];
+    this.#xcpInvitation = contactDataInput[ContactFields.COLUMN_XCP_INVITATION]
+      ? new XcpInvitation(
+          contactDataInput[
+            ContactFields.COLUMN_XCP_INVITATION
+          ] as XcpInvitationType,
+        )
+      : undefined;
   }
 
   public get id(): number {
@@ -101,6 +116,14 @@ export class Contact extends AbstractEntity<ContactType> {
     return this.#status;
   }
 
+  get xapUsername(): string | undefined {
+    return this.#xapUsername;
+  }
+
+  get xcpInvitation(): XcpInvitation | undefined {
+    return this.#xcpInvitation;
+  }
+
   public toJSON(): ContactType {
     return {
       [ContactFields.COLUMN_ID]: this.id,
@@ -114,6 +137,8 @@ export class Contact extends AbstractEntity<ContactType> {
       [ContactFields.COLUMN_TYPE]: this.type,
       [ContactFields.COLUMN_ROLE]: this.role,
       [ContactFields.COLUMN_STATUS]: this.status,
+      [ContactFields.COLUMN_XAP_USERNAME]: this.xapUsername,
+      [ContactFields.COLUMN_XCP_INVITATION]: this.xcpInvitation?.toJSON(),
     };
   }
 }
