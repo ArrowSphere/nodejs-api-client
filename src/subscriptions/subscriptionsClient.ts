@@ -38,7 +38,7 @@ export type SubscriptionCreationData = {
   sku: string;
   extraInformation?: {
     programs: {
-      [programName: string]: Record<string, string>;
+      [programName: string]: Record<string, string | boolean>;
     };
   };
 };
