@@ -11,7 +11,7 @@ export type OrderItemsType = {
   priceRates?: SpecialPriceRateType[];
 };
 
-export type GraphqlApiRealOrderType = {
+export type GraphqlApiOrderSoftwareType = {
   id?: number;
   customerId?: number;
   totalAmount?: number;
