@@ -1,5 +1,5 @@
 import { CountableType } from './counting';
-import { GraphqlApiRealOrderType } from './order';
+import { GraphqlApiOrderSoftwareType } from './order';
 import { SubscriptionType } from './subscription';
 
 export type GraphqlApiReportType = {
@@ -14,7 +14,7 @@ export type GraphqlApiReportType = {
   totalAmount?: number;
   userNote?: string;
   quantitySum?: CountableType;
-  order?: GraphqlApiRealOrderType;
+  order?: GraphqlApiOrderSoftwareType;
   status?: GraphqlApiReportStatusType;
 };
 
