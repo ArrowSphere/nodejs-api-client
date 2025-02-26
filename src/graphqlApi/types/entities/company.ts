@@ -14,7 +14,7 @@ export type CompanyTypeType = {
   type?: string;
 };
 
-type BaseCompanyType = {
+export type BaseCompanyType = {
   acronym?: string;
   address1?: string;
   address2?: string;
@@ -36,6 +36,7 @@ type BaseCompanyType = {
   phone?: string;
   resellerId?: number;
   state?: string;
+  type?: CompanyTypeType;
   vatNumber?: string;
   workgroup?: WorkgroupType;
   zip?: string;
@@ -68,12 +69,12 @@ export type PartnerType = BaseCompanyType & {
   ordersCount?: CountableType;
   ordersNeedCount?: CountableType;
   ordersSaasCount?: CountableType;
+  organizationUnits?: OrganizationUnitsType[];
   reportsCount?: CountableType;
   subscribedPrograms?: SubscribedProgramType[];
   subscriptions?: SubscriptionType[];
   subscriptionsCount?: CountableType;
   subscriptionsPendingCount?: CountableType;
-  type?: CompanyTypeType;
 };
 
 export type ArrowCompanyType = Omit<BaseCompanyType, 'partnerTags'> & {

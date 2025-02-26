@@ -183,6 +183,7 @@ export type SelectAllResultType = {
 
 export type SelectAllResponseDataType = {
   [SelectDataField.ARROW_COMPANY]?: ArrowCompanyType[];
+  [SelectDataField.CONTACT]?: ContactsType[];
   [SelectDataField.CONTINENT]?: ContinentType[];
   [SelectDataField.COUNTRY]?: CountryType[];
   [SelectDataField.END_CUSTOMER]?: EndCustomerType[];
@@ -268,6 +269,7 @@ export type GetSpecialPriceRatesHistoryResultType = {
 
 export type SelectOneResponseDataType = {
   [SelectDataField.ARROW_COMPANY]?: ArrowCompanyType;
+  [SelectDataField.CONTACT]?: ContactsType;
   [SelectDataField.CONTINENT]?: ContinentType;
   [SelectDataField.COUNTRY]?: CountryType;
   [SelectDataField.END_CUSTOMER]?: EndCustomerType;
