@@ -1156,3 +1156,75 @@ export const SELECT_ALL_SUBSCRIPTIONS_QUERY: SelectAllQueryType = {
 
 export const SELECT_ALL_SUBSCRIPTIONS_GQL =
   '{selectAll (filters: {groups: [{items: [{name: "validatedAt", operator: "IS_NULL", exclusion: true}, {name: "endedAt", operator: "GREAT_THAN", value: ["2024-01-01 00:00:00"]}, {name: "bypassReport", operator: "EQUALS", value: ["1"]}, {name: "program.type.name", operator: "EQUALS", value: ["Software"]}, {name: "autoReporting", operator: "EQUALS", value: ["0"]}], logicalOperator: "AND"}]}, pagination: {page: 1, perPage: 1000}, sort: [{name: "program.name", direction: "ASC"}, {name: "level.name", direction: "ASC"}, {name: "startedAt", direction: "ASC"}]) { data { subscription { id program { internalName name } startedAt orderId partnerId userNote level { name } } } errors { code message } pagination { currentPage perPage previous next total totalPage totalPages } }}';
+
+export const SELECT_ALL_PARTNER_ORGANIZATION_UNIT_QUERY: SelectAllQueryType = {
+  [Queries.SELECT_ALL]: {
+    __args: {
+      filters: {
+        groups: [
+          {
+            items: [
+              {
+                name: 'id',
+                value: ['123'],
+                operator: ComparisonOperator.EQUALS,
+              },
+            ],
+          },
+        ],
+      },
+    },
+    data: {
+      partner: {
+        organizationUnits: {
+          id: true,
+          name: true,
+          endCustomersCount: true,
+          usersCounts: true,
+        },
+      },
+    },
+    errors: {
+      code: true,
+      message: true,
+    },
+  },
+};
+
+export const SELECT_ALL_PARTNER_ORGANIZATION_UNIT_GQL =
+  '{selectAll (filters: {groups: [{items: [{name: "id", value: ["123"], operator: "EQUALS"}]}]}) { data { partner { organizationUnits { id name endCustomersCount usersCounts } } } errors { code message } }}';
+
+export const SELECT_ALL_CONTACTS_QUERY: SelectAllQueryType = {
+  [Queries.SELECT_ALL]: {
+    data: {
+      contact: {
+        id: true,
+        companies: {
+          id: true,
+          name: true,
+          type: {
+            id: true,
+            type: true,
+          },
+        },
+        email: true,
+        firstname: true,
+        lastname: true,
+        locked: true,
+        organizationUnits: {
+          id: true,
+          name: true,
+        },
+        phone: true,
+        username: true,
+      },
+    },
+    errors: {
+      code: true,
+      message: true,
+    },
+  },
+};
+
+export const SELECT_ALL_CONTACTS_GQL =
+  '{selectAll { data { contact { id companies { id name type { id type } } email firstname lastname locked organizationUnits { id name } phone username } } errors { code message } }}';

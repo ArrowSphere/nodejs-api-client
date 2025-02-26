@@ -901,4 +901,115 @@ describe('GraphqlApiClient', () => {
       expect(result).to.deep.equals(expectedResult);
     });
   });
+  describe('selectAll Oraganization units', () => {
+    it('makes a graphql POST request on the specified URL to selectAll Organization units', async () => {
+      const expectedResult: SelectAllResultType = {
+        [Queries.SELECT_ALL]: {
+          [SelectableField.DATA]: {
+            [SelectDataField.PARTNER]: [
+              {
+                organizationUnits: [
+                  {
+                    id: 1,
+                    name: 'OU 1',
+                    endCustomersCount: 2,
+                    usersCounts: 0,
+                  },
+                  {
+                    id: 2,
+                    name: 'OU 2',
+                    endCustomersCount: 5,
+                    usersCounts: 1,
+                  },
+                ],
+              },
+            ],
+          },
+          [SelectableField.ERRORS]: undefined,
+          [SelectableField.PAGINATION]: {
+            currentPage: 1,
+            next: 2,
+            perPage: 100,
+            total: 30,
+            totalPage: 2,
+            totalPages: 8,
+          },
+        },
+      };
+
+      graphQLClient.request.resolves(expectedResult);
+
+      const result: SelectAllResultType | null = await client.selectAll(
+        GraphqlApiQueryMock.SELECT_ALL_PARTNER_ORGANIZATION_UNIT_QUERY,
+      );
+
+      sinon.assert.calledWithExactly(
+        graphQLClient.request,
+        sinon.match(
+          GraphqlApiQueryMock.SELECT_ALL_PARTNER_ORGANIZATION_UNIT_GQL,
+        ),
+      );
+
+      expect(result).to.deep.equals(expectedResult);
+    });
+  });
+  describe('selectAll contacts', () => {
+    it('makes a graphql POST request on the specified URL to selectAll contacts', async () => {
+      const expectedResult: SelectAllResultType = {
+        [Queries.SELECT_ALL]: {
+          [SelectableField.DATA]: {
+            [SelectDataField.CONTACT]: [
+              {
+                id: 1,
+                companies: [
+                  {
+                    id: 123,
+                    name: 'The company 123',
+                    type: {
+                      id: 3,
+                      type: 'UKW',
+                    },
+                  },
+                ],
+                email: 'user1@email.com',
+                firstname: 'Firstname 1',
+                lastname: 'lastname: 1',
+                locked: false,
+                organizationUnits: [
+                  {
+                    id: 22,
+                    name: 'The OU 22',
+                  },
+                ],
+                phone: '1234567890',
+                username: 'username 1',
+              },
+            ],
+          },
+          [SelectableField.ERRORS]: undefined,
+          [SelectableField.PAGINATION]: {
+            currentPage: 1,
+            next: 2,
+            perPage: 100,
+            total: 30,
+            totalPage: 1,
+            totalPages: 8,
+          },
+        },
+      };
+
+      graphQLClient.request.resolves(expectedResult);
+
+      const result: SelectAllResultType | null = await client.selectAll(
+        GraphqlApiQueryMock.SELECT_ALL_CONTACTS_QUERY,
+      );
+
+      sinon.assert.calledWithExactly(
+        graphQLClient.request,
+        sinon.match(GraphqlApiQueryMock.SELECT_ALL_CONTACTS_GQL),
+      );
+
+      expect(result).to.deep.equals(expectedResult);
+    });
+  });
 });

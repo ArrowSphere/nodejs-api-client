@@ -1,6 +1,7 @@
 import { Merge, Schema } from 'type-fest';
 import {
   ArrowCompanyType,
+  BaseCompanyType,
   CompanyExtraInformation,
   EndCustomerType,
   PartnerType,
@@ -52,6 +53,7 @@ type MissingFieldsOfCompanySchema = {
   currency?: CurrencySchema;
   extraInformations?: CompanyExtraInformationSchema;
   orders?: OrdersSchema;
+  organizationUnits?: OrganizationUnitSchema;
   partnerTags?: PartnertagSchema;
   subscribedPrograms?: SubscribedProgramSchema;
   subscriptions?: SubscriptionSchema;
@@ -81,6 +83,7 @@ type MissingFieldsOfOrdersSchema = {
 };
 
 type MissingFieldsOfContactSchema = {
+  companies?: BaseCompanySchema;
   organizationUnits?: OrganizationUnitSchema;
 };
 
@@ -204,6 +207,7 @@ export type LicenseBudgetNotificationSchema = Schema<
   LicenseBudgetNotificationType,
   boolean
 >;
+export type BaseCompanySchema = Schema<BaseCompanyType, boolean>;
 export type OrganizationUnitSchema = Schema<OrganizationUnitsType, boolean>;
 export type PageSchema = Schema<PageType, boolean>;
 export type ProgramBenefitSchema = Schema<ProgramBenefitType, boolean>;
@@ -257,6 +261,7 @@ export type SelectAllResultSchema = {
 
 export type SelectAllResponseDataSchema = {
   [SelectDataField.ARROW_COMPANY]?: ArrowCompanySchema;
+  [SelectDataField.CONTACT]?: ContactsSchema;
   [SelectDataField.CONTINENT]?: ContinentSchema;
   [SelectDataField.COUNTRY]?: CountrySchema;
   [SelectDataField.END_CUSTOMER]?: EndCustomerSchema;
@@ -280,24 +285,7 @@ export type SelectOneResultSchema = {
   [SelectableField.ERRORS]?: ErrorsSchema;
 };
 
-export type SelectOneResponseDataSchema = {
-  [SelectDataField.ARROW_COMPANY]?: ArrowCompanySchema;
-  [SelectDataField.CONTINENT]?: ContinentSchema;
-  [SelectDataField.COUNTRY]?: CountrySchema;
-  [SelectDataField.END_CUSTOMER]?: EndCustomerSchema;
-  [SelectDataField.LICENSE_BUDGET]?: LicenseBudgetSchema;
-  [SelectDataField.PARTNER]?: PartnerSchema;
-  [SelectDataField.PARTNERTAG]?: PartnertagSchema;
-  [SelectDataField.PROGRAM]?: GraphqlApiProgramSchema;
-  [SelectDataField.QUOTE]?: QuoteSchema;
-  [SelectDataField.REPORT]?: ReportSchema;
-  [SelectDataField.REPORT_STATUS]?: ReportStatusSchema;
-  [SelectDataField.SUBSCRIBED_PROGRAM]?: SubscribedProgramSchema;
-  [SelectDataField.SUBSCRIPTION]?: SubscriptionSchema;
-  [SelectDataField.USER]?: UserSchema;
-  [SelectDataField.USER_HISTORY]?: UserHistorySchema;
-  [SelectDataField.WORKGROUP]?: WorkgroupSchema;
-};
+export type SelectOneResponseDataSchema = SelectAllResponseDataSchema;
 
 export type SelectAllQuerySchema = {
   [Queries.SELECT_ALL]?: SelectAllResultSchema;
