@@ -1,9 +1,11 @@
+import { EndCustomerType } from './company';
 import { OrganizationUnitsType } from './organizationUnit';
 
 export type ContactsType = {
   id?: number;
   active?: boolean;
   communicationEmail?: string;
+  companies?: EndCustomerType[];
   effectiveDate?: string;
   email?: string;
   erpId?: string;

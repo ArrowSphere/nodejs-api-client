@@ -36,6 +36,7 @@ type BaseCompanyType = {
   phone?: string;
   resellerId?: number;
   state?: string;
+  type?: CompanyTypeType;
   vatNumber?: string;
   workgroup?: WorkgroupType;
   zip?: string;
@@ -73,7 +74,6 @@ export type PartnerType = BaseCompanyType & {
   subscriptions?: SubscriptionType[];
   subscriptionsCount?: CountableType;
   subscriptionsPendingCount?: CountableType;
-  type?: CompanyTypeType;
 };
 
 export type ArrowCompanyType = Omit<BaseCompanyType, 'partnerTags'> & {
