@@ -3,6 +3,15 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.178.0] - 2025.03.05
+
+### Added
+
+- [graphql-api] add field contact to SelectAllResponseDataSchema
+- [graphql-api] add field organizationUnits to PartnerType
+- [graphql-api] add field companies to ContactsType
+- [graphql-api] add fields contacts, endCustomer, endCustomersCount to OrganizationUnitsType
+
 ## [3.177.1] - 2025.03.04
 
 ### Added
