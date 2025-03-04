@@ -41,6 +41,7 @@ export enum LicenseEventStatusCode {
   REJECTED = '85',
   COMPLETED = '86',
   SUSPENDED = '87',
+  ACTIVATION_EXPIRED = '88',
   CANCELLED = '89',
   TRANSFERRED = '126',
 }
