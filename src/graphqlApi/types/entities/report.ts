@@ -13,6 +13,7 @@ export type GraphqlApiReportType = {
   subscription?: SubscriptionType;
   totalAmount?: number;
   userNote?: string;
+  quantityCount?: number;
   quantitySum?: CountableType;
   order?: GraphqlApiOrderSoftwareType;
   status?: GraphqlApiReportStatusType;

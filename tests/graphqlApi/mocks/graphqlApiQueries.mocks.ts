@@ -1046,9 +1046,7 @@ export const SELECT_REPORTS_QUERY: SelectAllQueryType = {
             symbol: true,
           },
         },
-        quantitySum: {
-          total: true,
-        },
+        quantityCount: true,
       },
     },
     errors: {
@@ -1064,7 +1062,7 @@ export const SELECT_REPORTS_QUERY: SelectAllQueryType = {
 };
 
 export const SELECT_REPORTS_GQL =
-  '{selectAll (filters: {groups: [{items: [{name: "lastUpdatedAt", value: ["2024-11-06", "2025-02-07"], operator: "BETWEEN"}, {name: "subscription.program.type.name", value: ["Software"], operator: "EQUALS"}]}]}, pagination: {page: 1, perPage: 15}) { data { report { id reportMonth lastUpdatedAt subscription { partnerId company { name workgroup { code } } program { internalName } level { name } } status { id name } order { totalAmount unit { symbol } } quantitySum { total } } } errors { code message } pagination { currentPage perPage total } }}';
+  '{selectAll (filters: {groups: [{items: [{name: "lastUpdatedAt", value: ["2024-11-06", "2025-02-07"], operator: "BETWEEN"}, {name: "subscription.program.type.name", value: ["Software"], operator: "EQUALS"}]}]}, pagination: {page: 1, perPage: 15}) { data { report { id reportMonth lastUpdatedAt subscription { partnerId company { name workgroup { code } } program { internalName } level { name } } status { id name } order { totalAmount unit { symbol } } quantityCount } } errors { code message } pagination { currentPage perPage total } }}';
 
 export const SELECT_ALL_SUBSCRIPTIONS_QUERY: SelectAllQueryType = {
   [Queries.SELECT_ALL]: {
