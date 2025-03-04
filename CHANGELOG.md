@@ -3,9 +3,14 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.177.1] - 2025.03.04
+
+### Added
+- [graphql-api] add field quantityCount to GraphqlApiReportType
+
 ## [3.177.0] - 2025.02.25
 
-### Addes
+### Added
 - [customers] add endpoint to delete customer
 - [customers] add endpoint to reconciliate customers
 - [graphql-api] add fields ordersCount, organizationUnit, reportsCount to EndCustomerType
