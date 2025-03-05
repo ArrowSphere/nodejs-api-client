@@ -57,6 +57,7 @@ export type ProgramLevelOptionType = {
 
 export type ProgramLevelType = {
   internalName?: string;
+  level?: number;
   name?: string;
   benefits?: ProgramBenefitType[];
   requirements?: ProgramRequirementType[];

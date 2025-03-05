@@ -235,7 +235,16 @@ export type PageSchema = Schema<PageType, boolean>;
 export type ProgramBenefitSchema = Schema<ProgramBenefitType, boolean>;
 export type ProgramLevelOptionSchema = Schema<ProgramLevelOptionType, boolean>;
 export type ProgramRequirementSchema = Schema<ProgramRequirementType, boolean>;
-export type ProgramLevelSchema = Schema<ProgramLevelType, boolean>;
+export type ProgramLevelSchema = Merge<
+  Schema<ProgramLevelType, boolean>,
+  MissingFieldsOfLevelSchema
+>;
+
+export type MissingFieldsOfLevelSchema = {
+  benefits?: ProgramBenefitSchema;
+  programLevelOptionGroups?: ProgramLevelOptionGroupSchema;
+  requirements?: ProgramRequirementSchema;
+};
 
 type MissingFieldsOfProgramLevelOptionGroupSchema = {
   programLevelOptions?: ProgramLevelOptionSchema;
@@ -251,17 +260,8 @@ export type SubscriptionExtraFieldSchema = Schema<
   boolean
 >;
 
-export type MissingFieldsOfLevelSchema = {
-  benefits?: ProgramBenefitSchema;
-  programLevelOptionGroups?: ProgramLevelOptionGroupSchema;
-  requirements?: ProgramRequirementSchema;
-};
-
 export type MissingFieldsOfProgramSchema = {
-  levels?: Merge<
-    Schema<ProgramLevelSchema, boolean>,
-    MissingFieldsOfLevelSchema
-  >;
+  levels?: ProgramLevelSchema;
   subscriptionExtraFields?: SubscriptionExtraFieldSchema;
 };
 export type GraphqlApiProgramSchema = Merge<
@@ -305,6 +305,7 @@ export type SelectAllResponseDataSchema = {
   [SelectDataField.PARTNER]?: PartnerSchema;
   [SelectDataField.PARTNERTAG]?: PartnertagSchema;
   [SelectDataField.PROGRAM]?: GraphqlApiProgramSchema;
+  [SelectDataField.PROGRAM_LEVEL]?: ProgramLevelSchema;
   [SelectDataField.PROGRAM_LEVEL_OPTION_GROUP]?: ProgramLevelOptionGroupSchema;
   [SelectDataField.QUOTE]?: QuoteSchema;
   [SelectDataField.REPORT]?: ReportSchema;
