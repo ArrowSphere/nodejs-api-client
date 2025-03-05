@@ -266,6 +266,7 @@ export type SelectAllResponseDataSchema = {
   [SelectDataField.COUNTRY]?: CountrySchema;
   [SelectDataField.END_CUSTOMER]?: EndCustomerSchema;
   [SelectDataField.LICENSE_BUDGET]?: LicenseBudgetSchema;
+  [SelectDataField.ORGANIZATION_UNIT]?: OrganizationUnitSchema;
   [SelectDataField.PARTNER]?: PartnerSchema;
   [SelectDataField.PARTNERTAG]?: PartnertagSchema;
   [SelectDataField.PROGRAM]?: GraphqlApiProgramSchema;
