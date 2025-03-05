@@ -89,6 +89,11 @@ import { LicenceCouponCodeHistoryResult } from './entities/history/licenceCoupon
  */
 export enum LicenseFindParameters {
   /**
+   * The key for aggregation search query parameter (to request extra aggregation, which are not provided by default)
+   */
+  DATA_AGGREGATION = 'aggregations',
+
+  /**
    * The key for keyword search query parameter (to search one string in all available search fields)
    */
   DATA_KEYWORD = 'keyword',
@@ -317,6 +322,7 @@ export type LicenseRawFiltersParameters = {
  * Payload to pass the find request. Contains keyword(s), sort options, column filters and highlight option.
  */
 export type LicenseFindPayload = {
+  [LicenseFindParameters.DATA_AGGREGATION]?: string[];
   [LicenseFindParameters.DATA_KEYWORD]?: string;
   [LicenseFindParameters.DATA_KEYWORDS]?: LicenseKeywordsParameters;
   [LicenseFindParameters.DATA_FILTERS]?: LicenseFiltersParameters;
@@ -326,6 +332,7 @@ export type LicenseFindPayload = {
 };
 
 export type LicenseFindRawPayload = {
+  [LicenseFindParameters.DATA_AGGREGATION]?: string[];
   [LicenseFindParameters.DATA_KEYWORD]?: string;
   [LicenseFindParameters.DATA_KEYWORDS]?: {
     license?: LicenseRawKeywordsParametersLicence;
@@ -581,9 +588,22 @@ export class LicensesClient extends AbstractRestfulClient {
     this.setPage(page);
 
     const rawLicensePayload: LicenseFindRawPayload = {
+      aggregations: postData.aggregations,
       keyword: postData.keyword,
       highlight: postData.highlight,
     };
+
+    if (postData.keywords) {
+      // Flatten with prefix for each type of keyword (license and offer)
+      rawLicensePayload.keywords = {
+        ...this.createKeywords(postData.keywords, 'license'),
+        ...this.createKeywords(postData.keywords, 'offer'),
+        ...this.createKeywords(
+          postData.keywords,
+          'endCustomerOrganizationUnit',
+        ),
+      };
+    }
 
     if (postData.keywords) {
       // Flatten with prefix for each type of keyword (license and offer)
