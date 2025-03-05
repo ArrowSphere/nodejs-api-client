@@ -1157,29 +1157,12 @@ export const SELECT_ALL_SUBSCRIPTIONS_GQL =
 
 export const SELECT_ALL_PARTNER_ORGANIZATION_UNIT_QUERY: SelectAllQueryType = {
   [Queries.SELECT_ALL]: {
-    __args: {
-      filters: {
-        groups: [
-          {
-            items: [
-              {
-                name: 'id',
-                value: ['123'],
-                operator: ComparisonOperator.EQUALS,
-              },
-            ],
-          },
-        ],
-      },
-    },
     data: {
-      partner: {
-        organizationUnits: {
-          id: true,
-          name: true,
-          endCustomersCount: true,
-          usersCounts: true,
-        },
+      organizationUnit: {
+        id: true,
+        name: true,
+        endCustomersCount: true,
+        usersCounts: true,
       },
     },
     errors: {
@@ -1190,7 +1173,7 @@ export const SELECT_ALL_PARTNER_ORGANIZATION_UNIT_QUERY: SelectAllQueryType = {
 };
 
 export const SELECT_ALL_PARTNER_ORGANIZATION_UNIT_GQL =
-  '{selectAll (filters: {groups: [{items: [{name: "id", value: ["123"], operator: "EQUALS"}]}]}) { data { partner { organizationUnits { id name endCustomersCount usersCounts } } } errors { code message } }}';
+  '{selectAll { data { organizationUnit { id name endCustomersCount usersCounts } } errors { code message } }}';
 
 export const SELECT_ALL_CONTACTS_QUERY: SelectAllQueryType = {
   [Queries.SELECT_ALL]: {
