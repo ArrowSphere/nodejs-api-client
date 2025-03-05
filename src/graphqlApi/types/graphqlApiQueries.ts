@@ -13,6 +13,7 @@ import { PartnertagType } from './entities/partnertag';
 import {
   GraphqlApiProgramType,
   ProgramLevelOptionGroupType,
+  ProgramLevelType,
   SubscribedProgramType,
 } from './entities/program';
 import { QuoteType } from './entities/quote';
@@ -167,6 +168,7 @@ export enum SelectDataField {
   PARTNER = 'partner',
   PARTNERTAG = 'partnertag',
   PROGRAM = 'program',
+  PROGRAM_LEVEL = 'programLevel',
   PROGRAM_LEVEL_OPTION_GROUP = 'programLevelOptionGroup',
   QUOTE = 'quote',
   REPORT = 'report',
@@ -201,6 +203,7 @@ export type SelectAllResponseDataType = {
   [SelectDataField.PARTNER]?: PartnerType[];
   [SelectDataField.PARTNERTAG]?: PartnertagType[];
   [SelectDataField.PROGRAM]?: GraphqlApiProgramType[];
+  [SelectDataField.PROGRAM_LEVEL]?: ProgramLevelType[];
   [SelectDataField.PROGRAM_LEVEL_OPTION_GROUP]?: ProgramLevelOptionGroupType[];
   [SelectDataField.QUOTE]?: QuoteType[];
   [SelectDataField.REPORT]?: GraphqlApiReportType[];
@@ -291,6 +294,7 @@ export type SelectOneResponseDataType = {
   [SelectDataField.PARTNER]?: PartnerType;
   [SelectDataField.PARTNERTAG]?: PartnertagType;
   [SelectDataField.PROGRAM]?: GraphqlApiProgramType;
+  [SelectDataField.PROGRAM_LEVEL]?: ProgramLevelType;
   [SelectDataField.PROGRAM_LEVEL_OPTION_GROUP]?: ProgramLevelOptionGroupType;
   [SelectDataField.QUOTE]?: QuoteType;
   [SelectDataField.REPORT]?: GraphqlApiReportType;
