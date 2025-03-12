@@ -19,7 +19,11 @@ import {
 import { ContactsType } from './entities/contact';
 import { SubscriptionType } from './entities/subscription';
 import { SpecialPriceRateType } from './entities/specialPriceRate';
-import { OrderItemsType, OrdersType } from './entities/order';
+import {
+  GraphqlApiOrderLinkType,
+  OrderItemsType,
+  OrdersType,
+} from './entities/order';
 import {
   GraphqlApiProgramType,
   ProgramBenefitType,
@@ -45,6 +49,7 @@ import {
   GraphqlApiReportStatusType,
   GraphqlApiReportType,
 } from './entities/report';
+import { GraphqlApiEavType } from './entities/eav';
 
 export type PartnertagSchema = Schema<PartnertagType, boolean>;
 
@@ -75,10 +80,13 @@ type MissingFieldsOfEndCustomerSchema = {
 };
 
 type MissingFieldsOfOrderItemSchema = {
+  migratedFrom?: OrderLinkSchema;
+  migratedTo?: OrderLinkSchema;
   priceRates?: SpecialPriceRateSchema;
 };
 
 type MissingFieldsOfOrdersSchema = {
+  eavs?: GraphqlApiEavSchema;
   items?: OrderItemsSchema;
 };
 
@@ -202,6 +210,7 @@ export type CountrySchema = Merge<
 >;
 
 export type CurrencySchema = Schema<CurrencyType, boolean>;
+export type GraphqlApiEavSchema = Schema<GraphqlApiEavType, boolean>;
 export type ErrorsSchema = Schema<ErrorsType, boolean>;
 export type LicenseBudgetNotificationSchema = Schema<
   LicenseBudgetNotificationType,
@@ -209,6 +218,7 @@ export type LicenseBudgetNotificationSchema = Schema<
 >;
 export type BaseCompanySchema = Schema<BaseCompanyType, boolean>;
 export type OrganizationUnitSchema = Schema<OrganizationUnitsType, boolean>;
+export type OrderLinkSchema = Schema<GraphqlApiOrderLinkType, boolean>;
 export type PageSchema = Schema<PageType, boolean>;
 export type ProgramBenefitSchema = Schema<ProgramBenefitType, boolean>;
 export type ProgramLevelOptionSchema = Schema<ProgramLevelOptionType, boolean>;
@@ -267,6 +277,7 @@ export type SelectAllResponseDataSchema = {
   [SelectDataField.END_CUSTOMER]?: EndCustomerSchema;
   [SelectDataField.LICENSE_BUDGET]?: LicenseBudgetSchema;
   [SelectDataField.ORGANIZATION_UNIT]?: OrganizationUnitSchema;
+  [SelectDataField.ORDER]?: OrdersSchema;
   [SelectDataField.PARTNER]?: PartnerSchema;
   [SelectDataField.PARTNERTAG]?: PartnertagSchema;
   [SelectDataField.PROGRAM]?: GraphqlApiProgramSchema;
