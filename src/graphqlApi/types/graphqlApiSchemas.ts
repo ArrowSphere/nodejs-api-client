@@ -45,6 +45,7 @@ import {
   GraphqlApiReportStatusType,
   GraphqlApiReportType,
 } from './entities/report';
+import { GraphqlApiEavType } from './entities/eav';
 
 export type PartnertagSchema = Schema<PartnertagType, boolean>;
 
@@ -79,6 +80,7 @@ type MissingFieldsOfOrderItemSchema = {
 };
 
 type MissingFieldsOfOrdersSchema = {
+  eavs?: GraphqlApiEavSchema;
   items?: OrderItemsSchema;
 };
 
@@ -202,6 +204,7 @@ export type CountrySchema = Merge<
 >;
 
 export type CurrencySchema = Schema<CurrencyType, boolean>;
+export type GraphqlApiEavSchema = Schema<GraphqlApiEavType, boolean>;
 export type ErrorsSchema = Schema<ErrorsType, boolean>;
 export type LicenseBudgetNotificationSchema = Schema<
   LicenseBudgetNotificationType,
@@ -267,6 +270,7 @@ export type SelectAllResponseDataSchema = {
   [SelectDataField.END_CUSTOMER]?: EndCustomerSchema;
   [SelectDataField.LICENSE_BUDGET]?: LicenseBudgetSchema;
   [SelectDataField.ORGANIZATION_UNIT]?: OrganizationUnitSchema;
+  [SelectDataField.ORDER]?: OrdersSchema;
   [SelectDataField.PARTNER]?: PartnerSchema;
   [SelectDataField.PARTNERTAG]?: PartnertagSchema;
   [SelectDataField.PROGRAM]?: GraphqlApiProgramSchema;

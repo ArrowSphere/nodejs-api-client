@@ -1209,3 +1209,171 @@ export const SELECT_ALL_CONTACTS_QUERY: SelectAllQueryType = {
 
 export const SELECT_ALL_CONTACTS_GQL =
   '{selectAll { data { contact { id companies { id name type { id type } } email firstname lastname locked organizationUnits { id name } phone username } } errors { code message } }}';
+
+export const SELECT_ONE_ORDER_QUERY: SelectOneQueryType = {
+  [Queries.SELECT_ONE]: {
+    __args: {
+      filters: {
+        groups: [
+          {
+            items: [
+              {
+                name: 'id',
+                value: ['1234'],
+              },
+            ],
+          },
+        ],
+      },
+    },
+    data: {
+      order: {
+        id: true,
+        arrowCompany: {
+          address1: true,
+          address2: true,
+          billingId: true,
+          city: true,
+          id: true,
+          internalReference: true,
+          name: true,
+          state: true,
+          zip: true,
+        },
+        arrowContact: {
+          id: true,
+          email: true,
+          firstname: true,
+          lastname: true,
+          phone: true,
+        },
+        commitmentAmountTotal: true,
+        createdAt: true,
+        eavs: {
+          id: true,
+          name: true,
+          resourceId: true,
+          type: true,
+          value: true,
+        },
+        endCustomer: {
+          address1: true,
+          address2: true,
+          billingId: true,
+          city: true,
+          country: {
+            name: true,
+          },
+          id: true,
+          internalReference: true,
+          name: true,
+          state: true,
+          zip: true,
+        },
+        endCustomerContact: {
+          id: true,
+          email: true,
+          firstname: true,
+          lastname: true,
+          phone: true,
+        },
+        endCustomerPoNumber: true,
+        fulfilledAt: true,
+        items: {
+          id: true,
+          name: true,
+          program: {
+            disclaimer: {
+              content: true,
+            },
+            id: true,
+            internalName: true,
+            name: true,
+            vendor: {
+              name: true,
+            },
+            vendorReference: true,
+            xacVendorCode: true,
+          },
+          reference: true,
+          itemData: {
+            id: true,
+            offerName: true,
+            customTermEndDate: true,
+            publicPrice: true,
+            buyPrice: true,
+            sellPrice: true,
+            currency: true,
+            arrowRateType: true,
+            partnerRateType: true,
+            billingTerm: true,
+            billingCycle: true,
+            arrowRateValue: true,
+            partnerRateValue: true,
+            partnerBuyPriceWithoutPromotion: true,
+            partnerCotermBuyPriceWithoutPromotion: true,
+            vendorRateValue: true,
+            vendorRateType: true,
+            arrowSpherePriceBandSku: true,
+            licenseAgreementType: true,
+            classification: true,
+            mainLogoUrl: true,
+            squareLogoUrl: true,
+            marketplace: true,
+            creationDate: true,
+            quantity: true,
+            orderingType: true,
+            partnerBuyPrice: true,
+            partnerCotermBuyPrice: true,
+            retailCotermBuyPrice: true,
+          },
+        },
+        partner: {
+          address1: true,
+          address2: true,
+          billingId: true,
+          city: true,
+          country: {
+            name: true,
+          },
+          id: true,
+          internalReference: true,
+          name: true,
+          state: true,
+          zip: true,
+        },
+        partnerContact: {
+          id: true,
+          email: true,
+          firstname: true,
+          lastname: true,
+          phone: true,
+        },
+        scheduledAt: true,
+        partnerPoNumber: true,
+        quote: {
+          id: true,
+        },
+        reference: true,
+        status: {
+          id: true,
+          name: true,
+        },
+        totalRecurringPrice: true,
+        updatedAt: true,
+      },
+    },
+    errors: {
+      code: true,
+      message: true,
+    },
+    pagination: {
+      currentPage: true,
+      perPage: true,
+      total: true,
+    },
+  },
+};
+
+export const SELECT_ONE_ORDER_GQL =
+  '{selectOne (filters: {groups: [{items: [{name: "id", value: ["1234"]}]}]}) { data { order { id arrowCompany { address1 address2 billingId city id internalReference name state zip } arrowContact { id email firstname lastname phone } commitmentAmountTotal createdAt eavs { id name resourceId type value } endCustomer { address1 address2 billingId city country { name } id internalReference name state zip } endCustomerContact { id email firstname lastname phone } endCustomerPoNumber fulfilledAt items { id name program { disclaimer { content } id internalName name vendor { name } vendorReference xacVendorCode } reference itemData { id offerName customTermEndDate publicPrice buyPrice sellPrice currency arrowRateType partnerRateType billingTerm billingCycle arrowRateValue partnerRateValue partnerBuyPriceWithoutPromotion partnerCotermBuyPriceWithoutPromotion vendorRateValue vendorRateType arrowSpherePriceBandSku licenseAgreementType classification mainLogoUrl squareLogoUrl marketplace creationDate quantity orderingType partnerBuyPrice partnerCotermBuyPrice retailCotermBuyPrice } } partner { address1 address2 billingId city country { name } id internalReference name state zip } partnerContact { id email firstname lastname phone } scheduledAt partnerPoNumber quote { id } reference status { id name } totalRecurringPrice updatedAt } } errors { code message } pagination { currentPage perPage total } }}';

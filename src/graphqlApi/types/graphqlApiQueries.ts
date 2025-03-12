@@ -6,6 +6,7 @@ import {
 import { ContactsType } from './entities/contact';
 import { ContinentType, CountryType } from './entities/country';
 import { LicenseBudgetType } from './entities/licenseBudget';
+import { OrdersType } from './entities/order';
 import { OrganizationUnitsType } from './entities/organizationUnit';
 import { PartnertagType } from './entities/partnertag';
 import {
@@ -160,6 +161,7 @@ export enum SelectDataField {
   END_CUSTOMER = 'endCustomer',
   LICENSE_BUDGET = 'licenseBudget',
   ORGANIZATION_UNIT = 'organizationUnit',
+  ORDER = 'order',
   PARTNER = 'partner',
   PARTNERTAG = 'partnertag',
   PROGRAM = 'program',
@@ -191,6 +193,7 @@ export type SelectAllResponseDataType = {
   [SelectDataField.END_CUSTOMER]?: EndCustomerType[];
   [SelectDataField.LICENSE_BUDGET]?: LicenseBudgetType[];
   [SelectDataField.ORGANIZATION_UNIT]?: OrganizationUnitsType[];
+  [SelectDataField.ORDER]?: OrdersType[];
   [SelectDataField.PARTNER]?: PartnerType[];
   [SelectDataField.PARTNERTAG]?: PartnertagType[];
   [SelectDataField.PROGRAM]?: GraphqlApiProgramType[];
@@ -278,6 +281,7 @@ export type SelectOneResponseDataType = {
   [SelectDataField.END_CUSTOMER]?: EndCustomerType;
   [SelectDataField.LICENSE_BUDGET]?: LicenseBudgetType;
   [SelectDataField.ORGANIZATION_UNIT]?: OrganizationUnitsType;
+  [SelectDataField.ORDER]?: OrdersType;
   [SelectDataField.PARTNER]?: PartnerType;
   [SelectDataField.PARTNERTAG]?: PartnertagType;
   [SelectDataField.PROGRAM]?: GraphqlApiProgramType;
