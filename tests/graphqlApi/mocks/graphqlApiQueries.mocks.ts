@@ -1209,3 +1209,118 @@ export const SELECT_ALL_CONTACTS_QUERY: SelectAllQueryType = {
 
 export const SELECT_ALL_CONTACTS_GQL =
   '{selectAll { data { contact { id companies { id name type { id type } } email firstname lastname locked organizationUnits { id name } phone username } } errors { code message } }}';
+
+export const SELECT_ONE_ORDER_QUERY: SelectOneQueryType = {
+  [Queries.SELECT_ONE]: {
+    __args: {
+      filters: {
+        groups: [
+          {
+            items: [
+              {
+                name: 'id',
+                value: ['1234'],
+              },
+            ],
+          },
+        ],
+      },
+    },
+    data: {
+      order: {
+        id: true,
+        partner: {
+          id: true,
+          name: true,
+          workgroup: {
+            code: true,
+          },
+        },
+        endCustomer: {
+          id: true,
+          name: true,
+          country: {
+            code2: true,
+            name: true,
+          },
+          partner: {
+            country: {
+              code2: true,
+              code3: true,
+              id: true,
+              lat: true,
+              lng: true,
+              name: true,
+              phoneCode: true,
+            },
+          },
+        },
+        items: {
+          id: true,
+          name: true,
+          program: {
+            id: true,
+            name: true,
+            internalName: true,
+            vendor: {
+              id: true,
+              name: true,
+              identifier: true,
+              licenseUrl: true,
+              logoLarge: true,
+              logoSmall: true,
+              logoStandard: true,
+              url: true,
+            },
+            vendorReference: true,
+            xacVendorCode: true,
+          },
+          reference: true,
+          itemData: {
+            id: true,
+            offerName: true,
+            customTermEndDate: true,
+            publicPrice: true,
+            buyPrice: true,
+            sellPrice: true,
+            currency: true,
+            arrowRateType: true,
+            partnerRateType: true,
+            billingTerm: true,
+            billingCycle: true,
+            arrowRateValue: true,
+            partnerRateValue: true,
+            partnerBuyPriceWithoutPromotion: true,
+            partnerCotermBuyPriceWithoutPromotion: true,
+            vendorRateValue: true,
+            vendorRateType: true,
+            arrowSpherePriceBandSku: true,
+            licenseAgreementType: true,
+            classification: true,
+            mainLogoUrl: true,
+            squareLogoUrl: true,
+            marketplace: true,
+            creationDate: true,
+            quantity: true,
+            orderingType: true,
+            partnerBuyPrice: true,
+            partnerCotermBuyPrice: true,
+            retailCotermBuyPrice: true,
+          },
+        },
+      },
+    },
+    errors: {
+      code: true,
+      message: true,
+    },
+    pagination: {
+      currentPage: true,
+      perPage: true,
+      total: true,
+    },
+  },
+};
+
+export const SELECT_ONE_ORDER_GQL =
+  '{selectOne (filters: {groups: [{items: [{name: "id", value: ["1234"]}]}]}) { data { order { id partner { id name workgroup { code } } endCustomer { id name country { code2 name } partner { country { code2 code3 id lat lng name phoneCode } } } items { id name program { id name internalName vendor { id name identifier licenseUrl logoLarge logoSmall logoStandard url } vendorReference xacVendorCode } reference itemData { id offerName customTermEndDate publicPrice buyPrice sellPrice currency arrowRateType partnerRateType billingTerm billingCycle arrowRateValue partnerRateValue partnerBuyPriceWithoutPromotion partnerCotermBuyPriceWithoutPromotion vendorRateValue vendorRateType arrowSpherePriceBandSku licenseAgreementType classification mainLogoUrl squareLogoUrl marketplace creationDate quantity orderingType partnerBuyPrice partnerCotermBuyPrice retailCotermBuyPrice } } } } errors { code message } pagination { currentPage perPage total } }}';
