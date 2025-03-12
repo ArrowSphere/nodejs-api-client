@@ -2,10 +2,10 @@ import axios, {
   AxiosInstance,
   AxiosResponse,
   InternalAxiosRequestConfig,
-  RawAxiosRequestHeaders,
+  // RawAxiosRequestHeaders,
 } from 'axios';
-import { cloneDeep } from 'lodash';
-import { PostPartnerPayload } from './partner';
+// import { PostPartnerPayload } from './partner';
+import cloneDeep from 'lodash/cloneDeep';
 
 export type AxiosSingletonConfiguration = {
   isLogging?: boolean;
@@ -85,15 +85,15 @@ export class AxiosSingleton {
   ): InternalAxiosRequestConfig {
     const tempRequest: InternalAxiosRequestConfig = cloneDeep(request);
 
-    if (tempRequest.headers?.apiKey) {
-      const apiKey = tempRequest.headers?.apiKey as string;
-      (tempRequest.headers as RawAxiosRequestHeaders).apiKey =
-        '****************************' + apiKey.substring(apiKey.length - 4);
-    }
-
-    if (tempRequest.data?.user?.password) {
-      (tempRequest.data as PostPartnerPayload).user.password = '***********';
-    }
+    // if (tempRequest.headers?.apiKey) {
+    //   const apiKey = tempRequest.headers?.apiKey as string;
+    //   (tempRequest.headers as RawAxiosRequestHeaders).apiKey =
+    //     '****************************' + apiKey.substring(apiKey.length - 4);
+    // }
+    //
+    // if (tempRequest.data?.user?.password) {
+    //   (tempRequest.data as PostPartnerPayload).user.password = '***********';
+    // }
 
     return tempRequest;
   }
@@ -104,12 +104,12 @@ export class AxiosSingleton {
   private static cleanResponseLog(response: AxiosResponse): AxiosResponse {
     const tempResponse: AxiosResponse = cloneDeep(response);
 
-    if (tempResponse.config.headers?.apiKey) {
-      const apiKey = tempResponse.config.headers?.apiKey as string;
-      (tempResponse.config.headers as RawAxiosRequestHeaders).apiKey =
-        '****************************' + apiKey.substring(apiKey.length - 4);
-    }
-    delete tempResponse.request;
+    // if (tempResponse.config.headers?.apiKey) {
+    //   const apiKey = tempResponse.config.headers?.apiKey as string;
+    //   (tempResponse.config.headers as RawAxiosRequestHeaders).apiKey =
+    //     '****************************' + apiKey.substring(apiKey.length - 4);
+    // }
+    // delete tempResponse.request;
 
     return tempResponse;
   }
