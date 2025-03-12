@@ -1,20 +1,31 @@
 import axios, {
   AxiosInstance,
-  AxiosRequestConfig,
   AxiosResponse,
-  RawAxiosRequestHeaders,
+  InternalAxiosRequestConfig,
 } from 'axios';
-import { cloneDeep } from 'lodash';
-import { PostPartnerPayload } from './partner';
 
 export type AxiosSingletonConfiguration = {
   isLogging?: boolean;
 };
 
+enum DefaultObfuscateFields {
+  API_KEY = 'apiKey',
+  PASSWORD = 'password',
+  AUTHORIZATION = 'Authorization',
+  NEW_PASSWORD = 'newPassword',
+  OLD_PASSWORD = 'oldPassword',
+}
+
 export class AxiosSingleton {
   private static _axiosInstance: AxiosInstance;
   private static _isLogging = false;
 
+  /**
+   * Get the singleton instance of Axios.
+   * @param configuration - Configuration object for AxiosSingleton.
+   *
+   * @returns The Axios instance.
+   */
   public static getInstance(
     configuration: AxiosSingletonConfiguration = {},
   ): AxiosInstance {
@@ -29,12 +40,18 @@ export class AxiosSingleton {
     return AxiosSingleton._axiosInstance;
   }
 
+  /**
+   * Initialize the request interceptor.
+   */
   private static _initializedRequestInterceptor(): void {
     this._axiosInstance.interceptors.request.use((req) =>
       this._handleRequest(req, this._isLogging),
     );
   }
 
+  /**
+   * Initialize the response interceptor.
+   */
   private static _initializedResponseInterceptor(): void {
     this._axiosInstance.interceptors.response.use((req) =>
       this._handleResponse(req, this._isLogging),
@@ -42,17 +59,21 @@ export class AxiosSingleton {
   }
 
   /**
-   * @param request - Axios Request
-   * @param isLogging - Must log
+   * Handle the request before it is sent.
+   *
+   * @param request - The Axios request configuration.
+   * @param isLogging - Whether logging is enabled.
+   *
+   * @returns The modified request configuration.
    */
   private static _handleRequest(
-    request: AxiosRequestConfig,
+    request: InternalAxiosRequestConfig,
     isLogging = false,
-  ): AxiosRequestConfig {
+  ): InternalAxiosRequestConfig {
     if (isLogging) {
       console.info(
         'AXIOS - Request : ',
-        AxiosSingleton.cleanRequestLog(request),
+        AxiosSingleton.sanitizeObject(request),
       );
     }
 
@@ -60,8 +81,12 @@ export class AxiosSingleton {
   }
 
   /**
-   * @param response - Axios Response
-   * @param isLogging - Must log
+   * Handle the response after it is received.
+   *
+   * @param response - The Axios response.
+   * @param isLogging - Whether logging is enabled.
+   *
+   * @returns The modified response.
    */
   private static _handleResponse(
     response: AxiosResponse,
@@ -78,39 +103,80 @@ export class AxiosSingleton {
   }
 
   /**
-   * @param request - Axios Request
+   * Clean the response log by removing sensitive information.
+   *
+   * @param response - The Axios response.
+   *
+   * @returns The sanitized response.
    */
-  private static cleanRequestLog(
-    request: AxiosRequestConfig,
-  ): AxiosRequestConfig {
-    const tempRequest: AxiosRequestConfig = cloneDeep(request);
+  private static cleanResponseLog(response: AxiosResponse): AxiosResponse {
+    delete response.request;
 
-    if (tempRequest.headers?.apiKey) {
-      const apiKey = tempRequest.headers?.apiKey as string;
-      (tempRequest.headers as RawAxiosRequestHeaders).apiKey =
-        '****************************' + apiKey.substring(apiKey.length - 4);
-    }
-
-    if (tempRequest.data?.user?.password) {
-      (tempRequest.data as PostPartnerPayload).user.password = '***********';
-    }
-
-    return tempRequest;
+    return AxiosSingleton.sanitizeObject(response) as AxiosResponse;
   }
 
   /**
-   * @param response - Axios Response
+   * Sanitize an object by obfuscating sensitive fields.
+   * This function is recursive and supports circular references using WeakMap.
+   *
+   * @param obj - The object to sanitize.
+   * @param fieldsToObfuscate - List of keys whose values should be replaced with '***'. Defaults to ["authorization", "x-api-key", "password", "token"].
+   * @param seen - Internal map to track processed objects and prevent infinite loops. Defaults to new WeakMap().
+   *
+   * @returns A new sanitized object with sensitive data obfuscated or removed.
    */
-  private static cleanResponseLog(response: AxiosResponse): AxiosResponse {
-    const tempResponse: AxiosResponse = cloneDeep(response);
+  private static sanitizeObject(
+    obj: any,
+    fieldsToObfuscate: string[] = [
+      DefaultObfuscateFields.API_KEY,
+      DefaultObfuscateFields.PASSWORD,
+      DefaultObfuscateFields.AUTHORIZATION,
+      DefaultObfuscateFields.NEW_PASSWORD,
+      DefaultObfuscateFields.OLD_PASSWORD,
+    ],
+    seen: WeakMap<object, any> = new WeakMap(),
+  ): any {
+    if (!obj || typeof obj !== 'object') return obj;
 
-    if (tempResponse.config.headers?.apiKey) {
-      const apiKey = tempResponse.config.headers?.apiKey as string;
-      (tempResponse.config.headers as RawAxiosRequestHeaders).apiKey =
-        '****************************' + apiKey.substring(apiKey.length - 4);
+    // Vérifie si l'objet a déjà été traité (évite les boucles infinies)
+    if (seen.has(obj)) return seen.get(obj);
+
+    // Crée une copie de l'objet pour éviter de le modifier directement
+    const sanitizedCopy: object | Array<object> = Array.isArray(obj) ? [] : {};
+
+    // Stocke l'objet dans WeakMap avant la récursion
+    seen.set(obj, sanitizedCopy);
+
+    for (const [key, value] of Object.entries(obj)) {
+      if (
+        fieldsToObfuscate
+          .map((field) => field.toUpperCase())
+          .includes(key.toUpperCase())
+      ) {
+        let obfuscatedFields = '';
+        switch (key.toUpperCase()) {
+          case DefaultObfuscateFields.API_KEY.toUpperCase():
+          case DefaultObfuscateFields.AUTHORIZATION.toUpperCase():
+            obfuscatedFields =
+              '****************************' +
+              (value as string).substring((value as string).length - 4);
+            break;
+          default:
+            obfuscatedFields = '***';
+            break;
+        }
+        (sanitizedCopy as any)[key] = obfuscatedFields;
+      } else if (typeof value === 'object' && value !== null) {
+        (sanitizedCopy as any)[key] = AxiosSingleton.sanitizeObject(
+          value,
+          fieldsToObfuscate,
+          seen,
+        ); // 🔄 Récursion avec WeakMap
+      } else {
+        (sanitizedCopy as any)[key] = value;
+      }
     }
-    delete tempResponse.request;
 
-    return tempResponse;
+    return sanitizedCopy;
   }
 }

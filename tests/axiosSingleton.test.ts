@@ -1,65 +1,23 @@
 import { expect } from 'chai';
-import { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { AxiosHeaders, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import { AxiosSingleton } from '../src';
+import sinon from 'sinon';
 
-const REQUEST: AxiosRequestConfig = {
+const REQUEST: InternalAxiosRequestConfig = {
   url: 'testUrl',
   method: 'GET',
-  headers: {
+  headers: new AxiosHeaders({
     test: 'key',
     apiKey: 'myTestRequestAPIKEY',
-  },
-};
-
-const REQUEST_RESULT: AxiosRequestConfig = {
-  url: 'testUrl',
-  method: 'GET',
-  headers: {
-    test: 'key',
-    apiKey: '****************************IKEY',
-  },
-};
-
-const REQUEST_WITHOUT_HEADERS: AxiosRequestConfig = {
-  url: 'testUrl',
-  method: 'GET',
-};
-
-const REQUEST_WITHOUT_USER: AxiosRequestConfig = {
-  url: 'testUrl',
-  method: 'GET',
+  }),
   data: {
-    other: 'other',
-  },
-};
-
-const REQUEST_WITH_USER: AxiosRequestConfig = {
-  url: 'testUrl',
-  method: 'GET',
-  data: {
-    user: { other: 'other' },
-  },
-};
-
-const REQUEST_WITH_USER_PASSWORD: AxiosRequestConfig = {
-  url: 'testUrl',
-  method: 'GET',
-  data: {
-    user: { password: 'pass' },
-  },
-};
-
-const CLEAN_REQUEST_WITH_USER_PASSWORD: AxiosRequestConfig = {
-  url: 'testUrl',
-  method: 'GET',
-  data: {
-    user: { password: '***********' },
+    password: 'myPassword',
   },
 };
 
 const RESPONSE: AxiosResponse = {
   data: {},
-  config: REQUEST,
+  config: REQUEST as InternalAxiosRequestConfig,
   status: 200,
   statusText: 'GET',
   headers: {
@@ -67,94 +25,35 @@ const RESPONSE: AxiosResponse = {
   },
   request: {
     test: 'test',
-  },
-};
-
-const RESPONSE_RESULT: AxiosResponse = {
-  data: {},
-  config: REQUEST_RESULT,
-  status: 200,
-  statusText: 'GET',
-  headers: {
-    test: 'key',
-  },
-};
-
-const RESPONSE_WITHOUT_APIKEY: AxiosResponse = {
-  data: {},
-  config: REQUEST_RESULT,
-  status: 200,
-  statusText: 'GET',
-  headers: {
-    test: 'key',
-  },
-  request: {
-    test: 'test',
-  },
-};
-
-const RESPONSE_RESULT_WITHOUT_APIKEY: AxiosResponse = {
-  data: {},
-  config: REQUEST_RESULT,
-  status: 200,
-  statusText: 'GET',
-  headers: {
-    test: 'key',
-  },
-};
-
-const RESPONSE_WITHOUT_HEADERS_AND_REQUEST: AxiosResponse = {
-  data: {},
-  config: REQUEST_WITHOUT_HEADERS,
-  status: 200,
-  statusText: 'GET',
-  headers: {
-    test: 'key',
   },
 };
 
 describe('axiosSingleton', function () {
-  describe('cleanRequestLog', function () {
+  describe('_handleRequest', function () {
     it('should be call', function () {
-      const response = AxiosSingleton['cleanRequestLog'](REQUEST);
-      console.log(response);
-
-      expect(response).to.deep.equals(REQUEST_RESULT);
+      const spy = sinon.spy(console, 'info');
+      AxiosSingleton['_handleRequest'](REQUEST, true);
+      expect(spy.calledOnce).to.be.true;
     });
 
-    it('should be call without apiKey', function () {
-      const response = AxiosSingleton['cleanRequestLog'](REQUEST_RESULT);
-      console.log(response);
+    it('should not be call', function () {
+      const spy = sinon.spy(console, 'info');
+      AxiosSingleton['_handleRequest'](REQUEST);
+      expect(spy.calledOnce).to.be.false;
+    });
+  });
 
-      expect(response).to.deep.equals(REQUEST_RESULT);
+  describe('_handleResponse', function () {
+    it('should be call', function () {
+      const spy = sinon.spy(console, 'info');
+      AxiosSingleton['_handleResponse'](RESPONSE, true);
+      expect(spy.calledOnce).to.be.true;
     });
 
-    it('should be call without header', function () {
-      const response = AxiosSingleton['cleanRequestLog'](
-        REQUEST_WITHOUT_HEADERS,
-      );
-
-      expect(response).to.deep.equals(REQUEST_WITHOUT_HEADERS);
-    });
-
-    it('should be call without user', function () {
-      const response = AxiosSingleton['cleanRequestLog'](REQUEST_WITHOUT_USER);
-
-      expect(response).to.deep.equals(REQUEST_WITHOUT_USER);
-    });
-
-    it('should be call with user', function () {
-      const response = AxiosSingleton['cleanRequestLog'](REQUEST_WITH_USER);
-
-      expect(response).to.deep.equals(REQUEST_WITH_USER);
-    });
-
-    it('should be call with user password', function () {
-      const response = AxiosSingleton['cleanRequestLog'](
-        REQUEST_WITH_USER_PASSWORD,
-      );
-
-      expect(response).to.deep.equals(CLEAN_REQUEST_WITH_USER_PASSWORD);
+    it('should not be call', function () {
+      const spy = sinon.spy(console, 'info');
+      AxiosSingleton['_handleResponse'](RESPONSE);
+      expect(spy.calledOnce).to.be.false;
     });
   });
 
@@ -162,23 +61,36 @@ describe('axiosSingleton', function () {
     it('should be call', function () {
       const response = AxiosSingleton['cleanResponseLog'](RESPONSE);
 
-      expect(response).to.deep.equals(RESPONSE_RESULT);
+      expect(response).to.not.have.property('request');
+      expect(response.config.headers.apiKey).to.equal(
+        '****************************IKEY',
+      );
+      expect(response.config.data.password).to.equal('***');
+    });
+  });
+
+  describe('sanitizeObject', () => {
+    it('should mask sensitive fields in a simple object', () => {
+      const sampleObj = { apiKey: '1234567890abcdef', other: 'value' };
+      const sanitizedObj = AxiosSingleton['sanitizeObject'](sampleObj);
+
+      expect(sanitizedObj).to.have.property(
+        'apiKey',
+        '****************************cdef',
+      );
+      expect(sanitizedObj).to.have.property('other', 'value');
     });
 
-    it('should be call without apiKey', function () {
-      const response = AxiosSingleton['cleanResponseLog'](
-        RESPONSE_WITHOUT_APIKEY,
+    it('should process recursively and handle circular references', () => {
+      const sampleObj: any = { apiKey: 'secretkey', nested: {} };
+      sampleObj.nested.self = sampleObj;
+      const sanitizedObj = AxiosSingleton['sanitizeObject'](sampleObj);
+
+      expect(sanitizedObj).to.have.property(
+        'apiKey',
+        '****************************tkey',
       );
-
-      expect(response).to.deep.equals(RESPONSE_RESULT_WITHOUT_APIKEY);
-    });
-
-    it('should be call without header', function () {
-      const response = AxiosSingleton['cleanResponseLog'](
-        RESPONSE_WITHOUT_HEADERS_AND_REQUEST,
-      );
-
-      expect(response).to.deep.equals(RESPONSE_WITHOUT_HEADERS_AND_REQUEST);
+      expect(sanitizedObj.nested).to.be.an('object');
     });
   });
 });
