@@ -5,7 +5,7 @@ export type ContactsType = {
   id?: number;
   active?: boolean;
   communicationEmail?: string;
-  companies?: EndCustomerType[];
+  company?: EndCustomerType;
   effectiveDate?: string;
   email?: string;
   erpId?: string;

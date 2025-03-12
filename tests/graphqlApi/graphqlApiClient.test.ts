@@ -961,16 +961,14 @@ describe('GraphqlApiClient', () => {
             [SelectDataField.CONTACT]: [
               {
                 id: 1,
-                companies: [
-                  {
-                    id: 123,
-                    name: 'The company 123',
-                    type: {
-                      id: 3,
-                      type: 'UKW',
-                    },
+                company: {
+                  id: 123,
+                  name: 'The company 123',
+                  type: {
+                    id: 3,
+                    type: 'UKW',
                   },
-                ],
+                },
                 email: 'user1@email.com',
                 firstname: 'Firstname 1',
                 lastname: 'lastname: 1',

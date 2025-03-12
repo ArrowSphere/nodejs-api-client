@@ -83,7 +83,6 @@ type MissingFieldsOfOrdersSchema = {
 };
 
 type MissingFieldsOfContactSchema = {
-  companies?: BaseCompanySchema;
   organizationUnits?: OrganizationUnitSchema;
 };
 
