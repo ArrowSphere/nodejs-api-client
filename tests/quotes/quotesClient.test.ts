@@ -5,7 +5,7 @@ import {
   PublicApiClient,
   PublishQuoteRequestType,
 } from '../../src';
-import { Axios, AxiosResponse } from 'axios';
+import { Axios, AxiosHeaders, AxiosResponse } from 'axios';
 import sinon from 'sinon';
 import nock from 'nock';
 
@@ -36,7 +36,9 @@ describe('QuotesClient', () => {
         },
         statusText: 'success',
         headers: {},
-        config: {},
+        config: {
+          headers: new AxiosHeaders(),
+        },
       };
 
       axiosClient.request.resolves(expectedResult);
@@ -307,7 +309,9 @@ describe('QuotesClient', () => {
         },
         statusText: 'success',
         headers: {},
-        config: {},
+        config: {
+          headers: new AxiosHeaders(),
+        },
       };
 
       axiosClient.request.resolves(expectedResult);
