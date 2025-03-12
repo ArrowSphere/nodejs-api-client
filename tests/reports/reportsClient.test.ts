@@ -6,7 +6,7 @@ import {
   PAYLOAD_LIST,
   PAYLOAD_VALIDATE,
 } from './mocks/reports.mocks';
-import { Axios, AxiosResponse } from 'axios';
+import { Axios, AxiosHeaders, AxiosResponse } from 'axios';
 import sinon from 'sinon';
 
 export const REPORT_MOCK_URL = 'https://reports.localhost/index.php/api';
@@ -36,7 +36,9 @@ describe('ReportsClient', () => {
         },
         statusText: 'success',
         headers: {},
-        config: {},
+        config: {
+          headers: new AxiosHeaders(),
+        },
       };
 
       axiosClient.request.resolves(expectedResult);

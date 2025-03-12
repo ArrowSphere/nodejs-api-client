@@ -6,7 +6,7 @@ import {
   UpdateScopeUserPayloadFields,
 } from '../../src';
 import { expect } from 'chai';
-import { Axios, AxiosResponse } from 'axios';
+import { Axios, AxiosHeaders, AxiosResponse } from 'axios';
 import { constants } from 'http2';
 import sinon from 'sinon';
 import nock from 'nock';
@@ -46,7 +46,9 @@ describe('PartnerClient', () => {
         },
         statusText: 'success',
         headers: {},
-        config: {},
+        config: {
+          headers: new AxiosHeaders(),
+        },
       };
 
       axiosClient.request.resolves(expectedResult);

@@ -1,7 +1,7 @@
 import axios, {
   AxiosInstance,
-  AxiosRequestConfig,
   AxiosResponse,
+  InternalAxiosRequestConfig,
   RawAxiosRequestHeaders,
 } from 'axios';
 import { cloneDeep } from 'lodash';
@@ -46,9 +46,9 @@ export class AxiosSingleton {
    * @param isLogging - Must log
    */
   private static _handleRequest(
-    request: AxiosRequestConfig,
+    request: InternalAxiosRequestConfig,
     isLogging = false,
-  ): AxiosRequestConfig {
+  ): InternalAxiosRequestConfig {
     if (isLogging) {
       console.info(
         'AXIOS - Request : ',
@@ -81,9 +81,9 @@ export class AxiosSingleton {
    * @param request - Axios Request
    */
   private static cleanRequestLog(
-    request: AxiosRequestConfig,
-  ): AxiosRequestConfig {
-    const tempRequest: AxiosRequestConfig = cloneDeep(request);
+    request: InternalAxiosRequestConfig,
+  ): InternalAxiosRequestConfig {
+    const tempRequest: InternalAxiosRequestConfig = cloneDeep(request);
 
     if (tempRequest.headers?.apiKey) {
       const apiKey = tempRequest.headers?.apiKey as string;

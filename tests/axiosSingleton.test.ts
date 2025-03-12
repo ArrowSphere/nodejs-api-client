@@ -1,65 +1,70 @@
 import { expect } from 'chai';
-import { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { AxiosHeaders, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import { AxiosSingleton } from '../src';
 
-const REQUEST: AxiosRequestConfig = {
+const REQUEST: InternalAxiosRequestConfig = {
   url: 'testUrl',
   method: 'GET',
-  headers: {
+  headers: new AxiosHeaders({
     test: 'key',
     apiKey: 'myTestRequestAPIKEY',
-  },
+  }),
 };
 
-const REQUEST_RESULT: AxiosRequestConfig = {
+const REQUEST_RESULT: InternalAxiosRequestConfig = {
   url: 'testUrl',
   method: 'GET',
-  headers: {
+  headers: new AxiosHeaders({
     test: 'key',
     apiKey: '****************************IKEY',
-  },
+  }),
 };
 
-const REQUEST_WITHOUT_HEADERS: AxiosRequestConfig = {
+const REQUEST_WITHOUT_HEADERS: InternalAxiosRequestConfig = {
   url: 'testUrl',
   method: 'GET',
+  headers: new AxiosHeaders(),
 };
 
-const REQUEST_WITHOUT_USER: AxiosRequestConfig = {
+const REQUEST_WITHOUT_USER: InternalAxiosRequestConfig = {
   url: 'testUrl',
   method: 'GET',
   data: {
     other: 'other',
   },
+  headers: new AxiosHeaders(),
 };
 
-const REQUEST_WITH_USER: AxiosRequestConfig = {
+const REQUEST_WITH_USER: InternalAxiosRequestConfig = {
   url: 'testUrl',
   method: 'GET',
   data: {
     user: { other: 'other' },
   },
+  headers: new AxiosHeaders(),
 };
 
-const REQUEST_WITH_USER_PASSWORD: AxiosRequestConfig = {
+const REQUEST_WITH_USER_PASSWORD: InternalAxiosRequestConfig = {
   url: 'testUrl',
   method: 'GET',
   data: {
     user: { password: 'pass' },
   },
+  headers: new AxiosHeaders(),
 };
 
-const CLEAN_REQUEST_WITH_USER_PASSWORD: AxiosRequestConfig = {
+const CLEAN_REQUEST_WITH_USER_PASSWORD: InternalAxiosRequestConfig = {
   url: 'testUrl',
   method: 'GET',
   data: {
     user: { password: '***********' },
   },
+  headers: new AxiosHeaders(),
 };
 
 const RESPONSE: AxiosResponse = {
   data: {},
-  config: REQUEST,
+  config: REQUEST as InternalAxiosRequestConfig,
   status: 200,
   statusText: 'GET',
   headers: {
