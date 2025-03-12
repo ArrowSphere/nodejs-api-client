@@ -1,4 +1,11 @@
-import { GetResult, Parameters, PublicApiClient } from '../../src';
+import {
+  GetResult,
+  Parameters,
+  PublicApiClient,
+  StaffTypeEnum,
+  UpdateAdditionalInformationOrderInputType,
+  UpdateContributorOrderInputType,
+} from '../../src';
 import nock from 'nock';
 import { expect } from 'chai';
 import {
@@ -18,6 +25,23 @@ export const ORDERS_MOCK_URL = 'https://orders.localhost/index.php/api';
 export const ORDERS_CREATE = '/orders';
 export const GET_ORDERS_URL = new RegExp('/orders.*');
 export const UPDATE_ORDERS_URL = new RegExp('/orders.*');
+export const ARCHIVE_ORDERS_URL = new RegExp('/orders/XSPO[0-9]+/archive');
+export const CANCEL_ORDERS_URL = new RegExp('/orders/XSPO[0-9]+/cancel');
+export const REJECT_GRADED_ORDERS_URL = new RegExp(
+  '/orders/XSPO[0-9]+/rejectGraded',
+);
+export const RESUBMIT_GRADED_ORDERS_URL = new RegExp(
+  '/orders/XSPO[0-9]+/resubmit',
+);
+export const VALIDATE_GRADED_ORDERS_URL = new RegExp(
+  '/orders/XSPO[0-9]+/validate',
+);
+export const CONTRIBUTOR_GRADED_ORDERS_URL = new RegExp(
+  '/orders/XSPO[0-9]+/contributor',
+);
+export const ADDITIONALINFORMATION_GRADED_ORDERS_URL = new RegExp(
+  '/orders/XSPO[0-9]+/additionalInformation',
+);
 
 describe('OrdersClient', () => {
   const client = new PublicApiClient()
@@ -161,6 +185,126 @@ describe('OrdersClient', () => {
       );
       expect(result).to.be.instanceof(GetResult);
       expect(result.toJSON()).to.eql(PAYLOAD_UPDATE_ORDER_RESULT);
+    });
+  });
+
+  describe('archiveOrder', async () => {
+    const orderClient = new PublicApiClient()
+      .getOrdersClient()
+      .setUrl(ORDERS_MOCK_URL);
+
+    it('Should archive order', async () => {
+      nock(ORDERS_MOCK_URL).patch(ARCHIVE_ORDERS_URL).reply(200);
+
+      await orderClient.archiveOrder('XSPO123');
+
+      expect(nock.isDone()).to.be.true;
+    });
+  });
+
+  describe('cancelOrder', async () => {
+    const orderClient = new PublicApiClient()
+      .getOrdersClient()
+      .setUrl(ORDERS_MOCK_URL);
+
+    it('Should archive order', async () => {
+      nock(ORDERS_MOCK_URL).patch(CANCEL_ORDERS_URL).reply(200);
+
+      await orderClient.cancelOrder('XSPO123');
+
+      expect(nock.isDone()).to.be.true;
+    });
+  });
+
+  describe('rejectGradedOrder', async () => {
+    const orderClient = new PublicApiClient()
+      .getOrdersClient()
+      .setUrl(ORDERS_MOCK_URL);
+
+    it('Should archive order', async () => {
+      nock(ORDERS_MOCK_URL).patch(REJECT_GRADED_ORDERS_URL).reply(200);
+
+      await orderClient.rejectGradedOrder('XSPO123');
+
+      expect(nock.isDone()).to.be.true;
+    });
+  });
+
+  describe('resubmitOrder', async () => {
+    const orderClient = new PublicApiClient()
+      .getOrdersClient()
+      .setUrl(ORDERS_MOCK_URL);
+
+    it('Should archive order', async () => {
+      nock(ORDERS_MOCK_URL).patch(RESUBMIT_GRADED_ORDERS_URL).reply(200);
+
+      await orderClient.resubmitOrder('XSPO123');
+
+      expect(nock.isDone()).to.be.true;
+    });
+  });
+
+  describe('validateOrder', async () => {
+    const orderClient = new PublicApiClient()
+      .getOrdersClient()
+      .setUrl(ORDERS_MOCK_URL);
+
+    it('Should archive order', async () => {
+      nock(ORDERS_MOCK_URL).patch(VALIDATE_GRADED_ORDERS_URL).reply(200);
+
+      await orderClient.validateOrder('XSPO123');
+
+      expect(nock.isDone()).to.be.true;
+    });
+  });
+
+  describe('updateStaffContributorsOrder', async () => {
+    const orderClient = new PublicApiClient()
+      .getOrdersClient()
+      .setUrl(ORDERS_MOCK_URL);
+
+    it('Should archive order', async () => {
+      nock(ORDERS_MOCK_URL).patch(CONTRIBUTOR_GRADED_ORDERS_URL).reply(200);
+      const payload: UpdateContributorOrderInputType = {
+        contributor: [
+          {
+            type: StaffTypeEnum.FCST,
+            staffId: 1,
+          },
+          {
+            type: StaffTypeEnum.ISR,
+            staffId: 2,
+          },
+        ],
+      };
+
+      await orderClient.updateStaffContributorsOrder('XSPO123', payload);
+
+      expect(nock.isDone()).to.be.true;
+    });
+  });
+
+  describe('updateAdditionalInformationOrder', async () => {
+    const orderClient = new PublicApiClient()
+      .getOrdersClient()
+      .setUrl(ORDERS_MOCK_URL);
+
+    it('Should archive order', async () => {
+      nock(ORDERS_MOCK_URL)
+        .patch(ADDITIONALINFORMATION_GRADED_ORDERS_URL)
+        .reply(200);
+      const payload: UpdateAdditionalInformationOrderInputType = {
+        data: [
+          {
+            name: 'promotion_code',
+            value: 'SKW-ZEAZ',
+          },
+        ],
+      };
+
+      await orderClient.updateAdditionalInformationOrder('XSPO123', payload);
+
+      expect(nock.isDone()).to.be.true;
     });
   });
 });

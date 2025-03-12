@@ -4,8 +4,10 @@ import {
   PartnerType,
 } from './entities/company';
 import { ContactsType } from './entities/contact';
+import { GraphqlApiStaffType } from './entities/contributor';
 import { ContinentType, CountryType } from './entities/country';
 import { LicenseBudgetType } from './entities/licenseBudget';
+import { GraphqlApiOrderHistoryType, OrdersType } from './entities/order';
 import { OrganizationUnitsType } from './entities/organizationUnit';
 import { PartnertagType } from './entities/partnertag';
 import {
@@ -160,6 +162,8 @@ export enum SelectDataField {
   END_CUSTOMER = 'endCustomer',
   LICENSE_BUDGET = 'licenseBudget',
   ORGANIZATION_UNIT = 'organizationUnit',
+  ORDER = 'order',
+  ORDER_HISTORY = 'orderHistory',
   PARTNER = 'partner',
   PARTNERTAG = 'partnertag',
   PROGRAM = 'program',
@@ -168,6 +172,7 @@ export enum SelectDataField {
   REPORT = 'report',
   REPORT_STATUS = 'reportStatus',
   SPECIAL_PRICE_RATE = 'specialPriceRate',
+  STAFF = 'staff',
   SUBSCRIBED_PROGRAM = 'subscribedProgram',
   SUBSCRIPTION = 'subscription',
   USER = 'user',
@@ -191,6 +196,8 @@ export type SelectAllResponseDataType = {
   [SelectDataField.END_CUSTOMER]?: EndCustomerType[];
   [SelectDataField.LICENSE_BUDGET]?: LicenseBudgetType[];
   [SelectDataField.ORGANIZATION_UNIT]?: OrganizationUnitsType[];
+  [SelectDataField.ORDER]?: OrdersType[];
+  [SelectDataField.ORDER_HISTORY]?: GraphqlApiOrderHistoryType[];
   [SelectDataField.PARTNER]?: PartnerType[];
   [SelectDataField.PARTNERTAG]?: PartnertagType[];
   [SelectDataField.PROGRAM]?: GraphqlApiProgramType[];
@@ -198,6 +205,7 @@ export type SelectAllResponseDataType = {
   [SelectDataField.QUOTE]?: QuoteType[];
   [SelectDataField.REPORT]?: GraphqlApiReportType[];
   [SelectDataField.REPORT_STATUS]?: GraphqlApiReportStatusType[];
+  [SelectDataField.STAFF]?: GraphqlApiStaffType[];
   [SelectDataField.SUBSCRIBED_PROGRAM]?: SubscribedProgramType[];
   [SelectDataField.SUBSCRIPTION]?: SubscriptionType[];
   [SelectDataField.USER]?: UserType[];
@@ -278,6 +286,8 @@ export type SelectOneResponseDataType = {
   [SelectDataField.END_CUSTOMER]?: EndCustomerType;
   [SelectDataField.LICENSE_BUDGET]?: LicenseBudgetType;
   [SelectDataField.ORGANIZATION_UNIT]?: OrganizationUnitsType;
+  [SelectDataField.ORDER]?: OrdersType;
+  [SelectDataField.ORDER_HISTORY]?: GraphqlApiOrderHistoryType;
   [SelectDataField.PARTNER]?: PartnerType;
   [SelectDataField.PARTNERTAG]?: PartnertagType;
   [SelectDataField.PROGRAM]?: GraphqlApiProgramType;
@@ -285,6 +295,7 @@ export type SelectOneResponseDataType = {
   [SelectDataField.QUOTE]?: QuoteType;
   [SelectDataField.REPORT]?: GraphqlApiReportType;
   [SelectDataField.REPORT_STATUS]?: GraphqlApiReportStatusType;
+  [SelectDataField.STAFF]?: GraphqlApiStaffType;
   [SelectDataField.SUBSCRIBED_PROGRAM]?: SubscribedProgramType;
   [SelectDataField.SUBSCRIPTION]?: SubscriptionType;
   [SelectDataField.USER]?: UserType;

@@ -1012,4 +1012,146 @@ describe('GraphqlApiClient', () => {
       expect(result).to.deep.equals(expectedResult);
     });
   });
+  describe('selectOne order with details', () => {
+    it('makes a graphql POST request on the specified URL to selectOne order', async () => {
+      const expectedResult: SelectOneResultType = {
+        [Queries.SELECT_ONE]: {
+          [SelectableField.DATA]: {
+            [SelectDataField.ORDER]: {
+              id: 3559984,
+              items: [
+                {
+                  name: 'Microsoft 365 Business Standard',
+                  reference: 'CFQ7TTC0LDPB:0001',
+                  program: {
+                    name: 'Microsoft Cloud Solution Provider (CSP)',
+                    internalName: 'MSCSP',
+                    vendor: {
+                      name: 'Microsoft',
+                    },
+                    vendorReference: 'Microsoft',
+                    xacVendorCode: 'Microsoft',
+                    id: 54,
+                  },
+                  itemData: {
+                    offerName: 'Microsoft 365 Business Standard',
+                    classification: 'SaaS',
+                    publicPrice: 11.7,
+                    partnerBuyPriceWithoutPromotion: 10.88,
+                    arrowSpherePriceBandSku:
+                      'MSCSP_CFQ7TTC0LDPB-0001_FR_EUR_1_720_8640',
+                    marketplace: 'FR',
+                    licenseAgreementType: 'Corporate',
+                    billingCycle: 720,
+                    billingTerm: 8640,
+                    orderingType: 'RECURRING',
+                    mainLogoUrl:
+                      'https://websource.myportal.cloud/images/icon/Microsoft.png',
+                    squareLogoUrl:
+                      'https://websource.myportal.cloud/images/icon/Microsoft.png',
+                    arrowRateType: 'discount',
+                    vendorRateType: undefined,
+                    partnerRateType: 'discount',
+                    arrowRateValue: 0,
+                    vendorRateValue: undefined,
+                    partnerRateValue: 0,
+                    partnerBuyPrice: 10.88,
+                    currency: 'EUR',
+                    creationDate: '2025-03-11',
+                    customTermEndDate: undefined,
+                    endCustomerBuyPrice: 11.7,
+                    quantity: 1,
+                  },
+                  id: 6734369,
+                },
+              ],
+              partner: {
+                id: 17727,
+                name: 'The Company',
+                workgroup: {
+                  code: 'FR',
+                },
+              },
+              endCustomer: {
+                id: 176402,
+              },
+            },
+          },
+          [SelectableField.ERRORS]: undefined,
+          [SelectableField.PAGINATION]: {
+            currentPage: 1,
+            next: 2,
+            perPage: 100,
+            total: 30,
+            totalPage: 1,
+            totalPages: 8,
+          },
+        },
+      };
+
+      graphQLClient.request.resolves(expectedResult);
+
+      const result: SelectOneResultType | null = await client.selectOne(
+        GraphqlApiQueryMock.SELECT_ONE_ORDER_QUERY,
+      );
+
+      sinon.assert.calledWithExactly(
+        graphQLClient.request,
+        sinon.match(GraphqlApiQueryMock.SELECT_ONE_ORDER_GQL),
+      );
+
+      expect(result).to.deep.equals(expectedResult);
+    });
+  });
+  describe('selectAll staff by role id', () => {
+    it('makes a graphql POST request on the specified URL to selectAll staff', async () => {
+      const expectedResult: SelectAllResultType = {
+        [Queries.SELECT_ALL]: {
+          [SelectableField.DATA]: {
+            [SelectDataField.STAFF]: [
+              {
+                id: 1,
+                internalId: 'A123',
+                firstname: 'Firstname 1',
+                lastname: 'lastname: 1',
+                locked: false,
+                roles: [
+                  {
+                    id: 1,
+                    label: 'Arrow ECS Inside Sales Rep',
+                  },
+                ],
+                workgroup: {
+                  id: 1,
+                  code: 'FR',
+                },
+              },
+            ],
+          },
+          [SelectableField.ERRORS]: undefined,
+          [SelectableField.PAGINATION]: {
+            currentPage: 1,
+            next: 2,
+            perPage: 1000,
+            total: 30,
+            totalPage: 1,
+            totalPages: 15,
+          },
+        },
+      };
+
+      graphQLClient.request.resolves(expectedResult);
+
+      const result: SelectAllResultType | null = await client.selectAll(
+        GraphqlApiQueryMock.SELECT_ALL_STAFF_QUERY,
+      );
+
+      sinon.assert.calledWithExactly(
+        graphQLClient.request,
+        sinon.match(GraphqlApiQueryMock.SELECT_ALL_STAFF_GQL),
+      );
+
+      expect(result).to.deep.equals(expectedResult);
+    });
+  });
 });
