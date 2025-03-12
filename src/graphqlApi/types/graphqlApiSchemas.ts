@@ -52,7 +52,7 @@ type MissingFieldsOfCompanySchema = {
   contacts?: ContactsSchema;
   currency?: CurrencySchema;
   extraInformations?: CompanyExtraInformationSchema;
-  orders?: OrdersSchema;
+  //orders?: OrdersSchema;
   organizationUnits?: OrganizationUnitSchema;
   partnerTags?: PartnertagSchema;
   subscribedPrograms?: SubscribedProgramSchema;
@@ -68,7 +68,7 @@ type MissingFieldsOfArrowCompanySchema = {
 type MissingFieldsOfEndCustomerSchema = {
   extraInformations?: CompanyExtraInformationSchema;
   contacts?: ContactsSchema;
-  orders?: OrdersSchema;
+  //orders?: OrdersSchema;
   partnerTags?: PartnertagSchema;
   partner?: PartnerSchema;
   country?: CountrySchema;
@@ -80,6 +80,7 @@ type MissingFieldsOfOrderItemSchema = {
 
 type MissingFieldsOfOrdersSchema = {
   items?: OrderItemsSchema;
+  endCustomer?: EndCustomerSchema;
 };
 
 type MissingFieldsOfContactSchema = {
@@ -267,6 +268,7 @@ export type SelectAllResponseDataSchema = {
   [SelectDataField.END_CUSTOMER]?: EndCustomerSchema;
   [SelectDataField.LICENSE_BUDGET]?: LicenseBudgetSchema;
   [SelectDataField.ORGANIZATION_UNIT]?: OrganizationUnitSchema;
+  [SelectDataField.ORDER]?: OrdersSchema;
   [SelectDataField.PARTNER]?: PartnerSchema;
   [SelectDataField.PARTNERTAG]?: PartnertagSchema;
   [SelectDataField.PROGRAM]?: GraphqlApiProgramSchema;

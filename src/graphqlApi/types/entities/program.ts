@@ -11,9 +11,11 @@ export type GraphqlApiProgramType = {
   levels?: ProgramLevelType[];
   name?: string;
   subscriptionExtraFields?: SubscriptionExtraFieldType[];
+  type?: GraphqlApiProgramTypeType;
   url?: string;
   vendor?: VendorsType;
-  type?: GraphqlApiProgramTypeType;
+  vendorReference?: string;
+  xacVendorCode?: string;
 };
 
 export type GraphqlApiProgramTypeType = {
