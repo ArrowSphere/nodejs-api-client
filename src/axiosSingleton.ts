@@ -2,10 +2,7 @@ import axios, {
   AxiosInstance,
   AxiosResponse,
   InternalAxiosRequestConfig,
-  RawAxiosRequestHeaders,
 } from 'axios';
-import { cloneDeep } from 'lodash';
-import { PostPartnerPayload } from './partner';
 
 export type AxiosSingletonConfiguration = {
   isLogging?: boolean;
@@ -50,10 +47,12 @@ export class AxiosSingleton {
     isLogging = false,
   ): InternalAxiosRequestConfig {
     if (isLogging) {
-      console.info(
-        'AXIOS - Request : ',
-        AxiosSingleton.cleanRequestLog(request),
-      );
+      console.info('AXIOS - Request : ', {
+        method: request.method,
+        url: request.url,
+        data: AxiosSingleton.sanitizeObject(request.data),
+        headers: AxiosSingleton.sanitizeObject(request.headers),
+      });
     }
 
     return request;
@@ -68,49 +67,46 @@ export class AxiosSingleton {
     isLogging = false,
   ): AxiosResponse {
     if (isLogging) {
-      console.info(
-        'AXIOS - Response : ',
-        AxiosSingleton.cleanResponseLog(response),
-      );
+      console.info('AXIOS - Response : ', {
+        status: response.status,
+        headers: AxiosSingleton.sanitizeObject(response.headers),
+        data: AxiosSingleton.sanitizeObject(response.data),
+      });
     }
 
     return response;
   }
 
-  /**
-   * @param request - Axios Request
-   */
-  private static cleanRequestLog(
-    request: InternalAxiosRequestConfig,
-  ): InternalAxiosRequestConfig {
-    const tempRequest: InternalAxiosRequestConfig = cloneDeep(request);
+  private static sanitizeObject(
+    obj: any,
+    fieldsToObfuscate: string[] = ['apiKey', 'password'],
+    seen = new WeakMap(),
+  ): any {
+    if (!obj || typeof obj !== 'object') return obj;
 
-    if (tempRequest.headers?.apiKey) {
-      const apiKey = tempRequest.headers?.apiKey as string;
-      (tempRequest.headers as RawAxiosRequestHeaders).apiKey =
-        '****************************' + apiKey.substring(apiKey.length - 4);
+    // Vérifie si l'objet a déjà été traité (évite les boucles infinies)
+    if (seen.has(obj)) return seen.get(obj);
+
+    // Crée une copie de l'objet pour éviter de le modifier directement
+    const sanitizedCopy = Array.isArray(obj) ? [] : {};
+
+    // Stocke l'objet dans WeakMap avant la récursion
+    seen.set(obj, sanitizedCopy);
+
+    for (const [key, value] of Object.entries(obj)) {
+      if (fieldsToObfuscate.includes(key.toLowerCase())) {
+        (sanitizedCopy as any)[key] = '***'; // Masquage des champs sensibles
+      } else if (typeof value === 'object' && value !== null) {
+        (sanitizedCopy as any)[key] = AxiosSingleton.sanitizeObject(
+          value,
+          fieldsToObfuscate,
+          seen,
+        ); // 🔄 Récursion avec WeakMap
+      } else {
+        (sanitizedCopy as any)[key] = value;
+      }
     }
 
-    if (tempRequest.data?.user?.password) {
-      (tempRequest.data as PostPartnerPayload).user.password = '***********';
-    }
-
-    return tempRequest;
-  }
-
-  /**
-   * @param response - Axios Response
-   */
-  private static cleanResponseLog(response: AxiosResponse): AxiosResponse {
-    const tempResponse: AxiosResponse = cloneDeep(response);
-
-    if (tempResponse.config.headers?.apiKey) {
-      const apiKey = tempResponse.config.headers?.apiKey as string;
-      (tempResponse.config.headers as RawAxiosRequestHeaders).apiKey =
-        '****************************' + apiKey.substring(apiKey.length - 4);
-    }
-    delete tempResponse.request;
-
-    return tempResponse;
+    return sanitizedCopy;
   }
 }
