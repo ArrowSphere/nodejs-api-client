@@ -4,8 +4,8 @@ import axios, {
   InternalAxiosRequestConfig,
   RawAxiosRequestHeaders,
 } from 'axios';
-import { cloneDeep } from 'lodash';
 import { PostPartnerPayload } from './partner';
+import cloneDeep from 'lodash/cloneDeep';
 
 export type AxiosSingletonConfiguration = {
   isLogging?: boolean;
@@ -87,7 +87,7 @@ export class AxiosSingleton {
 
     if (tempRequest.headers?.apiKey) {
       const apiKey = tempRequest.headers?.apiKey as string;
-      (tempRequest.headers as RawAxiosRequestHeaders).apiKey =
+      tempRequest.headers.apiKey =
         '****************************' + apiKey.substring(apiKey.length - 4);
     }
 
