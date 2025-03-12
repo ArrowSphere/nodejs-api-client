@@ -4,8 +4,8 @@ import axios, {
   InternalAxiosRequestConfig,
   RawAxiosRequestHeaders,
 } from 'axios';
-import { cloneDeep } from 'lodash';
 import { PostPartnerPayload } from './partner';
+import cloneDeep from 'lodash/cloneDeep';
 
 export type AxiosSingletonConfiguration = {
   isLogging?: boolean;
@@ -84,10 +84,11 @@ export class AxiosSingleton {
     request: InternalAxiosRequestConfig,
   ): InternalAxiosRequestConfig {
     const tempRequest: InternalAxiosRequestConfig = cloneDeep(request);
+    AxiosSingleton.removeCircularReferences(tempRequest);
 
     if (tempRequest.headers?.apiKey) {
       const apiKey = tempRequest.headers?.apiKey as string;
-      (tempRequest.headers as RawAxiosRequestHeaders).apiKey =
+      tempRequest.headers.apiKey =
         '****************************' + apiKey.substring(apiKey.length - 4);
     }
 
@@ -103,6 +104,7 @@ export class AxiosSingleton {
    */
   private static cleanResponseLog(response: AxiosResponse): AxiosResponse {
     const tempResponse: AxiosResponse = cloneDeep(response);
+    AxiosSingleton.removeCircularReferences(tempResponse);
 
     if (tempResponse.config.headers?.apiKey) {
       const apiKey = tempResponse.config.headers?.apiKey as string;
@@ -112,5 +114,23 @@ export class AxiosSingleton {
     delete tempResponse.request;
 
     return tempResponse;
+  }
+
+  private static removeCircularReferences(
+    obj: any,
+    seen: WeakSet<object> = new WeakSet(),
+  ): any {
+    if (obj && typeof obj === 'object') {
+      if (seen.has(obj)) {
+        return;
+      }
+      seen.add(obj);
+      for (const key in obj) {
+        if (Object.prototype.hasOwnProperty.call(obj, key)) {
+          obj[key] = AxiosSingleton.removeCircularReferences(obj[key], seen);
+        }
+      }
+    }
+    return obj;
   }
 }
