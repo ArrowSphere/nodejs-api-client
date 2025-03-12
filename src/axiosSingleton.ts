@@ -4,7 +4,6 @@ import axios, {
   InternalAxiosRequestConfig,
   RawAxiosRequestHeaders,
 } from 'axios';
-import { cloneDeep } from 'lodash';
 import { PostPartnerPayload } from './partner';
 
 export type AxiosSingletonConfiguration = {
@@ -83,11 +82,13 @@ export class AxiosSingleton {
   private static cleanRequestLog(
     request: InternalAxiosRequestConfig,
   ): InternalAxiosRequestConfig {
-    const tempRequest: InternalAxiosRequestConfig = cloneDeep(request);
+    const tempRequest: InternalAxiosRequestConfig = JSON.parse(
+      JSON.stringify(request),
+    );
 
     if (tempRequest.headers?.apiKey) {
       const apiKey = tempRequest.headers?.apiKey as string;
-      (tempRequest.headers as RawAxiosRequestHeaders).apiKey =
+      tempRequest.headers.apiKey =
         '****************************' + apiKey.substring(apiKey.length - 4);
     }
 
@@ -102,7 +103,7 @@ export class AxiosSingleton {
    * @param response - Axios Response
    */
   private static cleanResponseLog(response: AxiosResponse): AxiosResponse {
-    const tempResponse: AxiosResponse = cloneDeep(response);
+    const tempResponse: AxiosResponse = JSON.parse(JSON.stringify(response));
 
     if (tempResponse.config.headers?.apiKey) {
       const apiKey = tempResponse.config.headers?.apiKey as string;
