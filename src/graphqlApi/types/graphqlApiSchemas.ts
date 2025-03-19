@@ -19,7 +19,12 @@ import {
 import { ContactsType } from './entities/contact';
 import { SubscriptionType } from './entities/subscription';
 import { SpecialPriceRateType } from './entities/specialPriceRate';
-import { OrderItemsType, OrdersType } from './entities/order';
+import {
+  GraphqlApiOrderHistoryType,
+  GraphqlApiOrderLinkType,
+  OrderItemsType,
+  OrdersType,
+} from './entities/order';
 import {
   GraphqlApiProgramType,
   ProgramBenefitType,
@@ -45,6 +50,11 @@ import {
   GraphqlApiReportStatusType,
   GraphqlApiReportType,
 } from './entities/report';
+import { GraphqlApiEavType } from './entities/eav';
+import {
+  GraphqlApiContributorRoleType,
+  GraphqlApiStaffType,
+} from './entities/contributor';
 
 export type PartnertagSchema = Schema<PartnertagType, boolean>;
 
@@ -75,10 +85,13 @@ type MissingFieldsOfEndCustomerSchema = {
 };
 
 type MissingFieldsOfOrderItemSchema = {
+  migratedFrom?: GraphqlApiOrderLinkSchema;
+  migratedTo?: GraphqlApiOrderLinkSchema;
   priceRates?: SpecialPriceRateSchema;
 };
 
 type MissingFieldsOfOrdersSchema = {
+  eavs?: GraphqlApiEavSchema;
   items?: OrderItemsSchema;
 };
 
@@ -203,6 +216,15 @@ export type CountrySchema = Merge<
 
 export type CurrencySchema = Schema<CurrencyType, boolean>;
 export type ErrorsSchema = Schema<ErrorsType, boolean>;
+export type GraphqlApiEavSchema = Schema<GraphqlApiEavType, boolean>;
+export type GraphqlApiOrderHistorySchema = Schema<
+  GraphqlApiOrderHistoryType,
+  boolean
+>;
+export type GraphqlApiOrderLinkSchema = Schema<
+  GraphqlApiOrderLinkType,
+  boolean
+>;
 export type LicenseBudgetNotificationSchema = Schema<
   LicenseBudgetNotificationType,
   boolean
@@ -246,6 +268,17 @@ export type GraphqlApiProgramSchema = Merge<
   Schema<GraphqlApiProgramType, boolean>,
   MissingFieldsOfProgramSchema
 >;
+type MissingFieldsOfStaffSchema = {
+  roles?: GraphqlApiContributorRoleSchema;
+};
+export type GraphqlApiStaffSchema = Merge<
+  Schema<GraphqlApiStaffType, boolean>,
+  MissingFieldsOfStaffSchema
+>;
+export type GraphqlApiContributorRoleSchema = Schema<
+  GraphqlApiContributorRoleType,
+  boolean
+>;
 export type ReportStatusSchema = Schema<GraphqlApiReportStatusType, boolean>;
 export type SpecialPriceRateSchema = Schema<SpecialPriceRateType, boolean>;
 export type SubscribedProgramSchema = Schema<SubscribedProgramType, boolean>;
@@ -268,6 +301,7 @@ export type SelectAllResponseDataSchema = {
   [SelectDataField.LICENSE_BUDGET]?: LicenseBudgetSchema;
   [SelectDataField.ORGANIZATION_UNIT]?: OrganizationUnitSchema;
   [SelectDataField.ORDER]?: OrdersSchema;
+  [SelectDataField.ORDER_HISTORY]?: GraphqlApiOrderHistoryType;
   [SelectDataField.PARTNER]?: PartnerSchema;
   [SelectDataField.PARTNERTAG]?: PartnertagSchema;
   [SelectDataField.PROGRAM]?: GraphqlApiProgramSchema;
@@ -275,6 +309,7 @@ export type SelectAllResponseDataSchema = {
   [SelectDataField.QUOTE]?: QuoteSchema;
   [SelectDataField.REPORT]?: ReportSchema;
   [SelectDataField.REPORT_STATUS]?: ReportStatusSchema;
+  [SelectDataField.STAFF]?: GraphqlApiStaffSchema;
   [SelectDataField.SUBSCRIBED_PROGRAM]?: SubscribedProgramSchema;
   [SelectDataField.SUBSCRIPTION]?: SubscriptionSchema;
   [SelectDataField.USER]?: UserSchema;
