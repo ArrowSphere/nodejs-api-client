@@ -4,7 +4,8 @@ import { expect } from 'chai';
 import {
   PAYLOAD_ORDERS,
   PAYLOAD_ORDERS_WITHOUT_OPTIONAL,
-  PAYLOAD_UPDATE_ORDER,
+  PAYLOAD_UPDATE_ORDER_END_CUSTOMER_PO_NUMBER,
+  PAYLOAD_UPDATE_ORDER_PO_NUMBER,
   PAYLOAD_UPDATE_ORDER_RESULT,
 } from './mocks/orders.mocks';
 import {
@@ -150,14 +151,27 @@ describe('OrdersClient', () => {
       .getOrdersClient()
       .setUrl(ORDERS_MOCK_URL);
 
-    it('Should update order', async () => {
+    it('Should update order po number', async () => {
       nock(ORDERS_MOCK_URL)
         .patch(UPDATE_ORDERS_URL)
         .reply(200, PAYLOAD_UPDATE_ORDER_RESULT);
 
       const result = await orderClient.updateOrder(
         'XSPO123',
-        PAYLOAD_UPDATE_ORDER,
+        PAYLOAD_UPDATE_ORDER_PO_NUMBER,
+      );
+      expect(result).to.be.instanceof(GetResult);
+      expect(result.toJSON()).to.eql(PAYLOAD_UPDATE_ORDER_RESULT);
+    });
+
+    it('Should update order end customer po number', async () => {
+      nock(ORDERS_MOCK_URL)
+        .patch(UPDATE_ORDERS_URL)
+        .reply(200, PAYLOAD_UPDATE_ORDER_RESULT);
+
+      const result = await orderClient.updateOrder(
+        'XSPO123',
+        PAYLOAD_UPDATE_ORDER_END_CUSTOMER_PO_NUMBER,
       );
       expect(result).to.be.instanceof(GetResult);
       expect(result.toJSON()).to.eql(PAYLOAD_UPDATE_ORDER_RESULT);
