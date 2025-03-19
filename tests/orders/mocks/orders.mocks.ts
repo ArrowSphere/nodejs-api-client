@@ -44,6 +44,7 @@ export const PAYLOAD_ORDERS: GetData<DataListOrdersType> = {
           [ReferenceLinkFields.COLUMN_LINK]: '/api/customers/XSP17727',
         },
         [OrderFields.COLUMN_PONUMBER]: '123456',
+        [OrderFields.COLUMN_END_CUSTOMER_PO_NUMBER]: '654321',
         [OrderFields.COLUMN_PRODUCTS]: [
           {
             [OrderProductsFields.COLUMN_SKU]:
@@ -127,6 +128,7 @@ export const PAYLOAD_ORDERS_WITHOUT_OPTIONAL: GetData<DataListOrdersType> = {
           [ReferenceLinkFields.COLUMN_LINK]: '/api/customers/XSP17727',
         },
         [OrderFields.COLUMN_PONUMBER]: '123456',
+        [OrderFields.COLUMN_END_CUSTOMER_PO_NUMBER]: '654321',
         [OrderFields.COLUMN_PRODUCTS]: [
           {
             [OrderProductsFields.COLUMN_SKU]:
@@ -170,6 +172,8 @@ export const PAYLOAD_ORDERS_WITHOUT_OPTIONAL: GetData<DataListOrdersType> = {
 
 export const PAYLOAD_UPDATE_ORDER: UpdateOrderInputType = {
   [UpdateOrderInputFields.COLUMN_PO_NUMBER]: 'PO_NUMBER',
+  [UpdateOrderInputFields.COLUMN_END_CUSTOMER_PO_NUMBER]:
+    'END_CUSTOMER_PO_NUMBER',
 };
 
 export const PAYLOAD_UPDATE_ORDER_RESULT: GetData<UpdateOrderResultData> = {
