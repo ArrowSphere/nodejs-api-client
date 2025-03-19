@@ -1,5 +1,6 @@
 export * from './entities/dataListOrders';
 export * from './entities/orders/order';
+export * from './entities/orders/updateOrderResult';
 export * from './entities/orders/partner/partner';
 export * from './entities/orders/products/identifiers/vendor/identifiersVendor';
 export * from './entities/orders/products/identifiers/productIdentifiers';
