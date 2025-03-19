@@ -134,7 +134,17 @@ export enum UpdateOrderInputFields {
 
 export type UpdateOrderInputType = {
   [UpdateOrderInputFields.COLUMN_PO_NUMBER]: string;
-  [UpdateOrderInputFields.COLUMN_END_CUSTOMER_PO_NUMBER]: string;
+  [UpdateOrderInputFields.COLUMN_END_CUSTOMER_PO_NUMBER]?: string;
+};
+
+export enum UpdateContributorOrderInputFields {
+  COLUMN_TYPE = 'type',
+  COLUMN_CONTRIBUTOR_ID = 'contributorId',
+}
+
+export type UpdateContributorOrderInputType = {
+  [UpdateContributorOrderInputFields.COLUMN_TYPE]: string;
+  [UpdateContributorOrderInputFields.COLUMN_CONTRIBUTOR_ID]: number;
 };
 
 export class OrdersClient extends AbstractRestfulClient {
@@ -181,5 +191,60 @@ export class OrdersClient extends AbstractRestfulClient {
       UpdateOrderResult,
       await this.patch(payload, parameters),
     );
+  }
+
+  public async archiveOrder(
+    orderReference: string,
+    parameters: Parameters = {},
+  ): Promise<void> {
+    this.path = `/${orderReference}/archive`;
+
+    await this.patch(undefined, parameters);
+  }
+
+  public async cancelOrder(
+    orderReference: string,
+    parameters: Parameters = {},
+  ): Promise<void> {
+    this.path = `/${orderReference}/cancel`;
+
+    await this.patch(undefined, parameters);
+  }
+
+  public async rejectGradedOrder(
+    orderReference: string,
+    parameters: Parameters = {},
+  ): Promise<void> {
+    this.path = `/${orderReference}/rejectGraded`;
+
+    await this.patch(undefined, parameters);
+  }
+
+  public async resubmitOrder(
+    orderReference: string,
+    parameters: Parameters = {},
+  ): Promise<void> {
+    this.path = `/${orderReference}/resubmit`;
+
+    await this.patch(undefined, parameters);
+  }
+
+  public async validateOrder(
+    orderReference: string,
+    parameters: Parameters = {},
+  ): Promise<void> {
+    this.path = `/${orderReference}/validate`;
+
+    await this.patch(undefined, parameters);
+  }
+
+  public async updateStaffContributorsOrder(
+    orderReference: string,
+    payload: UpdateContributorOrderInputType,
+    parameters: Parameters = {},
+  ): Promise<void> {
+    this.path = `/${orderReference}/contributor`;
+
+    await this.patch(payload, parameters);
   }
 }
