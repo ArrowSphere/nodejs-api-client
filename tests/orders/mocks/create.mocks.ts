@@ -41,6 +41,7 @@ export const CreateOrderFullInputPayload: CreateOrderInputType = {
   [CreateOrderInputFields.COLUMN_CUSTOMER]: {
     [CreateOrderInputFields.COLUMN_REFERENCE]: 'XSP4533',
     [CreateOrderInputFields.COLUMN_PO_NUMBER]: '456789',
+    [CreateOrderInputFields.COLUMN_END_CUSTOMER_PO_NUMBER]: '987654',
   },
   [CreateOrderInputFields.COLUMN_PRODUCTS]: [
     {
