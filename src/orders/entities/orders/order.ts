@@ -16,6 +16,7 @@ export enum OrderFields {
   COLUMN_PARTNER = 'partner',
   COLUMN_CUSTOMER = 'customer',
   COLUMN_PONUMBER = 'ponumber',
+  COLUMN_END_CUSTOMER_PO_NUMBER = 'endCustomerPONumber',
   COLUMN_PRODUCTS = 'products',
   COLUMN_EXTRA_INFORMATION = 'extraInformation',
   COLUMN_ORGANIZATION_UNIT_REF = 'organizationUnitRef',
@@ -29,7 +30,8 @@ export type OrderType = {
   [OrderFields.COLUMN_ORDER_REFERENCE]: string;
   [OrderFields.COLUMN_PARTNER]?: OrderPartnerType;
   [OrderFields.COLUMN_CUSTOMER]: ReferenceLinkType;
-  [OrderFields.COLUMN_PONUMBER]: string;
+  [OrderFields.COLUMN_PONUMBER]: string | null;
+  [OrderFields.COLUMN_END_CUSTOMER_PO_NUMBER]?: string | null;
   [OrderFields.COLUMN_PRODUCTS]: Array<OrderProductsType>;
   [OrderFields.COLUMN_EXTRA_INFORMATION]?: AdditionalExtraInformationType;
   [OrderFields.COLUMN_ORGANIZATION_UNIT_REF]?: string;
@@ -43,7 +45,8 @@ export class Order extends AbstractEntity<OrderType> {
   readonly #order_reference: string;
   readonly #partner?: OrderPartner;
   readonly #customer: ReferenceLink;
-  readonly #ponumber: string;
+  readonly #ponumber: string | null;
+  readonly #endCustomerPONumber?: string | null;
   readonly #products: Array<OrderProduct>;
   readonly #extraInformation?: AdditionalExtraInformation;
   readonly #organizationUnitRef?: string;
@@ -66,6 +69,8 @@ export class Order extends AbstractEntity<OrderType> {
       getOrderDataInput[OrderFields.COLUMN_CUSTOMER],
     );
     this.#ponumber = getOrderDataInput[OrderFields.COLUMN_PONUMBER];
+    this.#endCustomerPONumber =
+      getOrderDataInput[OrderFields.COLUMN_END_CUSTOMER_PO_NUMBER];
     this.#products = getOrderDataInput[OrderFields.COLUMN_PRODUCTS].map(
       (order: OrderProductsType) => new OrderProduct(order),
     );
@@ -105,8 +110,11 @@ export class Order extends AbstractEntity<OrderType> {
   get customer(): ReferenceLink {
     return this.#customer;
   }
-  get ponumber(): string {
+  get ponumber(): string | null {
     return this.#ponumber;
+  }
+  get endCustomerPONumber(): string | null | undefined {
+    return this.#endCustomerPONumber;
   }
   get products(): Array<OrderProduct> {
     return this.#products;
@@ -130,6 +138,7 @@ export class Order extends AbstractEntity<OrderType> {
       [OrderFields.COLUMN_PARTNER]: this.partner?.toJSON(),
       [OrderFields.COLUMN_CUSTOMER]: this.customer.toJSON(),
       [OrderFields.COLUMN_PONUMBER]: this.ponumber,
+      [OrderFields.COLUMN_END_CUSTOMER_PO_NUMBER]: this.endCustomerPONumber,
       [OrderFields.COLUMN_PRODUCTS]: this.products.map((order: OrderProduct) =>
         order.toJSON(),
       ),
