@@ -1230,8 +1230,15 @@ export const SELECT_ONE_ORDER_QUERY: SelectOneQueryType = {
       order: {
         id: true,
         arrowCompany: {
+          address1: true,
+          address2: true,
+          billingId: true,
+          city: true,
           id: true,
+          internalReference: true,
           name: true,
+          state: true,
+          zip: true,
         },
         arrowContact: {
           id: true,
@@ -1241,46 +1248,75 @@ export const SELECT_ONE_ORDER_QUERY: SelectOneQueryType = {
           phone: true,
         },
         commitmentAmountTotal: true,
-        createdAt: true,
-        partner: {
+        contributor: {
           id: true,
-          name: true,
-          workgroup: {
-            code: true,
-          },
-        },
-        partnerContact: {
-          id: true,
-          email: true,
-          firstname: true,
-          lastname: true,
-          phone: true,
-        },
-        poNumber: true,
-        status: {
-          id: true,
-          name: true,
-        },
-        totalRecurringPrice: true,
-        updatedAt: true,
-        endCustomer: {
-          id: true,
-          name: true,
-          country: {
-            code2: true,
-            name: true,
-          },
-          partner: {
-            country: {
-              code2: true,
-              code3: true,
-              id: true,
-              lat: true,
-              lng: true,
-              name: true,
-              phoneCode: true,
+          icst: {
+            id: true,
+            firstname: true,
+            lastname: true,
+            internalId: true,
+            workgroup: {
+              code: true,
             },
           },
+          isr: {
+            id: true,
+            firstname: true,
+            lastname: true,
+            internalId: true,
+            workgroup: {
+              code: true,
+            },
+          },
+          fcst: {
+            id: true,
+            firstname: true,
+            lastname: true,
+            internalId: true,
+            workgroup: {
+              code: true,
+            },
+          },
+          fsr: {
+            id: true,
+            firstname: true,
+            lastname: true,
+            internalId: true,
+            workgroup: {
+              code: true,
+            },
+          },
+          sor: {
+            id: true,
+            firstname: true,
+            lastname: true,
+            internalId: true,
+            workgroup: {
+              code: true,
+            },
+          },
+        },
+        createdAt: true,
+        eavs: {
+          id: true,
+          name: true,
+          resourceId: true,
+          type: true,
+          value: true,
+        },
+        endCustomer: {
+          address1: true,
+          address2: true,
+          billingId: true,
+          city: true,
+          country: {
+            name: true,
+          },
+          id: true,
+          internalReference: true,
+          name: true,
+          state: true,
+          zip: true,
         },
         endCustomerContact: {
           id: true,
@@ -1289,22 +1325,34 @@ export const SELECT_ONE_ORDER_QUERY: SelectOneQueryType = {
           lastname: true,
           phone: true,
         },
+        endCustomerPoNumber: true,
+        fulfilledAt: true,
         items: {
           id: true,
+          migratedFrom: {
+            from: {
+              order: {
+                id: true,
+              },
+            },
+          },
+          migratedTo: {
+            to: {
+              order: {
+                id: true,
+              },
+            },
+          },
           name: true,
           program: {
+            disclaimer: {
+              content: true,
+            },
             id: true,
-            name: true,
             internalName: true,
+            name: true,
             vendor: {
-              id: true,
               name: true,
-              identifier: true,
-              licenseUrl: true,
-              logoLarge: true,
-              logoSmall: true,
-              logoStandard: true,
-              url: true,
             },
             vendorReference: true,
             xacVendorCode: true,
@@ -1342,6 +1390,39 @@ export const SELECT_ONE_ORDER_QUERY: SelectOneQueryType = {
             retailCotermBuyPrice: true,
           },
         },
+        partner: {
+          address1: true,
+          address2: true,
+          billingId: true,
+          city: true,
+          country: {
+            name: true,
+          },
+          id: true,
+          internalReference: true,
+          name: true,
+          state: true,
+          zip: true,
+        },
+        partnerContact: {
+          id: true,
+          email: true,
+          firstname: true,
+          lastname: true,
+          phone: true,
+        },
+        scheduledAt: true,
+        partnerPoNumber: true,
+        quote: {
+          id: true,
+        },
+        reference: true,
+        status: {
+          id: true,
+          name: true,
+        },
+        totalRecurringPrice: true,
+        updatedAt: true,
       },
     },
     errors: {
@@ -1357,4 +1438,4 @@ export const SELECT_ONE_ORDER_QUERY: SelectOneQueryType = {
 };
 
 export const SELECT_ONE_ORDER_GQL =
-  '{selectOne (filters: {groups: [{items: [{name: "id", value: ["1234"]}]}]}) { data { order { id arrowCompany { id name } arrowContact { id email firstname lastname phone } commitmentAmountTotal createdAt partner { id name workgroup { code } } partnerContact { id email firstname lastname phone } poNumber status { id name } totalRecurringPrice updatedAt endCustomer { id name country { code2 name } partner { country { code2 code3 id lat lng name phoneCode } } } endCustomerContact { id email firstname lastname phone } items { id name program { id name internalName vendor { id name identifier licenseUrl logoLarge logoSmall logoStandard url } vendorReference xacVendorCode } reference itemData { id offerName customTermEndDate publicPrice buyPrice sellPrice currency arrowRateType partnerRateType billingTerm billingCycle arrowRateValue partnerRateValue partnerBuyPriceWithoutPromotion partnerCotermBuyPriceWithoutPromotion vendorRateValue vendorRateType arrowSpherePriceBandSku licenseAgreementType classification mainLogoUrl squareLogoUrl marketplace creationDate quantity orderingType partnerBuyPrice partnerCotermBuyPrice retailCotermBuyPrice } } } } errors { code message } pagination { currentPage perPage total } }}';
+  '{selectOne (filters: {groups: [{items: [{name: "id", value: ["1234"]}]}]}) { data { order { id arrowCompany { address1 address2 billingId city id internalReference name state zip } arrowContact { id email firstname lastname phone } commitmentAmountTotal contributor { id icst { id firstname lastname internalId workgroup { code } } isr { id firstname lastname internalId workgroup { code } } fcst { id firstname lastname internalId workgroup { code } } fsr { id firstname lastname internalId workgroup { code } } sor { id firstname lastname internalId workgroup { code } } } createdAt eavs { id name resourceId type value } endCustomer { address1 address2 billingId city country { name } id internalReference name state zip } endCustomerContact { id email firstname lastname phone } endCustomerPoNumber fulfilledAt items { id migratedFrom { from { order { id } } } migratedTo { to { order { id } } } name program { disclaimer { content } id internalName name vendor { name } vendorReference xacVendorCode } reference itemData { id offerName customTermEndDate publicPrice buyPrice sellPrice currency arrowRateType partnerRateType billingTerm billingCycle arrowRateValue partnerRateValue partnerBuyPriceWithoutPromotion partnerCotermBuyPriceWithoutPromotion vendorRateValue vendorRateType arrowSpherePriceBandSku licenseAgreementType classification mainLogoUrl squareLogoUrl marketplace creationDate quantity orderingType partnerBuyPrice partnerCotermBuyPrice retailCotermBuyPrice } } partner { address1 address2 billingId city country { name } id internalReference name state zip } partnerContact { id email firstname lastname phone } scheduledAt partnerPoNumber quote { id } reference status { id name } totalRecurringPrice updatedAt } } errors { code message } pagination { currentPage perPage total } }}';
