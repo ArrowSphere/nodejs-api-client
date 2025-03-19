@@ -1103,4 +1103,55 @@ describe('GraphqlApiClient', () => {
       expect(result).to.deep.equals(expectedResult);
     });
   });
+  describe('selectAll staff by role id', () => {
+    it('makes a graphql POST request on the specified URL to selectAll staff', async () => {
+      const expectedResult: SelectAllResultType = {
+        [Queries.SELECT_ALL]: {
+          [SelectableField.DATA]: {
+            [SelectDataField.STAFF]: [
+              {
+                id: 1,
+                internalId: 'A123',
+                firstname: 'Firstname 1',
+                lastname: 'lastname: 1',
+                locked: false,
+                roles: [
+                  {
+                    id: 1,
+                    label: 'Arrow ECS Inside Sales Rep',
+                  },
+                ],
+                workgroup: {
+                  id: 1,
+                  code: 'FR',
+                },
+              },
+            ],
+          },
+          [SelectableField.ERRORS]: undefined,
+          [SelectableField.PAGINATION]: {
+            currentPage: 1,
+            next: 2,
+            perPage: 1000,
+            total: 30,
+            totalPage: 1,
+            totalPages: 15,
+          },
+        },
+      };
+
+      graphQLClient.request.resolves(expectedResult);
+
+      const result: SelectAllResultType | null = await client.selectAll(
+        GraphqlApiQueryMock.SELECT_ALL_STAFF_QUERY,
+      );
+
+      sinon.assert.calledWithExactly(
+        graphQLClient.request,
+        sinon.match(GraphqlApiQueryMock.SELECT_ALL_STAFF_GQL),
+      );
+
+      expect(result).to.deep.equals(expectedResult);
+    });
+  });
 });
