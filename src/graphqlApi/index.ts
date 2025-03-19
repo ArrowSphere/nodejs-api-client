@@ -5,6 +5,7 @@ export * from './types/entities/company';
 export * from './types/entities/country';
 export * from './types/entities/currency';
 export * from './types/entities/disclaimer';
+export * from './types/entities/eav';
 export * from './types/entities/licenseBudget';
 export * from './types/entities/order';
 export * from './types/entities/organizationUnit';
