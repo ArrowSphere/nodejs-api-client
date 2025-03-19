@@ -23,4 +23,5 @@ export enum OrderStatusEnum {
   ORDER_VALIDATED = 'Order Validated',
   SCHEDULED_ORDER = 'Scheduled Order',
   CANCELED = 'Canceled',
+  PENDING_FINANCE_VALIDATION = 'Pending Finance validation',
 }
