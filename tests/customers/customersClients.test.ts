@@ -23,6 +23,7 @@ import {
   PAYLOAD_GET_CUSTOMERS_WITHOUT_OPTIONAL_FIELDS,
   PAYLOAD_POST_CUSTOMER_INVITATION,
   RESPONSE_CUSTOMER_CONTACT,
+  RESPONSE_CUSTOMER_PROVISION,
 } from './mocks/customers.mocks';
 import { Axios } from 'axios';
 import sinon from 'sinon';
@@ -40,8 +41,11 @@ export const CUSTOMERS_GET_CUSTOMER_INVITATION_URL = new RegExp(
 export const CUSTOMERS_GET_CUSTOMER_CONTACT_URL = new RegExp(
   '/customers/REF/contacts.*',
 );
-export const CUSTOMERS_POST_CUSTOMERS_MIGRATION_URL = new RegExp(
+export const CUSTOMERS_CUSTOMERS_MIGRATION_URL = new RegExp(
   '/customers/REF/migration',
+);
+export const CUSTOMERS_CUSTOMERS_PROVISION = new RegExp(
+  '/customers/REF/provision',
 );
 
 describe('CustomersClients', () => {
@@ -515,7 +519,7 @@ describe('CustomersClients', () => {
     });
   });
 
-  describe('postCustomerMigration', () => {
+  describe('CustomerMigration', () => {
     const client = new PublicApiClient()
       .getCustomersClient()
       .setUrl(CUSTOMERS_MOCK_URL);
@@ -526,7 +530,7 @@ describe('CustomersClients', () => {
 
     it('call post customer migration method to create a migration', async () => {
       nock(CUSTOMERS_MOCK_URL)
-        .post(CUSTOMERS_POST_CUSTOMERS_MIGRATION_URL)
+        .post(CUSTOMERS_CUSTOMERS_MIGRATION_URL)
         .reply(202);
 
       const result = await client.postCustomerMigration(
@@ -545,7 +549,7 @@ describe('CustomersClients', () => {
       };
 
       nock(CUSTOMERS_MOCK_URL)
-        .post(CUSTOMERS_POST_CUSTOMERS_MIGRATION_URL)
+        .post(CUSTOMERS_CUSTOMERS_MIGRATION_URL)
         .reply(400, expectedResult);
 
       try {
@@ -555,6 +559,65 @@ describe('CustomersClients', () => {
           'Error: status code: 400. URL: https://customers.localhost',
         );
       }
+    });
+
+    it('call cancel customer migration method to cancel a migration', async () => {
+      nock(CUSTOMERS_MOCK_URL)
+        .delete(CUSTOMERS_CUSTOMERS_MIGRATION_URL)
+        .reply(200);
+
+      await client.cancelCustomerMigration('REF', 'program');
+    });
+  });
+
+  describe('CustomerProvision', () => {
+    const client = new PublicApiClient()
+      .getCustomersClient()
+      .setUrl(CUSTOMERS_MOCK_URL);
+
+    const migrationPayload: PostCustomerMigrationPayload = {
+      program: 'program',
+    };
+
+    it('call post customer provision method to create a migration', async () => {
+      nock(CUSTOMERS_MOCK_URL).post(CUSTOMERS_CUSTOMERS_PROVISION).reply(202);
+
+      const result = await client.postCustomerProvision(
+        'REF',
+        migrationPayload,
+      );
+
+      expect(result).to.equal('');
+    });
+
+    it('call provision customer should fail', async () => {
+      const expectedResult: APIResponseError = {
+        status: 400,
+        error: 'Bad value for program',
+      };
+
+      nock(CUSTOMERS_MOCK_URL)
+        .post(CUSTOMERS_CUSTOMERS_PROVISION)
+        .reply(400, expectedResult);
+
+      try {
+        await client.postCustomerProvision('REF', migrationPayload);
+      } catch (error) {
+        expect((error as Error).message).to.equal(
+          'Error: status code: 400. URL: https://customers.localhost',
+        );
+      }
+    });
+
+    it('call get Provision', async () => {
+      nock(CUSTOMERS_MOCK_URL)
+        .get(CUSTOMERS_CUSTOMERS_PROVISION)
+        .reply(200, RESPONSE_CUSTOMER_PROVISION);
+
+      const res = await client.getCustomerProvision('REF', 'program');
+
+      expect(res).to.be.instanceof(GetResult);
+      expect(res.toJSON()).to.eql(RESPONSE_CUSTOMER_PROVISION);
     });
   });
   describe('reactivatecustomer', () => {

@@ -93,6 +93,15 @@ A customers company are managed by the `company` entity.
 |-------------------------|--------------|-----------|-------------------------------------|
 | reference               | ```string``` | XSP12345  | The end customer company reference  |
 
+### CustomerProvision
+
+A customers provision are managed by the `customerProvision` entity.
+
+| Field       | Type         | Example                | Description                            |
+|-------------|--------------|------------------------|----------------------------------------|
+| status      | ```string``` | 'in_progress'          | Status of provision process            |
+| message     | ```string``` | 'still in progress'    | Detailed message of the current status |
+| attributes  | ```Record``` | ['domainName': 'xxxx'] | Attributes used in the process         |
 
 ## Usage
 
