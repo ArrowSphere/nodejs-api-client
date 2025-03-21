@@ -19,6 +19,10 @@ import {
 } from '../../../src';
 import { CustomerContactXcpInvitationFields } from '../../../src/customers/entities/customers/customerContact/customerContactXcpInvitation';
 import { CustomerContactOrganizationUnitFields } from '../../../src/customers/entities/customers/customerContact/customerContactOrganizationUnit';
+import {
+  CustomerProvisionFields,
+  CustomerProvisionType,
+} from '../../../src/customers/entities/customerProvision';
 
 export const PAYLOAD_GET_CUSTOMERS = {
   [GetResultFields.COLUMN_STATUS]: 200,
@@ -222,5 +226,16 @@ export const RESPONSE_CUSTOMER_CONTACT: GetData<CustomerContactType> = {
         [CustomerContactOrganizationUnitFields.COLUMN_NAME]: 'OU name 2',
       },
     ],
+  },
+};
+
+export const RESPONSE_CUSTOMER_PROVISION: GetData<CustomerProvisionType> = {
+  [GetResultFields.COLUMN_STATUS]: 200,
+  [GetResultFields.COLUMN_DATA]: {
+    [CustomerProvisionFields.COLUMN_STATUS]: 'fulfilled',
+    [CustomerProvisionFields.COLUMN_MESSAGE]: 'fulfilled',
+    [CustomerProvisionFields.COLUMN_ATTRIBUTES]: {
+      test: 'test',
+    },
   },
 };
