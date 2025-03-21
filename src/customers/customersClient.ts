@@ -12,6 +12,7 @@ import {
 import { CustomerFields, CustomerType } from './entities/customers/customer';
 import { ContactFields } from './entities/customers/contact/contact';
 import { AxiosResponse } from 'axios';
+import { CustomerProvision } from './entities/customerProvision';
 
 export enum CustomerMigrationAttributeFields {
   NAME = 'name',
@@ -295,5 +296,32 @@ export class CustomersClient extends AbstractRestfulClient {
     this.path = '/reconciliation';
 
     await this.post({ program }, parameters);
+  }
+
+  public async cancelCustomerMigration(
+    customerReference: string,
+    program: string,
+  ): Promise<void | APIResponseError> {
+    this.path = `/${customerReference}/migration`;
+
+    await this.delete({ program });
+  }
+
+  public async postCustomerProvision(
+    customerReference: string,
+    payload: PostCustomerMigrationPayload,
+  ): Promise<void> {
+    this.path = `/${customerReference}/provision`;
+
+    return await this.post(payload);
+  }
+
+  public async getCustomerProvision(
+    customerReference: string,
+    program: string,
+  ): Promise<GetResult<CustomerProvision>> {
+    this.path = `/${customerReference}/provision`;
+
+    return new GetResult(CustomerProvision, await this.get({ program }));
   }
 }
