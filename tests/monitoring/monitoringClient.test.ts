@@ -19,12 +19,12 @@ describe('MonitoringClient', () => {
       type: 'type',
     };
     nock(MONITORING_MOCK_URL)
-      .post('/monitoring/report', report)
+      .post('/monitoring/report', [report])
       .reply((_uri, body) => {
-        expect(body).to.eqls(report);
+        expect(body).to.eqls([report]);
         return [200, ''];
       });
 
-    await client.sendReport(report);
+    await client.sendReport([report]);
   });
 });
