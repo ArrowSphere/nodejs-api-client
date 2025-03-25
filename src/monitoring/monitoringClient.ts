@@ -18,9 +18,9 @@ export class MonitoringClient extends AbstractRestfulClient {
    */
   private REPORT_PATH = '/report';
 
-  public sendReport(report: ReportMonitoringType): Promise<void> {
+  public sendReport(reports: ReportMonitoringType[]): Promise<void> {
     this.path = this.REPORT_PATH;
 
-    return this.post(report);
+    return this.post(reports);
   }
 }
