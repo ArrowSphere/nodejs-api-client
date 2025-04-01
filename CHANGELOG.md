@@ -3,6 +3,18 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.184.0] - 2025.04.01
+
+### Added
+- [orders] add archive order endpoint `archiveOrder`
+- [orders] add cancel scheduled order endpoint `cancelOrder`
+- [orders] add reject graded order endpoint `rejectGradedOrder`
+- [orders] add resubmit order endpoint `resubmitOrder`
+- [orders] add update contributor order endpoint `updateStaffContributorsOrder`
+- [orders] add update additional information order endpoint `updateAdditionalInformationOrder`
+- [graphql-api] add types `GraphqlApiContributorType`, `GraphqlApiStaffType`, `GraphqlApiContributorRoleType`, `GraphqlApiDisclaimerType`, `GraphqlApiEavType`, `GraphqlApiOrderStatusType`, `GraphqlApiOrderLinkType`, `GraphqlApiOrderHistoryType`
+- [graphql-api] add many fields to types `OrdersType` `OrderItemsType`, `GraphqlApiProgramType`
+
 ## [3.183.0] - 2025.03.21
 
 ### Added
