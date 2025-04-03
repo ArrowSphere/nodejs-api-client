@@ -17,7 +17,7 @@ export type GraphqlApiProgramType = {
   url?: string;
   vendor?: VendorsType;
   vendorReference?: string;
-  xacVendorCode?: string;
+  legacyCode?: string;
 };
 
 export type GraphqlApiProgramTypeType = {

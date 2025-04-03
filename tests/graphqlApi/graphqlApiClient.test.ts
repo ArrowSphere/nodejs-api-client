@@ -1030,7 +1030,7 @@ describe('GraphqlApiClient', () => {
                       name: 'Microsoft',
                     },
                     vendorReference: 'Microsoft',
-                    xacVendorCode: 'Microsoft',
+                    legacyCode: 'Microsoft',
                     id: 54,
                   },
                   itemData: {
