@@ -20,6 +20,7 @@ const PARTNERS_MOCK_URL = 'https://partners.localhost';
 const PARTNER_REFERENCE = 'XSP123456';
 const USER_REFERENCE = 'XSP999';
 const BASE_PATH = `/partners/${PARTNER_REFERENCE}/users/${USER_REFERENCE}`;
+const ANONYMIZE_PATH = `/partners/${PARTNER_REFERENCE}/contact/anonymize`;
 const PARTNER = '/partners/v1/register';
 
 describe('PartnerClient', () => {
@@ -227,6 +228,18 @@ describe('PartnerClient', () => {
 
       expect(response).to.be.instanceof(GetResult);
       expect(response.toJSON()).to.be.deep.equal(PARTNER_CREATE_RESPONSE);
+    });
+  });
+
+  describe('anonymizeContacts', () => {
+    it('calls the patchUser method', async () => {
+      nock(PARTNERS_MOCK_URL).patch(ANONYMIZE_PATH).reply(204);
+
+      await client.anonymizeContacts(PARTNER_REFERENCE, {
+        usernames: ['username1'],
+      });
+
+      expect(nock.isDone()).to.be.true;
     });
   });
 });
