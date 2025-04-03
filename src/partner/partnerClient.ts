@@ -122,6 +122,14 @@ export type PostPartnerPayload = {
   [PartnerFields.COLUMN_RECAPTCHA_TOKEN]: string;
 };
 
+export enum PartnerAnonymizeContactsPayloadFields {
+  COLUMN_CONTACTS = 'contacts',
+}
+
+export type PartnerAnonymizeContactsPayload = {
+  [PartnerAnonymizeContactsPayloadFields.COLUMN_CONTACTS]: number[];
+};
+
 export class PartnerClient extends AbstractRestfulClient {
   protected basePath = '/partners';
 
@@ -284,5 +292,15 @@ export class PartnerClient extends AbstractRestfulClient {
     this.path = `/v1/register`;
 
     return new GetResult(DataPartner, await this.post(payload, parameters));
+  }
+
+  public async anonymizeContacts(
+    partnerReference: string,
+    payload: PartnerAnonymizeContactsPayload,
+    parameters: Parameters = {},
+  ): Promise<void> {
+    this.path = `/${partnerReference}/contact/anonymize`;
+
+    await this.patch(payload, parameters);
   }
 }
