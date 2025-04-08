@@ -246,18 +246,20 @@ A license is managed by the `LicenseGet` entity.
 
 ### ActionsGetResult
 
-| Field          | Type         | Example                                                | Description                                                                                                                              |
-|----------------|--------------|--------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------|
-| history        | ```string``` | {{baseApiUrl}}/licenses/XSP123546/history              | The URL that list the license history                                                                                                    |
-| update         | ```string``` | {{baseApiUrl}}/licenses/XSP123456                      | The URL that allow to update a license (here for compatibility, please use /increaseSeats or /decreaseSeats to modify the license seats) |
-| increaseSeats  | ```string``` | {{baseApiUrl}}/licenses/XSP123456/increaseSeats        | The URL that allow to increase a license number of seats                                                                                 |
-| decreaseSeats  | ```string``` | {{baseApiUrl}}/licenses/XSP123456/decreaseSeats        | The URL that allow to decrease a license number of seats                                                                                 |
-| addons catalog | ```string``` | {{baseApiUrl}}/licenses/XSP123456/addons               | The addon that can be linked to the license base product (addons can have addons too)                                                    |
-| suspend        | ```string``` | {{baseApiUrl}}/licenses/XSP123456/suspend              | The URL that allow to suspend a license                                                                                                  |
-| reactivate     | ```string``` | {{baseApiUrl}}/licenses/XSP123456/reactivate           | The URL that allow to reactivate a license                                                                                               |
-| autoRenewOff   | ```string``` | {{baseApiUrl}}/licenses/XSP123456/autorenew/cancel     | The URL that allow to turn the auto renew OFF                                                                                            |
-| autoRenewOn    | ```string``` | {{baseApiUrl}}/licenses/XSP123456/autorenew/reactivate | The URL that allow to turn the auto renew ON                                                                                             |
-| cancel         | ```string``` | {{baseApiUrl}}/licenses/XSP123456/cancel               | The URL that allow to cancel a license                                                                                                   |
+| Field              | Type         | Example                                                | Description                                                                                                                              |
+|--------------------|--------------|--------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------|
+| history            | ```string``` | {{baseApiUrl}}/licenses/XSP123546/history              | The URL that list the license history                                                                                                    |
+| update             | ```string``` | {{baseApiUrl}}/licenses/XSP123456                      | The URL that allow to update a license (here for compatibility, please use /increaseSeats or /decreaseSeats to modify the license seats) |
+| increaseSeats      | ```string``` | {{baseApiUrl}}/licenses/XSP123456/increaseSeats        | The URL that allow to increase a license number of seats                                                                                 |
+| decreaseSeats      | ```string``` | {{baseApiUrl}}/licenses/XSP123456/decreaseSeats        | The URL that allow to decrease a license number of seats                                                                                 |
+| addons catalog     | ```string``` | {{baseApiUrl}}/licenses/XSP123456/addons               | The addon that can be linked to the license base product (addons can have addons too)                                                    |
+| suspend            | ```string``` | {{baseApiUrl}}/licenses/XSP123456/suspend              | The URL that allow to suspend a license                                                                                                  |
+| reactivate         | ```string``` | {{baseApiUrl}}/licenses/XSP123456/reactivate           | The URL that allow to reactivate a license                                                                                               |
+| autoRenewOff       | ```string``` | {{baseApiUrl}}/licenses/XSP123456/autorenew/cancel     | The URL that allow to turn the auto renew OFF                                                                                            |
+| autoRenewOn        | ```string``` | {{baseApiUrl}}/licenses/XSP123456/autorenew/reactivate | The URL that allow to turn the auto renew ON                                                                                             |
+| cancel             | ```string``` | {{baseApiUrl}}/licenses/XSP123456/cancel               | The URL that allow to cancel a license                                                                                                   |
+| updateFriendlyName | ```string``` | {{baseApiUrl}}/licenses/XSP123456/friendlyName         | The URL that allow to update friendly name                                                                                               |
+| scheduledTask      | ```string``` | {{baseApiUrl}}/licenses/XSP123456/scheduledTasks       | The URL that allow to create a scheduled task                                                                                            |
 
 ### ActionMessagesGetResult
 
