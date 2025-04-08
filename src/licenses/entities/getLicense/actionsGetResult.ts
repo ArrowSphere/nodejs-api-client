@@ -14,6 +14,8 @@ export enum ActionsGetFields {
   COLUMN_CONVERSION = 'conversion',
   COLUMN_PAUSE = 'pause',
   COLUMN_UPGRADE = 'upgrade',
+  COLUMN_UPDATE_FRIENDLY_NAME = 'updateFriendlyName',
+  COLUMN_SCHEDULED_TASK = 'scheduledTask',
 }
 
 export type ActionsGetData = {
@@ -30,6 +32,8 @@ export type ActionsGetData = {
   [ActionsGetFields.COLUMN_CONVERSION]?: string;
   [ActionsGetFields.COLUMN_PAUSE]?: string;
   [ActionsGetFields.COLUMN_UPGRADE]?: string;
+  [ActionsGetFields.COLUMN_UPDATE_FRIENDLY_NAME]?: string;
+  [ActionsGetFields.COLUMN_SCHEDULED_TASK]?: string;
 };
 
 export class ActionsGetResult extends AbstractEntity<ActionsGetData> {
@@ -46,6 +50,8 @@ export class ActionsGetResult extends AbstractEntity<ActionsGetData> {
   readonly #conversion?: string;
   readonly #pause?: string;
   readonly #upgrade?: string;
+  readonly #updateFriendlyName?: string;
+  readonly #scheduledTask?: string;
 
   public constructor(data: ActionsGetData) {
     super(data);
@@ -63,6 +69,9 @@ export class ActionsGetResult extends AbstractEntity<ActionsGetData> {
     this.#conversion = data[ActionsGetFields.COLUMN_CONVERSION];
     this.#pause = data[ActionsGetFields.COLUMN_PAUSE];
     this.#upgrade = data[ActionsGetFields.COLUMN_UPGRADE];
+    this.#updateFriendlyName =
+      data[ActionsGetFields.COLUMN_UPDATE_FRIENDLY_NAME];
+    this.#scheduledTask = data[ActionsGetFields.COLUMN_SCHEDULED_TASK];
   }
 
   public get history(): string {
@@ -117,6 +126,14 @@ export class ActionsGetResult extends AbstractEntity<ActionsGetData> {
     return this.#upgrade;
   }
 
+  public get updateFriendlyName(): string | undefined {
+    return this.#updateFriendlyName;
+  }
+
+  public get scheduledTask(): string | undefined {
+    return this.#scheduledTask;
+  }
+
   public toJSON(): ActionsGetData {
     return {
       [ActionsGetFields.COLUMN_HISTORY]: this.history,
@@ -132,6 +149,8 @@ export class ActionsGetResult extends AbstractEntity<ActionsGetData> {
       [ActionsGetFields.COLUMN_CONVERSION]: this.conversion,
       [ActionsGetFields.COLUMN_PAUSE]: this.pause,
       [ActionsGetFields.COLUMN_UPGRADE]: this.upgrade,
+      [ActionsGetFields.COLUMN_UPDATE_FRIENDLY_NAME]: this.updateFriendlyName,
+      [ActionsGetFields.COLUMN_SCHEDULED_TASK]: this.scheduledTask,
     };
   }
 }
