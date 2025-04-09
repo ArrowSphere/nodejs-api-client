@@ -3,6 +3,10 @@ import { GetResult } from '../getResult';
 import { DataListOrders } from './entities/dataListOrders';
 import { ReferenceLink } from './entities/referenceLink';
 import { UpdateOrderResult } from './entities/orders/updateOrderResult';
+import {
+  AttachmentOrder,
+  AttachmentsListOrder,
+} from './entities/orders/attachment';
 
 export enum CreateOrderInputFields {
   COLUMN_CUSTOMER = 'customer',
@@ -181,6 +185,16 @@ export type UpdateAdditionalInformationOrderInputType = {
   [UpdateAdditionalInformationOrderInputFields.COLUMN_DATA]: UpdateAdditionalInformationItemOrderInputType[];
 };
 
+export enum UploadAttachmentOrderInputFields {
+  COLUMN_NAME = 'name',
+  COLUMN_FILE_ENCODED = 'fileEncoded',
+}
+
+export type UploadAttachmentOrderInputType = {
+  [UploadAttachmentOrderInputFields.COLUMN_NAME]: string;
+  [UploadAttachmentOrderInputFields.COLUMN_FILE_ENCODED]: string;
+};
+
 export class OrdersClient extends AbstractRestfulClient {
   /**
    * The base path of the API
@@ -290,5 +304,42 @@ export class OrdersClient extends AbstractRestfulClient {
     this.path = `/${orderReference}/additionalInformation`;
 
     await this.patch(payload, parameters);
+  }
+
+  public async getAttachmentsOrder(
+    orderReference: string,
+    perPage?: number,
+    page?: number,
+    parameters: Parameters = {},
+  ): Promise<GetResult<AttachmentsListOrder>> {
+    this.path = `/${orderReference}/attachment`;
+    if (perPage) {
+      this.setPerPage(perPage);
+    }
+    if (page) {
+      this.setPage(page);
+    }
+
+    return new GetResult(AttachmentsListOrder, await this.get(parameters));
+  }
+
+  public async deleteAttachmentOrder(
+    orderReference: string,
+    name: string,
+    parameters: Parameters = {},
+  ): Promise<void> {
+    this.path = `/${orderReference}/attachment/${name}`;
+
+    await this.delete(parameters);
+  }
+
+  public async uploadAttachmentOrder(
+    orderReference: string,
+    payload: UploadAttachmentOrderInputType,
+    parameters: Parameters = {},
+  ): Promise<GetResult<AttachmentOrder>> {
+    this.path = `/${orderReference}/attachment`;
+
+    return new GetResult(AttachmentOrder, await this.post(payload, parameters));
   }
 }
