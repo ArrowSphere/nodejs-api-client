@@ -3,6 +3,7 @@ import { GetResult } from '../getResult';
 import { DataListOrders } from './entities/dataListOrders';
 import { ReferenceLink } from './entities/referenceLink';
 import { UpdateOrderResult } from './entities/orders/updateOrderResult';
+import { AttachmentsListOrder } from './entities/orders/attachment';
 
 export enum CreateOrderInputFields {
   COLUMN_CUSTOMER = 'customer',
@@ -290,5 +291,31 @@ export class OrdersClient extends AbstractRestfulClient {
     this.path = `/${orderReference}/additionalInformation`;
 
     await this.patch(payload, parameters);
+  }
+
+  public async getAttachmentsOrder(
+    orderReference: string,
+    perPage?: number,
+    page?: number,
+    parameters: Parameters = {},
+  ): Promise<GetResult<AttachmentsListOrder>> {
+    this.path = `/${orderReference}/attachment`;
+    if (perPage) {
+      this.setPerPage(perPage);
+    }
+    if (page) {
+      this.setPage(page);
+    }
+
+    return new GetResult(AttachmentsListOrder, await this.get(parameters));
+  }
+
+  public async deleteAttachmentOrder(
+    orderReference: string,
+    parameters: Parameters = {},
+  ): Promise<void> {
+    this.path = `/${orderReference}/attachment`;
+
+    await this.delete(parameters);
   }
 }
