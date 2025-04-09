@@ -9,10 +9,12 @@ import {
 import nock from 'nock';
 import { expect } from 'chai';
 import {
+  PAYLOAD_GET_ATTACHMENTS_ORDER_RESULT,
   PAYLOAD_ORDERS,
   PAYLOAD_ORDERS_WITHOUT_OPTIONAL,
   PAYLOAD_UPDATE_ORDER,
   PAYLOAD_UPDATE_ORDER_RESULT,
+  PAYLOAD_UPLOAD_ATTACHMENT_ORDER_RESULT,
 } from './mocks/orders.mocks';
 import {
   CreateOrderFullInputPayload,
@@ -41,6 +43,10 @@ export const CONTRIBUTOR_GRADED_ORDERS_URL = new RegExp(
 );
 export const ADDITIONALINFORMATION_GRADED_ORDERS_URL = new RegExp(
   '/orders/XSPO[0-9]+/additionalInformation',
+);
+export const ATTACHMENT_ORDER_URL = new RegExp('/orders/XSPO[0-9]+/attachment');
+export const DELETE_ATTACHMENT_ORDER_URL = new RegExp(
+  '/orders/XSPO[0-9]+/attachment/.*',
 );
 
 describe('OrdersClient', () => {
@@ -305,6 +311,56 @@ describe('OrdersClient', () => {
       await orderClient.updateAdditionalInformationOrder('XSPO123', payload);
 
       expect(nock.isDone()).to.be.true;
+    });
+  });
+
+  describe('getAttachmentsOrder', async () => {
+    const orderClient = new PublicApiClient()
+      .getOrdersClient()
+      .setUrl(ORDERS_MOCK_URL);
+
+    it('should return the order attachments list', async () => {
+      nock(ORDERS_MOCK_URL)
+        .get(ATTACHMENT_ORDER_URL)
+        .reply(200, PAYLOAD_GET_ATTACHMENTS_ORDER_RESULT);
+
+      const result = await orderClient.getAttachmentsOrder('XSPO123');
+      expect(result).to.be.instanceof(GetResult);
+      expect(result.toJSON()).to.eql(PAYLOAD_GET_ATTACHMENTS_ORDER_RESULT);
+    });
+  });
+
+  describe('deleteAttachmentOrder', async () => {
+    const orderClient = new PublicApiClient()
+      .getOrdersClient()
+      .setUrl(ORDERS_MOCK_URL);
+
+    it('should delete an order attachment', async () => {
+      nock(ORDERS_MOCK_URL).delete(DELETE_ATTACHMENT_ORDER_URL).reply(204);
+
+      await orderClient.deleteAttachmentOrder('XSPO123', 'attachment-test.pdf');
+
+      expect(nock.isDone()).to.be.true;
+    });
+  });
+
+  describe('uploadAttachmentOrder', async () => {
+    const orderClient = new PublicApiClient()
+      .getOrdersClient()
+      .setUrl(ORDERS_MOCK_URL);
+
+    it('should add a new attachment to the order and return the information about the new attachment', async () => {
+      nock(ORDERS_MOCK_URL)
+        .post(ATTACHMENT_ORDER_URL)
+        .reply(200, PAYLOAD_UPLOAD_ATTACHMENT_ORDER_RESULT);
+
+      const result = await orderClient.uploadAttachmentOrder('XSPO123', {
+        fileEncoded:
+          'data:application/pdf;base64,b2DFFEFDSSGDFGDGSDFGFHGDFGFDGDFG',
+        name: 'attachment-test.pdf',
+      });
+      expect(result).to.be.instanceof(GetResult);
+      expect(result.toJSON()).to.eql(PAYLOAD_UPLOAD_ATTACHMENT_ORDER_RESULT);
     });
   });
 });
