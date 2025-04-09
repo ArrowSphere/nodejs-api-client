@@ -1,6 +1,10 @@
 // PAYLOADS
 import {
   AdditionalExtraInformationFields,
+  AttachmentOrderFields,
+  AttachmentOrderType,
+  AttachmentsOrderListFields,
+  AttachmentsOrderListType,
   DataListOrdersFields,
   DataListOrdersType,
   GetData,
@@ -180,5 +184,36 @@ export const PAYLOAD_UPDATE_ORDER_RESULT: GetData<UpdateOrderResultData> = {
   [GetResultFields.COLUMN_STATUS]: 200,
   [GetResultFields.COLUMN_DATA]: {
     message: 'Order with reference {orderReference} has been updated',
+  },
+};
+
+export const PAYLOAD_GET_ATTACHMENTS_ORDER_RESULT: GetData<AttachmentsOrderListType> = {
+  [GetResultFields.COLUMN_STATUS]: 200,
+  [GetResultFields.COLUMN_DATA]: {
+    [AttachmentsOrderListFields.COLUMN_ATTACHMENTS]: [
+      {
+        [AttachmentOrderFields.COLUMN_LAST_MODIFIED]: '2023-10-10T10:00:00Z',
+        [AttachmentOrderFields.COLUMN_METADATA]: {
+          usedid: '123456',
+          username: 'arrowuser',
+        },
+        [AttachmentOrderFields.COLUMN_NAME]: 'attachment_name',
+        [AttachmentOrderFields.COLUMN_URL]:
+          'https://example.com/attachment/123',
+      },
+    ],
+  },
+};
+
+export const PAYLOAD_UPLOAD_ATTACHMENT_ORDER_RESULT: GetData<AttachmentOrderType> = {
+  [GetResultFields.COLUMN_STATUS]: 200,
+  [GetResultFields.COLUMN_DATA]: {
+    [AttachmentOrderFields.COLUMN_LAST_MODIFIED]: '2023-10-10T10:00:00Z',
+    [AttachmentOrderFields.COLUMN_METADATA]: {
+      usedid: '123456',
+      username: 'arrowuser',
+    },
+    [AttachmentOrderFields.COLUMN_NAME]: 'attachment_name',
+    [AttachmentOrderFields.COLUMN_URL]: 'https://example.com/attachment/123',
   },
 };
