@@ -276,6 +276,7 @@ export const MOCK_FIND_RESPONSE: FindData = {
  * This allows us to insure the payload integrity throughout the updates.
  */
 const PAYLOAD_SCHEMA = Joi.object({
+  [LicenseFindParameters.DATA_AGGREGATION]: [Joi.string()],
   [LicenseFindParameters.DATA_KEYWORD]: Joi.string(),
   [LicenseFindParameters.DATA_KEYWORDS]: Joi.object().pattern(
     Joi.string().valid(

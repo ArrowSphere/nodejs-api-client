@@ -1,11 +1,20 @@
 import { AbstractEntity } from '../../abstractEntity';
 import { LicenseFindResultFields } from './license/licenseFindResult';
 
+type FilterFindResultDataIterable = {
+  [field in LicenseFindResultFields]?: unknown;
+};
+
 /**
  * Filter data values
  */
-export type FilterFindResultDataValues = {
-  [field in LicenseFindResultFields]?: unknown;
+export type FilterFindResultDataValues =
+  | FilterFindResultDataIterable
+  | LicenseFilterAggregationType[];
+
+export type LicenseFilterAggregationType = {
+  count: number;
+  values: string[];
 };
 
 /**
