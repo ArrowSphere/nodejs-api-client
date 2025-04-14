@@ -3,6 +3,13 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.186.0] - 2025.04.15
+
+### Added
+- [graphql-api] add endpoint `getAttachmentsOrder` to get order attachments list
+- [graphql-api] add endpoint `deleteAttachmentOrder` to delete one order attachment
+- [graphql-api] add endpoint `uploadAttachmentOrder` to add new attachment to an order
+
 ## [3.185.0] - 2025.04.11
 
 ### Added
