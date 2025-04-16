@@ -22,7 +22,7 @@ export type OrganizationUnitClientActionType = {
 };
 
 export class OrganizationUnitClient extends AbstractRestfulClient {
-  protected basePath = '/partners/organizationUnits';
+  protected basePath = '/organizationUnit';
 
   public async getList(
     perPage = 25,
@@ -46,20 +46,20 @@ export class OrganizationUnitClient extends AbstractRestfulClient {
   }
 
   public async getOne(
-    organizationUnitRef: string,
+    ouRef: string,
     parameters: Parameters = {},
   ): Promise<GetResult<OrganizationUnit>> {
-    this.path = `/${organizationUnitRef}`;
+    this.path = `/ouRef/${ouRef}`;
 
     return new GetResult(OrganizationUnit, await this.get(parameters));
   }
 
   public async update(
-    organizationUnitRef: string,
+    ouRef: string,
     payload: OrganizationUnitPayloadType,
     parameters: Parameters = {},
   ): Promise<GetResult<OrganizationUnit>> {
-    this.path = `/${organizationUnitRef}`;
+    this.path = `/ouRef/${ouRef}`;
 
     return new GetResult(
       OrganizationUnit,
@@ -68,10 +68,10 @@ export class OrganizationUnitClient extends AbstractRestfulClient {
   }
 
   public async deleteOne(
-    organizationUnitRef: string,
+    ouRef: string,
     parameters: Parameters = {},
   ): Promise<void> {
-    this.path = `/${organizationUnitRef}`;
+    this.path = `/ouRef/${ouRef}`;
 
     return await this.delete(parameters);
   }
@@ -82,12 +82,8 @@ export class OrganizationUnitClient extends AbstractRestfulClient {
     payload: OrganizationUnitClientActionType,
     parameters: Parameters = {},
   ): Promise<void> {
-    this.basePath = '/organizationUnit';
     this.path = `/${action}/${organizationUnitRef}`;
 
-    const response = await this.patch<void>(payload, parameters);
-    this.basePath = '/partners/organizationUnits';
-
-    return response;
+    return await this.patch<void>(payload, parameters);
   }
 }
