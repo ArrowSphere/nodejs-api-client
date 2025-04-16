@@ -3,6 +3,7 @@ import { ContactsType } from './contact';
 import { GraphqlApiContributorType } from './contributor';
 import { GraphqlApiEavType } from './eav';
 import { GraphqlApiProgramType } from './program';
+import { GraphqlApiProviderInfoType } from './provider';
 import { ItemData, QuoteType } from './quote';
 import { SpecialPriceRateType } from './specialPriceRate';
 import { GraphqlApiUnitType } from './unit';
@@ -43,6 +44,7 @@ export type OrderItemsType = {
   order?: OrdersType;
   priceRates?: SpecialPriceRateType[];
   program?: GraphqlApiProgramType;
+  providerInfo?: GraphqlApiProviderInfoType;
   reference?: string;
   status?: GraphqlApiOrderStatusType;
 };
