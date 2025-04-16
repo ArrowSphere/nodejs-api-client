@@ -1,13 +1,13 @@
 export class PublicApiClientException extends Error {
   public httpCode: number;
   public httpError: string;
-  public config?: unknown;
+  public config?: Record<string, unknown>;
 
   constructor(
     message: string,
     httpError = '',
     httpCode = 0,
-    config: object = {},
+    config: Record<string, unknown> = {},
   ) {
     super(message);
     this.httpCode = httpCode;
