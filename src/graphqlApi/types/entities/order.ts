@@ -36,6 +36,7 @@ export type OrdersType = {
 
 export type OrderItemsType = {
   id?: number;
+  isAddon?: boolean;
   itemData?: ItemData;
   migratedFrom?: GraphqlApiOrderLinkType[];
   migratedTo?: GraphqlApiOrderLinkType[];
@@ -43,6 +44,7 @@ export type OrderItemsType = {
   order?: OrdersType;
   priceRates?: SpecialPriceRateType[];
   program?: GraphqlApiProgramType;
+  provisionError?: string;
   reference?: string;
   status?: GraphqlApiOrderStatusType;
 };
