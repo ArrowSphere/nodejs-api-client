@@ -125,6 +125,7 @@ export type APIResponseCustomerMigration = {
 export interface APIResponseError {
   status: number;
   error: string;
+  messages?: string;
 }
 
 export type PatchCustomerContactPayload = {

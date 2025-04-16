@@ -12,6 +12,7 @@ import {
   PostCustomerMigrationPayload,
   PostCustomerPayload,
   PublicApiClient,
+  PublicApiClientException,
 } from '../../src/';
 import { expect } from 'chai';
 import { PAYLOAD_ORDERS } from '../orders/mocks/orders.mocks';
@@ -544,8 +545,9 @@ describe('CustomersClients', () => {
 
     it('call migration customer should fail', async () => {
       const expectedResult: APIResponseError = {
-        status: 400,
-        error: 'Bad value for program',
+        status: 403,
+        error: 'Bad request',
+        messages: 'Bad value for program.',
       };
 
       nock(CUSTOMERS_MOCK_URL)
@@ -555,9 +557,7 @@ describe('CustomersClients', () => {
       try {
         await client.postCustomerMigration('REF', migrationPayload, {});
       } catch (error) {
-        expect((error as Error).message).to.equal(
-          'Error: status code: 400. URL: https://customers.localhost',
-        );
+        expect((error as Error).message).to.equal(expectedResult.messages);
       }
     });
 
@@ -592,8 +592,9 @@ describe('CustomersClients', () => {
 
     it('call provision customer should fail', async () => {
       const expectedResult: APIResponseError = {
-        status: 400,
-        error: 'Bad value for program',
+        status: 403,
+        error: 'Bad Request',
+        messages: 'Bad value for program.',
       };
 
       nock(CUSTOMERS_MOCK_URL)
@@ -603,8 +604,9 @@ describe('CustomersClients', () => {
       try {
         await client.postCustomerProvision('REF', migrationPayload);
       } catch (error) {
-        expect((error as Error).message).to.equal(
-          'Error: status code: 400. URL: https://customers.localhost',
+        console.log(error);
+        expect((error as PublicApiClientException).message).to.equal(
+          expectedResult.messages,
         );
       }
     });
