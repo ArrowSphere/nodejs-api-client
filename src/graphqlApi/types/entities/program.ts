@@ -10,6 +10,7 @@ export type GraphqlApiProgramType = {
   disclaimer?: GraphqlApiDisclaimerType;
   internalName?: string;
   introduction?: string;
+  legacyCode?: string;
   levels?: ProgramLevelType[];
   name?: string;
   subscriptionExtraFields?: SubscriptionExtraFieldType[];
@@ -17,7 +18,6 @@ export type GraphqlApiProgramType = {
   url?: string;
   vendor?: VendorsType;
   vendorReference?: string;
-  xacVendorCode?: string;
 };
 
 export type GraphqlApiProgramTypeType = {
