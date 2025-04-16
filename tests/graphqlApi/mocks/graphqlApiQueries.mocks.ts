@@ -1350,16 +1350,25 @@ export const SELECT_ONE_ORDER_QUERY: SelectOneQueryType = {
             },
             id: true,
             internalName: true,
+            legacyCode: true,
             name: true,
             vendor: {
               name: true,
             },
             vendorReference: true,
-            xacVendorCode: true,
+          },
+          providerInfo: {
+            id: true,
+            errorMessage: true,
+            isProvisioned: true,
+            provider: {
+              name: true,
+            },
           },
           reference: true,
           itemData: {
             id: true,
+            isAddon: true,
             offerName: true,
             customTermEndDate: true,
             publicPrice: true,
@@ -1438,7 +1447,7 @@ export const SELECT_ONE_ORDER_QUERY: SelectOneQueryType = {
 };
 
 export const SELECT_ONE_ORDER_GQL =
-  '{selectOne (filters: {groups: [{items: [{name: "id", value: ["1234"]}]}]}) { data { order { id arrowCompany { address1 address2 billingId city id internalReference name state zip } arrowContact { id email firstname lastname phone } commitmentAmountTotal contributor { id icst { id firstname lastname internalId workgroup { code } } isr { id firstname lastname internalId workgroup { code } } fcst { id firstname lastname internalId workgroup { code } } fsr { id firstname lastname internalId workgroup { code } } sor { id firstname lastname internalId workgroup { code } } } createdAt eavs { id name resourceId type value } endCustomer { address1 address2 billingId city country { name } id internalReference name state zip } endCustomerContact { id email firstname lastname phone } endCustomerPoNumber fulfilledAt items { id migratedFrom { from { order { id } } } migratedTo { to { order { id } } } name program { disclaimer { content } id internalName name vendor { name } vendorReference xacVendorCode } reference itemData { id offerName customTermEndDate publicPrice buyPrice sellPrice currency arrowRateType partnerRateType billingTerm billingCycle arrowRateValue partnerRateValue partnerBuyPriceWithoutPromotion partnerCotermBuyPriceWithoutPromotion vendorRateValue vendorRateType arrowSpherePriceBandSku licenseAgreementType classification mainLogoUrl squareLogoUrl marketplace creationDate quantity orderingType partnerBuyPrice partnerCotermBuyPrice retailCotermBuyPrice } } partner { address1 address2 billingId city country { name } id internalReference name state zip } partnerContact { id email firstname lastname phone } scheduledAt partnerPoNumber quote { id } reference status { id name } totalRecurringPrice updatedAt } } errors { code message } pagination { currentPage perPage total } }}';
+  '{selectOne (filters: {groups: [{items: [{name: "id", value: ["1234"]}]}]}) { data { order { id arrowCompany { address1 address2 billingId city id internalReference name state zip } arrowContact { id email firstname lastname phone } commitmentAmountTotal contributor { id icst { id firstname lastname internalId workgroup { code } } isr { id firstname lastname internalId workgroup { code } } fcst { id firstname lastname internalId workgroup { code } } fsr { id firstname lastname internalId workgroup { code } } sor { id firstname lastname internalId workgroup { code } } } createdAt eavs { id name resourceId type value } endCustomer { address1 address2 billingId city country { name } id internalReference name state zip } endCustomerContact { id email firstname lastname phone } endCustomerPoNumber fulfilledAt items { id migratedFrom { from { order { id } } } migratedTo { to { order { id } } } name program { disclaimer { content } id internalName legacyCode name vendor { name } vendorReference } providerInfo { id errorMessage isProvisioned provider { name } } reference itemData { id isAddon offerName customTermEndDate publicPrice buyPrice sellPrice currency arrowRateType partnerRateType billingTerm billingCycle arrowRateValue partnerRateValue partnerBuyPriceWithoutPromotion partnerCotermBuyPriceWithoutPromotion vendorRateValue vendorRateType arrowSpherePriceBandSku licenseAgreementType classification mainLogoUrl squareLogoUrl marketplace creationDate quantity orderingType partnerBuyPrice partnerCotermBuyPrice retailCotermBuyPrice } } partner { address1 address2 billingId city country { name } id internalReference name state zip } partnerContact { id email firstname lastname phone } scheduledAt partnerPoNumber quote { id } reference status { id name } totalRecurringPrice updatedAt } } errors { code message } pagination { currentPage perPage total } }}';
 
 export const SELECT_ALL_STAFF_QUERY: SelectAllQueryType = {
   [Queries.SELECT_ALL]: {
