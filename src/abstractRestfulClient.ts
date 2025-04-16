@@ -256,9 +256,12 @@ export abstract class AbstractRestfulClient extends AbstractHttpClient {
 
     if (statusCode >= 400 && statusCode <= 599) {
       throw new PublicApiClientException(
-        `Error: status code: ${statusCode}. URL: ${this.getUrl()}`,
+        response.data.messages,
         response.data.error,
         statusCode,
+        {
+          origin: `Error: status code: ${statusCode}. URL: ${this.getUrl()}`,
+        },
       );
     }
 
