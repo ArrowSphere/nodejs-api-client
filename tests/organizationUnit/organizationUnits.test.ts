@@ -18,10 +18,10 @@ import { ORGANIZATION_UNIT_PATCH_MOCK } from './mocks/update.mocks';
 import { constants } from 'http2';
 import { beforeEach } from 'mocha';
 
-export const ORGANIZATION_UNIT_MOCK_URL = 'https://organizationUnits.localhost';
-export const ORGANIZATION_UNIT_DEFAULT = '/partners/organizationUnits';
+export const ORGANIZATION_UNIT_MOCK_URL = 'https://organizationUnit.localhost';
+export const ORGANIZATION_UNIT_DEFAULT = '/organizationUnit';
 export const ORGANIZATION_UNIT_WITH_PARAMETERS = new RegExp(
-  '/partners/organizationUnits/*/*',
+  '/organizationUnit/*/*',
 );
 export const ORGANIZATION_UNIT_NEW_ENDPOINT_WITH_PARAMETERS = new RegExp(
   '/organizationUnit/*',
