@@ -11,4 +11,5 @@ export * from './entities/orders/products/products';
 export * from '../shared/extraInformation/additionalExtraInformation';
 export * from './entities/referenceLink';
 export * from './types/orderStatus';
+export * from './types/orderItemStatus';
 export * from './ordersClient';

@@ -1026,11 +1026,11 @@ describe('GraphqlApiClient', () => {
                   program: {
                     name: 'Microsoft Cloud Solution Provider (CSP)',
                     internalName: 'MSCSP',
+                    legacyCode: 'Microsoft',
                     vendor: {
                       name: 'Microsoft',
                     },
                     vendorReference: 'Microsoft',
-                    xacVendorCode: 'Microsoft',
                     id: 54,
                   },
                   itemData: {
