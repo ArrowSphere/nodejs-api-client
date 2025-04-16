@@ -3,7 +3,12 @@ export class PublicApiClientException extends Error {
   public httpError: string;
   public config?: unknown;
 
-  constructor(message: string, httpError = '', httpCode = 0, config = {}) {
+  constructor(
+    message: string,
+    httpError = '',
+    httpCode = 0,
+    config: object = {},
+  ) {
     super(message);
     this.httpCode = httpCode;
     this.httpError = httpError;
