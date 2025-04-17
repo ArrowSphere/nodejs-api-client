@@ -248,9 +248,14 @@ export abstract class AbstractRestfulClient extends AbstractHttpClient {
     const statusCode = response.status;
     if (statusCode === 404) {
       throw new NotFoundException(
-        `Resource not found on URL ${this.getUrl()}`,
+        response.data.messages,
         response.data.error,
         statusCode,
+        {
+          origin: `Resource not found on URL ${this.getUrl()}${this.basePath}${
+            this.path
+          }`,
+        },
       );
     }
 
@@ -260,7 +265,9 @@ export abstract class AbstractRestfulClient extends AbstractHttpClient {
         response.data.error,
         statusCode,
         {
-          origin: `Error: status code: ${statusCode}. URL: ${this.getUrl()}`,
+          origin: `Error: status code: ${statusCode}. URL: ${this.getUrl()}${
+            this.basePath
+          }${this.path}`,
         },
       );
     }
