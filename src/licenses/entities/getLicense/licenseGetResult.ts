@@ -83,6 +83,7 @@ export enum LicenseGetFields {
   COLUMN_MARKET_SEGMENT = 'marketSegment',
   COLUMN_CONFIGS = 'configs',
   COLUMN_WARNINGS = 'warnings',
+  COLUMN_END_DATE = 'end_date',
 }
 
 export type LicenseGetData = {
@@ -136,6 +137,7 @@ export type LicenseGetData = {
   [LicenseGetFields.COLUMN_MARKET_SEGMENT]?: string | null;
   [LicenseGetFields.COLUMN_CONFIGS]?: Array<ConfigFindResultData> | null;
   [LicenseGetFields.COLUMN_WARNINGS]?: Array<WarningFindResultData> | null;
+  [LicenseGetFields.COLUMN_END_DATE]: string;
 };
 
 export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
@@ -189,6 +191,7 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
   readonly #marketSegment?: string | null;
   readonly #configs?: Array<ConfigFindResult> | null;
   readonly #warnings?: Array<WarningFindResult> | null;
+  readonly #endDate: string;
 
   public constructor(licenseGetDataInput: LicenseGetData) {
     super(licenseGetDataInput);
@@ -318,6 +321,8 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
       (warningData: WarningFindResultData): WarningFindResult =>
         new WarningFindResult(warningData),
     );
+
+    this.#endDate = licenseGetDataInput[LicenseGetFields.COLUMN_END_DATE] ?? '';
   }
 
   public get classification(): string {
@@ -523,6 +528,10 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
     return this.#warnings;
   }
 
+  public get endDate(): string {
+    return this.#endDate;
+  }
+
   public toJSON(): LicenseGetData {
     return {
       [LicenseGetFields.COLUMN_ADDITIONAL_INFORMATION]: this
@@ -545,7 +554,7 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
       [LicenseGetFields.COLUMN_ACTIVATION_DATETIME]: this.activationDatetime,
       [LicenseGetFields.COLUMN_EXPIRY_DATETIME]: this.expiryDatetime,
       [LicenseGetFields.COLUMN_AUTO_RENEW]: this.autoRenew,
-      [LicenseGetFields.COLUMN_MARKETPLACE]: this.#marketplace,
+      [LicenseGetFields.COLUMN_MARKETPLACE]: this.marketplace,
       [LicenseGetFields.COLUMN_MESSAGE]: this.message,
       [LicenseGetFields.COLUMN_ACTIONS]: this.actions?.toJSON(),
       [LicenseGetFields.COLUMN_ACTION_MESSAGES]: this.actionMessages?.map(
@@ -587,6 +596,7 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
       [LicenseGetFields.COLUMN_WARNINGS]: this.warnings?.map(
         (warning: WarningFindResult) => warning.toJSON(),
       ),
+      [LicenseGetFields.COLUMN_END_DATE]: this.endDate,
     };
   }
 }
