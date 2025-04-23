@@ -3,7 +3,18 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.188.0] - 2025.04.23
+
+### Added
+
+- [graphql-api] add fields `isAddon`, `provisionError` into `OrderItemsType`
+- [graphql-api] add field `isAddon` into `QuoteItemType`
+- [graphql-api] update `OrderStatusEnum`
+- [graphql-api] add enum `OrderItemStatusEnum`
+- [graphql-api] rename field `xacVendorCode?` to `legacyCode` of `GraphqlApiProgramType`
+
 ## [3.187.0] - 2025.04.22
+
 ### Added
 - [Licenses] add endDate to LicenseGetData type and LicenseGetResult class
 
