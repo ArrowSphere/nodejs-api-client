@@ -47,6 +47,7 @@ export const CUSTOMERS_CUSTOMERS_MIGRATION_URL = new RegExp(
 export const CUSTOMERS_CUSTOMERS_PROVISION = new RegExp(
   '/customers/REF/provision',
 );
+const ANONYMIZE_PATH = `/customers/REF/contact/anonymize`;
 
 describe('CustomersClients', () => {
   describe('getCustomers', () => {
@@ -641,6 +642,22 @@ describe('CustomersClients', () => {
       nock(CUSTOMERS_MOCK_URL).post('/customers/reconciliation').reply(200);
 
       await client.postReconciliationCustomers('MSCSP');
+    });
+  });
+
+  describe('anonymizeContacts', () => {
+    const client = new PublicApiClient()
+      .getCustomersClient()
+      .setUrl(CUSTOMERS_MOCK_URL);
+
+    it('calls the anonymizeContacts method', async () => {
+      nock(CUSTOMERS_MOCK_URL).patch(ANONYMIZE_PATH).reply(204);
+
+      await client.anonymizeContacts('REF', {
+        contacts: [123],
+      });
+
+      expect(nock.isDone()).to.be.true;
     });
   });
 });

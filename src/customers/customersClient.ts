@@ -131,6 +131,14 @@ export type PatchCustomerContactPayload = {
   [Property in keyof PostCustomerContactPayload]?: PostCustomerContactPayload[Property];
 };
 
+export enum CustomerAnonymizeContactsPayloadFields {
+  COLUMN_CONTACTS = 'contacts',
+}
+
+export type CustomerAnonymizeContactsPayload = {
+  [CustomerAnonymizeContactsPayloadFields.COLUMN_CONTACTS]: number[];
+};
+
 export class CustomersClient extends AbstractRestfulClient {
   /**
    * The base path of the API
@@ -323,5 +331,15 @@ export class CustomersClient extends AbstractRestfulClient {
     this.path = `/${customerReference}/provision`;
 
     return new GetResult(CustomerProvision, await this.get({ program }));
+  }
+
+  public async anonymizeContacts(
+    customerReference: string,
+    payload: CustomerAnonymizeContactsPayload,
+    parameters: Parameters = {},
+  ): Promise<void> {
+    this.path = `/${customerReference}/contact/anonymize`;
+
+    await this.patch(payload, parameters);
   }
 }
