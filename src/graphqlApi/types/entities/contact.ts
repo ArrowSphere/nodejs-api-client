@@ -1,5 +1,6 @@
 import { EndCustomerType } from './company';
 import { OrganizationUnitsType } from './organizationUnit';
+import { UserType } from './user';
 
 export type ContactsType = {
   id?: number;
@@ -19,6 +20,7 @@ export type ContactsType = {
   username?: string;
   type?: ContactTypeType;
   role?: ContactRole;
+  user?: UserType;
 };
 
 type ContactRole = {
