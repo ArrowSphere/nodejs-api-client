@@ -1197,6 +1197,9 @@ export const SELECT_ALL_CONTACTS_QUERY: SelectAllQueryType = {
           name: true,
         },
         phone: true,
+        user: {
+          id: true,
+        },
         username: true,
       },
     },
