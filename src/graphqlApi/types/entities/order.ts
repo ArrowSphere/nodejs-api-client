@@ -75,3 +75,28 @@ export type GraphqlApiOrderHistoryType = {
   order?: OrdersType;
   user?: UserType;
 };
+
+export type GraphqlApiOrderListType = {
+  id?: number;
+  createdAt?: string;
+  createdBy?: string;
+  createdByImpersonate?: string;
+  endCustomerName?: string;
+  labelsSerialized?: string;
+  marketplace?: string;
+  orderType?: string;
+  partnerName?: string;
+  programInternalName?: string;
+  partnerId?: number;
+  programId?: number;
+  reference?: string;
+  scheduledAt?: string;
+  status?: string;
+  statusId?: number;
+  totalCommitment?: number;
+  totalPrice?: number;
+  unitSymbol?: string;
+  updatedAt?: string;
+  uuid?: number;
+  vendorName?: string;
+};
