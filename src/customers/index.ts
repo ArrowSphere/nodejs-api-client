@@ -6,5 +6,8 @@ export * from './entities/customers/customer';
 export * from './entities/customers/details/details';
 export * from './entities/dataCustomers';
 export * from './entities/dataInvitation';
+export * from './entities/dataUnknownLicenses';
 export * from './entities/invitations/company/company';
 export * from './entities/invitations/contact/invitationContact';
+export * from './entities/unknownLicenses/relation';
+export * from './entities/unknownLicenses/unknownLicense';

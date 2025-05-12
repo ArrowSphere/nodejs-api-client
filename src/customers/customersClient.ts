@@ -2,6 +2,7 @@ import { AbstractRestfulClient, Parameters } from '../abstractRestfulClient';
 import { GetResult } from '../getResult';
 import { DataCustomers } from './entities/dataCustomers';
 import { DataInvitation } from './entities/dataInvitation';
+import { DataUnknownLicenses } from './entities/dataUnknownLicenses';
 import { DataListOrders } from '../orders';
 import { CustomerContactList } from './entities/customers/customerContact/customerContactList';
 import {
@@ -324,5 +325,14 @@ export class CustomersClient extends AbstractRestfulClient {
     this.path = `/${customerReference}/provision`;
 
     return new GetResult(CustomerProvision, await this.get({ program }));
+  }
+
+  public async getUnknownLicenses(
+    customerReference: string,
+    parameters: Parameters = {},
+  ): Promise<GetResult<DataUnknownLicenses>> {
+    this.path = `/${customerReference}/unknownlicenses`;
+
+    return new GetResult(DataUnknownLicenses, await this.get(parameters));
   }
 }
