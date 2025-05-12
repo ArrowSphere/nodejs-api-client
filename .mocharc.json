@@ -1,3 +1,6 @@
 {
-  "require": ["mocha-suppress-logs", "ts-node/register"]
+  "require": [
+    "mocha-suppress-logs",
+    "ts-node/register"
+  ]
 }

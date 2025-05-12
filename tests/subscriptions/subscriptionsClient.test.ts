@@ -18,7 +18,9 @@ import { SubscriptionsListResult } from '../../src/subscriptions/entities/subscr
 import querystring from 'querystring';
 
 export const SUBSCRIPTIONS_MOCK_URL = 'http://subscriptions.localhost';
-export const SUBSCRIPTIONS_LIST_ENDPOINT = /\/admin\/subscriptions/;
+export const SUBSCRIPTIONS_LIST_ENDPOINT = /^\/subscriptions/;
+// export const SUBSCRIPTIONS_ADMIN_LIST_ENDPOINT = /\/subscriptions/;
+export const SUBSCRIPTIONS_ADMIN_LIST_ENDPOINT = /^\/admin\/subscriptions/;
 
 /**
  * Mock subscription data to be used in tests and returned by mocks
@@ -47,6 +49,21 @@ export const MOCK_SUBSCRIPTION_DATA: SubscriptionData = {
  * Mocks a potential list call response data
  */
 export const MOCK_LIST_RESPONSE: SubscriptionsListData = {
+  pagination: {
+    currentPage: 1,
+    total: 2,
+    totalPage: 2,
+    perPage: 25,
+    next: '/subscriptions?perPage=25&page=2',
+    previous: '/subscriptions?perPage=25&page=1',
+  },
+  data: [MOCK_SUBSCRIPTION_DATA],
+};
+
+/**
+ * Mocks a potential admin list call response data
+ */
+export const MOCK_ADMIN_LIST_RESPONSE: SubscriptionsListData = {
   pagination: {
     currentPage: 1,
     total: 2,
@@ -89,7 +106,7 @@ export const SUBSCRIPTIONS_LIST_PAYLOAD: SubscriptionsListPayload = {
   subscription: ['9852', '9853'],
 };
 
-describe('SubscriptionsClient', () => {
+describe.only('SubscriptionsClient', () => {
   const client = new PublicApiClient()
     .getSubscriptionsClient()
     .setUrl(SUBSCRIPTIONS_MOCK_URL);
@@ -112,6 +129,27 @@ describe('SubscriptionsClient', () => {
           return [204];
         });
       client.listRaw(SUBSCRIPTIONS_LIST_PAYLOAD);
+    });
+
+    it('fetch subscription from admin endpoint', (done) => {
+      nock(SUBSCRIPTIONS_MOCK_URL)
+        .get(SUBSCRIPTIONS_ADMIN_LIST_ENDPOINT)
+        .reply((uri) => {
+          try {
+            const query = querystring.decode(
+              new URL(uri, SUBSCRIPTIONS_MOCK_URL).search.replace('?', ''),
+            );
+            expect(() => Joi.assert(query, PAYLOAD_SCHEMA)).not.to.throw();
+          } catch (error) {
+            done(error);
+            return [500];
+          }
+          done();
+          return [204];
+        });
+      client.listRaw(SUBSCRIPTIONS_LIST_PAYLOAD, {
+        isAdmin: true,
+      });
     });
 
     it('calls the get method and returns its result', async () => {
@@ -182,6 +220,67 @@ describe('SubscriptionsClient', () => {
         .get(SUBSCRIPTIONS_LIST_ENDPOINT)
         .reply(200, (): SubscriptionsListData => MOCK_LIST_RESPONSE);
       const result = await client.list();
+      expect(result).to.be.instanceOf(SubscriptionsListResult);
+    });
+  });
+
+  describe('listAdmin', () => {
+    it('sets the specified page number', (done) => {
+      nock(SUBSCRIPTIONS_MOCK_URL)
+        .get(SUBSCRIPTIONS_ADMIN_LIST_ENDPOINT)
+        .reply((uri) => {
+          const urlParams = new URL(uri, SUBSCRIPTIONS_MOCK_URL);
+          try {
+            expect(urlParams.searchParams.get('page')).to.equal('10');
+          } catch (error) {
+            done(error);
+            return [500];
+          }
+          done();
+          return [204];
+        });
+      client.listAdmin(undefined, undefined, 10);
+    });
+
+    it('sets the specified per page number', (done) => {
+      nock(SUBSCRIPTIONS_MOCK_URL)
+        .get(SUBSCRIPTIONS_ADMIN_LIST_ENDPOINT)
+        .reply((uri) => {
+          const urlParams = new URL(uri, SUBSCRIPTIONS_MOCK_URL);
+          try {
+            expect(urlParams.searchParams.get('perPage')).to.equal('10');
+          } catch (error) {
+            done(error);
+            return [500];
+          }
+          done();
+          return [204];
+        });
+      client.listAdmin(undefined, 10);
+    });
+
+    it('sets the default per page number if required', (done) => {
+      nock(SUBSCRIPTIONS_MOCK_URL)
+        .get(SUBSCRIPTIONS_ADMIN_LIST_ENDPOINT)
+        .reply((uri) => {
+          const urlParams = new URL(uri, SUBSCRIPTIONS_MOCK_URL);
+          try {
+            expect(urlParams.searchParams.get('perPage')).to.exist;
+          } catch (error) {
+            done(error);
+            return [500];
+          }
+          done();
+          return [204];
+        });
+      client.listAdmin();
+    });
+
+    it('calls listRaw and feeds the response returns the SubscriptionsListResult entity', async () => {
+      nock(SUBSCRIPTIONS_MOCK_URL)
+        .get(SUBSCRIPTIONS_ADMIN_LIST_ENDPOINT)
+        .reply(200, (): SubscriptionsListData => MOCK_ADMIN_LIST_RESPONSE);
+      const result = await client.listAdmin();
       expect(result).to.be.instanceOf(SubscriptionsListResult);
     });
   });

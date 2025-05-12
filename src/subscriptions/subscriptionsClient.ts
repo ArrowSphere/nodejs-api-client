@@ -67,9 +67,10 @@ export class SubscriptionsClient extends AbstractRestfulClient {
    * @returns Promise\<AxiosResponse\<{@link SubscriptionsListData}\>\>   */
   public async listRaw(
     data: SubscriptionsListPayload = {},
+    options = { isAdmin: false },
   ): Promise<SubscriptionsListData> {
     this.path = this.LIST_PATH;
-    return this.get<SubscriptionsListData>(data, {}, { isAdmin: true });
+    return this.get<SubscriptionsListData>(data, {}, options);
   }
 
   /**
@@ -92,7 +93,20 @@ export class SubscriptionsClient extends AbstractRestfulClient {
     this.setPerPage(perPage);
     this.setPage(page);
 
-    const response = await this.listRaw(postData);
+    const response = await this.listRaw(postData, { isAdmin: false });
+
+    return new SubscriptionsListResult(response, this, postData);
+  }
+
+  public async listAdmin(
+    postData: SubscriptionsListPayload = {},
+    perPage = 100,
+    page = 1,
+  ) {
+    this.setPerPage(perPage);
+    this.setPage(page);
+
+    const response = await this.listRaw(postData, { isAdmin: true });
 
     return new SubscriptionsListResult(response, this, postData);
   }
