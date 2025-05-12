@@ -11,14 +11,16 @@ import {
   SubscriptionFields,
 } from '../../src/subscriptions/entities/subscription';
 import {
-  SubscriptionsListData,
+  AdminSubscriptionsListData,
+  PartnerSubscriptionsListData,
   SubscriptionsListPayload,
 } from '../../src/subscriptions/subscriptionsClient';
 import { SubscriptionsListResult } from '../../src/subscriptions/entities/subscriptionsListResult';
 import querystring from 'querystring';
 
 export const SUBSCRIPTIONS_MOCK_URL = 'http://subscriptions.localhost';
-export const SUBSCRIPTIONS_LIST_ENDPOINT = /\/admin\/subscriptions/;
+export const SUBSCRIPTIONS_PARTNER_LIST_ENDPOINT = /^\/subscriptions/;
+export const SUBSCRIPTIONS_ADMIN_LIST_ENDPOINT = /^\/admin\/subscriptions/;
 
 /**
  * Mock subscription data to be used in tests and returned by mocks
@@ -44,9 +46,9 @@ export const MOCK_SUBSCRIPTION_DATA: SubscriptionData = {
 };
 
 /**
- * Mocks a potential list call response data
+ * Mocks a potential admin list call response data
  */
-export const MOCK_LIST_RESPONSE: SubscriptionsListData = {
+export const MOCK_ADMIN_LIST_RESPONSE: AdminSubscriptionsListData = {
   pagination: {
     currentPage: 1,
     total: 2,
@@ -56,6 +58,32 @@ export const MOCK_LIST_RESPONSE: SubscriptionsListData = {
     previous: '/admin/subscriptions?perPage=25&page=1',
   },
   data: [MOCK_SUBSCRIPTION_DATA],
+};
+
+export const MOCK_PARTNER_LIST_RESPONSE: PartnerSubscriptionsListData = {
+  status: 200,
+  data: [
+    {
+      reference: 'XSPS162859',
+      name: 'BD-CSG-CSP',
+      status: "Pending user's acceptance of CTA",
+      dateDemand: '2025-05-12T08:19:49.000Z',
+      dateValidation: null,
+      dateEnd: null,
+      level: null,
+      error_msg: null,
+      details: {
+        partnerId: '52623088',
+      },
+      extraInformation: {
+        programs: {
+          'BD-CSG-CSP': {
+            partnerId: '52623088',
+          },
+        },
+      },
+    },
+  ],
 };
 
 /**
@@ -95,9 +123,9 @@ describe('SubscriptionsClient', () => {
     .setUrl(SUBSCRIPTIONS_MOCK_URL);
 
   describe('listRaw', () => {
-    it('calls the get method with the right payload', (done) => {
+    it('fetch subscriptions from admin endpoint', (done) => {
       nock(SUBSCRIPTIONS_MOCK_URL)
-        .get(SUBSCRIPTIONS_LIST_ENDPOINT)
+        .get(SUBSCRIPTIONS_ADMIN_LIST_ENDPOINT)
         .reply((uri) => {
           try {
             const query = querystring.decode(
@@ -117,7 +145,7 @@ describe('SubscriptionsClient', () => {
     it('calls the get method and returns its result', async () => {
       const expectedData = { expected: true };
       nock(SUBSCRIPTIONS_MOCK_URL)
-        .get(SUBSCRIPTIONS_LIST_ENDPOINT)
+        .get(SUBSCRIPTIONS_ADMIN_LIST_ENDPOINT)
         .reply(200, expectedData);
 
       const result = await client.listRaw();
@@ -126,9 +154,22 @@ describe('SubscriptionsClient', () => {
   });
 
   describe('list', () => {
+    it('should fetch data and return it', async () => {
+      nock(SUBSCRIPTIONS_MOCK_URL)
+        .get(SUBSCRIPTIONS_PARTNER_LIST_ENDPOINT)
+        .reply(
+          200,
+          (): PartnerSubscriptionsListData => MOCK_PARTNER_LIST_RESPONSE,
+        );
+      const result = await client.list();
+      expect(result).to.deep.equal(MOCK_PARTNER_LIST_RESPONSE);
+    });
+  });
+
+  describe('listAdmin', () => {
     it('sets the specified page number', (done) => {
       nock(SUBSCRIPTIONS_MOCK_URL)
-        .get(SUBSCRIPTIONS_LIST_ENDPOINT)
+        .get(SUBSCRIPTIONS_ADMIN_LIST_ENDPOINT)
         .reply((uri) => {
           const urlParams = new URL(uri, SUBSCRIPTIONS_MOCK_URL);
           try {
@@ -140,12 +181,12 @@ describe('SubscriptionsClient', () => {
           done();
           return [204];
         });
-      client.list(undefined, undefined, 10);
+      client.listAdmin(undefined, undefined, 10);
     });
 
     it('sets the specified per page number', (done) => {
       nock(SUBSCRIPTIONS_MOCK_URL)
-        .get(SUBSCRIPTIONS_LIST_ENDPOINT)
+        .get(SUBSCRIPTIONS_ADMIN_LIST_ENDPOINT)
         .reply((uri) => {
           const urlParams = new URL(uri, SUBSCRIPTIONS_MOCK_URL);
           try {
@@ -157,12 +198,12 @@ describe('SubscriptionsClient', () => {
           done();
           return [204];
         });
-      client.list(undefined, 10);
+      client.listAdmin(undefined, 10);
     });
 
     it('sets the default per page number if required', (done) => {
       nock(SUBSCRIPTIONS_MOCK_URL)
-        .get(SUBSCRIPTIONS_LIST_ENDPOINT)
+        .get(SUBSCRIPTIONS_ADMIN_LIST_ENDPOINT)
         .reply((uri) => {
           const urlParams = new URL(uri, SUBSCRIPTIONS_MOCK_URL);
           try {
@@ -174,14 +215,14 @@ describe('SubscriptionsClient', () => {
           done();
           return [204];
         });
-      client.list();
+      client.listAdmin();
     });
 
     it('calls listRaw and feeds the response returns the SubscriptionsListResult entity', async () => {
       nock(SUBSCRIPTIONS_MOCK_URL)
-        .get(SUBSCRIPTIONS_LIST_ENDPOINT)
-        .reply(200, (): SubscriptionsListData => MOCK_LIST_RESPONSE);
-      const result = await client.list();
+        .get(SUBSCRIPTIONS_ADMIN_LIST_ENDPOINT)
+        .reply(200, (): AdminSubscriptionsListData => MOCK_ADMIN_LIST_RESPONSE);
+      const result = await client.listAdmin();
       expect(result).to.be.instanceOf(SubscriptionsListResult);
     });
   });

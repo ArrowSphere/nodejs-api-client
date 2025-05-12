@@ -1,7 +1,7 @@
 import { AbstractEntity } from '../../abstractEntity';
 import {
+  AdminSubscriptionsListData,
   SubscriptionsClient,
-  SubscriptionsListData,
   SubscriptionsListPayload,
 } from '../subscriptionsClient';
 import { Subscription, SubscriptionData } from './subscription';
@@ -15,7 +15,7 @@ export type SubscriptionsListResultData = {
   nbResults: number;
 };
 
-export class SubscriptionsListResult extends AbstractEntity<SubscriptionsListData> {
+export class SubscriptionsListResult extends AbstractEntity<AdminSubscriptionsListData> {
   readonly #subscriptions: Array<SubscriptionData>;
   readonly #client: SubscriptionsClient;
   readonly #payload: SubscriptionsListPayload;
@@ -32,7 +32,7 @@ export class SubscriptionsListResult extends AbstractEntity<SubscriptionsListDat
    * @param payload - Payload parameter sent to the first call
    */
   constructor(
-    response: SubscriptionsListData,
+    response: AdminSubscriptionsListData,
     client: SubscriptionsClient,
     payload: SubscriptionsListPayload = {},
   ) {
