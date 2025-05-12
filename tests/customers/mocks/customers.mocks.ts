@@ -8,6 +8,8 @@ import {
   CustomerFields,
   DataCustomersFields,
   DataInvitationFields,
+  DataUnknownLicensesFields,
+  DataUnknownLicenseType,
   DetailsFields,
   GetData,
   GetResultFields,
@@ -16,6 +18,8 @@ import {
   PostCustomerContactPayload,
   PostCustomerInvitation,
   PostCustomerInvitationFields,
+  RelationFields,
+  UnknownLicenseFields,
 } from '../../../src';
 import { CustomerContactXcpInvitationFields } from '../../../src/customers/entities/customers/customerContact/customerContactXcpInvitation';
 import { CustomerContactOrganizationUnitFields } from '../../../src/customers/entities/customers/customerContact/customerContactOrganizationUnit';
@@ -237,5 +241,137 @@ export const RESPONSE_CUSTOMER_PROVISION: GetData<CustomerProvisionType> = {
     [CustomerProvisionFields.COLUMN_ATTRIBUTES]: {
       test: 'test',
     },
+  },
+};
+
+export const PAYLOAD_GET_UNKNOWN_LICENSES: GetData<DataUnknownLicenseType> = {
+  [GetResultFields.COLUMN_STATUS]: 200,
+  [GetResultFields.COLUMN_DATA]: {
+    [DataUnknownLicensesFields.COLUMN_UNKNOWN_LICENSES]: [
+      {
+        [UnknownLicenseFields.COLUMN_VENDOR_REFERENCE_ID]:
+          'AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE',
+        [UnknownLicenseFields.COLUMN_OFFER_NAME]:
+          'Microsoft Azure Account (Legacy)',
+        [UnknownLicenseFields.COLUMN_OFFER_SKU]: 'MS-AZR-0146P',
+        [UnknownLicenseFields.COLUMN_PRICEBAND_ARROWSPHERE_SKU]:
+          'var_MS-AZR-0146P_17857',
+        [UnknownLicenseFields.COLUMN_QUANTITY]: 1,
+        [UnknownLicenseFields.COLUMN_SUBSCRIPTION_START_DATE]:
+          '2021-05-07T00:00:00Z',
+        [UnknownLicenseFields.COLUMN_FRIENDLY_NAME]: 'Microsoft Azure',
+        [UnknownLicenseFields.COLUMN_IS_RECONCILABLE]: true,
+        [UnknownLicenseFields.COLUMN_RECONCILABLE_MESSAGE]: '',
+        [UnknownLicenseFields.COLUMN_IS_ADDON]: false,
+        [UnknownLicenseFields.COLUMN_PARENT_SUBSCRIPTION_VENDOR_REFERENCE_ID]:
+          '',
+        [UnknownLicenseFields.COLUMN_PARENT_PARTNER_REF]: '',
+        [UnknownLicenseFields.COLUMN_STATUS]: 'active',
+        [UnknownLicenseFields.COLUMN_GROUP]: 'group1',
+        [UnknownLicenseFields.COLUMN_RELATIONS]: [],
+      },
+      {
+        [UnknownLicenseFields.COLUMN_VENDOR_REFERENCE_ID]:
+          '00000000-AAAA-BBBB-CCCC-DDDDEEEEFFFF',
+        [UnknownLicenseFields.COLUMN_OFFER_NAME]: '',
+        [UnknownLicenseFields.COLUMN_OFFER_SKU]:
+          'CFQ7TTC0LF8S:0001:CFQ7TTC0K195',
+        [UnknownLicenseFields.COLUMN_PRICEBAND_ARROWSPHERE_SKU]: null,
+        [UnknownLicenseFields.COLUMN_QUANTITY]: 2,
+        [UnknownLicenseFields.COLUMN_SUBSCRIPTION_START_DATE]:
+          '2021-03-15T16:40:14.504682Z',
+        [UnknownLicenseFields.COLUMN_FRIENDLY_NAME]:
+          'Office 365 E5 without Audio Conferencing',
+        [UnknownLicenseFields.COLUMN_IS_RECONCILABLE]: false,
+        [UnknownLicenseFields.COLUMN_RECONCILABLE_MESSAGE]:
+          "The offer doesn't exist in the xCM",
+        [UnknownLicenseFields.COLUMN_IS_ADDON]: false,
+        [UnknownLicenseFields.COLUMN_PARENT_SUBSCRIPTION_VENDOR_REFERENCE_ID]:
+          '',
+        [UnknownLicenseFields.COLUMN_PARENT_PARTNER_REF]: '',
+        [UnknownLicenseFields.COLUMN_STATUS]: 'active',
+        [UnknownLicenseFields.COLUMN_GROUP]: 'group2',
+        [UnknownLicenseFields.COLUMN_RELATIONS]: [],
+      },
+      {
+        [UnknownLicenseFields.COLUMN_VENDOR_REFERENCE_ID]:
+          '01234567-0000-1111-2222-333344445555',
+        [UnknownLicenseFields.COLUMN_OFFER_NAME]: 'Virtual Machines BS Series',
+        [UnknownLicenseFields.COLUMN_OFFER_SKU]: 'DZH318Z0BQ35',
+        [UnknownLicenseFields.COLUMN_PRICEBAND_ARROWSPHERE_SKU]:
+          'DZH318Z0BQ35_00CQ_8640_720_EUR_21_4Gb_1_CAEast_BSSeries_1',
+        [UnknownLicenseFields.COLUMN_QUANTITY]: 1,
+        [UnknownLicenseFields.COLUMN_SUBSCRIPTION_START_DATE]: '2021-05-25',
+        [UnknownLicenseFields.COLUMN_FRIENDLY_NAME]:
+          'Reserved_VM_Instance_Standard_B1s_CA_East_1_Year',
+        [UnknownLicenseFields.COLUMN_IS_RECONCILABLE]: true,
+        [UnknownLicenseFields.COLUMN_RECONCILABLE_MESSAGE]: '',
+        [UnknownLicenseFields.COLUMN_IS_ADDON]: false,
+        [UnknownLicenseFields.COLUMN_PARENT_SUBSCRIPTION_VENDOR_REFERENCE_ID]:
+          '5924dd50-3dc7-4537-9f5f-7a156de2e4ff',
+        [UnknownLicenseFields.COLUMN_PARENT_PARTNER_REF]: 'XSP123456789',
+        [UnknownLicenseFields.COLUMN_STATUS]: 'Active',
+        [UnknownLicenseFields.COLUMN_GROUP]:
+          '74iWsafP-z49nh6_hFQiSYqwoXYHXF1M1',
+        [UnknownLicenseFields.COLUMN_RELATIONS]: [
+          {
+            [RelationFields.COLUMN_TYPE]: 'reservedInstanceOf',
+            [RelationFields.COLUMN_PARTNER_REF]: 'XSP123987654',
+            [RelationFields.COLUMN_SCOPE]: 'single',
+          },
+        ],
+      },
+      {
+        [UnknownLicenseFields.COLUMN_VENDOR_REFERENCE_ID]:
+          '98765432-aaaa-bbbb-cccc-ddddeeeeffff',
+        [UnknownLicenseFields.COLUMN_OFFER_NAME]: 'Virtual Machines BS Series',
+        [UnknownLicenseFields.COLUMN_OFFER_SKU]: 'DZH318Z0BQ35',
+        [UnknownLicenseFields.COLUMN_PRICEBAND_ARROWSPHERE_SKU]:
+          'DZH318Z0BQ35_007T_8640_0_EUR_21_4Gb_1_KRSouth_BSSeries_1',
+        [UnknownLicenseFields.COLUMN_QUANTITY]: 1,
+        [UnknownLicenseFields.COLUMN_SUBSCRIPTION_START_DATE]: '2021-08-27',
+        [UnknownLicenseFields.COLUMN_FRIENDLY_NAME]:
+          'Reserved_VM_Instance_Standard_B1s_KR_South_1_Year',
+        [UnknownLicenseFields.COLUMN_IS_RECONCILABLE]: false,
+        [UnknownLicenseFields.COLUMN_RECONCILABLE_MESSAGE]:
+          'No Azure subscription not found. Reconciliate or create one first',
+        [UnknownLicenseFields.COLUMN_IS_ADDON]: false,
+        [UnknownLicenseFields.COLUMN_PARENT_SUBSCRIPTION_VENDOR_REFERENCE_ID]:
+          '',
+        [UnknownLicenseFields.COLUMN_PARENT_PARTNER_REF]: '',
+        [UnknownLicenseFields.COLUMN_STATUS]: 'Active',
+        [UnknownLicenseFields.COLUMN_GROUP]:
+          'lWjyllDK0iV27Hm7m9kwSr3g01Qp56BZ1',
+        [UnknownLicenseFields.COLUMN_RELATIONS]: [
+          {
+            [RelationFields.COLUMN_TYPE]: 'reservedInstanceOf',
+            [RelationFields.COLUMN_SCOPE]: 'shared',
+          },
+        ],
+      },
+      {
+        [UnknownLicenseFields.COLUMN_VENDOR_REFERENCE_ID]:
+          'c109ed3d-7c9d-4b3b-8b3b-3b3b3b3b3b3b',
+        [UnknownLicenseFields.COLUMN_OFFER_NAME]:
+          'Azure App Service Premium v3 Plan - Linux',
+        [UnknownLicenseFields.COLUMN_OFFER_SKU]: 'DZH318Z0DCR6:003L',
+        [UnknownLicenseFields.COLUMN_PRICEBAND_ARROWSPHERE_SKU]:
+          'DZH318Z0DCR6_003L_25920_720_DKK',
+        [UnknownLicenseFields.COLUMN_QUANTITY]: null,
+        [UnknownLicenseFields.COLUMN_SUBSCRIPTION_START_DATE]: null,
+        [UnknownLicenseFields.COLUMN_FRIENDLY_NAME]: 'N/A',
+        [UnknownLicenseFields.COLUMN_IS_RECONCILABLE]: false,
+        [UnknownLicenseFields.COLUMN_RECONCILABLE_MESSAGE]:
+          'Unable to fetch RI data on Microsoft side',
+        [UnknownLicenseFields.COLUMN_IS_ADDON]: false,
+        [UnknownLicenseFields.COLUMN_PARENT_SUBSCRIPTION_VENDOR_REFERENCE_ID]:
+          '',
+        [UnknownLicenseFields.COLUMN_PARENT_PARTNER_REF]: '',
+        [UnknownLicenseFields.COLUMN_STATUS]: 'Active',
+        [UnknownLicenseFields.COLUMN_GROUP]:
+          'FVEeh1P5tYlxDKEu2RS6aze45crzfr1M1',
+        [UnknownLicenseFields.COLUMN_RELATIONS]: [],
+      },
+    ],
   },
 };

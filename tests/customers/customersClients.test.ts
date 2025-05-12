@@ -22,12 +22,13 @@ import {
   PAYLOAD_GET_CUSTOMER_INVITATION,
   PAYLOAD_GET_CUSTOMERS,
   PAYLOAD_GET_CUSTOMERS_WITHOUT_OPTIONAL_FIELDS,
+  PAYLOAD_GET_UNKNOWN_LICENSES,
   PAYLOAD_POST_CUSTOMER_INVITATION,
   RESPONSE_CUSTOMER_CONTACT,
   RESPONSE_CUSTOMER_PROVISION,
 } from './mocks/customers.mocks';
 import { Axios } from 'axios';
-import sinon from 'sinon';
+import * as sinon from 'sinon';
 import { cloneDeep } from 'lodash';
 
 export const CUSTOMERS_MOCK_URL = 'https://customers.localhost';
@@ -47,6 +48,10 @@ export const CUSTOMERS_CUSTOMERS_MIGRATION_URL = new RegExp(
 );
 export const CUSTOMERS_CUSTOMERS_PROVISION = new RegExp(
   '/customers/REF/provision',
+);
+
+export const CUSTOMERS_GET_UNKNOWN_LICENSES_URL = new RegExp(
+  '/customers/REF/unknownlicenses',
 );
 
 describe('CustomersClients', () => {
@@ -625,6 +630,7 @@ describe('CustomersClients', () => {
       expect(res.toJSON()).to.eql(RESPONSE_CUSTOMER_PROVISION);
     });
   });
+
   describe('reactivatecustomer', () => {
     const client = new PublicApiClient()
       .getCustomersClient()
@@ -646,6 +652,23 @@ describe('CustomersClients', () => {
       nock(CUSTOMERS_MOCK_URL).post('/customers/reconciliation').reply(200);
 
       await client.postReconciliationCustomers('MSCSP');
+    });
+  });
+
+  describe('getUnknownLicenses', () => {
+    const client = new PublicApiClient()
+      .getCustomersClient()
+      .setUrl(CUSTOMERS_MOCK_URL);
+
+    it('call get customer unknown licenses', async () => {
+      nock(CUSTOMERS_MOCK_URL)
+        .get(CUSTOMERS_GET_UNKNOWN_LICENSES_URL)
+        .reply(200, PAYLOAD_GET_UNKNOWN_LICENSES);
+
+      const result = await client.getUnknownLicenses('REF');
+
+      expect(result).to.be.instanceof(GetResult);
+      expect(result.toJSON()).to.eql(PAYLOAD_GET_UNKNOWN_LICENSES);
     });
   });
 });
