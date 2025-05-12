@@ -20,7 +20,7 @@ export type SubscriptionsListPayload = {
   sortDirection?: 'ASC' | 'DESC';
 };
 
-export type SubscriptionsListData = {
+export type AdminSubscriptionsListData = {
   data: Array<SubscriptionData>;
   pagination: {
     perPage: number;
@@ -29,6 +29,33 @@ export type SubscriptionsListData = {
     total: number;
     next: string;
     previous: string;
+  };
+};
+
+export type PartnerSubscriptionsListData = {
+  data: Array<PartnerSubscription>;
+  status: number;
+};
+
+export type PartnerSubscription = {
+  reference: string;
+  name: string;
+  status: string;
+  dateDemand: string;
+  dateValidation: string | null;
+  dateEnd: string | null;
+  level: string | null;
+  error_msg: string | null;
+  details: {
+    partnerId: string;
+  };
+  extraInformation: {
+    programs: Record<
+      string,
+      {
+        partnerId: string;
+      }
+    >;
   };
 };
 
@@ -60,16 +87,17 @@ export class SubscriptionsClient extends AbstractRestfulClient {
   protected isCamelPagination = true;
 
   /**
-   * Calls the subscriptions API list endpoint
+   * @deprecated use listAdmin instead
+   * Calls the admin subscriptions API list endpoint
    *
    * @param data - List payload
    *
-   * @returns Promise\<AxiosResponse\<{@link SubscriptionsListData}\>\>   */
+   * @returns Promise\<AxiosResponse\<{@link AdminSubscriptionsListData}\>\>   */
   public async listRaw(
     data: SubscriptionsListPayload = {},
-  ): Promise<SubscriptionsListData> {
+  ): Promise<AdminSubscriptionsListData> {
     this.path = this.LIST_PATH;
-    return this.get<SubscriptionsListData>(data, {}, { isAdmin: true });
+    return this.get<AdminSubscriptionsListData>(data, {}, { isAdmin: true });
   }
 
   /**
@@ -77,7 +105,7 @@ export class SubscriptionsClient extends AbstractRestfulClient {
    *
    * Note: This endpoint requires an admin token to be called
    *
-   * @param postData - List payload
+   * @param filters - List payload
    * @param perPage - Number of results per page
    * @param page - Page number to fetch
    *
@@ -85,21 +113,31 @@ export class SubscriptionsClient extends AbstractRestfulClient {
    *
    */
   public async list(
-    postData: SubscriptionsListPayload = {},
+    filters: SubscriptionsListPayload = {},
+  ): Promise<PartnerSubscriptionsListData> {
+    return this.get<PartnerSubscriptionsListData>(
+      filters,
+      {},
+      { isAdmin: false },
+    );
+  }
+
+  public async listAdmin(
+    filters: SubscriptionsListPayload = {},
     perPage = 100,
     page = 1,
-  ): Promise<SubscriptionsListResult> {
+  ) {
     this.setPerPage(perPage);
     this.setPage(page);
 
-    const response = await this.listRaw(postData);
+    const response = await this.listRaw(filters);
 
-    return new SubscriptionsListResult(response, this, postData);
+    return new SubscriptionsListResult(response, this, filters);
   }
 
   public async addSubscription(
-    postData: SubscriptionCreationData,
+    filters: SubscriptionCreationData,
   ): Promise<void> {
-    return this.post(postData);
+    return this.post(filters);
   }
 }

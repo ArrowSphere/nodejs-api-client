@@ -2,15 +2,15 @@ import { expect } from 'chai';
 import nock from 'nock';
 import { PublicApiClient } from '../../../src';
 import {
-  SubscriptionsListData,
+  AdminSubscriptionsListData,
   SubscriptionsListResult,
   SubscriptionsListResultData,
 } from '../../../src/subscriptions';
 import {
-  MOCK_LIST_RESPONSE,
+  MOCK_ADMIN_LIST_RESPONSE,
   MOCK_SUBSCRIPTION_DATA,
-  SUBSCRIPTIONS_LIST_ENDPOINT,
   SUBSCRIPTIONS_LIST_PAYLOAD,
+  SUBSCRIPTIONS_ADMIN_LIST_ENDPOINT,
 } from '../subscriptionsClient.test';
 
 const LIST_RESULT_SUBSCRIPTIONS_MOCK_URL =
@@ -21,7 +21,7 @@ const subscriptionsClient = new PublicApiClient()
   .setUrl(LIST_RESULT_SUBSCRIPTIONS_MOCK_URL);
 
 const result = new SubscriptionsListResult(
-  MOCK_LIST_RESPONSE,
+  MOCK_ADMIN_LIST_RESPONSE,
   subscriptionsClient,
 );
 
@@ -37,10 +37,10 @@ describe('SubscriptionsListResult', () => {
   describe('getSubscriptions', () => {
     it('yields all subscriptions from all pages', async () => {
       // Let's make the response two pages of a single item each
-      const mockData: SubscriptionsListData = {
-        ...MOCK_LIST_RESPONSE,
+      const mockData: AdminSubscriptionsListData = {
+        ...MOCK_ADMIN_LIST_RESPONSE,
         pagination: {
-          ...MOCK_LIST_RESPONSE.pagination,
+          ...MOCK_ADMIN_LIST_RESPONSE.pagination,
           currentPage: 1,
           total: 3,
           totalPage: 3,
@@ -48,10 +48,10 @@ describe('SubscriptionsListResult', () => {
         data: [MOCK_SUBSCRIPTION_DATA],
       };
       nock(LIST_RESULT_SUBSCRIPTIONS_MOCK_URL)
-        .get(SUBSCRIPTIONS_LIST_ENDPOINT)
+        .get(SUBSCRIPTIONS_ADMIN_LIST_ENDPOINT)
         .reply(
           200,
-          (): SubscriptionsListData => ({
+          (): AdminSubscriptionsListData => ({
             ...mockData,
             pagination: {
               currentPage: 2,
@@ -63,10 +63,10 @@ describe('SubscriptionsListResult', () => {
             },
           }),
         )
-        .get(SUBSCRIPTIONS_LIST_ENDPOINT)
+        .get(SUBSCRIPTIONS_ADMIN_LIST_ENDPOINT)
         .reply(
           200,
-          (): SubscriptionsListData => ({
+          (): AdminSubscriptionsListData => ({
             ...mockData,
             pagination: {
               currentPage: 3,
@@ -96,7 +96,7 @@ describe('SubscriptionsListResult', () => {
   describe('getClient', () => {
     it('returns this.#client', () => {
       const result = new SubscriptionsListResult(
-        MOCK_LIST_RESPONSE,
+        MOCK_ADMIN_LIST_RESPONSE,
         subscriptionsClient,
       );
 
@@ -107,7 +107,7 @@ describe('SubscriptionsListResult', () => {
   describe('getPayload', () => {
     it('returns this.#payload', () => {
       const result = new SubscriptionsListResult(
-        MOCK_LIST_RESPONSE,
+        MOCK_ADMIN_LIST_RESPONSE,
         subscriptionsClient,
         SUBSCRIPTIONS_LIST_PAYLOAD,
       );
@@ -119,12 +119,12 @@ describe('SubscriptionsListResult', () => {
   describe('getCurrentPage', () => {
     it('returns this.#client', () => {
       const result = new SubscriptionsListResult(
-        MOCK_LIST_RESPONSE,
+        MOCK_ADMIN_LIST_RESPONSE,
         subscriptionsClient,
       );
 
       expect(result.currentPage).to.eqls(
-        MOCK_LIST_RESPONSE.pagination.currentPage,
+        MOCK_ADMIN_LIST_RESPONSE.pagination.currentPage,
       );
     });
   });
@@ -132,41 +132,47 @@ describe('SubscriptionsListResult', () => {
   describe('getNbResults', () => {
     it('returns this.#nbResults', () => {
       const result = new SubscriptionsListResult(
-        MOCK_LIST_RESPONSE,
+        MOCK_ADMIN_LIST_RESPONSE,
         subscriptionsClient,
       );
-      expect(result.nbResults).to.eqls(MOCK_LIST_RESPONSE.pagination.total);
+      expect(result.nbResults).to.eqls(
+        MOCK_ADMIN_LIST_RESPONSE.pagination.total,
+      );
     });
   });
 
   describe('getTotalPages', () => {
     it('returns this.#totalPage', () => {
       const result = new SubscriptionsListResult(
-        MOCK_LIST_RESPONSE,
+        MOCK_ADMIN_LIST_RESPONSE,
         subscriptionsClient,
       );
-      expect(result.totalPage).to.eqls(MOCK_LIST_RESPONSE.pagination.totalPage);
+      expect(result.totalPage).to.eqls(
+        MOCK_ADMIN_LIST_RESPONSE.pagination.totalPage,
+      );
     });
   });
 
   describe('getNextPageURL', () => {
     it('returns this.#nextPageURL', () => {
       const result = new SubscriptionsListResult(
-        MOCK_LIST_RESPONSE,
+        MOCK_ADMIN_LIST_RESPONSE,
         subscriptionsClient,
       );
-      expect(result.nextPageURL).to.eqls(MOCK_LIST_RESPONSE.pagination.next);
+      expect(result.nextPageURL).to.eqls(
+        MOCK_ADMIN_LIST_RESPONSE.pagination.next,
+      );
     });
   });
 
   describe('getPreviousPageURL', () => {
     it('returns this.#previousPageURL', () => {
       const result = new SubscriptionsListResult(
-        MOCK_LIST_RESPONSE,
+        MOCK_ADMIN_LIST_RESPONSE,
         subscriptionsClient,
       );
       expect(result.previousPageURL).to.eqls(
-        MOCK_LIST_RESPONSE.pagination.previous,
+        MOCK_ADMIN_LIST_RESPONSE.pagination.previous,
       );
     });
   });
@@ -174,7 +180,7 @@ describe('SubscriptionsListResult', () => {
   describe('toJSON', () => {
     it('returns the serialized SubscriptionData', () => {
       const result = new SubscriptionsListResult(
-        MOCK_LIST_RESPONSE,
+        MOCK_ADMIN_LIST_RESPONSE,
         subscriptionsClient,
       );
       expect(result.toJSON()).to.eqls({
