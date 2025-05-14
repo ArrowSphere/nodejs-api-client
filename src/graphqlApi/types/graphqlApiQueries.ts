@@ -7,7 +7,11 @@ import { ContactsType } from './entities/contact';
 import { GraphqlApiStaffType } from './entities/contributor';
 import { ContinentType, CountryType } from './entities/country';
 import { LicenseBudgetType } from './entities/licenseBudget';
-import { GraphqlApiOrderHistoryType, OrdersType } from './entities/order';
+import {
+  GraphqlApiOrderHistoryType,
+  GraphqlApiOrderListType,
+  OrdersType,
+} from './entities/order';
 import { OrganizationUnitsType } from './entities/organizationUnit';
 import { PartnertagType } from './entities/partnertag';
 import {
@@ -165,6 +169,7 @@ export enum SelectDataField {
   ORGANIZATION_UNIT = 'organizationUnit',
   ORDER = 'order',
   ORDER_HISTORY = 'orderHistory',
+  ORDER_LIST = 'orderList',
   PARTNER = 'partner',
   PARTNERTAG = 'partnertag',
   PROGRAM = 'program',
@@ -200,6 +205,7 @@ export type SelectAllResponseDataType = {
   [SelectDataField.ORGANIZATION_UNIT]?: OrganizationUnitsType[];
   [SelectDataField.ORDER]?: OrdersType[];
   [SelectDataField.ORDER_HISTORY]?: GraphqlApiOrderHistoryType[];
+  [SelectDataField.ORDER_LIST]?: GraphqlApiOrderListType[];
   [SelectDataField.PARTNER]?: PartnerType[];
   [SelectDataField.PARTNERTAG]?: PartnertagType[];
   [SelectDataField.PROGRAM]?: GraphqlApiProgramType[];
