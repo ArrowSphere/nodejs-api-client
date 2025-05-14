@@ -1,4 +1,4 @@
-import { AbstractRestfulClient } from '../abstractRestfulClient';
+import { AbstractRestfulClient, Parameters } from '../abstractRestfulClient';
 import { GetResult } from '../getResult';
 import { DataListOrdersSoftware } from './entities/dataListOrderSoftware';
 
@@ -23,5 +23,14 @@ export class OrderSoftwareClient extends AbstractRestfulClient {
   ): Promise<GetResult<DataListOrdersSoftware>> {
     this.path = `/${orderReference}`;
     return new GetResult(DataListOrdersSoftware, await this.get());
+  }
+
+  public async deleteOrder(
+    orderReference: string,
+    parameters: Parameters = {},
+  ): Promise<void> {
+    this.path = `/${orderReference}`;
+
+    await this.delete(parameters);
   }
 }
