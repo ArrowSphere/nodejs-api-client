@@ -363,4 +363,23 @@ describe('OrdersClient', () => {
       expect(result.toJSON()).to.eql(PAYLOAD_UPLOAD_ATTACHMENT_ORDER_RESULT);
     });
   });
+
+  describe('injectionScenarioOrder', async () => {
+    const orderClient = new PublicApiClient()
+      .getOrdersClient()
+      .setUrl(ORDERS_MOCK_URL);
+
+    it('should upload an xlsx file and return the information about the uploaded file', async () => {
+      nock(ORDERS_MOCK_URL)
+        .post('/orders/injectionScenario')
+        .reply(200, PAYLOAD_UPLOAD_ATTACHMENT_ORDER_RESULT);
+
+      const result = await orderClient.injectionScenarioOrder({
+        fileEncoded:
+          'data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,EUsDBBQABddfdfsfs',
+      });
+      expect(result).to.be.instanceof(GetResult);
+      expect(result.toJSON()).to.eql(PAYLOAD_UPLOAD_ATTACHMENT_ORDER_RESULT);
+    });
+  });
 });

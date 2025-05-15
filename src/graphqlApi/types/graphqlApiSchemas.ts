@@ -22,6 +22,7 @@ import { SpecialPriceRateType } from './entities/specialPriceRate';
 import {
   GraphqlApiOrderHistoryType,
   GraphqlApiOrderLinkType,
+  GraphqlApiOrderListType,
   OrderItemsType,
   OrdersType,
 } from './entities/order';
@@ -223,6 +224,10 @@ export type GraphqlApiOrderHistorySchema = Schema<
 >;
 export type GraphqlApiOrderLinkSchema = Schema<
   GraphqlApiOrderLinkType,
+  boolean
+>;
+export type GraphqlApiOrderListSchema = Schema<
+  GraphqlApiOrderListType,
   boolean
 >;
 export type LicenseBudgetNotificationSchema = Schema<

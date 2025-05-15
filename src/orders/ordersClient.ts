@@ -195,6 +195,10 @@ export type UploadAttachmentOrderInputType = {
   [UploadAttachmentOrderInputFields.COLUMN_FILE_ENCODED]: string;
 };
 
+export type InjectionScenarioOrderInputType = {
+  [UploadAttachmentOrderInputFields.COLUMN_FILE_ENCODED]: string;
+};
+
 export class OrdersClient extends AbstractRestfulClient {
   /**
    * The base path of the API
@@ -339,6 +343,15 @@ export class OrdersClient extends AbstractRestfulClient {
     parameters: Parameters = {},
   ): Promise<GetResult<AttachmentOrder>> {
     this.path = `/${orderReference}/attachment`;
+
+    return new GetResult(AttachmentOrder, await this.post(payload, parameters));
+  }
+
+  public async injectionScenarioOrder(
+    payload: InjectionScenarioOrderInputType,
+    parameters: Parameters = {},
+  ): Promise<GetResult<AttachmentOrder>> {
+    this.path = `/injectionScenario`;
 
     return new GetResult(AttachmentOrder, await this.post(payload, parameters));
   }
