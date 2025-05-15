@@ -3,6 +3,13 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.204.0] - 2025.07.02
+
+### Added
+
+- [graphql-api] add entity `GraphqlApiOrderListType`
+- [order] add endpoint `injectionScenarioOrder` to upload injection file
+
 ## [3.203.0] - 2025.07.02
 
 ### Added
