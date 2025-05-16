@@ -94,6 +94,11 @@ export enum LicenseFindParameters {
   DATA_AGGREGATION = 'aggregations',
 
   /**
+   * The key for comparisons
+   */
+  DATA_COMPARE = 'compare',
+
+  /**
    * The key for keyword search query parameter (to search one string in all available search fields)
    */
   DATA_KEYWORD = 'keyword',
@@ -227,6 +232,10 @@ export type LicenseSortParameters = BaseParameters<
   EndCustomerOrganizationUnitSortParameters
 >;
 
+export type LicenseCompareParameters = {
+  [field: string]: unknown;
+};
+
 export type LicenseFiltersParameters = BaseParameters<
   LicenceFindDataFiltersParameters,
   OfferFindResultDataFiltersParameters,
@@ -314,6 +323,10 @@ export type FiltersParameters =
   | boolean
   | FiltersCompareValue;
 
+export type LicenseRawCompareParameters = {
+  [field: string]: unknown;
+};
+
 export type LicenseRawFiltersParameters = {
   [field: string]: unknown;
 };
@@ -323,6 +336,7 @@ export type LicenseRawFiltersParameters = {
  */
 export type LicenseFindPayload = {
   [LicenseFindParameters.DATA_AGGREGATION]?: string[];
+  [LicenseFindParameters.DATA_COMPARE]?: LicenseCompareParameters;
   [LicenseFindParameters.DATA_KEYWORD]?: string;
   [LicenseFindParameters.DATA_KEYWORDS]?: LicenseKeywordsParameters;
   [LicenseFindParameters.DATA_FILTERS]?: LicenseFiltersParameters;
@@ -333,6 +347,7 @@ export type LicenseFindPayload = {
 
 export type LicenseFindRawPayload = {
   [LicenseFindParameters.DATA_AGGREGATION]?: string[];
+  [LicenseFindParameters.DATA_COMPARE]?: LicenseRawCompareParameters;
   [LicenseFindParameters.DATA_KEYWORD]?: string;
   [LicenseFindParameters.DATA_KEYWORDS]?: {
     license?: LicenseRawKeywordsParametersLicence;
@@ -592,6 +607,11 @@ export class LicensesClient extends AbstractRestfulClient {
       keyword: postData.keyword,
       highlight: postData.highlight,
     };
+
+    if (Object.keys(postData.compare ?? {}).length > 0) {
+      // TODO: create comparisons
+      rawLicensePayload.compare = postData.compare;
+    }
 
     if (postData.keywords) {
       // Flatten with prefix for each type of keyword (license and offer)
