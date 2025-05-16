@@ -277,6 +277,20 @@ export const MOCK_FIND_RESPONSE: FindData = {
  */
 const PAYLOAD_SCHEMA = Joi.object({
   [LicenseFindParameters.DATA_AGGREGATION]: [Joi.string()],
+  [LicenseFindParameters.DATA_COMPARE]: Joi.object().pattern(
+    Joi.string().valid(
+      ...Object.values(PriceFindResultFields).map(
+        (field) => `license.price.${field}`,
+      ),
+      ...Object.values(PriceBandPriceFindResultFields).map(
+        (field) => `offer.priceBand.prices.${field}`,
+      ),
+    ),
+    Joi.object({
+      field: Joi.string().required(),
+      operator: Joi.string().valid('EQ', 'NEQ'), // adapte si besoin
+    }),
+  ),
   [LicenseFindParameters.DATA_KEYWORD]: Joi.string(),
   [LicenseFindParameters.DATA_KEYWORDS]: Joi.object().pattern(
     Joi.string().valid(
@@ -366,6 +380,12 @@ describe('LicensesClient', () => {
     .setUrl(LICENSES_MOCK_URL);
   // Standard payload as per described by types
   const standardPayload: LicenseFindPayload = {
+    [LicenseFindParameters.DATA_COMPARE]: {
+      'license.price.buy_price': {
+        field: 'offer.priceBand.prices.buy',
+        operator: 'NEQ',
+      },
+    },
     [LicenseFindParameters.DATA_KEYWORD]: 'test',
     [LicenseFindParameters.DATA_KEYWORDS]: {
       license: {
@@ -444,6 +464,12 @@ describe('LicensesClient', () => {
 
   const standardRawPayload: LicenseFindRawPayload = {
     ...standardPayload,
+    [LicenseFindParameters.DATA_COMPARE]: {
+      [`license.${LicenseFindResultFields.COLUMN_PRICE}.${PriceFindResultFields.COLUMN_BUY_PRICE}`]: {
+        field: `offer.${OfferFindResultFields.COLUMN_PRICE_BAND}.${PriceBandFindResultFields.COLUMN_PRICES}.${PriceBandPriceFindResultFields.COLUMN_BUY}`,
+        operator: LicenseFindParameters.OPERATOR_NEQ,
+      },
+    },
     [LicenseFindParameters.DATA_KEYWORDS]: {
       [`license.${LicenseFindResultFields.COLUMN_CATEGORY}`]: {
         [LicenseFindParameters.KEYWORDS_VALUES]: ['test'],
