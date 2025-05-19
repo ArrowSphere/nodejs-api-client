@@ -3,6 +3,11 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.195.0] - 2025.05.12
+
+### Added
+- [licenses] Handle compare for endpoint find licenses v2
+
 ## [3.194.0] - 2025.05.12
 
 ### Added
