@@ -78,4 +78,51 @@ describe('ContactClient', function () {
       expect(response.toJSON()).to.be.deep.equal(CONTACT_PATCH_RESPONSE);
     });
   });
+
+  describe('unlockInsecureLoginContact', () => {
+    it('calls the unlockInsecureLoginContact method', async () => {
+      nock(CONTACT_MOCK_URL)
+        .patch(`${CONTACT}/123/unlock-insecure-login`)
+        .reply(204);
+
+      await client.unlockInsecureLoginContact(123);
+      expect(nock.isDone()).to.be.true;
+    });
+  });
+
+  describe('disableMfaContact', () => {
+    it('calls the disableMfaContact method', async () => {
+      nock(CONTACT_MOCK_URL).patch(`${CONTACT}/123/disable-mfa`).reply(204);
+
+      await client.disableMfaContact(123);
+      expect(nock.isDone()).to.be.true;
+    });
+  });
+
+  describe('lockContact', () => {
+    it('calls the lockContact method', async () => {
+      nock(CONTACT_MOCK_URL).patch(`${CONTACT}/123/status`).reply(204);
+
+      await client.lockContact(123);
+      expect(nock.isDone()).to.be.true;
+    });
+  });
+
+  describe('unlockContact', () => {
+    it('calls the unlockContact method', async () => {
+      nock(CONTACT_MOCK_URL).patch(`${CONTACT}/123/status`).reply(204);
+
+      await client.unlockContact(123);
+      expect(nock.isDone()).to.be.true;
+    });
+  });
+
+  describe('disableAliasContact', () => {
+    it('calls the disableAliasContact method', async () => {
+      nock(CONTACT_MOCK_URL).patch(`${CONTACT}/123/disable-alias`).reply(204);
+
+      await client.disableAliasContact(123, 'aliasUsername');
+      expect(nock.isDone()).to.be.true;
+    });
+  });
 });
