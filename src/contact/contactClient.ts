@@ -69,4 +69,51 @@ export class ContactClient extends AbstractRestfulClient {
       await this.patch<GetData<ContactType>>(patchData, parameters),
     );
   }
+
+  public async lockContact(
+    contactId: number,
+    parameters: Parameters = {},
+  ): Promise<void> {
+    this.path = `/${contactId}/status`;
+
+    return await this.patch({ locked: true }, parameters);
+  }
+
+  public async unlockContact(
+    contactId: number,
+    parameters: Parameters = {},
+  ): Promise<void> {
+    this.path = `/${contactId}/status`;
+
+    return await this.patch({ locked: false }, parameters);
+  }
+
+  public async disableMfaContact(
+    contactId: number,
+    parameters: Parameters = {},
+  ): Promise<void> {
+    this.path = `/${contactId}/disable-mfa`;
+
+    return await this.patch({}, parameters);
+  }
+
+  public async disableAliasContact(
+    contactId: number,
+    aliasUsername: string,
+    providerName?: string,
+    parameters: Parameters = {},
+  ): Promise<void> {
+    this.path = `/${contactId}/disable-alias`;
+
+    return await this.patch({ aliasUsername, providerName }, parameters);
+  }
+
+  public async unlockInsecureLoginContact(
+    contactId: number,
+    parameters: Parameters = {},
+  ): Promise<void> {
+    this.path = `/${contactId}/unlock-insecure-login`;
+
+    return await this.patch({}, parameters);
+  }
 }
