@@ -24,6 +24,16 @@ export type ContactRequestType = {
   [ContactRequestFields.COLUMN_ROLE]: string;
 };
 
+export enum AnonymizeContactsPayloadFields {
+  COLUMN_PARTNER_REF = 'partnerRef',
+  COLUMN_CONTACTS = 'contacts',
+}
+
+export type AnonymizeContactsPayload = {
+  [AnonymizeContactsPayloadFields.COLUMN_PARTNER_REF]?: string;
+  [AnonymizeContactsPayloadFields.COLUMN_CONTACTS]: number[];
+};
+
 export class ContactClient extends AbstractRestfulClient {
   /**
    * The base path of the API
@@ -115,5 +125,14 @@ export class ContactClient extends AbstractRestfulClient {
     this.path = `/${contactId}/unlock-insecure-login`;
 
     return await this.patch({}, parameters);
+  }
+
+  public async anonymizeContacts(
+    payload: AnonymizeContactsPayload,
+    parameters: Parameters = {},
+  ): Promise<void> {
+    this.path = `/anonymize`;
+
+    await this.patch(payload, parameters);
   }
 }
