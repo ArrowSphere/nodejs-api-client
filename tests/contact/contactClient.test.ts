@@ -14,6 +14,7 @@ import {
 export const CONTACT_MOCK_URL = 'https://contacts.localhost';
 export const CONTACT = '/contacts';
 export const GET_CONTACT_URL = new RegExp('/contacts.*');
+const ANONYMIZE_PATH = `/contacts/anonymize`;
 
 describe('ContactClient', function () {
   const client = new PublicApiClient()
@@ -122,6 +123,19 @@ describe('ContactClient', function () {
       nock(CONTACT_MOCK_URL).patch(`${CONTACT}/123/disable-alias`).reply(204);
 
       await client.disableAliasContact(123, 'aliasUsername');
+      expect(nock.isDone()).to.be.true;
+    });
+  });
+
+  describe('anonymizeContacts', () => {
+    it('calls the patchUser method', async () => {
+      nock(CONTACT_MOCK_URL).patch(ANONYMIZE_PATH).reply(204);
+
+      await client.anonymizeContacts({
+        contacts: [123],
+        partnerRef: 'XSP123',
+      });
+
       expect(nock.isDone()).to.be.true;
     });
   });
