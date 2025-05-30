@@ -15,7 +15,6 @@ import {
   ConfigFindResult,
   ConfigFindResultData,
   ConfigFindResultFields,
-  FilterFindFields,
   FindConfig,
   FindData,
   FindResult,
@@ -261,11 +260,8 @@ export const MOCK_FIND_RESPONSE: FindData = {
   },
   filters: [
     {
-      [FilterFindFields.COLUMN_NAME]:
-        LicenseFindResultFields.COLUMN_ACCEPT_EULA,
-      [FilterFindFields.COLUMN_VALUES]: {
-        [LicenseFindResultFields.COLUMN_ACCEPT_EULA]: true,
-      },
+      name: LicenseFindResultFields.COLUMN_ACCEPT_EULA,
+      values: [{ value: 'true', count: 1 }],
     },
   ],
   results: [MOCK_RESULT_DATA],
