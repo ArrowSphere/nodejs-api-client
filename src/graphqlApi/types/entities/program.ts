@@ -6,6 +6,7 @@ import { VendorsType } from './vendor';
 export type GraphqlApiProgramType = {
   id?: number;
   bypassReport?: number;
+  clickToAccept?: boolean;
   description?: string;
   disclaimer?: GraphqlApiDisclaimerType;
   internalName?: string;
