@@ -1,28 +1,18 @@
 import { AbstractEntity } from '../../abstractEntity';
 import { LicenseFindResultFields } from './license/licenseFindResult';
 
-type FilterFindResultDataIterable = {
+export type FilterFindResultDataIterable = {
   [field in LicenseFindResultFields]?: unknown;
 };
 
-/**
- * Filter data values
- */
-export type FilterFindResultDataValues =
-  | FilterFindResultDataIterable
-  | LicenseFilterAggregationType[];
-
-export type LicenseFilterAggregationType = {
-  count: number;
-  values: string[];
-};
+// TODO: set type FilterFindResultDataIterable, checking public api
 
 /**
  * Filter data
  */
 export type FilterFindResultData = {
   [FilterFindFields.COLUMN_NAME]: string;
-  [FilterFindFields.COLUMN_VALUES]: FilterFindResultDataValues;
+  [FilterFindFields.COLUMN_VALUES]: FilterFindResultDataIterable;
 };
 
 /**
@@ -38,7 +28,7 @@ export enum FilterFindFields {
  */
 export class FilterFindResult extends AbstractEntity<FilterFindResultData> {
   readonly #name: string;
-  readonly #values: FilterFindResultDataValues;
+  readonly #values: FilterFindResultDataIterable;
 
   protected VALIDATION_RULES = {
     [FilterFindFields.COLUMN_NAME]: 'present',
@@ -63,7 +53,7 @@ export class FilterFindResult extends AbstractEntity<FilterFindResultData> {
     return this.#name;
   }
 
-  public get values(): FilterFindResultDataValues {
+  public get values(): FilterFindResultDataIterable {
     return this.#values;
   }
 
