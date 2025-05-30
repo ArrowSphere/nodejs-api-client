@@ -70,6 +70,11 @@ export type SubscriptionCreationData = {
   };
 };
 
+export type CreateSubscriptionData = {
+  reference: string;
+  subscription: SubscriptionData;
+};
+
 export class SubscriptionsClient extends AbstractRestfulClient {
   /**
    * The base path of the API
@@ -137,7 +142,7 @@ export class SubscriptionsClient extends AbstractRestfulClient {
 
   public async addSubscription(
     filters: SubscriptionCreationData,
-  ): Promise<void> {
+  ): Promise<CreateSubscriptionData> {
     return this.post(filters);
   }
 }
