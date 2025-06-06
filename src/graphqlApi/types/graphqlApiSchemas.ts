@@ -300,10 +300,19 @@ export type GraphqlApiContributorRoleSchema = Schema<
   GraphqlApiContributorRoleType,
   boolean
 >;
+
+type MissingFieldsOfSubscriptionSchema = {
+  partnerTags?: PartnertagSchema;
+};
+
+export type SubscriptionSchema = Merge<
+  Schema<SubscriptionType, boolean>,
+  MissingFieldsOfSubscriptionSchema
+>;
+
 export type ReportStatusSchema = Schema<GraphqlApiReportStatusType, boolean>;
 export type SpecialPriceRateSchema = Schema<SpecialPriceRateType, boolean>;
 export type SubscribedProgramSchema = Schema<SubscribedProgramType, boolean>;
-export type SubscriptionSchema = Schema<SubscriptionType, boolean>;
 export type UserHistorySchema = Schema<UserHistoryType, boolean>;
 export type WorkgroupSchema = Schema<WorkgroupType, boolean>;
 export type SupportLevelSchema = Schema<GraphqlApiSupportLevel, boolean>;
