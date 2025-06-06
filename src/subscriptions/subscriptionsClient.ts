@@ -1,7 +1,7 @@
 /**
  * Class SubscriptionsClient
  */
-import { AbstractRestfulClient } from '../abstractRestfulClient';
+import { AbstractRestfulClient, Parameters } from '../abstractRestfulClient';
 import { SubscriptionData } from './entities/subscription';
 import { SubscriptionsListResult } from './entities/subscriptionsListResult';
 
@@ -144,5 +144,14 @@ export class SubscriptionsClient extends AbstractRestfulClient {
     filters: SubscriptionCreationData,
   ): Promise<CreateSubscriptionData> {
     return this.post(filters);
+  }
+
+  public async validate(
+    subscriptionReference: string,
+    parameters: Parameters = {},
+  ): Promise<void> {
+    this.path = `/${subscriptionReference}/validateCTA`;
+
+    return this.post({}, parameters);
   }
 }

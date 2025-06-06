@@ -226,4 +226,16 @@ describe('SubscriptionsClient', () => {
       expect(result).to.be.instanceOf(SubscriptionsListResult);
     });
   });
+
+  describe('validate', () => {
+    it('should validate the given subscription', async () => {
+      nock(SUBSCRIPTIONS_MOCK_URL)
+        .post('/subscriptions/XSP12345/validate')
+        .reply(200);
+
+      await client.validateCTA('XSP12345');
+
+      expect(nock.isDone()).to.be.true;
+    });
+  });
 });

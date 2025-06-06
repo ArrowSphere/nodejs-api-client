@@ -1123,17 +1123,54 @@ export const SELECT_ALL_SUBSCRIPTIONS_QUERY: SelectAllQueryType = {
     data: {
       subscription: {
         id: true,
+        agreement: {
+          id: true,
+          lastVersion: true,
+          total: true,
+        },
+        autoReporting: true,
+        company: {
+          id: true,
+          name: true,
+        },
+        ctaValidatedAt: true,
+        demandedAt: true,
+        enabled: true,
+        endedAt: true,
+        level: {
+          name: true,
+        },
+        localContact: {
+          id: true,
+          firstname: true,
+          lastname: true,
+          username: true,
+        },
+        orderId: true,
+        partnerContact: {
+          id: true,
+          firstname: true,
+          lastname: true,
+          username: true,
+        },
+        partnerId: true,
+        partnerTags: {
+          id: true,
+          label: true,
+        },
         program: {
+          clickToAccept: true,
           internalName: true,
           name: true,
         },
         startedAt: true,
-        orderId: true,
-        partnerId: true,
-        userNote: true,
-        level: {
+        status: {
+          id: true,
           name: true,
         },
+        updatedAt: true,
+        userNote: true,
+        validatedAt: true,
       },
     },
     errors: {
@@ -1153,7 +1190,7 @@ export const SELECT_ALL_SUBSCRIPTIONS_QUERY: SelectAllQueryType = {
 };
 
 export const SELECT_ALL_SUBSCRIPTIONS_GQL =
-  '{selectAll (filters: {groups: [{items: [{name: "validatedAt", operator: "IS_NULL", exclusion: true}, {name: "endedAt", operator: "GREAT_THAN", value: ["2024-01-01 00:00:00"]}, {name: "bypassReport", operator: "EQUALS", value: ["1"]}, {name: "program.type.name", operator: "EQUALS", value: ["Software"]}, {name: "autoReporting", operator: "EQUALS", value: ["0"]}], logicalOperator: "AND"}]}, pagination: {page: 1, perPage: 1000}, sort: [{name: "program.name", direction: "ASC"}, {name: "level.name", direction: "ASC"}, {name: "startedAt", direction: "ASC"}]) { data { subscription { id program { internalName name } startedAt orderId partnerId userNote level { name } } } errors { code message } pagination { currentPage perPage previous next total totalPage totalPages } }}';
+  '{selectAll (filters: {groups: [{items: [{name: "validatedAt", operator: "IS_NULL", exclusion: true}, {name: "endedAt", operator: "GREAT_THAN", value: ["2024-01-01 00:00:00"]}, {name: "bypassReport", operator: "EQUALS", value: ["1"]}, {name: "program.type.name", operator: "EQUALS", value: ["Software"]}, {name: "autoReporting", operator: "EQUALS", value: ["0"]}], logicalOperator: "AND"}]}, pagination: {page: 1, perPage: 1000}, sort: [{name: "program.name", direction: "ASC"}, {name: "level.name", direction: "ASC"}, {name: "startedAt", direction: "ASC"}]) { data { subscription { id agreement { id lastVersion total } autoReporting company { id name } ctaValidatedAt demandedAt enabled endedAt level { name } localContact { id firstname lastname username } orderId partnerContact { id firstname lastname username } partnerId partnerTags { id label } program { clickToAccept internalName name } startedAt status { id name } updatedAt userNote validatedAt } } errors { code message } pagination { currentPage perPage previous next total totalPage totalPages } }}';
 
 export const SELECT_ALL_PARTNER_ORGANIZATION_UNIT_QUERY: SelectAllQueryType = {
   [Queries.SELECT_ALL]: {
