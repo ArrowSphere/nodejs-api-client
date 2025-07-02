@@ -148,10 +148,12 @@ export const PAYLOAD_SCHEMA_LICENSE: GetData<GetLicenseResultData> = {
       [LicenseGetFields.COLUMN_RELATION]: [
         {
           [RelationGetDataFields.COLUMN_PARTNER_REF]: 'XSP12345',
+          [RelationGetDataFields.COLUMN_QUANTITY]: 1,
           [RelationGetDataFields.COLUMN_TYPE]: 'sibling',
         },
         {
           [RelationGetDataFields.COLUMN_PARTNER_REF]: 'XSP234',
+          [RelationGetDataFields.COLUMN_QUANTITY]: 2,
           [RelationGetDataFields.COLUMN_TYPE]: 'sibling',
         },
       ],
