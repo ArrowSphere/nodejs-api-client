@@ -52,4 +52,14 @@ describe('OrderSoftwareClient', () => {
       expect(response.toJSON()).to.be.deep.equals(GET_ORDER_SOFTWARE_DATA);
     });
   });
+
+  describe('deleteOrder', async () => {
+    it('should delete a software order ', async () => {
+      nock(ORDER_SOFTWARE_MOCK_URL).delete(GET_ORDER_SOFTWARE).reply(204);
+
+      await client.deleteOrder('XSP123456');
+
+      expect(nock.isDone()).to.be.true;
+    });
+  });
 });
