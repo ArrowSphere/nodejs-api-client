@@ -3,6 +3,11 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.202.0] - 2025.07.02
+
+### Added
+- [license] Add field quantity on license relations
+
 ## [3.201.0] - 2025.06.26
 
 ### Added
