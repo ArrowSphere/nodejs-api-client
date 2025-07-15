@@ -44,6 +44,8 @@ export type QuoteItemType = {
 export type ItemData = {
   id?: string;
   isAddon?: boolean;
+  isTrial?: boolean;
+  arrowSubCategories?: string[];
   offerName?: string;
   customTermEndDate?: string;
   publicPrice?: number;
