@@ -43,7 +43,12 @@ import {
 import { UserHistoryType, UserType } from './entities/user';
 import { OrganizationUnitsType } from './entities/organizationUnit';
 import { CurrencyType } from './entities/currency';
-import { ItemData, QuoteItemType, QuoteType } from './entities/quote';
+import {
+  ItemData,
+  NameValueType,
+  QuoteItemType,
+  QuoteType,
+} from './entities/quote';
 import { QuoteVersion } from './entities/quoteVersion';
 import { Comment } from './entities/comment';
 import {
@@ -89,6 +94,7 @@ type MissingFieldsOfOrderItemSchema = {
   migratedFrom?: GraphqlApiOrderLinkSchema;
   migratedTo?: GraphqlApiOrderLinkSchema;
   priceRates?: SpecialPriceRateSchema;
+  itemData?: ItemDataSchema;
 };
 
 type MissingFieldsOfOrdersSchema = {
@@ -145,7 +151,16 @@ type MissingFieldsOfCountrySchema = {
   continent?: ContinentSchema;
 };
 
-export type ItemDataSchema = Schema<ItemData, boolean>;
+type NameValueTypeSchema = Schema<NameValueType, boolean>;
+
+type MissingFieldsOfItemDataSchema = {
+  attributes?: NameValueTypeSchema;
+};
+
+export type ItemDataSchema = Merge<
+  Schema<ItemData, boolean>,
+  MissingFieldsOfItemDataSchema
+>;
 
 export type QuoteSchema = Merge<
   Schema<QuoteType, boolean>,
