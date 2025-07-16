@@ -50,7 +50,10 @@ export type ItemData = {
   offerName?: string;
   customTermEndDate?: string;
   publicPrice?: number;
+  buyCurrency?: string;
   buyPrice?: number;
+  exchangeRateBuySell?: number;
+  exchangeRateBuyCountry?: number;
   sellPrice?: number;
   currency?: string;
   arrowRateType?: string;
