@@ -1,20 +1,22 @@
 import { AbstractEntity } from '../../../abstractEntity';
 
 export enum IssueFields {
-  COLUMN_ID = 'id',
-  COLUMN_TITLE = 'title',
+  COLUMN_ADDITIONAL_DATA = 'additionalData',
+  COLUMN_CREATED = 'created',
+  COLUMN_CREATED_BY = 'createdBy',
   COLUMN_DESCRIPTION = 'description',
-  COLUMN_TOPIC_ID = 'topicId',
   COLUMN_END_CUSTOMER_REF = 'endCustomerRef',
+  COLUMN_ID = 'id',
   COLUMN_LANGUAGE = 'language',
   COLUMN_OFFER = 'offer',
   COLUMN_PRIORITY = 'priority',
-  COLUMN_STATUS = 'status',
-  COLUMN_CREATED_BY = 'createdBy',
-  COLUMN_SUPPORT_PLAN = 'supportPlan',
   COLUMN_PROGRAM = 'program',
-  COLUMN_ADDITIONAL_DATA = 'additionalData',
-  COLUMN_CREATED = 'created',
+  COLUMN_RESELLER = 'reseller',
+  COLUMN_STATUS = 'status',
+  COLUMN_SUPPORT_PLAN = 'supportPlan',
+  COLUMN_TITLE = 'title',
+  COLUMN_TOPIC = 'topic',
+  COLUMN_TOPIC_ID = 'topicId',
   COLUMN_UPDATED = 'updated',
 }
 
@@ -80,6 +82,7 @@ export type IssueType = {
   [IssueFields.COLUMN_TITLE]: string;
   [IssueFields.COLUMN_DESCRIPTION]: string;
   [IssueFields.COLUMN_TOPIC_ID]: string;
+  [IssueFields.COLUMN_TOPIC]: string;
   [IssueFields.COLUMN_END_CUSTOMER_REF]?: string;
   [IssueFields.COLUMN_LANGUAGE]?: string;
   [IssueFields.COLUMN_OFFER]?: IssueOfferType;
@@ -233,6 +236,7 @@ export class Issue extends AbstractEntity<IssueType> {
   readonly #id?: string;
   readonly #title: string;
   readonly #description: string;
+  readonly #topic: string;
   readonly #topicId: string;
   readonly #endCustomerRef?: string;
   readonly #language?: string;
@@ -252,6 +256,7 @@ export class Issue extends AbstractEntity<IssueType> {
     this.#id = input[IssueFields.COLUMN_ID];
     this.#title = input[IssueFields.COLUMN_TITLE];
     this.#description = input[IssueFields.COLUMN_DESCRIPTION];
+    this.#topic = input[IssueFields.COLUMN_TOPIC];
     this.#topicId = input[IssueFields.COLUMN_TOPIC_ID];
     this.#endCustomerRef = input[IssueFields.COLUMN_END_CUSTOMER_REF];
     this.#language = input[IssueFields.COLUMN_LANGUAGE];
@@ -308,6 +313,10 @@ export class Issue extends AbstractEntity<IssueType> {
     return this.#topicId;
   }
 
+  get topic(): string {
+    return this.#topic;
+  }
+
   get endCustomerRef(): string | undefined {
     return this.#endCustomerRef;
   }
@@ -358,6 +367,7 @@ export class Issue extends AbstractEntity<IssueType> {
       [IssueFields.COLUMN_TITLE]: this.title,
       [IssueFields.COLUMN_DESCRIPTION]: this.description,
       [IssueFields.COLUMN_TOPIC_ID]: this.topicId,
+      [IssueFields.COLUMN_TOPIC]: this.topic,
       [IssueFields.COLUMN_END_CUSTOMER_REF]: this.endCustomerRef,
       [IssueFields.COLUMN_LANGUAGE]: this.language,
       [IssueFields.COLUMN_OFFER]: this.offer?.toJSON(),

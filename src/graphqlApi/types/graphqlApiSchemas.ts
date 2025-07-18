@@ -57,6 +57,7 @@ import {
   GraphqlApiReportType,
 } from './entities/report';
 import { GraphqlApiEavType } from './entities/eav';
+import { GraphqlApiSupportLevel } from './entities/supportLevel';
 import {
   GraphqlApiContributorRoleType,
   GraphqlApiStaffType,
@@ -305,6 +306,7 @@ export type SubscribedProgramSchema = Schema<SubscribedProgramType, boolean>;
 export type SubscriptionSchema = Schema<SubscriptionType, boolean>;
 export type UserHistorySchema = Schema<UserHistoryType, boolean>;
 export type WorkgroupSchema = Schema<WorkgroupType, boolean>;
+export type SupportLevelSchema = Schema<GraphqlApiSupportLevel, boolean>;
 
 export type SelectAllResultSchema = {
   [SelectableField.DATA]?: SelectAllResponseDataSchema;
@@ -336,6 +338,7 @@ export type SelectAllResponseDataSchema = {
   [SelectDataField.USER]?: UserSchema;
   [SelectDataField.USER_HISTORY]?: UserHistorySchema;
   [SelectDataField.WORKGROUP]?: WorkgroupSchema;
+  [SelectDataField.SUPPORT_LEVEL]?: SupportLevelSchema;
 };
 
 export type SelectOneResultSchema = {
