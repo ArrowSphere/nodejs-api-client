@@ -1154,4 +1154,94 @@ describe('GraphqlApiClient', () => {
       expect(result).to.deep.equals(expectedResult);
     });
   });
+
+  describe('Support Level', () => {
+    it('makes a graphql POST request on the specified URL to selectAll support level', async () => {
+      const expectedResult: SelectAllResultType = {
+        [Queries.SELECT_ALL]: {
+          [SelectableField.DATA]: {
+            [SelectDataField.SUPPORT_LEVEL]: [
+              {
+                id: 1,
+                label: 'test',
+                isPremium: true,
+                isEndCustomer: true,
+                skus: 'sku1,sku2',
+                program: {
+                  id: 1,
+                  internalName: 'MSCSP',
+                  name: 'Microsoft Cloud Solution Provider (CSP)',
+                },
+              },
+            ],
+          },
+          [SelectableField.ERRORS]: undefined,
+          [SelectableField.PAGINATION]: {
+            currentPage: 1,
+            next: 2,
+            perPage: 1000,
+            total: 30,
+            totalPage: 1,
+            totalPages: 15,
+          },
+        },
+      };
+
+      graphQLClient.request.resolves(expectedResult);
+
+      const result: SelectAllResultType | null = await client.selectAll(
+        GraphqlApiQueryMock.SELECT_ALL_SUPPORT_LEVEL_QUERY,
+      );
+
+      sinon.assert.calledWithExactly(
+        graphQLClient.request,
+        sinon.match(GraphqlApiQueryMock.SELECT_ALL_SUPPORT_LEVEL_GQL),
+      );
+
+      expect(result).to.deep.equals(expectedResult);
+    });
+
+    it('makes a graphql POST request on the specified URL to selectOne support level', async () => {
+      const expectedResult: SelectOneResultType = {
+        [Queries.SELECT_ONE]: {
+          [SelectableField.DATA]: {
+            [SelectDataField.SUPPORT_LEVEL]: {
+              id: 1,
+              label: 'test',
+              isPremium: true,
+              isEndCustomer: true,
+              skus: 'sku1,sku2',
+              program: {
+                id: 1,
+                internalName: 'MSCSP',
+                name: 'Microsoft Cloud Solution Provider (CSP)',
+              },
+            },
+          },
+          [SelectableField.ERRORS]: undefined,
+          [SelectableField.PAGINATION]: {
+            currentPage: 1,
+            next: 2,
+            perPage: 100,
+            total: 30,
+            totalPage: 1,
+            totalPages: 8,
+          },
+        },
+      };
+
+      graphQLClient.request.resolves(expectedResult);
+
+      const result: SelectOneResultType | null = await client.selectOne(
+        GraphqlApiQueryMock.SELECT_ONE_SUPPORT_LEVEL_QUERY,
+      );
+
+      sinon.assert.calledWithExactly(
+        graphQLClient.request,
+        sinon.match(GraphqlApiQueryMock.SELECT_ONE_SUPPORT_LEVEL_GQL),
+      );
+
+      expect(result).to.deep.equals(expectedResult);
+    });
+  });
 });
