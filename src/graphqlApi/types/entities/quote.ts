@@ -95,6 +95,8 @@ export type ItemData = {
   creationDate?: string;
   quantity?: number;
   orderingType?: string;
+  vendorName?: string;
+  vendorPriceBandSku?: string;
 };
 
 export type NameValueType = {
