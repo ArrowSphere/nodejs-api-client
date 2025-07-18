@@ -13,14 +13,15 @@ export enum IssueProgramsType {
 }
 
 export type CreateIssuePayload = {
-  [IssueFields.COLUMN_TITLE]: string;
-  [IssueFields.COLUMN_DESCRIPTION]: string;
-  [IssueFields.COLUMN_TOPIC_ID]: string;
-  [IssueFields.COLUMN_PROGRAM]: IssueProgramsType;
-  [IssueFields.COLUMN_OFFER]?: IssueOfferType;
-  [IssueFields.COLUMN_CREATED_BY]?: IssueCreatedByType;
-  [IssueFields.COLUMN_END_CUSTOMER_REF]?: string;
   [IssueFields.COLUMN_ADDITIONAL_DATA]?: Array<IssueAdditionalDataType>;
+  [IssueFields.COLUMN_CREATED_BY]?: IssueCreatedByType;
+  [IssueFields.COLUMN_DESCRIPTION]: string;
+  [IssueFields.COLUMN_END_CUSTOMER_REF]?: string;
+  [IssueFields.COLUMN_OFFER]?: IssueOfferType;
+  [IssueFields.COLUMN_PROGRAM]: IssueProgramsType;
+  [IssueFields.COLUMN_RESELLER]?: string;
+  [IssueFields.COLUMN_TITLE]: string;
+  [IssueFields.COLUMN_TOPIC_ID]: string;
 };
 
 export type UpdateIssueStatusOperation = {

@@ -29,6 +29,7 @@ import { SpecialPriceRateType } from './entities/specialPriceRate';
 import { SubscriptionType } from './entities/subscription';
 import { UserHistoryType, UserType } from './entities/user';
 import { WorkgroupType } from './entities/workgroup';
+import { GraphqlApiSupportLevel } from './entities/supportLevel';
 import {
   ContactsSchema,
   ErrorsSchema,
@@ -185,6 +186,7 @@ export enum SelectDataField {
   USER = 'user',
   USER_HISTORY = 'userHistory',
   WORKGROUP = 'workgroup',
+  SUPPORT_LEVEL = 'supportLevel',
 }
 
 export type SelectAllResultType = {
@@ -220,6 +222,7 @@ export type SelectAllResponseDataType = {
   [SelectDataField.USER]?: UserType[];
   [SelectDataField.USER_HISTORY]?: UserHistoryType[];
   [SelectDataField.WORKGROUP]?: WorkgroupType[];
+  [SelectDataField.SUPPORT_LEVEL]?: GraphqlApiSupportLevel[];
 };
 
 export enum ErrorsField {
@@ -311,6 +314,7 @@ export type SelectOneResponseDataType = {
   [SelectDataField.USER]?: UserType;
   [SelectDataField.USER_HISTORY]?: UserHistoryType;
   [SelectDataField.WORKGROUP]?: WorkgroupType;
+  [SelectDataField.SUPPORT_LEVEL]?: GraphqlApiSupportLevel;
 };
 
 export enum QueryVariablesField {
