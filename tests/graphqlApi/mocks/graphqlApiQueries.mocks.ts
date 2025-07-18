@@ -1498,3 +1498,53 @@ export const SELECT_ALL_STAFF_QUERY: SelectAllQueryType = {
 
 export const SELECT_ALL_STAFF_GQL =
   '{selectAll (filters: {groups: [{items: [{name: "roles.id", value: ["1"]}]}]}) { data { staff { firstname id internalId lastname locked workgroup { code } roles { id label } } } errors { code message } }}';
+
+export const SELECT_ALL_SUPPORT_LEVEL_QUERY: SelectAllQueryType = {
+  [Queries.SELECT_ALL]: {
+    __args: {},
+    data: {
+      supportLevel: {
+        id: true,
+        skus: true,
+        label: true,
+        program: {
+          id: true,
+          internalName: true,
+          name: true,
+        },
+      },
+    },
+    errors: {
+      code: true,
+      message: true,
+    },
+  },
+};
+
+export const SELECT_ALL_SUPPORT_LEVEL_GQL =
+  '{selectAll { data { supportLevel { id skus label program { id internalName name } } } errors { code message } }}';
+
+export const SELECT_ONE_SUPPORT_LEVEL_QUERY: SelectOneQueryType = {
+  [Queries.SELECT_ONE]: {
+    __args: {},
+    data: {
+      supportLevel: {
+        id: true,
+        skus: true,
+        label: true,
+        program: {
+          id: true,
+          internalName: true,
+          name: true,
+        },
+      },
+    },
+    errors: {
+      code: true,
+      message: true,
+    },
+  },
+};
+
+export const SELECT_ONE_SUPPORT_LEVEL_GQL =
+  '{selectOne { data { supportLevel { id skus label program { id internalName name } } } errors { code message } }}';
