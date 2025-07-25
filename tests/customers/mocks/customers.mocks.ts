@@ -5,6 +5,8 @@ import {
   CustomerContactFields,
   CustomerContactPayloadFields,
   CustomerContactType,
+  CustomerCredentialsFields,
+  CustomerCredentialsType,
   CustomerFields,
   DataCustomersFields,
   DataInvitationFields,
@@ -373,5 +375,15 @@ export const PAYLOAD_GET_UNKNOWN_LICENSES: GetData<DataUnknownLicenseType> = {
         [UnknownLicenseFields.COLUMN_RELATIONS]: [],
       },
     ],
+  },
+};
+
+export const RESPONSE_CUSTOMER_CREDENTIALS: GetData<CustomerCredentialsType> = {
+  [GetResultFields.COLUMN_STATUS]: 200,
+  [GetResultFields.COLUMN_DATA]: {
+    [CustomerCredentialsFields.COLUMN_PASSWORD]: 'password',
+    [CustomerCredentialsFields.COLUMN_URL]: 'https://example.com',
+    [CustomerCredentialsFields.COLUMN_USERNAME]: 'username',
+    [CustomerCredentialsFields.COLUMN_VENDOR]: 'vendor',
   },
 };

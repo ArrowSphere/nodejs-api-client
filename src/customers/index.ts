@@ -11,3 +11,4 @@ export * from './entities/invitations/company/company';
 export * from './entities/invitations/contact/invitationContact';
 export * from './entities/unknownLicenses/relation';
 export * from './entities/unknownLicenses/unknownLicense';
+export * from './entities/customerCredentials';

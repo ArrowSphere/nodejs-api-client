@@ -25,6 +25,7 @@ import {
   PAYLOAD_GET_UNKNOWN_LICENSES,
   PAYLOAD_POST_CUSTOMER_INVITATION,
   RESPONSE_CUSTOMER_CONTACT,
+  RESPONSE_CUSTOMER_CREDENTIALS,
   RESPONSE_CUSTOMER_PROVISION,
 } from './mocks/customers.mocks';
 import { Axios } from 'axios';
@@ -48,6 +49,9 @@ export const CUSTOMERS_CUSTOMERS_MIGRATION_URL = new RegExp(
 );
 export const CUSTOMERS_CUSTOMERS_PROVISION = new RegExp(
   '/customers/REF/provision',
+);
+export const CUSTOMERS_CUSTOMERS_CREDENTIALS = new RegExp(
+  '/customers/REF/vendor/VENDOR_REF/credentials',
 );
 
 export const CUSTOMERS_GET_UNKNOWN_LICENSES_URL = new RegExp(
@@ -669,6 +673,26 @@ describe('CustomersClients', () => {
 
       expect(result).to.be.instanceof(GetResult);
       expect(result.toJSON()).to.eql(PAYLOAD_GET_UNKNOWN_LICENSES);
+    });
+  });
+
+  describe('getCustomerVendorCredentials', () => {
+    const client = new PublicApiClient()
+      .getCustomersClient()
+      .setUrl(CUSTOMERS_MOCK_URL);
+
+    it('call get customer vendor credentials', async () => {
+      nock(CUSTOMERS_MOCK_URL)
+        .get(CUSTOMERS_CUSTOMERS_CREDENTIALS)
+        .reply(200, RESPONSE_CUSTOMER_CREDENTIALS);
+
+      const result = await client.getCustomerVendorCredentials(
+        'REF',
+        'VENDOR_REF',
+      );
+
+      expect(result).to.be.instanceof(GetResult);
+      expect(result.toJSON()).to.eql(RESPONSE_CUSTOMER_CREDENTIALS);
     });
   });
 });
