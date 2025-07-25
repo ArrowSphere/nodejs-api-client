@@ -14,6 +14,7 @@ import { CustomerFields, CustomerType } from './entities/customers/customer';
 import { ContactFields } from './entities/customers/contact/contact';
 import { AxiosResponse } from 'axios';
 import { CustomerProvision } from './entities/customerProvision';
+import { CustomerCredentials } from './entities/customerCredentials';
 
 export enum CustomerMigrationAttributeFields {
   NAME = 'name',
@@ -334,5 +335,15 @@ export class CustomersClient extends AbstractRestfulClient {
     this.path = `/${customerReference}/unknownlicenses`;
 
     return new GetResult(DataUnknownLicenses, await this.get(parameters));
+  }
+
+  public async getCustomerVendorCredentials(
+    customerReference: string,
+    vendorReference: string,
+    parameters: Parameters = {},
+  ): Promise<GetResult<CustomerCredentials>> {
+    this.path = `/${customerReference}/vendor/${vendorReference}/credentials`;
+
+    return new GetResult(CustomerCredentials, await this.get(parameters));
   }
 }
