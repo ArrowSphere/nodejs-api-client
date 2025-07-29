@@ -3,11 +3,17 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.210.0] - 2025.07.29
+
+### Added
+
+- [customers] add endpoint `getCustomerVendorCredentials`
+
 ## [3.209.0] - 2025.07.24
 
 ### Added
 
-- [graphql-api] add schema `supportLevel` 
+- [graphql-api] add schema `supportLevel`
 
 ### Modified
 - [graphql-api] add extra fields to IssueFields and fix some problems
