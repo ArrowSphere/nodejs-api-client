@@ -14,6 +14,7 @@ export const LIST_TOPIC_RESPONSE: GetData<TopicsType> = {
       [TopicFields.COLUMN_LABEL]: 'label',
       [TopicFields.COLUMN_PREMIUM]: true,
       [TopicFields.COLUMN_DESCRIPTION]: 'description',
+      [TopicFields.COLUMN_CLASSIFICATION]: 'PaaS',
     },
   ],
 };
