@@ -6,6 +6,7 @@ export enum TopicFields {
   COLUMN_LABEL = 'label',
   COLUMN_PREMIUM = 'premium',
   COLUMN_DESCRIPTION = 'content',
+  COLUMN_CLASSIFICATION = 'classification',
 }
 
 export type TopicType = {
@@ -14,6 +15,7 @@ export type TopicType = {
   [TopicFields.COLUMN_LABEL]: string;
   [TopicFields.COLUMN_PREMIUM]: boolean;
   [TopicFields.COLUMN_DESCRIPTION]: string;
+  [TopicFields.COLUMN_CLASSIFICATION]: string;
 };
 
 export class Topic extends AbstractEntity<TopicType> {
@@ -22,6 +24,7 @@ export class Topic extends AbstractEntity<TopicType> {
   readonly #label: string;
   readonly #premium: boolean;
   readonly #description: string;
+  readonly #classification: string;
 
   constructor(input: TopicType) {
     super(input);
@@ -31,6 +34,7 @@ export class Topic extends AbstractEntity<TopicType> {
     this.#label = input[TopicFields.COLUMN_LABEL];
     this.#premium = input[TopicFields.COLUMN_PREMIUM];
     this.#description = input[TopicFields.COLUMN_DESCRIPTION];
+    this.#classification = input[TopicFields.COLUMN_CLASSIFICATION];
   }
 
   get id(): number {
@@ -53,6 +57,10 @@ export class Topic extends AbstractEntity<TopicType> {
     return this.#description;
   }
 
+  get classification(): string {
+    return this.#classification;
+  }
+
   public toJSON(): TopicType {
     return {
       [TopicFields.COLUMN_ID]: this.id,
@@ -60,6 +68,7 @@ export class Topic extends AbstractEntity<TopicType> {
       [TopicFields.COLUMN_LABEL]: this.label,
       [TopicFields.COLUMN_PREMIUM]: this.premium,
       [TopicFields.COLUMN_DESCRIPTION]: this.description,
+      [TopicFields.COLUMN_CLASSIFICATION]: this.classification,
     };
   }
 }
