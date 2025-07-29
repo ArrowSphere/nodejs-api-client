@@ -1,5 +1,17 @@
 import { AbstractEntity } from '../../../abstractEntity';
 
+export enum ScheduledTaskDetailsFields {
+  COLUMN_CREATE = 'create',
+  COLUMN_DELETE = 'delete',
+  COLUMN_UPDATE = 'update',
+}
+
+export type ScheduledTaskDetailsType = {
+  [ScheduledTaskDetailsFields.COLUMN_CREATE]?: string;
+  [ScheduledTaskDetailsFields.COLUMN_DELETE]?: string;
+  [ScheduledTaskDetailsFields.COLUMN_UPDATE]?: string;
+};
+
 export enum ActionsGetFields {
   COLUMN_HISTORY = 'history',
   COLUMN_UPDATE = 'update',
@@ -16,6 +28,7 @@ export enum ActionsGetFields {
   COLUMN_UPGRADE = 'upgrade',
   COLUMN_UPDATE_FRIENDLY_NAME = 'updateFriendlyName',
   COLUMN_SCHEDULED_TASK = 'scheduledTask',
+  COLUMN_SCHEDULED_TASK_DETAILS = 'scheduledTaskDetails',
 }
 
 export type ActionsGetData = {
@@ -34,6 +47,7 @@ export type ActionsGetData = {
   [ActionsGetFields.COLUMN_UPGRADE]?: string;
   [ActionsGetFields.COLUMN_UPDATE_FRIENDLY_NAME]?: string;
   [ActionsGetFields.COLUMN_SCHEDULED_TASK]?: string;
+  [ActionsGetFields.COLUMN_SCHEDULED_TASK_DETAILS]?: ScheduledTaskDetailsType;
 };
 
 export class ActionsGetResult extends AbstractEntity<ActionsGetData> {
@@ -52,6 +66,7 @@ export class ActionsGetResult extends AbstractEntity<ActionsGetData> {
   readonly #upgrade?: string;
   readonly #updateFriendlyName?: string;
   readonly #scheduledTask?: string;
+  readonly #scheduledTaskDetails?: Record<string, string>;
 
   public constructor(data: ActionsGetData) {
     super(data);
@@ -72,6 +87,8 @@ export class ActionsGetResult extends AbstractEntity<ActionsGetData> {
     this.#updateFriendlyName =
       data[ActionsGetFields.COLUMN_UPDATE_FRIENDLY_NAME];
     this.#scheduledTask = data[ActionsGetFields.COLUMN_SCHEDULED_TASK];
+    this.#scheduledTaskDetails =
+      data[ActionsGetFields.COLUMN_SCHEDULED_TASK_DETAILS];
   }
 
   public get history(): string {
@@ -134,6 +151,10 @@ export class ActionsGetResult extends AbstractEntity<ActionsGetData> {
     return this.#scheduledTask;
   }
 
+  public get scheduledTaskDetails(): Record<string, string> | undefined {
+    return this.#scheduledTaskDetails;
+  }
+
   public toJSON(): ActionsGetData {
     return {
       [ActionsGetFields.COLUMN_HISTORY]: this.history,
@@ -151,6 +172,8 @@ export class ActionsGetResult extends AbstractEntity<ActionsGetData> {
       [ActionsGetFields.COLUMN_UPGRADE]: this.upgrade,
       [ActionsGetFields.COLUMN_UPDATE_FRIENDLY_NAME]: this.updateFriendlyName,
       [ActionsGetFields.COLUMN_SCHEDULED_TASK]: this.scheduledTask,
+      [ActionsGetFields.COLUMN_SCHEDULED_TASK_DETAILS]: this
+        .scheduledTaskDetails,
     };
   }
 }
