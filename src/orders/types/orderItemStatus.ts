@@ -2,7 +2,7 @@ export enum OrderItemStatusEnum {
   ARCHIVE = 'Archived',
   EXTERNAL_ERROR = 'External Error',
   IN_PROGRESS = 'In progress',
-  INTERNAL_ERROR = 'External Error',
+  INTERNAL_ERROR = 'Internal Error',
   OPEN = 'Open',
   PENDING = 'Pending',
   PENDING_RELATIONSHIP = 'Pending relationship',
