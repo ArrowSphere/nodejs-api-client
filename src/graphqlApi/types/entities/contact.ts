@@ -1,4 +1,4 @@
-import { EndCustomerType } from './company';
+import { ArrowCompanyType, EndCustomerType, PartnerType } from './company';
 import { OrganizationUnitsType } from './organizationUnit';
 import { UserType } from './user';
 
@@ -6,7 +6,12 @@ export type ContactsType = {
   id?: number;
   active?: boolean;
   communicationEmail?: string;
+  //@deprecated This field no longer exists in graphql schema and must be removed.
   companies?: EndCustomerType[];
+  company?:
+    | (EndCustomerType & { __typename: 'EndCustomer' })
+    | (PartnerType & { __typename: 'Partner' })
+    | (ArrowCompanyType & { __typename: 'ArrowCompany' });
   effectiveDate?: string;
   email?: string;
   erpId?: string;
