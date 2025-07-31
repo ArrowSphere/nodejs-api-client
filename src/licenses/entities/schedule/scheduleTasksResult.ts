@@ -1,21 +1,21 @@
 import { AbstractEntity } from '../../../abstractEntity';
 
 export type ScheduleTaskData = {
-  scheduleTaskId: number;
+  scheduleTaskId?: number;
 };
 
 export class ScheduleTasksResult extends AbstractEntity<ScheduleTaskData> {
-  readonly #scheduleTaskId: number;
+  readonly #scheduleTaskId: number | undefined;
 
-  public constructor(data: ScheduleTaskData) {
-    super(data);
+  public constructor(data: ScheduleTaskData | undefined) {
+    super(data ?? {});
 
-    this.#scheduleTaskId = data.scheduleTaskId;
+    this.#scheduleTaskId = data?.scheduleTaskId;
   }
 
   public toJSON(): ScheduleTaskData {
     return {
-      scheduleTaskId: this.#scheduleTaskId,
+      ...(this.#scheduleTaskId ? { scheduleTaskId: this.#scheduleTaskId } : {}),
     };
   }
 }
