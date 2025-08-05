@@ -48,6 +48,22 @@ export enum CustomerContactPayloadFields {
   COLUMN_ORGANIZATION_UNIT_IDS = 'organizationUnitIds',
 }
 
+export enum ExportCustomersInputFields {
+  COLUMN_FILTERS = 'filters',
+}
+export enum CustomersFilterInputFields {
+  COMPANY_ID = 'companyId',
+  COMPANY_NAME = 'companyName',
+  ACRONYM = 'acronym',
+  BILLING_ID = 'billingId',
+  CITY = 'city',
+  ZIP_CODE = 'zipCode',
+  STATE = 'state',
+  COUNTRY = 'country',
+  CREATION_DATE = 'creationDate',
+  INTERNAL_REFERENCE = 'internalReference',
+}
+
 export type PostCustomerContactPayload = {
   [CustomerContactPayloadFields.COLUMN_FIRST_NAME]: string;
   [CustomerContactPayloadFields.COLUMN_LAST_NAME]: string;
@@ -132,6 +148,30 @@ export interface APIResponseError {
 
 export type PatchCustomerContactPayload = {
   [Property in keyof PostCustomerContactPayload]?: PostCustomerContactPayload[Property];
+};
+
+export enum UploadAttachmentInputFields {
+  COLUMN_FILE_ENCODED = 'fileEncoded',
+}
+
+export type BulkActionInputType = {
+  [UploadAttachmentInputFields.COLUMN_FILE_ENCODED]: string;
+};
+
+export type CustomersFilterInputType = {
+  [CustomersFilterInputFields.COMPANY_ID]?: string;
+  [CustomersFilterInputFields.COMPANY_NAME]?: string;
+  [CustomersFilterInputFields.ACRONYM]?: string;
+  [CustomersFilterInputFields.BILLING_ID]?: string;
+  [CustomersFilterInputFields.CITY]?: string;
+  [CustomersFilterInputFields.ZIP_CODE]?: string;
+  [CustomersFilterInputFields.STATE]?: string;
+  [CustomersFilterInputFields.COUNTRY]?: string;
+  [CustomersFilterInputFields.CREATION_DATE]?: string;
+  [CustomersFilterInputFields.INTERNAL_REFERENCE]?: string;
+};
+export type ExportCustomersInputType = {
+  [ExportCustomersInputFields.COLUMN_FILTERS]: CustomersFilterInputType;
 };
 
 export class CustomersClient extends AbstractRestfulClient {
@@ -345,5 +385,18 @@ export class CustomersClient extends AbstractRestfulClient {
     this.path = `/${customerReference}/vendor/${vendorReference}/credentials`;
 
     return new GetResult(CustomerCredentials, await this.get(parameters));
+  }
+
+  public async postBulkUploadCustomer(
+    bulkActionInput: BulkActionInputType,
+  ): Promise<void> {
+    this.path = '/bulkupdate';
+    await this.post(bulkActionInput);
+  }
+  public async postExportCustomers(
+    payload: ExportCustomersInputType,
+  ): Promise<void> {
+    this.path = '/initiate-export';
+    await this.post(payload);
   }
 }
