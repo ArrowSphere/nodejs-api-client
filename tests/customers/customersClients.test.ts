@@ -5,7 +5,10 @@ import {
   APIResponseError,
   APIResponseResourceCreated,
   CustomerContactFields,
+  CustomersFilterInputFields,
   DataInvitationFields,
+  ExportCustomersInputFields,
+  ExportCustomersInputType,
   GetResult,
   GetResultFields,
   Parameters,
@@ -54,6 +57,12 @@ export const CUSTOMERS_CUSTOMERS_CREDENTIALS = new RegExp(
   '/customers/REF/vendor/VENDOR_REF/credentials',
 );
 
+export const CUSTOMERS_CUSTOMERS_BULK_UPLOAD = new RegExp(
+  '/customers/bulkupdate',
+);
+export const CUSTOMERS_CUSTOMERS_EXPORT_CUSTOMERS = new RegExp(
+  '/customers/initiate-export',
+);
 export const CUSTOMERS_GET_UNKNOWN_LICENSES_URL = new RegExp(
   '/customers/REF/unknownlicenses',
 );
@@ -693,6 +702,46 @@ describe('CustomersClients', () => {
 
       expect(result).to.be.instanceof(GetResult);
       expect(result.toJSON()).to.eql(RESPONSE_CUSTOMER_CREDENTIALS);
+    });
+  });
+  describe('postBulkUploadCustomer', () => {
+    const client = new PublicApiClient()
+      .getCustomersClient()
+      .setUrl(CUSTOMERS_MOCK_URL);
+
+    it('call Post BulkUpload Customer', async () => {
+      nock(CUSTOMERS_MOCK_URL).post(CUSTOMERS_CUSTOMERS_BULK_UPLOAD).reply(200);
+
+      await client.postBulkUploadCustomer({
+        fileEncoded: 'file.csv',
+      });
+    });
+  });
+  describe('postExportCustomers', () => {
+    const client = new PublicApiClient()
+      .getCustomersClient()
+      .setUrl(CUSTOMERS_MOCK_URL);
+
+    it('call Post BulkUpload Customer', async () => {
+      nock(CUSTOMERS_MOCK_URL)
+        .post(CUSTOMERS_CUSTOMERS_EXPORT_CUSTOMERS)
+        .reply(200);
+
+      const payload: ExportCustomersInputType = {
+        [ExportCustomersInputFields.COLUMN_FILTERS]: {
+          [CustomersFilterInputFields.COMPANY_ID]: '12345',
+          [CustomersFilterInputFields.BILLING_ID]: '1234',
+          [CustomersFilterInputFields.ACRONYM]: '1234',
+          [CustomersFilterInputFields.CITY]: 'test',
+          [CustomersFilterInputFields.COMPANY_NAME]: 'test',
+          [CustomersFilterInputFields.CREATION_DATE]: '2023-01-01',
+          [CustomersFilterInputFields.INTERNAL_REFERENCE]: '1234',
+          [CustomersFilterInputFields.ZIP_CODE]: '75012',
+          [CustomersFilterInputFields.STATE]: 'test',
+        },
+      };
+
+      await client.postExportCustomers(payload);
     });
   });
 });
