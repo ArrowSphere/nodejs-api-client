@@ -11,6 +11,7 @@ export enum LicenseEventActionType {
   SUSPENDED = 'suspended',
   PRORATA = 'prorata',
   RECURRING = 'recurring',
+  CONVERSION = 'conversion',
 }
 
 export enum LicenseEventType {
