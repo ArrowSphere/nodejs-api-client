@@ -105,6 +105,11 @@ export interface LicenseEventDetails {
   source?: string | null;
 }
 
+export type LicenseEventImpersonatorType = {
+  email?: string;
+  name?: string;
+};
+
 export interface LicenseEvent {
   id?: number;
   partnerRef?: string;
@@ -126,4 +131,5 @@ export interface LicenseEvent {
   user?: LicenseEventUser;
   actionType?: LicenseEventActionType;
   eventDetails?: LicenseEventDetails;
+  impersonator?: LicenseEventImpersonatorType;
 }

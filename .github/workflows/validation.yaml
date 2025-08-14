@@ -30,4 +30,4 @@ jobs:
         run: yarn test:coverage
       - if: env.COVERALLS_REPO_TOKEN != null
         name: Push coverage to coveralls
-        run: yarn test:coverage:report
+        run: yarn test:coverage
