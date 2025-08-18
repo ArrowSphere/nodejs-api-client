@@ -115,6 +115,7 @@ export interface LicenseEvent {
   partnerRef?: string;
   orderRef?: string;
   createdAt?: string;
+  startDate?: string;
   customer?: LicenseEventCustomer;
   reseller?: LicenseEventReseller;
   marketplace?: string;
