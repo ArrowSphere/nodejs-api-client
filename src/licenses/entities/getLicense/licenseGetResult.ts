@@ -83,7 +83,7 @@ export enum LicenseGetFields {
   COLUMN_MARKET_SEGMENT = 'marketSegment',
   COLUMN_CONFIGS = 'configs',
   COLUMN_WARNINGS = 'warnings',
-  COLUMN_END_DATE = 'end_date',
+  COLUMN_END_DATE = 'endDate',
 }
 
 export type LicenseGetData = {
