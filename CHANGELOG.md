@@ -7,7 +7,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - [license] add field startDate on license event
 
-
 ## [3.216.0] - 2025.08.14
 ### Added
 - [license] add field impersonator on license event
