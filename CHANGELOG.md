@@ -3,6 +3,18 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.242.0] - 2026.02.10
+
+### Added
+
+- [license] add endpoint to get license dynamic attributes mapping
+
+## [3.241.0] - 2026.02.10
+
+### Added
+
+- [license attachments] client for endpoints: add, delete, get attachments
+
 ## [3.240.0] - 2026.02.02
 
 ### Added
