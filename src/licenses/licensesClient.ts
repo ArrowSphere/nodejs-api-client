@@ -83,6 +83,7 @@ import { ConsumptionDailyPrediction } from '../consumption';
 import { GetScheduledTasksResult } from './entities/schedule/getScheduledTasksResult';
 import { GetScheduleTaskResult } from './entities/schedule/getScheduleTaskResult';
 import { LicenceCouponCodeHistoryResult } from './entities/history/licenceCouponCodeHistoryResult';
+import { DynamicAttributesMappingResult } from './entities/license/dynamicMappingResult';
 
 /**
  * Parameters passable to the request for refining search.
@@ -1144,5 +1145,16 @@ export class LicensesClient extends AbstractRestfulClient {
       }
       return acc;
     }, {});
+  }
+
+  public async getLicenseDynamicAttributesMapping(
+    parameters: Parameters = {},
+  ): Promise<GetResult<DynamicAttributesMappingResult>> {
+    this.path = '/license-mapping';
+
+    return new GetResult(
+      DynamicAttributesMappingResult,
+      await this.get(parameters),
+    );
   }
 }
