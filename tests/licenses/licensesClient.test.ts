@@ -68,6 +68,7 @@ import {
   PAYLOAD_SCHEMA_LICENSE,
   PAYLOAD_SCHEMA_LICENSE_WITHOUT_OPTIONAL_FIELDS,
   PAYLOAD_LICENSE_COUPON_CODE_HISTORY,
+  PAYLOAD_LICENSE_DYNAMIC_ATTRIBUTES_MAPPING,
 } from './licenses.mocks';
 import { Axios } from 'axios';
 import sinon from 'sinon';
@@ -115,6 +116,8 @@ export const LICENSE_MOCK_URL_SCHEDULE_TASKS =
 export const LICENSE_MOCK_URL_SCHEDULED_TASKS =
   '/licenses/XSP12343/scheduledTasks/12345';
 export const LICENSE_MOCK_URL_BULK = '/licenses/bulk-action';
+export const LICENSE_DYNAMIC_ATTRIBUTES_MAPPING_MOCK_URL =
+  '/licenses/license-mapping';
 
 /**
  * Mock license data to be used in tests and returned by mocks
@@ -1422,6 +1425,20 @@ describe('LicensesClient', () => {
         .reply(200, PAYLOAD_LICENSE_COUPON_CODE_HISTORY);
 
       await getLicenseCouponCodeHistory.getCouponCodeHistory('12343');
+      expect(nock.isDone()).to.be.true;
+    });
+  });
+
+  describe('getLicenseDynamicAttributesMapping', () => {
+    const getLicenseDynamicAttributesMapping = new PublicApiClient()
+      .getLicensesClient()
+      .setUrl(LICENSES_MOCK_URL);
+    it('call get method', async () => {
+      nock(LICENSES_MOCK_URL)
+        .get(LICENSE_DYNAMIC_ATTRIBUTES_MAPPING_MOCK_URL)
+        .reply(200, PAYLOAD_LICENSE_DYNAMIC_ATTRIBUTES_MAPPING);
+
+      await getLicenseDynamicAttributesMapping.getLicenseDynamicAttributesMapping();
       expect(nock.isDone()).to.be.true;
     });
   });
