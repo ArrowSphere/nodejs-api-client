@@ -84,6 +84,7 @@ export enum LicenseGetFields {
   COLUMN_CONFIGS = 'configs',
   COLUMN_WARNINGS = 'warnings',
   COLUMN_END_DATE = 'endDate',
+  COLUMN_ATTRIBUTES = 'attributes',
 }
 
 export type LicenseGetData = {
@@ -138,6 +139,7 @@ export type LicenseGetData = {
   [LicenseGetFields.COLUMN_CONFIGS]?: Array<ConfigFindResultData> | null;
   [LicenseGetFields.COLUMN_WARNINGS]?: Array<WarningFindResultData> | null;
   [LicenseGetFields.COLUMN_END_DATE]: string;
+  [LicenseGetFields.COLUMN_ATTRIBUTES]: Record<string, string>;
 };
 
 export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
@@ -192,6 +194,7 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
   readonly #configs?: Array<ConfigFindResult> | null;
   readonly #warnings?: Array<WarningFindResult> | null;
   readonly #endDate: string;
+  readonly #attributes: Record<string, string>;
 
   public constructor(licenseGetDataInput: LicenseGetData) {
     super(licenseGetDataInput);
@@ -323,6 +326,8 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
     );
 
     this.#endDate = licenseGetDataInput[LicenseGetFields.COLUMN_END_DATE] ?? '';
+    this.#attributes =
+      licenseGetDataInput[LicenseGetFields.COLUMN_ATTRIBUTES] ?? {};
   }
 
   public get classification(): string {
@@ -532,6 +537,10 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
     return this.#endDate;
   }
 
+  public get attributes(): Record<string, string> {
+    return this.#attributes;
+  }
+
   public toJSON(): LicenseGetData {
     return {
       [LicenseGetFields.COLUMN_ADDITIONAL_INFORMATION]: this
@@ -597,6 +606,7 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
         (warning: WarningFindResult) => warning.toJSON(),
       ),
       [LicenseGetFields.COLUMN_END_DATE]: this.endDate,
+      [LicenseGetFields.COLUMN_ATTRIBUTES]: this.attributes,
     };
   }
 }
