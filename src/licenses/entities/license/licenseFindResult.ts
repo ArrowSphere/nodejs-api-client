@@ -101,6 +101,7 @@ export enum LicenseFindResultFields {
   COLUMN_VENDOR_NAME = 'vendor_name',
   COLUMN_VENDOR_SUBSCRIPTION_ID = 'vendor_subscription_id',
   COLUMN_HIGHLIGHT = 'highlight',
+  COLUMN_ATTRIBUTES = 'attributes',
 }
 
 /**
@@ -153,6 +154,7 @@ export type LicenseFindResultData = {
   [LicenseFindResultFields.COLUMN_VENDOR_NAME]: string;
   [LicenseFindResultFields.COLUMN_VENDOR_SUBSCRIPTION_ID]: string | null;
   [LicenseFindResultFields.COLUMN_HIGHLIGHT]?: Highlight;
+  [LicenseFindResultFields.COLUMN_ATTRIBUTES]?: Record<string, string>;
 };
 
 export type LicenceFindDataKeywords = {
