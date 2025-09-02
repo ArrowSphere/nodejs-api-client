@@ -39,6 +39,7 @@ import { CredentialsResultType } from '../../src/licenses/entities/license/crede
 import { RatesGetDataFields } from '../../src/licenses/entities/getLicense/ratesGetResult';
 import { constants } from 'http2';
 import { PriceBandDataFields } from '../../src/licenses/entities/getLicense/priceBandGetResult';
+import { DynamicAttributesMappingResultData } from '../../src/licenses/entities/license/dynamicMappingResult';
 
 export const PAYLOAD_SCHEMA_LICENSE: GetData<GetLicenseResultData> = {
   status: 200,
@@ -437,5 +438,13 @@ export const LICENSE_SCHEDULED_TASK_GET_RESPONSE: GetData<GetScheduleTaskResultD
       '2024-04-07T20:27:09+00:00',
     [GetScheduleTaskResultFields.COLUMN_COTERMINOSITY_DATE]:
       '2025-04-06T20:23:52+00:00',
+  },
+};
+
+export const PAYLOAD_LICENSE_DYNAMIC_ATTRIBUTES_MAPPING: GetData<DynamicAttributesMappingResultData> = {
+  status: 200,
+  data: {
+    'license.attributes.attributeA': 'valueA',
+    'license.attributes.attributeB': 'valueB',
   },
 };
