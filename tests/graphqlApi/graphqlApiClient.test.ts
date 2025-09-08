@@ -31,6 +31,7 @@ import {
   SpecialPriceRateType,
   UserHistoryType,
   UserType,
+  ExportResultType,
 } from '../../src/graphqlApi';
 import { QuoteType } from '../../src/graphqlApi/types/entities/quote';
 
@@ -1239,6 +1240,30 @@ describe('GraphqlApiClient', () => {
       sinon.assert.calledWithExactly(
         graphQLClient.request,
         sinon.match(GraphqlApiQueryMock.SELECT_ONE_SUPPORT_LEVEL_GQL),
+      );
+
+      expect(result).to.deep.equals(expectedResult);
+    });
+  });
+
+  describe('export end customer', () => {
+    it('makes a graphql POST request on the specified URL to export end customer', async () => {
+      const expectedResult: ExportResultType = {
+        [Queries.EXPORT]: {
+          [SelectableField.DATA]: null,
+          [SelectableField.ERRORS]: undefined,
+        },
+      };
+
+      graphQLClient.request.resolves(expectedResult);
+
+      const result: ExportResultType | null = await client.export(
+        GraphqlApiQueryMock.EXPORT_END_CUSTOMER_QUERY,
+      );
+
+      sinon.assert.calledWithExactly(
+        graphQLClient.request,
+        sinon.match(GraphqlApiQueryMock.EXPORT_END_CUSTOMER_GQL),
       );
 
       expect(result).to.deep.equals(expectedResult);

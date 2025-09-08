@@ -7,6 +7,8 @@ import {
 
 import {
   ErrorsField,
+  ExportQueryType,
+  ExportResultType,
   GetLocalContactQueryType,
   GetLocalContactResultType,
   GetSpecialPriceRatesHistoryQueryType,
@@ -17,6 +19,7 @@ import {
   Queries,
   QueryVariablesField,
   QueryVariablesType,
+  SelectableField,
   SelectAllQueryType,
   SelectAllResultType,
   SelectDataField,
@@ -26,7 +29,6 @@ import {
   SelectOneQueryType,
   SelectOneResponseDataType,
   SelectOneResultType,
-  SelectableField,
 } from './types/graphqlApiQueries';
 import {
   ArrowCompanySchema,
@@ -59,25 +61,13 @@ export class GraphqlApiClient extends AbstractGraphQLClient {
   public async selectAll(
     query: SelectAllQueryType,
   ): Promise<SelectAllResultType | null> {
-    const queryStr: string = this.stringifyQuery(query);
-
-    const result: SelectAllResultType | null = await this.find<SelectAllResultType>(
-      queryStr,
-    );
-
-    return result;
+    return await this.find<SelectAllResultType>(this.stringifyQuery(query));
   }
 
   public async selectOne(
     query: SelectOneQueryType,
   ): Promise<SelectOneResultType | null> {
-    const queryStr: string = this.stringifyQuery(query);
-
-    const result: SelectOneResultType | null = await this.find<SelectOneResultType>(
-      queryStr,
-    );
-
-    return result;
+    return await this.find<SelectOneResultType>(this.stringifyQuery(query));
   }
 
   public async findOneById<T>(
@@ -242,5 +232,11 @@ export class GraphqlApiClient extends AbstractGraphQLClient {
     return await this.find<GetSpecialPriceRatesHistoryResultType>(
       this.stringifyQuery(query),
     );
+  }
+
+  public async export(
+    query: ExportQueryType,
+  ): Promise<ExportResultType | null> {
+    return await this.find<ExportResultType>(this.stringifyQuery(query));
   }
 }

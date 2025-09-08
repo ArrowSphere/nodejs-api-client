@@ -308,6 +308,11 @@ export type UserHistorySchema = Schema<UserHistoryType, boolean>;
 export type WorkgroupSchema = Schema<WorkgroupType, boolean>;
 export type SupportLevelSchema = Schema<GraphqlApiSupportLevel, boolean>;
 
+export type ExportResultSchema = {
+  [SelectableField.DATA]?: SelectAllResponseDataSchema;
+  [SelectableField.ERRORS]?: ErrorsSchema;
+};
+
 export type SelectAllResultSchema = {
   [SelectableField.DATA]?: SelectAllResponseDataSchema;
   [SelectableField.ERRORS]?: ErrorsSchema;
@@ -354,4 +359,8 @@ export type SelectAllQuerySchema = {
 
 export type SelectOneQuerySchema = {
   [Queries.SELECT_ONE]?: SelectOneResultSchema;
+};
+
+export type ExportQuerySchema = {
+  [Queries.EXPORT]?: ExportResultSchema;
 };
