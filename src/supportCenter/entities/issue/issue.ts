@@ -82,7 +82,7 @@ export type IssueType = {
   [IssueFields.COLUMN_TITLE]: string;
   [IssueFields.COLUMN_DESCRIPTION]: string;
   [IssueFields.COLUMN_TOPIC_ID]: string;
-  [IssueFields.COLUMN_TOPIC]: string;
+  [IssueFields.COLUMN_TOPIC]?: string;
   [IssueFields.COLUMN_END_CUSTOMER_REF]?: string;
   [IssueFields.COLUMN_LANGUAGE]?: string;
   [IssueFields.COLUMN_OFFER]?: IssueOfferType;
@@ -236,7 +236,7 @@ export class Issue extends AbstractEntity<IssueType> {
   readonly #id?: string;
   readonly #title: string;
   readonly #description: string;
-  readonly #topic: string;
+  readonly #topic?: string;
   readonly #topicId: string;
   readonly #endCustomerRef?: string;
   readonly #language?: string;
@@ -313,7 +313,7 @@ export class Issue extends AbstractEntity<IssueType> {
     return this.#topicId;
   }
 
-  get topic(): string {
+  get topic(): string | undefined {
     return this.#topic;
   }
 
