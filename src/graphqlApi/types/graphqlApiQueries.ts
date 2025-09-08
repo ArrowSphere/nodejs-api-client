@@ -158,6 +158,8 @@ export enum SelectableField {
   DATA = 'data',
   ERRORS = 'errors',
   PAGINATION = 'pagination',
+  EXCEL_FIELDS = 'excelFields',
+  EXPORT_TITLE = 'exportTitle',
 }
 
 export enum SelectDataField {
@@ -194,6 +196,13 @@ export type SelectAllResultType = {
     [SelectableField.DATA]?: SelectAllResponseDataType;
     [SelectableField.ERRORS]?: ErrorsType;
     [SelectableField.PAGINATION]?: PageType;
+  };
+};
+
+export type ExportResultType = {
+  [Queries.EXPORT]: {
+    [SelectableField.DATA]?: null;
+    [SelectableField.ERRORS]?: ErrorsType;
   };
 };
 
@@ -337,6 +346,14 @@ export type QueryVariablesType = {
   [QueryVariablesField.OPTIONS]?: InputQueryOptionsType;
 };
 
+export type QueryVariablesExportType = QueryVariablesType & {
+  [SelectableField.EXCEL_FIELDS]?: {
+    label: string;
+    field: string;
+  }[];
+  [SelectableField.EXPORT_TITLE]?: string;
+};
+
 export type SelectOneByIdQueryVariablesType = {
   id: number;
   [QueryVariablesField.EXCLUSION_FILTERS]?: InputSearchFilterType;
@@ -350,7 +367,16 @@ export enum Queries {
   SELECT_ONE_BY_ID = 'selectOneById',
   GET_LOCAL_CONTACT = 'getLocalContact',
   GET_SPECIAL_PRICE_RATES_HISTORY = 'getSpecialPriceRatesHistory',
+  EXPORT = 'export',
 }
+
+export type ExportQueryType = {
+  [Queries.EXPORT]: {
+    __args?: QueryVariablesExportType;
+    [SelectableField.DATA]: SelectAllResponseDataSchema;
+    [SelectableField.ERRORS]?: ErrorsSchema;
+  };
+};
 
 export type SelectAllQueryType = {
   [Queries.SELECT_ALL]: {

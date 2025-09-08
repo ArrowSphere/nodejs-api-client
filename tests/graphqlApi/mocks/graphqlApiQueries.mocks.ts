@@ -1,6 +1,7 @@
 import {
   ComparisonOperator,
   Direction,
+  ExportQueryType,
   LogicalOperator,
   Queries,
   QueryModifier,
@@ -1549,3 +1550,36 @@ export const SELECT_ONE_SUPPORT_LEVEL_QUERY: SelectOneQueryType = {
 
 export const SELECT_ONE_SUPPORT_LEVEL_GQL =
   '{selectOne { data { supportLevel { id skus label program { id internalName name } } } errors { code message } }}';
+
+export const EXPORT_END_CUSTOMER_QUERY: ExportQueryType = {
+  [Queries.EXPORT]: {
+    __args: {
+      excelFields: [
+        {
+          label: 'identifier',
+          field: 'id',
+        },
+        {
+          label: 'Partner Name',
+          field: 'partner.name',
+        },
+      ],
+      exportTitle: 'test',
+    },
+    data: {
+      endCustomer: {
+        id: true,
+        partner: {
+          id: true,
+          name: true,
+        },
+      },
+    },
+    errors: {
+      code: true,
+      message: true,
+    },
+  },
+};
+export const EXPORT_END_CUSTOMER_GQL =
+  '{export (excelFields: [{label: "identifier", field: "id"}, {label: "Partner Name", field: "partner.name"}], exportTitle: "test") { data { endCustomer { id partner { id name } } } errors { code message } }}';
