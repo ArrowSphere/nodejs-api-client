@@ -57,6 +57,7 @@ describe('CatalogGraphQLClient', () => {
             perPage: 12,
           },
           searchBody: {
+            ignoreCatalogPlan: true,
             sort: {
               name: 'test',
             },

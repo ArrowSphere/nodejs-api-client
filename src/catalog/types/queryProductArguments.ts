@@ -3,7 +3,7 @@
  */
 export type QueryProductArguments = {
   paginate?: PaginateArgument;
-  searchBody: SearchBodyArgument;
+  searchBody: SearchBodyProductArgument;
 };
 
 /**
@@ -66,6 +66,10 @@ export type SearchBodyArgument = {
   restricted?: boolean;
   sort?: SortArgument | SortArgument[];
   topOffers?: boolean;
+};
+
+export type SearchBodyProductArgument = SearchBodyArgument & {
+  ignoreCatalogPlan?: boolean;
 };
 
 export type SearchProductFilterArgument = {
