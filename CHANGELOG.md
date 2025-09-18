@@ -3,30 +3,50 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [3.220.0] - 2025.09.08
+## [3.221.0] - 2025.09.18
+
 ### Added
+
+- [subscription] update type for handling subscription upgrade
+
+## [3.220.0] - 2025.09.08
+
+### Added
+
 - [catalog] Added ignoreCatalogPlan property
+
 ### Fixed
+
 - [supportCenter] Field topic is optional
 
 ## [3.219.0] - 2025.09.08
+
 ### Added
+
 - [graphql-api] add export feature
 
 ## [3.218.0] - 2025.08.27
+
 ### Added
+
 - [license] add field endDate on license
 
 ## [3.217.0] - 2025.08.18
+
 ### Added
+
 - [license] add field startDate on license event
 
 ## [3.216.0] - 2025.08.14
+
 ### Added
+
 - [license] add field impersonator on license event
 
 ## [3.215.0] - 2025.08.06
+
 ### Added
+
 - [customer] add endpoint to bulk update customers
 - [customer] add endpoint to export customers
 
