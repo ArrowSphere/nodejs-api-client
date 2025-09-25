@@ -4,8 +4,10 @@ export enum CompleteWhoAmICompanyFields {
   COLUMN_COMPANY_RESTRICTED = 'companyRestricted',
   COLUMN_COUNTRY_CODE = 'countryCode',
   COLUMN_ERP_ID = 'erpId',
+  COLUMN_HAS_ACCESS_TO_CUSTOM_ASSISTANT = 'hasAccessToCustomAssistant',
   COLUMN_HAS_ACCESS_TO_XCM = 'hasAccessToXcm',
   COLUMN_HAS_ACCESS_TO_XCP = 'hasAccessToXcp',
+  COLUMN_HAS_ACCESS_TO_XCP_AI = 'hasAccessToXcpAI',
   COLUMN_IS_PROTECTED = 'isProtected',
   COLUMN_MARKETPLACE = 'marketplace',
   COLUMN_NAME = 'name',
@@ -23,8 +25,10 @@ export type CompleteWhoAmICompanyData = {
   [CompleteWhoAmICompanyFields.COLUMN_COMPANY_RESTRICTED]: boolean;
   [CompleteWhoAmICompanyFields.COLUMN_COUNTRY_CODE]: string;
   [CompleteWhoAmICompanyFields.COLUMN_ERP_ID]: string;
+  [CompleteWhoAmICompanyFields.COLUMN_HAS_ACCESS_TO_CUSTOM_ASSISTANT]: boolean;
   [CompleteWhoAmICompanyFields.COLUMN_HAS_ACCESS_TO_XCM]: boolean;
   [CompleteWhoAmICompanyFields.COLUMN_HAS_ACCESS_TO_XCP]: boolean;
+  [CompleteWhoAmICompanyFields.COLUMN_HAS_ACCESS_TO_XCP_AI]: boolean;
   [CompleteWhoAmICompanyFields.COLUMN_IS_PROTECTED]: boolean;
   [CompleteWhoAmICompanyFields.COLUMN_MARKETPLACE]?: string;
   [CompleteWhoAmICompanyFields.COLUMN_NAME]?: string;
@@ -41,10 +45,14 @@ export class CompleteWhoAmICompany extends AbstractEntity<CompleteWhoAmICompanyD
       data[CompleteWhoAmICompanyFields.COLUMN_COMPANY_RESTRICTED];
     this.#countryCode = data[CompleteWhoAmICompanyFields.COLUMN_COUNTRY_CODE];
     this.#erpId = data[CompleteWhoAmICompanyFields.COLUMN_ERP_ID];
+    this.#hasAccessToCustomAssistant =
+      data[CompleteWhoAmICompanyFields.COLUMN_HAS_ACCESS_TO_CUSTOM_ASSISTANT];
     this.#hasAccessToXcm =
       data[CompleteWhoAmICompanyFields.COLUMN_HAS_ACCESS_TO_XCM];
     this.#hasAccessToXcp =
       data[CompleteWhoAmICompanyFields.COLUMN_HAS_ACCESS_TO_XCP];
+    this.#hasAccessToXcpAI =
+      data[CompleteWhoAmICompanyFields.COLUMN_HAS_ACCESS_TO_XCP_AI];
     this.#isProtected = data[CompleteWhoAmICompanyFields.COLUMN_IS_PROTECTED];
     this.#marketplace = data[CompleteWhoAmICompanyFields.COLUMN_MARKETPLACE];
     this.#name = data[CompleteWhoAmICompanyFields.COLUMN_NAME];
@@ -56,8 +64,10 @@ export class CompleteWhoAmICompany extends AbstractEntity<CompleteWhoAmICompanyD
   readonly #companyRestricted: boolean;
   readonly #countryCode: string;
   readonly #erpId: string;
+  readonly #hasAccessToCustomAssistant: boolean;
   readonly #hasAccessToXcm: boolean;
   readonly #hasAccessToXcp: boolean;
+  readonly #hasAccessToXcpAI: boolean;
   readonly #isProtected: boolean;
   readonly #marketplace?: string;
   readonly #name?: string;
@@ -77,12 +87,20 @@ export class CompleteWhoAmICompany extends AbstractEntity<CompleteWhoAmICompanyD
     return this.#erpId;
   }
 
+  get hasAccessToCustomAssistant(): boolean {
+    return this.#hasAccessToCustomAssistant;
+  }
+
   get hasAccessToXcm(): boolean {
     return this.#hasAccessToXcm;
   }
 
   get hasAccessToXcp(): boolean {
     return this.#hasAccessToXcp;
+  }
+
+  get hasAccessToXcpAI(): boolean {
+    return this.#hasAccessToXcpAI;
   }
 
   get isProtected(): boolean {
@@ -115,10 +133,14 @@ export class CompleteWhoAmICompany extends AbstractEntity<CompleteWhoAmICompanyD
         .companyRestricted,
       [CompleteWhoAmICompanyFields.COLUMN_COUNTRY_CODE]: this.countryCode,
       [CompleteWhoAmICompanyFields.COLUMN_ERP_ID]: this.erpId,
+      [CompleteWhoAmICompanyFields.COLUMN_HAS_ACCESS_TO_CUSTOM_ASSISTANT]: this
+        .hasAccessToCustomAssistant,
       [CompleteWhoAmICompanyFields.COLUMN_HAS_ACCESS_TO_XCM]: this
         .hasAccessToXcm,
       [CompleteWhoAmICompanyFields.COLUMN_HAS_ACCESS_TO_XCP]: this
         .hasAccessToXcp,
+      [CompleteWhoAmICompanyFields.COLUMN_HAS_ACCESS_TO_XCP_AI]: this
+        .hasAccessToXcpAI,
       [CompleteWhoAmICompanyFields.COLUMN_IS_PROTECTED]: this.isProtected,
       [CompleteWhoAmICompanyFields.COLUMN_MARKETPLACE]: this.marketplace,
       [CompleteWhoAmICompanyFields.COLUMN_NAME]: this.name,
