@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.222.0] - 2025.09.25
+
+### Added
+
+- [assistant] Add hasAccessToCustomAssistant and hasAccessToXcpAI properties to CompleteWhoAmICompany
+
 ## [3.221.0] - 2025.09.18
 
 ### Added
@@ -509,7 +515,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [3.148.0] - 2024.10.10
 
 ### Added
-- [quotes] add vendorRateType and vendorUplift 
+- [quotes] add vendorRateType and vendorUplift
 
 ## [3.147.0] - 2024.010.09
 
@@ -608,17 +614,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - [quotes] Add lastVersion and version in quotes
 
-## [3.132.0] - 2024.08.12 
+## [3.132.0] - 2024.08.12
 
 ### Added
 - [licences] Provide information to process remaining credits
 
-## [3.131.0] - 2024.08.12 
+## [3.131.0] - 2024.08.12
 
 ### Added
 - [licences] Add FindResultItem type
 
-## [3.130.0] - 2024.08.06 
+## [3.130.0] - 2024.08.06
 
 ### Added
 - [quotes] Add buyPrice and sellPrice in ItemData
