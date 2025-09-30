@@ -20,8 +20,9 @@ import {
   SharedContactFields,
   UpdateOrderInputFields,
   UpdateOrderInputType,
+  UpdateOrderResultData,
+  VendorAttributesFields,
 } from '../../../src';
-import { UpdateOrderResultData } from '../../../src/orders/entities/orders/updateOrderResult';
 import { PriceBandFields } from '../../../src/orders/entities/orders/products/priceBand/priceBand';
 import { OrganizationUnitTypeFields } from '../../../src/orders/entities/orders/products/organizationUnit/organizationUnit';
 
@@ -86,6 +87,10 @@ export const PAYLOAD_ORDERS: GetData<DataListOrdersType> = {
             [OrderProductsFields.COLUMN_IDENTIFIERS]: {
               [ProductIdentifiersFields.COLUMN_VENDOR]: {
                 [IdentifiersVendorFields.COLUMN_SKU]: 'sku',
+                [IdentifiersVendorFields.COLUMN_ATTRIBUTES]: {
+                  [VendorAttributesFields.COLUMN_CAN_SWITCH_AUTO_RENEW]: true,
+                },
+                [IdentifiersVendorFields.COLUMN_BRAND]: 'brand',
               },
             },
             [OrderProductsFields.COLUMN_ORGANIZATION_UNIT_REF]: 'XSPOU321',
@@ -165,6 +170,8 @@ export const PAYLOAD_ORDERS_WITHOUT_OPTIONAL: GetData<DataListOrdersType> = {
             [OrderProductsFields.COLUMN_IDENTIFIERS]: {
               [ProductIdentifiersFields.COLUMN_VENDOR]: {
                 [IdentifiersVendorFields.COLUMN_SKU]: 'sku',
+                [IdentifiersVendorFields.COLUMN_ATTRIBUTES]: {},
+                [IdentifiersVendorFields.COLUMN_BRAND]: 'brand',
               },
             },
           },
