@@ -4,6 +4,7 @@ export * from './entities/orders/order';
 export * from './entities/orders/updateOrderResult';
 export * from './entities/orders/partner/partner';
 export * from './entities/orders/products/identifiers/vendor/identifiersVendor';
+export * from './entities/orders/products/identifiers/vendor/vendorAttributes';
 export * from './entities/orders/products/identifiers/productIdentifiers';
 export * from './entities/orders/products/prices/productPrices';
 export * from './entities/orders/products/program/productProgram';
