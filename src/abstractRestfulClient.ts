@@ -462,19 +462,21 @@ export abstract class AbstractRestfulClient extends AbstractHttpClient {
 
   /**
    * Sends a DELETE request
-   * @param payload - Payload to be sent in the POST body
    * @param parameters - Query parameters to be sent in the request
    * @param headers - Headers to be sent in the request
    * @param options - Options to send
+   * @param payload - Payload to be sent in the POST body
    * @returns Promise\<T\>
    */
   protected async delete(
     parameters: Parameters = {},
     headers: Headers = {},
     options: Options = {},
+    payload: Payload = {},
   ): Promise<void> {
     const url: string = this.generateUrl(parameters, options);
     const config: AxiosRequestConfig = {
+      data: payload,
       headers: this.prepareHeaders(headers),
     };
 
@@ -487,6 +489,7 @@ export abstract class AbstractRestfulClient extends AbstractHttpClient {
 
         if (mustRetry) {
           const config: AxiosRequestConfig = {
+            data: payload,
             headers: this.prepareHeaders(headers),
           };
           const response = await this.client.delete(url, config);
