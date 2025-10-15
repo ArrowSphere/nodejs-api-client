@@ -422,7 +422,7 @@ export type ScheduleTasks = {
   term?: number;
   seats?: number;
   executionDate: string;
-};
+} & ExtraInformationType;
 
 export type UpdateScheduledTaskRequestType = Omit<
   ScheduleTasks,
