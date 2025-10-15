@@ -416,13 +416,15 @@ export type SaveBillingCommentsInputType = {
   [SaveBillingCommentsInputFields.COLUMN_COMMENT_TWO]?: string | null;
 };
 
+export type DeleteScheduledTaskType = ExtraInformationType;
+
 export type ScheduleTasks = {
   coterminosityDate?: string;
   periodicity?: number;
   term?: number;
   seats?: number;
   executionDate: string;
-};
+} & ExtraInformationType;
 
 export type UpdateScheduledTaskRequestType = Omit<
   ScheduleTasks,
@@ -1014,10 +1016,11 @@ export class LicensesClient extends AbstractRestfulClient {
     licenseReference: string,
     scheduledTaskId: number,
     parameters: Parameters = {},
+    payload: DeleteScheduledTaskType = {},
   ): Promise<void> {
     this.path = `/${licenseReference}${this.SCHEDULE_TASKS_PATH}/${scheduledTaskId}`;
 
-    return this.delete(parameters);
+    return this.delete(parameters, payload);
   }
 
   public async getLicenseDailyPredictions(

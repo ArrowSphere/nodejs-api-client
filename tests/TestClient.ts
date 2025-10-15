@@ -79,7 +79,7 @@ export class TestClient extends AbstractRestfulClient {
 
   deleteTestAdmin(): Promise<void> {
     this.path = TEST_ENDPOINT;
-    return super.delete({}, {}, { isAdmin: true });
+    return super.delete({}, {}, {}, { isAdmin: true });
   }
 }
 

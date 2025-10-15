@@ -462,19 +462,21 @@ export abstract class AbstractRestfulClient extends AbstractHttpClient {
 
   /**
    * Sends a DELETE request
-   * @param payload - Payload to be sent in the POST body
    * @param parameters - Query parameters to be sent in the request
+   * @param payload - Payload to be sent in the POST body
    * @param headers - Headers to be sent in the request
    * @param options - Options to send
    * @returns Promise\<T\>
    */
   protected async delete(
     parameters: Parameters = {},
+    payload: Payload = {},
     headers: Headers = {},
     options: Options = {},
   ): Promise<void> {
     const url: string = this.generateUrl(parameters, options);
     const config: AxiosRequestConfig = {
+      data: payload,
       headers: this.prepareHeaders(headers),
     };
 
