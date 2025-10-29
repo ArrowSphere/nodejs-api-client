@@ -30,6 +30,7 @@ import { SubscriptionType } from './entities/subscription';
 import { UserHistoryType, UserType } from './entities/user';
 import { WorkgroupType } from './entities/workgroup';
 import { GraphqlApiSupportLevel } from './entities/supportLevel';
+import { GraphqlApiProgramAgreementType } from './entities/programAgreement';
 import {
   ContactsSchema,
   ErrorsSchema,
@@ -189,6 +190,7 @@ export enum SelectDataField {
   USER_HISTORY = 'userHistory',
   WORKGROUP = 'workgroup',
   SUPPORT_LEVEL = 'supportLevel',
+  PROGRAM_AGREEMENT = 'programAgreement',
 }
 
 export type SelectAllResultType = {
@@ -232,6 +234,7 @@ export type SelectAllResponseDataType = {
   [SelectDataField.USER_HISTORY]?: UserHistoryType[];
   [SelectDataField.WORKGROUP]?: WorkgroupType[];
   [SelectDataField.SUPPORT_LEVEL]?: GraphqlApiSupportLevel[];
+  [SelectDataField.PROGRAM_AGREEMENT]?: GraphqlApiProgramAgreementType[];
 };
 
 export enum ErrorsField {

@@ -1551,6 +1551,25 @@ export const SELECT_ONE_SUPPORT_LEVEL_QUERY: SelectOneQueryType = {
 export const SELECT_ONE_SUPPORT_LEVEL_GQL =
   '{selectOne { data { supportLevel { id skus label program { id internalName name } } } errors { code message } }}';
 
+export const SELECT_ALL_PROGRAM_AGREEMENT_QUERY: SelectAllQueryType = {
+  [Queries.SELECT_ALL]: {
+    __args: {},
+    data: {
+      programAgreement: {
+        id: true,
+        url: true,
+      },
+    },
+    errors: {
+      code: true,
+      message: true,
+    },
+  },
+};
+
+export const SELECT_ALL_PROGRAM_AGREEMENT_GQL =
+  '{selectAll { data { programAgreement { id url } } errors { code message } }}';
+
 export const EXPORT_END_CUSTOMER_QUERY: ExportQueryType = {
   [Queries.EXPORT]: {
     __args: {
