@@ -1,7 +1,7 @@
 import { WorkgroupType } from './workgroup';
 import { GraphqlApiProgramType } from './program';
 import { SubscriptionType } from './subscription';
-import { GraphqlApiProviderAgreementHistoryType } from './providerArgeementHistory';
+import { GraphqlApiProviderAgreementHistoryType } from './providerAgreementHistory';
 
 export type GraphqlApiProgramAgreementType = {
   id?: number;
