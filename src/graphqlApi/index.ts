@@ -24,4 +24,4 @@ export * from './graphqlApiClient';
 export * from './types/entities/quoteVersion';
 export * from './types/entities/comment';
 export * from './types/entities/programAgreement';
-export * from './types/entities/providerArgeementHistory';
+export * from './types/entities/providerAgreementHistory';
