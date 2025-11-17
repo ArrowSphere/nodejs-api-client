@@ -83,6 +83,10 @@ import { ConsumptionDailyPrediction } from '../consumption';
 import { GetScheduledTasksResult } from './entities/schedule/getScheduledTasksResult';
 import { GetScheduleTaskResult } from './entities/schedule/getScheduleTaskResult';
 import { LicenceCouponCodeHistoryResult } from './entities/history/licenceCouponCodeHistoryResult';
+import {
+  AttachmentLicense,
+  AttachmentsLicense,
+} from './entities/license/attachment';
 
 /**
  * Parameters passable to the request for refining search.
@@ -454,6 +458,16 @@ export type RewriteRateHistoryInputType = {
   [RewriteRateHistoryInputFields.COLUMN_DATE_START]: string;
   [RewriteRateHistoryInputFields.COLUMN_RATE_TYPE]: string;
   [RewriteRateHistoryInputFields.COLUMN_RATE]: number;
+};
+
+export enum UploadAttachmentLicenseInputFields {
+  COLUMN_NAME = 'name',
+  COLUMN_FILE_ENCODED = 'fileEncoded',
+}
+
+export type UploadAttachmentLicenseInputType = {
+  [UploadAttachmentLicenseInputFields.COLUMN_NAME]: string;
+  [UploadAttachmentLicenseInputFields.COLUMN_FILE_ENCODED]: string;
 };
 
 export class LicensesClient extends AbstractRestfulClient {
@@ -1053,6 +1067,46 @@ export class LicensesClient extends AbstractRestfulClient {
     this.path = `/${licenseReference}${this.REWRITE_RATE_HISTORY_PATH}`;
 
     await this.post(payload, parameters);
+  }
+
+  public async getAttachmentsLicense(
+    licenseReference: string,
+    perPage?: number,
+    page?: number,
+    parameters: Parameters = {},
+  ): Promise<GetResult<AttachmentsLicense>> {
+    this.path = `/${licenseReference}/attachment`;
+    if (perPage) {
+      this.setPerPage(perPage);
+    }
+    if (page) {
+      this.setPage(page);
+    }
+
+    return new GetResult(AttachmentsLicense, await this.get(parameters));
+  }
+
+  public async deleteAttachmentLicense(
+    licenseReference: string,
+    name: string,
+    parameters: Parameters = {},
+  ): Promise<void> {
+    this.path = `/${licenseReference}/attachment/${name}`;
+
+    await this.delete(parameters);
+  }
+
+  public async uploadAttachmentLicense(
+    licenseReference: string,
+    payload: UploadAttachmentLicenseInputType,
+    parameters: Parameters = {},
+  ): Promise<GetResult<AttachmentLicense>> {
+    this.path = `/${licenseReference}/attachment`;
+
+    return new GetResult(
+      AttachmentLicense,
+      await this.post(payload, parameters),
+    );
   }
 
   private createFilters(
