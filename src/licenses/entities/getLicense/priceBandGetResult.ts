@@ -3,6 +3,7 @@ import {
   SaleConstraintsFindResult,
   SaleConstraintsFindResultData,
 } from '../offer/priceband/saleConstraintsFindResult';
+import { AttributesParameterType } from '../../../catalog';
 
 export enum PriceBandDataFields {
   COLUMN_ATTRIBUTES = 'attributes',
@@ -17,6 +18,7 @@ export type Billing = {
 export type PriceBandAttribute = {
   name: string;
   value: string;
+  type?: AttributesParameterType;
 };
 
 export type PriceBandData = {
