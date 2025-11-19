@@ -68,6 +68,9 @@ import {
   PAYLOAD_SCHEMA_LICENSE,
   PAYLOAD_SCHEMA_LICENSE_WITHOUT_OPTIONAL_FIELDS,
   PAYLOAD_LICENSE_COUPON_CODE_HISTORY,
+  GET_ATTACHMENTS_RESPONSE,
+  POST_ATTACHMENT_RESPONSE,
+  POST_ATTACHMENT_PAYLOAD,
 } from './licenses.mocks';
 import { Axios } from 'axios';
 import sinon from 'sinon';
@@ -82,6 +85,10 @@ import {
   EndCustomerOrganizationUnitFindResultType,
 } from '../../src/licenses/entities/endCustomerOrganizationUnit/endCustomerOrganizationUnitFindResult';
 import { GET_LICENSE_DAILY_PREDICTIONS_RESPONSE } from '../consumption/mocks/consumption.mocks';
+import {
+  AttachmentLicense,
+  AttachmentsLicense,
+} from '../../src/licenses/entities/license/attachment';
 
 export const LICENSES_MOCK_URL = 'https://licenses.localhost';
 export const LICENSES_FIND_ENDPOINT = new RegExp('/licenses/v2/find.*');
@@ -114,6 +121,9 @@ export const LICENSE_MOCK_URL_SCHEDULE_TASKS =
   '/licenses/XSP12343/scheduledTasks';
 export const LICENSE_MOCK_URL_SCHEDULED_TASKS =
   '/licenses/XSP12343/scheduledTasks/12345';
+export const LICENSE_MOCK_URL_ATTACHMENT = '/licenses/XSP12343/attachment';
+export const LICENSE_MOCK_URL_ATTACHMENT_NAME =
+  '/licenses/XSP12343/attachment/name';
 export const LICENSE_MOCK_URL_BULK = '/licenses/bulk-action';
 
 /**
@@ -1298,6 +1308,64 @@ describe('LicensesClient', () => {
 
       await licensesClient.deleteScheduledTask('XSP12343', 12345);
       expect(nock.isDone()).to.be.true;
+    });
+  });
+
+  describe('getAttachmentsLicense', () => {
+    const licensesClient = new PublicApiClient()
+      .getLicensesClient()
+      .setUrl(LICENSES_MOCK_URL);
+
+    it('should call getAttachmentsLicense method', async () => {
+      const licenseReference = 'XSP12343';
+
+      nock(LICENSES_MOCK_URL)
+        .get(LICENSE_MOCK_URL_ATTACHMENT)
+        .reply(constants.HTTP_STATUS_OK, GET_ATTACHMENTS_RESPONSE);
+
+      const result: GetResult<AttachmentsLicense> = await licensesClient.getAttachmentsLicense(
+        licenseReference,
+      );
+
+      expect(result).to.be.instanceof(GetResult);
+      expect(result.toJSON().data).to.be.deep.equals(
+        GET_ATTACHMENTS_RESPONSE.data,
+      );
+    });
+  });
+
+  describe('deleteAttachmentLicense', () => {
+    const licensesClient = new PublicApiClient()
+      .getLicensesClient()
+      .setUrl(LICENSES_MOCK_URL);
+    it('call the delete method', async function () {
+      nock(LICENSES_MOCK_URL)
+        .delete(LICENSE_MOCK_URL_ATTACHMENT_NAME)
+        .reply(constants.HTTP_STATUS_NO_CONTENT);
+
+      await licensesClient.deleteAttachmentLicense('XSP12343', 'name');
+      expect(nock.isDone()).to.be.true;
+    });
+  });
+
+  describe('uploadAttachmentLicense', () => {
+    const licensesClient = new PublicApiClient()
+      .getLicensesClient()
+      .setUrl(LICENSES_MOCK_URL);
+    it('should call scheduleTasks method', async () => {
+      nock(LICENSES_MOCK_URL)
+        .post(LICENSE_MOCK_URL_ATTACHMENT)
+        .reply(constants.HTTP_STATUS_OK, POST_ATTACHMENT_RESPONSE);
+
+      const result: GetResult<AttachmentLicense> = await licensesClient.uploadAttachmentLicense(
+        'XSP12343',
+        POST_ATTACHMENT_PAYLOAD,
+      );
+
+      expect(nock.isDone()).to.be.true;
+      expect(result.toJSON().data).to.be.deep.equals(
+        POST_ATTACHMENT_RESPONSE.data,
+      );
     });
   });
 

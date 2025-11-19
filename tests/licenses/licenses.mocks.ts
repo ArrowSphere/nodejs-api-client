@@ -33,12 +33,20 @@ import {
   LicenceCouponCodeHistoryResultFields,
   SaleConstraintsFindResultFields,
   GetScheduledTasksResultFields,
+  UploadAttachmentLicenseInputType,
+  UploadAttachmentLicenseInputFields,
 } from '../../src';
 import { ExtraDataFields } from '../../src/licenses/entities/getLicense/extraDataGetResult';
 import { CredentialsResultType } from '../../src/licenses/entities/license/credentialsResult';
 import { RatesGetDataFields } from '../../src/licenses/entities/getLicense/ratesGetResult';
 import { constants } from 'http2';
 import { PriceBandDataFields } from '../../src/licenses/entities/getLicense/priceBandGetResult';
+import {
+  AttachmentLicenseFields,
+  AttachmentLicenseType,
+  AttachmentsLicenseFields,
+  AttachmentsLicenseType,
+} from '../../src/licenses/entities/license/attachment';
 
 export const PAYLOAD_SCHEMA_LICENSE: GetData<GetLicenseResultData> = {
   status: 200,
@@ -437,5 +445,33 @@ export const LICENSE_SCHEDULED_TASK_GET_RESPONSE: GetData<GetScheduleTaskResultD
       '2024-04-07T20:27:09+00:00',
     [GetScheduleTaskResultFields.COLUMN_COTERMINOSITY_DATE]:
       '2025-04-06T20:23:52+00:00',
+  },
+};
+
+export const ATTACHMENT_LICENSE: AttachmentLicenseType = {
+  [AttachmentLicenseFields.COLUMN_LAST_MODIFIED]: '2025-11-18:11:26+00:00',
+  [AttachmentLicenseFields.COLUMN_METADATA]: {
+    uploadedby: 'internal',
+    userid: 'userid_123',
+    username: 'username_123',
+  },
+  [AttachmentLicenseFields.COLUMN_NAME]: 'attachment_name',
+  [AttachmentLicenseFields.COLUMN_URL]: 'attachment_url',
+};
+
+export const POST_ATTACHMENT_PAYLOAD: UploadAttachmentLicenseInputType = {
+  [UploadAttachmentLicenseInputFields.COLUMN_NAME]: 'attachment_name',
+  [UploadAttachmentLicenseInputFields.COLUMN_FILE_ENCODED]: 'file_encoded',
+};
+
+export const POST_ATTACHMENT_RESPONSE: GetData<AttachmentLicenseType> = {
+  [GetResultFields.COLUMN_STATUS]: constants.HTTP_STATUS_OK,
+  [GetResultFields.COLUMN_DATA]: ATTACHMENT_LICENSE,
+};
+
+export const GET_ATTACHMENTS_RESPONSE: GetData<AttachmentsLicenseType> = {
+  [GetResultFields.COLUMN_STATUS]: constants.HTTP_STATUS_OK,
+  [GetResultFields.COLUMN_DATA]: {
+    [AttachmentsLicenseFields.COLUMN_ATTACHMENTS]: [ATTACHMENT_LICENSE],
   },
 };
