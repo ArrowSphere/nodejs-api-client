@@ -23,6 +23,7 @@ export type QuoteType = {
   partner?: PartnerType;
   versions?: QuoteVersion[];
   promotionCode?: string;
+  promotionType?: string;
   reference?: string;
   status?: string;
   totalRecurringPrice?: number;
