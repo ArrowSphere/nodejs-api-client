@@ -3,40 +3,49 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [3.236.0] - 2025.01.21
+## [3.237.0] - 2026.01.21
+
+### Added
+
+- [contact] Add field organisation Units in get contact response payload
+
+## [3.236.0] - 2026.01.21
 
 ### Updated
+
 - Added friendlyName event type to LicenseEventActionType
 
-## [3.235.0] - 2025.01.20
+## [3.235.0] - 2026.01.20
 
 ### Updated
+
 - [Order] Update order products entity
 
-## [3.234.0] - 2025.01.19
+## [3.234.0] - 2026.01.19
 
 ### Updated
+
 - Handle the bundles in the Offers
 
-
-## [3.233.0] - 2025.01.15
+## [3.233.0] - 2026.01.15
 
 ### Updated
+
 -  update lib json-to-graphql-query to version 2.3.0
 
-## [3.232.1] - 2025.01.14
+## [3.232.1] - 2026.01.14
 
 ### Added
 
 - [Quote] Fix mandatoryEula type
 
-## [3.232.0] - 2025.01.13
+## [3.232.0] - 2026.01.13
 
 ### Added
 
 - [Quote] Provide field mandatoryEula in item program
 
-## [3.231.0] - 2025.01.08
+## [3.231.0] - 2026.01.08
 
 ### Added
 
