@@ -8,6 +8,7 @@ export enum XcpInvitationFields {
   COLUMN_SENDER_ID = 'sender_id',
   COLUMN_CONTACT_ID = 'contact_id',
   COLUMN_POLICY = 'policy',
+  COLUMN_EXPIRED_AT = 'expiredAt',
 }
 
 export type XcpInvitationType = {
@@ -18,6 +19,7 @@ export type XcpInvitationType = {
   [XcpInvitationFields.COLUMN_SENDER_ID]: number;
   [XcpInvitationFields.COLUMN_CONTACT_ID]: number;
   [XcpInvitationFields.COLUMN_POLICY]: string;
+  [XcpInvitationFields.COLUMN_EXPIRED_AT]: string;
 };
 
 export class XcpInvitation extends AbstractEntity<XcpInvitationType> {
@@ -28,6 +30,7 @@ export class XcpInvitation extends AbstractEntity<XcpInvitationType> {
   readonly #sender_id: number;
   readonly #contact_id: number;
   readonly #policy: string;
+  readonly #expiredAt: string;
 
   public constructor(xcpInvitationDataInput: XcpInvitationType) {
     super(xcpInvitationDataInput);
@@ -43,6 +46,8 @@ export class XcpInvitation extends AbstractEntity<XcpInvitationType> {
     this.#contact_id =
       xcpInvitationDataInput[XcpInvitationFields.COLUMN_CONTACT_ID];
     this.#policy = xcpInvitationDataInput[XcpInvitationFields.COLUMN_POLICY];
+    this.#expiredAt =
+      xcpInvitationDataInput[XcpInvitationFields.COLUMN_EXPIRED_AT];
   }
 
   get id(): number {
@@ -66,6 +71,9 @@ export class XcpInvitation extends AbstractEntity<XcpInvitationType> {
   get policy(): string {
     return this.#policy;
   }
+  get expiredAt(): string {
+    return this.#expiredAt;
+  }
 
   public toJSON(): XcpInvitationType {
     return {
@@ -76,6 +84,7 @@ export class XcpInvitation extends AbstractEntity<XcpInvitationType> {
       [XcpInvitationFields.COLUMN_SENDER_ID]: this.sender_id,
       [XcpInvitationFields.COLUMN_CONTACT_ID]: this.contact_id,
       [XcpInvitationFields.COLUMN_POLICY]: this.policy,
+      [XcpInvitationFields.COLUMN_EXPIRED_AT]: this.expiredAt,
     };
   }
 }
