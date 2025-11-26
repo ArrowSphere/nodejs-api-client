@@ -3,6 +3,7 @@ import { BannerV2, BannerV2Type } from './banner/banner';
 import { LandingPageV2, LandingPageV2Type } from './landingPage/landingPage';
 import { Rules, RulesType } from '../../campaign/rules/rules';
 import { DownloadUrls } from './banner/downloadUrls';
+import { CampaignPopup, CampaignPopupType } from './popup/popup';
 
 export enum CampaignV2Fields {
   COLUMN_DOWNLOAD_URLS = 'downloadUrls',
@@ -18,6 +19,7 @@ export enum CampaignV2Fields {
   COLUMN_START_DATE = 'startDate',
   COLUMN_END_DATE = 'endDate',
   COLUMN_BANNER = 'banner',
+  COLUMN_POPUP = 'campaignPopup',
   COLUMN_LANDING_PAGE = 'landingPage',
 }
 
@@ -34,8 +36,9 @@ export type CampaignV2Type = {
   [CampaignV2Fields.COLUMN_RULES]?: RulesType;
   [CampaignV2Fields.COLUMN_START_DATE]?: string;
   [CampaignV2Fields.COLUMN_END_DATE]?: string;
-  [CampaignV2Fields.COLUMN_BANNER]: BannerV2Type;
-  [CampaignV2Fields.COLUMN_LANDING_PAGE]: LandingPageV2Type;
+  [CampaignV2Fields.COLUMN_BANNER]?: BannerV2Type;
+  [CampaignV2Fields.COLUMN_POPUP]?: CampaignPopupType;
+  [CampaignV2Fields.COLUMN_LANDING_PAGE]?: LandingPageV2Type;
 };
 
 export class CampaignV2 extends AbstractEntity<CampaignV2Type> {
@@ -51,8 +54,9 @@ export class CampaignV2 extends AbstractEntity<CampaignV2Type> {
   readonly #rules?: Rules;
   readonly #startDate?: string;
   readonly #endDate?: string;
-  readonly #banner: BannerV2;
-  readonly #landingPage: LandingPageV2;
+  readonly #banner?: BannerV2;
+  readonly #campaignPopup?: CampaignPopup;
+  readonly #landingPage?: LandingPageV2;
 
   constructor(campaignInput: CampaignV2Type) {
     super(campaignInput);
@@ -69,11 +73,25 @@ export class CampaignV2 extends AbstractEntity<CampaignV2Type> {
       : undefined;
     this.#startDate = campaignInput[CampaignV2Fields.COLUMN_START_DATE];
     this.#endDate = campaignInput[CampaignV2Fields.COLUMN_END_DATE];
-    this.#banner = new BannerV2(campaignInput[CampaignV2Fields.COLUMN_BANNER]);
+    this.#banner = campaignInput[CampaignV2Fields.COLUMN_BANNER]
+      ? new BannerV2(
+          campaignInput[CampaignV2Fields.COLUMN_BANNER] as BannerV2Type,
+        )
+      : undefined;
 
-    this.#landingPage = new LandingPageV2(
-      campaignInput[CampaignV2Fields.COLUMN_LANDING_PAGE],
-    );
+    this.#campaignPopup = campaignInput[CampaignV2Fields.COLUMN_POPUP]
+      ? new CampaignPopup(
+          campaignInput[CampaignV2Fields.COLUMN_POPUP] as CampaignPopupType,
+        )
+      : undefined;
+
+    this.#landingPage = campaignInput[CampaignV2Fields.COLUMN_LANDING_PAGE]
+      ? new LandingPageV2(
+          campaignInput[
+            CampaignV2Fields.COLUMN_LANDING_PAGE
+          ] as LandingPageV2Type,
+        )
+      : undefined;
     this.#status = campaignInput[CampaignV2Fields.COLUMN_STATUS];
   }
 
@@ -121,11 +139,15 @@ export class CampaignV2 extends AbstractEntity<CampaignV2Type> {
     return this.#endDate;
   }
 
-  get banner(): BannerV2 {
+  get banner(): BannerV2 | undefined {
     return this.#banner;
   }
 
-  get landingPage(): LandingPageV2 {
+  get campaignPopup(): CampaignPopup | undefined {
+    return this.#campaignPopup;
+  }
+
+  get landingPage(): LandingPageV2 | undefined {
     return this.#landingPage;
   }
 
@@ -146,8 +168,9 @@ export class CampaignV2 extends AbstractEntity<CampaignV2Type> {
       [CampaignV2Fields.COLUMN_RULES]: this.rules?.toJSON(),
       [CampaignV2Fields.COLUMN_START_DATE]: this.startDate,
       [CampaignV2Fields.COLUMN_END_DATE]: this.endDate,
-      [CampaignV2Fields.COLUMN_BANNER]: this.banner.toJSON(),
-      [CampaignV2Fields.COLUMN_LANDING_PAGE]: this.landingPage.toJSON(),
+      [CampaignV2Fields.COLUMN_BANNER]: this.banner?.toJSON(),
+      [CampaignV2Fields.COLUMN_LANDING_PAGE]: this.landingPage?.toJSON(),
+      [CampaignV2Fields.COLUMN_POPUP]: this.campaignPopup?.toJSON(),
       [CampaignV2Fields.COLUMN_STATUS]: this.status,
     };
   }
