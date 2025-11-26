@@ -6,6 +6,7 @@ import { CampaignAssets } from './entities/campaignAssets/campaignAssets';
 import { CampaignList } from './entities/v2/campaignList';
 import { CampaignAggragations } from './entities/campaign/campaignAggregation';
 import { CampaignAssetsUpload } from './entities/campaignAssets/campaignAssetsUpload';
+import { CampaignPopupType } from './entities/v2/campaign/popup/popup';
 
 export enum PostEmailCampaignFields {
   COLUMN_APPLICATION = 'application',
@@ -24,6 +25,7 @@ export enum CampaignInputFields {
   COLUMN_IS_ACTIVATED = 'isActivated',
   COLUMN_LANDING_PAGE = 'landingPage',
   COLUMN_NAME = 'name',
+  COLUMN_POPUP = 'campaignPopup',
   COLUMN_RULES = 'rules',
   COLUMN_START_DATE = 'startDate',
   COLUMN_STATUS = 'status',
@@ -189,12 +191,22 @@ export type LandingPageInputType = {
   [LandingPageInputFields.COLUMN_URL]?: string;
 };
 
+export enum CampaignCategoryList {
+  COMMUNICATION_BAR = 'COMMUNICATIONBAR',
+  BANNER = 'BANNER',
+  BUG = 'BUG',
+  NOTIFICATION = 'NOTIFICATION',
+  POPUP = 'CAMPAIGN_POPUP',
+  RELEASE = 'RELEASE',
+}
+
 export type CampaignInputType = {
   [CampaignInputFields.COLUMN_BANNER]?: BannerInputType;
-  [CampaignInputFields.COLUMN_CATEGORY]?: string;
+  [CampaignInputFields.COLUMN_CATEGORY]?: CampaignCategoryList;
   [CampaignInputFields.COLUMN_END_DATE]?: string;
   [CampaignInputFields.COLUMN_IS_ACTIVATED]?: boolean;
   [CampaignInputFields.COLUMN_LANDING_PAGE]?: LandingPageInputType;
+  [CampaignInputFields.COLUMN_POPUP]?: CampaignPopupType;
   [CampaignInputFields.COLUMN_NAME]: string;
   [CampaignInputFields.COLUMN_RULES]?: RulesInputType;
   [CampaignInputFields.COLUMN_START_DATE]?: string;
