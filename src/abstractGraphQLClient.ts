@@ -1,11 +1,10 @@
-import { GraphQLClient } from 'graphql-request';
-import * as Dom from 'graphql-request/dist/types.dom';
 import { Options } from './abstractRestfulClient';
 import * as path from 'path';
 import { GetProductsType } from './catalog';
 import { jsonToGraphQLQuery } from 'json-to-graphql-query';
 import { AbstractHttpClient } from './AbstractHttpClient';
 import { PublicApiClientException } from './exception';
+import { GraphQLClient } from 'graphql-request';
 
 export type GraphQLResponseTypes = GetProductsType;
 
@@ -16,7 +15,7 @@ export abstract class AbstractGraphQLClient extends AbstractHttpClient {
    */
   protected graphQLClient!: GraphQLClient;
 
-  protected optionsHeader?: Dom.RequestInit['headers'];
+  protected optionsHeader?: RequestInit['headers'];
 
   protected options: Options = {};
 
