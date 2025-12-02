@@ -1,23 +1,22 @@
 name: Lint, Build, Test
 
 on:
-  push:
   pull_request:
 
 jobs:
   lint-build-test:
     strategy:
       matrix:
-        node: ['14.x', '16.x', '18.x']
+        node: ['20.x', '22.x', '24.x']
     env:
       COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
     name: Lint, Build, Test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         name: Checkout code
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
       - name: Install Node.js dependencies
@@ -26,7 +25,7 @@ jobs:
         run: yarn lint
       - name: Run build
         run: yarn build
-      - name: Run tests
+      - name: Run tests with coverage
         run: yarn test:coverage
       - if: env.COVERALLS_REPO_TOKEN != null
         name: Push coverage to coveralls

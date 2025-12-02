@@ -52,7 +52,7 @@ export enum FileUploadKeys {
 
 export type Payload = Record<string, unknown> | Array<Payload>;
 export interface PayloadWithFile {
-  [FileUploadKeys.Fields]?: Record<string, unknown>;
+  [FileUploadKeys.Fields]?: Record<string, File>;
   [FileUploadKeys.File]?: File;
 }
 
@@ -357,7 +357,7 @@ export abstract class AbstractRestfulClient extends AbstractHttpClient {
     };
 
     const formData: FormData = new FormData();
-    formData.append(FileUploadKeys.File, payload[FileUploadKeys.File]);
+    formData.append(FileUploadKeys.File, payload[FileUploadKeys.File] ?? '');
     for (const [key, value] of Object.entries(
       payload[FileUploadKeys.Fields] ?? {},
     )) {
