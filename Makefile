@@ -3,7 +3,7 @@
 help:
 	@echo "\033[1;36mInstallation:\033[0m" \
 	&& echo "  \033[1;32minstall     	\033[0m : Install dependencies (yarn install --frozen-lockfile)" \
-	&& echo "  \033[1;32mupdate-lock 	\033[0m : Update yarn.lock from package.json (yarn install)" \
+	&& echo "  \033[1;32minstall-mutable 	\033[0m : Update yarn.lock from package.json (yarn install)" \
 	&& echo "" \
 	&& echo "\033[1;36mBuild & Clean:\033[0m" \
 	&& echo "  \033[1;32mbuild       	\033[0m : Build the project (yarn build)" \

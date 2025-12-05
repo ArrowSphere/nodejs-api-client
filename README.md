@@ -10,6 +10,10 @@ It should be the only way to make calls to ArrowSphere's API with Node.js code.
 
 To use this package, you need valid access to ArrowSphere, with a valid API key.
 
+# ⚠️ Security Disclaimer
+
+**Please exercise extreme caution when installing new dependencies. Always verify the source and reputation of any library before adding it to your project, to avoid introducing malicious packages.**
+
 ## Installation
 
 Install the latest version with
