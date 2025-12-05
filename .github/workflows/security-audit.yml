@@ -35,6 +35,119 @@ jobs:
             echo "changed=true" >> $GITHUB_OUTPUT
           fi
 
+      - name: Check for malicious packages from list
+        if: steps.deps_changed.outputs.changed == 'true'
+        run: |
+          curl -sSL https://raw.githubusercontent.com/wiz-sec-public/wiz-research-iocs/refs/heads/main/reports/shai-hulud-2-packages.csv -o ./malicious_source1.csv
+          curl -sSL https://raw.githubusercontent.com/hemachandsai/shai-hulud-malicious-packages/main/malicious_npm_packages.json -o ./malicious_source2.json
+          awk -F, 'NR>1 {gsub(/=|\|\|/,"",$2); gsub(/  +/," ",$2); print $1 "," $2}' ./malicious_source1.csv | sort | uniq | \
+            jq -Rn '
+            [inputs | split(",") | {name: .[0], versions: ([.[1] | split(" ") | map(select(length > 0))])}] |
+              group_by(.name) |
+              map({name: .[0].name, versions: (.[].versions | add)})
+            ' > ./malicious_source1_raw.json
+          jq 'to_entries | map({name: .key, versions: .value.versions})' ./malicious_source2.json > ./malicious_source2_raw.json
+          jq -s 'add | group_by(.name) | map({name: .[0].name, versions: (map(.versions) | add | unique)})' \
+            ./malicious_source1_raw.json ./malicious_source2_raw.json > ./malicious_merged_raw.json
+          jq '[.dependencies,.devDependencies | to_entries[] | {name: .key, version: .value}]' package.json > ./project_packages.json
+          if jq -e '
+            [ .[] as $pkg | select(
+              ([ $malList[0][] | select(
+                .name == $pkg.name and (
+                  (.versions | length == 0) or
+                  ((has("versions") and ($pkg.version | length > 0) and (.versions | index($pkg.version)))) or
+                  ($pkg.version | length == 0)
+                )
+              ) ] | length) > 0)
+            ] | length > 0
+            ' ./project_packages.json --slurpfile malList ./malicious_merged_raw.json; then
+            echo "Malicious package (with or without version) detected in package.json! Aborting install."
+            exit 1
+          else
+            echo "No malicious packages detected in package.json."
+          fi
+
+          # yarn.lock check
+          awk '
+          # Function to add a version without duplicates
+            function addVersion(pkg, ver) {
+            # Ignore if pkg is empty
+            if (pkg == "") return
+          
+            for (i in versions[pkg]) {
+            if (versions[pkg][i] == ver) return
+          }
+            versions[pkg][length(versions[pkg])] = ver
+          }
+            
+            BEGIN {
+            currentPkg = ""
+          }
+          
+          # Detect a package block: "react@^18.0.0:"
+            /^[^[:space:]].*:/ {
+            line = $0
+            sub(/:$/, "", line)
+            gsub(/"/, "", line)
+          
+            # Extract package name
+            currentPkg = line
+            sub(/@.*$/, "", currentPkg)
+          
+            # Ignore if the name is invalid
+            if (currentPkg ~ /^[[:space:]]*$/) currentPkg = ""
+          }
+          
+          # Extract the version
+            /^[[:space:]]*version / {
+            # Ignore if no current package
+            if (currentPkg == "") next
+          
+            gsub(/"/, "", $2)
+            ver = $2
+            addVersion(currentPkg, ver)
+          }
+            
+            END {
+            print "["
+          
+            firstPkg = 1
+            for (p in versions) {
+            if (!firstPkg) print ","
+            firstPkg = 0
+          
+          printf "  {\"name\": \"%s\", \"version\": [", p
+          
+              firstVer = 1
+              for (i in versions[p]) {
+                if (!firstVer) printf ", "
+                printf "\"%s\"", versions[p][i]
+            firstVer = 0
+            }
+            
+            printf "]}"
+              }
+              
+              print "\n]"
+            }
+            ' yarn.lock > project_packages_lock.json
+            
+          if jq -e '
+            [ .[] as $pkg | select(
+              ([ $malList[0][] | select(
+                .name == $pkg.name and (
+                  (.versions | length == 0) or
+                  ((has("versions") and ($pkg.version | length > 0) and (.versions | index($pkg.version)))) or
+                  ($pkg.version | length == 0)
+                )
+              ) ] | length) > 0)
+            ] | length > 0
+            ' project_packages_lock.json --slurpfile malList ./malicious_merged_raw.json; then
+            echo "Malicious package (with or without version) detected in yarn.lock! Aborting install."
+            exit 1
+          else
+            echo "No malicious packages detected in yarn.lock."
+          fi
       - name: Install dependencies
         if: steps.deps_changed.outputs.changed == 'true'
         run: yarn install --frozen-lockfile
