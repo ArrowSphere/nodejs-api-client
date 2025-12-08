@@ -97,6 +97,9 @@ export type ItemData = {
   quantity?: number;
   orderingType?: string;
   vendorName?: string;
+  initialBuyPrice?: number;
+  initialSellPrice?: number;
+  isPromotion?: boolean;
   vendorPriceBandSku?: string;
 };
 
