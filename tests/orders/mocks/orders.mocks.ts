@@ -24,6 +24,13 @@ import {
 import { UpdateOrderResultData } from '../../../src/orders/entities/orders/updateOrderResult';
 import { PriceBandFields } from '../../../src/orders/entities/orders/products/priceBand/priceBand';
 import { OrganizationUnitTypeFields } from '../../../src/orders/entities/orders/products/organizationUnit/organizationUnit';
+import { IdentifiersVendorAttributesFields } from '../../../src/orders/entities/orders/products/identifiers/vendor/attributes/identifiersVendorAttributes';
+import { FamilyFields } from '../../../src/orders/entities/orders/products/family/family';
+import {
+  PricingRulesFields,
+  RateEnum,
+  RuleEnum,
+} from '../../../src/orders/entities/orders/products/pricingRules/pricingRules';
 
 export const PAYLOAD_ORDERS: GetData<DataListOrdersType> = {
   [GetResultFields.COLUMN_STATUS]: 200,
@@ -55,8 +62,12 @@ export const PAYLOAD_ORDERS: GetData<DataListOrdersType> = {
               'Microsoft||MS-0ZH-VISIO||B4D4B7F4-4089-43B6-9C44-DE97B760FB11',
             [OrderProductsFields.COLUMN_QUANTITY]: 2,
             [OrderProductsFields.COLUMN_STATUS]: 'Provisioned',
+            [OrderProductsFields.COLUMN_CREATION_DATE]: '2017-05-01 19:09:15',
             [OrderProductsFields.COLUMN_DATESTATUS]: '2017-05-15 09:39:05',
             [OrderProductsFields.COLUMN_DETAILEDSTATUS]: 'Provisioned',
+            [OrderProductsFields.COLUMN_FAMILY]: {
+              [FamilyFields.COLUMN_NAME]: 'family name',
+            },
             [OrderProductsFields.COLUMN_IS_ADDON]: true,
             [OrderProductsFields.COLUMN_ARROWSUBCATEGORIES]: ['nce'],
             [OrderProductsFields.COLUMN_IS_TRIAL]: true,
@@ -85,6 +96,10 @@ export const PAYLOAD_ORDERS: GetData<DataListOrdersType> = {
             },
             [OrderProductsFields.COLUMN_IDENTIFIERS]: {
               [ProductIdentifiersFields.COLUMN_VENDOR]: {
+                [IdentifiersVendorFields.COLUMN_ATTRIBUTES]: {
+                  [IdentifiersVendorAttributesFields.COLUMN_CAN_SWITCH_AUTO_RENEW]: true,
+                },
+                [IdentifiersVendorFields.COLUMN_NAME]: 'name',
                 [IdentifiersVendorFields.COLUMN_SKU]: 'sku',
               },
             },
@@ -102,6 +117,17 @@ export const PAYLOAD_ORDERS: GetData<DataListOrdersType> = {
                 { name: 'Attribute3', value: 'value3' },
               ],
             },
+            [OrderProductsFields.COLUMN_PRICING_RULES]: [
+              {
+                [PricingRulesFields.COLUMN_TIER]: 1,
+                [PricingRulesFields.COLUMN_TYPE]: RuleEnum.RATE,
+                [PricingRulesFields.COLUMN_RATE_TYPE]: RateEnum.DISCOUNT,
+                [PricingRulesFields.COLUMN_VALUE]: 7,
+              },
+            ],
+            [OrderProductsFields.COLUMN_PROGRAM_NAME]: 'program name',
+            [OrderProductsFields.COLUMN_SOURCE]: 'source unknown',
+            [OrderProductsFields.COLUMN_VENDOR_NAME]: 'vendor name',
           },
         ],
         [OrderFields.COLUMN_EXTRA_INFORMATION]: {
@@ -141,6 +167,7 @@ export const PAYLOAD_ORDERS_WITHOUT_OPTIONAL: GetData<DataListOrdersType> = {
             [OrderProductsFields.COLUMN_STATUS]: 'Provisioned',
             [OrderProductsFields.COLUMN_DATESTATUS]: '2017-05-15 09:39:05',
             [OrderProductsFields.COLUMN_DETAILEDSTATUS]: 'Provisioned',
+            [OrderProductsFields.COLUMN_FAMILY]: {},
             [OrderProductsFields.COLUMN_IS_ADDON]: true,
             [OrderProductsFields.COLUMN_IS_TRIAL]: true,
             [OrderProductsFields.COLUMN_PRICES]: {
@@ -164,9 +191,14 @@ export const PAYLOAD_ORDERS_WITHOUT_OPTIONAL: GetData<DataListOrdersType> = {
             },
             [OrderProductsFields.COLUMN_IDENTIFIERS]: {
               [ProductIdentifiersFields.COLUMN_VENDOR]: {
+                [IdentifiersVendorFields.COLUMN_ATTRIBUTES]: {
+                  [IdentifiersVendorAttributesFields.COLUMN_CAN_SWITCH_AUTO_RENEW]: true,
+                },
+                [IdentifiersVendorFields.COLUMN_NAME]: 'name',
                 [IdentifiersVendorFields.COLUMN_SKU]: 'sku',
               },
             },
+            [OrderProductsFields.COLUMN_PRICING_RULES]: [],
           },
         ],
       },
