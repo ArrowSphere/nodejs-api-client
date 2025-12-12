@@ -1,4 +1,5 @@
 import { AbstractEntity } from '../../../../abstractEntity';
+import { PriceBandData, PriceBandGetResult } from '../../../../licenses';
 import { ReferenceLink, ReferenceLinkType } from '../../referenceLink';
 import { ProductPrices, ProductPricesType } from './prices/productPrices';
 import { ProductProgram, ProductProgramType } from './program/productProgram';
@@ -6,18 +7,21 @@ import {
   ProductIdentifiers,
   ProductIdentifiersType,
 } from './identifiers/productIdentifiers';
-import { PriceBand, PriceBandType } from './priceBand/priceBand';
 import {
   OrganizationUnit,
   OrganizationUnitType,
 } from './organizationUnit/organizationUnit';
+import { Family, FamilyType } from './family/family';
+import { BusinessRuleEffectType, PricingRules } from './pricingRules/pricingRules';
 
 export enum OrderProductsFields {
   COLUMN_SKU = 'sku',
   COLUMN_QUANTITY = 'quantity',
   COLUMN_STATUS = 'status',
+  COLUMN_CREATION_DATE = 'creationDate',
   COLUMN_DATESTATUS = 'dateStatus',
   COLUMN_DETAILEDSTATUS = 'detailedStatus',
+  COLUMN_FAMILY = 'family',
   COLUMN_IS_ADDON = 'isAddon',
   COLUMN_ARROWSUBCATEGORIES = 'arrowSubCategories',
   COLUMN_IS_TRIAL = 'isTrial',
@@ -31,14 +35,20 @@ export enum OrderProductsFields {
   COLUMN_ORGANIZATION_UNIT_REF = 'organizationUnitRef',
   COLUMN_ORGANIZATION_UNIT = 'organizationUnit',
   COLUMN_PRICE_BAND = 'priceBand',
+  COLUMN_PRICING_RULES = 'pricingRules',
+  COLUMN_PROGRAM_NAME = 'programName',
+  COLUMN_SOURCE = 'source',
+  COLUMN_VENDOR_NAME = 'vendorName',
 }
 
 export type OrderProductsType = {
   [OrderProductsFields.COLUMN_SKU]: string;
   [OrderProductsFields.COLUMN_QUANTITY]: number;
   [OrderProductsFields.COLUMN_STATUS]: string;
+  [OrderProductsFields.COLUMN_CREATION_DATE]?: string;
   [OrderProductsFields.COLUMN_DATESTATUS]: string;
   [OrderProductsFields.COLUMN_DETAILEDSTATUS]: string;
+  [OrderProductsFields.COLUMN_FAMILY]: FamilyType;
   [OrderProductsFields.COLUMN_IS_ADDON]: boolean;
   [OrderProductsFields.COLUMN_ARROWSUBCATEGORIES]?: Array<string>;
   [OrderProductsFields.COLUMN_IS_TRIAL]: boolean;
@@ -51,15 +61,21 @@ export type OrderProductsType = {
   [OrderProductsFields.COLUMN_IDENTIFIERS]: ProductIdentifiersType;
   [OrderProductsFields.COLUMN_ORGANIZATION_UNIT_REF]?: string;
   [OrderProductsFields.COLUMN_ORGANIZATION_UNIT]?: OrganizationUnitType;
-  [OrderProductsFields.COLUMN_PRICE_BAND]?: PriceBandType;
+  [OrderProductsFields.COLUMN_PRICE_BAND]?: PriceBandData;
+  [OrderProductsFields.COLUMN_PRICING_RULES]: Array<BusinessRuleEffectType>;
+  [OrderProductsFields.COLUMN_PROGRAM_NAME]?: string;
+  [OrderProductsFields.COLUMN_SOURCE]?: string;
+  [OrderProductsFields.COLUMN_VENDOR_NAME]?: string;
 };
 
 export class OrderProduct extends AbstractEntity<OrderProductsType> {
   readonly #sku: string;
   readonly #quantity: number;
   readonly #status: string;
+  readonly #creationDate?: string;
   readonly #dateStatus: string;
   readonly #detailedStatus: string;
+  readonly #family: Family;
   readonly #isAddon: boolean;
   readonly #arrowSubCategories?: Array<string>;
   readonly #isTrial: boolean;
@@ -72,17 +88,24 @@ export class OrderProduct extends AbstractEntity<OrderProductsType> {
   readonly #identifier: ProductIdentifiers;
   readonly #organizationUnitRef?: string;
   readonly #organizationUnit?: OrganizationUnit;
-  readonly #priceBand?: PriceBand;
+  readonly #priceBand?: PriceBandGetResult;
+  readonly #pricingRules: Array<PricingRules>;
+  readonly #programName?: string;
+  readonly #source?: string;
+  readonly #vendorName?: string;
 
   public constructor(getOrderProducts: OrderProductsType) {
     super(getOrderProducts);
 
     this.#sku = getOrderProducts[OrderProductsFields.COLUMN_SKU];
+    this.#creationDate = getOrderProducts[OrderProductsFields.COLUMN_CREATION_DATE];
     this.#quantity = getOrderProducts[OrderProductsFields.COLUMN_QUANTITY];
     this.#status = getOrderProducts[OrderProductsFields.COLUMN_STATUS];
     this.#dateStatus = getOrderProducts[OrderProductsFields.COLUMN_DATESTATUS];
     this.#detailedStatus =
       getOrderProducts[OrderProductsFields.COLUMN_DETAILEDSTATUS];
+    this.#family =
+      new Family(getOrderProducts[OrderProductsFields.COLUMN_FAMILY]);
     this.#isAddon = getOrderProducts[OrderProductsFields.COLUMN_IS_ADDON];
     this.#arrowSubCategories =
       getOrderProducts[OrderProductsFields.COLUMN_ARROWSUBCATEGORIES] ??
@@ -124,10 +147,22 @@ export class OrderProduct extends AbstractEntity<OrderProductsType> {
         )
       : undefined;
     this.#priceBand = getOrderProducts[OrderProductsFields.COLUMN_PRICE_BAND]
-      ? new PriceBand(
-          getOrderProducts[OrderProductsFields.COLUMN_PRICE_BAND] as PriceBand,
+      ? new PriceBandGetResult(
+          getOrderProducts[OrderProductsFields.COLUMN_PRICE_BAND],
         )
       : undefined;
+    this.#pricingRules = getOrderProducts[
+        OrderProductsFields.COLUMN_PRICING_RULES
+      ].map(
+      (businessRuleEffect: BusinessRuleEffectType): PricingRules =>
+        new PricingRules(businessRuleEffect),
+    );
+    this.#programName =
+      getOrderProducts[OrderProductsFields.COLUMN_PROGRAM_NAME];
+    this.#source =
+      getOrderProducts[OrderProductsFields.COLUMN_SOURCE];
+    this.#vendorName =
+      getOrderProducts[OrderProductsFields.COLUMN_VENDOR_NAME];
   }
 
   get sku(): string {
@@ -139,11 +174,17 @@ export class OrderProduct extends AbstractEntity<OrderProductsType> {
   get status(): string {
     return this.#status;
   }
+  get creationDate(): string | undefined {
+    return this.#creationDate;
+  }
   get dateStatus(): string {
     return this.#dateStatus;
   }
   get detailedStatus(): string {
     return this.#detailedStatus;
+  }
+  get family(): Family {
+    return this.#family;
   }
   get isAddon(): boolean {
     return this.#isAddon;
@@ -178,11 +219,23 @@ export class OrderProduct extends AbstractEntity<OrderProductsType> {
   get organizationUnitRef(): string | undefined {
     return this.#organizationUnitRef;
   }
-  get priceBand(): PriceBand | undefined {
+  get priceBand(): PriceBandGetResult | undefined {
     return this.#priceBand;
   }
   get organizationUnit(): OrganizationUnit | undefined {
     return this.#organizationUnit;
+  }
+  get pricingRules(): Array<PricingRules> {
+    return this.#pricingRules;
+  }
+  get programName(): string | undefined {
+    return this.#programName;
+  }
+  get source(): string | undefined {
+    return this.#source;
+  }
+  get vendorName(): string | undefined {
+    return this.#vendorName;
   }
 
   public toJSON(): OrderProductsType {
@@ -190,8 +243,10 @@ export class OrderProduct extends AbstractEntity<OrderProductsType> {
       [OrderProductsFields.COLUMN_SKU]: this.sku,
       [OrderProductsFields.COLUMN_QUANTITY]: this.quantity,
       [OrderProductsFields.COLUMN_STATUS]: this.status,
+      [OrderProductsFields.COLUMN_CREATION_DATE]: this.creationDate,
       [OrderProductsFields.COLUMN_DATESTATUS]: this.dateStatus,
       [OrderProductsFields.COLUMN_DETAILEDSTATUS]: this.detailedStatus,
+      [OrderProductsFields.COLUMN_FAMILY]: this.family.toJSON(),
       [OrderProductsFields.COLUMN_IS_ADDON]: this.isAddon,
       [OrderProductsFields.COLUMN_ARROWSUBCATEGORIES]: this.arrowSubCategories,
       [OrderProductsFields.COLUMN_IS_TRIAL]: this.isTrial,
@@ -206,6 +261,13 @@ export class OrderProduct extends AbstractEntity<OrderProductsType> {
         .organizationUnitRef,
       [OrderProductsFields.COLUMN_ORGANIZATION_UNIT]: this.organizationUnit?.toJSON(),
       [OrderProductsFields.COLUMN_PRICE_BAND]: this.priceBand?.toJSON(),
+      [OrderProductsFields.COLUMN_PRICING_RULES]: this.pricingRules.map(
+        (pricingRules: PricingRules): BusinessRuleEffectType =>
+          pricingRules.toJSON(),
+      ),
+      [OrderProductsFields.COLUMN_PROGRAM_NAME]: this.programName,
+      [OrderProductsFields.COLUMN_SOURCE]: this.source,
+      [OrderProductsFields.COLUMN_VENDOR_NAME]: this.vendorName,
     };
   }
 }
