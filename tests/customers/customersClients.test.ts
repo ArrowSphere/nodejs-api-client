@@ -27,6 +27,7 @@ import {
   PAYLOAD_GET_CUSTOMERS_WITHOUT_OPTIONAL_FIELDS,
   PAYLOAD_GET_UNKNOWN_LICENSES,
   PAYLOAD_POST_CUSTOMER_INVITATION,
+  RESPONSE_CUSTOMER_CHECK_MICROSOFT_CUSTOMER_AGREEMENT,
   RESPONSE_CUSTOMER_CONTACT,
   RESPONSE_CUSTOMER_CREDENTIALS,
   RESPONSE_CUSTOMER_PROVISION,
@@ -65,6 +66,9 @@ export const CUSTOMERS_CUSTOMERS_EXPORT_CUSTOMERS = new RegExp(
 );
 export const CUSTOMERS_GET_UNKNOWN_LICENSES_URL = new RegExp(
   '/customers/REF/unknownlicenses',
+);
+export const CUSTOMERS_GET_CHECK_MICROSOFT_CUSTOMER_AGREEMENT = new RegExp(
+  '/checkMicrosoftCustomerAgreement.*',
 );
 
 describe('CustomersClients', () => {
@@ -742,6 +746,41 @@ describe('CustomersClients', () => {
       };
 
       await client.postExportCustomers(payload);
+    });
+  });
+  describe('getCheckMicrosoftCustomerAgreement', () => {
+    const client = new PublicApiClient()
+      .getCustomersClient()
+      .setUrl(CUSTOMERS_MOCK_URL);
+
+    it('call get CheckMicrosoftCustomerAgreement without customerRef', async () => {
+      nock(CUSTOMERS_MOCK_URL)
+        .get(CUSTOMERS_GET_CHECK_MICROSOFT_CUSTOMER_AGREEMENT)
+        .reply(200, RESPONSE_CUSTOMER_CHECK_MICROSOFT_CUSTOMER_AGREEMENT);
+
+      const result = await client.getCheckMicrosoftCustomerAgreement();
+
+      expect(result).to.be.instanceof(GetResult);
+      expect(result.toJSON()).to.eql(
+        RESPONSE_CUSTOMER_CHECK_MICROSOFT_CUSTOMER_AGREEMENT,
+      );
+    });
+
+    it('call get CheckMicrosoftCustomerAgreement with customerRef', async () => {
+      nock(CUSTOMERS_MOCK_URL)
+        .get(CUSTOMERS_GET_CHECK_MICROSOFT_CUSTOMER_AGREEMENT)
+        .reply(200, RESPONSE_CUSTOMER_CHECK_MICROSOFT_CUSTOMER_AGREEMENT);
+      const parameters = {
+        customerReference: 'REF',
+      };
+      const result = await client.getCheckMicrosoftCustomerAgreement(
+        parameters,
+      );
+
+      expect(result).to.be.instanceof(GetResult);
+      expect(result.toJSON()).to.eql(
+        RESPONSE_CUSTOMER_CHECK_MICROSOFT_CUSTOMER_AGREEMENT,
+      );
     });
   });
 });
