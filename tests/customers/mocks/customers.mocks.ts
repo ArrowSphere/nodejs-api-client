@@ -29,6 +29,10 @@ import {
   CustomerProvisionFields,
   CustomerProvisionType,
 } from '../../../src/customers/entities/customerProvision';
+import {
+  CustomerAgreementsFields,
+  CustomerAgreementsType,
+} from '../../../src/customers/entities/customers/agreements/customerAgreements';
 
 export const PAYLOAD_GET_CUSTOMERS = {
   [GetResultFields.COLUMN_STATUS]: 200,
@@ -385,5 +389,12 @@ export const RESPONSE_CUSTOMER_CREDENTIALS: GetData<CustomerCredentialsType> = {
     [CustomerCredentialsFields.COLUMN_URL]: 'https://example.com',
     [CustomerCredentialsFields.COLUMN_USERNAME]: 'username',
     [CustomerCredentialsFields.COLUMN_VENDOR]: 'vendor',
+  },
+};
+
+export const RESPONSE_CUSTOMER_CHECK_MICROSOFT_CUSTOMER_AGREEMENT: GetData<CustomerAgreementsType> = {
+  [GetResultFields.COLUMN_STATUS]: 200,
+  [GetResultFields.COLUMN_DATA]: {
+    [CustomerAgreementsFields.COLUMN_IS_MCA_VALIDATED]: true,
   },
 };

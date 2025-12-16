@@ -15,6 +15,7 @@ import { ContactFields } from './entities/customers/contact/contact';
 import { AxiosResponse } from 'axios';
 import { CustomerProvision } from './entities/customerProvision';
 import { CustomerCredentials } from './entities/customerCredentials';
+import { CustomerAgreements } from './entities/customers/agreements/customerAgreements';
 
 export enum CustomerMigrationAttributeFields {
   NAME = 'name',
@@ -393,10 +394,19 @@ export class CustomersClient extends AbstractRestfulClient {
     this.path = '/bulkupdate';
     await this.post(bulkActionInput);
   }
+
   public async postExportCustomers(
     payload: ExportCustomersInputType,
   ): Promise<void> {
     this.path = '/initiate-export';
     await this.post(payload);
+  }
+
+  public async getCheckMicrosoftCustomerAgreement(
+    parameters: { customerReference?: string } & Parameters = {},
+  ): Promise<GetResult<CustomerAgreements>> {
+    this.path = '/checkMicrosoftCustomerAgreement';
+
+    return new GetResult(CustomerAgreements, await this.get(parameters));
   }
 }
