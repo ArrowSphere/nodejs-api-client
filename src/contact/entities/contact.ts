@@ -1,5 +1,6 @@
 import { AbstractEntity } from '../../abstractEntity';
 import { XcpInvitation, XcpInvitationType } from './xcpInvitation';
+import { OrganizationUnits, OrganizationUnitsType } from './organizationUnits';
 
 export enum ContactFields {
   COLUMN_ID = 'id',
@@ -14,7 +15,9 @@ export enum ContactFields {
   COLUMN_ROLE = 'role',
   COLUMN_STATUS = 'status',
   COLUMN_XAP_USERNAME = 'xapUsername',
+  COLUMN_IS_ACTIVE = 'isActive',
   COLUMN_XCP_INVITATION = 'xcpInvitation',
+  COLUMN_ORGANIZATION_UNITS = 'organizationUnits',
 }
 
 export type ContactType = {
@@ -30,7 +33,9 @@ export type ContactType = {
   [ContactFields.COLUMN_ROLE]: string;
   [ContactFields.COLUMN_STATUS]: string;
   [ContactFields.COLUMN_XAP_USERNAME]?: string;
+  [ContactFields.COLUMN_IS_ACTIVE]: boolean;
   [ContactFields.COLUMN_XCP_INVITATION]?: XcpInvitationType;
+  [ContactFields.COLUMN_ORGANIZATION_UNITS]?: OrganizationUnitsType[];
 };
 
 export class Contact extends AbstractEntity<ContactType> {
@@ -46,7 +51,9 @@ export class Contact extends AbstractEntity<ContactType> {
   readonly #role: string;
   readonly #status: string;
   readonly #xapUsername?: string;
+  readonly #isActive: boolean;
   readonly #xcpInvitation?: XcpInvitation;
+  readonly #organizationUnits?: OrganizationUnits[];
 
   public constructor(contactDataInput: ContactType) {
     super(contactDataInput);
@@ -63,12 +70,20 @@ export class Contact extends AbstractEntity<ContactType> {
     this.#role = contactDataInput[ContactFields.COLUMN_ROLE];
     this.#status = contactDataInput[ContactFields.COLUMN_STATUS];
     this.#xapUsername = contactDataInput[ContactFields.COLUMN_XAP_USERNAME];
+    this.#isActive = contactDataInput[ContactFields.COLUMN_IS_ACTIVE];
     this.#xcpInvitation = contactDataInput[ContactFields.COLUMN_XCP_INVITATION]
       ? new XcpInvitation(
           contactDataInput[
             ContactFields.COLUMN_XCP_INVITATION
           ] as XcpInvitationType,
         )
+      : undefined;
+    this.#organizationUnits = contactDataInput[
+      ContactFields.COLUMN_ORGANIZATION_UNITS
+    ]
+      ? (contactDataInput[
+          ContactFields.COLUMN_ORGANIZATION_UNITS
+        ] as OrganizationUnitsType[]).map((ou) => new OrganizationUnits(ou))
       : undefined;
   }
 
@@ -120,8 +135,16 @@ export class Contact extends AbstractEntity<ContactType> {
     return this.#xapUsername;
   }
 
+  get isActive(): boolean {
+    return this.#isActive;
+  }
+
   get xcpInvitation(): XcpInvitation | undefined {
     return this.#xcpInvitation;
+  }
+
+  get organizationUnits(): OrganizationUnits[] | undefined {
+    return this.#organizationUnits;
   }
 
   public toJSON(): ContactType {
@@ -138,7 +161,11 @@ export class Contact extends AbstractEntity<ContactType> {
       [ContactFields.COLUMN_ROLE]: this.role,
       [ContactFields.COLUMN_STATUS]: this.status,
       [ContactFields.COLUMN_XAP_USERNAME]: this.xapUsername,
+      [ContactFields.COLUMN_IS_ACTIVE]: this.isActive,
       [ContactFields.COLUMN_XCP_INVITATION]: this.xcpInvitation?.toJSON(),
+      [ContactFields.COLUMN_ORGANIZATION_UNITS]: this.organizationUnits?.map(
+        (ou) => ou.toJSON(),
+      ),
     };
   }
 }

@@ -36,6 +36,7 @@ export const CONTACT_RESPONSE: ContactInformation.ContactType = {
   [ContactInformation.ContactFields.COLUMN_TYPE]: 'MSP',
   [ContactInformation.ContactFields.COLUMN_ROLE]: 'primary',
   [ContactInformation.ContactFields.COLUMN_STATUS]: 'active',
+  [ContactInformation.ContactFields.COLUMN_IS_ACTIVE]: true,
 };
 
 export const CONTACT_LIST_RESPONSE: GetData<ContactInformation.ContactListType> = {
