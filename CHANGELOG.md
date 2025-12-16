@@ -3,12 +3,17 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.229.0] - 2025.12.16
+
+### Added
+
+- [Customers agreement] Add endpoint checkpoint to get CheckMicrosoftCustomerAgreement
+
 ## [3.228.0] - 2025.12.09
 
 ### Added
 
 - [Project Security] Update multiple libraries to fix security vulnerabilities and add ci to check vulnerabilities
-
 
 ## [3.227.0] - 2025.11.26
 
