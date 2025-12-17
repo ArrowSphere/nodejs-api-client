@@ -3,6 +3,7 @@
 import {
   AttributesParameters,
   AttributeType,
+  BundleBillingRuleType,
   ExchangeRateType,
   ExchangeRateValueType,
   FiltersType,
@@ -21,6 +22,7 @@ export type PaginationSchema = Schema<PaginationType, boolean>;
 export type FiltersSchema = Schema<FiltersType, boolean>;
 
 type AttributesParametersSchema = Schema<AttributesParameters, boolean>;
+type BundleBillingRuleSchema = Schema<BundleBillingRuleType, boolean>;
 type IdentifiersSchema = Schema<IdentifiersType, boolean>;
 type RelatedOfferSchema = Schema<RelatedOfferType, boolean>;
 type PromotionSchema = Schema<PromotionType, boolean>;
@@ -32,6 +34,8 @@ type MissingFieldsOfProductSchema = {
   addonPrimaries?: IdentifiersSchema;
   attributesParameters?: AttributesParametersSchema;
   baseOfferPrimaries?: IdentifiersSchema;
+  bundleBillingRules?: BundleBillingRuleSchema;
+  bundledOfferPrimaries?: IdentifiersSchema;
   conversionOfferPrimaries?: IdentifiersSchema;
   defaultPriceBand?: PriceBandSchema;
   relatedOffers?: RelatedOfferSchema;
