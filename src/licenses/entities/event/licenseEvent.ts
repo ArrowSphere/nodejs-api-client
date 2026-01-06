@@ -12,6 +12,7 @@ export enum LicenseEventActionType {
   PRORATA = 'prorata',
   RECURRING = 'recurring',
   CONVERSION = 'conversion',
+  FRIENDLY_NAME = 'friendlyName',
 }
 
 export enum LicenseEventType {
