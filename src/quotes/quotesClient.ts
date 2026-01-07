@@ -118,6 +118,15 @@ export class QuotesClient extends AbstractRestfulClient {
     return new GetResult(PutQuoteResult, await this.get(parameters));
   }
 
+  public async sendToCustomer(
+    quoteReference: string,
+    parameters: Parameters = {},
+  ): Promise<void> {
+    this.path = `/${quoteReference}/sendToEndCustomer`;
+
+    return await this.get(parameters);
+  }
+
   public async createQuote(
     postData: CreateQuoteRequestType,
     parameters: Parameters = {},
