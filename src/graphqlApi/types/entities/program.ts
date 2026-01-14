@@ -13,7 +13,7 @@ export type GraphqlApiProgramType = {
   introduction?: string;
   legacyCode?: string;
   levels?: ProgramLevelType[];
-  mandatoryEula?: string;
+  mandatoryEula?: boolean;
   name?: string;
   subscriptionExtraFields?: SubscriptionExtraFieldType[];
   type?: GraphqlApiProgramTypeType;
