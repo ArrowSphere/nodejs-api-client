@@ -83,7 +83,7 @@
     "axios": "1.13.2",
     "graphql": "16.8.1",
     "graphql-request": "7.3.5",
-    "json-to-graphql-query": "2.2.5",
+    "json-to-graphql-query": "2.3.0",
     "lodash": "4.17.21",
     "type-fest": "2.19.0",
     "validatorjs": "3.22.1"
