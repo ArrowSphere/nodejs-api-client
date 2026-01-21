@@ -70,6 +70,7 @@ export type SearchBodyArgument = {
 
 export type SearchBodyProductArgument = SearchBodyArgument & {
   ignoreCatalogPlan?: boolean;
+  includeBundles?: boolean;
 };
 
 export type SearchProductFilterArgument = {
