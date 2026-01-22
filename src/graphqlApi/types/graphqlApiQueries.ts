@@ -135,6 +135,7 @@ export enum InputFilterValueField {
   HAVING = 'having',
   VALUE_TYPE = 'valueType',
   IFNULL_VALUE = 'ifNullValue',
+  FORCE_CASE_INSENSITIVE = 'forceCaseInsensitive',
 }
 
 export type InputFilterValueType = {
@@ -145,6 +146,7 @@ export type InputFilterValueType = {
   [InputFilterValueField.HAVING]?: boolean;
   [InputFilterValueField.VALUE_TYPE]?: ValueType;
   [InputFilterValueField.IFNULL_VALUE]?: string;
+  [InputFilterValueField.FORCE_CASE_INSENSITIVE]?: boolean;
 };
 
 export enum InputQueryOptionsField {
