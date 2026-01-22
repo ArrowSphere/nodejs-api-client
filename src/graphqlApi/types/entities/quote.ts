@@ -101,6 +101,8 @@ export type ItemData = {
   initialSellPrice?: number;
   isPromotion?: boolean;
   vendorPriceBandSku?: string;
+  identifiersVendorName?: string;
+  identifiersVendorNamesSerialized?: string;
 };
 
 export type NameValueType = {
