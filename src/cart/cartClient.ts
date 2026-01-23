@@ -1,15 +1,21 @@
 import { AbstractRestfulClient, Parameters } from '../abstractRestfulClient';
 import { GetResult } from '../getResult';
-import { Item, ItemList } from './entities';
+import { Item, ItemFields, ItemList, PricingRuleType } from './entities';
 
 export enum ItemRequestFields {
   ADDITIONAL_DATA = 'additionalData',
-
+  COTERM_PRICES = 'cotermPrices',
+  COTERM_PRICES_WITHOUT_PROMOTION = 'cotermPricesWithoutPromotion',
+  CURRENCY = 'currency',
+  IS_ADDON = 'isAddon',
+  IS_TRIAL = 'isTrial',
+  ITEM_ID = 'itemId',
   OFFER_NAME = 'offerName',
-
   PRICE_BAND_ARROWSPHERE_SKU = 'priceBandArrowsphereSku',
-
+  PRICES = 'prices',
+  PRICES_WITHOUT_PROMOTION = 'pricesWithoutPromotion',
   QUANTITY = 'quantity',
+  RULES = 'rules',
 }
 
 export enum ItemAdditionalDataRequestFields {
@@ -23,13 +29,27 @@ export type ItemAdditionalDataRequestType = {
 };
 
 export type ItemRequestType = {
-  [ItemRequestFields.ADDITIONAL_DATA]?: ItemAdditionalDataRequestType[];
-
-  [ItemRequestFields.OFFER_NAME]: string;
-
-  [ItemRequestFields.PRICE_BAND_ARROWSPHERE_SKU]: string;
-
-  [ItemRequestFields.QUANTITY]: number;
+  [ItemFields.ADDITIONAL_DATA]?: ItemAdditionalDataRequestType[] | undefined;
+  [ItemFields.COTERM_PRICES]?:
+    | Record<'arrow' | 'partner' | 'endCustomer' | 'retail', number>
+    | undefined;
+  [ItemFields.COTERM_PRICES_WITHOUT_PROMOTION]?:
+    | Record<'arrow' | 'partner' | 'endCustomer' | 'retail', number>
+    | undefined;
+  [ItemFields.CURRENCY]?: string | undefined;
+  [ItemFields.IS_ADDON]?: boolean | undefined;
+  [ItemFields.IS_TRIAL]?: boolean | undefined;
+  [ItemFields.ITEM_ID]: string;
+  [ItemFields.OFFER_NAME]: string;
+  [ItemFields.PRICE_BAND_ARROWSPHERE_SKU]: string;
+  [ItemFields.PRICES]?:
+    | Record<'arrow' | 'partner' | 'endCustomer' | 'retail', number>
+    | undefined;
+  [ItemFields.PRICES_WITHOUT_PROMOTION]?:
+    | Record<'arrow' | 'partner' | 'endCustomer' | 'retail', number>
+    | undefined;
+  [ItemFields.QUANTITY]: number;
+  [ItemFields.RULES]?: PricingRuleType | undefined;
 };
 
 export type ItemAddRequestType = ItemRequestType;
