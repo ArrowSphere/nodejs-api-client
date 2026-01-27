@@ -83,6 +83,8 @@ import { ConsumptionDailyPrediction } from '../consumption';
 import { GetScheduledTasksResult } from './entities/schedule/getScheduledTasksResult';
 import { GetScheduleTaskResult } from './entities/schedule/getScheduleTaskResult';
 import { LicenceCouponCodeHistoryResult } from './entities/history/licenceCouponCodeHistoryResult';
+import { GetLicenseAttachmentsResult } from './entities/attachment/GetLicenseAttachmentsResult';
+import { PostLicenseAttachmentResult } from './entities/attachment/PostLicenseAttachmentResult';
 
 /**
  * Parameters passable to the request for refining search.
@@ -225,6 +227,11 @@ export type BaseParameters<
 };
 
 type KeyParent = 'license' | 'offer' | 'endCustomerOrganizationUnit';
+
+export type AttachFileToLicenseParameters = {
+  name: string;
+  fileEncoded: string;
+};
 
 export type LicenseSortParameters = BaseParameters<
   LicenceFindDataSortParameters,
@@ -677,6 +684,55 @@ export class LicensesClient extends AbstractRestfulClient {
     return new FindResult(response, this, rawLicensePayload, parameters);
   }
 
+  public async findAttachments(
+    licenseReference: string,
+    perPage = 100,
+    page = 1,
+    parameters: Parameters = {},
+  ): Promise<GetResult<GetLicenseAttachmentsResult>> {
+    this.setPerPage(perPage);
+    this.setPage(page);
+
+    this.path = `/${licenseReference}/attachment`;
+
+    return new GetResult(
+      GetLicenseAttachmentsResult,
+      await this.get(parameters),
+    );
+  }
+
+  public async attachFileToLicense(
+    licenseReference: string,
+    parameters: AttachFileToLicenseParameters,
+  ): Promise<GetResult<PostLicenseAttachmentResult>> {
+    this.path = `/${licenseReference}/attachment`;
+
+    return new GetResult(
+      PostLicenseAttachmentResult,
+      await this.post(parameters),
+    );
+  }
+
+  public async removeLicenseAttachment(
+    licenseReference: string,
+    documentName: string,
+  ): Promise<void> {
+    this.path = `/${licenseReference}/attachment/${documentName}`;
+
+    return await this.delete();
+  }
+
+  public async getScheduledTasks(
+    licenseReference: string,
+    parameters: Parameters = {},
+  ): Promise<GetResult<GetScheduledTasksResult>> {
+    this.path = `/${licenseReference}${this.SCHEDULE_TASKS_PATH}`;
+
+    const response = await this.get(parameters);
+
+    return new GetResult(GetScheduledTasksResult, response);
+  }
+
   public getConfigsRaw(reference: string): Promise<FindConfig> {
     this.path = `/${reference}${this.CONFIGS_PATH}`;
 
@@ -978,17 +1034,6 @@ export class LicensesClient extends AbstractRestfulClient {
       ScheduleTasksResult,
       await this.post(payload, parameters),
     );
-  }
-
-  public async getScheduledTasks(
-    licenseReference: string,
-    parameters: Parameters = {},
-  ): Promise<GetResult<GetScheduledTasksResult>> {
-    this.path = `/${licenseReference}${this.SCHEDULE_TASKS_PATH}`;
-
-    const response = await this.get(parameters);
-
-    return new GetResult(GetScheduledTasksResult, response);
   }
 
   public async updateScheduledTask(
