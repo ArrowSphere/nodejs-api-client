@@ -227,6 +227,11 @@ export type BaseParameters<
 
 type KeyParent = 'license' | 'offer' | 'endCustomerOrganizationUnit';
 
+export type AttachFileToLicenseParameters = {
+  name: string;
+  fileEncoded: string;
+};
+
 export type LicenseSortParameters = BaseParameters<
   LicenceFindDataSortParameters,
   OfferFindResultDataSortParameters,
@@ -680,14 +685,37 @@ export class LicensesClient extends AbstractRestfulClient {
 
   public async findAttachments(
     licenseReference: string,
+    perPage = 100,
+    page = 1,
     parameters: Parameters = {},
   ) {
+    this.setPerPage(perPage);
+    this.setPage(page);
+
     this.path = `/${licenseReference}/attachment`;
 
     return new GetResult(
       GetLicenseAttachmentsResult,
       await this.get(parameters),
     );
+  }
+
+  public async attachFileToLicense(
+    licenseReference: string,
+    parameters: AttachFileToLicenseParameters,
+  ) {
+    this.path = `/${licenseReference}/attachment`;
+
+    return await this.post(parameters);
+  }
+
+  public async removeLicenseAttachment(
+    licenseReference: string,
+    documentName: string,
+  ) {
+    this.path = `/${licenseReference}/attachment/${documentName}`;
+
+    return await this.delete();
   }
 
   public async getScheduledTasks(
