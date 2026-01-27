@@ -84,6 +84,7 @@ import { GetScheduledTasksResult } from './entities/schedule/getScheduledTasksRe
 import { GetScheduleTaskResult } from './entities/schedule/getScheduleTaskResult';
 import { LicenceCouponCodeHistoryResult } from './entities/history/licenceCouponCodeHistoryResult';
 import { GetLicenseAttachmentsResult } from './entities/attachment/GetLicenseAttachmentsResult';
+import { PostLicenseAttachmentResult } from './entities/attachment/PostLicenseAttachmentResult';
 
 /**
  * Parameters passable to the request for refining search.
@@ -226,6 +227,11 @@ export type BaseParameters<
 };
 
 type KeyParent = 'license' | 'offer' | 'endCustomerOrganizationUnit';
+
+export type AttachFileToLicenseParameters = {
+  name: string;
+  fileEncoded: string;
+};
 
 export type LicenseSortParameters = BaseParameters<
   LicenceFindDataSortParameters,
@@ -680,14 +686,40 @@ export class LicensesClient extends AbstractRestfulClient {
 
   public async findAttachments(
     licenseReference: string,
+    perPage = 100,
+    page = 1,
     parameters: Parameters = {},
-  ) {
+  ): Promise<GetResult<GetLicenseAttachmentsResult>> {
+    this.setPerPage(perPage);
+    this.setPage(page);
+
     this.path = `/${licenseReference}/attachment`;
 
     return new GetResult(
       GetLicenseAttachmentsResult,
       await this.get(parameters),
     );
+  }
+
+  public async attachFileToLicense(
+    licenseReference: string,
+    parameters: AttachFileToLicenseParameters,
+  ): Promise<GetResult<PostLicenseAttachmentResult>> {
+    this.path = `/${licenseReference}/attachment`;
+
+    return new GetResult(
+      PostLicenseAttachmentResult,
+      await this.post(parameters),
+    );
+  }
+
+  public async removeLicenseAttachment(
+    licenseReference: string,
+    documentName: string,
+  ): Promise<void> {
+    this.path = `/${licenseReference}/attachment/${documentName}`;
+
+    return await this.delete();
   }
 
   public async getScheduledTasks(
