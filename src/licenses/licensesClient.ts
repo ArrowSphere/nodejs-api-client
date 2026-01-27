@@ -227,6 +227,11 @@ export type BaseParameters<
 
 type KeyParent = 'license' | 'offer' | 'endCustomerOrganizationUnit';
 
+export type AttachFileToLicenseParameters = {
+  name: string;
+  fileEncoded: string;
+};
+
 export type LicenseSortParameters = BaseParameters<
   LicenceFindDataSortParameters,
   OfferFindResultDataSortParameters,
@@ -688,6 +693,15 @@ export class LicensesClient extends AbstractRestfulClient {
       GetLicenseAttachmentsResult,
       await this.get(parameters),
     );
+  }
+
+  public async attachFileToLicense(
+    licenseReference: string,
+    parameters: AttachFileToLicenseParameters,
+  ) {
+    this.path = `/${licenseReference}/attachment`;
+
+    return await this.post(parameters);
   }
 
   public async getScheduledTasks(
