@@ -16,6 +16,9 @@ import {
   PARTNER_CREATE_REQUEST,
 } from './mocks/create.mocks';
 
+import { CreateUserApiKeyResult } from '../../src/partner/types/createUserApiKeyResult';
+import { CreateUserApiKeyPayload } from '../../src/partner/types/userApiKey';
+import { GetUserApiKeysResult } from '../../src/partner/types/getUserApiKeysResult';
 const PARTNERS_MOCK_URL = 'https://partners.localhost';
 const PARTNER_REFERENCE = 'XSP123456';
 const USER_REFERENCE = 'XSP999';
@@ -227,6 +230,162 @@ describe('PartnerClient', () => {
 
       expect(response).to.be.instanceof(GetResult);
       expect(response.toJSON()).to.be.deep.equal(PARTNER_CREATE_RESPONSE);
+    });
+  });
+
+  describe('createUserApiKey', () => {
+    const CREATE_API_KEY_RESPONSE = {
+      status: 200,
+      data: {
+        contactName: 'User Lastname2754949',
+        expiration_date: '2026-12-31',
+        isActive: '1',
+        key: 'sdRIwGgyVFwvEbgZhWEQeBphtoDgfVuy',
+        lastCharacters: 'fVuy',
+        name: '80ndjmrj',
+        reference: 'XSPAK123',
+        since: '2026-08-31',
+        usedAt: null,
+        userLogin: 'msp_1415100145',
+      },
+    };
+
+    it('should call createUserApiKey method', async () => {
+      nock(PARTNERS_MOCK_URL)
+        .post(`${BASE_PATH}/apikeys`)
+        .reply(constants.HTTP_STATUS_OK, CREATE_API_KEY_RESPONSE);
+
+      const payload: CreateUserApiKeyPayload = {
+        name: '80ndjmrj',
+        expiration_date: '2026-08-31',
+      };
+
+      const response: GetResult<CreateUserApiKeyResult> = await client.createUserApiKey(
+        PARTNER_REFERENCE,
+        USER_REFERENCE,
+        payload,
+      );
+
+      expect(response).to.be.instanceof(GetResult);
+      expect(response.toJSON().data).to.be.deep.equals(
+        CREATE_API_KEY_RESPONSE.data,
+      );
+    });
+  });
+
+  describe('deleteUserApiKey', () => {
+    const APIKEY_REFERENCE = '109955';
+
+    it('should call deleteUserApiKey method', async () => {
+      nock(PARTNERS_MOCK_URL)
+        .delete(`${BASE_PATH}/apikeys/${APIKEY_REFERENCE}`)
+        .reply(204);
+
+      await client.deleteUserApiKey(
+        PARTNER_REFERENCE,
+        USER_REFERENCE,
+        APIKEY_REFERENCE,
+      );
+      expect(nock.isDone()).to.be.true;
+    });
+  });
+
+  describe('getUserApiKeys', () => {
+    const GET_API_KEYS_RESPONSE = {
+      status: 200,
+      data: [
+        {
+          contactName: 'AX API',
+          expiration_date: '2026-12-31',
+          isActive: '1',
+          lastCharacters: 'nTYu',
+          name: 'xBE',
+          reference: 'XSP2ZEAK123',
+          since: '2026-01-01',
+          usedAt: null,
+          userLogin: 'vds',
+        },
+        {
+          contactName: 'US API',
+          expiration_date: '2026-06-31',
+          isActive: '0',
+          lastCharacters: 'JJGG',
+          name: 'US API DEV',
+          reference: 'XSPAK452ZEAK6',
+          since: '2024-02-01',
+          usedAt: '2024-03-01',
+          userLogin: 'us.api',
+        },
+      ],
+    };
+
+    it('should call getUserApiKeys method without parameters (exp admin)', async () => {
+      nock(PARTNERS_MOCK_URL)
+        .get('/partners/apikeys')
+        .reply(constants.HTTP_STATUS_OK, GET_API_KEYS_RESPONSE);
+
+      const response: GetResult<GetUserApiKeysResult> = await client.getUserApiKeys();
+
+      expect(response).to.be.instanceof(GetResult);
+      expect(response.toJSON().data).to.be.deep.equals(
+        GET_API_KEYS_RESPONSE.data,
+      );
+    });
+
+    it('should call getUserApiKeys method with all filters', async () => {
+      nock(PARTNERS_MOCK_URL)
+        .get('/partners/apikeys')
+        .query({
+          partnerReference: PARTNER_REFERENCE,
+          userReference: USER_REFERENCE,
+          userLogin: 'keswi@eg.dk',
+          name: 'APISDK',
+          isActive: '1',
+        })
+        .reply(constants.HTTP_STATUS_OK, GET_API_KEYS_RESPONSE);
+
+      const response: GetResult<GetUserApiKeysResult> = await client.getUserApiKeys(
+        {
+          partnerReference: PARTNER_REFERENCE,
+          userReference: USER_REFERENCE,
+          userLogin: 'keswi@eg.dk',
+          name: 'APISDK',
+          isActive: '1',
+        },
+      );
+
+      expect(response).to.be.instanceof(GetResult);
+      expect(response.toJSON().data).to.be.deep.equals(
+        GET_API_KEYS_RESPONSE.data,
+      );
+    });
+
+    it('should call getUserApiKeys method with filters and pagination', async () => {
+      nock(PARTNERS_MOCK_URL)
+        .get('/partners/apikeys')
+        .query({
+          partnerReference: PARTNER_REFERENCE,
+          isActive: '1',
+          page: '2',
+          per_page: '50',
+        })
+        .reply(constants.HTTP_STATUS_OK, GET_API_KEYS_RESPONSE);
+
+      const response: GetResult<GetUserApiKeysResult> = await client.getUserApiKeys(
+        {
+          partnerReference: PARTNER_REFERENCE,
+          isActive: '1',
+        },
+        {
+          page: 2,
+          per_page: 50,
+        },
+      );
+
+      expect(response).to.be.instanceof(GetResult);
+      expect(response.toJSON().data).to.be.deep.equals(
+        GET_API_KEYS_RESPONSE.data,
+      );
     });
   });
 });
