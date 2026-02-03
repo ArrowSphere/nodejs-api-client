@@ -1,5 +1,8 @@
 import { AbstractRestfulClient, Parameters } from '../abstractRestfulClient';
+import { CreateUserApiKeyResult } from './types/createUserApiKeyResult';
+import { CreateUserApiKeyPayload } from './types/userApiKey';
 import { GetResult } from '../getResult';
+import { GetUserApiKeysResult } from './types/getUserApiKeysResult';
 import { GetUserImpersonationsResult } from './types/getUserImpersonationsResult';
 import {
   UpdateScopeUserPayload,
@@ -65,6 +68,14 @@ export enum PartnerCompanyPayloadFields {
   COLUMN_VAT_NUMBER = 'vatNumber',
 }
 
+export enum GetUserApiKeysFiltersFields {
+  COLUMN_PARTNER_REFERENCE = 'partnerReference',
+  COLUMN_USER_REFERENCE = 'userReference',
+  COLUMN_USER_LOGIN = 'userLogin',
+  COLUMN_NAME = 'name',
+  COLUMN_IS_ACTIVE = 'isActive',
+}
+
 export type PatchUserPayload = {
   [PatchUserPayloadFields.COLUMN_FIRSTNAME]?: string;
   [PatchUserPayloadFields.COLUMN_LASTNAME]?: string;
@@ -120,6 +131,14 @@ export type PostPartnerPayload = {
   [PartnerFields.COLUMN_CONTACT]: PartnerContactPayload;
   [PartnerFields.COLUMN_COMPANY]?: PartnerCompanyPayload;
   [PartnerFields.COLUMN_RECAPTCHA_TOKEN]: string;
+};
+
+export type GetUserApiKeysFilters = {
+  [GetUserApiKeysFiltersFields.COLUMN_PARTNER_REFERENCE]?: string;
+  [GetUserApiKeysFiltersFields.COLUMN_USER_REFERENCE]?: string;
+  [GetUserApiKeysFiltersFields.COLUMN_USER_LOGIN]?: string;
+  [GetUserApiKeysFiltersFields.COLUMN_NAME]?: string;
+  [GetUserApiKeysFiltersFields.COLUMN_IS_ACTIVE]?: string;
 };
 
 export class PartnerClient extends AbstractRestfulClient {
@@ -284,5 +303,44 @@ export class PartnerClient extends AbstractRestfulClient {
     this.path = `/v1/register`;
 
     return new GetResult(DataPartner, await this.post(payload, parameters));
+  }
+
+  public async getUserApiKeys(
+    filters: GetUserApiKeysFilters = {},
+    parameters: Parameters = {},
+  ): Promise<GetResult<GetUserApiKeysResult>> {
+    this.path = `/apikeys`;
+
+    const queryParameters: Parameters = {
+      ...parameters,
+      ...filters,
+    };
+
+    return new GetResult(GetUserApiKeysResult, await this.get(queryParameters));
+  }
+
+  public async deleteUserApiKey(
+    partnerReference: string,
+    userReference: string,
+    apikeyReference: string,
+    parameters: Parameters = {},
+  ): Promise<void> {
+    this.path = `/${partnerReference}/users/${userReference}/apikeys/${apikeyReference}`;
+
+    return this.delete(parameters);
+  }
+
+  public async createUserApiKey(
+    partnerReference: string,
+    userReference: string,
+    payload: CreateUserApiKeyPayload,
+    parameters: Parameters = {},
+  ): Promise<GetResult<CreateUserApiKeyResult>> {
+    this.path = `/${partnerReference}/users/${userReference}/apikeys`;
+
+    return new GetResult(
+      CreateUserApiKeyResult,
+      await this.post(payload, parameters),
+    );
   }
 }
