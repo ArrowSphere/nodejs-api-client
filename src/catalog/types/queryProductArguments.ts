@@ -43,6 +43,7 @@ export type SearchBodyPriceBandsArgument = {
   exclusionFilters?: SearchProductFilterArgument[];
   sort?: SortArgument;
   highlight?: boolean;
+  includeBundles?: boolean;
   aggregatorFilter?: string[];
   marketplace?: string;
   resellerRef?: string;
