@@ -526,6 +526,11 @@ export class LicensesClient extends AbstractRestfulClient {
   private REACTIVATE_AUTO_RENEW_PATH = '/autorenew/reactivate';
 
   /**
+   * The path of license auto-renew to est
+   */
+  private AUTO_RENEW_TO_EST_PATH = '/autorenew/est';
+
+  /**
    * The path of reactivate license auto-renew
    */
   private UPGRADE_PATH = '/conversion';
@@ -932,6 +937,16 @@ export class LicensesClient extends AbstractRestfulClient {
     parameters: Parameters = {},
   ): Promise<void> {
     this.path = `/${licenseReference}${this.REACTIVATE_AUTO_RENEW_PATH}`;
+
+    return await this.put(payload, parameters);
+  }
+
+  public async autoRenewToEst(
+    licenseReference: string,
+    payload?: PutReactivateAutoRenew,
+    parameters: Parameters = {},
+  ): Promise<void> {
+    this.path = `/${licenseReference}${this.AUTO_RENEW_TO_EST_PATH}`;
 
     return await this.put(payload, parameters);
   }
