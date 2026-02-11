@@ -85,6 +85,13 @@ export enum LicenseGetFields {
   COLUMN_WARNINGS = 'warnings',
   COLUMN_END_DATE = 'endDate',
   COLUMN_ATTRIBUTES = 'attributes',
+  COLUMN_RENEWAL_POLICY = 'renewalPolicy',
+}
+
+export enum RenewalPolicyEnum {
+  COLUMN_RENEWAL_POLICY_RENEW = 'renew',
+  COLUMN_RENEWAL_POLICY_CANCEL = 'cancel',
+  COLUMN_RENEWAL_POLICY_RENEW_TO_EST = 'est',
 }
 
 export type LicenseGetData = {
@@ -140,6 +147,7 @@ export type LicenseGetData = {
   [LicenseGetFields.COLUMN_WARNINGS]?: Array<WarningFindResultData> | null;
   [LicenseGetFields.COLUMN_END_DATE]: string;
   [LicenseGetFields.COLUMN_ATTRIBUTES]: Record<string, string>;
+  [LicenseGetFields.COLUMN_RENEWAL_POLICY]?: RenewalPolicyEnum;
 };
 
 export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
@@ -195,6 +203,7 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
   readonly #warnings?: Array<WarningFindResult> | null;
   readonly #endDate: string;
   readonly #attributes: Record<string, string>;
+  readonly #renewalPolicy?: RenewalPolicyEnum;
 
   public constructor(licenseGetDataInput: LicenseGetData) {
     super(licenseGetDataInput);
@@ -328,6 +337,8 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
     this.#endDate = licenseGetDataInput[LicenseGetFields.COLUMN_END_DATE] ?? '';
     this.#attributes =
       licenseGetDataInput[LicenseGetFields.COLUMN_ATTRIBUTES] ?? {};
+    this.#renewalPolicy =
+      licenseGetDataInput[LicenseGetFields.COLUMN_RENEWAL_POLICY];
   }
 
   public get classification(): string {
@@ -541,6 +552,10 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
     return this.#attributes;
   }
 
+  public get renewalPolicy(): RenewalPolicyEnum | undefined {
+    return this.#renewalPolicy;
+  }
+
   public toJSON(): LicenseGetData {
     return {
       [LicenseGetFields.COLUMN_ADDITIONAL_INFORMATION]: this
@@ -607,6 +622,7 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
       ),
       [LicenseGetFields.COLUMN_END_DATE]: this.endDate,
       [LicenseGetFields.COLUMN_ATTRIBUTES]: this.attributes,
+      [LicenseGetFields.COLUMN_RENEWAL_POLICY]: this.renewalPolicy,
     };
   }
 }
