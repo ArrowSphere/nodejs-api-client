@@ -22,6 +22,7 @@ export enum ActionsGetFields {
   COLUMN_REACTIVATE = 'reactivate',
   COLUMN_AUTO_RENEW_OFF = 'autoRenewOff',
   COLUMN_AUTO_RENEW_ON = 'autoRenewOn',
+  COLUMN_AUTO_RENEW_TO_EST = 'autoRenewToEst',
   COLUMN_CANCEL = 'cancel',
   COLUMN_CONVERSION = 'conversion',
   COLUMN_PAUSE = 'pause',
@@ -41,6 +42,7 @@ export type ActionsGetData = {
   [ActionsGetFields.COLUMN_REACTIVATE]?: string;
   [ActionsGetFields.COLUMN_AUTO_RENEW_OFF]?: string;
   [ActionsGetFields.COLUMN_AUTO_RENEW_ON]?: string;
+  [ActionsGetFields.COLUMN_AUTO_RENEW_TO_EST]?: string;
   [ActionsGetFields.COLUMN_CANCEL]?: string;
   [ActionsGetFields.COLUMN_CONVERSION]?: string;
   [ActionsGetFields.COLUMN_PAUSE]?: string;
@@ -60,6 +62,7 @@ export class ActionsGetResult extends AbstractEntity<ActionsGetData> {
   readonly #reactivate?: string;
   readonly #autoRenewOff?: string;
   readonly #autoRenewOn?: string;
+  readonly #autoRenewToEst?: string;
   readonly #cancel?: string;
   readonly #conversion?: string;
   readonly #pause?: string;
@@ -80,6 +83,7 @@ export class ActionsGetResult extends AbstractEntity<ActionsGetData> {
     this.#reactivate = data[ActionsGetFields.COLUMN_REACTIVATE];
     this.#autoRenewOff = data[ActionsGetFields.COLUMN_AUTO_RENEW_OFF];
     this.#autoRenewOn = data[ActionsGetFields.COLUMN_AUTO_RENEW_ON];
+    this.#autoRenewToEst = data[ActionsGetFields.COLUMN_AUTO_RENEW_TO_EST];
     this.#cancel = data[ActionsGetFields.COLUMN_CANCEL];
     this.#conversion = data[ActionsGetFields.COLUMN_CONVERSION];
     this.#pause = data[ActionsGetFields.COLUMN_PAUSE];
@@ -127,6 +131,10 @@ export class ActionsGetResult extends AbstractEntity<ActionsGetData> {
     return this.#autoRenewOn;
   }
 
+  public get autoRenewToEst(): string | undefined {
+    return this.#autoRenewToEst;
+  }
+
   public get cancel(): string | undefined {
     return this.#cancel;
   }
@@ -166,6 +174,7 @@ export class ActionsGetResult extends AbstractEntity<ActionsGetData> {
       [ActionsGetFields.COLUMN_REACTIVATE]: this.reactivate,
       [ActionsGetFields.COLUMN_AUTO_RENEW_OFF]: this.autoRenewOff,
       [ActionsGetFields.COLUMN_AUTO_RENEW_ON]: this.autoRenewOn,
+      [ActionsGetFields.COLUMN_AUTO_RENEW_TO_EST]: this.autoRenewToEst,
       [ActionsGetFields.COLUMN_CANCEL]: this.cancel,
       [ActionsGetFields.COLUMN_CONVERSION]: this.conversion,
       [ActionsGetFields.COLUMN_PAUSE]: this.pause,
