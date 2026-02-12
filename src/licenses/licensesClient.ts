@@ -67,12 +67,10 @@ import { PartialResponse, PartialResponseData } from '../partialResponse';
 import { constants } from 'http2';
 import {
   ActionTypes,
-  BulkBodyArgument,
-  BulkSetRateBody,
   BulkAutoRenewBody,
+  BulkBodyArgument,
   BulkBodyFields,
   SpecialPriceRateActive,
-  BulkUploadChangesBody,
 } from './types/bulkArguments';
 import {
   EndCustomerOrganisationUnitDataKeywords,
@@ -394,6 +392,8 @@ export type PutCancelAutoRenew = ExtraInformationType;
 
 export type PutReactivateAutoRenew = ExtraInformationType;
 
+export type PutActivateRenewEst = ExtraInformationType;
+
 export type PostUpgrade = {
   sku: string;
   billingCycle: number;
@@ -524,6 +524,11 @@ export class LicensesClient extends AbstractRestfulClient {
    * The path of reactivate license auto-renew
    */
   private REACTIVATE_AUTO_RENEW_PATH = '/autorenew/reactivate';
+
+  /**
+   * The path of activate license renew extended service term
+   */
+  private ACTIVATE_RENEW_EST_PATH = '/autorenew/est';
 
   /**
    * The path of reactivate license auto-renew
@@ -780,7 +785,7 @@ export class LicensesClient extends AbstractRestfulClient {
       };
       postData = postAutoRenewData;
     } else if (bulkData.actionType == ActionTypes.SET_RATE) {
-      const postSetRateData: BulkSetRateBody = {
+      postData = {
         [BulkBodyFields.ACTION_TYPE]: bulkData.actionType,
         [BulkBodyFields.LICENSES]: bulkData.licenses,
         [BulkBodyFields.SPECIAL_PRICE_RATE_TYPE]: bulkData.specialPriceRateType,
@@ -789,14 +794,12 @@ export class LicensesClient extends AbstractRestfulClient {
         [BulkBodyFields.SPECIAL_RATE_EFFECTIVE_APPLICATION_DATE]:
           bulkData.specialRateEffectiveApplicationDate,
       };
-      postData = postSetRateData;
     } else if (bulkData.actionType == ActionTypes.UPLOAD_CHANGES) {
-      const postUploadChanges: BulkUploadChangesBody = {
+      postData = {
         [BulkBodyFields.ACTION_TYPE]: bulkData[BulkBodyFields.ACTION_TYPE],
         [BulkBodyFields.FILE_BASE64]: bulkData[BulkBodyFields.FILE_BASE64],
         [BulkBodyFields.FILE_NAME]: bulkData[BulkBodyFields.FILE_NAME],
       };
-      postData = postUploadChanges;
     } else {
       throw new Error('actionType does not exist');
     }
@@ -932,6 +935,16 @@ export class LicensesClient extends AbstractRestfulClient {
     parameters: Parameters = {},
   ): Promise<void> {
     this.path = `/${licenseReference}${this.REACTIVATE_AUTO_RENEW_PATH}`;
+
+    return await this.put(payload, parameters);
+  }
+
+  public async activeRenewExtendedServiceTerm(
+    licenseReference: string,
+    payload?: PutActivateRenewEst,
+    parameters: Parameters = {},
+  ): Promise<void> {
+    this.path = `/${licenseReference}${this.ACTIVATE_RENEW_EST_PATH}`;
 
     return await this.put(payload, parameters);
   }

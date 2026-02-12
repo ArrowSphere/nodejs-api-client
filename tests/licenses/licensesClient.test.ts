@@ -104,6 +104,8 @@ export const LICENSE_MOCK_URL_CANCEL_AUTO_RENEW_LICENSE =
   '/licenses/XSP123456/autorenew/cancel';
 export const LICENSE_MOCK_URL_REACTIVATE_AUTO_RENEW_LICENSE =
   '/licenses/XSP123456/autorenew/reactivate';
+export const LICENSE_MOCK_URL_ACTIVATE_RENEW_EST_LICENSE =
+  '/licenses/XSP123456/autorenew/est';
 export const LICENSE_MOCK_URL_UPGRADE_LICENSE = '/licenses/XSP123456/upgrade';
 export const LICENSE_MOCK_URL_CONVERSION_SKU_LICENSE =
   '/licenses/XSP123456/conversion/sku';
@@ -1049,6 +1051,20 @@ describe('LicensesClient', () => {
         .reply(204);
 
       await getLicenseClient.reactivateAutoRenew('XSP123456');
+      expect(nock.isDone()).to.be.true;
+    });
+  });
+
+  describe('activateRenewEst', () => {
+    const getLicenseClient = new PublicApiClient()
+      .getLicensesClient()
+      .setUrl(LICENSES_MOCK_URL);
+    it('calls the put method', async () => {
+      nock(LICENSES_MOCK_URL)
+        .put(LICENSE_MOCK_URL_ACTIVATE_RENEW_EST_LICENSE)
+        .reply(204);
+
+      await getLicenseClient.activeRenewExtendedServiceTerm('XSP123456');
       expect(nock.isDone()).to.be.true;
     });
   });
