@@ -51,6 +51,7 @@ export enum LicenseGetFields {
   COLUMN_ACTIVATION_DATETIME = 'activation_datetime',
   COLUMN_EXPIRY_DATETIME = 'expiry_datetime',
   COLUMN_AUTO_RENEW = 'autoRenew',
+  COLUMN_RENEWAL_POLICY = 'renewalPolicy',
   COLUMN_MARKETPLACE = 'marketplace',
   COLUMN_MESSAGE = 'message',
   COLUMN_ACTIONS = 'actions',
@@ -87,6 +88,12 @@ export enum LicenseGetFields {
   COLUMN_ATTRIBUTES = 'attributes',
 }
 
+export enum RenewalPolicyEnum {
+  CANCEL = 'cancel',
+  RENEW_TO_EST = 'auto_renew_to_est',
+  RENEW = 'auto_renew',
+}
+
 export type LicenseGetData = {
   [LicenseGetFields.COLUMN_ADDITIONAL_INFORMATION]?: Record<string, unknown>;
   [LicenseGetFields.COLUMN_CLASSIFICATION]: string;
@@ -107,6 +114,7 @@ export type LicenseGetData = {
   [LicenseGetFields.COLUMN_ACTIVATION_DATETIME]: string | null;
   [LicenseGetFields.COLUMN_EXPIRY_DATETIME]: string | null;
   [LicenseGetFields.COLUMN_AUTO_RENEW]?: boolean;
+  [LicenseGetFields.COLUMN_RENEWAL_POLICY]?: RenewalPolicyEnum;
   [LicenseGetFields.COLUMN_MARKETPLACE]: string;
   [LicenseGetFields.COLUMN_MESSAGE]: string;
   [LicenseGetFields.COLUMN_ACTIONS]?: ActionsGetData;
@@ -162,6 +170,7 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
   readonly #activation_datetime: string | null;
   readonly #expiry_datetime: string | null;
   readonly #autoRenew?: boolean;
+  readonly #renewalPolicy?: RenewalPolicyEnum;
   readonly #marketplace: string;
   readonly #message: string;
   readonly #actions?: ActionsGetResult;
@@ -234,6 +243,8 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
     this.#expiry_datetime =
       licenseGetDataInput[LicenseGetFields.COLUMN_EXPIRY_DATETIME];
     this.#autoRenew = licenseGetDataInput[LicenseGetFields.COLUMN_AUTO_RENEW];
+    this.#renewalPolicy =
+      licenseGetDataInput[LicenseGetFields.COLUMN_RENEWAL_POLICY];
     this.#marketplace =
       licenseGetDataInput[LicenseGetFields.COLUMN_MARKETPLACE];
     this.#message = licenseGetDataInput[LicenseGetFields.COLUMN_MESSAGE];
@@ -406,6 +417,10 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
     return this.#autoRenew;
   }
 
+  public get renewalPolicy(): RenewalPolicyEnum | undefined {
+    return this.#renewalPolicy;
+  }
+
   public get marketplace(): string {
     return this.#marketplace;
   }
@@ -563,6 +578,7 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
       [LicenseGetFields.COLUMN_ACTIVATION_DATETIME]: this.activationDatetime,
       [LicenseGetFields.COLUMN_EXPIRY_DATETIME]: this.expiryDatetime,
       [LicenseGetFields.COLUMN_AUTO_RENEW]: this.autoRenew,
+      [LicenseGetFields.COLUMN_RENEWAL_POLICY]: this.renewalPolicy,
       [LicenseGetFields.COLUMN_MARKETPLACE]: this.marketplace,
       [LicenseGetFields.COLUMN_MESSAGE]: this.message,
       [LicenseGetFields.COLUMN_ACTIONS]: this.actions?.toJSON(),
