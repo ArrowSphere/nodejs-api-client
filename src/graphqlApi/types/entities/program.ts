@@ -86,9 +86,12 @@ export type SubscribedProgramType = {
   subscriptionEndedAt?: string;
   partner?: PartnerType;
   program?: GraphqlApiProgramType;
+  programLevel?: GraphqlApiProgramLevelType;
   subscription?: SubscriptionType;
   vendor?: VendorsType;
   vendorCode?: string;
   vendorName?: string;
   workgroupCode?: string;
+  programType?: string;
+  levelInternalName?: string;
 };

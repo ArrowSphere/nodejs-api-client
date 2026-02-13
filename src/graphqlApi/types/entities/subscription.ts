@@ -2,6 +2,11 @@ import { PartnerType } from './company';
 import { ContactsType } from './contact';
 import { GraphqlApiProgramLevelType, GraphqlApiProgramType } from './program';
 
+export type SubscriptionStatusType = {
+  id?: number;
+  name?: string;
+};
+
 export type SubscriptionType = {
   id?: number;
   autoReporting?: boolean;
@@ -16,4 +21,5 @@ export type SubscriptionType = {
   startedAt?: string;
   userNote?: string;
   validatedAt?: string;
+  status?: SubscriptionStatusType;
 };
