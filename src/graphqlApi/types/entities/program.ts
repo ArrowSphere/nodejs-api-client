@@ -11,6 +11,7 @@ export type GraphqlApiProgramType = {
   disclaimer?: GraphqlApiDisclaimerType;
   internalName?: string;
   introduction?: string;
+  isPriceEditable?: boolean;
   legacyCode?: string;
   levels?: ProgramLevelType[];
   mandatoryEula?: boolean;
