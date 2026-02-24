@@ -74,6 +74,9 @@ export enum GetUserApiKeysFiltersFields {
   COLUMN_USER_LOGIN = 'userLogin',
   COLUMN_NAME = 'name',
   COLUMN_IS_ACTIVE = 'isActive',
+  COLUMN_EXPIRATION_DATE = 'expirationDate',
+  COLUMN_CREATION_DATE = 'creationDate',
+  COLUMN_LAST_ACCESS = 'lastAccess',
 }
 
 export type PatchUserPayload = {
@@ -139,6 +142,9 @@ export type GetUserApiKeysFilters = {
   [GetUserApiKeysFiltersFields.COLUMN_USER_LOGIN]?: string;
   [GetUserApiKeysFiltersFields.COLUMN_NAME]?: string;
   [GetUserApiKeysFiltersFields.COLUMN_IS_ACTIVE]?: string;
+  [GetUserApiKeysFiltersFields.COLUMN_EXPIRATION_DATE]?: string;
+  [GetUserApiKeysFiltersFields.COLUMN_CREATION_DATE]?: string;
+  [GetUserApiKeysFiltersFields.COLUMN_LAST_ACCESS]?: string;
 };
 
 export class PartnerClient extends AbstractRestfulClient {
