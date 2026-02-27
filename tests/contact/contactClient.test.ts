@@ -56,7 +56,7 @@ describe('ContactClient', function () {
         .reply(constants.HTTP_STATUS_OK, CONTACT_GET_RESPONSE);
 
       const response: GetResult<ContactInformation.Contact> = await client.getContact(
-        '1234',
+        1234,
       );
 
       expect(response).to.be.instanceof(GetResult);
@@ -71,7 +71,7 @@ describe('ContactClient', function () {
         .reply(constants.HTTP_STATUS_OK, CONTACT_PATCH_RESPONSE);
 
       const response: GetResult<ContactInformation.Contact> = await client.updateContact(
-        '1234',
+        1234,
         CONTACT_PATCH_REQUEST,
       );
 
