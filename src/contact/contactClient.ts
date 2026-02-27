@@ -59,20 +59,20 @@ export class ContactClient extends AbstractRestfulClient {
   }
 
   public async getContact(
-    contactReference: string,
+    contactId: number,
     parameters: Parameters = {},
   ): Promise<GetResult<Contact>> {
-    this.path = `/${contactReference}`;
+    this.path = `/${contactId}`;
 
     return new GetResult(Contact, await this.get(parameters));
   }
 
   public async updateContact(
-    contactReference: string,
+    contactId: number,
     patchData: ContactRequestType,
     parameters: Parameters = {},
   ): Promise<GetResult<Contact>> {
-    this.path = `/${contactReference}`;
+    this.path = `/${contactId}`;
 
     return new GetResult(
       Contact,
