@@ -28,7 +28,18 @@ export type ItemAdditionalDataRequestType = {
   [ItemAdditionalDataRequestFields.VALUE]: string;
 };
 
+/**
+ * Deprecated type, kept for backward compatibility. Use ItemAddRequestType instead which has the same structure
+ */
 export type ItemRequestType = {
+  [ItemRequestFields.ADDITIONAL_DATA]?: ItemAdditionalDataRequestType[];
+  [ItemRequestFields.OFFER_NAME]: string;
+  [ItemRequestFields.PRICE_BAND_ARROWSPHERE_SKU]: string;
+  [ItemRequestFields.QUANTITY]: number;
+};
+
+export type ItemAddRequestType = ItemRequestType;
+export type ItemUpdateRequestType = {
   [ItemFields.ADDITIONAL_DATA]?: ItemAdditionalDataRequestType[] | undefined;
   [ItemFields.COTERM_PRICES]?:
     | Record<'arrow' | 'partner' | 'endCustomer' | 'retail', number>
@@ -51,9 +62,6 @@ export type ItemRequestType = {
   [ItemFields.QUANTITY]: number;
   [ItemFields.RULES]?: PricingRuleType | undefined;
 };
-
-export type ItemAddRequestType = ItemRequestType;
-export type ItemUpdateRequestType = ItemRequestType;
 
 export class CartClient extends AbstractRestfulClient {
   protected basePath = '/cart';
