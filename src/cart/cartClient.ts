@@ -1,6 +1,6 @@
 import { AbstractRestfulClient, Parameters } from '../abstractRestfulClient';
 import { GetResult } from '../getResult';
-import { Item, ItemFields, ItemList, PricingRuleType } from './entities';
+import { Item, ItemList } from './entities';
 
 export enum ItemRequestFields {
   ADDITIONAL_DATA = 'additionalData',
@@ -16,6 +16,7 @@ export enum ItemRequestFields {
   PRICES_WITHOUT_PROMOTION = 'pricesWithoutPromotion',
   QUANTITY = 'quantity',
   RULES = 'rules',
+  USERNAME = 'userName',
 }
 
 export enum ItemAdditionalDataRequestFields {
@@ -28,32 +29,23 @@ export type ItemAdditionalDataRequestType = {
   [ItemAdditionalDataRequestFields.VALUE]: string;
 };
 
+/**
+ * Deprecated type, kept for backward compatibility. Use ItemAddRequestType instead which has the same structure
+ */
 export type ItemRequestType = {
-  [ItemFields.ADDITIONAL_DATA]?: ItemAdditionalDataRequestType[] | undefined;
-  [ItemFields.COTERM_PRICES]?:
-    | Record<'arrow' | 'partner' | 'endCustomer' | 'retail', number>
-    | undefined;
-  [ItemFields.COTERM_PRICES_WITHOUT_PROMOTION]?:
-    | Record<'arrow' | 'partner' | 'endCustomer' | 'retail', number>
-    | undefined;
-  [ItemFields.CURRENCY]?: string | undefined;
-  [ItemFields.IS_ADDON]?: boolean | undefined;
-  [ItemFields.IS_TRIAL]?: boolean | undefined;
-  [ItemFields.ITEM_ID]: string;
-  [ItemFields.OFFER_NAME]: string;
-  [ItemFields.PRICE_BAND_ARROWSPHERE_SKU]: string;
-  [ItemFields.PRICES]?:
-    | Record<'arrow' | 'partner' | 'endCustomer' | 'retail', number>
-    | undefined;
-  [ItemFields.PRICES_WITHOUT_PROMOTION]?:
-    | Record<'arrow' | 'partner' | 'endCustomer' | 'retail', number>
-    | undefined;
-  [ItemFields.QUANTITY]: number;
-  [ItemFields.RULES]?: PricingRuleType | undefined;
+  [ItemRequestFields.OFFER_NAME]: string;
+  [ItemRequestFields.PRICE_BAND_ARROWSPHERE_SKU]: string;
+  [ItemRequestFields.QUANTITY]: number;
+  [ItemRequestFields.ADDITIONAL_DATA]?: ItemAdditionalDataRequestType[];
+  [ItemRequestFields.USERNAME]?: string;
 };
 
 export type ItemAddRequestType = ItemRequestType;
-export type ItemUpdateRequestType = ItemRequestType;
+export type ItemUpdateRequestType = {
+  [ItemRequestFields.PRICE_BAND_ARROWSPHERE_SKU]: string;
+  [ItemRequestFields.QUANTITY]: number;
+  [ItemRequestFields.ADDITIONAL_DATA]?: ItemAdditionalDataRequestType[];
+};
 
 export class CartClient extends AbstractRestfulClient {
   protected basePath = '/cart';

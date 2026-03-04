@@ -8,6 +8,7 @@ import {
   ItemAdditionalDataFields,
   ItemFields,
   ItemListType,
+  ItemUpdateRequestType,
 } from '../../../src';
 import { constants } from 'http2';
 
@@ -36,7 +37,6 @@ export const CART_ADD_ITEM_REQUEST: ItemAddRequestType = {
       [ItemAdditionalDataRequestFields.VALUE]: '5.04934',
     },
   ],
-  [ItemRequestFields.ITEM_ID]: CART_ITEM_ID,
   [ItemRequestFields.OFFER_NAME]: 'Microsoft 365 Business Premium',
   [ItemRequestFields.PRICE_BAND_ARROWSPHERE_SKU]:
     '031C9E47-4802-4248-838E-778FB1D2CC05',
@@ -61,7 +61,6 @@ export const CART_ADD_ITEM_RESPONSE: GetData<ItemType> = {
 };
 
 export const CART_ADD_ITEM_WITHOUT_ADDITIONAL_DATA_REQUEST: ItemAddRequestType = {
-  [ItemRequestFields.ITEM_ID]: CART_ITEM_ID,
   [ItemRequestFields.OFFER_NAME]: 'Microsoft 365 Business Premium',
   [ItemRequestFields.PRICE_BAND_ARROWSPHERE_SKU]:
     '031C9E47-4802-4248-838E-778FB1D2CC05',
@@ -85,15 +84,13 @@ export const CART_ADD_ITEM_WITHOUT_ADDITIONAL_DATA_RESPONSE: GetData<ItemType> =
   },
 };
 
-export const CART_UPDATE_ITEM_REQUEST: ItemAddRequestType = {
+export const CART_UPDATE_ITEM_REQUEST: ItemUpdateRequestType = {
   [ItemRequestFields.ADDITIONAL_DATA]: [
     {
       [ItemAdditionalDataRequestFields.NAME]: 'resellerRate',
       [ItemAdditionalDataRequestFields.VALUE]: '5.04934',
     },
   ],
-  [ItemRequestFields.ITEM_ID]: CART_ITEM_ID,
-  [ItemRequestFields.OFFER_NAME]: 'Microsoft 365 Business Premium',
   [ItemRequestFields.PRICE_BAND_ARROWSPHERE_SKU]:
     '031C9E47-4802-4248-838E-778FB1D2CC05',
   [ItemRequestFields.QUANTITY]: 2,
