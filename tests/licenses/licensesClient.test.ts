@@ -1134,7 +1134,9 @@ describe('LicensesClient', () => {
         .post('/licenses/XSP123/conversion/XSP456')
         .reply(201);
 
-      await getLicenseClient.upgradeToExisting('XSP123', 'XSP456', 2);
+      await getLicenseClient.upgradeToExisting('XSP123', 'XSP456', {
+        quantity: 2,
+      });
       expect(nock.isDone()).to.be.true;
     });
   });

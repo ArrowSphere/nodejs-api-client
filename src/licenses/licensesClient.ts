@@ -399,7 +399,11 @@ export type PostUpgrade = {
   billingCycle: number;
   term: number;
   quantity: number;
-};
+} & ExtraInformationType;
+
+export type PostUpgradeToExisting = {
+  quantity: number;
+} & ExtraInformationType;
 
 export enum SaveBillingCommentsInputFields {
   COLUMN_COMMENT_ONE = 'comment1',
@@ -962,12 +966,12 @@ export class LicensesClient extends AbstractRestfulClient {
   public async upgradeToExisting(
     licenseReference: string,
     targetLicenseReference: string,
-    quantity: number,
+    payload: PostUpgradeToExisting,
     parameters: Parameters = {},
   ): Promise<void> {
     this.path = `/${licenseReference}${this.UPGRADE_PATH}/${targetLicenseReference}`;
 
-    await this.post({ quantity }, parameters);
+    await this.post(payload, parameters);
   }
 
   public async saveBillingComments(
