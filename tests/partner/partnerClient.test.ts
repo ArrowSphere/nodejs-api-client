@@ -19,6 +19,8 @@ import {
 import { CreateUserApiKeyResult } from '../../src/partner/types/createUserApiKeyResult';
 import { CreateUserApiKeyPayload } from '../../src/partner/types/userApiKey';
 import { GetUserApiKeysResult } from '../../src/partner/types/getUserApiKeysResult';
+import { CustomFieldListResponse } from '../../src/partner/entities/CustomField/CustomFieldListResponse';
+import { CustomFieldResponse } from '../../src/partner/entities/CustomField/CustomFieldResponse';
 const PARTNERS_MOCK_URL = 'https://partners.localhost';
 const PARTNER_REFERENCE = 'XSP123456';
 const USER_REFERENCE = 'XSP999';
@@ -386,6 +388,87 @@ describe('PartnerClient', () => {
       expect(response.toJSON().data).to.be.deep.equals(
         GET_API_KEYS_RESPONSE.data,
       );
+    });
+  });
+  describe('customField', () => {
+    const CUSTOM_FIELD_MOCK = {
+      id: 1,
+      label: 'test',
+      isActive: true,
+      entity: 'company',
+      isUsed: false,
+      createdAt: '2023-01-01T00:00:00.000Z',
+      createdBy: 'test',
+    };
+
+    it('should call getCustomField method ', async () => {
+      nock(PARTNERS_MOCK_URL)
+        .get('/partners/customField')
+        .query({
+          isActive: true,
+          page: '2',
+          per_page: '50',
+        })
+        .reply(constants.HTTP_STATUS_OK, {
+          status: 200,
+          data: [CUSTOM_FIELD_MOCK],
+        });
+
+      const response: GetResult<CustomFieldListResponse> = await client.getCustomField(
+        {
+          isActive: true,
+          page: 2,
+          per_page: 50,
+        },
+      );
+
+      expect(response).to.be.instanceof(GetResult);
+      expect(response.toJSON().data[0]).to.be.deep.equals(CUSTOM_FIELD_MOCK);
+    });
+
+    it('should call postCustomField method ', async () => {
+      nock(PARTNERS_MOCK_URL)
+        .post('/partners/customField')
+        .reply(constants.HTTP_STATUS_CREATED, {
+          status: 201,
+          data: CUSTOM_FIELD_MOCK,
+        });
+
+      const response: GetResult<CustomFieldResponse> = await client.postCustomField(
+        {
+          label: 'test',
+          isActive: true,
+          entity: 'company',
+        },
+      );
+
+      expect(response).to.be.instanceof(GetResult);
+      expect(response.toJSON().data).to.be.deep.equals(CUSTOM_FIELD_MOCK);
+    });
+
+    it('should call patchCustomField method ', async () => {
+      nock(PARTNERS_MOCK_URL)
+        .patch('/partners/customField/1')
+        .reply(constants.HTTP_STATUS_CREATED, {
+          status: 200,
+          data: CUSTOM_FIELD_MOCK,
+        });
+
+      const response: GetResult<CustomFieldResponse> = await client.patchCustomField(
+        1,
+        true,
+      );
+
+      expect(response).to.be.instanceof(GetResult);
+      expect(response.toJSON().data).to.be.deep.equals(CUSTOM_FIELD_MOCK);
+    });
+
+    it('should call deleteCustomField method ', async () => {
+      nock(PARTNERS_MOCK_URL).delete('/partners/customField/1').reply(204);
+
+      await client.deleteCustomField(1);
+
+      expect(nock.isDone()).to.be.true;
     });
   });
 });
