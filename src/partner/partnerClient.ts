@@ -9,6 +9,9 @@ import {
   UpdateUserActionEnum,
 } from './types/updateUserTypes';
 import { DataPartner } from './entities/dataPartner';
+import { createCustomFieldType } from './types/createCustomField';
+import { CustomFieldResponse } from './entities/CustomField/CustomFieldResponse';
+import { CustomFieldListResponse } from './entities/CustomField/CustomFieldListResponse';
 
 export enum PatchUserPayloadFields {
   COLUMN_FIRSTNAME = 'firstname',
@@ -348,5 +351,43 @@ export class PartnerClient extends AbstractRestfulClient {
       CreateUserApiKeyResult,
       await this.post(payload, parameters),
     );
+  }
+
+  public async postCustomField(
+    payload: createCustomFieldType,
+    parameters: Parameters = {},
+  ): Promise<GetResult<CustomFieldResponse>> {
+    this.path = `/customField`;
+
+    return new GetResult(
+      CustomFieldResponse,
+      await this.post(payload, parameters),
+    );
+  }
+
+  public async getCustomFieldList(
+    parameters: Parameters = {},
+  ): Promise<GetResult<CustomFieldListResponse>> {
+    this.path = `/customField`;
+
+    return new GetResult(CustomFieldListResponse, await this.get(parameters));
+  }
+
+  public async patchCustomField(
+    customFieldId: number,
+    isActive: boolean,
+  ): Promise<GetResult<CustomFieldResponse>> {
+    this.path = `/customField/${customFieldId}`;
+
+    return new GetResult(CustomFieldResponse, await this.patch({ isActive }));
+  }
+
+  public async deleteCustomField(
+    customFieldId: number,
+    parameters: Parameters = {},
+  ): Promise<void> {
+    this.path = `/customField/${customFieldId}`;
+
+    return this.delete(parameters);
   }
 }
