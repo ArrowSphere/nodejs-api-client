@@ -401,7 +401,7 @@ describe('PartnerClient', () => {
       createdBy: 'test',
     };
 
-    it('should call getCustomField method ', async () => {
+    it('should call getCustomFieldList method ', async () => {
       nock(PARTNERS_MOCK_URL)
         .get('/partners/customField')
         .query({
@@ -414,7 +414,7 @@ describe('PartnerClient', () => {
           data: [CUSTOM_FIELD_MOCK],
         });
 
-      const response: GetResult<CustomFieldListResponse> = await client.getCustomField(
+      const response: GetResult<CustomFieldListResponse> = await client.getCustomFieldList(
         {
           isActive: true,
           page: 2,
