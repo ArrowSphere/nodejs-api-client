@@ -3,6 +3,11 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.249.1] - 2026.03.09
+
+### Fixed
+- [Partner] Fix Unit test
+
 ## [3.249.0] - 2026.03.05
 
 ### Added
@@ -10,12 +15,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [3.248.2] - 2026.03.04
 
-### Updated
+### Fixed
 - [Cart] Fix type of the add and update cart endpoint payload
 
 ## [3.248.1] - 2026.02.26
 
-### Updated
+### Fixed
 - [Contact] Fix type of the get and patch contact endpoint payload
 
 ## [3.248.0] - 2026.02.26
