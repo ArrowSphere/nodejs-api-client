@@ -82,6 +82,10 @@ export enum GetUserApiKeysFiltersFields {
   COLUMN_LAST_ACCESS = 'lastAccess',
 }
 
+export enum PostAttachmentFields {
+  COLUMN_FILE_ENCODED = 'fileEncoded',
+}
+
 export type PatchUserPayload = {
   [PatchUserPayloadFields.COLUMN_FIRSTNAME]?: string;
   [PatchUserPayloadFields.COLUMN_LASTNAME]?: string;
@@ -148,6 +152,10 @@ export type GetUserApiKeysFilters = {
   [GetUserApiKeysFiltersFields.COLUMN_EXPIRATION_DATE]?: string;
   [GetUserApiKeysFiltersFields.COLUMN_CREATION_DATE]?: string;
   [GetUserApiKeysFiltersFields.COLUMN_LAST_ACCESS]?: string;
+};
+
+export type CustomerListPayload = {
+  [PostAttachmentFields.COLUMN_FILE_ENCODED]: string;
 };
 
 export class PartnerClient extends AbstractRestfulClient {
@@ -389,5 +397,13 @@ export class PartnerClient extends AbstractRestfulClient {
     this.path = `/customField/${customFieldId}`;
 
     return this.delete(parameters);
+  }
+
+  public async generateGdapLinksFromCustomerListFile(
+    payload: CustomerListPayload,
+  ): Promise<void> {
+    this.path = `/generateGdap`;
+
+    return await this.post(payload);
   }
 }
