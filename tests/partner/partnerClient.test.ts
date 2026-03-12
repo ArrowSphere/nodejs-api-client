@@ -471,4 +471,16 @@ describe('PartnerClient', () => {
       expect(nock.isDone()).to.be.true;
     });
   });
+
+  describe('generate GDAP links', () => {
+    it('should call the post generateGdapLinksFromCustomerListFile', async () => {
+      nock(PARTNERS_MOCK_URL).post('/partners/generateGdap').reply(204);
+
+      await client.generateGdapLinksFromCustomerListFile({
+        fileEncoded: 'file.csv',
+      });
+
+      expect(nock.isDone()).to.be.true;
+    });
+  });
 });
