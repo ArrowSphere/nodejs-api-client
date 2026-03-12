@@ -1,0 +1,66 @@
+name: Version Increment Check
+
+on:
+  pull_request:
+    paths:
+      - 'package.json'
+      - 'yarn.lock'
+
+jobs:
+  version-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Check version increment
+        run: |
+          # Get the base (target branch) version
+          BASE_VERSION=$(git show origin/${{ github.base_ref }}:package.json | jq -r '.version')
+          # Get the new version from the PR branch
+          NEW_VERSION=$(jq -r '.version' package.json)
+
+          echo "Base version : $BASE_VERSION"
+          echo "New version  : $NEW_VERSION"
+
+          if [ "$BASE_VERSION" = "$NEW_VERSION" ]; then
+            echo "No version change detected, skipping check."
+            exit 0
+          fi
+
+          # Parse MAJOR.MINOR.PATCH components
+          IFS='.' read -r BASE_MAJOR BASE_MINOR BASE_PATCH <<< "$BASE_VERSION"
+          IFS='.' read -r NEW_MAJOR  NEW_MINOR  NEW_PATCH  <<< "$NEW_VERSION"
+
+          VALID=false
+
+          # Valid major bump: (x+1).0.0
+          if [ "$NEW_MAJOR" = "$((BASE_MAJOR + 1))" ] && [ "$NEW_MINOR" = "0" ] && [ "$NEW_PATCH" = "0" ]; then
+            VALID=true
+            echo "✅ Valid major bump: $BASE_VERSION -> $NEW_VERSION"
+          fi
+
+          # Valid minor bump: x.(y+1).0
+          if [ "$NEW_MAJOR" = "$BASE_MAJOR" ] && [ "$NEW_MINOR" = "$((BASE_MINOR + 1))" ] && [ "$NEW_PATCH" = "0" ]; then
+            VALID=true
+            echo "✅ Valid minor bump: $BASE_VERSION -> $NEW_VERSION"
+          fi
+
+          # Valid patch bump: x.y.(z+1)
+          if [ "$NEW_MAJOR" = "$BASE_MAJOR" ] && [ "$NEW_MINOR" = "$BASE_MINOR" ] && [ "$NEW_PATCH" = "$((BASE_PATCH + 1))" ]; then
+            VALID=true
+            echo "✅ Valid patch bump: $BASE_VERSION -> $NEW_VERSION"
+          fi
+
+          if [ "$VALID" = "false" ]; then
+            echo "❌ Invalid version increment: $BASE_VERSION -> $NEW_VERSION"
+            echo ""
+            echo "The version must be incremented by exactly one step at a time:"
+            echo "  - Major bump : x.y.z -> (x+1).0.0"
+            echo "  - Minor bump : x.y.z -> x.(y+1).0"
+            echo "  - Patch bump : x.y.z -> x.y.(z+1)"
+            exit 1
+          fi
+
