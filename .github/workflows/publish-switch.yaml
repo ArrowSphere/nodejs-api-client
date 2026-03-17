@@ -13,11 +13,11 @@ jobs:
     uses: ./.github/workflows/publish.yaml
     permissions:
       id-token: write
-      contents: read
+      contents: write
 
   next:
     if: github.event.release.prerelease == true
     uses: ./.github/workflows/pre-release-publish.yaml
     permissions:
       id-token: write
-      contents: read
+      contents: write
