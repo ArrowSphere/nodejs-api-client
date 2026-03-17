@@ -9,6 +9,7 @@ export enum CompanyTypeEnum {
 
 export enum RateTypeEnum {
   DISCOUNT = 'discount',
+  DISCOUNT_UNPROTECTED = 'discountUnprotected',
   UPLIFT = 'uplift',
 }
 
