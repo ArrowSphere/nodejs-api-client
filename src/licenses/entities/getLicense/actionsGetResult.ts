@@ -25,6 +25,7 @@ export enum ActionsGetFields {
   COLUMN_AUTO_RENEW_ON = 'autoRenewOn',
   COLUMN_CANCEL = 'cancel',
   COLUMN_CONVERSION = 'conversion',
+  COLUMN_LATE_RENEWAL = 'lateRenewal',
   COLUMN_PAUSE = 'pause',
   COLUMN_UPGRADE = 'upgrade',
   COLUMN_UPDATE_FRIENDLY_NAME = 'updateFriendlyName',
@@ -45,6 +46,7 @@ export type ActionsGetData = {
   [ActionsGetFields.COLUMN_AUTO_RENEW_ON]?: string;
   [ActionsGetFields.COLUMN_CANCEL]?: string;
   [ActionsGetFields.COLUMN_CONVERSION]?: string;
+  [ActionsGetFields.COLUMN_LATE_RENEWAL]?: string;
   [ActionsGetFields.COLUMN_PAUSE]?: string;
   [ActionsGetFields.COLUMN_UPGRADE]?: string;
   [ActionsGetFields.COLUMN_UPDATE_FRIENDLY_NAME]?: string;
