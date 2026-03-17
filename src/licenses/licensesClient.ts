@@ -84,6 +84,7 @@ import { LicenceCouponCodeHistoryResult } from './entities/history/licenceCoupon
 import { GetLicenseAttachmentsResult } from './entities/attachment/GetLicenseAttachmentsResult';
 import { PostLicenseAttachmentResult } from './entities/attachment/PostLicenseAttachmentResult';
 import { DynamicAttributesMappingResult } from './entities/license/dynamicMappingResult';
+import { LateRenewableLicenseResult } from './entities/lateRenewalLicense/lateRenewableLicenseResult';
 
 /**
  * Parameters passable to the request for refining search.
@@ -829,6 +830,17 @@ export class LicensesClient extends AbstractRestfulClient {
     this.path = `/${licenseReference}`;
 
     return new GetResult(GetLicenseResult, await this.get(parameters));
+  }
+
+  public async getLateRenewableLicenses(
+    parameters: Parameters = {},
+  ): Promise<GetResult<LateRenewableLicenseResult>> {
+    this.path = `/listEligibleAdobeLateRenew`;
+
+    return new GetResult(
+      LateRenewableLicenseResult,
+      await this.get(parameters),
+    );
   }
 
   public async updateLicense(
