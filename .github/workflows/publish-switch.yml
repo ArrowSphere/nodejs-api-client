@@ -1,0 +1,23 @@
+name: Publish switch
+on:
+  release:
+    types: [released, edited, prereleased]
+
+permissions:
+  id-token: write  # Required for OIDC
+  contents: read
+
+jobs:
+  publish:
+    if: github.event.release.prerelease == false
+    uses: ./.github/workflows/publish.yml
+    permissions:
+      id-token: write
+      contents: read
+
+  next:
+    if: github.event.release.prerelease == true
+    uses: ./.github/workflows/pre-release-publish.yml
+    permissions:
+      id-token: write
+      contents: read
