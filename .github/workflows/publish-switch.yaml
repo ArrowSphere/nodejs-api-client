@@ -10,14 +10,14 @@ permissions:
 jobs:
   publish:
     if: github.event.release.prerelease == false
-    uses: ./.github/workflows/publish.yml
+    uses: ./.github/workflows/publish.yaml
     permissions:
       id-token: write
       contents: read
 
   next:
     if: github.event.release.prerelease == true
-    uses: ./.github/workflows/pre-release-publish.yml
+    uses: ./.github/workflows/pre-release-publish.yaml
     permissions:
       id-token: write
       contents: read
