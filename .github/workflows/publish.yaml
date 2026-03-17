@@ -1,7 +1,7 @@
 name: NPM Publish
 on:
-  release:
-    types: [released, edited]
+  workflow_call:
+
 jobs:
   publish-gh:
     name: Publish GitHub package
@@ -37,5 +37,3 @@ jobs:
         run: yarn install --frozen-lockfile
       - name: Publish to npmjs
         run: npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
