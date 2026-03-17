@@ -25,6 +25,7 @@ export enum ActionsGetFields {
   COLUMN_AUTO_RENEW_ON = 'autoRenewOn',
   COLUMN_CANCEL = 'cancel',
   COLUMN_CONVERSION = 'conversion',
+  COLUMN_LATE_RENEWAL = 'lateRenewal',
   COLUMN_PAUSE = 'pause',
   COLUMN_UPGRADE = 'upgrade',
   COLUMN_UPDATE_FRIENDLY_NAME = 'updateFriendlyName',
@@ -45,6 +46,7 @@ export type ActionsGetData = {
   [ActionsGetFields.COLUMN_AUTO_RENEW_ON]?: string;
   [ActionsGetFields.COLUMN_CANCEL]?: string;
   [ActionsGetFields.COLUMN_CONVERSION]?: string;
+  [ActionsGetFields.COLUMN_LATE_RENEWAL]?: string;
   [ActionsGetFields.COLUMN_PAUSE]?: string;
   [ActionsGetFields.COLUMN_UPGRADE]?: string;
   [ActionsGetFields.COLUMN_UPDATE_FRIENDLY_NAME]?: string;
@@ -65,6 +67,7 @@ export class ActionsGetResult extends AbstractEntity<ActionsGetData> {
   readonly #autoRenewToEst?: string;
   readonly #cancel?: string;
   readonly #conversion?: string;
+  readonly #lateRenewal?: string;
   readonly #pause?: string;
   readonly #upgrade?: string;
   readonly #updateFriendlyName?: string;
@@ -86,6 +89,7 @@ export class ActionsGetResult extends AbstractEntity<ActionsGetData> {
     this.#autoRenewToEst = data[ActionsGetFields.COLUMN_AUTO_RENEW_TO_EST];
     this.#cancel = data[ActionsGetFields.COLUMN_CANCEL];
     this.#conversion = data[ActionsGetFields.COLUMN_CONVERSION];
+    this.#lateRenewal = data[ActionsGetFields.COLUMN_LATE_RENEWAL];
     this.#pause = data[ActionsGetFields.COLUMN_PAUSE];
     this.#upgrade = data[ActionsGetFields.COLUMN_UPGRADE];
     this.#updateFriendlyName =
@@ -143,6 +147,10 @@ export class ActionsGetResult extends AbstractEntity<ActionsGetData> {
     return this.#conversion;
   }
 
+  public get lateRenewal(): string | undefined {
+    return this.#lateRenewal;
+  }
+
   public get pause(): string | undefined {
     return this.#pause;
   }
@@ -177,6 +185,7 @@ export class ActionsGetResult extends AbstractEntity<ActionsGetData> {
       [ActionsGetFields.COLUMN_AUTO_RENEW_TO_EST]: this.autoRenewToEst,
       [ActionsGetFields.COLUMN_CANCEL]: this.cancel,
       [ActionsGetFields.COLUMN_CONVERSION]: this.conversion,
+      [ActionsGetFields.COLUMN_LATE_RENEWAL]: this.lateRenewal,
       [ActionsGetFields.COLUMN_PAUSE]: this.pause,
       [ActionsGetFields.COLUMN_UPGRADE]: this.upgrade,
       [ActionsGetFields.COLUMN_UPDATE_FRIENDLY_NAME]: this.updateFriendlyName,
