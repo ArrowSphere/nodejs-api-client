@@ -336,7 +336,7 @@ export class PartnerClient extends AbstractRestfulClient {
     return new GetResult(GetUserApiKeysResult, await this.get(queryParameters));
   }
 
-  public async deleteUserApiKey(
+  public async adminDeleteUserApiKey(
     partnerReference: string,
     userReference: string,
     apikeyReference: string,
@@ -347,13 +347,34 @@ export class PartnerClient extends AbstractRestfulClient {
     return this.delete(parameters);
   }
 
-  public async createUserApiKey(
+  public async deleteUserApiKey(
+    apikeyReference: string,
+    parameters: Parameters = {},
+  ): Promise<void> {
+    this.path = `/users/apikeys/${apikeyReference}`;
+
+    return this.delete(parameters);
+  }
+
+  public async adminCreateUserApiKey(
     partnerReference: string,
     userReference: string,
     payload: CreateUserApiKeyPayload,
     parameters: Parameters = {},
   ): Promise<GetResult<CreateUserApiKeyResult>> {
     this.path = `/${partnerReference}/users/${userReference}/apikeys`;
+
+    return new GetResult(
+      CreateUserApiKeyResult,
+      await this.post(payload, parameters),
+    );
+  }
+
+  public async createUserApiKey(
+    payload: CreateUserApiKeyPayload,
+    parameters: Parameters = {},
+  ): Promise<GetResult<CreateUserApiKeyResult>> {
+    this.path = `/users/apikeys`;
 
     return new GetResult(
       CreateUserApiKeyResult,

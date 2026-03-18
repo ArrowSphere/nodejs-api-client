@@ -235,7 +235,7 @@ describe('PartnerClient', () => {
     });
   });
 
-  describe('createUserApiKey', () => {
+  describe('create API_KEYS', () => {
     const CREATE_API_KEY_RESPONSE = {
       status: 200,
       data: {
@@ -252,7 +252,7 @@ describe('PartnerClient', () => {
       },
     };
 
-    it('should call createUserApiKey method', async () => {
+    it('should call adminCreateUserApiKey method', async () => {
       nock(PARTNERS_MOCK_URL)
         .post(`${BASE_PATH}/apikeys`)
         .reply(constants.HTTP_STATUS_OK, CREATE_API_KEY_RESPONSE);
@@ -262,7 +262,7 @@ describe('PartnerClient', () => {
         expiration_date: '2026-08-31',
       };
 
-      const response: GetResult<CreateUserApiKeyResult> = await client.createUserApiKey(
+      const response: GetResult<CreateUserApiKeyResult> = await client.adminCreateUserApiKey(
         PARTNER_REFERENCE,
         USER_REFERENCE,
         payload,
@@ -273,17 +273,46 @@ describe('PartnerClient', () => {
         CREATE_API_KEY_RESPONSE.data,
       );
     });
+
+    it('should call createUserApiKey method', async () => {
+      nock(PARTNERS_MOCK_URL)
+        .post(`/partners/users/apikeys`)
+        .reply(constants.HTTP_STATUS_OK, CREATE_API_KEY_RESPONSE);
+
+      const payload: CreateUserApiKeyPayload = {
+        name: '80ndjmrj',
+        expiration_date: '2026-08-31',
+      };
+
+      const response: GetResult<CreateUserApiKeyResult> = await client.createUserApiKey(
+        payload,
+      );
+
+      expect(response).to.be.instanceof(GetResult);
+      expect(response.toJSON().data).to.be.deep.equals(
+        CREATE_API_KEY_RESPONSE.data,
+      );
+    });
   });
 
-  describe('deleteUserApiKey', () => {
+  describe('delete API_KEYS', () => {
     const APIKEY_REFERENCE = '109955';
 
     it('should call deleteUserApiKey method', async () => {
       nock(PARTNERS_MOCK_URL)
+        .delete(`/partners/users/apikeys/${APIKEY_REFERENCE}`)
+        .reply(204);
+
+      await client.deleteUserApiKey(APIKEY_REFERENCE);
+      expect(nock.isDone()).to.be.true;
+    });
+
+    it('should call adminDeleteUserApiKey method', async () => {
+      nock(PARTNERS_MOCK_URL)
         .delete(`${BASE_PATH}/apikeys/${APIKEY_REFERENCE}`)
         .reply(204);
 
-      await client.deleteUserApiKey(
+      await client.adminDeleteUserApiKey(
         PARTNER_REFERENCE,
         USER_REFERENCE,
         APIKEY_REFERENCE,
