@@ -201,6 +201,7 @@ export const MOCK_RESULT_DATA: {
     [LicenseFindResultFields.COLUMN_VENDOR_NAME]: 'vendor_name',
     [LicenseFindResultFields.COLUMN_VENDOR_SUBSCRIPTION_ID]:
       'vendor_subscription_id',
+    [LicenseFindResultFields.COLUMN_ATTRIBUTES]: undefined,
   },
   offer: {
     [OfferFindResultFields.COLUMN_ACTION_FLAGS]: {
