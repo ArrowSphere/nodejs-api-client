@@ -369,6 +369,7 @@ export class LicenseFindResult extends AbstractEntity<LicenseFindResultData> {
   readonly #vendorName: string;
   readonly #vendorSubscriptionId: string | null;
   readonly #highlight: Highlight;
+  readonly #attributes?: Record<string, string>;
 
   /**
    * LicenseFindResult constructor.
@@ -472,6 +473,7 @@ export class LicenseFindResult extends AbstractEntity<LicenseFindResultData> {
     this.#vendorSubscriptionId =
       data[LicenseFindResultFields.COLUMN_VENDOR_SUBSCRIPTION_ID];
     this.#highlight = data[LicenseFindResultFields.COLUMN_HIGHLIGHT] ?? {};
+    this.#attributes = data[LicenseFindResultFields.COLUMN_ATTRIBUTES];
   }
 
   public get id(): number {
@@ -658,6 +660,10 @@ export class LicenseFindResult extends AbstractEntity<LicenseFindResultData> {
     return this.#highlight;
   }
 
+  public get attributes(): Record<string, string> | undefined {
+    return this.#attributes;
+  }
+
   /**
    * Plain JSON object representation of the license entity.
    * @returns {@link LicenseData}
@@ -717,6 +723,7 @@ export class LicenseFindResult extends AbstractEntity<LicenseFindResultData> {
       [LicenseFindResultFields.COLUMN_VENDOR_SUBSCRIPTION_ID]: this
         .vendorSubscriptionId,
       [LicenseFindResultFields.COLUMN_HIGHLIGHT]: this.highlight,
+      [LicenseFindResultFields.COLUMN_ATTRIBUTES]: this.attributes,
     };
   }
 }

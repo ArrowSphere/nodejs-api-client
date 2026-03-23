@@ -133,6 +133,7 @@ export const MOCK_LICENSE_DATA_WITHOUT_OPTIONAL_DATA_RESPONSE: LicenseFindResult
   [LicenseFindResultFields.COLUMN_VENDOR_NAME]: 'vendor_name',
   [LicenseFindResultFields.COLUMN_VENDOR_SUBSCRIPTION_ID]:
     'vendor_subscription_id',
+  [LicenseFindResultFields.COLUMN_ATTRIBUTES]: undefined,
 };
 
 describe('LicenseFindResult', () => {
