@@ -245,6 +245,7 @@ export const MOCK_RESULT_DATA: {
       },
     },
     [OfferFindResultFields.COLUMN_ARROW_SUB_CATEGORIES]: ['NCE'],
+    [OfferFindResultFields.COLUMN_VENDOR_NAME]: 'vendorName',
   },
   endCustomerOrganizationUnit: {
     [EndCustomerOrganizationUnitFindResultFields.COLUMN_NAME]: 'name',
