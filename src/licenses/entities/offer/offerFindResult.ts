@@ -30,6 +30,7 @@ export enum OfferFindResultFields {
   COLUMN_NAME = 'name',
   COLUMN_PRICE_BAND = 'priceBand',
   COLUMN_ARROW_SUB_CATEGORIES = 'arrowSubCategories',
+  COLUMN_VENDOR_NAME = 'vendorName',
 }
 
 export type OfferFindResultData = {
@@ -40,6 +41,7 @@ export type OfferFindResultData = {
   [OfferFindResultFields.COLUMN_NAME]: string;
   [OfferFindResultFields.COLUMN_PRICE_BAND]: PriceBandFindResultData;
   [OfferFindResultFields.COLUMN_ARROW_SUB_CATEGORIES]: Array<string> | null;
+  [OfferFindResultFields.COLUMN_VENDOR_NAME]?: string;
 };
 
 export type OfferFindResultDataKeywords = {
@@ -90,6 +92,7 @@ export class OfferFindResult extends AbstractEntity<OfferFindResultData> {
   readonly #name: string;
   readonly #priceBand: PriceBandFindResult;
   readonly #arrowSubCategories: Array<string> | null;
+  readonly #vendorName?: string;
 
   public constructor(data: OfferFindResultData) {
     super(data);
@@ -150,6 +153,7 @@ export class OfferFindResult extends AbstractEntity<OfferFindResultData> {
     this.#priceBand = new PriceBandFindResult(priceBand);
     this.#arrowSubCategories =
       data[OfferFindResultFields.COLUMN_ARROW_SUB_CATEGORIES];
+    this.#vendorName = data[OfferFindResultFields.COLUMN_VENDOR_NAME];
   }
 
   public get actionFlags(): ActionFlagsFindResult {
@@ -180,6 +184,10 @@ export class OfferFindResult extends AbstractEntity<OfferFindResultData> {
     return this.#arrowSubCategories;
   }
 
+  public get vendorName(): string | undefined {
+    return this.#vendorName;
+  }
+
   public toJSON(): OfferFindResultData {
     return {
       [OfferFindResultFields.COLUMN_ACTION_FLAGS]: this.actionFlags.toJSON(),
@@ -190,6 +198,7 @@ export class OfferFindResult extends AbstractEntity<OfferFindResultData> {
       [OfferFindResultFields.COLUMN_PRICE_BAND]: this.priceBand.toJSON(),
       [OfferFindResultFields.COLUMN_ARROW_SUB_CATEGORIES]: this
         .arrowSubCategories,
+      [OfferFindResultFields.COLUMN_VENDOR_NAME]: this.vendorName,
     };
   }
 }
