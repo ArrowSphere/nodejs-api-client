@@ -43,6 +43,30 @@ export abstract class AbstractHttpClient {
    */
   protected security: HttpClientSecurity = HttpClientSecurity.API_KEY;
 
+  /**
+   * Set the path for the request. Must be used before sending the request.
+   * @param path
+   */
+  public setPath(path: string): this {
+    this.path = path;
+
+    return this;
+  }
+
+  /**
+   * Add query parameter to the request url.
+   * Must be used after defining the path and before sending the request.
+   * @param key name of the query parameter
+   * @param value value of the query parameter
+   */
+  public addQueryParam(key: string, value: string): void {
+    if (this.path.includes('?')) {
+      this.path += `&${key}=${value}`;
+    }
+
+    this.path += `?${key}=${value}`;
+  }
+
   public setToken(token: string): this {
     this.token = token;
 

@@ -1,13 +1,13 @@
 import { AbstractEntity } from '../../../abstractEntity';
-import { LateRenewableLicenseData } from './LicenseRenewableLicenseData';
+import { GetLateRenewableLicenseData } from './LicenseRenewableLicenseData';
 
-export class LateRenewableLicenseResult extends AbstractEntity<LateRenewableLicenseData> {
+export class GetLateRenewableLicenseResult extends AbstractEntity<GetLateRenewableLicenseData> {
   readonly #vendorSku: string;
   readonly #quantity: number;
   readonly #licenseRef?: string;
   readonly #offerName?: string;
 
-  public constructor(data: LateRenewableLicenseData) {
+  public constructor(data: GetLateRenewableLicenseData) {
     super(data ?? {});
 
     this.#vendorSku = data.vendorSku;
@@ -16,7 +16,7 @@ export class LateRenewableLicenseResult extends AbstractEntity<LateRenewableLice
     this.#offerName = data?.offerName;
   }
 
-  public toJSON(): LateRenewableLicenseData {
+  public toJSON(): GetLateRenewableLicenseData {
     return {
       vendorSku: this.#vendorSku,
       quantity: this.#quantity,
