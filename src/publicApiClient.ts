@@ -28,6 +28,7 @@ import { AnalyticsClient } from './analytics';
 import { ReportsClient } from './reports';
 import { OrderSoftwareClient } from './orderSoftware';
 import { MonitoringClient } from './monitoring';
+import { CustomFieldsClient } from './customFields/customFieldsClient';
 
 /**
  * Public API Client class, should be the main entry point for your calls
@@ -46,6 +47,18 @@ export class PublicApiClient extends AbstractRestfulClient {
       .setHttpExceptionHandlers(this.httpExceptionHandlers);
   }
 
+  /**
+   * Creates a new {@link CustomersClient} instance and returns it
+   * @returns {@link CustomersClient}
+   */
+  public getCustomFieldsClient(
+    configuration?: ConfigurationsClient,
+  ): CustomFieldsClient {
+    const client: CustomFieldsClient = new CustomFieldsClient(configuration);
+    this.applyConfig(client);
+
+    return client;
+  }
   /**
    * Creates a new {@link CustomersClient} instance and returns it
    * @returns {@link CustomersClient}
