@@ -299,6 +299,10 @@ export type LicenceFindDataFiltersParameters = {
   [LicenseFindResultFields.COLUMN_VENDOR_CODE]?: FiltersParameters;
   [LicenseFindResultFields.COLUMN_VENDOR_NAME]?: FiltersParameters;
   [LicenseFindResultFields.COLUMN_VENDOR_SUBSCRIPTION_ID]?: FiltersParameters;
+  [LicenseFindResultFields.COLUMN_ATTRIBUTES]?: Record<
+    string,
+    FiltersParameters
+  >;
 };
 
 export class LicenseFindResult extends AbstractEntity<LicenseFindResultData> {
