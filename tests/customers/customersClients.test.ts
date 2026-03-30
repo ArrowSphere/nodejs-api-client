@@ -36,7 +36,6 @@ import {
 } from './mocks/customers.mocks';
 import { Axios } from 'axios';
 import * as sinon from 'sinon';
-import { cloneDeep } from 'lodash';
 
 export const CUSTOMERS_MOCK_URL = 'https://customers.localhost';
 export const CUSTOMERS_GET_CUSTOMERS_URL = new RegExp('/customers.*');
@@ -281,7 +280,7 @@ describe('CustomersClients', () => {
     });
 
     it('call get customer contact details without xcp invitation', async () => {
-      const response = cloneDeep(RESPONSE_CUSTOMER_CONTACT);
+      const response = structuredClone(RESPONSE_CUSTOMER_CONTACT);
       delete response.data[CustomerContactFields.COLUMN_XCP_INVITATION];
 
       nock(CUSTOMERS_MOCK_URL)
@@ -295,7 +294,7 @@ describe('CustomersClients', () => {
     });
 
     it('call get customer contact details with empty xcp invitation values', async () => {
-      const response = cloneDeep(RESPONSE_CUSTOMER_CONTACT);
+      const response = structuredClone(RESPONSE_CUSTOMER_CONTACT);
       response.data.xcpInvitation = {};
 
       nock(CUSTOMERS_MOCK_URL)
