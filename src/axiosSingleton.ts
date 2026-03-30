@@ -125,8 +125,8 @@ export class AxiosSingleton {
    *
    * @returns A new sanitized object with sensitive data obfuscated or removed.
    */
-  private static sanitizeObject(
-    obj: any,
+  private static sanitizeObject<T extends object>(
+    obj: T,
     fieldsToObfuscate: string[] = [
       DefaultObfuscateFields.API_KEY,
       DefaultObfuscateFields.PASSWORD,
@@ -134,15 +134,17 @@ export class AxiosSingleton {
       DefaultObfuscateFields.NEW_PASSWORD,
       DefaultObfuscateFields.OLD_PASSWORD,
     ],
-    seen: WeakMap<object, any> = new WeakMap(),
-  ): any {
+    seen: WeakMap<object, Record<string, unknown>> = new WeakMap(),
+  ): T {
     if (!obj || typeof obj !== 'object') return obj;
 
     // Vérifie si l'objet a déjà été traité (évite les boucles infinies)
-    if (seen.has(obj)) return seen.get(obj);
+    if (seen.has(obj)) return seen.get(obj) as T;
 
     // Crée une copie de l'objet pour éviter de le modifier directement
-    const sanitizedCopy: object | Array<object> = Array.isArray(obj) ? [] : {};
+    const sanitizedCopy: Record<string, unknown> = Array.isArray(obj)
+      ? (([] as unknown) as Record<string, unknown>)
+      : {};
 
     // Stocke l'objet dans WeakMap avant la récursion
     seen.set(obj, sanitizedCopy);
@@ -165,18 +167,31 @@ export class AxiosSingleton {
             obfuscatedFields = '***';
             break;
         }
-        (sanitizedCopy as any)[key] = obfuscatedFields;
+        sanitizedCopy[key] = obfuscatedFields;
       } else if (typeof value === 'object' && value !== null) {
-        (sanitizedCopy as any)[key] = AxiosSingleton.sanitizeObject(
+        sanitizedCopy[key] = AxiosSingleton.sanitizeObject(
           value,
           fieldsToObfuscate,
           seen,
         ); // 🔄 Récursion avec WeakMap
+      } else if (typeof value === 'string') {
+        try {
+          const parsed: unknown = JSON.parse(value);
+          if (parsed && typeof parsed === 'object') {
+            sanitizedCopy[key] = JSON.stringify(
+              AxiosSingleton.sanitizeObject(parsed, fieldsToObfuscate, seen),
+            );
+          } else {
+            sanitizedCopy[key] = value;
+          }
+        } catch {
+          sanitizedCopy[key] = value;
+        }
       } else {
-        (sanitizedCopy as any)[key] = value;
+        sanitizedCopy[key] = value;
       }
     }
 
-    return sanitizedCopy;
+    return sanitizedCopy as T;
   }
 }

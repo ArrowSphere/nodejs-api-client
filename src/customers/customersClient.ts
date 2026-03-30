@@ -16,6 +16,7 @@ import { AxiosResponse } from 'axios';
 import { CustomerProvision } from './entities/customerProvision';
 import { CustomerCredentials } from './entities/customerCredentials';
 import { CustomerAgreements } from './entities/customers/agreements/customerAgreements';
+import { DataInvitationActivate } from './entities/dataInvitationActivate';
 
 export enum CustomerMigrationAttributeFields {
   NAME = 'name',
@@ -121,6 +122,14 @@ export enum PostCustomerInvitationFields {
 export type PostCustomerInvitation = {
   [PostCustomerInvitationFields.COLUMN_CONTACT_ID]: number;
   [PostCustomerInvitationFields.COLUMN_POLICY]: string;
+};
+
+export enum PostCustomerInvitationActivateFields {
+  COLUMN_PASSWORD = 'password',
+}
+
+export type PostCustomerInvitationActivate = {
+  [PostCustomerInvitationActivateFields.COLUMN_PASSWORD]: string;
 };
 
 export type APIResponseResourceCreated = {
@@ -408,5 +417,18 @@ export class CustomersClient extends AbstractRestfulClient {
     this.path = '/checkMicrosoftCustomerAgreement';
 
     return new GetResult(CustomerAgreements, await this.get(parameters));
+  }
+
+  public async postCustomerInvitationActivate(
+    code: string,
+    payload: PostCustomerInvitationActivate,
+    parameters: Parameters = {},
+  ): Promise<GetResult<DataInvitationActivate>> {
+    this.path = `/invitations/${code}/activate`;
+
+    return new GetResult(
+      DataInvitationActivate,
+      await this.post(payload, parameters),
+    );
   }
 }

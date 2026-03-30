@@ -27,10 +27,12 @@ import {
   PAYLOAD_GET_CUSTOMERS_WITHOUT_OPTIONAL_FIELDS,
   PAYLOAD_GET_UNKNOWN_LICENSES,
   PAYLOAD_POST_CUSTOMER_INVITATION,
+  PAYLOAD_POST_CUSTOMER_INVITATION_ACTIVATE,
   RESPONSE_CUSTOMER_CHECK_MICROSOFT_CUSTOMER_AGREEMENT,
   RESPONSE_CUSTOMER_CONTACT,
   RESPONSE_CUSTOMER_CREDENTIALS,
   RESPONSE_CUSTOMER_PROVISION,
+  RESPONSE_POST_CUSTOMER_INVITATION_ACTIVATE,
 } from './mocks/customers.mocks';
 import { Axios } from 'axios';
 import * as sinon from 'sinon';
@@ -69,6 +71,9 @@ export const CUSTOMERS_GET_UNKNOWN_LICENSES_URL = new RegExp(
 );
 export const CUSTOMERS_GET_CHECK_MICROSOFT_CUSTOMER_AGREEMENT = new RegExp(
   '/checkMicrosoftCustomerAgreement.*',
+);
+export const CUSTOMERS_POST_CUSTOMER_INVITATION_ACTIVATE = new RegExp(
+  '/customers/invitations/.*/activate',
 );
 
 describe('CustomersClients', () => {
@@ -780,6 +785,28 @@ describe('CustomersClients', () => {
       expect(result).to.be.instanceof(GetResult);
       expect(result.toJSON()).to.eql(
         RESPONSE_CUSTOMER_CHECK_MICROSOFT_CUSTOMER_AGREEMENT,
+      );
+    });
+  });
+
+  describe('postInvitationActivate', () => {
+    const client = new PublicApiClient()
+      .getCustomersClient()
+      .setUrl(CUSTOMERS_MOCK_URL);
+
+    it('call post customer invitation activate method', async () => {
+      nock(CUSTOMERS_MOCK_URL)
+        .post(CUSTOMERS_POST_CUSTOMER_INVITATION_ACTIVATE)
+        .reply(200, RESPONSE_POST_CUSTOMER_INVITATION_ACTIVATE);
+
+      const result = await client.postCustomerInvitationActivate(
+        'CODE_999',
+        PAYLOAD_POST_CUSTOMER_INVITATION_ACTIVATE,
+      );
+
+      expect(result).to.be.instanceof(GetResult);
+      expect(result.toJSON()).to.eql(
+        RESPONSE_POST_CUSTOMER_INVITATION_ACTIVATE,
       );
     });
   });
