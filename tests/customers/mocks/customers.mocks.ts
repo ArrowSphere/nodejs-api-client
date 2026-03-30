@@ -9,6 +9,8 @@ import {
   CustomerCredentialsType,
   CustomerFields,
   DataCustomersFields,
+  DataInvitationActivateFields,
+  DataInvitationActivateType,
   DataInvitationFields,
   DataUnknownLicensesFields,
   DataUnknownLicenseType,
@@ -19,6 +21,8 @@ import {
   PaginationFields,
   PostCustomerContactPayload,
   PostCustomerInvitation,
+  PostCustomerInvitationActivate,
+  PostCustomerInvitationActivateFields,
   PostCustomerInvitationFields,
   RelationFields,
   UnknownLicenseFields,
@@ -396,5 +400,16 @@ export const RESPONSE_CUSTOMER_CHECK_MICROSOFT_CUSTOMER_AGREEMENT: GetData<Custo
   [GetResultFields.COLUMN_STATUS]: 200,
   [GetResultFields.COLUMN_DATA]: {
     [CustomerAgreementsFields.COLUMN_IS_MCA_VALIDATED]: true,
+  },
+};
+
+export const PAYLOAD_POST_CUSTOMER_INVITATION_ACTIVATE: PostCustomerInvitationActivate = {
+  [PostCustomerInvitationActivateFields.COLUMN_PASSWORD]: 'password',
+};
+
+export const RESPONSE_POST_CUSTOMER_INVITATION_ACTIVATE: GetData<DataInvitationActivateType> = {
+  [GetResultFields.COLUMN_STATUS]: 200,
+  [GetResultFields.COLUMN_DATA]: {
+    [DataInvitationActivateFields.COLUMN_USERNAME]: 'username',
   },
 };
