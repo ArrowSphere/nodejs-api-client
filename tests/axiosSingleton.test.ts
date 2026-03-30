@@ -92,5 +92,31 @@ describe('axiosSingleton', function () {
       );
       expect(sanitizedObj.nested).to.be.an('object');
     });
+
+    it('should sanitize sensitive fields inside a JSON-stringified string value', () => {
+      const innerPayload = {
+        apiKey: 'myTestRequestAPIKEY',
+        password: 'myPassword',
+        safe: 'value',
+      };
+      const sampleObj = { data: JSON.stringify(innerPayload) };
+      const sanitizedObj = AxiosSingleton['sanitizeObject'](sampleObj);
+
+      const parsedData = JSON.parse(sanitizedObj.data);
+      expect(parsedData).to.have.property(
+        'apiKey',
+        '****************************IKEY',
+      );
+      expect(parsedData).to.have.property('password', '***');
+      expect(parsedData).to.have.property('safe', 'value');
+    });
+
+    it('should leave non-JSON string values untouched', () => {
+      const sampleObj = { message: 'hello world', count: 42 };
+      const sanitizedObj = AxiosSingleton['sanitizeObject'](sampleObj);
+
+      expect(sanitizedObj).to.have.property('message', 'hello world');
+      expect(sanitizedObj).to.have.property('count', 42);
+    });
   });
 });

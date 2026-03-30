@@ -172,6 +172,19 @@ export class AxiosSingleton {
           fieldsToObfuscate,
           seen,
         ); // 🔄 Récursion avec WeakMap
+      } else if (typeof value === 'string') {
+        try {
+          const parsed = JSON.parse(value);
+          if (parsed && typeof parsed === 'object') {
+            (sanitizedCopy as any)[key] = JSON.stringify(
+              AxiosSingleton.sanitizeObject(parsed, fieldsToObfuscate, seen),
+            );
+          } else {
+            (sanitizedCopy as any)[key] = value;
+          }
+        } catch {
+          (sanitizedCopy as any)[key] = value;
+        }
       } else {
         (sanitizedCopy as any)[key] = value;
       }
