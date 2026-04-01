@@ -1,6 +1,8 @@
 import { AbstractRestfulClient, Parameters } from '../abstractRestfulClient';
 import { GetResult } from '../getResult';
 import { Item, ItemList } from './entities';
+import { GetPromotionCartListResult } from './entities/promotionList';
+import { GetPrerequisitesListResult } from './entities/prerequisiteList';
 
 export enum ItemRequestFields {
   ADDITIONAL_DATA = 'additionalData',
@@ -54,6 +56,29 @@ export class CartClient extends AbstractRestfulClient {
     parameters: Parameters = {},
   ): Promise<GetResult<Item>> {
     return new GetResult(Item, await this.post(postData, parameters));
+  }
+
+  public async checkPromotion(
+    parameters: Parameters = {},
+  ): Promise<GetResult<GetPromotionCartListResult>> {
+    this.path = '/check-promotion';
+
+    return new GetResult(
+      GetPromotionCartListResult,
+      await this.get(parameters),
+    );
+  }
+
+  public async checkPrerequisites(
+    itemId: string,
+    parameters: Parameters = {},
+  ): Promise<GetResult<GetPrerequisitesListResult>> {
+    this.path = `/${itemId}/prerequisites`;
+
+    return new GetResult(
+      GetPrerequisitesListResult,
+      await this.get(parameters),
+    );
   }
 
   public async updateItem(

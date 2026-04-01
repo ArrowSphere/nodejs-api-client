@@ -32,8 +32,8 @@ type QuoteRateType = {
 };
 
 type QuoteCustomerPricesType = {
-  rate: QuoteRateType;
-  fixedPrice: number;
+  rate?: QuoteRateType;
+  fixedPrice?: number;
 };
 
 type QuoteArrowPricesType = QuoteCustomerPricesType;
@@ -44,7 +44,7 @@ type QuotePricesType = {
   arrow?: QuoteArrowPricesType;
 };
 
-type QuoteItemType = {
+export type QuoteItemTypeRequest = {
   arrowSpherePriceBandSku: string;
   quantity: number;
   coterminosityDate?: string;
@@ -53,7 +53,7 @@ type QuoteItemType = {
 
 export type PublishQuoteRequestType = {
   customer?: QuoteCustomerType;
-  items: QuoteItemType[];
+  items: QuoteItemTypeRequest[];
   startDate?: string;
   endDate?: string;
   name?: string;
@@ -61,7 +61,7 @@ export type PublishQuoteRequestType = {
 
 export type CreateQuoteRequestType = {
   customer?: QuoteCustomerType;
-  items?: QuoteItemType[];
+  items?: QuoteItemTypeRequest[];
   promotionCode?: string;
 };
 
