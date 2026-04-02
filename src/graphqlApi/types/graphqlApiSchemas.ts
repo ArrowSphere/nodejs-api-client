@@ -120,10 +120,8 @@ type MissingFieldsOfLicenseBudgetSchema = {
 
 type MissingFieldsOfQuoteSchema = {
   arrowCompany?: ArrowCompanySchema;
-  endCustomer?: EndCustomerSchema;
   comments?: CommentSchema;
   items?: QuoteItemSchema;
-  partner?: PartnerSchema;
   versions?: QuoteVersionSchema;
   lastVersion?: QuoteVersionSchema;
 };

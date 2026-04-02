@@ -21,6 +21,7 @@ export type QuoteType = {
   items?: QuoteItemType[];
   name?: string;
   partner?: PartnerType;
+  partnerContact?: ContactsType;
   versions?: QuoteVersion[];
   promotionCode?: string;
   promotionType?: string;

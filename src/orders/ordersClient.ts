@@ -49,6 +49,7 @@ export enum CreateOrderInputFields {
   COLUMN_PROMOTION_ID = 'promotionId',
   COLUMN_ORGANIZATION_UNIT_REF = 'organizationUnitRef',
   COLUMN_EAVS = 'eavs',
+  COLUMN_QUOTE_REF = 'quoteRef',
 }
 
 export enum scenarioType {
@@ -84,6 +85,7 @@ export type CreateOrderInputType = {
     programs: OrderProgramsType;
   };
   [CreateOrderInputFields.COLUMN_ORGANIZATION_UNIT_REF]?: string;
+  [CreateOrderInputFields.COLUMN_QUOTE_REF]?: string;
 };
 
 export type CreateOrderProductType = {
