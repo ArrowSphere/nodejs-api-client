@@ -9,7 +9,10 @@ import {
   UpdateUserActionEnum,
 } from './types/updateUserTypes';
 import { DataPartner } from './entities/dataPartner';
-import { createCustomFieldType } from './types/createCustomField';
+import {
+  createCustomFieldType,
+  CustomFieldEntityEnum,
+} from './types/createCustomField';
 import { CustomFieldResponse } from './entities/CustomField/CustomFieldResponse';
 import { CustomFieldListResponse } from './entities/CustomField/CustomFieldListResponse';
 
@@ -156,6 +159,40 @@ export type GetUserApiKeysFilters = {
 
 export type CustomerListPayload = {
   [PostAttachmentFields.COLUMN_FILE_ENCODED]: string;
+};
+
+export enum GetCustomFieldListFiltersFields {
+  COLUMN_LABEL = 'label',
+  COLUMN_IS_ACTIVE = 'isActive',
+  COLUMN_CREATED_BY = 'createdBy',
+  COLUMN_CREATED_AT = 'createdAt',
+  COLUMN_PAGE = 'page',
+  COLUMN_PER_PAGE = 'per_page',
+  COLUMN_SORT_BY = 'sort_by',
+  COLUMN_ORDER_BY = 'order_by',
+}
+
+export enum CustomFieldSortByEnum {
+  LABEL = 'label',
+  CREATED_AT = 'createdAt',
+  CREATED_BY = 'createdBy',
+  IS_ACTIVE = 'isActive',
+}
+
+export enum CustomFieldOrderByEnum {
+  ASC = 'ASC',
+  DESC = 'DESC',
+}
+
+export type GetCustomFieldListFilters = {
+  [GetCustomFieldListFiltersFields.COLUMN_LABEL]?: string;
+  [GetCustomFieldListFiltersFields.COLUMN_IS_ACTIVE]?: boolean;
+  [GetCustomFieldListFiltersFields.COLUMN_CREATED_BY]?: string;
+  [GetCustomFieldListFiltersFields.COLUMN_CREATED_AT]?: string;
+  [GetCustomFieldListFiltersFields.COLUMN_PAGE]?: number;
+  [GetCustomFieldListFiltersFields.COLUMN_PER_PAGE]?: number;
+  [GetCustomFieldListFiltersFields.COLUMN_SORT_BY]?: CustomFieldSortByEnum;
+  [GetCustomFieldListFiltersFields.COLUMN_ORDER_BY]?: CustomFieldOrderByEnum;
 };
 
 export class PartnerClient extends AbstractRestfulClient {
@@ -362,10 +399,11 @@ export class PartnerClient extends AbstractRestfulClient {
   }
 
   public async postCustomField(
+    entity: CustomFieldEntityEnum,
     payload: createCustomFieldType,
     parameters: Parameters = {},
   ): Promise<GetResult<CustomFieldResponse>> {
-    this.path = `/customField`;
+    this.path = `/customField/entity/${entity}`;
 
     return new GetResult(
       CustomFieldResponse,
@@ -374,27 +412,41 @@ export class PartnerClient extends AbstractRestfulClient {
   }
 
   public async getCustomFieldList(
+    entity: CustomFieldEntityEnum,
+    filters: GetCustomFieldListFilters = {},
     parameters: Parameters = {},
   ): Promise<GetResult<CustomFieldListResponse>> {
-    this.path = `/customField`;
+    this.path = `/customField/entity/${entity}`;
 
-    return new GetResult(CustomFieldListResponse, await this.get(parameters));
+    const queryParameters: Parameters = {
+      ...parameters,
+      ...filters,
+    };
+
+    return new GetResult(
+      CustomFieldListResponse,
+      await this.get(queryParameters),
+    );
   }
 
   public async patchCustomField(
     customFieldId: number,
     isActive: boolean,
+    parameters: Parameters = {},
   ): Promise<GetResult<CustomFieldResponse>> {
-    this.path = `/customField/${customFieldId}`;
+    this.path = `/customField/customFieldId/${customFieldId}`;
 
-    return new GetResult(CustomFieldResponse, await this.patch({ isActive }));
+    return new GetResult(
+      CustomFieldResponse,
+      await this.patch({ isActive }, parameters),
+    );
   }
 
   public async deleteCustomField(
     customFieldId: number,
     parameters: Parameters = {},
   ): Promise<void> {
-    this.path = `/customField/${customFieldId}`;
+    this.path = `/customField/customFieldId/${customFieldId}`;
 
     return this.delete(parameters);
   }
