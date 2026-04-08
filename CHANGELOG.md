@@ -3,6 +3,20 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.357.0] - 2026.04.08
+
+### Added
+- [Partner] Add `CustomFieldEntityEnum` with values `COMPANY` and `ORDER_ITEM`
+- [Partner] Add `entity` path param to `getCustomFieldList`
+- [Partner] Add `entity` path param to `postCustomField`
+- [Partner] Add query filters to `getCustomFieldList`
+
+### Updated
+- [Partner] Fix `getCustomFieldList` path to `/customField/entity/{entity}`
+- [Partner] Fix `postCustomField` path to `/customField/entity/{entity}`
+- [Partner] Fix `patchCustomField` path to `/customField/customFieldId/{customFieldId}`
+- [Partner] Fix `deleteCustomField` path to `/customField/customFieldId/{customFieldId}`
+
 ## [3.356.0] - 2026.03.30
 
 ### Added
