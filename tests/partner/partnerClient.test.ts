@@ -21,6 +21,7 @@ import { CreateUserApiKeyPayload } from '../../src/partner/types/userApiKey';
 import { GetUserApiKeysResult } from '../../src/partner/types/getUserApiKeysResult';
 import { CustomFieldListResponse } from '../../src/partner/entities/CustomField/CustomFieldListResponse';
 import { CustomFieldResponse } from '../../src/partner/entities/CustomField/CustomFieldResponse';
+import { CustomFieldEntityEnum } from '../../src/partner/types/createCustomField';
 const PARTNERS_MOCK_URL = 'https://partners.localhost';
 const PARTNER_REFERENCE = 'XSP123456';
 const USER_REFERENCE = 'XSP999';
@@ -395,7 +396,7 @@ describe('PartnerClient', () => {
       id: 1,
       label: 'test',
       isActive: true,
-      entity: 'company',
+      entity: 'COMPANY',
       isUsed: false,
       createdAt: '2023-01-01T00:00:00.000Z',
       createdBy: 'test',
@@ -403,9 +404,9 @@ describe('PartnerClient', () => {
 
     it('should call getCustomFieldList method ', async () => {
       nock(PARTNERS_MOCK_URL)
-        .get('/partners/customField')
+        .get('/partners/customField/entity/COMPANY')
         .query({
-          isActive: true,
+          isActive: 'true',
           page: '2',
           per_page: '50',
         })
@@ -415,6 +416,7 @@ describe('PartnerClient', () => {
         });
 
       const response: GetResult<CustomFieldListResponse> = await client.getCustomFieldList(
+        CustomFieldEntityEnum.COMPANY,
         {
           isActive: true,
           page: 2,
@@ -428,17 +430,18 @@ describe('PartnerClient', () => {
 
     it('should call postCustomField method ', async () => {
       nock(PARTNERS_MOCK_URL)
-        .post('/partners/customField')
+        .post('/partners/customField/entity/COMPANY')
         .reply(constants.HTTP_STATUS_CREATED, {
           status: 201,
           data: CUSTOM_FIELD_MOCK,
         });
 
       const response: GetResult<CustomFieldResponse> = await client.postCustomField(
+        CustomFieldEntityEnum.COMPANY,
         {
           label: 'test',
           isActive: true,
-          entity: 'company',
+          entity: CustomFieldEntityEnum.COMPANY,
         },
       );
 
@@ -448,7 +451,7 @@ describe('PartnerClient', () => {
 
     it('should call patchCustomField method ', async () => {
       nock(PARTNERS_MOCK_URL)
-        .patch('/partners/customField/1')
+        .patch('/partners/customField/customFieldId/1')
         .reply(constants.HTTP_STATUS_CREATED, {
           status: 200,
           data: CUSTOM_FIELD_MOCK,
@@ -464,7 +467,9 @@ describe('PartnerClient', () => {
     });
 
     it('should call deleteCustomField method ', async () => {
-      nock(PARTNERS_MOCK_URL).delete('/partners/customField/1').reply(204);
+      nock(PARTNERS_MOCK_URL)
+        .delete('/partners/customField/customFieldId/1')
+        .reply(204);
 
       await client.deleteCustomField(1);
 
