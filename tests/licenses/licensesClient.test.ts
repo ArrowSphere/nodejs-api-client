@@ -202,6 +202,7 @@ export const MOCK_RESULT_DATA: {
     [LicenseFindResultFields.COLUMN_VENDOR_SUBSCRIPTION_ID]:
       'vendor_subscription_id',
     [LicenseFindResultFields.COLUMN_ATTRIBUTES]: undefined,
+    [LicenseFindResultFields.COLUMN_HAS_SEAT_DIFFERENCE]: false,
   },
   offer: {
     [OfferFindResultFields.COLUMN_ACTION_FLAGS]: {
