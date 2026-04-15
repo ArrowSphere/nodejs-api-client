@@ -51,6 +51,7 @@ export type SearchBodyPriceBandsArgument = {
   restricted?: boolean;
   getFamilies?: boolean;
   quantity?: number;
+  bundleArrowSphereSku?: string;
 };
 
 export type SearchBodyArgument = {
