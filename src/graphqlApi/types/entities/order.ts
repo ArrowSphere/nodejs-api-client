@@ -78,6 +78,7 @@ export type GraphqlApiOrderHistoryType = {
 
 export type GraphqlApiOrderListType = {
   id?: number;
+  buyCurrencyCode?: string;
   country?: string;
   createdAt?: string;
   createdBy?: string;
@@ -97,7 +98,9 @@ export type GraphqlApiOrderListType = {
   status?: string;
   statusId?: number;
   totalCommitment?: number;
+  totalCommitmentWithoutExchange?: number;
   totalPrice?: number;
+  totalPriceWithoutExchange?: number;
   updatedAt?: string;
   uuid?: number;
   vendorName?: string;
