@@ -83,6 +83,12 @@ export const PAYLOAD_GET_CUSTOMERS = {
             test: 'test',
           },
         },
+        [CustomerFields.COLUMN_CUSTOM_FIELDS]: [
+          {
+            label: 'Custom customer label',
+            value: 'Custom customer value',
+          },
+        ],
       },
     ],
   },

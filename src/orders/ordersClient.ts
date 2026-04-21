@@ -50,6 +50,7 @@ export enum CreateOrderInputFields {
   COLUMN_ORGANIZATION_UNIT_REF = 'organizationUnitRef',
   COLUMN_EAVS = 'eavs',
   COLUMN_QUOTE_REF = 'quoteRef',
+  COLUMN_CUSTOM_FIELDS = 'customFields',
 }
 
 export enum scenarioType {
@@ -86,6 +87,10 @@ export type CreateOrderInputType = {
   };
   [CreateOrderInputFields.COLUMN_ORGANIZATION_UNIT_REF]?: string;
   [CreateOrderInputFields.COLUMN_QUOTE_REF]?: string;
+  [CreateOrderInputFields.COLUMN_CUSTOM_FIELDS]?: Array<{
+    label: string;
+    value: string;
+  }>;
 };
 
 export type CreateOrderProductType = {

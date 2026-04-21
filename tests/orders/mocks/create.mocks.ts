@@ -43,6 +43,12 @@ export const CreateOrderFullInputPayload: CreateOrderInputType = {
     [CreateOrderInputFields.COLUMN_PO_NUMBER]: '456789',
     [CreateOrderInputFields.COLUMN_END_CUSTOMER_PO_NUMBER]: '987654',
   },
+  [CreateOrderInputFields.COLUMN_CUSTOM_FIELDS]: [
+    {
+      label: 'Custom order label',
+      value: 'Custom order value',
+    },
+  ],
   [CreateOrderInputFields.COLUMN_PRODUCTS]: [
     {
       [CreateOrderInputFields.COLUMN_ARROW_SPHERE_PRICE_BAND_SKU]:
@@ -79,6 +85,12 @@ export const CreateOrderInjectionScenarioPayload: CreateOrderInputType = {
     [CreateOrderInputFields.COLUMN_REFERENCE]: 'XSP4533',
     [CreateOrderInputFields.COLUMN_PO_NUMBER]: '456789',
   },
+  [CreateOrderInputFields.COLUMN_CUSTOM_FIELDS]: [
+    {
+      label: 'Custom order label',
+      value: 'Custom order value',
+    },
+  ],
   [CreateOrderInputFields.COLUMN_SCENARIO]: scenarioType.INJECTION,
   [CreateOrderInputFields.COLUMN_PRODUCTS]: [
     {

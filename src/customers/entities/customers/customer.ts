@@ -9,6 +9,10 @@ import {
   OrganizationUnit,
   OrganizationUnitType,
 } from '../../../organisationUnit';
+import {
+  CustomerCustomField,
+  CustomerCustomFieldType,
+} from './customerCustomField';
 
 export enum CustomerFields {
   COLUMN_REFERENCE = 'Reference',
@@ -52,6 +56,7 @@ export enum CustomerFields {
   COLUMN_RESELLER = 'Reseller',
   COLUMN_PARTNER_TAGS = 'PartnerTags',
   COLUMN_PARTNER_TAGS_LABEL = 'label',
+  COLUMN_CUSTOM_FIELDS = 'customFields',
 }
 
 export type CompanyReseller = {
@@ -104,6 +109,7 @@ export type CustomerType = {
   [CustomerFields.COLUMN_ORGANISATION_UNIT]?: OrganizationUnitType;
   [CustomerFields.COLUMN_RESELLER]?: CompanyReseller;
   [CustomerFields.COLUMN_PARTNER_TAGS]?: PartnerTags[];
+  [CustomerFields.COLUMN_CUSTOM_FIELDS]?: CustomerCustomFieldType[];
 };
 
 export class Customer extends AbstractEntity<CustomerType> {
@@ -147,6 +153,7 @@ export class Customer extends AbstractEntity<CustomerType> {
   readonly #organisationUnit?: OrganizationUnit;
   readonly #reseller?: CompanyReseller;
   readonly #partnerTags?: PartnerTags[];
+  readonly #customFields?: CustomerCustomField[];
 
   public constructor(getCustomersDataInput: CustomerType) {
     super(getCustomersDataInput);
@@ -231,6 +238,9 @@ export class Customer extends AbstractEntity<CustomerType> {
     this.#reseller = getCustomersDataInput[CustomerFields.COLUMN_RESELLER];
     this.#partnerTags =
       getCustomersDataInput[CustomerFields.COLUMN_PARTNER_TAGS];
+    this.#customFields = getCustomersDataInput[
+      CustomerFields.COLUMN_CUSTOM_FIELDS
+    ]?.map((field: CustomerCustomFieldType) => new CustomerCustomField(field));
   }
 
   get Reference(): string {
@@ -393,6 +403,10 @@ export class Customer extends AbstractEntity<CustomerType> {
     return this.#partnerTags;
   }
 
+  get CustomFields(): CustomerCustomField[] | undefined {
+    return this.#customFields;
+  }
+
   public toJSON(): CustomerType {
     return {
       [CustomerFields.COLUMN_REFERENCE]: this.Reference,
@@ -435,6 +449,9 @@ export class Customer extends AbstractEntity<CustomerType> {
       [CustomerFields.COLUMN_ORGANISATION_UNIT]: this.OrganisationUnit?.toJSON(),
       [CustomerFields.COLUMN_RESELLER]: this.Reseller,
       [CustomerFields.COLUMN_PARTNER_TAGS]: this.PartnerTags,
+      [CustomerFields.COLUMN_CUSTOM_FIELDS]: this.CustomFields?.map(
+        (field: CustomerCustomField) => field.toJSON(),
+      ),
     };
   }
 }

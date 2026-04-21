@@ -17,6 +17,7 @@ import { CustomerProvision } from './entities/customerProvision';
 import { CustomerCredentials } from './entities/customerCredentials';
 import { CustomerAgreements } from './entities/customers/agreements/customerAgreements';
 import { DataInvitationActivate } from './entities/dataInvitationActivate';
+import { CustomerCustomFieldType } from './entities/customers/customerCustomField';
 
 export enum CustomerMigrationAttributeFields {
   NAME = 'name',
@@ -112,6 +113,7 @@ export type PostCustomerPayload = {
   [CustomerFields.COLUMN_INTERNAL_REFERENCE]?: string;
   [CustomerFields.COLUMN_CONTACT]?: PostCustomerContact;
   [CustomerFields.COLUMN_REGISTRATION_NUMBER]?: string;
+  [CustomerFields.COLUMN_CUSTOM_FIELDS]?: CustomerCustomFieldType[];
 };
 
 export enum PostCustomerInvitationFields {

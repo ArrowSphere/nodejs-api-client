@@ -47,6 +47,12 @@ export const PAYLOAD_SCHEMA_LICENSE: GetData<GetLicenseResultData> = {
   data: {
     license: {
       [LicenseGetFields.COLUMN_ATTRIBUTES]: {},
+      [LicenseGetFields.COLUMN_CUSTOM_FIELDS]: [
+        {
+          label: 'Custom license label',
+          value: 'Custom license value',
+        },
+      ],
       [LicenseGetFields.COLUMN_CLASSIFICATION]: 'SaaS',
       [LicenseGetFields.COLUMN_END_DATE]: '2025-04-22',
       [LicenseGetFields.COLUMN_LICENSE_ID]: '123456',

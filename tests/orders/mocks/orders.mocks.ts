@@ -137,6 +137,12 @@ export const PAYLOAD_ORDERS: GetData<DataListOrdersType> = {
             },
           },
         },
+        [OrderFields.COLUMN_CUSTOM_FIELDS]: [
+          {
+            label: 'Custom order label',
+            value: 'Custom order value',
+          },
+        ],
         [OrderFields.COLUMN_ORGANIZATION_UNIT_REF]: 'XSPOU123',
       },
     ],
