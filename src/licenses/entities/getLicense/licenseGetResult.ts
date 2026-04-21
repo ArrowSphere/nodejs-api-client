@@ -31,6 +31,10 @@ import {
   WarningFindResult,
   WarningFindResultData,
 } from '../license/warningFindResult';
+import {
+  LicenseCustomField,
+  LicenseCustomFieldType,
+} from './licenseCustomField';
 
 export enum LicenseGetFields {
   COLUMN_ADDITIONAL_INFORMATION = 'additional_information',
@@ -86,6 +90,7 @@ export enum LicenseGetFields {
   COLUMN_WARNINGS = 'warnings',
   COLUMN_END_DATE = 'endDate',
   COLUMN_ATTRIBUTES = 'attributes',
+  COLUMN_CUSTOM_FIELDS = 'customFields',
 }
 
 export enum RenewalPolicyEnum {
@@ -148,6 +153,7 @@ export type LicenseGetData = {
   [LicenseGetFields.COLUMN_WARNINGS]?: Array<WarningFindResultData> | null;
   [LicenseGetFields.COLUMN_END_DATE]: string;
   [LicenseGetFields.COLUMN_ATTRIBUTES]: Record<string, string>;
+  [LicenseGetFields.COLUMN_CUSTOM_FIELDS]?: Array<LicenseCustomFieldType>;
 };
 
 export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
@@ -204,6 +210,7 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
   readonly #warnings?: Array<WarningFindResult> | null;
   readonly #endDate: string;
   readonly #attributes: Record<string, string>;
+  readonly #customFields?: Array<LicenseCustomField>;
 
   public constructor(licenseGetDataInput: LicenseGetData) {
     super(licenseGetDataInput);
@@ -339,6 +346,9 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
     this.#endDate = licenseGetDataInput[LicenseGetFields.COLUMN_END_DATE] ?? '';
     this.#attributes =
       licenseGetDataInput[LicenseGetFields.COLUMN_ATTRIBUTES] ?? {};
+    this.#customFields = licenseGetDataInput[
+      LicenseGetFields.COLUMN_CUSTOM_FIELDS
+    ]?.map((field: LicenseCustomFieldType) => new LicenseCustomField(field));
   }
 
   public get classification(): string {
@@ -556,6 +566,10 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
     return this.#attributes;
   }
 
+  public get customFields(): Array<LicenseCustomField> | undefined {
+    return this.#customFields;
+  }
+
   public toJSON(): LicenseGetData {
     return {
       [LicenseGetFields.COLUMN_ADDITIONAL_INFORMATION]: this
@@ -623,6 +637,9 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
       ),
       [LicenseGetFields.COLUMN_END_DATE]: this.endDate,
       [LicenseGetFields.COLUMN_ATTRIBUTES]: this.attributes,
+      [LicenseGetFields.COLUMN_CUSTOM_FIELDS]: this.customFields?.map(
+        (field: LicenseCustomField) => field.toJSON(),
+      ),
     };
   }
 }

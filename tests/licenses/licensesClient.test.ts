@@ -1148,6 +1148,12 @@ describe('LicensesClient', () => {
       const payload: SaveBillingCommentsInputType = {
         comment1: 'The comment 1',
         comment2: 'The comment 2',
+        customFields: [
+          {
+            label: 'Custom billing label',
+            value: 'Custom billing value',
+          },
+        ],
       };
 
       nock(LICENSES_MOCK_URL)

@@ -369,6 +369,12 @@ describe('CustomersClients', () => {
       CountryCode: 'FR',
       Zip: '75012',
       ReceptionPhone: '1234567890',
+      customFields: [
+        {
+          label: 'Custom customer label',
+          value: 'Custom customer value',
+        },
+      ],
     };
 
     beforeEach(() => {
@@ -434,6 +440,12 @@ describe('CustomersClients', () => {
       CompanyName: 'Company test 1',
       AddressLine1: 'Address 1',
       AddressLine2: 'Address 2',
+      customFields: [
+        {
+          label: 'Custom customer label',
+          value: 'Custom customer value',
+        },
+      ],
     };
 
     beforeEach(() => {

@@ -406,6 +406,7 @@ export type PostUpgrade = {
 export enum SaveBillingCommentsInputFields {
   COLUMN_COMMENT_ONE = 'comment1',
   COLUMN_COMMENT_TWO = 'comment2',
+  COLUMN_CUSTOM_FIELDS = 'customFields',
 }
 
 export enum SaveSpecialBidInputFields {
@@ -424,6 +425,10 @@ export enum RewriteRateHistoryInputFields {
 export type SaveBillingCommentsInputType = {
   [SaveBillingCommentsInputFields.COLUMN_COMMENT_ONE]?: string | null;
   [SaveBillingCommentsInputFields.COLUMN_COMMENT_TWO]?: string | null;
+  [SaveBillingCommentsInputFields.COLUMN_CUSTOM_FIELDS]?: Array<{
+    label: string;
+    value: string;
+  }>;
 };
 
 export type DeleteScheduledTaskType = ExtraInformationType;

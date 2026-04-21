@@ -6,6 +6,10 @@ import {
   AdditionalExtraInformation,
   AdditionalExtraInformationType,
 } from '../../../shared';
+import {
+  OrderCustomField,
+  OrderCustomFieldType,
+} from './customField/customField';
 
 export enum OrderFields {
   COLUMN_REFERENCE = 'reference',
@@ -20,6 +24,7 @@ export enum OrderFields {
   COLUMN_PRODUCTS = 'products',
   COLUMN_EXTRA_INFORMATION = 'extraInformation',
   COLUMN_ORGANIZATION_UNIT_REF = 'organizationUnitRef',
+  COLUMN_CUSTOM_FIELDS = 'customFields',
 }
 
 export type OrderType = {
@@ -35,6 +40,7 @@ export type OrderType = {
   [OrderFields.COLUMN_PRODUCTS]: Array<OrderProductsType>;
   [OrderFields.COLUMN_EXTRA_INFORMATION]?: AdditionalExtraInformationType;
   [OrderFields.COLUMN_ORGANIZATION_UNIT_REF]?: string;
+  [OrderFields.COLUMN_CUSTOM_FIELDS]?: Array<OrderCustomFieldType>;
 };
 
 export class Order extends AbstractEntity<OrderType> {
@@ -50,6 +56,7 @@ export class Order extends AbstractEntity<OrderType> {
   readonly #products: Array<OrderProduct>;
   readonly #extraInformation?: AdditionalExtraInformation;
   readonly #organizationUnitRef?: string;
+  readonly #customFields?: Array<OrderCustomField>;
 
   public constructor(getOrderDataInput: OrderType) {
     super(getOrderDataInput);
@@ -87,6 +94,10 @@ export class Order extends AbstractEntity<OrderType> {
 
     this.#organizationUnitRef =
       getOrderDataInput[OrderFields.COLUMN_ORGANIZATION_UNIT_REF];
+
+    this.#customFields = getOrderDataInput[
+      OrderFields.COLUMN_CUSTOM_FIELDS
+    ]?.map((field: OrderCustomFieldType) => new OrderCustomField(field));
   }
 
   get reference(): string {
@@ -128,6 +139,10 @@ export class Order extends AbstractEntity<OrderType> {
     return this.#organizationUnitRef;
   }
 
+  get customFields(): Array<OrderCustomField> | undefined {
+    return this.#customFields;
+  }
+
   public toJSON(): OrderType {
     return {
       [OrderFields.COLUMN_REFERENCE]: this.reference,
@@ -144,6 +159,9 @@ export class Order extends AbstractEntity<OrderType> {
       ),
       [OrderFields.COLUMN_EXTRA_INFORMATION]: this.extraInformation?.toJSON(),
       [OrderFields.COLUMN_ORGANIZATION_UNIT_REF]: this.organizationUnitRef,
+      [OrderFields.COLUMN_CUSTOM_FIELDS]: this.customFields?.map(
+        (field: OrderCustomField) => field.toJSON(),
+      ),
     };
   }
 }
