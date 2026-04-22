@@ -7,6 +7,7 @@ export enum ActionTypes {
 }
 
 export enum AutoRenewStatuses {
+  EST = 'est',
   OFF = 'off',
   ON = 'on',
 }
