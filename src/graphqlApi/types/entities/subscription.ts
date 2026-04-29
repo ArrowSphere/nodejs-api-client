@@ -12,6 +12,7 @@ export type SubscriptionType = {
   autoReporting?: boolean;
   company?: PartnerType;
   endedAt?: string;
+  dateCTAValid?: string;
   level?: GraphqlApiProgramLevelType;
   localContact?: ContactsType;
   orderId?: string;
@@ -22,4 +23,5 @@ export type SubscriptionType = {
   userNote?: string;
   validatedAt?: string;
   status?: SubscriptionStatusType;
+  hasActiveProgramAgreement?: boolean;
 };
