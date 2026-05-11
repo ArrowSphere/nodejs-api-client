@@ -17,10 +17,13 @@ export type PricingRuleType = {
 
 export enum ItemFields {
   ADDITIONAL_DATA = 'additionalData',
+  BASE_PRICE_BANDS = 'basePriceBands',
+  BUNDLE_ARROWSPHERE_SKU = 'bundleArrowSphereSku',
   COTERM_PRICES = 'cotermPrices',
   COTERM_PRICES_WITHOUT_PROMOTION = 'cotermPricesWithoutPromotion',
   CURRENCY = 'currency',
   IS_ADDON = 'isAddon',
+  IS_BUNDLE = 'isBundle',
   IS_TRIAL = 'isTrial',
   ITEM_ID = 'itemId',
   OFFER_NAME = 'offerName',
@@ -41,6 +44,7 @@ export type ItemType = {
     | undefined;
   [ItemFields.CURRENCY]?: string;
   [ItemFields.IS_ADDON]?: boolean;
+  [ItemFields.IS_BUNDLE]?: boolean | undefined;
   [ItemFields.IS_TRIAL]?: boolean;
   [ItemFields.ITEM_ID]: string;
   [ItemFields.OFFER_NAME]: string;
@@ -53,6 +57,8 @@ export type ItemType = {
     | undefined;
   [ItemFields.QUANTITY]: number;
   [ItemFields.RULES]?: Record<string, PricingRuleType> | undefined;
+  [ItemFields.BUNDLE_ARROWSPHERE_SKU]?: string | undefined;
+  [ItemFields.BASE_PRICE_BANDS]?: ItemType[] | undefined;
 };
 
 export class Item extends AbstractEntity<ItemType> {
@@ -65,6 +71,7 @@ export class Item extends AbstractEntity<ItemType> {
     | undefined;
   readonly #currency?: string | undefined;
   readonly #isAddon?: boolean | undefined;
+  readonly #isBundle?: boolean | undefined;
   readonly #isTrial?: boolean | undefined;
   readonly #itemId: string;
   readonly #offerName: string;
@@ -77,6 +84,8 @@ export class Item extends AbstractEntity<ItemType> {
     | undefined;
   readonly #quantity: number;
   readonly #rules?: Record<string, PricingRuleType> | undefined;
+  readonly #bundleArrowSphereSku?: string | undefined;
+  readonly #basePriceBands?: Item[] | undefined;
 
   public constructor(itemResponse: ItemType) {
     super(itemResponse);
@@ -87,6 +96,7 @@ export class Item extends AbstractEntity<ItemType> {
       itemResponse[ItemFields.COTERM_PRICES_WITHOUT_PROMOTION];
     this.#currency = itemResponse[ItemFields.CURRENCY];
     this.#isAddon = itemResponse[ItemFields.IS_ADDON];
+    this.#isBundle = itemResponse[ItemFields.IS_BUNDLE];
     this.#isTrial = itemResponse[ItemFields.IS_TRIAL];
     this.#itemId = itemResponse[ItemFields.ITEM_ID];
     this.#offerName = itemResponse[ItemFields.OFFER_NAME];
@@ -97,6 +107,11 @@ export class Item extends AbstractEntity<ItemType> {
       itemResponse[ItemFields.PRICES_WITHOUT_PROMOTION];
     this.#quantity = itemResponse[ItemFields.QUANTITY];
     this.#rules = itemResponse[ItemFields.RULES];
+    this.#bundleArrowSphereSku =
+      itemResponse[ItemFields.BUNDLE_ARROWSPHERE_SKU];
+    this.#basePriceBands = itemResponse[ItemFields.BASE_PRICE_BANDS]?.map(
+      (band) => new Item(band),
+    );
   }
 
   get additionalData(): ItemAdditionalDataType[] | undefined {
@@ -121,6 +136,10 @@ export class Item extends AbstractEntity<ItemType> {
 
   get isAddon(): boolean | undefined {
     return this.#isAddon;
+  }
+
+  get isBundle(): boolean | undefined {
+    return this.#isBundle;
   }
 
   get isTrial(): boolean | undefined {
@@ -159,6 +178,14 @@ export class Item extends AbstractEntity<ItemType> {
     return this.#rules;
   }
 
+  get bundleArrowSphereSku(): string | undefined {
+    return this.#bundleArrowSphereSku;
+  }
+
+  get basePriceBands(): Item[] | undefined {
+    return this.#basePriceBands;
+  }
+
   public toJSON(): ItemType {
     return {
       [ItemFields.ADDITIONAL_DATA]: this.additionalData,
@@ -167,6 +194,7 @@ export class Item extends AbstractEntity<ItemType> {
         .cotermPricesWithoutPromotion,
       [ItemFields.CURRENCY]: this.currency,
       [ItemFields.IS_ADDON]: this.isAddon,
+      [ItemFields.IS_BUNDLE]: this.isBundle,
       [ItemFields.IS_TRIAL]: this.isTrial,
       [ItemFields.ITEM_ID]: this.itemId,
       [ItemFields.OFFER_NAME]: this.offerName,
@@ -175,6 +203,10 @@ export class Item extends AbstractEntity<ItemType> {
       [ItemFields.PRICES_WITHOUT_PROMOTION]: this.pricesWithoutPromotion,
       [ItemFields.QUANTITY]: this.quantity,
       [ItemFields.RULES]: this.rules,
+      [ItemFields.BUNDLE_ARROWSPHERE_SKU]: this.bundleArrowSphereSku,
+      [ItemFields.BASE_PRICE_BANDS]: this.basePriceBands?.map((band) =>
+        band.toJSON(),
+      ),
     };
   }
 }
