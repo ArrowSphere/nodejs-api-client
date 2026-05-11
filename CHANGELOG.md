@@ -3,6 +3,14 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.367.0] - 2026.05.11
+
+### Added
+
+- [Cart] Add `isBundle`, `bundleArrowSphereSku`, and `basePriceBands` fields to `ItemType` and `Item` entity
+- [Cart] Add `ItemBundleRequestType` for adding bundle items to cart
+- [Cart] Add `BASE_PRICE_BANDS` and `BUNDLE_ARROWSPHERE_SKU` to `ItemRequestFields` enum
+
 ## [3.366.0] - 2026.05.11
 ### Added
 - [SupportLevel] Add `displayName`, `level` and `priority` to `GraphqlApiSupportLevel`
