@@ -8,6 +8,8 @@ import {
   CART_ADD_ITEM_URL_INTERCEPTOR,
   CART_ADD_ITEM_WITHOUT_ADDITIONAL_DATA_REQUEST,
   CART_ADD_ITEM_WITHOUT_ADDITIONAL_DATA_RESPONSE,
+  CART_ADD_BUNDLE_ITEM_REQUEST,
+  CART_ADD_BUNDLE_ITEM_RESPONSE,
   CART_ITEM_ID,
   CART_LIST_ITEMS_RESPONSE,
   CART_LIST_ITEMS_URL_INTERCEPTOR,
@@ -55,6 +57,19 @@ describe('CartClient', function () {
       expect(response.toJSON()).to.be.deep.equal(
         CART_ADD_ITEM_WITHOUT_ADDITIONAL_DATA_RESPONSE,
       );
+    });
+
+    it('call the post method with a bundle item', async function () {
+      nock(CART_MOCK_URL)
+        .post(CART_ADD_ITEM_URL_INTERCEPTOR)
+        .reply(constants.HTTP_STATUS_CREATED, CART_ADD_BUNDLE_ITEM_RESPONSE);
+
+      const response: GetResult<Item> = await client.addItem(
+        CART_ADD_BUNDLE_ITEM_REQUEST,
+      );
+
+      expect(response).to.be.instanceof(GetResult);
+      expect(response.toJSON()).to.be.deep.equal(CART_ADD_BUNDLE_ITEM_RESPONSE);
     });
   });
 

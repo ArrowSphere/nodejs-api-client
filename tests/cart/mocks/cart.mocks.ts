@@ -9,6 +9,7 @@ import {
   ItemFields,
   ItemListType,
   ItemUpdateRequestType,
+  ItemBundleRequestType,
 } from '../../../src';
 import { constants } from 'http2';
 
@@ -140,4 +141,48 @@ export const CART_REMOVE_ITEM_RESPONSE: GetData<undefined> = {
 export const CART_REMOVE_ITEMS_RESPONSE: GetData<undefined> = {
   [GetResultFields.COLUMN_STATUS]: constants.HTTP_STATUS_NO_CONTENT,
   [GetResultFields.COLUMN_DATA]: undefined,
+};
+
+export const CART_ADD_BUNDLE_ITEM_REQUEST: ItemBundleRequestType = {
+  [ItemRequestFields.BUNDLE_ARROWSPHERE_SKU]: 'ALO001_TEST-BUNDLE',
+  [ItemRequestFields.OFFER_NAME]: 'ALO 001 TEST BUNDLE',
+  [ItemRequestFields.QUANTITY]: 1,
+  [ItemRequestFields.BASE_PRICE_BANDS]: [
+    {
+      [ItemRequestFields.OFFER_NAME]: 'ALO 001 TEST OFFER 1',
+      [ItemRequestFields.PRICE_BAND_ARROWSPHERE_SKU]: 'ALO001_TEST-OFFER-1',
+      [ItemRequestFields.QUANTITY]: 1,
+    },
+    {
+      [ItemRequestFields.OFFER_NAME]: 'ALO 001 TEST OFFER 2',
+      [ItemRequestFields.PRICE_BAND_ARROWSPHERE_SKU]: 'ALO001_TEST-OFFER-2',
+      [ItemRequestFields.QUANTITY]: 1,
+    },
+  ],
+};
+
+export const CART_ADD_BUNDLE_ITEM_RESPONSE: GetData<ItemType> = {
+  [GetResultFields.COLUMN_STATUS]: constants.HTTP_STATUS_CREATED,
+  [GetResultFields.COLUMN_DATA]: {
+    [ItemFields.ITEM_ID]: CART_ITEM_ID,
+    [ItemFields.OFFER_NAME]: 'ALO 001 TEST BUNDLE',
+    [ItemFields.PRICE_BAND_ARROWSPHERE_SKU]: 'ALO001_TEST-BUNDLE',
+    [ItemFields.QUANTITY]: 1,
+    [ItemFields.IS_BUNDLE]: true,
+    [ItemFields.BUNDLE_ARROWSPHERE_SKU]: 'ALO001_TEST-BUNDLE',
+    [ItemFields.BASE_PRICE_BANDS]: [
+      {
+        [ItemFields.ITEM_ID]: '2587c69e-667a-11ed-9022-0242ac120003',
+        [ItemFields.OFFER_NAME]: 'ALO 001 TEST OFFER 1',
+        [ItemFields.PRICE_BAND_ARROWSPHERE_SKU]: 'ALO001_TEST-OFFER-1',
+        [ItemFields.QUANTITY]: 1,
+      },
+      {
+        [ItemFields.ITEM_ID]: '2587c69e-667a-11ed-9022-0242ac120004',
+        [ItemFields.OFFER_NAME]: 'ALO 001 TEST OFFER 2',
+        [ItemFields.PRICE_BAND_ARROWSPHERE_SKU]: 'ALO001_TEST-OFFER-2',
+        [ItemFields.QUANTITY]: 1,
+      },
+    ],
+  },
 };
