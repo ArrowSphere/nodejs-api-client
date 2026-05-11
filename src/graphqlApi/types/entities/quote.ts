@@ -3,6 +3,7 @@ import { ContactsType } from './contact';
 import { GraphqlApiProgramType } from './program';
 import { QuoteVersion } from './quoteVersion';
 import { Comment } from './comment';
+import { AttributesParameters } from '../../../catalog';
 
 export type EavType = {
   value?: string;
@@ -46,6 +47,7 @@ export type QuoteItemType = {
 export type ItemData = {
   id?: string;
   attributes?: NameValueType[];
+  attributesParameters?: AttributesParameters[];
   isAddon?: boolean;
   isTrial?: boolean;
   arrowSubCategories?: string[];
@@ -63,15 +65,13 @@ export type ItemData = {
   arrowBuyPrice?: number;
   arrowCotermBuyPrice?: number;
   /**
-   * this field will be delete shortly
    * Use 'partnerBuyPrice' instead.
-   * @deprecated
+   * @deprecated this field will be deleted shortly
    */
   resellerBuyPrice?: number;
   /**
-   * this field will be delete shortly
    * Use 'partnerCotermBuyPrice' instead.
-   * @deprecated
+   * @deprecated this field will be deleted shortly
    */
   resellerCotermBuyPrice?: number;
   retailCotermBuyPrice?: number;

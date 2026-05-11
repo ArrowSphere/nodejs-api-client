@@ -63,6 +63,7 @@ import {
   GraphqlApiContributorRoleType,
   GraphqlApiStaffType,
 } from './entities/contributor';
+import { AttributesParameters } from '../../catalog';
 
 export type PartnertagSchema = Schema<PartnertagType, boolean>;
 
@@ -153,8 +154,11 @@ type MissingFieldsOfCountrySchema = {
 
 type NameValueTypeSchema = Schema<NameValueType, boolean>;
 
+type AttributesParametersSchema = Schema<AttributesParameters, boolean>;
+
 type MissingFieldsOfItemDataSchema = {
   attributes?: NameValueTypeSchema;
+  attributesParameters?: AttributesParametersSchema;
 };
 
 export type ItemDataSchema = Merge<
