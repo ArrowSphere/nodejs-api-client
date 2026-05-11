@@ -6,6 +6,8 @@ import { GetPrerequisitesListResult } from './entities/prerequisiteList';
 
 export enum ItemRequestFields {
   ADDITIONAL_DATA = 'additionalData',
+  BASE_PRICE_BANDS = 'basePriceBands',
+  BUNDLE_ARROWSPHERE_SKU = 'bundleArrowSphereSku',
   COTERM_PRICES = 'cotermPrices',
   COTERM_PRICES_WITHOUT_PROMOTION = 'cotermPricesWithoutPromotion',
   CURRENCY = 'currency',
@@ -42,7 +44,16 @@ export type ItemRequestType = {
   [ItemRequestFields.USERNAME]?: string;
 };
 
-export type ItemAddRequestType = ItemRequestType;
+export type ItemBundleRequestType = {
+  [ItemRequestFields.BUNDLE_ARROWSPHERE_SKU]: string;
+  [ItemRequestFields.OFFER_NAME]: string;
+  [ItemRequestFields.QUANTITY]?: 1;
+  [ItemRequestFields.BASE_PRICE_BANDS]: ItemRequestType[];
+  [ItemRequestFields.ADDITIONAL_DATA]?: ItemAdditionalDataRequestType[];
+};
+
+export type ItemAddRequestType = ItemRequestType | ItemBundleRequestType;
+
 export type ItemUpdateRequestType = {
   [ItemRequestFields.PRICE_BAND_ARROWSPHERE_SKU]: string;
   [ItemRequestFields.QUANTITY]: number;
