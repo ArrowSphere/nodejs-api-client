@@ -12,6 +12,7 @@ import {
   PriceBandType,
   PricesType,
   ProductType,
+  PromotionPricesFull,
   PromotionType,
   RelatedOfferType,
 } from './catalogGraphQLTypes';
@@ -49,11 +50,18 @@ export type ProductSchema = Merge<
 >;
 
 type AttributeSchema = Schema<AttributeType, boolean>;
+
+type PromotionPricesFullSchema = Merge<
+  Schema<PromotionPricesFull, boolean>,
+  { attributes?: AttributeSchema }
+>;
+
 /**
  * Field of type array are not handled by Schema, they must be overwritten
  */
 type MissingFieldsOfPriceBandSchema = {
   attributes?: AttributeSchema;
+  promotionsPrices?: PromotionPricesFullSchema;
 };
 /**
  * No type corresponding
