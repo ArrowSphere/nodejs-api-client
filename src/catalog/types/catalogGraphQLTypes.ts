@@ -215,6 +215,7 @@ export type PriceBandType = {
   saleConstraints?: PriceBandSaleConstraintsType;
   uom?: UomType;
   promotionPrices?: PromotionPricesType;
+  promotionsPrices?: Array<PromotionPricesFull>;
   vendor?: VendorType;
 };
 
@@ -325,6 +326,11 @@ export type VendorPricingSourceType = {
   currency?: string;
   changeRate?: number;
   prices?: PricesType;
+};
+
+export type PromotionPricesFull = Omit<PromotionType, 'billing'> & {
+  prices?: PricesType;
+  attributes?: Array<AttributeType>;
 };
 
 export type PromotionType = {
