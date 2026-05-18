@@ -3,6 +3,11 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
+## [3.368.0] - 2026.05.18
+### Added
+-  [graphql-api] Add new field to PriceBandType: `promotionsPrices`
+
 ## [3.367.0] - 2026.05.11
 ### Added
 - [ItemData] Add field `attributesParameters` in itemData for quote & order
