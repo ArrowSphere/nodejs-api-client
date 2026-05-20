@@ -31,6 +31,7 @@ import { UserHistoryType, UserType } from './entities/user';
 import { WorkgroupType } from './entities/workgroup';
 import { GraphqlApiSupportLevel } from './entities/supportLevel';
 import { GraphqlApiProgramAgreementType } from './entities/programAgreement';
+import { SoftwareProductType } from './entities/softwareProduct';
 import {
   ContactsSchema,
   ErrorsSchema,
@@ -191,6 +192,7 @@ export enum SelectDataField {
   WORKGROUP = 'workgroup',
   SUPPORT_LEVEL = 'supportLevel',
   PROGRAM_AGREEMENT = 'programAgreement',
+  SOFTWARE_PRODUCT = 'softwareProduct',
 }
 
 export type SelectAllResultType = {
@@ -235,6 +237,7 @@ export type SelectAllResponseDataType = {
   [SelectDataField.WORKGROUP]?: WorkgroupType[];
   [SelectDataField.SUPPORT_LEVEL]?: GraphqlApiSupportLevel[];
   [SelectDataField.PROGRAM_AGREEMENT]?: GraphqlApiProgramAgreementType[];
+  [SelectDataField.SOFTWARE_PRODUCT]?: SoftwareProductType[];
 };
 
 export enum ErrorsField {
@@ -327,6 +330,7 @@ export type SelectOneResponseDataType = {
   [SelectDataField.USER_HISTORY]?: UserHistoryType;
   [SelectDataField.WORKGROUP]?: WorkgroupType;
   [SelectDataField.SUPPORT_LEVEL]?: GraphqlApiSupportLevel;
+  [SelectDataField.SOFTWARE_PRODUCT]?: SoftwareProductType;
 };
 
 export enum QueryVariablesField {
