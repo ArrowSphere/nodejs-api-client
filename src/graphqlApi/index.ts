@@ -26,3 +26,4 @@ export * from './types/entities/comment';
 export * from './types/entities/programAgreement';
 export * from './types/entities/providerAgreementHistory';
 export * from './types/entities/softwareProduct';
+export * from './types/entities/supportLevel';
