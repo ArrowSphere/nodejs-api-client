@@ -9,6 +9,7 @@ import {
   DataInvitationFields,
   ExportCustomersInputFields,
   ExportCustomersInputType,
+  ExportGdapRelationshipInputFields,
   GetResult,
   GetResultFields,
   Parameters,
@@ -73,6 +74,9 @@ export const CUSTOMERS_GET_CHECK_MICROSOFT_CUSTOMER_AGREEMENT = new RegExp(
 );
 export const CUSTOMERS_POST_CUSTOMER_INVITATION_ACTIVATE = new RegExp(
   '/customers/invitations/.*/activate',
+);
+export const CUSTOMERS_POST_EXPORT_GDAP_RELATIONSHIP = new RegExp(
+  '/customers/exportGdapRelationship',
 );
 
 describe('CustomersClients', () => {
@@ -819,6 +823,25 @@ describe('CustomersClients', () => {
       expect(result.toJSON()).to.eql(
         RESPONSE_POST_CUSTOMER_INVITATION_ACTIVATE,
       );
+    });
+  });
+
+  describe('postExportGdapRelationship', () => {
+    const client = new PublicApiClient()
+      .getCustomersClient()
+      .setUrl(CUSTOMERS_MOCK_URL);
+
+    it('call Post Export Gdap relationship', async () => {
+      nock(CUSTOMERS_MOCK_URL)
+        .post(CUSTOMERS_POST_EXPORT_GDAP_RELATIONSHIP)
+        .reply(200);
+
+      await client.postExportGdapRelationship({
+        [ExportGdapRelationshipInputFields.COLUMN_CUSTOMERS_REF]: [
+          '965865',
+          '23865',
+        ],
+      });
     });
   });
 });

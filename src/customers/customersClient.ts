@@ -170,6 +170,14 @@ export type BulkActionInputType = {
   [UploadAttachmentInputFields.COLUMN_FILE_ENCODED]: string;
 };
 
+export enum ExportGdapRelationshipInputFields {
+  COLUMN_CUSTOMERS_REF = 'customersRef',
+}
+
+export type PostExportGdapListType = {
+  [ExportGdapRelationshipInputFields.COLUMN_CUSTOMERS_REF]: string[];
+};
+
 export type CustomersFilterInputType = {
   [CustomersFilterInputFields.COMPANY_ID]?: string;
   [CustomersFilterInputFields.COMPANY_NAME]?: string;
@@ -387,6 +395,13 @@ export class CustomersClient extends AbstractRestfulClient {
     this.path = `/${customerReference}/unknownlicenses`;
 
     return new GetResult(DataUnknownLicenses, await this.get(parameters));
+  }
+
+  public async postExportGdapRelationship(
+    customerRefs: PostExportGdapListType,
+  ): Promise<void> {
+    this.path = '/exportGdapRelationship';
+    await this.post(customerRefs);
   }
 
   public async getCustomerVendorCredentials(
