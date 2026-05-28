@@ -59,6 +59,7 @@ import {
 import { GraphqlApiEavType } from './entities/eav';
 import { GraphqlApiSupportLevel } from './entities/supportLevel';
 import { GraphqlApiProgramAgreementType } from './entities/programAgreement';
+import { SoftwareProductType } from './entities/softwareProduct';
 import {
   GraphqlApiContributorRoleType,
   GraphqlApiStaffType,
@@ -314,6 +315,7 @@ export type ProgramAgreementSchema = Schema<
   GraphqlApiProgramAgreementType,
   boolean
 >;
+export type SoftwareProductSchema = Schema<SoftwareProductType, boolean>;
 
 export type ExportResultSchema = {
   [SelectableField.DATA]?: SelectAllResponseDataSchema;
@@ -352,6 +354,7 @@ export type SelectAllResponseDataSchema = {
   [SelectDataField.WORKGROUP]?: WorkgroupSchema;
   [SelectDataField.SUPPORT_LEVEL]?: SupportLevelSchema;
   [SelectDataField.PROGRAM_AGREEMENT]?: ProgramAgreementSchema;
+  [SelectDataField.SOFTWARE_PRODUCT]?: SoftwareProductSchema;
 };
 
 export type SelectOneResultSchema = {
