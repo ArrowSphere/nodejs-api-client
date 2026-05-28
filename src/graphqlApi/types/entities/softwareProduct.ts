@@ -1,4 +1,5 @@
 export type SoftwareProductType = {
+  id?: string;
   companyId?: number;
   vendorName?: string;
   programName?: string;
