@@ -33,7 +33,9 @@ export type ListIssueParametersType = ParametersWithPaginationType & {
   [ListIssueParametersFields.RESELLER_REF]?: string;
   [ListIssueParametersFields.SKU]?: string;
   [ListIssueParametersFields.SORT]?: 'title' | 'updated' | 'status';
-  [ListIssueParametersFields.STATUSES]?: IssueStatusesType;
+  [ListIssueParametersFields.STATUSES]?:
+    | IssueStatusesType
+    | IssueStatusesType[];
   [ListIssueParametersFields.TITLE]?: string;
 };
 
@@ -53,7 +55,13 @@ export class SupportCenterClient extends AbstractRestfulClient {
   ): Promise<GetResult<Issues>> {
     this.path = `/issues`;
 
-    return new GetResult(Issues, await this.get(parameters));
+    const processedParams: Parameters = { ...parameters };
+    const statuses = parameters[ListIssueParametersFields.STATUSES];
+    if (statuses && Array.isArray(statuses)) {
+      processedParams[ListIssueParametersFields.STATUSES] = statuses.join(',');
+    }
+
+    return new GetResult(Issues, await this.get(processedParams));
   }
 
   public async createIssue(
