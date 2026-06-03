@@ -87,6 +87,7 @@ export type ProductType = {
   isAddon?: boolean;
   isBundle?: boolean;
   isEnabled?: boolean;
+  isForPartnerOnly?: boolean;
   isIndirectBusiness?: boolean;
   isTrial?: boolean;
   lastUpdate?: string;
