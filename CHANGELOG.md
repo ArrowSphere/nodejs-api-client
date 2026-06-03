@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.373.0] - 2026.06.03
+### Added
+- [graphql-api] Add new field to ProductType: `isForPartnerOnly`
+
 ## [3.372.0] - 2026.06.03
 ### Updated
 - [graphql-api] Enable direct import of GraphqlApiSupportLevel type from API client
