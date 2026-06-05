@@ -317,6 +317,26 @@ export type ProgramAgreementSchema = Schema<
 >;
 export type SoftwareProductSchema = Schema<SoftwareProductType, boolean>;
 
+type CustomFieldValueSchema = {
+  id?: boolean;
+  customerFieldKey?: CustomFieldKeySchema;
+  value?: boolean;
+  entity?: boolean;
+  entityId?: boolean;
+  createdAt?: boolean;
+  createdBy?: boolean;
+};
+
+type CustomFieldKeySchema = {
+  id?: boolean;
+  label?: boolean;
+  company?: BaseCompanySchema;
+  entity?: boolean;
+  isActive?: boolean;
+  createdAt?: boolean;
+  createdBy?: boolean;
+};
+
 export type ExportResultSchema = {
   [SelectableField.DATA]?: SelectAllResponseDataSchema;
   [SelectableField.ERRORS]?: ErrorsSchema;
@@ -331,6 +351,8 @@ export type SelectAllResultSchema = {
 export type SelectAllResponseDataSchema = {
   [SelectDataField.ARROW_COMPANY]?: ArrowCompanySchema;
   [SelectDataField.CONTACT]?: ContactsSchema;
+  [SelectDataField.CUSTOM_FIELD_KEY]?: CustomFieldKeySchema;
+  [SelectDataField.CUSTOM_FIELD_VALUE]?: CustomFieldValueSchema;
   [SelectDataField.CONTINENT]?: ContinentSchema;
   [SelectDataField.COUNTRY]?: CountrySchema;
   [SelectDataField.END_CUSTOMER]?: EndCustomerSchema;

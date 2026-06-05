@@ -104,6 +104,8 @@ export type ItemData = {
   vendorPriceBandSku?: string;
   identifiersVendorName?: string;
   identifiersVendorNamesSerialized?: string;
+  bundleArrowSphereSku?: string;
+  bundleUuid?: string;
 };
 
 export type NameValueType = {

@@ -1602,3 +1602,111 @@ export const EXPORT_END_CUSTOMER_QUERY: ExportQueryType = {
 };
 export const EXPORT_END_CUSTOMER_GQL =
   '{export (excelFields: [{label: "identifier", field: "id"}, {label: "Partner Name", field: "partner.name"}], exportTitle: "test") { data { endCustomer { id partner { id name } } } errors { code message } }}';
+
+export const SELECT_ALL_CUSTOM_FIELD_KEY_QUERY: SelectAllQueryType = {
+  [Queries.SELECT_ALL]: {
+    __args: {},
+    data: {
+      customFieldKey: {
+        id: true,
+        label: true,
+        entity: true,
+        isActive: true,
+        createdAt: true,
+        createdBy: true,
+      },
+    },
+    errors: {
+      code: true,
+      message: true,
+    },
+  },
+};
+
+export const SELECT_ALL_CUSTOM_FIELD_KEY_GQL =
+  '{selectAll { data { customFieldKey { id label entity isActive createdAt createdBy } } errors { code message } }}';
+
+export const SELECT_ONE_CUSTOM_FIELD_KEY_QUERY: SelectOneQueryType = {
+  [Queries.SELECT_ONE]: {
+    __args: {},
+    data: {
+      customFieldKey: {
+        id: true,
+        label: true,
+        entity: true,
+        isActive: true,
+        createdAt: true,
+        createdBy: true,
+      },
+    },
+    errors: {
+      code: true,
+      message: true,
+    },
+  },
+};
+
+export const SELECT_ONE_CUSTOM_FIELD_KEY_GQL =
+  '{selectOne { data { customFieldKey { id label entity isActive createdAt createdBy } } errors { code message } }}';
+
+export const SELECT_ALL_CUSTOM_FIELD_VALUE_QUERY: SelectAllQueryType = {
+  [Queries.SELECT_ALL]: {
+    __args: {},
+    data: {
+      customFieldValue: {
+        id: true,
+        value: true,
+        entity: true,
+        entityId: true,
+        createdAt: true,
+        createdBy: true,
+        customerFieldKey: {
+          id: true,
+          label: true,
+          entity: true,
+          isActive: true,
+          createdAt: true,
+          createdBy: true,
+        },
+      },
+    },
+    errors: {
+      code: true,
+      message: true,
+    },
+  },
+};
+
+export const SELECT_ALL_CUSTOM_FIELD_VALUE_GQL =
+  '{selectAll { data { customFieldValue { id value entity entityId createdAt createdBy customerFieldKey { id label entity isActive createdAt createdBy } } } errors { code message } }}';
+
+export const SELECT_ONE_CUSTOM_FIELD_VALUE_QUERY: SelectOneQueryType = {
+  [Queries.SELECT_ONE]: {
+    __args: {},
+    data: {
+      customFieldValue: {
+        id: true,
+        value: true,
+        entity: true,
+        entityId: true,
+        createdAt: true,
+        createdBy: true,
+        customerFieldKey: {
+          id: true,
+          label: true,
+          entity: true,
+          isActive: true,
+          createdAt: true,
+          createdBy: true,
+        },
+      },
+    },
+    errors: {
+      code: true,
+      message: true,
+    },
+  },
+};
+
+export const SELECT_ONE_CUSTOM_FIELD_VALUE_GQL =
+  '{selectOne { data { customFieldValue { id value entity entityId createdAt createdBy customerFieldKey { id label entity isActive createdAt createdBy } } } errors { code message } }}';
