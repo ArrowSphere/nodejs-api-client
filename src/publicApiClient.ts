@@ -23,7 +23,7 @@ import { RegisterClient, StandardsClient } from './security';
 import { PartnerClient } from './partner';
 import { OrganizationUnitClient } from './organisationUnit';
 import { QuotesClient } from './quotes';
-import { BillingClient } from './billing';
+import { BillingClient, PricingPlanClient } from './billing';
 import { AnalyticsClient } from './analytics';
 import { ReportsClient } from './reports';
 import { OrderSoftwareClient } from './orderSoftware';
@@ -302,6 +302,15 @@ export class PublicApiClient extends AbstractRestfulClient {
 
   public getBillingClient(configuration?: ConfigurationsClient): BillingClient {
     const client: BillingClient = new BillingClient(configuration);
+    this.applyConfig(client);
+
+    return client;
+  }
+
+  public getPricingPlanClient(
+    configuration?: ConfigurationsClient,
+  ): PricingPlanClient {
+    const client: PricingPlanClient = new PricingPlanClient(configuration);
     this.applyConfig(client);
 
     return client;
