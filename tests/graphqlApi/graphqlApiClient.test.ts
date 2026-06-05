@@ -8,7 +8,6 @@ import {
 import { PublicApiClientException } from '../../src/exception';
 import * as GraphqlApiQueryMock from './mocks/graphqlApiQueries.mocks';
 import { GraphQLClient } from 'graphql-request';
-import { GRAPHQL_API_MOCK_URL } from './mocks/graphqlApiQueries.mocks';
 import {
   ArrowCompanyType,
   ContactsType,
@@ -36,7 +35,9 @@ import {
 import { QuoteType } from '../../src/graphqlApi/types/entities/quote';
 
 describe('GraphqlApiClient', () => {
-  const client = new GraphqlApiClient().setUrl(GRAPHQL_API_MOCK_URL);
+  const client = new GraphqlApiClient().setUrl(
+    GraphqlApiQueryMock.GRAPHQL_API_MOCK_URL,
+  );
   let graphQLClient: sinon.SinonStubbedInstance<GraphQLClient>;
 
   beforeEach(() => {
@@ -1349,6 +1350,238 @@ describe('GraphqlApiClient', () => {
       );
 
       expect(result).to.deep.equals(expectedResult);
+    });
+  });
+
+  describe('selectAll CustomFieldKey', () => {
+    it('makes a graphql POST request to selectAll CustomFieldKey', async () => {
+      const expectedResult: SelectAllResultType = {
+        [Queries.SELECT_ALL]: {
+          [SelectableField.DATA]: {
+            [SelectDataField.CUSTOM_FIELD_KEY]: [
+              {
+                id: 1,
+                label: 'Custom Field',
+                entity: 'partner',
+                isActive: true,
+                createdAt: '2023-01-01',
+                createdBy: 'admin@example.com',
+                customerFieldValue: [
+                  {
+                    id: 10,
+                    value: 'Field Value',
+                    entity: 'partner',
+                    entityId: 100,
+                    createdAt: '2023-01-01',
+                    createdBy: 'admin@example.com',
+                  },
+                ],
+              },
+            ],
+          },
+          [SelectableField.ERRORS]: undefined,
+          [SelectableField.PAGINATION]: undefined,
+        },
+      };
+
+      graphQLClient.request.resolves(expectedResult);
+
+      const result: SelectAllResultType | null = await client.selectAll(
+        GraphqlApiQueryMock.SELECT_ALL_CUSTOM_FIELD_KEY_QUERY,
+      );
+
+      sinon.assert.calledWithExactly(
+        graphQLClient.request,
+        sinon.match(GraphqlApiQueryMock.SELECT_ALL_CUSTOM_FIELD_KEY_GQL),
+      );
+
+      expect(result).to.deep.equals(expectedResult);
+    });
+
+    it('makes a graphql POST request to selectAll CustomFieldKey -> must return null', async () => {
+      graphQLClient.request.resolves(null);
+
+      const result: SelectAllResultType | null = await client.selectAll(
+        GraphqlApiQueryMock.SELECT_ALL_CUSTOM_FIELD_KEY_QUERY,
+      );
+
+      expect(result).to.be.null;
+
+      sinon.assert.calledWithExactly(
+        graphQLClient.request,
+        sinon.match(GraphqlApiQueryMock.SELECT_ALL_CUSTOM_FIELD_KEY_GQL),
+      );
+    });
+  });
+
+  describe('selectOne CustomFieldKey', () => {
+    it('makes a graphql POST request to selectOne CustomFieldKey', async () => {
+      const expectedResult: SelectOneResultType = {
+        [Queries.SELECT_ONE]: {
+          [SelectableField.DATA]: {
+            [SelectDataField.CUSTOM_FIELD_KEY]: {
+              id: 1,
+              label: 'Custom Field',
+              entity: 'partner',
+              isActive: true,
+              createdAt: '2023-01-01',
+              createdBy: 'admin@example.com',
+              customerFieldValue: [
+                {
+                  id: 10,
+                  value: 'Field Value',
+                  entity: 'partner',
+                  entityId: 100,
+                  createdAt: '2023-01-01',
+                  createdBy: 'admin@example.com',
+                },
+              ],
+            },
+          },
+        },
+      };
+
+      graphQLClient.request.resolves(expectedResult);
+
+      const result: SelectOneResultType | null = await client.selectOne(
+        GraphqlApiQueryMock.SELECT_ONE_CUSTOM_FIELD_KEY_QUERY,
+      );
+
+      expect(result).to.deep.equals(expectedResult);
+
+      sinon.assert.calledWithExactly(
+        graphQLClient.request,
+        sinon.match(GraphqlApiQueryMock.SELECT_ONE_CUSTOM_FIELD_KEY_GQL),
+      );
+    });
+
+    it('makes a graphql POST request to selectOne CustomFieldKey -> must return null', async () => {
+      graphQLClient.request.resolves(null);
+
+      const result: SelectOneResultType | null = await client.selectOne(
+        GraphqlApiQueryMock.SELECT_ONE_CUSTOM_FIELD_KEY_QUERY,
+      );
+
+      expect(result).to.be.null;
+
+      sinon.assert.calledWithExactly(
+        graphQLClient.request,
+        sinon.match(GraphqlApiQueryMock.SELECT_ONE_CUSTOM_FIELD_KEY_GQL),
+      );
+    });
+  });
+
+  describe('selectAll CustomFieldValue', () => {
+    it('makes a graphql POST request to selectAll CustomFieldValue', async () => {
+      const expectedResult: SelectAllResultType = {
+        [Queries.SELECT_ALL]: {
+          [SelectableField.DATA]: {
+            [SelectDataField.CUSTOM_FIELD_VALUE]: [
+              {
+                id: 10,
+                value: 'Field Value',
+                entity: 'partner',
+                entityId: 100,
+                createdAt: '2023-01-01',
+                createdBy: 'admin@example.com',
+                customerFieldKey: {
+                  id: 1,
+                  label: 'Custom Field',
+                  entity: 'partner',
+                  isActive: true,
+                  createdAt: '2023-01-01',
+                  createdBy: 'admin@example.com',
+                },
+              },
+            ],
+          },
+          [SelectableField.ERRORS]: undefined,
+          [SelectableField.PAGINATION]: undefined,
+        },
+      };
+
+      graphQLClient.request.resolves(expectedResult);
+
+      const result: SelectAllResultType | null = await client.selectAll(
+        GraphqlApiQueryMock.SELECT_ALL_CUSTOM_FIELD_VALUE_QUERY,
+      );
+
+      sinon.assert.calledWithExactly(
+        graphQLClient.request,
+        sinon.match(GraphqlApiQueryMock.SELECT_ALL_CUSTOM_FIELD_VALUE_GQL),
+      );
+
+      expect(result).to.deep.equals(expectedResult);
+    });
+
+    it('makes a graphql POST request to selectAll CustomFieldValue -> must return null', async () => {
+      graphQLClient.request.resolves(null);
+
+      const result: SelectAllResultType | null = await client.selectAll(
+        GraphqlApiQueryMock.SELECT_ALL_CUSTOM_FIELD_VALUE_QUERY,
+      );
+
+      expect(result).to.be.null;
+
+      sinon.assert.calledWithExactly(
+        graphQLClient.request,
+        sinon.match(GraphqlApiQueryMock.SELECT_ALL_CUSTOM_FIELD_VALUE_GQL),
+      );
+    });
+  });
+
+  describe('selectOne CustomFieldValue', () => {
+    it('makes a graphql POST request to selectOne CustomFieldValue', async () => {
+      const expectedResult: SelectOneResultType = {
+        [Queries.SELECT_ONE]: {
+          [SelectableField.DATA]: {
+            [SelectDataField.CUSTOM_FIELD_VALUE]: {
+              id: 10,
+              value: 'Field Value',
+              entity: 'partner',
+              entityId: 100,
+              createdAt: '2023-01-01',
+              createdBy: 'admin@example.com',
+              customerFieldKey: {
+                id: 1,
+                label: 'Custom Field',
+                entity: 'partner',
+                isActive: true,
+                createdAt: '2023-01-01',
+                createdBy: 'admin@example.com',
+              },
+            },
+          },
+        },
+      };
+
+      graphQLClient.request.resolves(expectedResult);
+
+      const result: SelectOneResultType | null = await client.selectOne(
+        GraphqlApiQueryMock.SELECT_ONE_CUSTOM_FIELD_VALUE_QUERY,
+      );
+
+      expect(result).to.deep.equals(expectedResult);
+
+      sinon.assert.calledWithExactly(
+        graphQLClient.request,
+        sinon.match(GraphqlApiQueryMock.SELECT_ONE_CUSTOM_FIELD_VALUE_GQL),
+      );
+    });
+
+    it('makes a graphql POST request to selectOne CustomFieldValue -> must return null', async () => {
+      graphQLClient.request.resolves(null);
+
+      const result: SelectOneResultType | null = await client.selectOne(
+        GraphqlApiQueryMock.SELECT_ONE_CUSTOM_FIELD_VALUE_QUERY,
+      );
+
+      expect(result).to.be.null;
+
+      sinon.assert.calledWithExactly(
+        graphQLClient.request,
+        sinon.match(GraphqlApiQueryMock.SELECT_ONE_CUSTOM_FIELD_VALUE_GQL),
+      );
     });
   });
 });

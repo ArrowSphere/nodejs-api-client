@@ -276,7 +276,7 @@ export enum PricesTypeKeys {
   PUBLIC_KEY = 'public',
   ARROW_KEY = 'arrow',
   PARTNER_KEY = 'partner',
-  ENDCUSTOMER_KEY = 'endCustom',
+  ENDCUSTOMER_KEY = 'endCustomer',
   RETAIL_KEY = 'public',
   VENDOR_PRICING_SOURCE_KEY = 'vendorPricingSource',
 }

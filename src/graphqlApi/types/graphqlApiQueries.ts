@@ -32,6 +32,8 @@ import { WorkgroupType } from './entities/workgroup';
 import { GraphqlApiSupportLevel } from './entities/supportLevel';
 import { GraphqlApiProgramAgreementType } from './entities/programAgreement';
 import { SoftwareProductType } from './entities/softwareProduct';
+import { CustomFieldKeyType } from './entities/customFieldKey';
+import { CustomFieldValueType } from './entities/customFieldValue';
 import {
   ContactsSchema,
   ErrorsSchema,
@@ -167,6 +169,8 @@ export enum SelectableField {
 export enum SelectDataField {
   ARROW_COMPANY = 'arrowCompany',
   CONTACT = 'contact',
+  CUSTOM_FIELD_KEY = 'customFieldKey',
+  CUSTOM_FIELD_VALUE = 'customFieldValue',
   CONTINENT = 'continent',
   COUNTRY = 'country',
   END_CUSTOMER = 'endCustomer',
@@ -213,6 +217,8 @@ export type ExportResultType = {
 export type SelectAllResponseDataType = {
   [SelectDataField.ARROW_COMPANY]?: ArrowCompanyType[];
   [SelectDataField.CONTACT]?: ContactsType[];
+  [SelectDataField.CUSTOM_FIELD_KEY]?: CustomFieldKeyType[];
+  [SelectDataField.CUSTOM_FIELD_VALUE]?: CustomFieldValueType[];
   [SelectDataField.CONTINENT]?: ContinentType[];
   [SelectDataField.COUNTRY]?: CountryType[];
   [SelectDataField.END_CUSTOMER]?: EndCustomerType[];
@@ -308,6 +314,8 @@ export type GetSpecialPriceRatesHistoryResultType = {
 export type SelectOneResponseDataType = {
   [SelectDataField.ARROW_COMPANY]?: ArrowCompanyType;
   [SelectDataField.CONTACT]?: ContactsType;
+  [SelectDataField.CUSTOM_FIELD_KEY]?: CustomFieldKeyType;
+  [SelectDataField.CUSTOM_FIELD_VALUE]?: CustomFieldValueType;
   [SelectDataField.CONTINENT]?: ContinentType;
   [SelectDataField.COUNTRY]?: CountryType;
   [SelectDataField.END_CUSTOMER]?: EndCustomerType;
