@@ -1,6 +1,7 @@
 import { AbstractEntity } from '../../abstractEntity';
 import { XcpInvitation, XcpInvitationType } from './xcpInvitation';
 import { OrganizationUnits, OrganizationUnitsType } from './organizationUnits';
+import { ContactXapInfo } from '../types/ContactXapInfo';
 
 export enum ContactFields {
   COLUMN_ID = 'id',
@@ -14,6 +15,7 @@ export enum ContactFields {
   COLUMN_TYPE = 'type',
   COLUMN_ROLE = 'role',
   COLUMN_STATUS = 'status',
+  COLUMN_XAP_INFO = 'xapInfo',
   COLUMN_XAP_USERNAME = 'xapUsername',
   COLUMN_IS_ACTIVE = 'isActive',
   COLUMN_XCP_INVITATION = 'xcpInvitation',
@@ -33,6 +35,7 @@ export type ContactType = {
   [ContactFields.COLUMN_ROLE]: string;
   [ContactFields.COLUMN_STATUS]: string;
   [ContactFields.COLUMN_XAP_USERNAME]?: string;
+  [ContactFields.COLUMN_XAP_INFO]?: ContactXapInfo;
   [ContactFields.COLUMN_IS_ACTIVE]: boolean;
   [ContactFields.COLUMN_XCP_INVITATION]?: XcpInvitationType;
   [ContactFields.COLUMN_ORGANIZATION_UNITS]?: OrganizationUnitsType[];
@@ -50,6 +53,7 @@ export class Contact extends AbstractEntity<ContactType> {
   readonly #type: string;
   readonly #role: string;
   readonly #status: string;
+  readonly #xapInfo?: ContactXapInfo;
   readonly #xapUsername?: string;
   readonly #isActive: boolean;
   readonly #xcpInvitation?: XcpInvitation;
@@ -69,6 +73,7 @@ export class Contact extends AbstractEntity<ContactType> {
     this.#type = contactDataInput[ContactFields.COLUMN_TYPE];
     this.#role = contactDataInput[ContactFields.COLUMN_ROLE];
     this.#status = contactDataInput[ContactFields.COLUMN_STATUS];
+    this.#xapInfo = contactDataInput[ContactFields.COLUMN_XAP_INFO];
     this.#xapUsername = contactDataInput[ContactFields.COLUMN_XAP_USERNAME];
     this.#isActive = contactDataInput[ContactFields.COLUMN_IS_ACTIVE];
     this.#xcpInvitation = contactDataInput[ContactFields.COLUMN_XCP_INVITATION]
@@ -131,6 +136,10 @@ export class Contact extends AbstractEntity<ContactType> {
     return this.#status;
   }
 
+  get xapInfo(): ContactXapInfo | undefined {
+    return this.#xapInfo;
+  }
+
   get xapUsername(): string | undefined {
     return this.#xapUsername;
   }
@@ -160,6 +169,7 @@ export class Contact extends AbstractEntity<ContactType> {
       [ContactFields.COLUMN_TYPE]: this.type,
       [ContactFields.COLUMN_ROLE]: this.role,
       [ContactFields.COLUMN_STATUS]: this.status,
+      [ContactFields.COLUMN_XAP_INFO]: this.xapInfo,
       [ContactFields.COLUMN_XAP_USERNAME]: this.xapUsername,
       [ContactFields.COLUMN_IS_ACTIVE]: this.isActive,
       [ContactFields.COLUMN_XCP_INVITATION]: this.xcpInvitation?.toJSON(),
