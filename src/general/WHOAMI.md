@@ -8,24 +8,25 @@ This endpoint allows the user to get information about himself.
 
 The endpoint is linked to the ```Whoami``` entity.
 
-| Field             | Type           | Example                  | Description                    |
-|-------------------|----------------|--------------------------|--------------------------------|
-| companyName       | ```string```   | Wayne industries         | The name of the company        |
-| addressLine1      | ```string```   | 1007 Mountain Drive      |                                |
-| addressLine2      | ```string```   | Wayne Manor              |                                |
-| zip               | ```string```   | 12345                    |                                |
-| city              | ```string```   | Gotham City              |                                |
-| countryCode       | ```string```   | US                       |                                |
-| state             | ```string```   | NJ                       |                                |
-| receptionPhone    | ```string```   | 1-800-555-1111           |                                |
-| websiteUrl        | ```string```   | <https://www.dccomics.com> |                                |
-| emailContact      | ```string```   | nobody@example.com       |                                |
-| headcount         | ```string```   | null                     |                                |
-| taxNumber         | ```string```   |                          |                                |
-| reference         | ```string```   | XSP12345                 |                                |
-| ref               | ```string```   | COMPANY12345             |                                |
-| billingId         | ```string```   |                          |                                |
-| internalReference | ```string```   |                          |                                |
+| Field             | Type           | Example                    | Description                                 |
+|-------------------|----------------|----------------------------|---------------------------------------------|
+| companyName       | ```string```   | Wayne industries           | The name of the company                     |
+| addressLine1      | ```string```   | 1007 Mountain Drive        |                                             |
+| addressLine2      | ```string```   | Wayne Manor                |                                             |
+| zip               | ```string```   | 12345                      |                                             |
+| city              | ```string```   | Gotham City                |                                             |
+| countryCode       | ```string```   | US                         |                                             |
+| state             | ```string```   | NJ                         |                                             |
+| receptionPhone    | ```string```   | 1-800-555-1111             |                                             |
+| websiteUrl        | ```string```   | <https://www.dccomics.com> |                                             |
+| emailContact      | ```string```   | nobody@example.com         |                                             |
+| headcount         | ```string```   | null                       |                                             |
+| taxNumber         | ```string```   |                            |                                             |
+| reference         | ```string```   | XSP12345                   |                                             |
+| ref               | ```string```   | COMPANY12345               |                                             |
+| billingId         | ```string```   |                            |                                             |
+| internalReference | ```string```   |                            |                                             |
+| preferredCurrency | ```string```   | EUR                        | Partner preferred currency (ISO 4217 code)  |
 
 ## Usage
 
