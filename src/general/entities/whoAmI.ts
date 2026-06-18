@@ -20,13 +20,16 @@ export enum WhoAmIResponseFields {
   COLUMN_REF = 'ref',
   COLUMN_BILLING_ID = 'billingId',
   COLUMN_INTERNAL_REFERENCE = 'internalReference',
+  COLUMN_PREFERRED_CURRENCY = 'preferredCurrency',
 }
 
 /**
  * Response data type for WhoAmI requests.
  */
 export type WhoAmIResponseData = {
-  [field in WhoAmIResponseFields]: string;
+  [field in WhoAmIResponseFields]: field extends WhoAmIResponseFields.COLUMN_PREFERRED_CURRENCY
+    ? string | undefined
+    : string;
 };
 
 /**
@@ -53,6 +56,8 @@ export class WhoAmI extends AbstractEntity<WhoAmIResponseData> {
     this.#billingId = data[WhoAmIResponseFields.COLUMN_BILLING_ID];
     this.#internalReference =
       data[WhoAmIResponseFields.COLUMN_INTERNAL_REFERENCE];
+    this.#preferredCurrency =
+      data[WhoAmIResponseFields.COLUMN_PREFERRED_CURRENCY];
   }
 
   protected VALIDATION_RULES = {
@@ -90,6 +95,7 @@ export class WhoAmI extends AbstractEntity<WhoAmIResponseData> {
   readonly #ref: string;
   readonly #billingId: string;
   readonly #internalReference: string;
+  readonly #preferredCurrency?: string;
 
   public getCompanyName(): string {
     return this.#companyName;
@@ -155,6 +161,10 @@ export class WhoAmI extends AbstractEntity<WhoAmIResponseData> {
     return this.#internalReference;
   }
 
+  public getPreferredCurrency(): string | undefined {
+    return this.#preferredCurrency;
+  }
+
   /**
    * Returns the raw JSON properties
    * @returns {@link WhoAmIResponseData}
@@ -177,6 +187,7 @@ export class WhoAmI extends AbstractEntity<WhoAmIResponseData> {
       [WhoAmIResponseFields.COLUMN_REF]: this.getRef(),
       [WhoAmIResponseFields.COLUMN_BILLING_ID]: this.getBillingId(),
       [WhoAmIResponseFields.COLUMN_INTERNAL_REFERENCE]: this.getInternalReference(),
+      [WhoAmIResponseFields.COLUMN_PREFERRED_CURRENCY]: this.getPreferredCurrency(),
     };
   }
 }
