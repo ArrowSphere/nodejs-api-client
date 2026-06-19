@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.377.0] - 2026.06.19
+### Added
+- [whoami] Add the preferredCurrency field to the whoami endpoint response
+
 ## [3.376.0] - 2026.06.16
 ### Added
 - [contact] Add optional `xapInfo` field in Contact entity
