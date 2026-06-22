@@ -44,6 +44,51 @@ describe('CatalogGraphQLClient', () => {
     });
   });
 
+  describe('ProductType bundleBaseProducts field', () => {
+    it('should allow a product to contain bundleBaseProducts as an array of ProductType', async () => {
+      const client = new CatalogGraphQLClient()
+        .setUrl(CATALOG_GRAPHQL_URL)
+        .setHeaders({ authorization: 'test' });
+
+      const baseProduct: ProductType = {
+        name: 'Base Product',
+        marketplace: 'FR',
+      };
+
+      const bundleProduct: ProductType = {
+        name: 'Bundle Product',
+        marketplace: 'FR',
+        bundleBaseProducts: [baseProduct],
+      };
+
+      const products: ProductType[] = [bundleProduct];
+      const bodyResponse = {
+        data: {
+          getProducts: products,
+        },
+      };
+
+      nock(CATALOG_GRAPHQL_URL).post(CATALOG_POST_URL).reply(200, bodyResponse);
+
+      const query: CatalogQuery = {
+        getProducts: {
+          __args: {
+            paginate: { page: 1, perPage: 12 },
+            searchBody: { ignoreCatalogPlan: true },
+          },
+          products: { name: true, bundleBaseProducts: { name: true } },
+        },
+      };
+
+      const response = await client.findByQuery(query);
+      expect(response).to.eql(bodyResponse.data);
+      expect(
+        (response as typeof bodyResponse.data).getProducts[0]
+          .bundleBaseProducts,
+      ).to.eql([baseProduct]);
+    });
+  });
+
   describe('should call http client using findByQuery', () => {
     const client = new CatalogGraphQLClient().setUrl(CATALOG_GRAPHQL_URL);
     const preparedQuery: CatalogQuery = {

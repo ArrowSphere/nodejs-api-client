@@ -109,6 +109,7 @@ export type ProductType = {
   weightTopSales?: number;
   xspUrl?: string;
   isBundleOrderQuantityLinked?: boolean;
+  bundleBaseProducts?: Array<ProductType>;
 };
 
 export type IdentifiersType = {

@@ -35,18 +35,26 @@ type MissingFieldsOfProductSchema = {
   addonPrimaries?: IdentifiersSchema;
   attributesParameters?: AttributesParametersSchema;
   baseOfferPrimaries?: IdentifiersSchema;
-  bundleBillingRules?: BundleBillingRuleSchema;
-  bundledOfferPrimaries?: IdentifiersSchema;
   conversionOfferPrimaries?: IdentifiersSchema;
   defaultPriceBand?: PriceBandSchema;
   relatedOffers?: RelatedOfferSchema;
-  priceBand?: PriceBandSchema;
   promotions?: PromotionSchema;
 };
 
-export type ProductSchema = Merge<
+export type MissingFieldsOfBundleProductSchema = {
+  bundleBaseProducts?: ProductSchemaBundleItem;
+  bundleBillingRules?: BundleBillingRuleSchema;
+  bundledOfferPrimaries?: IdentifiersSchema;
+};
+
+export type ProductSchemaBundleItem = Merge<
   Schema<ProductType, boolean>,
   MissingFieldsOfProductSchema
+>;
+export type ProductSchema = Merge<
+  Schema<ProductType, boolean>,
+  MissingFieldsOfProductSchema &
+    MissingFieldsOfBundleProductSchema & { priceBand?: PriceBandSchema }
 >;
 
 type AttributeSchema = Schema<AttributeType, boolean>;
