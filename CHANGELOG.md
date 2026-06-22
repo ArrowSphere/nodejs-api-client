@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.378.0] - 2026.06.22
+### Added
+- [catalog] Add `bundleBaseProducts` field to `ProductType` GraphQL type
+
 ## [3.377.0] - 2026.06.19
 ### Added
 - [whoami] Add the preferredCurrency field to the whoami endpoint response
