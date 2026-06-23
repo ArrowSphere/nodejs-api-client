@@ -65,6 +65,8 @@ export type GraphqlApiOrderLinkType = {
   from?: OrderItemsType;
   migratedAt?: string;
   to?: OrderItemsType;
+  fromId: number;
+  toId: number;
 };
 
 export type GraphqlApiOrderHistoryType = {
