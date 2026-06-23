@@ -171,7 +171,7 @@ export type BulkActionInputType = {
 };
 
 export enum ExportGdapRelationshipInputFields {
-  COLUMN_CUSTOMERS_REF = 'customersRef',
+  COLUMN_CUSTOMERS_REF = 'customerRefs',
 }
 
 export type PostExportGdapListType = {
