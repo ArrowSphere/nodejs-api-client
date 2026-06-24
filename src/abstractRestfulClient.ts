@@ -62,8 +62,10 @@ export type Options = {
 };
 
 export type RegisterCheckReturnSyncStatusError = {
-  statusCode?: number;
-  message?: string;
+  error: {
+    statusCode?: number;
+    message?: string;
+  };
 };
 
 export type RegisterCheckReturnVendorStatus = {
@@ -86,6 +88,7 @@ export type RegisterCheckReturnData = {
   customerReference?: string;
   isLocked?: boolean;
   marketplace?: string;
+  processingStatus?: string;
   resellerName?: string;
   resellerReference?: string;
   subscriptionReference?: string;
