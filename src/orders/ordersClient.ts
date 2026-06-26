@@ -15,6 +15,8 @@ export enum CreateOrderInputFields {
   COLUMN_END_CUSTOMER_PO_NUMBER = 'endCustomerPONumber',
   COLUMN_PRODUCTS = 'products',
   COLUMN_ARROW_SPHERE_PRICE_BAND_SKU = 'arrowSpherePriceBandSku',
+  COLUMN_BUNDLE_ARROW_SKU = 'bundleArrowSphereSku',
+  COLUMN_BUNDLE_UUID = 'bundleUuid',
   COLUMN_SKU = 'sku',
   COLUMN_QUANTITY = 'quantity',
   COLUMN_SUBSCRIPTION = 'subscription',
@@ -95,6 +97,8 @@ export type CreateOrderInputType = {
 
 export type CreateOrderProductType = {
   [CreateOrderInputFields.COLUMN_ARROW_SPHERE_PRICE_BAND_SKU]?: string;
+  [CreateOrderInputFields.COLUMN_BUNDLE_ARROW_SKU]?: string;
+  [CreateOrderInputFields.COLUMN_BUNDLE_UUID]?: string;
   [CreateOrderInputFields.COLUMN_SKU]?: string;
   [CreateOrderInputFields.COLUMN_QUANTITY]: number;
   [CreateOrderInputFields.COLUMN_SUBSCRIPTION]?: {
