@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.380.0] - 2026.06.26
+### Added
+- [register] Add `bundleUuid` and `bundleArrowSphereSku` to `CreateOrderInputFields` structure
+
 ## [3.379.0] - 2026.06.25
 ### Added
 - [register] Add `processingStatus` to `RegisterCheckReturnData` and update `RegisterCheckReturnSyncStatusError` structure
