@@ -32,6 +32,7 @@ import { WorkgroupType } from './entities/workgroup';
 import { GraphqlApiSupportLevel } from './entities/supportLevel';
 import { GraphqlApiProgramAgreementType } from './entities/programAgreement';
 import { SoftwareProductType } from './entities/softwareProduct';
+import { PartnerCatalogItemType } from './entities/partnerCatalogItem';
 import { CustomFieldKeyType } from './entities/customFieldKey';
 import { CustomFieldValueType } from './entities/customFieldValue';
 import {
@@ -197,6 +198,7 @@ export enum SelectDataField {
   SUPPORT_LEVEL = 'supportLevel',
   PROGRAM_AGREEMENT = 'programAgreement',
   SOFTWARE_PRODUCT = 'softwareProduct',
+  PARTNER_CATALOG_ITEM = 'partnerCatalogItem',
 }
 
 export type SelectAllResultType = {
@@ -244,6 +246,7 @@ export type SelectAllResponseDataType = {
   [SelectDataField.SUPPORT_LEVEL]?: GraphqlApiSupportLevel[];
   [SelectDataField.PROGRAM_AGREEMENT]?: GraphqlApiProgramAgreementType[];
   [SelectDataField.SOFTWARE_PRODUCT]?: SoftwareProductType[];
+  [SelectDataField.PARTNER_CATALOG_ITEM]?: PartnerCatalogItemType[];
 };
 
 export enum ErrorsField {
@@ -339,6 +342,7 @@ export type SelectOneResponseDataType = {
   [SelectDataField.WORKGROUP]?: WorkgroupType;
   [SelectDataField.SUPPORT_LEVEL]?: GraphqlApiSupportLevel;
   [SelectDataField.SOFTWARE_PRODUCT]?: SoftwareProductType;
+  [SelectDataField.PARTNER_CATALOG_ITEM]?: PartnerCatalogItemType;
 };
 
 export enum QueryVariablesField {

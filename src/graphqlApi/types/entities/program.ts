@@ -65,6 +65,7 @@ export type ProgramLevelType = {
   benefits?: ProgramBenefitType[];
   requirements?: ProgramRequirementType[];
   programLevelOptionGroups?: ProgramLevelOptionGroupType[];
+  program: GraphqlApiProgramType;
 };
 
 export type ProgramBenefitType = {

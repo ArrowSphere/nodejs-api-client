@@ -29,3 +29,4 @@ export * from './types/entities/softwareProduct';
 export * from './types/entities/supportLevel';
 export * from './types/entities/customFieldKey';
 export * from './types/entities/customFieldValue';
+export * from './types/entities/partnerCatalogItem';

@@ -60,6 +60,7 @@ import { GraphqlApiEavType } from './entities/eav';
 import { GraphqlApiSupportLevel } from './entities/supportLevel';
 import { GraphqlApiProgramAgreementType } from './entities/programAgreement';
 import { SoftwareProductType } from './entities/softwareProduct';
+import { PartnerCatalogItemType } from './entities/partnerCatalogItem';
 import {
   GraphqlApiContributorRoleType,
   GraphqlApiStaffType,
@@ -317,6 +318,18 @@ export type ProgramAgreementSchema = Schema<
 >;
 export type SoftwareProductSchema = Schema<SoftwareProductType, boolean>;
 
+type MissingFieldsOfPartnerCatalogItemSchema = {
+  partner?: PartnerSchema;
+  currency?: CurrencySchema;
+  softwareProduct?: SoftwareProductSchema;
+  subscription?: SubscriptionSchema;
+};
+
+export type PartnerCatalogItemSchema = Merge<
+  Schema<PartnerCatalogItemType, boolean>,
+  MissingFieldsOfPartnerCatalogItemSchema
+>;
+
 type CustomFieldValueSchema = {
   id?: boolean;
   customerFieldKey?: CustomFieldKeySchema;
@@ -377,6 +390,7 @@ export type SelectAllResponseDataSchema = {
   [SelectDataField.SUPPORT_LEVEL]?: SupportLevelSchema;
   [SelectDataField.PROGRAM_AGREEMENT]?: ProgramAgreementSchema;
   [SelectDataField.SOFTWARE_PRODUCT]?: SoftwareProductSchema;
+  [SelectDataField.PARTNER_CATALOG_ITEM]?: PartnerCatalogItemSchema;
 };
 
 export type SelectOneResultSchema = {
