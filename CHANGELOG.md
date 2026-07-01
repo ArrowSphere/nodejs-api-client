@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.380.1] - 2026.06.30
+### Fixed
+- [partners] Fix `COLUMN_PER_PAGE`, `COLUMN_SORT_BY` and `COLUMN_ORDER_BY` from custom billing fields.
+
 ## [3.380.0] - 2026.06.26
 ### Added
 - [register] Add `bundleUuid` and `bundleArrowSphereSku` to `CreateOrderInputFields` structure
