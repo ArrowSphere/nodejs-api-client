@@ -29,6 +29,11 @@ export class PricingPlanClient extends AbstractRestfulClient {
   protected basePath = '/billing/pricing-plans';
 
   /**
+   * uses camelCase pagination
+   */
+  protected isCamelPagination = true;
+
+  /**
    * Lists pricing plans with optional filters
    */
   public async listPricingPlans(
