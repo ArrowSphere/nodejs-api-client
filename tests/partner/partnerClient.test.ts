@@ -449,7 +449,7 @@ describe('PartnerClient', () => {
         {
           isActive: true,
           page: 2,
-          per_page: 50,
+          perPage: 50,
         },
       );
 

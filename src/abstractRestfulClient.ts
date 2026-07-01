@@ -511,13 +511,28 @@ export abstract class AbstractRestfulClient extends AbstractHttpClient {
    */
   protected generateUrl(parameters: Parameters, options: Options): string {
     const params = { ...parameters, ...this.generatePagination() };
+
+    const snakeCaseKeys: Record<string, ParameterKeys> = {
+      perPage: ParameterKeys.PER_PAGE,
+      sortBy: ParameterKeys.SORT_BY,
+      orderBy: ParameterKeys.ORDER_BY,
+    };
+
+    const normalizedParams: Parameters = {};
+    for (const [key, value] of Object.entries(params)) {
+      const normalizedKey =
+        !this.isCamelPagination && key in snakeCaseKeys
+          ? snakeCaseKeys[key]
+          : key;
+      normalizedParams[normalizedKey] = value as Parameters[string];
+    }
     const baseUrl: string = this.url.replace(new RegExp('/$'), '');
     const basePath: string = options.isAdmin
       ? path.join('/admin', this.basePath)
       : this.basePath;
     const url = new URL(`${baseUrl}${basePath}${this.path}`);
-    if (Object.values(params).length) {
-      url.search = querystring.stringify(params);
+    if (Object.values(normalizedParams).length) {
+      url.search = querystring.stringify(normalizedParams);
     }
 
     // We need to set the value back to empty in case we have a new call with the same instance.
