@@ -3,6 +3,15 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.380.1] - 2026.07.01
+### Security
+- Fixed security vulnerabilities in development dependencies
+- Replaced coveralls npm package with Coveralls GitHub Action to eliminate vulnerabilities
+
+### Changed
+- Updated test:coverage:report script to generate lcov output format
+- Added coveralls badge to README.md
+
 ## [3.380.0] - 2026.06.26
 ### Added
 - [register] Add `bundleUuid` and `bundleArrowSphereSku` to `CreateOrderInputFields` structure
