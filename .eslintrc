@@ -13,6 +13,17 @@
     "plugin:prettier/recommended"
   ],
   "rules": {
-    "tsdoc/syntax": "warn"
-  }
+    "tsdoc/syntax": "warn",
+    "@typescript-eslint/no-explicit-any": "warn"
+  },
+  "overrides": [
+    {
+      "files": ["tests/**/*.ts", "src/**/*.ts"],
+      "rules": {
+        "@typescript-eslint/no-unused-expressions": "off",
+        "@typescript-eslint/no-unused-vars": "off",
+        "@typescript-eslint/no-duplicate-enum-values": "off"
+      }
+    }
+  ]
 }

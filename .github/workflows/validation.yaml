@@ -8,8 +8,6 @@ jobs:
     strategy:
       matrix:
         node: ['20.x', '22.x', '24.x']
-    env:
-      COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
     name: Lint, Build, Test
     runs-on: ubuntu-latest
     steps:
@@ -28,6 +26,8 @@ jobs:
         run: yarn build
       - name: Run tests with coverage
         run: yarn test:coverage
-      - if: env.COVERALLS_REPO_TOKEN != null
-        name: Push coverage to coveralls
-        run: yarn test:coverage
+      - name: Upload coverage to Coveralls
+        uses: coverallsapp/github-action@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path-to-lcov: ./coverage/lcov.info
