@@ -167,9 +167,9 @@ export enum GetCustomFieldListFiltersFields {
   COLUMN_CREATED_BY = 'createdBy',
   COLUMN_CREATED_AT = 'createdAt',
   COLUMN_PAGE = 'page',
-  COLUMN_PER_PAGE = 'per_page',
-  COLUMN_SORT_BY = 'sort_by',
-  COLUMN_ORDER_BY = 'order_by',
+  COLUMN_PER_PAGE = 'perPage',
+  COLUMN_SORT_BY = 'sortBy',
+  COLUMN_ORDER_BY = 'orderBy',
 }
 
 export enum CustomFieldSortByEnum {
