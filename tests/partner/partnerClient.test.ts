@@ -22,6 +22,10 @@ import { GetUserApiKeysResult } from '../../src/partner/types/getUserApiKeysResu
 import { CustomFieldListResponse } from '../../src/partner/entities/CustomField/CustomFieldListResponse';
 import { CustomFieldResponse } from '../../src/partner/entities/CustomField/CustomFieldResponse';
 import { CustomFieldEntityEnum } from '../../src/partner/types/createCustomField';
+import {
+  CustomFieldSortByEnum,
+  CustomFieldOrderByEnum,
+} from '../../src/partner/partnerClient';
 const PARTNERS_MOCK_URL = 'https://partners.localhost';
 const PARTNER_REFERENCE = 'XSP123456';
 const USER_REFERENCE = 'XSP999';
@@ -437,7 +441,9 @@ describe('PartnerClient', () => {
         .query({
           isActive: 'true',
           page: '2',
-          per_page: '50',
+          perPage: '50',
+          sortBy: 'label',
+          orderBy: 'ASC',
         })
         .reply(constants.HTTP_STATUS_OK, {
           status: 200,
@@ -449,7 +455,9 @@ describe('PartnerClient', () => {
         {
           isActive: true,
           page: 2,
-          per_page: 50,
+          perPage: 50,
+          sortBy: CustomFieldSortByEnum.LABEL,
+          orderBy: CustomFieldOrderByEnum.ASC,
         },
       );
 
