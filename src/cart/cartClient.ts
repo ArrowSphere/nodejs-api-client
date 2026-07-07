@@ -16,6 +16,7 @@ export enum ItemRequestFields {
   ITEM_ID = 'itemId',
   OFFER_NAME = 'offerName',
   PRICE_BAND_ARROWSPHERE_SKU = 'priceBandArrowsphereSku',
+  PRICE_BAND_VENDOR_SKU = 'pricebandVendorSku',
   PRICES = 'prices',
   PRICES_WITHOUT_PROMOTION = 'pricesWithoutPromotion',
   QUANTITY = 'quantity',
@@ -39,6 +40,7 @@ export type ItemAdditionalDataRequestType = {
 export type ItemRequestType = {
   [ItemRequestFields.OFFER_NAME]: string;
   [ItemRequestFields.PRICE_BAND_ARROWSPHERE_SKU]: string;
+  [ItemRequestFields.PRICE_BAND_VENDOR_SKU]?: string;
   [ItemRequestFields.QUANTITY]: number;
   [ItemRequestFields.ADDITIONAL_DATA]?: ItemAdditionalDataRequestType[];
   [ItemRequestFields.USERNAME]?: string;
@@ -54,6 +56,10 @@ export type ItemBundleRequestType = {
 
 export type ItemAddRequestType = ItemRequestType | ItemBundleRequestType;
 
+export type ChangeCustomerRequestType = {
+  customerRef: string;
+};
+
 export type ItemUpdateRequestType = {
   [ItemRequestFields.PRICE_BAND_ARROWSPHERE_SKU]: string;
   [ItemRequestFields.QUANTITY]: number;
@@ -67,6 +73,16 @@ export class CartClient extends AbstractRestfulClient {
     parameters: Parameters = {},
   ): Promise<GetResult<Item>> {
     return new GetResult(Item, await this.post(postData, parameters));
+  }
+
+  public async changeCustomer(
+    postData: ChangeCustomerRequestType,
+    parameters: Parameters = {},
+  ): Promise<GetResult<ItemList>> {
+    this.path =
+      '/changeCustomer/?withPrices=' + (parameters.withPrices ?? false);
+
+    return new GetResult(ItemList, await this.post(postData));
   }
 
   public async checkPromotion(
