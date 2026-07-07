@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.381.0] - 2026.07.07
+### Added
+- [cart] Add the `changeCustomer` endpoint.
+
 ## [3.380.1] - 2026.06.30
 ### Fixed
 - [partners] Fix custom billing field sorting: send `perPage`, `sortBy` and `orderBy` query parameters as is camelCase
