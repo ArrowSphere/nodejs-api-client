@@ -28,6 +28,7 @@ export enum ItemFields {
   ITEM_ID = 'itemId',
   OFFER_NAME = 'offerName',
   PRICE_BAND_ARROWSPHERE_SKU = 'priceBandArrowsphereSku',
+  PRICE_BAND_VENDOR_SKU = 'pricebandVendorSku',
   PRICES = 'prices',
   PRICES_WITHOUT_PROMOTION = 'pricesWithoutPromotion',
   QUANTITY = 'quantity',
@@ -49,6 +50,7 @@ export type ItemType = {
   [ItemFields.ITEM_ID]: string;
   [ItemFields.OFFER_NAME]: string;
   [ItemFields.PRICE_BAND_ARROWSPHERE_SKU]: string;
+  [ItemFields.PRICE_BAND_VENDOR_SKU]?: string;
   [ItemFields.PRICES]?:
     | Record<'arrow' | 'partner' | 'endCustomer' | 'retail', number>
     | undefined;
@@ -76,6 +78,7 @@ export class Item extends AbstractEntity<ItemType> {
   readonly #itemId: string;
   readonly #offerName: string;
   readonly #priceBandArrowsphereSku: string;
+  readonly #pricebandVendorSku?: string;
   readonly #prices?:
     | Record<'arrow' | 'partner' | 'endCustomer' | 'retail', number>
     | undefined;
@@ -102,6 +105,7 @@ export class Item extends AbstractEntity<ItemType> {
     this.#offerName = itemResponse[ItemFields.OFFER_NAME];
     this.#priceBandArrowsphereSku =
       itemResponse[ItemFields.PRICE_BAND_ARROWSPHERE_SKU];
+    this.#pricebandVendorSku = itemResponse[ItemFields.PRICE_BAND_VENDOR_SKU];
     this.#prices = itemResponse[ItemFields.PRICES];
     this.#pricesWithoutPromotion =
       itemResponse[ItemFields.PRICES_WITHOUT_PROMOTION];
@@ -158,6 +162,10 @@ export class Item extends AbstractEntity<ItemType> {
     return this.#priceBandArrowsphereSku;
   }
 
+  get pricebandVendorSku(): string | undefined {
+    return this.#pricebandVendorSku;
+  }
+
   get prices():
     | Record<'arrow' | 'partner' | 'endCustomer' | 'retail', number>
     | undefined {
@@ -199,6 +207,7 @@ export class Item extends AbstractEntity<ItemType> {
       [ItemFields.ITEM_ID]: this.itemId,
       [ItemFields.OFFER_NAME]: this.offerName,
       [ItemFields.PRICE_BAND_ARROWSPHERE_SKU]: this.priceBandArrowsphereSku,
+      [ItemFields.PRICE_BAND_VENDOR_SKU]: this.pricebandVendorSku,
       [ItemFields.PRICES]: this.prices,
       [ItemFields.PRICES_WITHOUT_PROMOTION]: this.pricesWithoutPromotion,
       [ItemFields.QUANTITY]: this.quantity,
