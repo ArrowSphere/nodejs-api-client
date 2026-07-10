@@ -18,56 +18,60 @@ import {
 } from './pricingRules/pricingRules';
 
 export enum OrderProductsFields {
-  COLUMN_SKU = 'sku',
-  COLUMN_QUANTITY = 'quantity',
-  COLUMN_STATUS = 'status',
+  COLUMN_ARROWSUBCATEGORIES = 'arrowSubCategories',
+  COLUMN_BUNDLE_ARROW_SKU = 'bundleArrowSphereSku',
+  COLUMN_BUNDLE_UUID = 'bundleUuid',
+  COLUMN_CLASSIFICATION = 'classification',
   COLUMN_CREATION_DATE = 'creationDate',
   COLUMN_DATESTATUS = 'dateStatus',
   COLUMN_DETAILEDSTATUS = 'detailedStatus',
   COLUMN_FAMILY = 'family',
+  COLUMN_IDENTIFIERS = 'identifiers',
   COLUMN_IS_ADDON = 'isAddon',
-  COLUMN_ARROWSUBCATEGORIES = 'arrowSubCategories',
   COLUMN_IS_TRIAL = 'isTrial',
-  COLUMN_PRICES = 'prices',
-  COLUMN_SUBSCRIPTION = 'subscription',
   COLUMN_LICENSE = 'license',
   COLUMN_NAME = 'name',
-  COLUMN_CLASSIFICATION = 'classification',
-  COLUMN_PROGRAM = 'program',
-  COLUMN_IDENTIFIERS = 'identifiers',
-  COLUMN_ORGANIZATION_UNIT_REF = 'organizationUnitRef',
   COLUMN_ORGANIZATION_UNIT = 'organizationUnit',
+  COLUMN_ORGANIZATION_UNIT_REF = 'organizationUnitRef',
+  COLUMN_PRICES = 'prices',
   COLUMN_PRICE_BAND = 'priceBand',
   COLUMN_PRICING_RULES = 'pricingRules',
+  COLUMN_PROGRAM = 'program',
   COLUMN_PROGRAM_NAME = 'programName',
+  COLUMN_QUANTITY = 'quantity',
+  COLUMN_SKU = 'sku',
   COLUMN_SOURCE = 'source',
+  COLUMN_STATUS = 'status',
+  COLUMN_SUBSCRIPTION = 'subscription',
   COLUMN_VENDOR_NAME = 'vendorName',
 }
 
 export type OrderProductsType = {
-  [OrderProductsFields.COLUMN_SKU]: string;
-  [OrderProductsFields.COLUMN_QUANTITY]: number;
-  [OrderProductsFields.COLUMN_STATUS]: string;
+  [OrderProductsFields.COLUMN_ARROWSUBCATEGORIES]?: Array<string>;
+  [OrderProductsFields.COLUMN_BUNDLE_ARROW_SKU]?: string;
+  [OrderProductsFields.COLUMN_BUNDLE_UUID]?: string;
+  [OrderProductsFields.COLUMN_CLASSIFICATION]: string;
   [OrderProductsFields.COLUMN_CREATION_DATE]?: string;
   [OrderProductsFields.COLUMN_DATESTATUS]: string;
   [OrderProductsFields.COLUMN_DETAILEDSTATUS]: string;
   [OrderProductsFields.COLUMN_FAMILY]: FamilyType;
+  [OrderProductsFields.COLUMN_IDENTIFIERS]: ProductIdentifiersType;
   [OrderProductsFields.COLUMN_IS_ADDON]: boolean;
-  [OrderProductsFields.COLUMN_ARROWSUBCATEGORIES]?: Array<string>;
   [OrderProductsFields.COLUMN_IS_TRIAL]: boolean;
-  [OrderProductsFields.COLUMN_PRICES]: ProductPricesType;
-  [OrderProductsFields.COLUMN_SUBSCRIPTION]?: ReferenceLinkType;
   [OrderProductsFields.COLUMN_LICENSE]: ReferenceLinkType;
   [OrderProductsFields.COLUMN_NAME]: string;
-  [OrderProductsFields.COLUMN_CLASSIFICATION]: string;
-  [OrderProductsFields.COLUMN_PROGRAM]: ProductProgramType;
-  [OrderProductsFields.COLUMN_IDENTIFIERS]: ProductIdentifiersType;
-  [OrderProductsFields.COLUMN_ORGANIZATION_UNIT_REF]?: string;
   [OrderProductsFields.COLUMN_ORGANIZATION_UNIT]?: OrganizationUnitType;
+  [OrderProductsFields.COLUMN_ORGANIZATION_UNIT_REF]?: string;
+  [OrderProductsFields.COLUMN_PRICES]: ProductPricesType;
   [OrderProductsFields.COLUMN_PRICE_BAND]?: PriceBandData;
   [OrderProductsFields.COLUMN_PRICING_RULES]: Array<BusinessRuleEffectType>;
+  [OrderProductsFields.COLUMN_PROGRAM]: ProductProgramType;
   [OrderProductsFields.COLUMN_PROGRAM_NAME]?: string;
+  [OrderProductsFields.COLUMN_QUANTITY]: number;
+  [OrderProductsFields.COLUMN_SKU]: string;
   [OrderProductsFields.COLUMN_SOURCE]?: string;
+  [OrderProductsFields.COLUMN_STATUS]: string;
+  [OrderProductsFields.COLUMN_SUBSCRIPTION]?: ReferenceLinkType;
   [OrderProductsFields.COLUMN_VENDOR_NAME]?: string;
 };
 
