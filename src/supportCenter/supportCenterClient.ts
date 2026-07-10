@@ -21,6 +21,9 @@ export enum ListIssueParametersFields {
   SORT = 'sort',
   STATUSES = 'statuses',
   TITLE = 'title',
+  CREATED_BY = 'createdBy',
+  DATE_CREATION_START = 'dateCreationStart',
+  DATE_CREATION_END = 'dateCreationEnd',
   PAGE = 'page',
   PER_PAGE = 'per_page',
   PER_PAGE_CAMEL = 'perPage',
@@ -37,6 +40,9 @@ export type ListIssueParametersType = ParametersWithPaginationType & {
     | IssueStatusesType
     | IssueStatusesType[];
   [ListIssueParametersFields.TITLE]?: string;
+  [ListIssueParametersFields.CREATED_BY]?: string;
+  [ListIssueParametersFields.DATE_CREATION_START]?: string;
+  [ListIssueParametersFields.DATE_CREATION_END]?: string;
 };
 
 export class SupportCenterClient extends AbstractRestfulClient {
