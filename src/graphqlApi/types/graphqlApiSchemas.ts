@@ -65,6 +65,8 @@ import {
   GraphqlApiStaffType,
 } from './entities/contributor';
 import { AttributesParameters } from '../../catalog';
+import { CustomFieldValueType } from './entities/customFieldValue';
+import { CustomFieldKeyType } from './entities/customFieldKey';
 
 export type PartnertagSchema = Schema<PartnertagType, boolean>;
 
@@ -316,26 +318,8 @@ export type ProgramAgreementSchema = Schema<
   boolean
 >;
 export type SoftwareProductSchema = Schema<SoftwareProductType, boolean>;
-
-type CustomFieldValueSchema = {
-  id?: boolean;
-  customerFieldKey?: CustomFieldKeySchema;
-  value?: boolean;
-  entity?: boolean;
-  entityId?: boolean;
-  createdAt?: boolean;
-  createdBy?: boolean;
-};
-
-type CustomFieldKeySchema = {
-  id?: boolean;
-  label?: boolean;
-  company?: BaseCompanySchema;
-  entity?: boolean;
-  isActive?: boolean;
-  createdAt?: boolean;
-  createdBy?: boolean;
-};
+export type CustomFieldValueSchema = Schema<CustomFieldValueType, boolean>;
+export type CustomFieldKeySchema = Schema<CustomFieldKeyType, boolean>;
 
 export type ExportResultSchema = {
   [SelectableField.DATA]?: SelectAllResponseDataSchema;

@@ -1714,3 +1714,28 @@ export const SELECT_ONE_CUSTOM_FIELD_VALUE_QUERY: SelectOneQueryType = {
 
 export const SELECT_ONE_CUSTOM_FIELD_VALUE_GQL =
   '{selectOne { data { customFieldValue { id value entity entityId createdAt createdBy customerFieldKey { id label entity isActive createdAt createdBy } } } errors { code message } }}';
+
+export const SELECT_ALL_WORKGROUP_QUERY: SelectAllQueryType = {
+  [Queries.SELECT_ALL]: {
+    __args: {},
+    data: {
+      workgroup: {
+        id: true,
+        code: true,
+        name: true,
+        currency: {
+          id: true,
+          name: true,
+          symbol: true,
+        },
+      },
+    },
+    errors: {
+      code: true,
+      message: true,
+    },
+  },
+};
+
+export const SELECT_ALL_WORKGROUP_GQL =
+  '{selectAll { data { workgroup { id code name currency { id name symbol } } } errors { code message } }}';

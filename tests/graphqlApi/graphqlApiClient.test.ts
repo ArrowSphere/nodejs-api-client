@@ -31,6 +31,7 @@ import {
   UserHistoryType,
   UserType,
   ExportResultType,
+  WorkgroupType,
 } from '../../src/graphqlApi';
 import { QuoteType } from '../../src/graphqlApi/types/entities/quote';
 
@@ -1581,6 +1582,61 @@ describe('GraphqlApiClient', () => {
       sinon.assert.calledWithExactly(
         graphQLClient.request,
         sinon.match(GraphqlApiQueryMock.SELECT_ONE_CUSTOM_FIELD_VALUE_GQL),
+      );
+    });
+  });
+
+  describe('selectAll Workgroup with currency', () => {
+    it('makes a graphql POST request to selectAll Workgroup including currency field', async () => {
+      const workgroups: WorkgroupType[] = [
+        {
+          id: 1,
+          code: 'FR',
+          name: 'France',
+          currency: {
+            id: 1,
+            name: 'Euro',
+            symbol: '€',
+          },
+        },
+      ];
+
+      const expectedResult: SelectAllResultType = {
+        [Queries.SELECT_ALL]: {
+          [SelectableField.DATA]: {
+            [SelectDataField.WORKGROUP]: workgroups,
+          },
+          [SelectableField.ERRORS]: undefined,
+          [SelectableField.PAGINATION]: undefined,
+        },
+      };
+
+      graphQLClient.request.resolves(expectedResult);
+
+      const result: SelectAllResultType | null = await client.selectAll(
+        GraphqlApiQueryMock.SELECT_ALL_WORKGROUP_QUERY,
+      );
+
+      sinon.assert.calledWithExactly(
+        graphQLClient.request,
+        sinon.match(GraphqlApiQueryMock.SELECT_ALL_WORKGROUP_GQL),
+      );
+
+      expect(result).to.deep.equals(expectedResult);
+    });
+
+    it('makes a graphql POST request to selectAll Workgroup -> must return null', async () => {
+      graphQLClient.request.resolves(null);
+
+      const result: SelectAllResultType | null = await client.selectAll(
+        GraphqlApiQueryMock.SELECT_ALL_WORKGROUP_QUERY,
+      );
+
+      expect(result).to.be.null;
+
+      sinon.assert.calledWithExactly(
+        graphQLClient.request,
+        sinon.match(GraphqlApiQueryMock.SELECT_ALL_WORKGROUP_GQL),
       );
     });
   });
