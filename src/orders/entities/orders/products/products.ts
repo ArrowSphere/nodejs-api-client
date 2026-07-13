@@ -85,6 +85,8 @@ export class OrderProduct extends AbstractEntity<OrderProductsType> {
   readonly #family: Family;
   readonly #isAddon: boolean;
   readonly #arrowSubCategories?: Array<string>;
+  readonly #bundleArrowSphereSku?: string;
+  readonly #bundleUuid?: string;
   readonly #isTrial: boolean;
   readonly #prices: ProductPrices;
   readonly #subscription?: ReferenceLink;
@@ -120,6 +122,9 @@ export class OrderProduct extends AbstractEntity<OrderProductsType> {
       getOrderProducts[OrderProductsFields.COLUMN_ARROWSUBCATEGORIES] ??
       undefined;
     this.#isTrial = getOrderProducts[OrderProductsFields.COLUMN_IS_TRIAL];
+    this.#bundleArrowSphereSku =
+      getOrderProducts[OrderProductsFields.COLUMN_BUNDLE_ARROW_SKU];
+    this.#bundleUuid = getOrderProducts[OrderProductsFields.COLUMN_BUNDLE_UUID];
     this.#prices = new ProductPrices(
       getOrderProducts[OrderProductsFields.COLUMN_PRICES],
     );
@@ -201,6 +206,12 @@ export class OrderProduct extends AbstractEntity<OrderProductsType> {
   get arrowSubCategories(): Array<string> | undefined {
     return this.#arrowSubCategories;
   }
+  get bundleArrowSphereSku(): string | undefined {
+    return this.#bundleArrowSphereSku;
+  }
+  get bundleUuid(): string | undefined {
+    return this.#bundleUuid;
+  }
   get isTrial(): boolean {
     return this.#isTrial;
   }
@@ -258,6 +269,8 @@ export class OrderProduct extends AbstractEntity<OrderProductsType> {
       [OrderProductsFields.COLUMN_FAMILY]: this.family.toJSON(),
       [OrderProductsFields.COLUMN_IS_ADDON]: this.isAddon,
       [OrderProductsFields.COLUMN_ARROWSUBCATEGORIES]: this.arrowSubCategories,
+      [OrderProductsFields.COLUMN_BUNDLE_ARROW_SKU]: this.bundleArrowSphereSku,
+      [OrderProductsFields.COLUMN_BUNDLE_UUID]: this.bundleUuid,
       [OrderProductsFields.COLUMN_IS_TRIAL]: this.isTrial,
       [OrderProductsFields.COLUMN_PRICES]: this.prices.toJSON(),
       [OrderProductsFields.COLUMN_SUBSCRIPTION]: this.subscription?.toJSON(),
