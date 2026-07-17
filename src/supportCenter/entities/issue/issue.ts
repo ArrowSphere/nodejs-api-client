@@ -7,6 +7,7 @@ export enum IssueFields {
   COLUMN_DESCRIPTION = 'description',
   COLUMN_END_CUSTOMER_REF = 'endCustomerRef',
   COLUMN_ID = 'id',
+  COLUMN_KEY = 'key',
   COLUMN_LANGUAGE = 'language',
   COLUMN_OFFER = 'offer',
   COLUMN_PRIORITY = 'priority',
@@ -79,6 +80,7 @@ export type IssueAdditionalDataType = {
 
 export type IssueType = {
   [IssueFields.COLUMN_ID]?: string;
+  [IssueFields.COLUMN_KEY]?: string;
   [IssueFields.COLUMN_TITLE]: string;
   [IssueFields.COLUMN_DESCRIPTION]: string;
   [IssueFields.COLUMN_TOPIC_ID]: string;
@@ -234,6 +236,7 @@ export class IssueAdditionalData extends AbstractEntity<IssueAdditionalDataType>
 
 export class Issue extends AbstractEntity<IssueType> {
   readonly #id?: string;
+  readonly #key?: string;
   readonly #title: string;
   readonly #description: string;
   readonly #topic?: string;
@@ -254,6 +257,7 @@ export class Issue extends AbstractEntity<IssueType> {
     super(input);
 
     this.#id = input[IssueFields.COLUMN_ID];
+    this.#key = input[IssueFields.COLUMN_KEY];
     this.#title = input[IssueFields.COLUMN_TITLE];
     this.#description = input[IssueFields.COLUMN_DESCRIPTION];
     this.#topic = input[IssueFields.COLUMN_TOPIC];
@@ -299,6 +303,10 @@ export class Issue extends AbstractEntity<IssueType> {
 
   get id(): string | undefined {
     return this.#id;
+  }
+
+  get key(): string | undefined {
+    return this.#key;
   }
 
   get title(): string {
@@ -364,6 +372,7 @@ export class Issue extends AbstractEntity<IssueType> {
   public toJSON(): IssueType {
     return {
       [IssueFields.COLUMN_ID]: this.id,
+      [IssueFields.COLUMN_KEY]: this.key,
       [IssueFields.COLUMN_TITLE]: this.title,
       [IssueFields.COLUMN_DESCRIPTION]: this.description,
       [IssueFields.COLUMN_TOPIC_ID]: this.topicId,

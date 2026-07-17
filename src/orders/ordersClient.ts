@@ -153,11 +153,21 @@ export type CreateOrderProductType = {
 export enum UpdateOrderInputFields {
   COLUMN_PO_NUMBER = 'PO_number',
   COLUMN_END_CUSTOMER_PO_NUMBER = 'end_customer_PO_number',
+  COLUMN_CUSTOM_FIELDS = 'customFields',
+}
+
+export enum UpdateOrderCustomFields {
+  COLUMN_LABEL = 'label',
+  COLUMN_VALUE = 'value',
 }
 
 export type UpdateOrderInputType = {
   [UpdateOrderInputFields.COLUMN_PO_NUMBER]?: string;
   [UpdateOrderInputFields.COLUMN_END_CUSTOMER_PO_NUMBER]?: string;
+  [UpdateOrderInputFields.COLUMN_CUSTOM_FIELDS]?: Array<{
+    [UpdateOrderCustomFields.COLUMN_LABEL]: string;
+    [UpdateOrderCustomFields.COLUMN_VALUE]: string;
+  }>;
 };
 
 export enum UpdateContributorItemOrderInputFields {

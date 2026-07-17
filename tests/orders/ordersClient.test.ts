@@ -14,6 +14,7 @@ import {
   PAYLOAD_ORDERS_WITHOUT_OPTIONAL,
   PAYLOAD_UPDATE_ORDER,
   PAYLOAD_UPDATE_ORDER_RESULT,
+  PAYLOAD_UPDATE_ORDER_WITH_CUSTOM_FIELDS,
   PAYLOAD_UPLOAD_ATTACHMENT_ORDER_RESULT,
 } from './mocks/orders.mocks';
 import {
@@ -188,6 +189,19 @@ describe('OrdersClient', () => {
       const result = await orderClient.updateOrder(
         'XSPO123',
         PAYLOAD_UPDATE_ORDER,
+      );
+      expect(result).to.be.instanceof(GetResult);
+      expect(result.toJSON()).to.eql(PAYLOAD_UPDATE_ORDER_RESULT);
+    });
+
+    it('Should update order with custom fields', async () => {
+      nock(ORDERS_MOCK_URL)
+        .patch(UPDATE_ORDERS_URL)
+        .reply(200, PAYLOAD_UPDATE_ORDER_RESULT);
+
+      const result = await orderClient.updateOrder(
+        'XSPO123',
+        PAYLOAD_UPDATE_ORDER_WITH_CUSTOM_FIELDS,
       );
       expect(result).to.be.instanceof(GetResult);
       expect(result.toJSON()).to.eql(PAYLOAD_UPDATE_ORDER_RESULT);
