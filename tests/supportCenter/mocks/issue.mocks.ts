@@ -40,6 +40,7 @@ export const LIST_ISSUE_RESPONSE: GetData<IssuesType> = {
   [GetResultFields.COLUMN_DATA]: [
     {
       [IssueFields.COLUMN_ID]: 'id',
+      [IssueFields.COLUMN_KEY]: 'SUP-12345',
       [IssueFields.COLUMN_TITLE]: 'title',
       [IssueFields.COLUMN_DESCRIPTION]: 'description',
       [IssueFields.COLUMN_TOPIC]: 'topic',
@@ -76,6 +77,7 @@ export const LIST_ISSUE_RESPONSE: GetData<IssuesType> = {
     },
     {
       [IssueFields.COLUMN_ID]: 'id',
+      [IssueFields.COLUMN_KEY]: 'SUP-12345',
       [IssueFields.COLUMN_TITLE]: 'title',
       [IssueFields.COLUMN_DESCRIPTION]: 'description',
       [IssueFields.COLUMN_TOPIC]: 'topic',
@@ -128,6 +130,7 @@ export const GET_ISSUE_WITH_ALL_DATA_RESPONSE: GetData<IssueType> = {
   [GetResultFields.COLUMN_STATUS]: 200,
   [GetResultFields.COLUMN_DATA]: {
     [IssueFields.COLUMN_ID]: 'id',
+    [IssueFields.COLUMN_KEY]: 'SUP-12345',
     [IssueFields.COLUMN_TITLE]: 'title',
     [IssueFields.COLUMN_DESCRIPTION]: 'description',
     [IssueFields.COLUMN_TOPIC]: 'topic',

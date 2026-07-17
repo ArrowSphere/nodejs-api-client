@@ -18,6 +18,7 @@ import {
   ProductProgramFields,
   ReferenceLinkFields,
   SharedContactFields,
+  UpdateOrderCustomFields,
   UpdateOrderInputFields,
   UpdateOrderInputType,
 } from '../../../src';
@@ -216,6 +217,16 @@ export const PAYLOAD_UPDATE_ORDER: UpdateOrderInputType = {
   [UpdateOrderInputFields.COLUMN_PO_NUMBER]: 'PO_NUMBER',
   [UpdateOrderInputFields.COLUMN_END_CUSTOMER_PO_NUMBER]:
     'END_CUSTOMER_PO_NUMBER',
+};
+
+export const PAYLOAD_UPDATE_ORDER_WITH_CUSTOM_FIELDS: UpdateOrderInputType = {
+  ...PAYLOAD_UPDATE_ORDER,
+  [UpdateOrderInputFields.COLUMN_CUSTOM_FIELDS]: [
+    {
+      [UpdateOrderCustomFields.COLUMN_LABEL]: 'Custom order label',
+      [UpdateOrderCustomFields.COLUMN_VALUE]: 'Custom order value',
+    },
+  ],
 };
 
 export const PAYLOAD_UPDATE_ORDER_RESULT: GetData<UpdateOrderResultData> = {
