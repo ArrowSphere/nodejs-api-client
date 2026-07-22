@@ -32,6 +32,9 @@ import {
   RateEnum,
   RuleEnum,
 } from '../../../src/orders/entities/orders/products/pricingRules/pricingRules';
+import { ConversionRulesFields } from '../../../src/orders/entities/orders/products/prices/preferredCurrency/conversionRules';
+import { PreferredCurrencyValuesFields } from '../../../src/orders/entities/orders/products/prices/preferredCurrency/preferredCurrencyValues';
+import { PreferredCurrencyFields } from '../../../src/orders/entities/orders/products/prices/preferredCurrency';
 
 export const PAYLOAD_ORDERS: GetData<DataListOrdersType> = {
   [GetResultFields.COLUMN_STATUS]: 200,
@@ -80,6 +83,18 @@ export const PAYLOAD_ORDERS: GetData<DataListOrdersType> = {
               [ProductPricesFields.COLUMN_TERM]: 'one year',
               [ProductPricesFields.COLUMN_PERIODICITY_CODE]: 8640,
               [ProductPricesFields.COLUMN_TERM_CODE]: 8640,
+              [ProductPricesFields.COLUMN_PREFERRED_CURRENCY]: {
+                [PreferredCurrencyFields.COLUMN_CONVERSION_RULES]: {
+                  [ConversionRulesFields.COLUMN_CURRENCY]: 'JPY',
+                  [ConversionRulesFields.COLUMN_EXCHANGE_RATE_DATE]:
+                    '2026-07-01 16:21:46',
+                  [ConversionRulesFields.COLUMN_EXCHANGE_RATE]: 184.99091047161397,
+                },
+                [PreferredCurrencyFields.COLUMN_VALUES]: {
+                  [PreferredCurrencyValuesFields.COLUMN_BUY]: 57717.16,
+                  [PreferredCurrencyValuesFields.COLUMN_SELL]: 57717.16,
+                },
+              },
             },
             [OrderProductsFields.COLUMN_SUBSCRIPTION]: {
               [ReferenceLinkFields.COLUMN_REFERENCE]: 'XSPS7896',

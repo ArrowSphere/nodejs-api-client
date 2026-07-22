@@ -1,4 +1,5 @@
 import { AbstractEntity } from '../../../../../abstractEntity';
+import { PreferredCurrency, PreferredCurrencyType } from './preferredCurrency';
 
 export enum ProductPricesFields {
   COLUMN_BUY = 'buy',
@@ -8,6 +9,7 @@ export enum ProductPricesFields {
   COLUMN_TERM = 'term',
   COLUMN_PERIODICITY_CODE = 'periodicityCode',
   COLUMN_TERM_CODE = 'termCode',
+  COLUMN_PREFERRED_CURRENCY = 'preferredCurrency',
 }
 
 export type ProductPricesType = {
@@ -18,6 +20,7 @@ export type ProductPricesType = {
   [ProductPricesFields.COLUMN_TERM]: string;
   [ProductPricesFields.COLUMN_PERIODICITY_CODE]: number;
   [ProductPricesFields.COLUMN_TERM_CODE]: number;
+  [ProductPricesFields.COLUMN_PREFERRED_CURRENCY]?: PreferredCurrencyType;
 };
 
 export class ProductPrices extends AbstractEntity<ProductPricesType> {
@@ -28,6 +31,7 @@ export class ProductPrices extends AbstractEntity<ProductPricesType> {
   readonly #term: string;
   readonly #periodicityCode: number;
   readonly #termCode: number;
+  readonly #preferredCurrency?: PreferredCurrency;
 
   public constructor(productPricesInput: ProductPricesType) {
     super(productPricesInput);
@@ -41,6 +45,15 @@ export class ProductPrices extends AbstractEntity<ProductPricesType> {
     this.#periodicityCode =
       productPricesInput[ProductPricesFields.COLUMN_PERIODICITY_CODE];
     this.#termCode = productPricesInput[ProductPricesFields.COLUMN_TERM_CODE];
+    this.#preferredCurrency = productPricesInput[
+      ProductPricesFields.COLUMN_PREFERRED_CURRENCY
+    ]
+      ? new PreferredCurrency(
+          productPricesInput[
+            ProductPricesFields.COLUMN_PREFERRED_CURRENCY
+          ] as PreferredCurrencyType,
+        )
+      : undefined;
   }
 
   get buy(): number {
@@ -64,6 +77,9 @@ export class ProductPrices extends AbstractEntity<ProductPricesType> {
   get termCode(): number {
     return this.#termCode;
   }
+  get preferredCurrency(): PreferredCurrency | undefined {
+    return this.#preferredCurrency;
+  }
 
   public toJSON(): ProductPricesType {
     return {
@@ -74,6 +90,7 @@ export class ProductPrices extends AbstractEntity<ProductPricesType> {
       [ProductPricesFields.COLUMN_TERM]: this.term,
       [ProductPricesFields.COLUMN_PERIODICITY_CODE]: this.periodicityCode,
       [ProductPricesFields.COLUMN_TERM_CODE]: this.termCode,
+      [ProductPricesFields.COLUMN_PREFERRED_CURRENCY]: this.preferredCurrency?.toJSON(),
     };
   }
 }
