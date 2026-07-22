@@ -1,11 +1,16 @@
 import { BuySellData, BuySellFindResult } from './buySellFindResult';
 import { AbstractEntity } from '../../../abstractEntity';
+import {
+  LicenseGetPreferredCurrency,
+  LicenseGetPreferredCurrencyType,
+} from './licenseGetPreferredCurrency';
 
 export enum LicensePriceGetFields {
   COLUMN_CURRENCY = 'currency',
   COLUMN_PRICEBAND_ARROWSPHERE_SKU = 'priceBandArrowsphereSku',
   COLUMN_UNIT = 'unit',
   COLUMN_TOTAL = 'total',
+  COLUMN_PREFERRED_CURRENCY = 'preferredCurrency',
 }
 
 export type LicensePriceGetData = {
@@ -13,6 +18,7 @@ export type LicensePriceGetData = {
   [LicensePriceGetFields.COLUMN_PRICEBAND_ARROWSPHERE_SKU]: string;
   [LicensePriceGetFields.COLUMN_UNIT]: BuySellData;
   [LicensePriceGetFields.COLUMN_TOTAL]: BuySellData;
+  [LicensePriceGetFields.COLUMN_PREFERRED_CURRENCY]?: LicenseGetPreferredCurrencyType;
 };
 
 export class LicensePriceGetResult extends AbstractEntity<LicensePriceGetData> {
@@ -20,6 +26,7 @@ export class LicensePriceGetResult extends AbstractEntity<LicensePriceGetData> {
   readonly #priceBandArrowsphereSku: string;
   readonly #unit: BuySellFindResult;
   readonly #total: BuySellFindResult;
+  readonly #preferredCurrency?: LicenseGetPreferredCurrency;
 
   public constructor(data: LicensePriceGetData) {
     super(data);
@@ -31,6 +38,15 @@ export class LicensePriceGetResult extends AbstractEntity<LicensePriceGetData> {
     this.#total = new BuySellFindResult(
       data[LicensePriceGetFields.COLUMN_TOTAL],
     );
+    this.#preferredCurrency = data[
+      LicensePriceGetFields.COLUMN_PREFERRED_CURRENCY
+    ]
+      ? new LicenseGetPreferredCurrency(
+          data[
+            LicensePriceGetFields.COLUMN_PREFERRED_CURRENCY
+          ] as LicenseGetPreferredCurrencyType,
+        )
+      : undefined;
   }
 
   public get currency(): string {
@@ -49,6 +65,10 @@ export class LicensePriceGetResult extends AbstractEntity<LicensePriceGetData> {
     return this.#total;
   }
 
+  public get preferredCurrency(): LicenseGetPreferredCurrency | undefined {
+    return this.#preferredCurrency;
+  }
+
   public toJSON(): LicensePriceGetData {
     return {
       [LicensePriceGetFields.COLUMN_CURRENCY]: this.currency,
@@ -56,6 +76,7 @@ export class LicensePriceGetResult extends AbstractEntity<LicensePriceGetData> {
         .#priceBandArrowsphereSku,
       [LicensePriceGetFields.COLUMN_UNIT]: this.unit.toJSON(),
       [LicensePriceGetFields.COLUMN_TOTAL]: this.total.toJSON(),
+      [LicensePriceGetFields.COLUMN_PREFERRED_CURRENCY]: this.preferredCurrency?.toJSON(),
     };
   }
 }
