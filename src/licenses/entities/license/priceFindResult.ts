@@ -4,6 +4,10 @@ import {
   SortParameters,
 } from '../../licensesClient';
 import { AbstractEntity } from '../../../abstractEntity';
+import {
+  LicenseFindPreferredCurrency,
+  LicenseFindPreferredCurrencyType,
+} from './licenseFindPreferredCurrency';
 
 export enum PriceFindResultFields {
   COLUMN_PRICE_BAND_ARROWSPHERE_SKU = 'priceBandArrowsphereSku',
@@ -11,6 +15,7 @@ export enum PriceFindResultFields {
   COLUMN_SELL_PRICE = 'sell_price',
   COLUMN_LIST_PRICE = 'list_price',
   COLUMN_CURRENCY = 'currency',
+  COLUMN_PREFERRED_CURRENCY = 'preferredCurrency',
 }
 
 export type PriceFindResultData = {
@@ -19,6 +24,7 @@ export type PriceFindResultData = {
   [PriceFindResultFields.COLUMN_SELL_PRICE]: number;
   [PriceFindResultFields.COLUMN_LIST_PRICE]: number;
   [PriceFindResultFields.COLUMN_CURRENCY]?: string | null;
+  [PriceFindResultFields.COLUMN_PREFERRED_CURRENCY]?: LicenseFindPreferredCurrencyType;
 };
 
 export type PriceFindResultDataKeywords = {
@@ -59,6 +65,7 @@ export class PriceFindResult extends AbstractEntity<PriceFindResultData> {
   readonly #sell_price: number;
   readonly #list_price: number;
   readonly #currency: string | null | undefined;
+  readonly #preferredCurrency?: LicenseFindPreferredCurrency;
 
   public constructor(data: PriceFindResultData) {
     super(data);
@@ -69,6 +76,15 @@ export class PriceFindResult extends AbstractEntity<PriceFindResultData> {
     this.#sell_price = data[PriceFindResultFields.COLUMN_SELL_PRICE];
     this.#list_price = data[PriceFindResultFields.COLUMN_LIST_PRICE];
     this.#currency = data[PriceFindResultFields.COLUMN_CURRENCY];
+    this.#preferredCurrency = data[
+      PriceFindResultFields.COLUMN_PREFERRED_CURRENCY
+    ]
+      ? new LicenseFindPreferredCurrency(
+          data[
+            PriceFindResultFields.COLUMN_PREFERRED_CURRENCY
+          ] as LicenseFindPreferredCurrencyType,
+        )
+      : undefined;
   }
 
   public get priceBandArrowsphereSku(): string | null {
@@ -91,6 +107,10 @@ export class PriceFindResult extends AbstractEntity<PriceFindResultData> {
     return this.#currency;
   }
 
+  public get preferredCurrency(): LicenseFindPreferredCurrency | undefined {
+    return this.#preferredCurrency;
+  }
+
   public toJSON(): PriceFindResultData {
     return {
       [PriceFindResultFields.COLUMN_PRICE_BAND_ARROWSPHERE_SKU]: this
@@ -99,6 +119,7 @@ export class PriceFindResult extends AbstractEntity<PriceFindResultData> {
       [PriceFindResultFields.COLUMN_SELL_PRICE]: this.sellPrice,
       [PriceFindResultFields.COLUMN_LIST_PRICE]: this.listPrice,
       [PriceFindResultFields.COLUMN_CURRENCY]: this.currency,
+      [PriceFindResultFields.COLUMN_PREFERRED_CURRENCY]: this.preferredCurrency?.toJSON(),
     };
   }
 }
