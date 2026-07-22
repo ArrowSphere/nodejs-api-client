@@ -115,6 +115,7 @@ export const MOCK_LICENSE_DATA_WITHOUT_OPTIONAL_DATA_RESPONSE: LicenseFindResult
     [PriceFindResultFields.COLUMN_SELL_PRICE]: 1000,
     [PriceFindResultFields.COLUMN_LIST_PRICE]: 1000,
     [PriceFindResultFields.COLUMN_CURRENCY]: 'CURRENCY',
+    [PriceFindResultFields.COLUMN_PREFERRED_CURRENCY]: undefined,
   },
   [LicenseFindResultFields.COLUMN_RESELLER_NAME]: 'reseller_name',
   [LicenseFindResultFields.COLUMN_RESELLER_REF]: 'reseller_ref',
