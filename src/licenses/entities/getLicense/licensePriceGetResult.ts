@@ -1,5 +1,7 @@
 import { BuySellData, BuySellFindResult } from './buySellFindResult';
 import { AbstractEntity } from '../../../abstractEntity';
+import { ProductPricesFields } from '../../../orders';
+import { LicensePreferredCurrencyType } from '../license/licensePreferredCurrency';
 
 export enum LicensePriceGetFields {
   COLUMN_CURRENCY = 'currency',
@@ -13,6 +15,7 @@ export type LicensePriceGetData = {
   [LicensePriceGetFields.COLUMN_PRICEBAND_ARROWSPHERE_SKU]: string;
   [LicensePriceGetFields.COLUMN_UNIT]: BuySellData;
   [LicensePriceGetFields.COLUMN_TOTAL]: BuySellData;
+  [ProductPricesFields.COLUMN_PREFERRED_CURRENCY]?: LicensePreferredCurrencyType;
 };
 
 export class LicensePriceGetResult extends AbstractEntity<LicensePriceGetData> {
