@@ -1,17 +1,22 @@
+import { CurrencyType } from './currency';
+import { ProgramLevelType } from './program';
+import { WorkgroupType } from './workgroup';
+
 export type SoftwareProductType = {
   id?: string;
-  companyId?: number;
-  vendorName?: string;
-  programName?: string;
-  subscriptionId?: number;
-  productName?: string;
-  versionName?: string;
+  arrowSku?: string;
   sku?: string;
+  name?: string;
+  version?: string;
+  versionShortName?: string;
+  buyPrice?: number;
+  sellPrice?: number;
+  dateStart?: string;
+  dateEnd?: string;
   tierMin?: number;
   tierMax?: number;
-  sellPrice?: number;
-  price?: number;
-  unitSymbol?: string;
-  unitIfUsernoshow?: string;
-  priority?: number;
+  workgroup?: WorkgroupType;
+  buyCurrency?: CurrencyType;
+  sellCurrency?: CurrencyType;
+  programLevel?: ProgramLevelType;
 };
