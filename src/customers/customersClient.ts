@@ -114,6 +114,7 @@ export type PostCustomerPayload = {
   [CustomerFields.COLUMN_CONTACT]?: PostCustomerContact;
   [CustomerFields.COLUMN_REGISTRATION_NUMBER]?: string;
   [CustomerFields.COLUMN_CUSTOM_FIELDS]?: CustomerCustomFieldType[];
+  [CustomerFields.COLUMN_IS_RESELLER_COMPANY]?: boolean;
 };
 
 export enum PostCustomerInvitationFields {
