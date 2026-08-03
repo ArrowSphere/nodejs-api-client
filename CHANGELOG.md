@@ -3,6 +3,15 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.385.0] - 2026.08.03
+### Added
+- [graphql-api] Add `PartnerCatalogItem` entity with `id`, `sid`, `sellPrice`, `price`, `partner`, `currency`, `softwareProduct`, and `subscription` fields
+- [graphql-api] Add `nonMonetary` field to `CurrencyType`
+- [graphql-api] Add `program` field to `ProgramLevelType`
+
+### Updated
+- [graphql-api] Rework `SoftwareProductType` fields: replace `companyId`, `vendorName`, `programName`, `subscriptionId`, `productName`, `versionName`, `unitSymbol`, `unitIfUsernoshow`, `priority` with `arrowSku`, `name`, `version`, `versionShortName`, `buyPrice`, `dateStart`, `dateEnd`, `workgroup`, `buyCurrency`, `sellCurrency`, and `programLevel`
+
 ## [3.384.0] - 2026.07.20
 ### Added
 - [support-center] Add `key` to `IssueType`
