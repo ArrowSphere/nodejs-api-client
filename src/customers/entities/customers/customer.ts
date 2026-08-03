@@ -57,6 +57,7 @@ export enum CustomerFields {
   COLUMN_PARTNER_TAGS = 'PartnerTags',
   COLUMN_PARTNER_TAGS_LABEL = 'label',
   COLUMN_CUSTOM_FIELDS = 'customFields',
+  COLUMN_IS_RESELLER_COMPANY = 'isResellerCompany',
 }
 
 export type CompanyReseller = {
