@@ -20,6 +20,7 @@ export const TEST_NOTIFICATIONS_URL_COUNT = new RegExp('/notification/count');
 let client: NotificationsClient;
 describe('NotificationsClient', () => {
   beforeEach(() => {
+    nock.cleanAll();
     client = new PublicApiClient()
       .getNotificationsClient()
       .setUrl(NOTIFICATIONS_URL);

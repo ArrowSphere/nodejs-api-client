@@ -46,6 +46,13 @@ import {
   IdentifiersFindResultDataSortParameters,
 } from './priceband/identifiersFindResult';
 import { ArrowsphereFindResultFields } from './priceband/identifiers/arrowsphereFindResult';
+import {
+  Attributes,
+  AttributesData,
+  AttributesDataKeywords,
+  AttributesDataSortParameters,
+  AttributesDataFiltersParameters,
+} from './priceband/attributes';
 
 export enum PriceBandFindResultFields {
   COLUMN_ACTION_FLAGS = 'actionFlags',
@@ -56,6 +63,7 @@ export enum PriceBandFindResultFields {
   COLUMN_PRICES = 'prices',
   COLUMN_SALE_CONSTRAINTS = 'saleConstraints',
   COLUMN_IDENTIFIERS = 'identifiers',
+  COLUMN_ATTRIBUTES = 'attributes',
 }
 
 export type PriceBandFindResultData = {
@@ -67,6 +75,10 @@ export type PriceBandFindResultData = {
   [PriceBandFindResultFields.COLUMN_PRICES]: PriceBandPriceFindResultData;
   [PriceBandFindResultFields.COLUMN_SALE_CONSTRAINTS]: SaleConstraintsFindResultData;
   [PriceBandFindResultFields.COLUMN_IDENTIFIERS]: IdentifiersFindResultData;
+  [PriceBandFindResultFields.COLUMN_ATTRIBUTES]?:
+    | AttributesData[]
+    | undefined
+    | null;
 };
 
 export type PriceBandFindResultDataKeywords = {
@@ -78,6 +90,7 @@ export type PriceBandFindResultDataKeywords = {
   [PriceBandFindResultFields.COLUMN_PRICES]?: PriceBandPriceFindResultDataKeywords;
   [PriceBandFindResultFields.COLUMN_SALE_CONSTRAINTS]?: SaleConstraintsFindResultDataKeywords;
   [PriceBandFindResultFields.COLUMN_IDENTIFIERS]?: IdentifiersFindResultDataKeywords;
+  [PriceBandFindResultFields.COLUMN_ATTRIBUTES]?: AttributesDataKeywords;
 };
 
 export type PriceBandFindResultDataSortParameters = {
@@ -89,6 +102,7 @@ export type PriceBandFindResultDataSortParameters = {
   [PriceBandFindResultFields.COLUMN_PRICES]?: PriceBandPriceFindResultDataSortParameters;
   [PriceBandFindResultFields.COLUMN_SALE_CONSTRAINTS]?: SaleConstraintsFindResultDataSortParameters;
   [PriceBandFindResultFields.COLUMN_IDENTIFIERS]?: IdentifiersFindResultDataSortParameters;
+  [PriceBandFindResultFields.COLUMN_ATTRIBUTES]?: AttributesDataSortParameters;
 };
 
 export type PriceBandFindResultDataFiltersParameters = {
@@ -100,6 +114,7 @@ export type PriceBandFindResultDataFiltersParameters = {
   [PriceBandFindResultFields.COLUMN_PRICES]?: PriceBandPriceFindResultDataFiltersParameters;
   [PriceBandFindResultFields.COLUMN_SALE_CONSTRAINTS]?: SaleConstraintsFindResultDataFiltersParameters;
   [PriceBandFindResultFields.COLUMN_IDENTIFIERS]?: IdentifiersFindResultDataFiltersParameters;
+  [PriceBandFindResultFields.COLUMN_ATTRIBUTES]?: AttributesDataFiltersParameters;
 };
 
 export class PriceBandFindResult extends AbstractEntity<PriceBandFindResultData> {
@@ -112,6 +127,7 @@ export class PriceBandFindResult extends AbstractEntity<PriceBandFindResultData>
     [PriceBandFindResultFields.COLUMN_PRICES]: 'required|array',
     [PriceBandFindResultFields.COLUMN_SALE_CONSTRAINTS]: 'required|array',
     [PriceBandFindResultFields.COLUMN_IDENTIFIERS]: 'required|array',
+    [PriceBandFindResultFields.COLUMN_ATTRIBUTES]: 'array',
   };
 
   readonly #actionFlags: PriceBandActionFlagsFindResult;
@@ -122,6 +138,7 @@ export class PriceBandFindResult extends AbstractEntity<PriceBandFindResultData>
   readonly #prices: PriceBandPriceFindResult;
   readonly #saleConstraints: SaleConstraintsFindResult;
   readonly #identifiers: IdentifiersFindResult;
+  readonly #attributes: Attributes[];
 
   public constructor(data: PriceBandFindResultData) {
     super(data);
@@ -202,6 +219,10 @@ export class PriceBandFindResult extends AbstractEntity<PriceBandFindResultData>
       },
     };
     this.#identifiers = new IdentifiersFindResult(identifiers);
+    this.#attributes =
+      data[PriceBandFindResultFields.COLUMN_ATTRIBUTES]?.map(
+        (attr) => new Attributes(attr),
+      ) ?? [];
   }
 
   public get actionFlags(): PriceBandActionFlagsFindResult {
@@ -236,6 +257,10 @@ export class PriceBandFindResult extends AbstractEntity<PriceBandFindResultData>
     return this.#identifiers;
   }
 
+  public get attributes(): Attributes[] {
+    return this.#attributes;
+  }
+
   public toJSON(): PriceBandFindResultData {
     return {
       [PriceBandFindResultFields.COLUMN_ACTION_FLAGS]: this.actionFlags.toJSON(),
@@ -246,6 +271,9 @@ export class PriceBandFindResult extends AbstractEntity<PriceBandFindResultData>
       [PriceBandFindResultFields.COLUMN_PRICES]: this.prices.toJSON(),
       [PriceBandFindResultFields.COLUMN_SALE_CONSTRAINTS]: this.saleConstraints.toJSON(),
       [PriceBandFindResultFields.COLUMN_IDENTIFIERS]: this.identifiers.toJSON(),
+      [PriceBandFindResultFields.COLUMN_ATTRIBUTES]: this.attributes.map(
+        (attr) => attr.toJSON(),
+      ),
     };
   }
 }

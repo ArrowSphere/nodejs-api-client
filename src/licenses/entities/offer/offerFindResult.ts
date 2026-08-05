@@ -151,6 +151,10 @@ export class OfferFindResult extends AbstractEntity<OfferFindResultData> {
         data[OfferFindResultFields.COLUMN_PRICE_BAND][
           PriceBandFindResultFields.COLUMN_IDENTIFIERS
         ],
+      [PriceBandFindResultFields.COLUMN_ATTRIBUTES]:
+        data[OfferFindResultFields.COLUMN_PRICE_BAND][
+          PriceBandFindResultFields.COLUMN_ATTRIBUTES
+        ],
     };
     this.#priceBand = new PriceBandFindResult(priceBand);
     this.#arrowSubCategories =

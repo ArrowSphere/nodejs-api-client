@@ -2,6 +2,7 @@ import { PublicApiClient } from '../../src/publicApiClient';
 import nock from 'nock';
 import { constants } from 'http2';
 import { expect } from 'chai';
+import { beforeEach } from 'mocha';
 import { GET_ORDER_SOFTWARE_DATA } from './mocks/orderSoftware.mock';
 import { DataListOrdersSoftware, GetResult } from '../../src';
 
@@ -12,6 +13,10 @@ describe('OrderSoftwareClient', () => {
   const client = new PublicApiClient()
     .getOrderSoftwareClient()
     .setUrl(ORDER_SOFTWARE_MOCK_URL);
+
+  beforeEach(() => {
+    nock.cleanAll();
+  });
 
   describe('getOrdersList', () => {
     it('call the get method', async () => {
