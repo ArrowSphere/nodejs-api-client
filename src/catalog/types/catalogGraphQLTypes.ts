@@ -212,6 +212,7 @@ export type PriceBandType = {
   isBuyable?: boolean;
   marketplace?: string;
   name?: string;
+  offer?: OfferLightType;
   orderingType?: string;
   prices?: PricesType;
   saleConstraints?: PriceBandSaleConstraintsType;
@@ -219,6 +220,20 @@ export type PriceBandType = {
   promotionPrices?: PromotionPricesType;
   promotionsPrices?: Array<PromotionPricesFull>;
   vendor?: VendorType;
+};
+
+export type OfferLightType = {
+  identifiers?: IdentifiersType;
+  name?: string;
+  classification?: string;
+  arrowCategories?: string[];
+  arrowSubCategories?: string[];
+  lastUpdate?: string;
+  isAddon?: boolean;
+  hasAddons?: boolean;
+  environmentAvailability?: string;
+  isEnabled?: boolean;
+  isTrial?: boolean;
 };
 
 export type PriceBandActionFlagsType = {

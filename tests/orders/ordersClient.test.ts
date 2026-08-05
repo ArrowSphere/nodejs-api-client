@@ -8,6 +8,7 @@ import {
 } from '../../src';
 import nock from 'nock';
 import { expect } from 'chai';
+import { beforeEach } from 'mocha';
 import {
   PAYLOAD_GET_ATTACHMENTS_ORDER_RESULT,
   PAYLOAD_ORDERS,
@@ -54,6 +55,10 @@ describe('OrdersClient', () => {
   const client = new PublicApiClient()
     .getOrdersClient()
     .setUrl(ORDERS_MOCK_URL);
+
+  beforeEach(() => {
+    nock.cleanAll();
+  });
 
   describe('create', () => {
     it('calls the post method with the partial payload', async () => {

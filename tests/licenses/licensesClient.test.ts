@@ -1,7 +1,9 @@
 // Test tools
 import Joi from 'joi';
 import { URL } from 'url';
-import { expect } from 'chai';
+import chai, { expect } from 'chai';
+import chaiAsPromised from 'chai-as-promised';
+chai.use(chaiAsPromised);
 import nock from 'nock';
 
 // Sources
@@ -244,6 +246,7 @@ export const MOCK_RESULT_DATA: {
           [ArrowsphereFindResultFields.COLUMN_SKU]: 'sku',
         },
       },
+      [PriceBandFindResultFields.COLUMN_ATTRIBUTES]: [],
     },
     [OfferFindResultFields.COLUMN_ARROW_SUB_CATEGORIES]: ['NCE'],
     [OfferFindResultFields.COLUMN_VENDOR_NAME]: 'vendorName',

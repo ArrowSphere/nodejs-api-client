@@ -33,6 +33,7 @@ export * from './entities/license/securityFindResult';
 export * from './entities/license/upgradeResult';
 export * from './entities/license/warningFindResult';
 export * from './entities/offer/actionFlagsFindResult';
+export * from './entities/offer/priceband/attributes';
 export * from './entities/offer/offerFindResult';
 export * from './entities/offer/priceBandFindResult';
 export * from './entities/offer/priceband/billingFindResult';
