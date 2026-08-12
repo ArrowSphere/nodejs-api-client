@@ -16,8 +16,10 @@ export type SubscriptionType = {
   level?: GraphqlApiProgramLevelType;
   localContact?: ContactsType;
   orderId?: string;
+  orderIdText?: string;
   partnerContact?: ContactsType;
   partnerId?: string;
+  partnerIdText?: string;
   program?: GraphqlApiProgramType;
   startedAt?: string;
   userNote?: string;

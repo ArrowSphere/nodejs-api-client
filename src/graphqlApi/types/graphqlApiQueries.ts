@@ -11,6 +11,7 @@ import {
   GraphqlApiOrderHistoryType,
   GraphqlApiOrderListType,
   GraphqlApiOrderSoftwareHistoryType,
+  GraphqlApiOrderSoftwareType,
   OrdersType,
 } from './entities/order';
 import { OrganizationUnitsType } from './entities/organizationUnit';
@@ -182,6 +183,7 @@ export enum SelectDataField {
   ORDER_HISTORY = 'orderHistory',
   ORDER_LIST = 'orderList',
   ORDER_SOFTWARE_HISTORY = 'orderSoftwareHistory',
+  ORDER_SOFTWARE = 'orderSoftware',
   PARTNER = 'partner',
   PARTNERTAG = 'partnertag',
   PROGRAM = 'program',
@@ -232,6 +234,7 @@ export type SelectAllResponseDataType = {
   [SelectDataField.ORDER_HISTORY]?: GraphqlApiOrderHistoryType[];
   [SelectDataField.ORDER_LIST]?: GraphqlApiOrderListType[];
   [SelectDataField.ORDER_SOFTWARE_HISTORY]?: GraphqlApiOrderSoftwareHistoryType[];
+  [SelectDataField.ORDER_SOFTWARE]?: GraphqlApiOrderSoftwareType[];
   [SelectDataField.PARTNER]?: PartnerType[];
   [SelectDataField.PARTNERTAG]?: PartnertagType[];
   [SelectDataField.PROGRAM]?: GraphqlApiProgramType[];
@@ -330,6 +333,7 @@ export type SelectOneResponseDataType = {
   [SelectDataField.ORDER]?: OrdersType;
   [SelectDataField.ORDER_HISTORY]?: GraphqlApiOrderHistoryType;
   [SelectDataField.ORDER_SOFTWARE_HISTORY]?: GraphqlApiOrderSoftwareHistoryType;
+  [SelectDataField.ORDER_SOFTWARE]?: GraphqlApiOrderSoftwareType;
   [SelectDataField.PARTNER]?: PartnerType;
   [SelectDataField.PARTNERTAG]?: PartnertagType;
   [SelectDataField.PROGRAM]?: GraphqlApiProgramType;

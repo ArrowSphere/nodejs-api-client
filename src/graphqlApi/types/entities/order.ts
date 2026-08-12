@@ -1,10 +1,15 @@
+import { Comment } from './comment';
 import { ArrowCompanyType, EndCustomerType, PartnerType } from './company';
 import { ContactsType } from './contact';
 import { GraphqlApiContributorType } from './contributor';
+import { CurrencyType } from './currency';
 import { GraphqlApiEavType } from './eav';
 import { GraphqlApiProgramType } from './program';
 import { ItemData, QuoteType } from './quote';
+import { GraphqlApiReportType } from './report';
 import { SpecialPriceRateType } from './specialPriceRate';
+import { SubscriptionType } from './subscription';
+import { GraphqlApiTaxType } from './tax';
 import { GraphqlApiUnitType } from './unit';
 import { UserType } from './user';
 
@@ -53,7 +58,33 @@ export type GraphqlApiOrderSoftwareType = {
   id?: number;
   customerId?: number;
   totalAmount?: number;
+  totalAmountEnded?: number;
+  totalAmountUnit?: CurrencyType;
   unit?: GraphqlApiUnitType;
+  createdDate?: string;
+  customName?: string;
+  dateBegin?: string;
+  dateEnd?: string;
+  dateLastModified?: string;
+  dateSent?: string;
+  dateValidation?: string;
+  totalQuantity?: number;
+  totalUnit?: CurrencyType;
+  sumTotalUnit?: CurrencyType;
+  discountRatio?: number;
+  comments?: Comment[];
+  aggregatorErpNo?: string;
+  customerPo?: string;
+  endUserCompany?: PartnerType;
+  status?: GraphqlApiOrderSoftwareStatusType;
+  taxes?: GraphqlApiTaxType[];
+  report?: GraphqlApiReportType;
+  subscription?: SubscriptionType;
+};
+
+export type GraphqlApiOrderSoftwareStatusType = {
+  id?: number;
+  name?: string;
 };
 
 export type GraphqlApiOrderStatusType = {
