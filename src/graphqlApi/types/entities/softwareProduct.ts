@@ -3,7 +3,7 @@ import { ProgramLevelType } from './program';
 import { WorkgroupType } from './workgroup';
 
 export type SoftwareProductType = {
-  id?: string;
+  id?: number;
   arrowSku?: string;
   sku?: string;
   name?: string;

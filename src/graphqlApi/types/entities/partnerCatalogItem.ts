@@ -5,6 +5,8 @@ import { SubscriptionType } from './subscription';
 
 export type PartnerCatalogItemType = {
   id?: number;
+  programName?: string;
+  vendorName?: string;
   sid?: number;
   sellPrice?: number;
   price?: number;
