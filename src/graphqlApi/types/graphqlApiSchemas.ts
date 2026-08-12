@@ -24,6 +24,8 @@ import {
   GraphqlApiOrderLinkType,
   GraphqlApiOrderListType,
   GraphqlApiOrderSoftwareHistoryType,
+  GraphqlApiOrderSoftwareType,
+  GraphqlApiOrderSoftwareStatusType,
   OrderItemsType,
   OrdersType,
 } from './entities/order';
@@ -69,6 +71,8 @@ import {
 import { AttributesParameters } from '../../catalog';
 import { CustomFieldValueType } from './entities/customFieldValue';
 import { CustomFieldKeyType } from './entities/customFieldKey';
+import { GraphqlApiTaxType } from './entities/tax';
+import { GraphqlApiUnitType } from './entities/unit';
 
 export type PartnertagSchema = Schema<PartnertagType, boolean>;
 
@@ -339,6 +343,31 @@ export type PartnerCatalogItemSchema = Merge<
 
 export type CustomFieldValueSchema = Schema<CustomFieldValueType, boolean>;
 export type CustomFieldKeySchema = Schema<CustomFieldKeyType, boolean>;
+export type GraphqlApiTaxSchema = Schema<GraphqlApiTaxType, boolean>;
+
+type MissingFieldsOfOrderSoftwareSchema = {
+  endUserCompany?: PartnerSchema;
+  report?: ReportSchema;
+  status?: OrderSoftwareStatusSchema;
+  subscription?: SubscriptionSchema;
+  taxes?: GraphqlApiTaxSchema;
+  totalAmountUnit?: CurrencySchema;
+  totalUnit?: CurrencySchema;
+  sumTotalUnit?: CurrencySchema;
+  unit?: UnitSchema;
+  comments?: CommentSchema;
+};
+
+export type OrderSoftwareSchema = Merge<
+  Schema<GraphqlApiOrderSoftwareType, boolean>,
+  MissingFieldsOfOrderSoftwareSchema
+>;
+
+export type OrderSoftwareStatusSchema = Schema<
+  GraphqlApiOrderSoftwareStatusType,
+  boolean
+>;
+export type UnitSchema = Schema<GraphqlApiUnitType, boolean>;
 
 export type ExportResultSchema = {
   [SelectableField.DATA]?: SelectAllResponseDataSchema;
@@ -364,6 +393,7 @@ export type SelectAllResponseDataSchema = {
   [SelectDataField.ORDER]?: OrdersSchema;
   [SelectDataField.ORDER_HISTORY]?: GraphqlApiOrderHistoryType;
   [SelectDataField.ORDER_SOFTWARE_HISTORY]?: GraphqlApiOrderSoftwareHistorySchema;
+  [SelectDataField.ORDER_SOFTWARE]?: OrderSoftwareSchema;
   [SelectDataField.PARTNER]?: PartnerSchema;
   [SelectDataField.PARTNERTAG]?: PartnertagSchema;
   [SelectDataField.PROGRAM]?: GraphqlApiProgramSchema;

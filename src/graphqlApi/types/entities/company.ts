@@ -20,6 +20,7 @@ export type BaseCompanyType = {
   address2?: string;
   billingId?: string;
   city?: string;
+  country?: CountryType;
   contacts?: ContactsType[];
   createdAt?: string;
   deletedAt?: string;
