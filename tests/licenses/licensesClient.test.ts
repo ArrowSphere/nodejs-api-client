@@ -115,6 +115,10 @@ export const LICENSE_MOCK_URL_EXISTING_CONVERSION_SKU_LICENSE =
   '/licenses/XSP123456/conversion/existing';
 export const LICENSE_MOCK_URL_GET_CREDENTIALS = '/licenses/12343/credentials';
 export const LICENSE_MOCK_URL_PRICING_RATE = '/licenses/XSP12343/pricing-rate';
+export const LICENSE_MOCK_URL_PRICING_RATE_HISTORY =
+  '/licenses/XSP12343/pricing-rate/history';
+export const LICENSE_MOCK_URL_PRICING_RATE_SCHEDULED =
+  '/licenses/XSP12344/pricing-rate/scheduled';
 export const LICENSE_MOCK_URL_SCHEDULE_TASKS =
   '/licenses/XSP12343/scheduledTasks';
 export const LICENSE_MOCK_URL_SCHEDULED_TASKS =
@@ -1228,6 +1232,72 @@ describe('LicensesClient', () => {
       });
 
       expect(nock.isDone()).to.be.true;
+    });
+  });
+
+  describe('getPriceRatesHistory', () => {
+    const licensesClient = new PublicApiClient()
+      .getLicensesClient()
+      .setUrl(LICENSES_MOCK_URL);
+    it('should call getPriceRatesHistory method', async () => {
+      const payload = {
+        status: 200,
+        data: [
+          {
+            rateType: 'discount',
+            value: '0.10',
+            changeRequestDate: '2022-01-01',
+            effectiveDate: '2022-01-01',
+            source: 'xsp',
+          },
+        ],
+        pagination: { perPage: 25, continuationToken: null },
+      };
+
+      nock(LICENSES_MOCK_URL)
+        .get(LICENSE_MOCK_URL_PRICING_RATE_HISTORY)
+        .query({ perPage: 25 })
+        .reply(200, payload);
+
+      const result = await licensesClient.getPriceRatesHistory('XSP12343', {
+        perPage: 25,
+      });
+
+      expect(nock.isDone()).to.be.true;
+      expect(result).to.be.eqls(payload);
+    });
+  });
+
+  describe('getPriceRatesScheduled', () => {
+    const licensesClient = new PublicApiClient()
+      .getLicensesClient()
+      .setUrl(LICENSES_MOCK_URL);
+    it('should call getPriceRatesScheduled method', async () => {
+      const payload = {
+        status: 200,
+        data: [
+          {
+            rateType: 'discount',
+            value: '0.10',
+            changeRequestDate: '2022-01-01',
+            effectiveDate: '2022-01-01',
+            source: 'xsp',
+          },
+        ],
+        pagination: { perPage: 25, continuationToken: null },
+      };
+
+      nock(LICENSES_MOCK_URL)
+        .get(LICENSE_MOCK_URL_PRICING_RATE_SCHEDULED)
+        .query({ perPage: 25 })
+        .reply(200, payload);
+
+      const result = await licensesClient.getPriceRatesScheduled('XSP12344', {
+        perPage: 25,
+      });
+
+      expect(nock.isDone()).to.be.true;
+      expect(result).to.be.eqls(payload);
     });
   });
 

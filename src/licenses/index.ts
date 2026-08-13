@@ -50,4 +50,5 @@ export * from './licenseRequestClient';
 export * from './licensesClient';
 export * from './licensesEventClient';
 export * from './types/bulkArguments';
+export * from './types/pricingRate';
 export * from './entities/license/dynamicMappingResult';

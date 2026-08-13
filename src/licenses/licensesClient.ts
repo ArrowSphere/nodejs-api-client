@@ -77,6 +77,10 @@ import {
   EndCustomerOrganizationUnitFiltersParameters,
   EndCustomerOrganizationUnitSortParameters,
 } from './entities/endCustomerOrganizationUnit/endCustomerOrganizationUnitFindResult';
+import {
+  GetLicensePricingRateParameters,
+  GetLicensePricingRateResponse,
+} from './types/pricingRate';
 import { ConsumptionDailyPrediction } from '../consumption';
 import { GetScheduledTasksResult } from './entities/schedule/getScheduledTasksResult';
 import { GetScheduleTaskResult } from './entities/schedule/getScheduleTaskResult';
@@ -583,6 +587,16 @@ export class LicensesClient extends AbstractRestfulClient {
   private PRICING_RATE_PATH = '/pricing-rate';
 
   /**
+   * The path to get the pricing rate history on a license
+   */
+  private PRICING_RATE_HISTORY_PATH = '/pricing-rate/history';
+
+  /**
+   * The path to get the pricing rate scheduled on a license
+   */
+  private PRICING_RATE_SCHEDULED_PATH = '/pricing-rate/scheduled';
+
+  /**
    * The path to apply bulk action on license(s)
    */
   private BULK_PATH = '/bulk-action';
@@ -1061,6 +1075,24 @@ export class LicensesClient extends AbstractRestfulClient {
     this.path = `/${licenseReference}${this.PRICING_RATE_PATH}`;
 
     return await this.post(payload, parameters);
+  }
+
+  public async getPriceRatesHistory(
+    licenseReference: string,
+    params: GetLicensePricingRateParameters = {},
+  ): Promise<GetLicensePricingRateResponse> {
+    this.path = `/${licenseReference}${this.PRICING_RATE_HISTORY_PATH}`;
+
+    return this.get(params);
+  }
+
+  public async getPriceRatesScheduled(
+    licenseReference: string,
+    params: GetLicensePricingRateParameters = {},
+  ): Promise<GetLicensePricingRateResponse> {
+    this.path = `/${licenseReference}${this.PRICING_RATE_SCHEDULED_PATH}`;
+
+    return this.get(params);
   }
 
   public async scheduleTasks(
