@@ -78,6 +78,11 @@ import {
   EndCustomerOrganizationUnitSortParameters,
 } from './entities/endCustomerOrganizationUnit/endCustomerOrganizationUnitFindResult';
 import {
+  RatesDataKeywords,
+  RatesFiltersParameters,
+  RatesSortParameters,
+} from './entities/rates/rateFindResult';
+import {
   GetLicensePricingRateParameters,
   GetLicensePricingRateResponse,
 } from './types/pricingRate';
@@ -224,14 +229,16 @@ export enum LicenseFindParameters {
 export type BaseParameters<
   LicenseType,
   OfferType,
-  endCustomerOrganizationUnitType
+  endCustomerOrganizationUnitType,
+  RatesType
 > = {
   license?: LicenseType;
   offer?: OfferType;
   endCustomerOrganizationUnit?: endCustomerOrganizationUnitType;
+  rates?: RatesType;
 };
 
-type KeyParent = 'license' | 'offer' | 'endCustomerOrganizationUnit';
+type KeyParent = 'license' | 'offer' | 'endCustomerOrganizationUnit' | 'rates';
 
 export type AttachFileToLicenseParameters = {
   name: string;
@@ -241,7 +248,8 @@ export type AttachFileToLicenseParameters = {
 export type LicenseSortParameters = BaseParameters<
   LicenceFindDataSortParameters,
   OfferFindResultDataSortParameters,
-  EndCustomerOrganizationUnitSortParameters
+  EndCustomerOrganizationUnitSortParameters,
+  RatesSortParameters
 >;
 
 export type LicenseCompareParameters = {
@@ -251,7 +259,8 @@ export type LicenseCompareParameters = {
 export type LicenseFiltersParameters = BaseParameters<
   LicenceFindDataFiltersParameters,
   OfferFindResultDataFiltersParameters,
-  EndCustomerOrganizationUnitFiltersParameters
+  EndCustomerOrganizationUnitFiltersParameters,
+  RatesFiltersParameters
 >;
 
 /**
@@ -272,6 +281,7 @@ export type LicenseKeywordsParameters = {
   license?: LicenceFindDataKeywords;
   offer?: OfferFindResultDataKeywords;
   endCustomerOrganizationUnit?: EndCustomerOrganisationUnitDataKeywords;
+  rates?: RatesDataKeywords;
 };
 
 export type LicenseRawKeywordsParametersLicence = {
@@ -678,6 +688,7 @@ export class LicensesClient extends AbstractRestfulClient {
         ...this.createFilters(postData.filters, 'license'),
         ...this.createFilters(postData.filters, 'offer'),
         ...this.createFilters(postData.filters, 'endCustomerOrganizationUnit'),
+        ...this.createFilters(postData.filters, 'rates'),
       };
     }
 
@@ -690,6 +701,7 @@ export class LicensesClient extends AbstractRestfulClient {
           postData.exclusionFilters,
           'endCustomerOrganizationUnit',
         ),
+        ...this.createFilters(postData.exclusionFilters, 'rates'),
       };
     }
 
@@ -699,6 +711,7 @@ export class LicensesClient extends AbstractRestfulClient {
         ...this.createFilters(postData.sort, 'license'),
         ...this.createFilters(postData.sort, 'offer'),
         ...this.createFilters(postData.sort, 'endCustomerOrganizationUnit'),
+        ...this.createFilters(postData.sort, 'rates'),
       } as {
         license?: LicenseRawSortParametersLicense;
         offer?: LicenseRawSortParametersOffer;
@@ -1173,9 +1186,9 @@ export class LicensesClient extends AbstractRestfulClient {
   }
 
   private createFilters(
-    parameters: string | BaseParameters<unknown, unknown, unknown>,
+    parameters: string | BaseParameters<unknown, unknown, unknown, unknown>,
     keyParent: KeyParent,
-  ): BaseParameters<unknown, unknown, unknown> {
+  ): BaseParameters<unknown, unknown, unknown, unknown> {
     let appropriateParameters: unknown;
 
     if (typeof parameters === 'object') {
@@ -1193,14 +1206,16 @@ export class LicensesClient extends AbstractRestfulClient {
         const subAcc: Record<string, unknown> = Object.entries(
           value as LicenseFiltersParameters,
         ).reduce((generatedArr: Record<string, unknown>, [i, val]) => {
-          let recursiveArr: BaseParameters<unknown, unknown, unknown>;
+          let recursiveArr: BaseParameters<unknown, unknown, unknown, unknown>;
           const newKey = keyParent + '.' + key + '.' + i;
           if (typeof val !== 'object') {
             generatedArr[`${newKey}`] = val;
             return generatedArr;
           } else {
             recursiveArr = this.createFilters(
-              val as string | BaseParameters<unknown, unknown, unknown>,
+              val as
+                | string
+                | BaseParameters<unknown, unknown, unknown, unknown>,
               newKey as KeyParent,
             );
           }
