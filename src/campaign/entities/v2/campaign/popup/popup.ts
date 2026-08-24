@@ -1,60 +1,21 @@
 import { AbstractEntity } from '../../../../../abstractEntity';
+import {
+  CampaignBackground,
+  CampaignButton,
+  CampaignMedia,
+  CampaignTextColor,
+} from '../campaign';
 
 // Campaign Popup Types
 export type CampaignPopupType = {
-  background: PopupBackground;
-  button: PopupButton;
+  background: CampaignBackground;
+  button: CampaignButton;
   description: string;
   displayConfiguration: number;
-  media: PopupMedia;
-  textColor: PopupTextColor;
+  media: CampaignMedia;
+  textColor: CampaignTextColor;
   title: string;
 };
-
-export type PopupBackground = {
-  type: PopupBackgroundType;
-  color1?: string;
-  color2?: string;
-  uuidImage?: string;
-};
-
-export type PopupButton = {
-  buttonClass: BootstrapVariants;
-  linkUrl: string;
-  text: string;
-};
-
-export type PopupMedia = {
-  imageUuid?: string;
-  linkUrl?: string;
-  type: PopupMediaType;
-};
-
-export enum PopupBackgroundType {
-  IMAGE = 'IMAGE',
-  COLOR = 'COLOR',
-}
-
-export enum BootstrapVariants {
-  PRIMARY = 'primary',
-  SECONDARY = 'secondary',
-  SUCCESS = 'success',
-  DANGER = 'danger',
-  WARNING = 'warning',
-  INFO = 'info',
-  LIGHT = 'light',
-  DARK = 'dark',
-}
-
-export enum PopupMediaType {
-  IMAGE = 'IMAGE',
-  VIDEO = 'VIDEO',
-}
-
-export enum PopupTextColor {
-  LIGHT = 'LIGHT',
-  DARK = 'DARK',
-}
 
 export enum PopupFields {
   COLUMN_BACKGROUND = 'background',
@@ -67,12 +28,12 @@ export enum PopupFields {
 }
 
 export class CampaignPopup extends AbstractEntity<CampaignPopupType> {
-  readonly #background: PopupBackground;
-  readonly #button: PopupButton;
+  readonly #background: CampaignBackground;
+  readonly #button: CampaignButton;
   readonly #description: string;
   readonly #displayConfiguration: number;
-  readonly #media: PopupMedia;
-  readonly #textColor: PopupTextColor;
+  readonly #media: CampaignMedia;
+  readonly #textColor: CampaignTextColor;
   readonly #title: string;
 
   constructor(popupInput: CampaignPopupType) {
@@ -87,11 +48,11 @@ export class CampaignPopup extends AbstractEntity<CampaignPopupType> {
     this.#title = popupInput[PopupFields.COLUMN_TITLE];
   }
 
-  get background(): PopupBackground {
+  get background(): CampaignBackground {
     return this.#background;
   }
 
-  get button(): PopupButton {
+  get button(): CampaignButton {
     return this.#button;
   }
 
@@ -103,11 +64,11 @@ export class CampaignPopup extends AbstractEntity<CampaignPopupType> {
     return this.#displayConfiguration;
   }
 
-  get media(): PopupMedia {
+  get media(): CampaignMedia {
     return this.#media;
   }
 
-  get textColor(): PopupTextColor {
+  get textColor(): CampaignTextColor {
     return this.#textColor;
   }
 
