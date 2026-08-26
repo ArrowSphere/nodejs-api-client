@@ -1,4 +1,6 @@
 import {
+  CommentOrder,
+  DataListOrderComments,
   GetResult,
   Parameters,
   PublicApiClient,
@@ -24,6 +26,12 @@ import {
   CreateOrderResponsePayload,
   CreateOrderInjectionScenarioPayload,
 } from './mocks/create.mocks';
+import {
+  PAYLOAD_CREATE_ORDER_COMMENT,
+  PAYLOAD_CREATE_ORDER_COMMENT_RESULT,
+  PAYLOAD_EMPTY_LIST_ORDER_COMMENTS,
+  PAYLOAD_LIST_ORDER_COMMENTS,
+} from './mocks/comments.mocks';
 
 export const ORDERS_MOCK_URL = 'https://orders.localhost/index.php/api';
 export const ORDERS_CREATE = '/orders';
@@ -47,6 +55,7 @@ export const ADDITIONALINFORMATION_GRADED_ORDERS_URL = new RegExp(
   '/orders/XSPO[0-9]+/additionalInformation',
 );
 export const ATTACHMENT_ORDER_URL = new RegExp('/orders/XSPO[0-9]+/attachment');
+export const COMMENTS_ORDER_PATH = '/orders/XSPO123/comments';
 export const DELETE_ATTACHMENT_ORDER_URL = new RegExp(
   '/orders/XSPO[0-9]+/attachment/.*',
 );
@@ -399,6 +408,80 @@ describe('OrdersClient', () => {
       });
       expect(result).to.be.instanceof(GetResult);
       expect(result.toJSON()).to.eql(PAYLOAD_UPLOAD_ATTACHMENT_ORDER_RESULT);
+    });
+  });
+
+  describe('createComment', async () => {
+    const orderClient = new PublicApiClient()
+      .getOrdersClient()
+      .setUrl(ORDERS_MOCK_URL);
+
+    it('should post the comment on the order and return the created comment', async () => {
+      nock(ORDERS_MOCK_URL)
+        .post(COMMENTS_ORDER_PATH, PAYLOAD_CREATE_ORDER_COMMENT)
+        .reply(201, PAYLOAD_CREATE_ORDER_COMMENT_RESULT);
+
+      const result = await orderClient.createComment(
+        'XSPO123',
+        PAYLOAD_CREATE_ORDER_COMMENT,
+      );
+
+      expect(nock.isDone()).to.be.true;
+      expect(result).to.be.instanceof(GetResult);
+      expect(result.data).to.be.instanceof(CommentOrder);
+      expect(result.data.createdAt).to.equal('2026-08-26T09:48:55Z');
+      expect(result.data.createdBy).to.equal('arrowuser');
+      expect(result.data.value).to.equal('This is a comment');
+      expect(result.toJSON()).to.eql(PAYLOAD_CREATE_ORDER_COMMENT_RESULT);
+    });
+  });
+
+  describe('getListComments', async () => {
+    const orderClient = new PublicApiClient()
+      .getOrdersClient()
+      .setUrl(ORDERS_MOCK_URL);
+
+    it('should get the order comments with pagination and parameters', async () => {
+      nock(ORDERS_MOCK_URL)
+        .get(COMMENTS_ORDER_PATH)
+        .query({ per_page: 5, page: 2, order_by: 'ASC' })
+        .reply(200, PAYLOAD_LIST_ORDER_COMMENTS);
+
+      const result = await orderClient.getListComments('XSPO123', 5, 2, {
+        order_by: 'ASC',
+      });
+
+      expect(nock.isDone()).to.be.true;
+      expect(result).to.be.instanceof(GetResult);
+      expect(result.data).to.be.instanceof(DataListOrderComments);
+      expect(result.data.comments).to.have.length(2);
+      expect(result.data.comments[0]).to.be.instanceof(CommentOrder);
+      expect(result.data.comments[1].value).to.equal('Second comment');
+      expect(result.toJSON()).to.eql(PAYLOAD_LIST_ORDER_COMMENTS);
+    });
+
+    it('should get the order comments with default pagination', async () => {
+      nock(ORDERS_MOCK_URL)
+        .get(COMMENTS_ORDER_PATH)
+        .query({ per_page: 25 })
+        .reply(200, PAYLOAD_LIST_ORDER_COMMENTS);
+
+      const result = await orderClient.getListComments('XSPO123');
+
+      expect(nock.isDone()).to.be.true;
+      expect(result.toJSON()).to.eql(PAYLOAD_LIST_ORDER_COMMENTS);
+    });
+
+    it('should return an empty list when the order has no comments', async () => {
+      nock(ORDERS_MOCK_URL)
+        .get(COMMENTS_ORDER_PATH)
+        .query(true)
+        .reply(200, PAYLOAD_EMPTY_LIST_ORDER_COMMENTS);
+
+      const result = await orderClient.getListComments('XSPO123');
+
+      expect(result.data.comments).to.eql([]);
+      expect(result.toJSON()).to.eql(PAYLOAD_EMPTY_LIST_ORDER_COMMENTS);
     });
   });
 });
