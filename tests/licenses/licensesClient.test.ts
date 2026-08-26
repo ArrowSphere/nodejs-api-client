@@ -904,6 +904,28 @@ describe('LicensesClient', () => {
         PAYLOAD_SCHEMA_LICENSE_WITHOUT_OPTIONAL_FIELDS,
       );
     });
+
+    it('exposes bundleUuid and bundleArrowSphereSku from the license', async () => {
+      nock(LICENSES_MOCK_URL)
+        .get(LICENSE_MOCK_URL_LICENSE)
+        .reply(200, PAYLOAD_SCHEMA_LICENSE);
+
+      const result = await getLicenseClient.getLicense('123456');
+      expect(result.data.license.bundleUuid).to.equal('bundle-uuid-1234');
+      expect(result.data.license.bundleArrowSphereSku).to.equal(
+        'bundle-sku-1234',
+      );
+    });
+
+    it('returns undefined for bundleUuid and bundleArrowSphereSku when not present', async () => {
+      nock(LICENSES_MOCK_URL)
+        .get(LICENSE_MOCK_URL_LICENSE)
+        .reply(200, PAYLOAD_SCHEMA_LICENSE_WITHOUT_OPTIONAL_FIELDS);
+
+      const result = await getLicenseClient.getLicense('123456');
+      expect(result.data.license.bundleUuid).to.be.undefined;
+      expect(result.data.license.bundleArrowSphereSku).to.be.undefined;
+    });
   });
 
   describe('updateLicense', () => {
