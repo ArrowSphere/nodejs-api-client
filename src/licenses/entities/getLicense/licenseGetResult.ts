@@ -91,6 +91,8 @@ export enum LicenseGetFields {
   COLUMN_END_DATE = 'endDate',
   COLUMN_ATTRIBUTES = 'attributes',
   COLUMN_CUSTOM_FIELDS = 'customFields',
+  COLUMN_BUNDLE_UUID = 'bundleUuid',
+  COLUMN_BUNDLE_ARROW_SPHERE_SKU = 'bundleArrowSphereSku',
 }
 
 export enum RenewalPolicyEnum {
@@ -154,6 +156,8 @@ export type LicenseGetData = {
   [LicenseGetFields.COLUMN_END_DATE]: string;
   [LicenseGetFields.COLUMN_ATTRIBUTES]: Record<string, string>;
   [LicenseGetFields.COLUMN_CUSTOM_FIELDS]?: Array<LicenseCustomFieldType>;
+  [LicenseGetFields.COLUMN_BUNDLE_UUID]?: string;
+  [LicenseGetFields.COLUMN_BUNDLE_ARROW_SPHERE_SKU]?: string;
 };
 
 export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
@@ -211,6 +215,8 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
   readonly #endDate: string;
   readonly #attributes: Record<string, string>;
   readonly #customFields?: Array<LicenseCustomField>;
+  readonly #bundleUuid?: string;
+  readonly #bundleArrowSphereSku?: string;
 
   public constructor(licenseGetDataInput: LicenseGetData) {
     super(licenseGetDataInput);
@@ -349,6 +355,9 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
     this.#customFields = licenseGetDataInput[
       LicenseGetFields.COLUMN_CUSTOM_FIELDS
     ]?.map((field: LicenseCustomFieldType) => new LicenseCustomField(field));
+    this.#bundleUuid = licenseGetDataInput[LicenseGetFields.COLUMN_BUNDLE_UUID];
+    this.#bundleArrowSphereSku =
+      licenseGetDataInput[LicenseGetFields.COLUMN_BUNDLE_ARROW_SPHERE_SKU];
   }
 
   public get classification(): string {
@@ -570,6 +579,14 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
     return this.#customFields;
   }
 
+  public get bundleUuid(): string | undefined {
+    return this.#bundleUuid;
+  }
+
+  public get bundleArrowSphereSku(): string | undefined {
+    return this.#bundleArrowSphereSku;
+  }
+
   public toJSON(): LicenseGetData {
     return {
       [LicenseGetFields.COLUMN_ADDITIONAL_INFORMATION]: this
@@ -640,6 +657,9 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
       [LicenseGetFields.COLUMN_CUSTOM_FIELDS]: this.customFields?.map(
         (field: LicenseCustomField) => field.toJSON(),
       ),
+      [LicenseGetFields.COLUMN_BUNDLE_UUID]: this.bundleUuid,
+      [LicenseGetFields.COLUMN_BUNDLE_ARROW_SPHERE_SKU]: this
+        .bundleArrowSphereSku,
     };
   }
 }

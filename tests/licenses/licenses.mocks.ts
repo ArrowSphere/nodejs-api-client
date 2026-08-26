@@ -195,6 +195,8 @@ export const PAYLOAD_SCHEMA_LICENSE: GetData<GetLicenseResultData> = {
           },
         ],
       },
+      [LicenseGetFields.COLUMN_BUNDLE_UUID]: 'bundle-uuid-1234',
+      [LicenseGetFields.COLUMN_BUNDLE_ARROW_SPHERE_SKU]: 'bundle-sku-1234',
     },
   },
 };
