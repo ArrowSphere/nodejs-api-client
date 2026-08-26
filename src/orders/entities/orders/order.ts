@@ -25,6 +25,7 @@ export enum OrderFields {
   COLUMN_EXTRA_INFORMATION = 'extraInformation',
   COLUMN_ORGANIZATION_UNIT_REF = 'organizationUnitRef',
   COLUMN_CUSTOM_FIELDS = 'customFields',
+  COLUMN_QUOTE_REF = 'quoteRef',
 }
 
 export type OrderType = {
@@ -41,6 +42,7 @@ export type OrderType = {
   [OrderFields.COLUMN_EXTRA_INFORMATION]?: AdditionalExtraInformationType;
   [OrderFields.COLUMN_ORGANIZATION_UNIT_REF]?: string;
   [OrderFields.COLUMN_CUSTOM_FIELDS]?: Array<OrderCustomFieldType>;
+  [OrderFields.COLUMN_QUOTE_REF]?: string;
 };
 
 export class Order extends AbstractEntity<OrderType> {
@@ -57,6 +59,7 @@ export class Order extends AbstractEntity<OrderType> {
   readonly #extraInformation?: AdditionalExtraInformation;
   readonly #organizationUnitRef?: string;
   readonly #customFields?: Array<OrderCustomField>;
+  readonly #quoteRef?: string;
 
   public constructor(getOrderDataInput: OrderType) {
     super(getOrderDataInput);
@@ -98,6 +101,8 @@ export class Order extends AbstractEntity<OrderType> {
     this.#customFields = getOrderDataInput[
       OrderFields.COLUMN_CUSTOM_FIELDS
     ]?.map((field: OrderCustomFieldType) => new OrderCustomField(field));
+
+    this.#quoteRef = getOrderDataInput[OrderFields.COLUMN_QUOTE_REF];
   }
 
   get reference(): string {
@@ -143,6 +148,10 @@ export class Order extends AbstractEntity<OrderType> {
     return this.#customFields;
   }
 
+  get quoteRef(): string | undefined {
+    return this.#quoteRef;
+  }
+
   public toJSON(): OrderType {
     return {
       [OrderFields.COLUMN_REFERENCE]: this.reference,
@@ -162,6 +171,7 @@ export class Order extends AbstractEntity<OrderType> {
       [OrderFields.COLUMN_CUSTOM_FIELDS]: this.customFields?.map(
         (field: OrderCustomField) => field.toJSON(),
       ),
+      [OrderFields.COLUMN_QUOTE_REF]: this.quoteRef,
     };
   }
 }
