@@ -78,6 +78,15 @@ export type GraphqlApiOrderHistoryType = {
   user?: UserType;
 };
 
+export type GraphqlApiOrderSoftwareHistoryType = {
+  id?: number;
+  action?: string;
+  createdAt?: string;
+  description?: string;
+  orderSoftware?: GraphqlApiOrderSoftwareType;
+  user?: UserType;
+};
+
 export type GraphqlApiOrderListType = {
   id?: number;
   country?: string;

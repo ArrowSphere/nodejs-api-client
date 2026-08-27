@@ -686,6 +686,101 @@ export const SELECT_USER_HISTORY_QUERY: SelectAllQueryType = {
 export const SELECT_USER_HISTORY_GQL =
   '{selectAll (filters: {groups: [{items: [{name: "impactedUser.contact.username", value: ["099d9076a611ee24f83b0dc89c076a4f"], operator: "EQUALS"}]}]}, pagination: {page: 1, perPage: 5}) { data { userHistory { action createdAt description impactedUser { contact { firstname lastname } } originatorUser { contact { firstname lastname } } } } errors { code message } pagination { currentPage perPage total } }}';
 
+export const SELECT_ALL_ORDER_SOFTWARE_HISTORY_QUERY: SelectAllQueryType = {
+  [Queries.SELECT_ALL]: {
+    __args: {
+      filters: {
+        groups: [
+          {
+            items: [
+              {
+                name: 'orderSoftware.customerId',
+                value: ['123'],
+                operator: ComparisonOperator.EQUALS,
+              },
+            ],
+          },
+        ],
+      },
+      pagination: {
+        page: 1,
+        perPage: 5,
+      },
+    },
+    data: {
+      orderSoftwareHistory: {
+        id: true,
+        action: true,
+        createdAt: true,
+        description: true,
+        orderSoftware: {
+          id: true,
+          customerId: true,
+          totalAmount: true,
+        },
+        user: {
+          login: true,
+        },
+      },
+    },
+    errors: {
+      code: true,
+      message: true,
+    },
+    pagination: {
+      currentPage: true,
+      perPage: true,
+      total: true,
+    },
+  },
+};
+
+export const SELECT_ALL_ORDER_SOFTWARE_HISTORY_GQL =
+  '{selectAll (filters: {groups: [{items: [{name: "orderSoftware.customerId", value: ["123"], operator: "EQUALS"}]}]}, pagination: {page: 1, perPage: 5}) { data { orderSoftwareHistory { id action createdAt description orderSoftware { id customerId totalAmount } user { login } } } errors { code message } pagination { currentPage perPage total } }}';
+
+export const SELECT_ONE_ORDER_SOFTWARE_HISTORY_QUERY: SelectOneQueryType = {
+  [Queries.SELECT_ONE]: {
+    __args: {
+      filters: {
+        groups: [
+          {
+            items: [
+              {
+                name: 'id',
+                value: ['456'],
+                operator: ComparisonOperator.EQUALS,
+              },
+            ],
+          },
+        ],
+      },
+    },
+    data: {
+      orderSoftwareHistory: {
+        id: true,
+        action: true,
+        createdAt: true,
+        description: true,
+        orderSoftware: {
+          id: true,
+          customerId: true,
+          totalAmount: true,
+        },
+        user: {
+          login: true,
+        },
+      },
+    },
+    errors: {
+      code: true,
+      message: true,
+    },
+  },
+};
+
+export const SELECT_ONE_ORDER_SOFTWARE_HISTORY_GQL =
+  '{selectOne (filters: {groups: [{items: [{name: "id", value: ["456"], operator: "EQUALS"}]}]}) { data { orderSoftwareHistory { id action createdAt description orderSoftware { id customerId totalAmount } user { login } } } errors { code message } }}';
+
 export const SELECT_USER_QUERY: SelectAllQueryType = {
   [Queries.SELECT_ALL]: {
     __args: {
