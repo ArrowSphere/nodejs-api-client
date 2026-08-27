@@ -16,6 +16,7 @@ import {
   GetLocalContactResultType,
   GetSpecialPriceRatesHistoryResultType,
   GraphqlApiClient,
+  GraphqlApiOrderSoftwareHistoryType,
   GraphqlApiProgramType,
   GraphqlApiReportType,
   LicenseBudgetType,
@@ -561,6 +562,100 @@ describe('GraphqlApiClient', () => {
       sinon.assert.calledWithExactly(
         graphQLClient.request,
         sinon.match(GraphqlApiQueryMock.SELECT_USER_HISTORY_GQL),
+      );
+    });
+  });
+
+  describe('GetOrderSoftwareHistory', () => {
+    it('makes a graphql POST request on the specified URL to selectAll paginated order software history', async () => {
+      const orderSoftwareHistories: GraphqlApiOrderSoftwareHistoryType[] = [
+        {
+          id: 1,
+          action: 'Order created',
+          createdAt: '2024-01-15 10:30:00',
+          description: 'New order software created',
+          orderSoftware: {
+            id: 100,
+            customerId: 123,
+            totalAmount: 5000,
+          },
+          user: {
+            login: 'admin@example.com',
+          },
+        },
+        {
+          id: 2,
+          action: 'Order updated',
+          createdAt: '2024-01-16 14:20:00',
+          description: 'Order software details updated',
+          orderSoftware: {
+            id: 100,
+            customerId: 123,
+            totalAmount: 5500,
+          },
+          user: {
+            login: 'user@example.com',
+          },
+        },
+      ];
+
+      const expectedResult: SelectAllResultType = {
+        [Queries.SELECT_ALL]: {
+          [SelectableField.DATA]: {
+            [SelectDataField.ORDER_SOFTWARE_HISTORY]: orderSoftwareHistories,
+          },
+        },
+      };
+
+      graphQLClient.request.resolves(expectedResult);
+
+      const result: SelectAllResultType | null = await client.selectAll(
+        GraphqlApiQueryMock.SELECT_ALL_ORDER_SOFTWARE_HISTORY_QUERY,
+      );
+
+      expect(result).to.deep.equals(expectedResult);
+
+      sinon.assert.calledWithExactly(
+        graphQLClient.request,
+        sinon.match(GraphqlApiQueryMock.SELECT_ALL_ORDER_SOFTWARE_HISTORY_GQL),
+      );
+    });
+
+    it('makes a graphql POST request on the specified URL to selectOne order software history', async () => {
+      const orderSoftwareHistory: GraphqlApiOrderSoftwareHistoryType = {
+        id: 456,
+        action: 'Order cancelled',
+        createdAt: '2024-01-20 09:15:00',
+        description: 'Order software cancelled by user',
+        orderSoftware: {
+          id: 200,
+          customerId: 123,
+          totalAmount: 3000,
+        },
+        user: {
+          login: 'admin@example.com',
+        },
+      };
+
+      const expectedResult: SelectOneResultType = {
+        [Queries.SELECT_ONE]: {
+          [SelectableField.DATA]: {
+            [SelectDataField.ORDER_SOFTWARE_HISTORY]: orderSoftwareHistory,
+          },
+        },
+      };
+
+      graphQLClient.request.resolves(expectedResult);
+
+      const result: SelectOneResultType | null = await client.selectOne(
+        GraphqlApiQueryMock.SELECT_ONE_ORDER_SOFTWARE_HISTORY_QUERY,
+      );
+
+      expect(result).to.deep.equals(expectedResult);
+
+      sinon.assert.calledWithExactly(
+        graphQLClient.request,
+        sinon.match(GraphqlApiQueryMock.SELECT_ONE_ORDER_SOFTWARE_HISTORY_GQL),
       );
     });
   });

@@ -23,6 +23,7 @@ import {
   GraphqlApiOrderHistoryType,
   GraphqlApiOrderLinkType,
   GraphqlApiOrderListType,
+  GraphqlApiOrderSoftwareHistoryType,
   OrderItemsType,
   OrdersType,
 } from './entities/order';
@@ -245,6 +246,10 @@ export type GraphqlApiOrderHistorySchema = Schema<
   GraphqlApiOrderHistoryType,
   boolean
 >;
+export type GraphqlApiOrderSoftwareHistorySchema = Schema<
+  GraphqlApiOrderSoftwareHistoryType,
+  boolean
+>;
 export type GraphqlApiOrderLinkSchema = Schema<
   GraphqlApiOrderLinkType,
   boolean
@@ -358,6 +363,7 @@ export type SelectAllResponseDataSchema = {
   [SelectDataField.ORGANIZATION_UNIT]?: OrganizationUnitSchema;
   [SelectDataField.ORDER]?: OrdersSchema;
   [SelectDataField.ORDER_HISTORY]?: GraphqlApiOrderHistoryType;
+  [SelectDataField.ORDER_SOFTWARE_HISTORY]?: GraphqlApiOrderSoftwareHistorySchema;
   [SelectDataField.PARTNER]?: PartnerSchema;
   [SelectDataField.PARTNERTAG]?: PartnertagSchema;
   [SelectDataField.PROGRAM]?: GraphqlApiProgramSchema;
