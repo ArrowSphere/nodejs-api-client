@@ -18,6 +18,12 @@ export type RequestQuoteRequestType = {
   vendor: string;
 };
 
+export type DuplicateQuoteType = {
+  customer?: {
+    reference: string;
+  };
+};
+
 export type RequestQuoteIbmRequestType = {
   endCustomerRef?: string;
   reference?: string;
@@ -98,6 +104,16 @@ export class QuotesClient extends AbstractRestfulClient {
     this.path = `/${quoteReference}`;
 
     return await this.delete(parameters);
+  }
+
+  public async duplicateQuote(
+    quoteReference: string,
+    versionId: number,
+    postData: DuplicateQuoteType = {},
+  ): Promise<GetResult<PutQuoteResult>> {
+    this.path = `/${quoteReference}/version/${versionId}/duplicate`;
+
+    return new GetResult(PutQuoteResult, await this.post(postData));
   }
 
   public async validateQuote(
