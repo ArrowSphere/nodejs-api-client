@@ -9,6 +9,7 @@ export type LicensePricingRateItem = {
   changeRequestDate: string;
   effectiveDate: string;
   source: string;
+  tier: number;
 };
 
 export type LicensePricingRatePagination = {
