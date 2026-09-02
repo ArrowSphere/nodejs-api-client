@@ -3,6 +3,13 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.397.0] - 2026.09.02
+### Added
+- [graphql-api] Add `GraphqlApiOrderSoftwareType` with full fields: `totalAmountEnded`, `totalAmountUnit`, `createdDate`, `customName`, `dateBegin`, `dateEnd`, `dateLastModified`, `dateSent`, `dateValidation`, `totalQuantity`, `totalUnit`, `sumTotalUnit`, `discountRatio`, `comments`, `aggregatorErpNo`, `customerPo`, `endUserCompany`, `status`, `taxes`, `report`, and `subscription`
+- [graphql-api] Add `GraphqlApiOrderSoftwareStatusType` entity
+- [graphql-api] Add `GraphqlApiTaxType` entity with `id`, `name`, `rate`, `amount`, `stateReg`, `since`, `until`, `country`, and `currency` fields
+- [graphql-api] Add `orderIdText` and `partnerIdText` fields to `SubscriptionType`
+
 ## [3.396.0] - 2026.09.01
 ### Added
 - [graphql-api] Add `orderSoftwareHistory` type support for independent querying
