@@ -85,6 +85,9 @@ import {
   EndCustomerOrganizationUnitFindResultType,
 } from '../../src/licenses/entities/endCustomerOrganizationUnit/endCustomerOrganizationUnitFindResult';
 import { GET_LICENSE_DAILY_PREDICTIONS_RESPONSE } from '../consumption/mocks/consumption.mocks';
+import { ConversionRulesFields } from '../../src/shared/preferredCurrency/conversionRules';
+import { LicenseFindPreferredCurrencyValuesFields } from '../../src/licenses/entities/license/preferredCurrency/licenseFindPreferredCurrencyValues';
+import { LicenseFindPreferredCurrencyFields } from '../../src/licenses/entities/license/licenseFindPreferredCurrency';
 
 export const LICENSES_MOCK_URL = 'https://licenses.localhost';
 export const LICENSES_FIND_ENDPOINT = new RegExp('/licenses/v2/find.*');
@@ -185,6 +188,19 @@ export const MOCK_RESULT_DATA: {
       [PriceFindResultFields.COLUMN_SELL_PRICE]: 1000,
       [PriceFindResultFields.COLUMN_LIST_PRICE]: 1000,
       [PriceFindResultFields.COLUMN_CURRENCY]: 'CURRENCY',
+      [PriceFindResultFields.COLUMN_PREFERRED_CURRENCY]: {
+        [LicenseFindPreferredCurrencyFields.COLUMN_CONVERSION_RULES]: {
+          [ConversionRulesFields.COLUMN_CURRENCY]: 'JPY',
+          [ConversionRulesFields.COLUMN_EXCHANGE_RATE_DATE]:
+            '2026-09-02T14:42:00Z',
+          [ConversionRulesFields.COLUMN_EXCHANGE_RATE]: 1.2031254,
+        },
+        [LicenseFindPreferredCurrencyFields.COLUMN_VALUES]: {
+          [LicenseFindPreferredCurrencyValuesFields.COLUMN_BUY_PRICE]: 1.23,
+          [LicenseFindPreferredCurrencyValuesFields.COLUMN_SELL_PRICE]: 2.34,
+          [LicenseFindPreferredCurrencyValuesFields.COLUMN_LIST_PRICE]: 3.45,
+        },
+      },
     },
     [LicenseFindResultFields.COLUMN_RESELLER_NAME]: 'reseller_name',
     [LicenseFindResultFields.COLUMN_RESELLER_REF]: 'reseller_ref',

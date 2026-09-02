@@ -457,6 +457,10 @@ export class LicenseFindResult extends AbstractEntity<LicenseFindResultData> {
         data[LicenseFindResultFields.COLUMN_PRICE][
           PriceFindResultFields.COLUMN_CURRENCY
         ],
+      [PriceFindResultFields.COLUMN_PREFERRED_CURRENCY]:
+        data[LicenseFindResultFields.COLUMN_PRICE][
+          PriceFindResultFields.COLUMN_PREFERRED_CURRENCY
+        ],
     };
     this.#price = new PriceFindResult(price);
     this.#resellerName = data[LicenseFindResultFields.COLUMN_RESELLER_NAME];
