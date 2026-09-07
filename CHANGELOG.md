@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.398.0] - 2026.09.07
+### Added
+- [licenses] Add `preferredCurrency` to `LicensePriceGetData`, `PriceFindResultData`
+
 ## [3.397.0] - 2026.09.02
 ### Added
 - [graphql-api] Add `GraphqlApiOrderSoftwareType` with full fields: `totalAmountEnded`, `totalAmountUnit`, `createdDate`, `customName`, `dateBegin`, `dateEnd`, `dateLastModified`, `dateSent`, `dateValidation`, `totalQuantity`, `totalUnit`, `sumTotalUnit`, `discountRatio`, `comments`, `aggregatorErpNo`, `customerPo`, `endUserCompany`, `status`, `taxes`, `report`, and `subscription`
