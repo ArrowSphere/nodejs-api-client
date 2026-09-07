@@ -1,6 +1,12 @@
 import nock from 'nock';
 import { expect } from 'chai';
-import { CatalogGraphQLClient, CatalogQuery, ProductType } from '../../src';
+import {
+  CatalogGraphQLClient,
+  CatalogQueries,
+  CatalogQuery,
+  PriceBandType,
+  ProductType,
+} from '../../src';
 
 const CATALOG_GRAPHQL_URL = 'https://graphql.localhost';
 const CATALOG_POST_URL = '/catalog/graphql';
@@ -229,6 +235,194 @@ describe('CatalogGraphQLClient', () => {
 
       const response = await client.findByQuery(preparedQuery);
       expect(response).to.eql(bodyResponse.data);
+    });
+  });
+
+  describe('PriceBandType prices field', () => {
+    it('should return prices for getProducts', async () => {
+      const client = new CatalogGraphQLClient()
+        .setUrl(CATALOG_GRAPHQL_URL)
+        .setHeaders({ authorization: 'test' });
+
+      const products: ProductType[] = [
+        {
+          name: 'Office 365',
+          marketplace: 'FR',
+          defaultPriceBand: {
+            name: 'default',
+            isBuyable: true,
+            isEnabled: true,
+            prices: {
+              buy: '10.00',
+              sell: '12.00',
+              public: '15.00',
+              arrow: 8.01,
+              partner: 9.02,
+              endCustomer: 10.03,
+              retail: 11.04,
+              preferredCurrency: {
+                conversionRules: {
+                  currency: 'USD',
+                  exchangeRateDate: '2026-09-09T10:41:00Z',
+                  exchangeRate: 0.85,
+                },
+                values: {
+                  buy: '8.50',
+                  sell: '10.20',
+                  public: '12.75',
+                  arrow: 6.8,
+                  partner: 7.65,
+                  endCustomer: 8.5,
+                  retail: 9.35,
+                },
+              },
+            },
+          },
+        },
+      ];
+
+      const bodyResponse = {
+        data: {
+          getProducts: { products: products },
+        },
+      };
+
+      nock(CATALOG_GRAPHQL_URL).post(CATALOG_POST_URL).reply(200, bodyResponse);
+
+      const query: CatalogQueries = {
+        getProducts: {
+          __args: {
+            paginate: { page: 1, perPage: 12 },
+            searchBody: { ignoreCatalogPlan: true },
+          },
+          products: {
+            name: true,
+            defaultPriceBand: {
+              prices: {
+                buy: true,
+                sell: true,
+                public: true,
+                arrow: true,
+                partner: true,
+                endCustomer: true,
+                retail: true,
+                preferredCurrency: {
+                  conversionRules: {
+                    currency: true,
+                    exchangeRateDate: true,
+                    exchangeRate: true,
+                  },
+                  values: {
+                    buy: true,
+                    sell: true,
+                    public: true,
+                    arrow: true,
+                    partner: true,
+                    endCustomer: true,
+                    retail: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+      };
+
+      const response = await client.findProductsByQuery(query);
+      expect(response).to.eql(bodyResponse.data);
+      expect(
+        (response as typeof bodyResponse.data).getProducts.products[0]
+          .defaultPriceBand?.prices,
+      ).to.eql(products[0].defaultPriceBand?.prices);
+    });
+
+    it('should return prices for getPricesBand', async () => {
+      const client = new CatalogGraphQLClient()
+        .setUrl(CATALOG_GRAPHQL_URL)
+        .setHeaders({ authorization: 'test' });
+
+      const priceBands: PriceBandType[] = [
+        {
+          name: 'Office 365',
+          prices: {
+            buy: '10.00',
+            sell: '12.00',
+            public: '15.00',
+            arrow: 8.01,
+            partner: 9.02,
+            endCustomer: 10.03,
+            retail: 11.04,
+            preferredCurrency: {
+              conversionRules: {
+                currency: 'USD',
+                exchangeRateDate: '2026-09-09T10:41:00Z',
+                exchangeRate: 0.85,
+              },
+              values: {
+                buy: '8.50',
+                sell: '10.20',
+                public: '12.75',
+                arrow: 6.8,
+                partner: 7.65,
+                endCustomer: 8.5,
+                retail: 9.35,
+              },
+            },
+          },
+        },
+      ];
+
+      const bodyResponse = {
+        data: {
+          getPriceBands: { priceBands: priceBands },
+        },
+      };
+
+      nock(CATALOG_GRAPHQL_URL).post(CATALOG_POST_URL).reply(200, bodyResponse);
+
+      const query: CatalogQueries = {
+        getPriceBands: {
+          __args: {
+            paginate: { page: 1, perPage: 12 },
+            searchBody: {},
+          },
+          priceBands: {
+            name: true,
+            prices: {
+              buy: true,
+              sell: true,
+              public: true,
+              arrow: true,
+              partner: true,
+              endCustomer: true,
+              retail: true,
+              preferredCurrency: {
+                conversionRules: {
+                  currency: true,
+                  exchangeRateDate: true,
+                  exchangeRate: true,
+                },
+                values: {
+                  buy: true,
+                  sell: true,
+                  public: true,
+                  arrow: true,
+                  partner: true,
+                  endCustomer: true,
+                  retail: true,
+                },
+              },
+            },
+          },
+        },
+      };
+
+      const response = await client.findPriceBandsByQuery(query);
+      expect(response).to.eql(bodyResponse.data);
+      expect(
+        (response as typeof bodyResponse.data).getPriceBands.priceBands[0]
+          .prices,
+      ).to.eql(priceBands[0].prices);
     });
   });
 });
