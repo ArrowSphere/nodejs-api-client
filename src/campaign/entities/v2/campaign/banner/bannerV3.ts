@@ -34,17 +34,17 @@ export class CampaignBanner extends AbstractEntity<CampaignBannerType> {
   readonly #textColor: string;
   readonly #title: string;
 
-  constructor(popupInput: CampaignBannerType) {
-    super(popupInput);
-    this.#background = popupInput[BannerFields.COLUMN_BACKGROUND];
-    this.#button = popupInput[BannerFields.COLUMN_BUTTON];
-    this.#description = popupInput[BannerFields.COLUMN_DESCRIPTION];
+  constructor(bannerInput: CampaignBannerType) {
+    super(bannerInput);
+    this.#background = bannerInput[BannerFields.COLUMN_BACKGROUND];
+    this.#button = bannerInput[BannerFields.COLUMN_BUTTON];
+    this.#description = bannerInput[BannerFields.COLUMN_DESCRIPTION];
     this.#displayConfiguration =
-      popupInput[BannerFields.COLUMN_DISPLAY_CONFIGURATION];
-    this.#media = popupInput[BannerFields.COLUMN_MEDIA];
-    this.#subtitle = popupInput[BannerFields.COLUMN_SUBTITLE];
-    this.#textColor = popupInput[BannerFields.COLUMN_TEXT_COLOR];
-    this.#title = popupInput[BannerFields.COLUMN_TITLE];
+      bannerInput[BannerFields.COLUMN_DISPLAY_CONFIGURATION];
+    this.#media = bannerInput[BannerFields.COLUMN_MEDIA];
+    this.#subtitle = bannerInput[BannerFields.COLUMN_SUBTITLE];
+    this.#textColor = bannerInput[BannerFields.COLUMN_TEXT_COLOR];
+    this.#title = bannerInput[BannerFields.COLUMN_TITLE];
   }
 
   get background(): CampaignBackground {
