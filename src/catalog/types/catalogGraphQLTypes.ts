@@ -1,5 +1,7 @@
 // Here are the types, they are useful to have exact types of the responses
 
+import { ConversionRulesType } from '../../shared/preferredCurrency/conversionRules';
+
 export type GetProductsType = {
   getProducts?: PaginatedProductsType;
 };
@@ -293,19 +295,21 @@ export enum PricesTypeKeys {
   ARROW_KEY = 'arrow',
   PARTNER_KEY = 'partner',
   ENDCUSTOMER_KEY = 'endCustomer',
-  RETAIL_KEY = 'public',
+  RETAIL_KEY = 'retail',
   VENDOR_PRICING_SOURCE_KEY = 'vendorPricingSource',
+  PREFERRED_CURRENCY = 'preferredCurrency',
 }
 
 export type PricesType = {
   [PricesTypeKeys.BUY_KEY]?: string;
   [PricesTypeKeys.SELL_KEY]?: string;
   [PricesTypeKeys.PUBLIC_KEY]?: string;
-  [PricesTypeKeys.ARROW_KEY]?: string;
-  [PricesTypeKeys.PARTNER_KEY]?: string;
-  [PricesTypeKeys.ENDCUSTOMER_KEY]?: string;
-  [PricesTypeKeys.RETAIL_KEY]?: string;
+  [PricesTypeKeys.ARROW_KEY]?: number;
+  [PricesTypeKeys.PARTNER_KEY]?: number;
+  [PricesTypeKeys.ENDCUSTOMER_KEY]?: number;
+  [PricesTypeKeys.RETAIL_KEY]?: number;
   [PricesTypeKeys.VENDOR_PRICING_SOURCE_KEY]?: VendorPricingSourceType;
+  [PricesTypeKeys.PREFERRED_CURRENCY]?: PreferredCurrencyType;
 };
 
 export type PriceBandSaleConstraintsType = {
@@ -343,6 +347,31 @@ export type VendorPricingSourceType = {
   currency?: string;
   changeRate?: number;
   prices?: PricesType;
+};
+
+export type PreferredCurrencyType = {
+  conversionRules: ConversionRulesType;
+  values: PreferredCurrencyValuesType;
+};
+
+export enum PreferredCurrencyValuesTypeKeys {
+  BUY_KEY = 'buy',
+  SELL_KEY = 'sell',
+  PUBLIC_KEY = 'public',
+  ARROW_KEY = 'arrow',
+  PARTNER_KEY = 'partner',
+  ENDCUSTOMER_KEY = 'endCustomer',
+  RETAIL_KEY = 'retail',
+}
+
+export type PreferredCurrencyValuesType = {
+  [PreferredCurrencyValuesTypeKeys.BUY_KEY]?: string;
+  [PreferredCurrencyValuesTypeKeys.SELL_KEY]?: string;
+  [PreferredCurrencyValuesTypeKeys.PUBLIC_KEY]?: string;
+  [PreferredCurrencyValuesTypeKeys.ARROW_KEY]?: number;
+  [PreferredCurrencyValuesTypeKeys.PARTNER_KEY]?: number;
+  [PreferredCurrencyValuesTypeKeys.ENDCUSTOMER_KEY]?: number;
+  [PreferredCurrencyValuesTypeKeys.RETAIL_KEY]?: number;
 };
 
 export type PromotionPricesFull = Omit<PromotionType, 'billing'> & {
