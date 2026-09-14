@@ -1,8 +1,11 @@
 import { AbstractEntity } from '../../../../../abstractEntity';
 import {
+  BootstrapVariants,
   CampaignBackground,
+  CampaignBackgroundType,
   CampaignButton,
   CampaignMedia,
+  CampaignMediaType,
   CampaignTextColor,
 } from '../campaign';
 
@@ -16,6 +19,38 @@ export type CampaignPopupType = {
   textColor: CampaignTextColor;
   title: string;
 };
+
+/**
+ * @deprecated use CampaignBackground
+ */
+export type PopupBackground = CampaignBackground;
+
+/**
+ * @deprecated use CampaignButton
+ */
+export type PopupButton = CampaignButton;
+
+/**
+ * @deprecated use CampaignMedia
+ */
+export type PopupMedia = CampaignMedia;
+
+/**
+ * @deprecated use CampaignBackgroundType
+ */
+export { CampaignBackgroundType as PopupBackgroundType };
+
+/**
+ * @deprecated use CampaignMediaType
+ */
+export { CampaignMediaType as PopupMediaType };
+
+/**
+ * @deprecated use CampaignTextColor
+ */
+export { CampaignTextColor as PopupTextColor };
+
+export { BootstrapVariants };
 
 export enum PopupFields {
   COLUMN_BACKGROUND = 'background',

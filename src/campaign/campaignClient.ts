@@ -20,7 +20,8 @@ export type PostEmailCampaignType = {
 };
 
 export enum CampaignInputFields {
-  COLUMN_BANNER = 'campaignBanner',
+  COLUMN_BANNER = 'banner',
+  COLUMN_CAMPAIGN_BANNER = 'campaignBanner',
   COLUMN_CATEGORY = 'category',
   COLUMN_END_DATE = 'endDate',
   COLUMN_IS_ACTIVATED = 'isActivated',
@@ -195,7 +196,8 @@ export type LandingPageInputType = {
 
 export enum CampaignCategoryList {
   COMMUNICATION_BAR = 'COMMUNICATIONBAR',
-  BANNER = 'CAMPAIGNBANNER',
+  BANNER = 'BANNER',
+  CAMPAIGN_BANNER = 'CAMPAIGNBANNER',
   BUG = 'BUG',
   LANDING_PAGE = 'LANDINGPAGE',
   NOTIFICATION = 'NOTIFICATION',
@@ -204,7 +206,8 @@ export enum CampaignCategoryList {
 }
 
 export type CampaignInputType = {
-  [CampaignInputFields.COLUMN_BANNER]?: CampaignBannerType;
+  [CampaignInputFields.COLUMN_BANNER]?: BannerInputType;
+  [CampaignInputFields.COLUMN_CAMPAIGN_BANNER]?: CampaignBannerType;
   [CampaignInputFields.COLUMN_CATEGORY]?: CampaignCategoryList;
   [CampaignInputFields.COLUMN_END_DATE]?: string;
   [CampaignInputFields.COLUMN_IS_ACTIVATED]?: boolean;
