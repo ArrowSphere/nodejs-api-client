@@ -29,6 +29,7 @@ export type BaseCompanyType = {
   extraInformations?: CompanyExtraInformation[];
   id?: number;
   internalReference?: string;
+  isResellerCompany?: number;
   locked?: boolean;
   name?: string;
   orders?: OrdersType[];
