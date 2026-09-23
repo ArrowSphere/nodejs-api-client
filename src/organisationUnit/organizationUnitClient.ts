@@ -17,8 +17,8 @@ export enum OrganizationUnitClientActionFields {
 }
 
 export type OrganizationUnitClientActionType = {
-  licenses: string[];
-  users: string[];
+  licenses?: string[];
+  users?: string[];
 };
 
 export class OrganizationUnitClient extends AbstractRestfulClient {
