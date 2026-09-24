@@ -80,6 +80,7 @@ export type GraphqlApiOrderSoftwareType = {
   taxes?: GraphqlApiTaxType[];
   report?: GraphqlApiReportType;
   subscription?: SubscriptionType;
+  uuid?: number;
 };
 
 export type GraphqlApiOrderSoftwareStatusType = {
