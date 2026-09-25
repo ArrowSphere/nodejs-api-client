@@ -16,6 +16,7 @@ export enum ItemRequestFields {
   ITEM_ID = 'itemId',
   OFFER_NAME = 'offerName',
   PRICE_BAND_ARROWSPHERE_SKU = 'priceBandArrowsphereSku',
+  PRICE_BAND_ERP_SKU = 'pricebandErpSku',
   PRICE_BAND_VENDOR_SKU = 'pricebandVendorSku',
   PRICES = 'prices',
   PRICES_WITHOUT_PROMOTION = 'pricesWithoutPromotion',
@@ -40,6 +41,7 @@ export type ItemAdditionalDataRequestType = {
 export type ItemRequestType = {
   [ItemRequestFields.OFFER_NAME]: string;
   [ItemRequestFields.PRICE_BAND_ARROWSPHERE_SKU]: string;
+  [ItemRequestFields.PRICE_BAND_ERP_SKU]?: string;
   [ItemRequestFields.PRICE_BAND_VENDOR_SKU]?: string;
   [ItemRequestFields.QUANTITY]: number;
   [ItemRequestFields.ADDITIONAL_DATA]?: ItemAdditionalDataRequestType[];
