@@ -4,7 +4,7 @@ import { URL } from 'url';
 import chai, { expect } from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 chai.use(chaiAsPromised);
-import nock from 'nock';
+import nock, { RequestBodyMatcher } from 'nock';
 
 // Sources
 import {
@@ -785,6 +785,62 @@ describe('LicensesClient', () => {
           },
         }),
       ).not.to.be.rejected;
+    });
+
+    it('works with license.price.priceBandArrowSphereSku string filters', async () => {
+      const payload: LicenseFindPayload = {
+        [LicenseFindParameters.DATA_FILTERS]: {
+          license: {
+            [LicenseFindResultFields.COLUMN_PRICE]: {
+              [PriceFindResultFields.COLUMN_PRICE_BAND_ARROWSPHERE_SKU]: 'SKU1',
+            },
+          },
+        },
+      };
+      const expectedRawPayload: RequestBodyMatcher = {
+        [LicenseFindParameters.DATA_FILTERS]: {
+          [`license.${LicenseFindResultFields.COLUMN_PRICE}.${PriceFindResultFields.COLUMN_PRICE_BAND_ARROWSPHERE_SKU}`]: 'SKU1',
+        },
+      };
+
+      nock(LICENSES_MOCK_URL)
+        .post(LICENSES_FIND_ENDPOINT, expectedRawPayload)
+        .reply(200, (): FindData => MOCK_FIND_RESPONSE);
+
+      await client.find(payload);
+
+      expect(nock.isDone()).to.be.true;
+    });
+
+    it('works with license.price.priceBandArrowSphereSku array filters', async () => {
+      const payload: LicenseFindPayload = {
+        [LicenseFindParameters.DATA_FILTERS]: {
+          license: {
+            [LicenseFindResultFields.COLUMN_PRICE]: {
+              [PriceFindResultFields.COLUMN_PRICE_BAND_ARROWSPHERE_SKU]: [
+                'SKU1',
+                'SKU2',
+              ],
+            },
+          },
+        },
+      };
+      const expectedRawPayload: RequestBodyMatcher = {
+        [LicenseFindParameters.DATA_FILTERS]: {
+          [`license.${LicenseFindResultFields.COLUMN_PRICE}.${PriceFindResultFields.COLUMN_PRICE_BAND_ARROWSPHERE_SKU}`]: [
+            'SKU1',
+            'SKU2',
+          ],
+        },
+      };
+
+      nock(LICENSES_MOCK_URL)
+        .post(LICENSES_FIND_ENDPOINT, expectedRawPayload)
+        .reply(200, (): FindData => MOCK_FIND_RESPONSE);
+
+      await client.find(payload);
+
+      expect(nock.isDone()).to.be.true;
     });
 
     it('calls findRaw and feeds the response returns the FindResult entity', async () => {
