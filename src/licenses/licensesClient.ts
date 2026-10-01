@@ -1208,7 +1208,7 @@ export class LicensesClient extends AbstractRestfulClient {
         ).reduce((generatedArr: Record<string, unknown>, [i, val]) => {
           let recursiveArr: BaseParameters<unknown, unknown, unknown, unknown>;
           const newKey = keyParent + '.' + key + '.' + i;
-          if (typeof val !== 'object') {
+          if (typeof val !== 'object' || Array.isArray(val)) {
             generatedArr[`${newKey}`] = val;
             return generatedArr;
           } else {
