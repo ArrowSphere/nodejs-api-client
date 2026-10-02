@@ -130,6 +130,7 @@ export type GraphqlApiOrderListType = {
   endCustomerName?: string;
   orderType?: string;
   partnerId?: string;
+  partnerAcronym?: string;
   partnerName?: string;
   partnerPo?: string;
   partnerTags?: string;
