@@ -3,6 +3,14 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.425.0] - 2026.11.13
+### Added
+- [catalog] Add `catalogTypes` to `ArrowsphereIdentifierType` (`identifiers.arrowsphere.catalogTypes`)
+
+### Fixed
+- [extraInformation] Restrict `AdditionalExtraInformationItemType` values to `{ [name: string]: string } | undefined` (instead of `unknown`)
+- [CI] Support pre-release versions (e.g. `x.y.z-rc.abc.1`) in the version increment check workflow
+
 ## [3.424.0] - 2026.11.13
 ### Added
 - [quotes] Add `getQuote` (`GET /quotes/{reference}`) and `listQuotes` (`GET /quotes`) endpoints to `QuotesClient`

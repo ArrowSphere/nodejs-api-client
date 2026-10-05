@@ -124,6 +124,7 @@ export type ArrowsphereIdentifierType = {
   skuXsp?: string;
   skuXac?: string;
   orderableSku?: string;
+  catalogTypes?: Array<string>;
 };
 
 export type VendorIdentifierType = {
