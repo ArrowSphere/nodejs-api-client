@@ -67,6 +67,7 @@ export type ProductType = {
   actionFlags?: ActionFlagsType;
   addonPrimaries?: Array<IdentifiersType>;
   arrowCategories?: Array<string>;
+  /** @deprecated Use identifiers.arrowsphere.catalogTypes instead */
   arrowSubCategories?: Array<string>;
   assets?: AssetsType;
   attributesParameters?: Array<AttributesParameters>;
@@ -124,6 +125,7 @@ export type ArrowsphereIdentifierType = {
   skuXsp?: string;
   skuXac?: string;
   orderableSku?: string;
+  catalogTypes?: Array<string>;
 };
 
 export type VendorIdentifierType = {
