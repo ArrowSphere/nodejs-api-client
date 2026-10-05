@@ -30,9 +30,39 @@ jobs:
             exit 0
           fi
 
-          # Parse MAJOR.MINOR.PATCH components
-          IFS='.' read -r BASE_MAJOR BASE_MINOR BASE_PATCH <<< "$BASE_VERSION"
-          IFS='.' read -r NEW_MAJOR  NEW_MINOR  NEW_PATCH  <<< "$NEW_VERSION"
+          # Validate format: MAJOR.MINOR.PATCH with optional pre-release suffix (e.g. -rc.fdi.1)
+          SEMVER_REGEX='^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$'
+          for V in "$BASE_VERSION" "$NEW_VERSION"; do
+            if ! [[ "$V" =~ $SEMVER_REGEX ]]; then
+              echo "❌ Invalid version format: $V"
+              exit 1
+            fi
+          done
+
+          # Split core (x.y.z) and pre-release suffix (after the first '-')
+          BASE_CORE="${BASE_VERSION%%-*}"
+          NEW_CORE="${NEW_VERSION%%-*}"
+          BASE_PRE="${BASE_VERSION#"$BASE_CORE"}"; BASE_PRE="${BASE_PRE#-}"
+          NEW_PRE="${NEW_VERSION#"$NEW_CORE"}";   NEW_PRE="${NEW_PRE#-}"
+
+          # Same core version: only pre-release transitions are allowed
+          if [ "$BASE_CORE" = "$NEW_CORE" ]; then
+            if [ -n "$BASE_PRE" ] && [ -z "$NEW_PRE" ]; then
+              echo "✅ Valid release of pre-release: $BASE_VERSION -> $NEW_VERSION"
+              exit 0
+            fi
+            if [ -n "$BASE_PRE" ] && [ -n "$NEW_PRE" ]; then
+              echo "✅ Valid pre-release update: $BASE_VERSION -> $NEW_VERSION"
+              exit 0
+            fi
+            echo "❌ Invalid version change: $BASE_VERSION -> $NEW_VERSION"
+            echo "A pre-release of an already released version is not allowed."
+            exit 1
+          fi
+
+          # Parse MAJOR.MINOR.PATCH components (pre-release suffix ignored)
+          IFS='.' read -r BASE_MAJOR BASE_MINOR BASE_PATCH <<< "$BASE_CORE"
+          IFS='.' read -r NEW_MAJOR  NEW_MINOR  NEW_PATCH  <<< "$NEW_CORE"
 
           VALID=false
 
@@ -61,6 +91,7 @@ jobs:
             echo "  - Major bump : x.y.z -> (x+1).0.0"
             echo "  - Minor bump : x.y.z -> x.(y+1).0"
             echo "  - Patch bump : x.y.z -> x.y.(z+1)"
+            echo "An optional pre-release suffix is allowed (e.g. x.y.(z+1)-rc.abc.1)."
             exit 1
           fi
 
