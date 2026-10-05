@@ -5,7 +5,7 @@ export enum AdditionalExtraInformationFields {
 }
 
 export type AdditionalExtraInformationItemType = {
-  [key: string]: { [name: string]: string } | unknown;
+  [key: string]: { [name: string]: string } | undefined;
 };
 
 export type AdditionalExtraInformationType = {
