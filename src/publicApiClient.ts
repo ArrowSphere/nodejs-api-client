@@ -16,7 +16,7 @@ import {
 } from './wellArchitected';
 import { CartClient } from './cart/cartClient';
 import { SupportCenterClient } from './supportCenter';
-import { CatalogClient } from './catalog';
+import { CatalogClient, CatalogPlanClient } from './catalog';
 import { UserClient } from './user';
 import { NotificationsClient } from './notifications';
 import { RegisterClient, StandardsClient } from './security';
@@ -268,6 +268,15 @@ export class PublicApiClient extends AbstractRestfulClient {
 
   public getCatalogClient(configuration?: ConfigurationsClient): CatalogClient {
     const client: CatalogClient = new CatalogClient(configuration);
+    this.applyConfig(client);
+
+    return client;
+  }
+
+  public getCatalogPlanClient(
+    configuration?: ConfigurationsClient,
+  ): CatalogPlanClient {
+    const client: CatalogPlanClient = new CatalogPlanClient(configuration);
     this.applyConfig(client);
 
     return client;
