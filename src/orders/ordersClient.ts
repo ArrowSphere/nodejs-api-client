@@ -7,7 +7,12 @@ import {
   AttachmentOrder,
   AttachmentsListOrder,
 } from './entities/orders/attachment';
+import { CommentOrder } from './entities/orders/Comment';
+import { DataListOrderComments } from './entities/dataListOrderComments';
 
+export enum CreateOrderCommentInputFields {
+  COLUMN_BODY = 'body',
+}
 export enum CreateOrderInputFields {
   COLUMN_CUSTOMER = 'customer',
   COLUMN_REFERENCE = 'reference',
@@ -93,6 +98,10 @@ export type CreateOrderInputType = {
     label: string;
     value: string;
   }>;
+};
+
+export type CreateOrderCommentInputType = {
+  [CreateOrderCommentInputFields.COLUMN_BODY]: string;
 };
 
 export type CreateOrderProductType = {
@@ -231,6 +240,29 @@ export class OrdersClient extends AbstractRestfulClient {
     parameters: Parameters = {},
   ): Promise<GetResult<ReferenceLink>> {
     return new GetResult(ReferenceLink, await this.post(postData, parameters));
+  }
+
+  public async createComment(
+    orderReference: string,
+    payload: CreateOrderCommentInputType,
+    parameters: Parameters = {},
+  ): Promise<GetResult<CommentOrder>> {
+    this.path = `/${orderReference}/comments`;
+
+    return new GetResult(CommentOrder, await this.post(payload, parameters));
+  }
+
+  public async getListComments(
+    orderReference: string,
+    perPage = 25,
+    page = 1,
+    parameters: Parameters = {},
+  ): Promise<GetResult<DataListOrderComments>> {
+    this.setPerPage(perPage);
+    this.setPage(page);
+    this.path = `/${orderReference}/comments`;
+
+    return new GetResult(DataListOrderComments, await this.get(parameters));
   }
 
   public async getListOrders(
