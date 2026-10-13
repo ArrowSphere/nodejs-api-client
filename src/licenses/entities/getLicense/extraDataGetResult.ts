@@ -61,6 +61,7 @@ export enum CompanyDetailKeyEnum {
   TENANT_ID = 'TENANT_ID',
   VADE_SECURE_TENANT_ID = 'VADE_SECURE_TENANT_ID',
   XCP_DOMAIN = 'XCP_DOMAIN',
+  AVEPOINT_TENANT_OWNER_EMAIL = 'AVEPOINT_TENANT_OWNER_EMAIL',
 }
 
 export enum ExtraDataFields {
