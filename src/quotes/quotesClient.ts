@@ -3,6 +3,8 @@ import { GetResult } from '../getResult';
 import { QuoteRequest } from './entities/QuoteRequest';
 import { PutQuoteResult } from './entities/PutQuoteResult';
 import { QuoteComments } from './entities/QuoteComments';
+import { Quote } from './entities/Quote';
+import { QuoteList } from './entities/QuoteList';
 
 export type RequestQuoteRequestType = {
   agreeToReceiveCommunications: boolean;
@@ -77,6 +79,24 @@ export type CreateCommentType = {
 
 export class QuotesClient extends AbstractRestfulClient {
   protected basePath = '/quotes';
+
+  public async listQuotes(
+    perPage: number = 25,
+    page: number = 1,
+    parameters: Parameters = {},
+  ): Promise<GetResult<QuoteList>> {
+    this.path = '';
+    this.setPerPage(perPage);
+    this.setPage(page);
+
+    return new GetResult(QuoteList, await this.get(parameters));
+  }
+
+  public async getQuote(reference: string): Promise<GetResult<Quote>> {
+    this.path = `/${reference}`;
+
+    return new GetResult(Quote, await this.get());
+  }
 
   public async requestQuote(
     postData: RequestQuoteRequestType,
