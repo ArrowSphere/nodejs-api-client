@@ -2,9 +2,24 @@ import { expect } from 'chai';
 import {
   CreateCommentType,
   CreateQuoteRequestType,
+  OrderPartner,
   PublicApiClient,
   PublishQuoteRequestType,
+  QuoteLastVersion,
+  QuoteList,
+  QuoteProduct,
+  QuoteProductAssets,
+  QuoteProductPriceBand,
+  QuoteProductPriceBandArrowsphereIdentifier,
+  QuoteProductPriceBandErpIdentifier,
+  QuoteProductPriceBandIdentifiers,
+  QuoteProductPriceBandVendorIdentifier,
+  QuoteProductPrices,
+  QuoteProductProgram,
+  QuoteProductVendor,
+  ReferenceLink,
 } from '../../src';
+import { Quote, QuoteData } from '../../src/quotes/entities/Quote';
 import { Axios, AxiosHeaders, AxiosResponse } from 'axios';
 import sinon from 'sinon';
 import nock from 'nock';
@@ -13,9 +28,255 @@ const QUOTES_MOCK_URL = 'https://quotes.localhost';
 const QUOTE_REFERENCE = 'XSP999';
 
 describe('QuotesClient', () => {
+  const quote: QuoteData = {
+    customer: {
+      reference: 'XSP399744',
+      link: '/api/customers/XSP399744',
+    },
+    dateCreation: '2026-10-12 14:03:16',
+    dateEnd: '2026-10-27 23:59:59',
+    dateUpdate: '2026-10-14 12:37:40',
+    endCustomerPONumber: 'CUSTOMER-PO-456',
+    lastVersion: {
+      dateUpdate: '2026-10-14 12:37:40',
+      version: 2,
+    },
+    partner: {
+      companyName: 'Partner company name',
+      contact: {
+        firstName: 'Partner contact first name',
+        lastName: 'Partner contact last name',
+        email: 'Partner contact email',
+        phone: 'Partner contact phone',
+      },
+    },
+    ponumber: 'PO-123',
+    products: [
+      {
+        arrowSubCategories: ['NCE'],
+        assets: {
+          mainLogoUrl: 'https://websource.myportal.cloud/images/microsoft.png',
+          squareLogoUrl:
+            'https://websource.myportal.cloud/images/icon/microsoft.png',
+        },
+        classification: 'SaaS',
+        isAddon: false,
+        isTrial: false,
+        license: {
+          reference: 'XSP4510792',
+          link: '/api/licenses/XSP4510792',
+        },
+        name: 'Microsoft 365 Business Basic',
+        priceBand: {
+          identifiers: {
+            arrowsphere: {
+              sku: 'MS-0B-O365-BUSINESS-BASIC-NCE',
+            },
+            erp: {
+              sku: 'CFQ7TTC0LH18:0001:P1M',
+            },
+            vendor: {
+              sku: 'CFQ7TTC0LH18:0001',
+            },
+          },
+        },
+        prices: {
+          buy: 13.3,
+          currency: 'EUR',
+          periodicity: 'per Month',
+          periodicityCode: 720,
+          sell: 13.3,
+          term: 'twelveMonths',
+          termCode: 8640,
+        },
+        program: {
+          internalName: 'MSCSP',
+          legacyCode: 'microsoft',
+        },
+        promotionId: 'PROMO-123',
+        quantity: 2,
+        sku: 'SAAS||Microsoft||MICROSOFT-365-BUSINESS||CFQ7TTC0LH18:0001',
+        vendor: {
+          name: 'Microsoft',
+        },
+      },
+    ],
+    quoteReference: 'Q-ARWS-ef0e6bd8-17727',
+    reference: 'XSPQ1473674',
+    status: 'Sent to end customer',
+  };
+
   const client = new PublicApiClient()
     .getQuotesClient()
     .setUrl(QUOTES_MOCK_URL);
+
+  describe('getQuote', (): void => {
+    afterEach(() => {
+      sinon.restore();
+    });
+
+    it('should get a quote by reference and deserialize nested entities', async () => {
+      const payload = { status: 200, data: quote };
+      const scope = nock(QUOTES_MOCK_URL)
+        .get(`/quotes/${quote.reference}`)
+        .reply(200, payload);
+
+      const result = await client.getQuote(quote.reference);
+
+      expect(scope.isDone()).to.be.true;
+      expect(result.status).to.equal(200);
+      expect(result.data).to.be.instanceOf(Quote);
+      expect(result.data.partner).to.be.instanceOf(OrderPartner);
+      expect(result.data.partner?.contact.phone).to.equal(
+        'Partner contact phone',
+      );
+      expect(result.data.customer).to.be.instanceOf(ReferenceLink);
+      expect(result.data.ponumber).to.equal(quote.ponumber);
+      expect(result.data.endCustomerPONumber).to.equal(
+        quote.endCustomerPONumber,
+      );
+      const product = result.data.products[0];
+      expect(product).to.be.instanceOf(QuoteProduct);
+      expect(product.prices).to.be.instanceOf(QuoteProductPrices);
+      expect(product.license).to.be.instanceOf(ReferenceLink);
+      expect(product.vendor).to.be.instanceOf(QuoteProductVendor);
+      expect(product.priceBand).to.be.instanceOf(QuoteProductPriceBand);
+      expect(product.priceBand.identifiers).to.be.instanceOf(
+        QuoteProductPriceBandIdentifiers,
+      );
+      expect(product.priceBand.identifiers.arrowsphere).to.be.instanceOf(
+        QuoteProductPriceBandArrowsphereIdentifier,
+      );
+      expect(product.priceBand.identifiers.erp).to.be.instanceOf(
+        QuoteProductPriceBandErpIdentifier,
+      );
+      expect(product.priceBand.identifiers.vendor).to.be.instanceOf(
+        QuoteProductPriceBandVendorIdentifier,
+      );
+      expect(product.program).to.be.instanceOf(QuoteProductProgram);
+      expect(product.assets).to.be.instanceOf(QuoteProductAssets);
+      expect(result.data.lastVersion).to.be.instanceOf(QuoteLastVersion);
+      expect(product.priceBand.identifiers.arrowsphere.sku).to.equal(
+        'MS-0B-O365-BUSINESS-BASIC-NCE',
+      );
+      expect(product.promotionId).to.equal('PROMO-123');
+      expect(result.data.toJSON()).to.deep.equal(quote);
+      expect(result.pagination).to.be.undefined;
+    });
+
+    it('should support absent optional fields and empty products', async () => {
+      const minimalQuote: QuoteData = {
+        dateCreation: quote.dateCreation,
+        dateUpdate: quote.dateUpdate,
+        products: [],
+        quoteReference: quote.quoteReference,
+        reference: quote.reference,
+        status: quote.status,
+      };
+      const payload = { status: 200, data: minimalQuote };
+      const scope = nock(QUOTES_MOCK_URL)
+        .get(`/quotes/${quote.reference}`)
+        .reply(200, payload);
+
+      const result = await client.getQuote(quote.reference);
+
+      expect(scope.isDone()).to.be.true;
+      expect(result.data.dateEnd).to.be.undefined;
+      expect(result.data.partner).to.be.undefined;
+      expect(result.data.customer).to.be.undefined;
+      expect(result.data.ponumber).to.be.undefined;
+      expect(result.data.endCustomerPONumber).to.be.undefined;
+      expect(result.data.lastVersion).to.be.undefined;
+      expect(result.data.products).to.deep.equal([]);
+      expect(result.toJSON()).to.deep.equal(payload);
+    });
+  });
+
+  describe('getQuote with partial product data', (): void => {
+    it('should support a product without program internal name, logos nor price band vendor sku', async () => {
+      const productWithoutOptionalData = {
+        ...quote.products[0],
+        program: { legacyCode: 'microsoft' },
+        promotionId: undefined,
+        assets: { mainLogoUrl: null, squareLogoUrl: null },
+        priceBand: {
+          identifiers: {
+            arrowsphere: { sku: 'MS-0B-O365-BUSINESS-BASIC-NCE' },
+            erp: { sku: 'CFQ7TTC0LH18:0001:P1M' },
+            vendor: {},
+          },
+        },
+      };
+      const payload = {
+        status: 200,
+        data: { ...quote, products: [productWithoutOptionalData] },
+      };
+      const scope = nock(QUOTES_MOCK_URL)
+        .get(`/quotes/${quote.reference}`)
+        .reply(200, payload);
+
+      const result = await client.getQuote(quote.reference);
+      const product = result.data.products[0];
+
+      expect(scope.isDone()).to.be.true;
+      expect(product.program.legacyCode).to.equal('microsoft');
+      expect(product.program.internalName).to.be.undefined;
+      expect(product.assets.mainLogoUrl).to.be.null;
+      expect(product.assets.squareLogoUrl).to.be.null;
+      expect(product.vendor.name).to.equal('Microsoft');
+      expect(product.prices.periodicityCode).to.equal(720);
+      expect(product.prices.termCode).to.equal(8640);
+      expect(product.priceBand.identifiers.vendor.sku).to.be.undefined;
+      expect(product.promotionId).to.be.undefined;
+    });
+  });
+
+  describe('listQuotes', (): void => {
+    it('should list quotes with pagination', async () => {
+      const payload = {
+        status: 200,
+        data: [quote, { ...quote, reference: 'XSPQ1473675' }],
+        pagination: {
+          per_page: 25,
+          current_page: 1,
+          total_page: 1,
+          total: 2,
+          next: null,
+          previous: null,
+        },
+      };
+      const scope = nock(QUOTES_MOCK_URL)
+        .get('/quotes?per_page=25')
+        .reply(200, payload);
+
+      const result = await client.listQuotes(25, 1);
+
+      expect(scope.isDone()).to.be.true;
+      expect(result.data).to.be.instanceOf(QuoteList);
+      expect(result.data.quotes).to.have.lengthOf(2);
+      result.data.quotes.forEach((item) => {
+        expect(item).to.be.instanceOf(Quote);
+        expect(item.products[0]).to.be.instanceOf(QuoteProduct);
+      });
+      expect(result.data.toJSON()).to.deep.equal(payload.data);
+      expect(result.pagination?.toJSON()).to.deep.equal(payload.pagination);
+      expect(result.toJSON()).to.deep.equal(payload);
+    });
+
+    it('should support an empty quote list without pagination', async () => {
+      const payload = { status: 200, data: [] };
+      const scope = nock(QUOTES_MOCK_URL)
+        .get('/quotes?per_page=25')
+        .reply(200, payload);
+
+      const result = await client.listQuotes();
+
+      expect(scope.isDone()).to.be.true;
+      expect(result.data.quotes).to.deep.equal([]);
+      expect(result.pagination).to.be.undefined;
+      expect(result.toJSON()).to.deep.equal(payload);
+    });
+  });
 
   describe('deleteQuote', () => {
     let axiosClient: sinon.SinonStubbedInstance<Axios>;
