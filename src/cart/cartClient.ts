@@ -1,6 +1,6 @@
 import { AbstractRestfulClient, Parameters } from '../abstractRestfulClient';
 import { GetResult } from '../getResult';
-import { Item, ItemList } from './entities';
+import { CartItemListResult, Item } from './entities';
 import { GetPromotionCartListResult } from './entities/promotionList';
 import { GetPrerequisitesListResult } from './entities/prerequisiteList';
 
@@ -80,11 +80,11 @@ export class CartClient extends AbstractRestfulClient {
   public async changeCustomer(
     postData: ChangeCustomerRequestType,
     parameters: Parameters = {},
-  ): Promise<GetResult<ItemList>> {
+  ): Promise<CartItemListResult> {
     this.path =
       '/changeCustomer/?withPrices=' + (parameters.withPrices ?? false);
 
-    return new GetResult(ItemList, await this.post(postData));
+    return new CartItemListResult(await this.post(postData));
   }
 
   public async checkPromotion(
@@ -137,10 +137,10 @@ export class CartClient extends AbstractRestfulClient {
     perPage = 25,
     page = 1,
     parameters: Parameters = {},
-  ): Promise<GetResult<ItemList>> {
+  ): Promise<CartItemListResult> {
     this.setPerPage(perPage);
     this.setPage(page);
 
-    return new GetResult(ItemList, await this.get(parameters));
+    return new CartItemListResult(await this.get(parameters));
   }
 }

@@ -1,4 +1,6 @@
 import {
+  CartActionsEnum,
+  CartItemListResultData,
   GetData,
   GetResultFields,
   ItemAddRequestType,
@@ -186,3 +188,13 @@ export const CART_ADD_BUNDLE_ITEM_RESPONSE: GetData<ItemType> = {
     ],
   },
 };
+
+export const CART_LIST_ITEMS_WITH_ACTIONS_RESPONSE: CartItemListResultData = {
+  ...CART_LIST_ITEMS_RESPONSE,
+  cartActions: [CartActionsEnum.CHECKOUT, CartActionsEnum.REQUEST_QUOTE],
+};
+
+export const CHANGE_CUSTOMER_REQUEST = { customerRef: 'XSP123456' };
+export const CHANGE_CUSTOMER_URL_INTERCEPTOR = new RegExp(
+  `^${CART_MOCK_PATH}/changeCustomer/(\\?.*)?`,
+);
