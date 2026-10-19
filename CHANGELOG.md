@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.411.0] - 2026.10.19
+### Added
+- [cart] `listItems` and `changeCustomer` now return `CartItemListResult`, exposing the `cartActions` (`CartActionsEnum`: `CHECKOUT`, `REQUEST_QUOTE`) returned by the API
+
 ## [3.410.0] - 2026.10.13
 ### Added
 - [licenses] Add `AVEPOINT_TENANT_OWNER_EMAIL` to `CompanyDetailKeyEnum` enum
