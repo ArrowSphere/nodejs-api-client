@@ -21,8 +21,11 @@ import {
   CART_UPDATE_ITEM_REQUEST,
   CART_UPDATE_ITEM_RESPONSE,
   CART_UPDATE_ITEM_URL_INTERCEPTOR,
+  CART_LIST_ITEMS_WITH_ACTIONS_RESPONSE,
+  CHANGE_CUSTOMER_REQUEST,
+  CHANGE_CUSTOMER_URL_INTERCEPTOR,
 } from './mocks/cart.mocks';
-import { Item, ItemList } from '../../src';
+import { CartActionsEnum, CartItemListResult, Item, ItemList } from '../../src';
 
 describe('CartClient', function () {
   const client = new PublicApiClient().getCartClient().setUrl(CART_MOCK_URL);
@@ -99,6 +102,49 @@ describe('CartClient', function () {
 
       expect(response).to.be.instanceof(GetResult);
       expect(response.toJSON()).to.be.deep.equal(CART_LIST_ITEMS_RESPONSE);
+    });
+  });
+
+  describe('cart actions', function () {
+    it('exposes cartActions on listItems', async function () {
+      nock(CART_MOCK_URL)
+        .get(CART_LIST_ITEMS_URL_INTERCEPTOR)
+        .reply(constants.HTTP_STATUS_OK, CART_LIST_ITEMS_WITH_ACTIONS_RESPONSE);
+
+      const response = await client.listItems();
+
+      expect(response).to.be.instanceof(CartItemListResult);
+      expect(response.cartActions).to.be.deep.equal([
+        CartActionsEnum.CHECKOUT,
+        CartActionsEnum.REQUEST_QUOTE,
+      ]);
+      expect(response.toJSON()).to.be.deep.equal(
+        CART_LIST_ITEMS_WITH_ACTIONS_RESPONSE,
+      );
+    });
+
+    it('defaults cartActions to an empty array when absent', async function () {
+      nock(CART_MOCK_URL)
+        .get(CART_LIST_ITEMS_URL_INTERCEPTOR)
+        .reply(constants.HTTP_STATUS_OK, CART_LIST_ITEMS_RESPONSE);
+
+      const response = await client.listItems();
+
+      expect(response.cartActions).to.be.deep.equal([]);
+    });
+
+    it('exposes cartActions on changeCustomer', async function () {
+      nock(CART_MOCK_URL)
+        .post(CHANGE_CUSTOMER_URL_INTERCEPTOR)
+        .reply(constants.HTTP_STATUS_OK, CART_LIST_ITEMS_WITH_ACTIONS_RESPONSE);
+
+      const response = await client.changeCustomer(CHANGE_CUSTOMER_REQUEST);
+
+      expect(response.cartActions).to.be.deep.equal([
+        CartActionsEnum.CHECKOUT,
+        CartActionsEnum.REQUEST_QUOTE,
+      ]);
+      expect(response.data).to.be.instanceof(ItemList);
     });
   });
 
