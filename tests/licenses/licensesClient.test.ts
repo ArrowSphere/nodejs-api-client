@@ -11,6 +11,7 @@ import {
   ActionFlagsFindResultFields,
   ActiveSeatsFindResultFields,
   ArrowsphereFindResultFields,
+  ErpFindResultFields,
   AutoRenewStatuses,
   BillingFindResultFields,
   BulkSetRateBody,
@@ -264,6 +265,9 @@ export const MOCK_RESULT_DATA: {
       [PriceBandFindResultFields.COLUMN_IDENTIFIERS]: {
         [IdentifiersFindResultFields.COLUMN_ARROWSPHERE]: {
           [ArrowsphereFindResultFields.COLUMN_SKU]: 'sku',
+        },
+        [IdentifiersFindResultFields.COLUMN_ERP]: {
+          [ErpFindResultFields.COLUMN_SKU]: 'erpSku',
         },
       },
       [PriceBandFindResultFields.COLUMN_ATTRIBUTES]: [],

@@ -42,6 +42,7 @@ export * from './entities/offer/priceband/priceBandActionFlagsFindResult';
 export * from './entities/offer/priceband/priceBandPriceFindResult';
 export * from './entities/offer/priceband/saleConstraintsFindResult';
 export * from './entities/offer/priceband/identifiers/arrowsphereFindResult';
+export * from './entities/offer/priceband/identifiers/erpFindResult';
 export * from './entities/schedule/getScheduleTaskResult';
 export * from './entities/schedule/getScheduledTasksResult';
 export * from './entities/schedule/scheduleTasksResult';
