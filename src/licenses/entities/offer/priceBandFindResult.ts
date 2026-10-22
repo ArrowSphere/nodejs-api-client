@@ -217,6 +217,10 @@ export class PriceBandFindResult extends AbstractEntity<PriceBandFindResultData>
             IdentifiersFindResultFields.COLUMN_ARROWSPHERE
           ][ArrowsphereFindResultFields.COLUMN_SKU],
       },
+      [IdentifiersFindResultFields.COLUMN_ERP]:
+        data[PriceBandFindResultFields.COLUMN_IDENTIFIERS][
+          IdentifiersFindResultFields.COLUMN_ERP
+        ],
     };
     this.#identifiers = new IdentifiersFindResult(identifiers);
     this.#attributes =
