@@ -6,6 +6,7 @@ export enum IssueFields {
   COLUMN_CREATED_BY = 'createdBy',
   COLUMN_DESCRIPTION = 'description',
   COLUMN_END_CUSTOMER_REF = 'endCustomerRef',
+  COLUMN_EXTRA_DESCRIPTION_INFO = 'extraDescriptionInfo',
   COLUMN_ID = 'id',
   COLUMN_KEY = 'key',
   COLUMN_LANGUAGE = 'language',
