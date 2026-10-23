@@ -1,4 +1,5 @@
 import { AbstractEntity } from '../../abstractEntity';
+import { EndCustomer, CartEndCustomerType } from './endCustomer';
 
 export enum ItemAdditionalDataFields {
   NAME = 'name',
@@ -22,6 +23,7 @@ export enum ItemFields {
   COTERM_PRICES = 'cotermPrices',
   COTERM_PRICES_WITHOUT_PROMOTION = 'cotermPricesWithoutPromotion',
   CURRENCY = 'currency',
+  END_CUSTOMER = 'endCustomer',
   IS_ADDON = 'isAddon',
   IS_BUNDLE = 'isBundle',
   IS_TRIAL = 'isTrial',
@@ -45,6 +47,7 @@ export type ItemType = {
     | Record<'arrow' | 'partner' | 'endCustomer' | 'retail', number>
     | undefined;
   [ItemFields.CURRENCY]?: string;
+  [ItemFields.END_CUSTOMER]?: CartEndCustomerType | undefined;
   [ItemFields.IS_ADDON]?: boolean;
   [ItemFields.IS_BUNDLE]?: boolean | undefined;
   [ItemFields.IS_TRIAL]?: boolean;
@@ -74,6 +77,7 @@ export class Item extends AbstractEntity<ItemType> {
     | Record<'arrow' | 'partner' | 'endCustomer' | 'retail', number>
     | undefined;
   readonly #currency?: string | undefined;
+  readonly #endCustomer?: EndCustomer | undefined;
   readonly #isAddon?: boolean | undefined;
   readonly #isBundle?: boolean | undefined;
   readonly #isTrial?: boolean | undefined;
@@ -101,6 +105,8 @@ export class Item extends AbstractEntity<ItemType> {
     this.#cotermPricesWithoutPromotion =
       itemResponse[ItemFields.COTERM_PRICES_WITHOUT_PROMOTION];
     this.#currency = itemResponse[ItemFields.CURRENCY];
+    const endCustomer = itemResponse[ItemFields.END_CUSTOMER];
+    this.#endCustomer = endCustomer ? new EndCustomer(endCustomer) : undefined;
     this.#isAddon = itemResponse[ItemFields.IS_ADDON];
     this.#isBundle = itemResponse[ItemFields.IS_BUNDLE];
     this.#isTrial = itemResponse[ItemFields.IS_TRIAL];
@@ -140,6 +146,10 @@ export class Item extends AbstractEntity<ItemType> {
 
   get currency(): string | undefined {
     return this.#currency;
+  }
+
+  get endCustomer(): EndCustomer | undefined {
+    return this.#endCustomer;
   }
 
   get isAddon(): boolean | undefined {
@@ -209,6 +219,7 @@ export class Item extends AbstractEntity<ItemType> {
       [ItemFields.COTERM_PRICES_WITHOUT_PROMOTION]: this
         .cotermPricesWithoutPromotion,
       [ItemFields.CURRENCY]: this.currency,
+      [ItemFields.END_CUSTOMER]: this.endCustomer?.toJSON(),
       [ItemFields.IS_ADDON]: this.isAddon,
       [ItemFields.IS_BUNDLE]: this.isBundle,
       [ItemFields.IS_TRIAL]: this.isTrial,
