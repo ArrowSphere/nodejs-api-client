@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.415.0] - 2026.10.23
+### Added
+- [supportCenter] Add `extraDescriptionInfo` to `CreateIssuePayload` (`IssueExtraDescriptionInfoType`, `IssueExtraDescriptionInfoNameEnum`, `IssueExtraDescriptionInfoImpactEnum`, `IssueExtraDescriptionInfoUrgencyEnum`, `IssueExtraDescriptionInfoAvailabilityEnum`)
+
 ## [3.414.0] - 2026.10.23
 ### Added
 - [cart] Add `endCustomer` to cart `Item` (`EndCustomer`: `reference` and Microsoft `vendorInfo`)
