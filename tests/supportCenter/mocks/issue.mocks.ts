@@ -13,6 +13,9 @@ import {
   UpdateIssuePayload,
   IssueStatusesType,
   StatusDetailsValueEnum,
+  IssueExtraDescriptionInfoFields,
+  IssueExtraDescriptionInfoNameEnum,
+  IssueExtraDescriptionInfoImpactEnum,
 } from '../../../src';
 
 export const CREATE_ISSUE_PAYLOAD: CreateIssuePayload = {
@@ -20,6 +23,24 @@ export const CREATE_ISSUE_PAYLOAD: CreateIssuePayload = {
   description: 'description',
   topicId: '1',
   program: IssueProgramsType.ARWS_AMS,
+};
+
+export const CREATE_ISSUE_WITH_EXTRA_DESCRIPTION_INFO_PAYLOAD: CreateIssuePayload = {
+  ...CREATE_ISSUE_PAYLOAD,
+  program: IssueProgramsType.MSCSP,
+  [IssueFields.COLUMN_EXTRA_DESCRIPTION_INFO]: [
+    {
+      [IssueExtraDescriptionInfoFields.COLUMN_NAME]:
+        IssueExtraDescriptionInfoNameEnum.IMPACT,
+      [IssueExtraDescriptionInfoFields.COLUMN_VALUE]:
+        IssueExtraDescriptionInfoImpactEnum.LOW,
+    },
+    {
+      [IssueExtraDescriptionInfoFields.COLUMN_NAME]:
+        IssueExtraDescriptionInfoNameEnum.EXTRA_EMAIL,
+      [IssueExtraDescriptionInfoFields.COLUMN_VALUE]: 'john.doe@example.com',
+    },
+  ],
 };
 
 export const UPDATE_ISSUE_PAYLOAD: UpdateIssuePayload = [

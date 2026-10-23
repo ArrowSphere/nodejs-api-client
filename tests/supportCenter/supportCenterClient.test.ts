@@ -4,6 +4,7 @@ import { constants } from 'http2';
 import { expect } from 'chai';
 import {
   CREATE_ISSUE_PAYLOAD,
+  CREATE_ISSUE_WITH_EXTRA_DESCRIPTION_INFO_PAYLOAD,
   GET_ISSUE_RESPONSE,
   GET_ISSUE_WITH_ALL_DATA_RESPONSE,
   LIST_ISSUE_RESPONSE,
@@ -131,6 +132,21 @@ describe('SupportCenterClient', function () {
 
       expect(response).to.be.instanceof(GetResult);
       expect(response.toJSON()).to.be.deep.equal(GET_ISSUE_RESPONSE);
+    });
+
+    it('sends the extra description info in the body', async function () {
+      nock(SUPPORT_CENTER_MOCK_URL)
+        .post(
+          CREATE_ISSUE_URL_INTERCEPTOR,
+          CREATE_ISSUE_WITH_EXTRA_DESCRIPTION_INFO_PAYLOAD,
+        )
+        .reply(constants.HTTP_STATUS_OK, GET_ISSUE_RESPONSE);
+
+      await client.createIssue(
+        CREATE_ISSUE_WITH_EXTRA_DESCRIPTION_INFO_PAYLOAD,
+      );
+
+      expect(nock.isDone()).to.be.true;
     });
   });
 
