@@ -16,6 +16,7 @@ import {
 } from './entities/order';
 import { OrganizationUnitsType } from './entities/organizationUnit';
 import { PartnertagType } from './entities/partnertag';
+import { PartnertagCategoryType } from './entities/partnertagCategory';
 import {
   GraphqlApiProgramType,
   ProgramLevelOptionGroupType,
@@ -186,6 +187,7 @@ export enum SelectDataField {
   ORDER_SOFTWARE = 'orderSoftware',
   PARTNER = 'partner',
   PARTNERTAG = 'partnertag',
+  PARTNERTAG_CATEGORY = 'partnertagCategory',
   PROGRAM = 'program',
   PROGRAM_LEVEL = 'programLevel',
   PROGRAM_LEVEL_OPTION_GROUP = 'programLevelOptionGroup',
@@ -237,6 +239,7 @@ export type SelectAllResponseDataType = {
   [SelectDataField.ORDER_SOFTWARE]?: GraphqlApiOrderSoftwareType[];
   [SelectDataField.PARTNER]?: PartnerType[];
   [SelectDataField.PARTNERTAG]?: PartnertagType[];
+  [SelectDataField.PARTNERTAG_CATEGORY]?: PartnertagCategoryType[];
   [SelectDataField.PROGRAM]?: GraphqlApiProgramType[];
   [SelectDataField.PROGRAM_LEVEL]?: ProgramLevelType[];
   [SelectDataField.PROGRAM_LEVEL_OPTION_GROUP]?: ProgramLevelOptionGroupType[];
@@ -336,6 +339,7 @@ export type SelectOneResponseDataType = {
   [SelectDataField.ORDER_SOFTWARE]?: GraphqlApiOrderSoftwareType;
   [SelectDataField.PARTNER]?: PartnerType;
   [SelectDataField.PARTNERTAG]?: PartnertagType;
+  [SelectDataField.PARTNERTAG_CATEGORY]?: PartnertagCategoryType;
   [SelectDataField.PROGRAM]?: GraphqlApiProgramType;
   [SelectDataField.PROGRAM_LEVEL]?: ProgramLevelType;
   [SelectDataField.PROGRAM_LEVEL_OPTION_GROUP]?: ProgramLevelOptionGroupType;

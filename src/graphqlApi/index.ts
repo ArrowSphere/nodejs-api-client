@@ -11,6 +11,7 @@ export * from './types/entities/licenseBudget';
 export * from './types/entities/order';
 export * from './types/entities/organizationUnit';
 export * from './types/entities/partnertag';
+export * from './types/entities/partnertagCategory';
 export * from './types/entities/program';
 export * from './types/entities/quote';
 export * from './types/entities/report';

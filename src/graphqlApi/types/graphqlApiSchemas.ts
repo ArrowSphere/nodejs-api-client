@@ -7,6 +7,7 @@ import {
   PartnerType,
 } from './entities/company';
 import { PartnertagType } from './entities/partnertag';
+import { PartnertagCategoryType } from './entities/partnertagCategory';
 import { ContinentType, CountryType } from './entities/country';
 import { WorkgroupType } from './entities/workgroup';
 import {
@@ -75,6 +76,7 @@ import { GraphqlApiTaxType } from './entities/tax';
 import { GraphqlApiUnitType } from './entities/unit';
 
 export type PartnertagSchema = Schema<PartnertagType, boolean>;
+export type PartnertagCategorySchema = Schema<PartnertagCategoryType, boolean>;
 
 type MissingFieldsOfCompanySchema = {
   contacts?: ContactsSchema;
@@ -396,6 +398,7 @@ export type SelectAllResponseDataSchema = {
   [SelectDataField.ORDER_SOFTWARE]?: OrderSoftwareSchema;
   [SelectDataField.PARTNER]?: PartnerSchema;
   [SelectDataField.PARTNERTAG]?: PartnertagSchema;
+  [SelectDataField.PARTNERTAG_CATEGORY]?: PartnertagCategorySchema;
   [SelectDataField.PROGRAM]?: GraphqlApiProgramSchema;
   [SelectDataField.PROGRAM_LEVEL]?: ProgramLevelSchema;
   [SelectDataField.PROGRAM_LEVEL_OPTION_GROUP]?: ProgramLevelOptionGroupSchema;
