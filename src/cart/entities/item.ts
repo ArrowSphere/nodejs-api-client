@@ -1,5 +1,9 @@
 import { AbstractEntity } from '../../abstractEntity';
 import { EndCustomer, CartEndCustomerType } from './endCustomer';
+import {
+  ItemPreferredCurrency,
+  ItemPreferredCurrencyType,
+} from './itemPreferredCurrency';
 
 export enum ItemAdditionalDataFields {
   NAME = 'name',
@@ -32,6 +36,7 @@ export enum ItemFields {
   PRICE_BAND_ARROWSPHERE_SKU = 'priceBandArrowsphereSku',
   PRICE_BAND_ERP_SKU = 'pricebandErpSku',
   PRICE_BAND_VENDOR_SKU = 'pricebandVendorSku',
+  PREFERRED_CURRENCY = 'preferredCurrency',
   PRICES = 'prices',
   PRICES_WITHOUT_PROMOTION = 'pricesWithoutPromotion',
   QUANTITY = 'quantity',
@@ -56,6 +61,7 @@ export type ItemType = {
   [ItemFields.PRICE_BAND_ARROWSPHERE_SKU]: string;
   [ItemFields.PRICE_BAND_ERP_SKU]?: string;
   [ItemFields.PRICE_BAND_VENDOR_SKU]?: string;
+  [ItemFields.PREFERRED_CURRENCY]?: ItemPreferredCurrencyType;
   [ItemFields.PRICES]?:
     | Record<'arrow' | 'partner' | 'endCustomer' | 'retail', number>
     | undefined;
@@ -86,6 +92,7 @@ export class Item extends AbstractEntity<ItemType> {
   readonly #priceBandArrowsphereSku: string;
   readonly #pricebandErpSku?: string;
   readonly #pricebandVendorSku?: string;
+  readonly #preferredCurrency?: ItemPreferredCurrency;
   readonly #prices?:
     | Record<'arrow' | 'partner' | 'endCustomer' | 'retail', number>
     | undefined;
@@ -116,6 +123,10 @@ export class Item extends AbstractEntity<ItemType> {
       itemResponse[ItemFields.PRICE_BAND_ARROWSPHERE_SKU];
     this.#pricebandErpSku = itemResponse[ItemFields.PRICE_BAND_ERP_SKU];
     this.#pricebandVendorSku = itemResponse[ItemFields.PRICE_BAND_VENDOR_SKU];
+    const preferredCurrency = itemResponse[ItemFields.PREFERRED_CURRENCY];
+    this.#preferredCurrency = preferredCurrency
+      ? new ItemPreferredCurrency(preferredCurrency)
+      : undefined;
     this.#prices = itemResponse[ItemFields.PRICES];
     this.#pricesWithoutPromotion =
       itemResponse[ItemFields.PRICES_WITHOUT_PROMOTION];
@@ -184,6 +195,10 @@ export class Item extends AbstractEntity<ItemType> {
     return this.#pricebandVendorSku;
   }
 
+  get preferredCurrency(): ItemPreferredCurrency | undefined {
+    return this.#preferredCurrency;
+  }
+
   get prices():
     | Record<'arrow' | 'partner' | 'endCustomer' | 'retail', number>
     | undefined {
@@ -228,6 +243,7 @@ export class Item extends AbstractEntity<ItemType> {
       [ItemFields.PRICE_BAND_ARROWSPHERE_SKU]: this.priceBandArrowsphereSku,
       [ItemFields.PRICE_BAND_ERP_SKU]: this.pricebandErpSku,
       [ItemFields.PRICE_BAND_VENDOR_SKU]: this.pricebandVendorSku,
+      [ItemFields.PREFERRED_CURRENCY]: this.preferredCurrency?.toJSON(),
       [ItemFields.PRICES]: this.prices,
       [ItemFields.PRICES_WITHOUT_PROMOTION]: this.pricesWithoutPromotion,
       [ItemFields.QUANTITY]: this.quantity,

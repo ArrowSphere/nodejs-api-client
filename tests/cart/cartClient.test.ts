@@ -13,6 +13,7 @@ import {
   CART_ITEM_ID,
   CART_LIST_ITEMS_RESPONSE,
   CART_LIST_ITEMS_URL_INTERCEPTOR,
+  CART_LIST_ITEMS_WITHOUT_PREFERRED_CURRENCY_RESPONSE,
   CART_MOCK_URL,
   CART_REMOVE_ITEM_RESPONSE,
   CART_REMOVE_ITEM_URL_INTERCEPTOR,
@@ -25,7 +26,13 @@ import {
   CHANGE_CUSTOMER_REQUEST,
   CHANGE_CUSTOMER_URL_INTERCEPTOR,
 } from './mocks/cart.mocks';
-import { CartActionsEnum, CartItemListResult, Item, ItemList } from '../../src';
+import {
+  CartActionsEnum,
+  CartItemListResult,
+  Item,
+  ItemList,
+  ItemPreferredCurrency,
+} from '../../src';
 
 describe('CartClient', function () {
   const client = new PublicApiClient().getCartClient().setUrl(CART_MOCK_URL);
@@ -102,6 +109,29 @@ describe('CartClient', function () {
 
       expect(response).to.be.instanceof(GetResult);
       expect(response.toJSON()).to.be.deep.equal(CART_LIST_ITEMS_RESPONSE);
+
+      const [item] = response.data.items;
+      expect(item.preferredCurrency).to.be.instanceof(ItemPreferredCurrency);
+      expect(item.preferredCurrency?.conversionRules.currency).to.equal('PLN');
+      expect(item.preferredCurrency?.values.prices?.endCustomer).to.equal(
+        12.34,
+      );
+    });
+
+    it('call the get method without preferredCurrency', async function () {
+      nock(CART_MOCK_URL)
+        .get(CART_LIST_ITEMS_URL_INTERCEPTOR)
+        .reply(
+          constants.HTTP_STATUS_OK,
+          CART_LIST_ITEMS_WITHOUT_PREFERRED_CURRENCY_RESPONSE,
+        );
+
+      const response = await client.listItems();
+
+      expect(response.toJSON()).to.be.deep.equal(
+        CART_LIST_ITEMS_WITHOUT_PREFERRED_CURRENCY_RESPONSE,
+      );
+      expect(response.data.items[0].preferredCurrency).to.be.undefined;
     });
   });
 
