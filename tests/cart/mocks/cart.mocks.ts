@@ -10,6 +10,8 @@ import {
   ItemAdditionalDataFields,
   ItemFields,
   ItemListType,
+  ItemPreferredCurrencyFields,
+  ItemPreferredCurrencyValuesFields,
   ItemUpdateRequestType,
   ItemBundleRequestType,
 } from '../../../src';
@@ -116,23 +118,63 @@ export const CART_UPDATE_ITEM_RESPONSE: GetData<ItemType> = {
   },
 };
 
-export const CART_LIST_ITEMS_RESPONSE: GetData<ItemListType> = {
-  [GetResultFields.COLUMN_STATUS]: constants.HTTP_STATUS_OK,
-  [GetResultFields.COLUMN_DATA]: [
+const CART_LIST_ITEM_PRICES = {
+  arrow: 9.83,
+  partner: 11.43,
+  endCustomer: 12.34,
+  retail: 12.29,
+};
+
+const CART_LIST_ITEM: ItemType = {
+  [ItemFields.ITEM_ID]: CART_ITEM_ID,
+  [ItemFields.ADDITIONAL_DATA]: [
     {
-      [ItemFields.ITEM_ID]: CART_ITEM_ID,
-      [ItemFields.ADDITIONAL_DATA]: [
-        {
-          [ItemAdditionalDataFields.NAME]: 'resellerRate',
-          [ItemAdditionalDataFields.VALUE]: '5.04934',
-        },
-      ],
-      [ItemFields.OFFER_NAME]: 'Microsoft 365 Business Premium',
-      [ItemFields.PRICE_BAND_ARROWSPHERE_SKU]:
-        '031C9E47-4802-4248-838E-778FB1D2CC05',
-      [ItemFields.QUANTITY]: 2,
+      [ItemAdditionalDataFields.NAME]: 'resellerRate',
+      [ItemAdditionalDataFields.VALUE]: '5.04934',
     },
   ],
+  [ItemFields.CURRENCY]: 'EUR',
+  [ItemFields.IS_ADDON]: false,
+  [ItemFields.IS_TRIAL]: false,
+  [ItemFields.OFFER_NAME]: 'Microsoft 365 Business Premium',
+  [ItemFields.PRICE_BAND_ARROWSPHERE_SKU]:
+    '031C9E47-4802-4248-838E-778FB1D2CC05',
+  [ItemFields.PRICE_BAND_ERP_SKU]: 'CFQ7TTC0LH1P:0001',
+  [ItemFields.PRICE_BAND_VENDOR_SKU]: 'CFQ7TTC0LH1P:0001',
+  [ItemFields.PRICES]: CART_LIST_ITEM_PRICES,
+  [ItemFields.PRICES_WITHOUT_PROMOTION]: CART_LIST_ITEM_PRICES,
+  [ItemFields.COTERM_PRICES]: CART_LIST_ITEM_PRICES,
+  [ItemFields.COTERM_PRICES_WITHOUT_PROMOTION]: CART_LIST_ITEM_PRICES,
+  [ItemFields.QUANTITY]: 2,
+  [ItemFields.RULES]: {},
+  [ItemFields.PREFERRED_CURRENCY]: {
+    [ItemPreferredCurrencyFields.CONVERSION_RULES]: {
+      currency: 'PLN',
+      exchangeRate: 4.45,
+      exchangeRateDate: '2026-06-01T10:00:00Z',
+    },
+    [ItemPreferredCurrencyFields.VALUES]: {
+      [ItemPreferredCurrencyValuesFields.PRICES]: CART_LIST_ITEM_PRICES,
+      [ItemPreferredCurrencyValuesFields.PRICES_WITHOUT_PROMOTION]: CART_LIST_ITEM_PRICES,
+      [ItemPreferredCurrencyValuesFields.COTERM_PRICES]: CART_LIST_ITEM_PRICES,
+      [ItemPreferredCurrencyValuesFields.COTERM_PRICES_WITHOUT_PROMOTION]: CART_LIST_ITEM_PRICES,
+    },
+  },
+};
+
+export const CART_LIST_ITEMS_RESPONSE: GetData<ItemListType> = {
+  [GetResultFields.COLUMN_STATUS]: constants.HTTP_STATUS_OK,
+  [GetResultFields.COLUMN_DATA]: [CART_LIST_ITEM],
+};
+
+const {
+  [ItemFields.PREFERRED_CURRENCY]: _,
+  ...CART_LIST_ITEM_WITHOUT_PREFERRED_CURRENCY
+} = CART_LIST_ITEM;
+
+export const CART_LIST_ITEMS_WITHOUT_PREFERRED_CURRENCY_RESPONSE: GetData<ItemListType> = {
+  [GetResultFields.COLUMN_STATUS]: constants.HTTP_STATUS_OK,
+  [GetResultFields.COLUMN_DATA]: [CART_LIST_ITEM_WITHOUT_PREFERRED_CURRENCY],
 };
 
 export const CART_REMOVE_ITEM_RESPONSE: GetData<undefined> = {
