@@ -29,6 +29,7 @@ import {
 } from './entities/report';
 import { SpecialPriceRateType } from './entities/specialPriceRate';
 import { SubscriptionType } from './entities/subscription';
+import { SecurityRoleType } from './entities/securityRole';
 import { UserHistoryType, UserType } from './entities/user';
 import { WorkgroupType } from './entities/workgroup';
 import { GraphqlApiSupportLevel } from './entities/supportLevel';
@@ -192,6 +193,7 @@ export enum SelectDataField {
   QUOTE = 'quote',
   REPORT = 'report',
   REPORT_STATUS = 'reportStatus',
+  SECURITY_ROLE = 'securityRole',
   SPECIAL_PRICE_RATE = 'specialPriceRate',
   STAFF = 'staff',
   SUBSCRIBED_PROGRAM = 'subscribedProgram',
@@ -243,6 +245,7 @@ export type SelectAllResponseDataType = {
   [SelectDataField.QUOTE]?: QuoteType[];
   [SelectDataField.REPORT]?: GraphqlApiReportType[];
   [SelectDataField.REPORT_STATUS]?: GraphqlApiReportStatusType[];
+  [SelectDataField.SECURITY_ROLE]?: SecurityRoleType[];
   [SelectDataField.STAFF]?: GraphqlApiStaffType[];
   [SelectDataField.SUBSCRIBED_PROGRAM]?: SubscribedProgramType[];
   [SelectDataField.SUBSCRIPTION]?: SubscriptionType[];
@@ -342,6 +345,7 @@ export type SelectOneResponseDataType = {
   [SelectDataField.QUOTE]?: QuoteType;
   [SelectDataField.REPORT]?: GraphqlApiReportType;
   [SelectDataField.REPORT_STATUS]?: GraphqlApiReportStatusType;
+  [SelectDataField.SECURITY_ROLE]?: SecurityRoleType;
   [SelectDataField.STAFF]?: GraphqlApiStaffType;
   [SelectDataField.SUBSCRIBED_PROGRAM]?: SubscribedProgramType;
   [SelectDataField.SUBSCRIPTION]?: SubscriptionType;
