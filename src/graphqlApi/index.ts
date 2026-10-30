@@ -14,6 +14,7 @@ export * from './types/entities/partnertag';
 export * from './types/entities/program';
 export * from './types/entities/quote';
 export * from './types/entities/report';
+export * from './types/entities/securityRole';
 export * from './types/entities/subscription';
 export * from './types/entities/specialPriceRate';
 export * from './types/entities/unit';
