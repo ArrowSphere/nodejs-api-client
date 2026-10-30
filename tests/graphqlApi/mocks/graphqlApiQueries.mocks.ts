@@ -1277,9 +1277,9 @@ export const SELECT_ALL_CONTACTS_QUERY: SelectAllQueryType = {
       contact: {
         id: true,
         company: {
-          __typename: true,
           id: true,
           name: true,
+          typeName: true,
           type: {
             id: true,
             type: true,
@@ -1308,7 +1308,7 @@ export const SELECT_ALL_CONTACTS_QUERY: SelectAllQueryType = {
 };
 
 export const SELECT_ALL_CONTACTS_GQL =
-  '{selectAll { data { contact { id company { __typename id name type { id type } } email firstname lastname locked organizationUnits { id name } phone user { id } username } } errors { code message } }}';
+  '{selectAll { data { contact { id company { id name typeName type { id type } } email firstname lastname locked organizationUnits { id name } phone user { id } username } } errors { code message } }}';
 
 export const SELECT_ONE_ORDER_QUERY: SelectOneQueryType = {
   [Queries.SELECT_ONE]: {

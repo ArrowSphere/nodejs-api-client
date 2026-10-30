@@ -39,6 +39,7 @@ export type BaseCompanyType = {
   resellerId?: number;
   state?: string;
   type?: CompanyTypeType;
+  typeName?: string;
   vatNumber?: string;
   workgroup?: WorkgroupType;
   zip?: string;

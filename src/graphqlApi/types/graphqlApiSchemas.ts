@@ -43,6 +43,7 @@ import {
   LicenseBudgetNotificationType,
   LicenseBudgetType,
 } from './entities/licenseBudget';
+import { SecurityRoleType } from './entities/securityRole';
 import { UserHistoryType, UserType } from './entities/user';
 import { OrganizationUnitsType } from './entities/organizationUnit';
 import { CurrencyType } from './entities/currency';
@@ -116,11 +117,13 @@ type MissingFieldsOfOrdersSchema = {
 
 type MissingFieldsOfContactSchema = {
   companies?: BaseCompanySchema;
+  company?: BaseCompanySchema;
   organizationUnits?: OrganizationUnitSchema;
 };
 
 type MissingFieldsOfUserSchema = {
   contact?: ContactsSchema;
+  role?: SecurityRoleSchema;
   userTags?: PartnertagSchema;
 };
 
@@ -184,6 +187,8 @@ export type ContactsSchema = Merge<
   Schema<ContactsType, boolean>,
   MissingFieldsOfContactSchema
 >;
+
+export type SecurityRoleSchema = Schema<SecurityRoleType, boolean>;
 
 export type UserSchema = Merge<
   Schema<UserType, boolean>,
@@ -402,6 +407,7 @@ export type SelectAllResponseDataSchema = {
   [SelectDataField.QUOTE]?: QuoteSchema;
   [SelectDataField.REPORT]?: ReportSchema;
   [SelectDataField.REPORT_STATUS]?: ReportStatusSchema;
+  [SelectDataField.SECURITY_ROLE]?: SecurityRoleSchema;
   [SelectDataField.STAFF]?: GraphqlApiStaffSchema;
   [SelectDataField.SUBSCRIBED_PROGRAM]?: SubscribedProgramSchema;
   [SelectDataField.SUBSCRIPTION]?: SubscriptionSchema;
