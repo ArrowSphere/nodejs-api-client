@@ -3,6 +3,11 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.416.0] - 2026.10.29
+### Added
+- [graphqlApi] Add `lastLoginAt`, `locked`, `canBeDeleted` and `role` to `UserType`, and the `SecurityRole` entity (`SecurityRoleType`, `SecurityRoleSchema`, `SelectDataField.SECURITY_ROLE`)
+- [graphqlApi] Allow selecting `company` (common company fields) in `ContactsSchema`
+
 ## [3.415.0] - 2026.10.23
 ### Added
 - [supportCenter] Add `extraDescriptionInfo` to `CreateIssuePayload` (`IssueExtraDescriptionInfoType`, `IssueExtraDescriptionInfoNameEnum`, `IssueExtraDescriptionInfoImpactEnum`, `IssueExtraDescriptionInfoUrgencyEnum`, `IssueExtraDescriptionInfoAvailabilityEnum`)
