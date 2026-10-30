@@ -6,6 +6,10 @@ import {
   GET_PROGRAM_RESPONSE,
   LIST_PROGRAMS_RESPONSE,
 } from './mocks/program.mocks';
+import {
+  CHECK_ELIGIBILITY_PAYLOAD,
+  CHECK_ELIGIBILITY_RESPONSE,
+} from './mocks/checkEligibility.mocks';
 
 export const CATALOG_MOCK_URL = 'https://catalog.localhost';
 export const CATALOG_MOCK_PATH = '/catalog';
@@ -46,6 +50,22 @@ describe('CatalogClient', function () {
 
       expect(response).to.be.instanceof(GetResult);
       expect(response.toJSON()).to.be.deep.equal(GET_PROGRAM_RESPONSE);
+    });
+  });
+
+  describe('check eligibility', function () {
+    it('call the post method', async function () {
+      nock(CATALOG_MOCK_URL)
+        .post(
+          `${CATALOG_MOCK_PATH}/check-eligibility`,
+          CHECK_ELIGIBILITY_PAYLOAD,
+        )
+        .reply(constants.HTTP_STATUS_OK, CHECK_ELIGIBILITY_RESPONSE);
+
+      const response = await client.checkEligibility(CHECK_ELIGIBILITY_PAYLOAD);
+
+      expect(response).to.be.instanceof(GetResult);
+      expect(response.toJSON()).to.be.deep.equal(CHECK_ELIGIBILITY_RESPONSE);
     });
   });
 });
