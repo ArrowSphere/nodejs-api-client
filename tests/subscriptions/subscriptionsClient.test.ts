@@ -19,8 +19,8 @@ import { SubscriptionsListResult } from '../../src/subscriptions/entities/subscr
 import querystring from 'querystring';
 
 export const SUBSCRIPTIONS_MOCK_URL = 'http://subscriptions.localhost';
-export const SUBSCRIPTIONS_PARTNER_LIST_ENDPOINT = /^\/subscriptions/;
-export const SUBSCRIPTIONS_ADMIN_LIST_ENDPOINT = /^\/admin\/subscriptions/;
+export const SUBSCRIPTIONS_PARTNER_LIST_ENDPOINT = /^\/subscriptions\/?(\?|$)/;
+export const SUBSCRIPTIONS_ADMIN_LIST_ENDPOINT = /^\/subscriptions\/admin/;
 
 /**
  * Mock subscription data to be used in tests and returned by mocks

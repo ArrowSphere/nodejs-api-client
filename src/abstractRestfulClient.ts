@@ -57,6 +57,11 @@ export interface PayloadWithFile {
 }
 
 export type Options = {
+  /**
+   * @deprecated The `/admin/<service>` prefix is not routed by the public-api custom domain,
+   * declare the admin route as a path of the service instead (e.g. `/subscriptions/admin`).
+   * Will be removed in the next major version.
+   */
   isAdmin?: boolean;
   returnAxiosData?: boolean;
 };

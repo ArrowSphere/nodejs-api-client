@@ -82,9 +82,9 @@ export class SubscriptionsClient extends AbstractRestfulClient {
   protected basePath = '/subscriptions';
 
   /**
-   * The path of the List endpoint
+   * The path of the admin List endpoint
    */
-  private LIST_PATH = '';
+  private ADMIN_LIST_PATH = '/admin';
 
   /**
    * Pagination for these endpoints are camel cased (`&perPage=x` instead of `&per_page=x`)
@@ -101,8 +101,8 @@ export class SubscriptionsClient extends AbstractRestfulClient {
   public async listRaw(
     data: SubscriptionsListPayload = {},
   ): Promise<AdminSubscriptionsListData> {
-    this.path = this.LIST_PATH;
-    return this.get<AdminSubscriptionsListData>(data, {}, { isAdmin: true });
+    this.path = this.ADMIN_LIST_PATH;
+    return this.get<AdminSubscriptionsListData>(data);
   }
 
   /**
@@ -120,11 +120,7 @@ export class SubscriptionsClient extends AbstractRestfulClient {
   public async list(
     filters: SubscriptionsListPayload = {},
   ): Promise<PartnerSubscriptionsListData> {
-    return this.get<PartnerSubscriptionsListData>(
-      filters,
-      {},
-      { isAdmin: false },
-    );
+    return this.get<PartnerSubscriptionsListData>(filters);
   }
 
   public async listAdmin(
