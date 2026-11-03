@@ -106,6 +106,7 @@ export type ItemData = {
   identifiersVendorNamesSerialized?: string;
   bundleArrowSphereSku?: string;
   bundleUuid?: string;
+  needsEligibility?: boolean;
 };
 
 export type NameValueType = {
