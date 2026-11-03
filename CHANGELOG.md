@@ -3,6 +3,13 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.419.0] - 2026.11.03
+### Fixed
+- [subscriptions] Call `/subscriptions/admin` instead of `/admin/subscriptions` in `listRaw` and `listAdmin`, to be reachable through the public-api custom domain
+
+### Deprecated
+- Deprecate the `isAdmin` option of `Options` (REST and GraphQL clients): the `/admin/<service>` prefix is not routed by the public-api custom domain. It will be removed in the next major version
+
 ## [3.418.0] - 2026.11.03
 ### Added
 - [quotes] Add `needsEligibility` to quote `ItemData`
