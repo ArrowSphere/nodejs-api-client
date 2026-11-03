@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.420.0] - 2026.11.03
+### Added
+- [licenses] Add `LETSCOPILOT_TENANT_ID` to `CompanyDetailKeyEnum`
+
 ## [3.419.0] - 2026.11.03
 ### Fixed
 - [subscriptions] Call `/subscriptions/admin` instead of `/admin/subscriptions` in `listRaw` and `listAdmin`, to be reachable through the public-api custom domain
