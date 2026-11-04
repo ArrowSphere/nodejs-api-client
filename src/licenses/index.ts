@@ -1,3 +1,4 @@
+export * from './entities/company/companyFindResult';
 export * from './entities/endCustomerOrganizationUnit/endCustomerOrganizationUnitFindResult';
 export * from './entities/event/licenseEvent';
 export * from './entities/event/licenseEventGraphQL';
