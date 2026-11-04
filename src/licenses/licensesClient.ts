@@ -81,6 +81,8 @@ import {
   RatesDataKeywords,
   RatesFiltersParameters,
   RatesSortParameters,
+  RateFindResultDataSortParameters,
+  RateFindResultDataKeywords,
 } from './entities/rates/rateFindResult';
 import {
   GetLicensePricingRateParameters,
@@ -95,6 +97,11 @@ import { PostLicenseAttachmentResult } from './entities/attachment/PostLicenseAt
 import { DynamicAttributesMappingResult } from './entities/license/dynamicMappingResult';
 import { GetLateRenewableLicensesResult } from './entities/lateRenewalLicense/getLateRenewableLicensesResult';
 import { ExecuteLateRenewPayload } from './entities/lateRenewalLicense/executeLateRenewPayload';
+import {
+  CompanyDataKeywords,
+  CompanyFiltersParameters,
+  CompanySortParameters,
+} from './entities/company/companyFindResult';
 
 /**
  * Parameters passable to the request for refining search.
@@ -230,15 +237,34 @@ export type BaseParameters<
   LicenseType,
   OfferType,
   endCustomerOrganizationUnitType,
-  RatesType
+  RatesType,
+  resellerCompanyType,
+  endCustomerCompanyType
 > = {
   license?: LicenseType;
   offer?: OfferType;
   endCustomerOrganizationUnit?: endCustomerOrganizationUnitType;
   rates?: RatesType;
+  resellerCompany?: resellerCompanyType;
+  endCustomerCompany?: endCustomerCompanyType;
 };
 
-type KeyParent = 'license' | 'offer' | 'endCustomerOrganizationUnit' | 'rates';
+type UnknownBaseParameters = BaseParameters<
+  unknown,
+  unknown,
+  unknown,
+  unknown,
+  unknown,
+  unknown
+>;
+
+type KeyParent =
+  | 'license'
+  | 'offer'
+  | 'endCustomerOrganizationUnit'
+  | 'rates'
+  | 'resellerCompany'
+  | 'endCustomerCompany';
 
 export type AttachFileToLicenseParameters = {
   name: string;
@@ -249,7 +275,9 @@ export type LicenseSortParameters = BaseParameters<
   LicenceFindDataSortParameters,
   OfferFindResultDataSortParameters,
   EndCustomerOrganizationUnitSortParameters,
-  RatesSortParameters
+  RatesSortParameters,
+  CompanySortParameters,
+  CompanySortParameters
 >;
 
 export type LicenseCompareParameters = {
@@ -260,7 +288,9 @@ export type LicenseFiltersParameters = BaseParameters<
   LicenceFindDataFiltersParameters,
   OfferFindResultDataFiltersParameters,
   EndCustomerOrganizationUnitFiltersParameters,
-  RatesFiltersParameters
+  RatesFiltersParameters,
+  CompanyFiltersParameters,
+  CompanyFiltersParameters
 >;
 
 /**
@@ -282,6 +312,8 @@ export type LicenseKeywordsParameters = {
   offer?: OfferFindResultDataKeywords;
   endCustomerOrganizationUnit?: EndCustomerOrganisationUnitDataKeywords;
   rates?: RatesDataKeywords;
+  resellerCompany?: CompanyDataKeywords;
+  endCustomerCompany?: CompanyDataKeywords;
 };
 
 export type LicenseRawKeywordsParametersLicence = {
@@ -301,6 +333,27 @@ export type LicenseRawKeywordsParametersOffer = {
     | ActionFlagsFindResultDataKeywords
     | PriceBandFindResultDataKeywords
     | undefined;
+};
+
+export type LicenseRawKeywordsParametersEndCustomerOrganizationUnit = {
+  [field: string]: DataKeywords | undefined;
+};
+
+export type LicenseRawKeywordsParametersRates = {
+  [field: string]: DataKeywords | RateFindResultDataKeywords | undefined;
+};
+
+export type LicenseRawKeywordsParametersCompany = {
+  [field: string]: DataKeywords | undefined;
+};
+
+export type LicenseRawKeywordsParameters = {
+  license?: LicenseRawKeywordsParametersLicence;
+  offer?: LicenseRawKeywordsParametersOffer;
+  endCustomerOrganizationUnit?: LicenseRawKeywordsParametersEndCustomerOrganizationUnit;
+  rates?: LicenseRawKeywordsParametersRates;
+  resellerCompany?: LicenseRawKeywordsParametersCompany;
+  endCustomerCompany?: LicenseRawKeywordsParametersCompany;
 };
 
 export type SortParameters =
@@ -328,6 +381,26 @@ export type LicenseRawSortParametersOffer = {
 
 export type LicenseRawSortParametersEndCustomerOrganizationUnit = {
   [field: string]: SortParameters | undefined;
+};
+
+export type LicenseRawSortParametersRates = {
+  [field: string]:
+    | SortParameters
+    | RateFindResultDataSortParameters
+    | undefined;
+};
+
+export type LicenseRawSortParametersCompany = {
+  [field: string]: SortParameters | undefined;
+};
+
+export type LicenseRawSortParameters = {
+  license?: LicenseRawSortParametersLicense;
+  offer?: LicenseRawSortParametersOffer;
+  endCustomerOrganizationUnit?: LicenseRawSortParametersEndCustomerOrganizationUnit;
+  rates?: LicenseRawSortParametersRates;
+  resellerCompany?: LicenseRawSortParametersCompany;
+  endCustomerCompany?: LicenseRawSortParametersCompany;
 };
 
 export type FiltersCompareValue = {
@@ -371,16 +444,10 @@ export type LicenseFindRawPayload = {
   [LicenseFindParameters.DATA_AGGREGATION]?: string[];
   [LicenseFindParameters.DATA_COMPARE]?: LicenseRawCompareParameters;
   [LicenseFindParameters.DATA_KEYWORD]?: string;
-  [LicenseFindParameters.DATA_KEYWORDS]?: {
-    license?: LicenseRawKeywordsParametersLicence;
-    offer?: LicenseRawKeywordsParametersOffer;
-  };
+  [LicenseFindParameters.DATA_KEYWORDS]?: LicenseRawKeywordsParameters;
   [LicenseFindParameters.DATA_FILTERS]?: LicenseRawFiltersParameters;
   [LicenseFindParameters.DATA_EXCLUSION_FILTERS]?: LicenseRawFiltersParameters;
-  [LicenseFindParameters.DATA_SORT]?: {
-    license?: LicenseRawSortParametersLicense;
-    offer?: LicenseRawSortParametersOffer;
-  };
+  [LicenseFindParameters.DATA_SORT]?: LicenseRawSortParameters;
   [LicenseFindParameters.DATA_HIGHLIGHT]?: boolean;
 };
 
@@ -667,18 +734,9 @@ export class LicensesClient extends AbstractRestfulClient {
           postData.keywords,
           'endCustomerOrganizationUnit',
         ),
-      };
-    }
-
-    if (postData.keywords) {
-      // Flatten with prefix for each type of keyword (license and offer)
-      rawLicensePayload.keywords = {
-        ...this.createKeywords(postData.keywords, 'license'),
-        ...this.createKeywords(postData.keywords, 'offer'),
-        ...this.createKeywords(
-          postData.keywords,
-          'endCustomerOrganizationUnit',
-        ),
+        ...this.createKeywords(postData.keywords, 'rates'),
+        ...this.createKeywords(postData.keywords, 'resellerCompany'),
+        ...this.createKeywords(postData.keywords, 'endCustomerCompany'),
       };
     }
 
@@ -689,6 +747,8 @@ export class LicensesClient extends AbstractRestfulClient {
         ...this.createFilters(postData.filters, 'offer'),
         ...this.createFilters(postData.filters, 'endCustomerOrganizationUnit'),
         ...this.createFilters(postData.filters, 'rates'),
+        ...this.createFilters(postData.filters, 'resellerCompany'),
+        ...this.createFilters(postData.filters, 'endCustomerCompany'),
       };
     }
 
@@ -702,6 +762,8 @@ export class LicensesClient extends AbstractRestfulClient {
           'endCustomerOrganizationUnit',
         ),
         ...this.createFilters(postData.exclusionFilters, 'rates'),
+        ...this.createFilters(postData.exclusionFilters, 'resellerCompany'),
+        ...this.createFilters(postData.exclusionFilters, 'endCustomerCompany'),
       };
     }
 
@@ -712,11 +774,9 @@ export class LicensesClient extends AbstractRestfulClient {
         ...this.createFilters(postData.sort, 'offer'),
         ...this.createFilters(postData.sort, 'endCustomerOrganizationUnit'),
         ...this.createFilters(postData.sort, 'rates'),
-      } as {
-        license?: LicenseRawSortParametersLicense;
-        offer?: LicenseRawSortParametersOffer;
-        endCustomerOrganizationUnit?: LicenseRawSortParametersEndCustomerOrganizationUnit;
-      };
+        ...this.createFilters(postData.sort, 'resellerCompany'),
+        ...this.createFilters(postData.sort, 'endCustomerCompany'),
+      } as LicenseRawSortParameters;
     }
 
     const response = await this.findRaw(rawLicensePayload, parameters);
@@ -1186,9 +1246,9 @@ export class LicensesClient extends AbstractRestfulClient {
   }
 
   private createFilters(
-    parameters: string | BaseParameters<unknown, unknown, unknown, unknown>,
+    parameters: string | UnknownBaseParameters,
     keyParent: KeyParent,
-  ): BaseParameters<unknown, unknown, unknown, unknown> {
+  ): UnknownBaseParameters {
     let appropriateParameters: unknown;
 
     if (typeof parameters === 'object') {
@@ -1206,16 +1266,14 @@ export class LicensesClient extends AbstractRestfulClient {
         const subAcc: Record<string, unknown> = Object.entries(
           value as LicenseFiltersParameters,
         ).reduce((generatedArr: Record<string, unknown>, [i, val]) => {
-          let recursiveArr: BaseParameters<unknown, unknown, unknown, unknown>;
+          let recursiveArr: UnknownBaseParameters;
           const newKey = keyParent + '.' + key + '.' + i;
           if (typeof val !== 'object' || Array.isArray(val)) {
             generatedArr[`${newKey}`] = val;
             return generatedArr;
           } else {
             recursiveArr = this.createFilters(
-              val as
-                | string
-                | BaseParameters<unknown, unknown, unknown, unknown>,
+              val as string | UnknownBaseParameters,
               newKey as KeyParent,
             );
           }

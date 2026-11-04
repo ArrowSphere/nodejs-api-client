@@ -55,6 +55,7 @@ import {
   SaveSpecialBidInputType,
   RewriteRateHistoryInputType,
   CompanyTypeEnum,
+  DataKeywords,
   GetScheduledTasksResult,
   GetScheduleTaskResult,
   BulkUploadChangesBody,
@@ -85,6 +86,11 @@ import {
   EndCustomerOrganizationUnitFindResultFields,
   EndCustomerOrganizationUnitFindResultType,
 } from '../../src/licenses/entities/endCustomerOrganizationUnit/endCustomerOrganizationUnitFindResult';
+import { CompanyFindResultFields } from '../../src/licenses/entities/company/companyFindResult';
+import {
+  RateFindResultFields,
+  RatesFindResultFields,
+} from '../../src/licenses/entities/rates/rateFindResult';
 import { GET_LICENSE_DAILY_PREDICTIONS_RESPONSE } from '../consumption/mocks/consumption.mocks';
 import { ConversionRulesFields } from '../../src/shared/preferredCurrency/conversionRules';
 import { LicenseFindPreferredCurrencyValuesFields } from '../../src/licenses/entities/license/preferredCurrency/licenseFindPreferredCurrencyValues';
@@ -835,6 +841,109 @@ describe('LicensesClient', () => {
             'SKU1',
             'SKU2',
           ],
+        },
+      };
+
+      nock(LICENSES_MOCK_URL)
+        .post(LICENSES_FIND_ENDPOINT, expectedRawPayload)
+        .reply(200, (): FindData => MOCK_FIND_RESPONSE);
+
+      await client.find(payload);
+
+      expect(nock.isDone()).to.be.true;
+    });
+
+    it('flattens resellerCompany and endCustomerCompany filters, exclusion filters, keywords and sort', async () => {
+      const keywordsValue: DataKeywords = {
+        [LicenseFindParameters.KEYWORDS_VALUES]: ['acme'],
+        [LicenseFindParameters.KEYWORDS_OPERATOR]:
+          LicenseFindParameters.OPERATOR_OR,
+      };
+      const payload: LicenseFindPayload = {
+        [LicenseFindParameters.DATA_KEYWORDS]: {
+          resellerCompany: {
+            [CompanyFindResultFields.COMPANY_NAME]: keywordsValue,
+          },
+          endCustomerCompany: {
+            [CompanyFindResultFields.ACRONYM]: keywordsValue,
+          },
+        },
+        [LicenseFindParameters.DATA_FILTERS]: {
+          resellerCompany: {
+            [CompanyFindResultFields.COMPANY_REF]: 'XSP123',
+          },
+          endCustomerCompany: {
+            [CompanyFindResultFields.ERP_ID]: ['ERP1', 'ERP2'],
+          },
+        },
+        [LicenseFindParameters.DATA_EXCLUSION_FILTERS]: {
+          resellerCompany: {
+            [CompanyFindResultFields.ERP_ID]: 'ERP3',
+          },
+          endCustomerCompany: {
+            [CompanyFindResultFields.COMPANY_REF]: 'XSP456',
+          },
+        },
+        [LicenseFindParameters.DATA_SORT]: {
+          resellerCompany: {
+            [CompanyFindResultFields.COMPANY_NAME]:
+              LicenseFindParameters.SORT_ASCENDING,
+          },
+          endCustomerCompany: {
+            [CompanyFindResultFields.COMPANY_NAME]:
+              LicenseFindParameters.SORT_DESCENDING,
+          },
+        },
+      };
+      const expectedRawPayload: RequestBodyMatcher = {
+        [LicenseFindParameters.DATA_KEYWORDS]: {
+          [`resellerCompany.${CompanyFindResultFields.COMPANY_NAME}`]: keywordsValue,
+          [`endCustomerCompany.${CompanyFindResultFields.ACRONYM}`]: keywordsValue,
+        },
+        [LicenseFindParameters.DATA_FILTERS]: {
+          [`resellerCompany.${CompanyFindResultFields.COMPANY_REF}`]: 'XSP123',
+          [`endCustomerCompany.${CompanyFindResultFields.ERP_ID}`]: [
+            'ERP1',
+            'ERP2',
+          ],
+        },
+        [LicenseFindParameters.DATA_EXCLUSION_FILTERS]: {
+          [`resellerCompany.${CompanyFindResultFields.ERP_ID}`]: 'ERP3',
+          [`endCustomerCompany.${CompanyFindResultFields.COMPANY_REF}`]: 'XSP456',
+        },
+        [LicenseFindParameters.DATA_SORT]: {
+          [`resellerCompany.${CompanyFindResultFields.COMPANY_NAME}`]: LicenseFindParameters.SORT_ASCENDING,
+          [`endCustomerCompany.${CompanyFindResultFields.COMPANY_NAME}`]: LicenseFindParameters.SORT_DESCENDING,
+        },
+      };
+
+      nock(LICENSES_MOCK_URL)
+        .post(LICENSES_FIND_ENDPOINT, expectedRawPayload)
+        .reply(200, (): FindData => MOCK_FIND_RESPONSE);
+
+      await client.find(payload);
+
+      expect(nock.isDone()).to.be.true;
+    });
+
+    it('flattens rates keywords', async () => {
+      const keywordsValue: DataKeywords = {
+        [LicenseFindParameters.KEYWORDS_VALUES]: ['10'],
+        [LicenseFindParameters.KEYWORDS_OPERATOR]:
+          LicenseFindParameters.OPERATOR_AND,
+      };
+      const payload: LicenseFindPayload = {
+        [LicenseFindParameters.DATA_KEYWORDS]: {
+          rates: {
+            [RatesFindResultFields.COLUMN_MSP_SELL_RATE]: {
+              [RateFindResultFields.COLUMN_RATE]: keywordsValue,
+            },
+          },
+        },
+      };
+      const expectedRawPayload: RequestBodyMatcher = {
+        [LicenseFindParameters.DATA_KEYWORDS]: {
+          [`rates.${RatesFindResultFields.COLUMN_MSP_SELL_RATE}.${RateFindResultFields.COLUMN_RATE}`]: keywordsValue,
         },
       };
 
