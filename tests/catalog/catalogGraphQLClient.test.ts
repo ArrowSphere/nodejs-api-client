@@ -23,6 +23,10 @@ describe('CatalogGraphQLClient', () => {
       },
     };
 
+    afterEach(() => {
+      nock.cleanAll();
+    });
+
     it('makes a graphql POST request on the specified URL calling find', async () => {
       nock(CATALOG_GRAPHQL_URL).post(CATALOG_POST_URL).reply(200, bodyResponse);
 
@@ -47,6 +51,28 @@ describe('CatalogGraphQLClient', () => {
 
       const response = await client.find(query);
       expect(response).to.eql(bodyResponse.data);
+    });
+    it('does not send the authorization header when no token is set', async () => {
+      const client = new CatalogGraphQLClient().setUrl(CATALOG_GRAPHQL_URL);
+
+      nock(CATALOG_GRAPHQL_URL, { badheaders: ['authorization'] })
+        .post(CATALOG_POST_URL)
+        .reply(200, bodyResponse);
+
+      await client.find(query);
+      expect(nock.isDone()).to.be.true;
+    });
+    it('sends the token in the authorization header when a token is set', async () => {
+      const client = new CatalogGraphQLClient()
+        .setUrl(CATALOG_GRAPHQL_URL)
+        .setToken('token');
+
+      nock(CATALOG_GRAPHQL_URL, { reqheaders: { authorization: 'token' } })
+        .post(CATALOG_POST_URL)
+        .reply(200, bodyResponse);
+
+      await client.find(query);
+      expect(nock.isDone()).to.be.true;
     });
   });
 
