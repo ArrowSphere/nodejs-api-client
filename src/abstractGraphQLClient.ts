@@ -59,7 +59,7 @@ export abstract class AbstractGraphQLClient extends AbstractHttpClient {
 
   private applyHeaders(): void {
     const headers: Record<string, string> = {
-      authorization: this.token,
+      ...(this.token.length > 0 && { authorization: this.token }),
       ...this.headers,
     };
     this.getClientInstance().setHeaders(headers);
