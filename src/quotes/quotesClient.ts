@@ -57,6 +57,7 @@ export type QuoteItemTypeRequest = {
   quantity: number;
   coterminosityDate?: string;
   prices?: QuotePricesType;
+  promotionId?: string;
 };
 
 export type PublishQuoteRequestType = {
