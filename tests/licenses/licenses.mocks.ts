@@ -71,6 +71,7 @@ export const PAYLOAD_SCHEMA_LICENSE: GetData<GetLicenseResultData> = {
         [ActiveSeatsFindResultFields.COLUMN_NUMBER]: 3,
         [ActiveSeatsFindResultFields.COLUMN_LAST_UPDATE]: new Date().toISOString(),
       },
+      [LicenseGetFields.COLUMN_SEAT_SYNC]: true,
       [LicenseGetFields.COLUMN_SECURITY]: {
         [SecurityFindResultFields.COLUMN_ACTIVE_FRAUD_EVENTS]: 0,
       },
@@ -92,6 +93,8 @@ export const PAYLOAD_SCHEMA_LICENSE: GetData<GetLicenseResultData> = {
         [ActionsGetFields.COLUMN_AUTO_RENEW_ON]: 'auto_renew_on',
         [ActionsGetFields.COLUMN_AUTO_RENEW_TO_EST]: 'auto_renew_to_est',
         [ActionsGetFields.COLUMN_CANCEL]: 'cancel',
+        [ActionsGetFields.COLUMN_SEAT_SYNC_ON]: 'seat_sync_on',
+        [ActionsGetFields.COLUMN_SEAT_SYNC_OFF]: 'seat_sync_off',
       },
       [LicenseGetFields.COLUMN_ACTION_MESSAGES]: [
         {
