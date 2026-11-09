@@ -107,6 +107,7 @@ export type ItemData = {
   bundleArrowSphereSku?: string;
   bundleUuid?: string;
   needsEligibility?: boolean;
+  promotionId?: string;
 };
 
 export type NameValueType = {
