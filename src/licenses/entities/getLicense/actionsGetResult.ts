@@ -29,6 +29,8 @@ export enum ActionsGetFields {
   COLUMN_PAUSE = 'pause',
   COLUMN_UPGRADE = 'upgrade',
   COLUMN_UPDATE_FRIENDLY_NAME = 'updateFriendlyName',
+  COLUMN_SEAT_SYNC_ON = 'seatSyncOn',
+  COLUMN_SEAT_SYNC_OFF = 'seatSyncOff',
   COLUMN_SCHEDULED_TASK = 'scheduledTask',
   COLUMN_SCHEDULED_TASK_DETAILS = 'scheduledTaskDetails',
 }
@@ -50,6 +52,8 @@ export type ActionsGetData = {
   [ActionsGetFields.COLUMN_PAUSE]?: string;
   [ActionsGetFields.COLUMN_UPGRADE]?: string;
   [ActionsGetFields.COLUMN_UPDATE_FRIENDLY_NAME]?: string;
+  [ActionsGetFields.COLUMN_SEAT_SYNC_ON]?: string;
+  [ActionsGetFields.COLUMN_SEAT_SYNC_OFF]?: string;
   [ActionsGetFields.COLUMN_SCHEDULED_TASK]?: string;
   [ActionsGetFields.COLUMN_SCHEDULED_TASK_DETAILS]?: ScheduledTaskDetailsType;
 };
@@ -71,6 +75,8 @@ export class ActionsGetResult extends AbstractEntity<ActionsGetData> {
   readonly #pause?: string;
   readonly #upgrade?: string;
   readonly #updateFriendlyName?: string;
+  readonly #seatSyncOn?: string;
+  readonly #seatSyncOff?: string;
   readonly #scheduledTask?: string;
   readonly #scheduledTaskDetails?: Record<string, string>;
 
@@ -94,6 +100,8 @@ export class ActionsGetResult extends AbstractEntity<ActionsGetData> {
     this.#upgrade = data[ActionsGetFields.COLUMN_UPGRADE];
     this.#updateFriendlyName =
       data[ActionsGetFields.COLUMN_UPDATE_FRIENDLY_NAME];
+    this.#seatSyncOn = data[ActionsGetFields.COLUMN_SEAT_SYNC_ON];
+    this.#seatSyncOff = data[ActionsGetFields.COLUMN_SEAT_SYNC_OFF];
     this.#scheduledTask = data[ActionsGetFields.COLUMN_SCHEDULED_TASK];
     this.#scheduledTaskDetails =
       data[ActionsGetFields.COLUMN_SCHEDULED_TASK_DETAILS];
@@ -163,6 +171,14 @@ export class ActionsGetResult extends AbstractEntity<ActionsGetData> {
     return this.#updateFriendlyName;
   }
 
+  public get seatSyncOn(): string | undefined {
+    return this.#seatSyncOn;
+  }
+
+  public get seatSyncOff(): string | undefined {
+    return this.#seatSyncOff;
+  }
+
   public get scheduledTask(): string | undefined {
     return this.#scheduledTask;
   }
@@ -189,6 +205,8 @@ export class ActionsGetResult extends AbstractEntity<ActionsGetData> {
       [ActionsGetFields.COLUMN_PAUSE]: this.pause,
       [ActionsGetFields.COLUMN_UPGRADE]: this.upgrade,
       [ActionsGetFields.COLUMN_UPDATE_FRIENDLY_NAME]: this.updateFriendlyName,
+      [ActionsGetFields.COLUMN_SEAT_SYNC_ON]: this.seatSyncOn,
+      [ActionsGetFields.COLUMN_SEAT_SYNC_OFF]: this.seatSyncOff,
       [ActionsGetFields.COLUMN_SCHEDULED_TASK]: this.scheduledTask,
       [ActionsGetFields.COLUMN_SCHEDULED_TASK_DETAILS]: this
         .scheduledTaskDetails,

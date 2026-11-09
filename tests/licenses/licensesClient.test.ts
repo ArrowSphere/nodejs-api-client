@@ -1111,6 +1111,28 @@ describe('LicensesClient', () => {
       expect(result.data.license.bundleUuid).to.be.undefined;
       expect(result.data.license.bundleArrowSphereSku).to.be.undefined;
     });
+
+    it('exposes seatSync and its actions from the license', async () => {
+      nock(LICENSES_MOCK_URL)
+        .get(LICENSE_MOCK_URL_LICENSE)
+        .reply(200, PAYLOAD_SCHEMA_LICENSE);
+
+      const result = await getLicenseClient.getLicense('123456');
+      expect(result.data.license.seatSync).to.be.true;
+      expect(result.data.license.actions?.seatSyncOn).to.equal('seat_sync_on');
+      expect(result.data.license.actions?.seatSyncOff).to.equal(
+        'seat_sync_off',
+      );
+    });
+
+    it('returns undefined for seatSync when not present', async () => {
+      nock(LICENSES_MOCK_URL)
+        .get(LICENSE_MOCK_URL_LICENSE)
+        .reply(200, PAYLOAD_SCHEMA_LICENSE_WITHOUT_OPTIONAL_FIELDS);
+
+      const result = await getLicenseClient.getLicense('123456');
+      expect(result.data.license.seatSync).to.be.undefined;
+    });
   });
 
   describe('updateLicense', () => {
@@ -1226,6 +1248,25 @@ describe('LicensesClient', () => {
       await patchLicenseClient.updateFriendlyName('123456', {
         [LicenseGetFields.COLUMN_FRIENDLY_NAME]: 'friendlyName',
       });
+      expect(nock.isDone()).to.be.true;
+    });
+  });
+
+  describe('configureAutoSync', () => {
+    const configureAutoSyncClient = new PublicApiClient()
+      .getLicensesClient()
+      .setUrl(LICENSES_MOCK_URL);
+
+    it('calls the post method with the right payload', async () => {
+      const payload = {
+        [LicenseGetFields.COLUMN_SEAT_SYNC]: true,
+      };
+
+      nock(LICENSES_MOCK_URL)
+        .post('/licenses/XSP12345/configureAutoSync', payload)
+        .reply(201);
+
+      await configureAutoSyncClient.configureAutoSync('XSP12345', payload);
       expect(nock.isDone()).to.be.true;
     });
   });

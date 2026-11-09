@@ -52,6 +52,7 @@ export enum LicenseGetFields {
   COLUMN_NAME = 'name',
   COLUMN_SEATS = 'seats',
   COLUMN_ACTIVE_SEATS = 'activeSeats',
+  COLUMN_SEAT_SYNC = 'seatSync',
   COLUMN_ACTIVATION_DATETIME = 'activation_datetime',
   COLUMN_EXPIRY_DATETIME = 'expiry_datetime',
   COLUMN_AUTO_RENEW = 'autoRenew',
@@ -117,6 +118,7 @@ export type LicenseGetData = {
   [LicenseGetFields.COLUMN_NAME]: string;
   [LicenseGetFields.COLUMN_SEATS]: number;
   [LicenseGetFields.COLUMN_ACTIVE_SEATS]: ActiveSeatsFindResultData;
+  [LicenseGetFields.COLUMN_SEAT_SYNC]?: boolean;
   [LicenseGetFields.COLUMN_SECURITY]?: SecurityFindResultData;
   [LicenseGetFields.COLUMN_ACTIVATION_DATETIME]: string | null;
   [LicenseGetFields.COLUMN_EXPIRY_DATETIME]: string | null;
@@ -176,6 +178,7 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
   readonly #name: string;
   readonly #seats: number;
   readonly #activeSeats: ActiveSeatsFindResult;
+  readonly #seatSync?: boolean;
   readonly #security?: SecurityFindResult;
   readonly #activation_datetime: string | null;
   readonly #expiry_datetime: string | null;
@@ -244,6 +247,7 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
     this.#activeSeats = new ActiveSeatsFindResult(
       licenseGetDataInput[LicenseGetFields.COLUMN_ACTIVE_SEATS],
     );
+    this.#seatSync = licenseGetDataInput[LicenseGetFields.COLUMN_SEAT_SYNC];
     this.#security = licenseGetDataInput[LicenseGetFields.COLUMN_SECURITY]
       ? new SecurityFindResult(
           licenseGetDataInput[
@@ -418,6 +422,10 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
 
   public get activeSeats(): ActiveSeatsFindResult {
     return this.#activeSeats;
+  }
+
+  public get seatSync(): boolean | undefined {
+    return this.#seatSync;
   }
 
   public get security(): SecurityFindResult | undefined {
@@ -605,6 +613,7 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
       [LicenseGetFields.COLUMN_NAME]: this.name,
       [LicenseGetFields.COLUMN_SEATS]: this.seats,
       [LicenseGetFields.COLUMN_ACTIVE_SEATS]: this.activeSeats.toJSON(),
+      [LicenseGetFields.COLUMN_SEAT_SYNC]: this.seatSync,
       [LicenseGetFields.COLUMN_SECURITY]: this.security?.toJSON(),
       [LicenseGetFields.COLUMN_ACTIVATION_DATETIME]: this.activationDatetime,
       [LicenseGetFields.COLUMN_EXPIRY_DATETIME]: this.expiryDatetime,

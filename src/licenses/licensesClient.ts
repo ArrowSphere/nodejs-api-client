@@ -465,6 +465,10 @@ export type PutFriendlyName = {
   [LicenseGetFields.COLUMN_FRIENDLY_NAME]: string;
 } & ExtraInformationType;
 
+export type PostConfigureAutoSync = {
+  [LicenseGetFields.COLUMN_SEAT_SYNC]: boolean;
+} & ExtraInformationType;
+
 export type PutReactivate = ExtraInformationType;
 
 export type PutSuspend = ExtraInformationType;
@@ -592,6 +596,11 @@ export class LicensesClient extends AbstractRestfulClient {
    * The path of update friendlyName endpoint
    */
   private UPDATE_FRIENDLYNAME_PATH = '/friendlyName';
+
+  /**
+   * The path to enable or disable the automatic seats synchronization
+   */
+  private CONFIGURE_AUTO_SYNC_PATH = '/configureAutoSync';
 
   /**
    * The path of license history
@@ -1009,6 +1018,16 @@ export class LicensesClient extends AbstractRestfulClient {
     this.path = `/${licenseReference}${this.UPDATE_FRIENDLYNAME_PATH}`;
 
     return await this.put(putData, parameters);
+  }
+
+  public async configureAutoSync(
+    licenseReference: string,
+    payload: PostConfigureAutoSync,
+    parameters: Parameters = {},
+  ): Promise<void> {
+    this.path = `/${licenseReference}${this.CONFIGURE_AUTO_SYNC_PATH}`;
+
+    await this.post(payload, parameters);
   }
 
   public async getHistory(

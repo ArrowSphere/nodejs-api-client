@@ -103,6 +103,7 @@ export enum LicenseFindResultFields {
   COLUMN_HIGHLIGHT = 'highlight',
   COLUMN_ATTRIBUTES = 'attributes',
   COLUMN_HAS_SEAT_DIFFERENCE = 'has_seat_difference',
+  COLUMN_SEAT_SYNC = 'seatSync',
 }
 
 /**
@@ -157,6 +158,7 @@ export type LicenseFindResultData = {
   [LicenseFindResultFields.COLUMN_HIGHLIGHT]?: Highlight;
   [LicenseFindResultFields.COLUMN_ATTRIBUTES]?: Record<string, string>;
   [LicenseFindResultFields.COLUMN_HAS_SEAT_DIFFERENCE]: boolean | null;
+  [LicenseFindResultFields.COLUMN_SEAT_SYNC]?: boolean;
 };
 
 export type LicenceFindDataKeywords = {
@@ -206,6 +208,7 @@ export type LicenceFindDataKeywords = {
   [LicenseFindResultFields.COLUMN_VENDOR_NAME]?: DataKeywords;
   [LicenseFindResultFields.COLUMN_VENDOR_SUBSCRIPTION_ID]?: DataKeywords;
   [LicenseFindResultFields.COLUMN_HAS_SEAT_DIFFERENCE]?: DataKeywords;
+  [LicenseFindResultFields.COLUMN_SEAT_SYNC]?: DataKeywords;
 };
 
 export type LicenceFindDataSortParameters = {
@@ -255,6 +258,7 @@ export type LicenceFindDataSortParameters = {
   [LicenseFindResultFields.COLUMN_VENDOR_NAME]?: SortParameters;
   [LicenseFindResultFields.COLUMN_VENDOR_SUBSCRIPTION_ID]?: SortParameters;
   [LicenseFindResultFields.COLUMN_HAS_SEAT_DIFFERENCE]?: SortParameters;
+  [LicenseFindResultFields.COLUMN_SEAT_SYNC]?: SortParameters;
 };
 
 export type LicenceFindDataFiltersParameters = {
@@ -308,6 +312,7 @@ export type LicenceFindDataFiltersParameters = {
     FiltersParameters
   >;
   [LicenseFindResultFields.COLUMN_HAS_SEAT_DIFFERENCE]?: FiltersParameters;
+  [LicenseFindResultFields.COLUMN_SEAT_SYNC]?: FiltersParameters;
 };
 
 export class LicenseFindResult extends AbstractEntity<LicenseFindResultData> {
@@ -331,6 +336,7 @@ export class LicenseFindResult extends AbstractEntity<LicenseFindResultData> {
     [LicenseFindResultFields.COLUMN_VENDOR_CODE]: 'required',
     [LicenseFindResultFields.COLUMN_HIGHLIGHT]: 'object',
     [LicenseFindResultFields.COLUMN_HAS_SEAT_DIFFERENCE]: 'boolean',
+    [LicenseFindResultFields.COLUMN_SEAT_SYNC]: 'boolean',
   };
 
   readonly #acceptEula: boolean;
@@ -381,6 +387,7 @@ export class LicenseFindResult extends AbstractEntity<LicenseFindResultData> {
   readonly #highlight: Highlight;
   readonly #attributes?: Record<string, string>;
   readonly #hasSeatDifference: boolean | null;
+  readonly #seatSync?: boolean;
 
   /**
    * LicenseFindResult constructor.
@@ -491,6 +498,7 @@ export class LicenseFindResult extends AbstractEntity<LicenseFindResultData> {
     this.#attributes = data[LicenseFindResultFields.COLUMN_ATTRIBUTES];
     this.#hasSeatDifference =
       data[LicenseFindResultFields.COLUMN_HAS_SEAT_DIFFERENCE];
+    this.#seatSync = data[LicenseFindResultFields.COLUMN_SEAT_SYNC];
   }
 
   public get id(): number {
@@ -685,6 +693,10 @@ export class LicenseFindResult extends AbstractEntity<LicenseFindResultData> {
     return this.#hasSeatDifference;
   }
 
+  public get seatSync(): boolean | undefined {
+    return this.#seatSync;
+  }
+
   /**
    * Plain JSON object representation of the license entity.
    * @returns {@link LicenseData}
@@ -747,6 +759,9 @@ export class LicenseFindResult extends AbstractEntity<LicenseFindResultData> {
       [LicenseFindResultFields.COLUMN_ATTRIBUTES]: this.attributes,
       [LicenseFindResultFields.COLUMN_HAS_SEAT_DIFFERENCE]: this
         .hasSeatDifference,
+      ...(this.seatSync !== undefined && {
+        [LicenseFindResultFields.COLUMN_SEAT_SYNC]: this.seatSync,
+      }),
     };
   }
 }
