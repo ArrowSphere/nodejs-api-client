@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.422.0] - 2026.11.09
+### Added
+- [licenses] Add `seatSync` to `LicenseGetResult` and `LicenseFindResult`
+- [licenses] Add `seatSyncOn` and `seatSyncOff` to `ActionsGetResult`
+- [licenses] Add `configureAutoSync` endpoint to `LicensesClient` (`PostConfigureAutoSync`)
+
 ## [3.421.1] - 2026.11.05
 ### Fixed
 - [graphql] Do not send an empty `authorization` header when no token is set, so that the public-api custom domain authenticates the request with the `apikey` header
