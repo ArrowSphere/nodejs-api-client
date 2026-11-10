@@ -7,6 +7,7 @@ import {
   AttachmentOrder,
   AttachmentsListOrder,
 } from './entities/orders/attachment';
+import { OrderStatusEnum } from './types/orderStatus';
 import { CommentOrder } from './entities/orders/comment';
 import { DataListOrderComments } from './entities/dataListOrderComments';
 
@@ -230,6 +231,14 @@ export type InjectionScenarioOrderInputType = {
   [UploadAttachmentOrderInputFields.COLUMN_FILE_ENCODED]: string;
 };
 
+export enum UpdateStatusOrderInputFields {
+  COLUMN_STATUS = 'status',
+}
+
+export type UpdateStatusOrderInputType = {
+  [UpdateStatusOrderInputFields.COLUMN_STATUS]: OrderStatusEnum;
+};
+
 export class OrdersClient extends AbstractRestfulClient {
   /**
    * The base path of the API
@@ -319,6 +328,16 @@ export class OrdersClient extends AbstractRestfulClient {
     this.path = `/${orderReference}/validate`;
 
     await this.patch(undefined, parameters);
+  }
+
+  public async updateStatusOrder(
+    orderReference: string,
+    payload: UpdateStatusOrderInputType,
+    parameters: Parameters = {},
+  ): Promise<void> {
+    this.path = `/${orderReference}/status`;
+
+    await this.patch(payload, parameters);
   }
 
   public async updateStaffContributorsOrder(
