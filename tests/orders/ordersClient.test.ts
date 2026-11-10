@@ -2,11 +2,13 @@ import {
   CommentOrder,
   DataListOrderComments,
   GetResult,
+  OrderStatusEnum,
   Parameters,
   PublicApiClient,
   StaffTypeEnum,
   UpdateAdditionalInformationOrderInputType,
   UpdateContributorOrderInputType,
+  UpdateStatusOrderInputType,
 } from '../../src';
 import nock from 'nock';
 import { expect } from 'chai';
@@ -48,6 +50,7 @@ export const RESUBMIT_GRADED_ORDERS_URL = new RegExp(
 export const VALIDATE_GRADED_ORDERS_URL = new RegExp(
   '/orders/XSPO[0-9]+/validate',
 );
+export const UPDATE_STATUS_ORDERS_URL = new RegExp('/orders/XSPO[0-9]+/status');
 export const CONTRIBUTOR_GRADED_ORDERS_URL = new RegExp(
   '/orders/XSPO[0-9]+/contributor',
 );
@@ -287,6 +290,37 @@ describe('OrdersClient', () => {
       nock(ORDERS_MOCK_URL).patch(VALIDATE_GRADED_ORDERS_URL).reply(200);
 
       await orderClient.validateOrder('XSPO123');
+
+      expect(nock.isDone()).to.be.true;
+    });
+  });
+
+  describe('updateStatusOrder', async () => {
+    const orderClient = new PublicApiClient()
+      .getOrdersClient()
+      .setUrl(ORDERS_MOCK_URL);
+
+    it('Should update the order status', async () => {
+      const payload: UpdateStatusOrderInputType = {
+        status: OrderStatusEnum.FULFILLED,
+      };
+      nock(ORDERS_MOCK_URL).patch(UPDATE_STATUS_ORDERS_URL, payload).reply(204);
+
+      await orderClient.updateStatusOrder('XSPO123', payload);
+
+      expect(nock.isDone()).to.be.true;
+    });
+
+    it('Should update the order status with parameters', async () => {
+      const payload: UpdateStatusOrderInputType = {
+        status: OrderStatusEnum.CANCELED,
+      };
+      nock(ORDERS_MOCK_URL)
+        .patch(UPDATE_STATUS_ORDERS_URL, payload)
+        .query({ foo: 'bar' })
+        .reply(204);
+
+      await orderClient.updateStatusOrder('XSPO123', payload, { foo: 'bar' });
 
       expect(nock.isDone()).to.be.true;
     });
