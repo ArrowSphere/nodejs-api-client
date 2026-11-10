@@ -3,6 +3,11 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.422.0] - 2026.11.10
+### Added
+- [Orders] Add `updateStatusOrder` (`PATCH /orders/{orderReference}/status`) to set any status on an order
+- [Orders] Add the missing `Migration cancel failed`, `Validated`, `Sent to end customer` and `Draft` values to `OrderStatusEnum`
+
 ## [3.421.1] - 2026.11.05
 ### Fixed
 - [graphql] Do not send an empty `authorization` header when no token is set, so that the public-api custom domain authenticates the request with the `apikey` header
