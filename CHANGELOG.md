@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.424.0] - 2026.11.13
+### Added
+- [quotes] Add `getQuote` (`GET /quotes/{reference}`) and `listQuotes` (`GET /quotes`) endpoints to `QuotesClient`
+
 ## [3.423.0] - 2026.11.12
 ### Added
 - [cart] Add `preferredCurrency` to cart `Item`
