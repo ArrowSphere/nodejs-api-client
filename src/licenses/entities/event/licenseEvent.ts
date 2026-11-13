@@ -105,6 +105,7 @@ export interface LicenseEventUser {
 export interface LicenseEventDetails {
   message?: string;
   source?: string | null;
+  parameters?: Record<string, unknown>;
 }
 
 export type LicenseEventImpersonatorType = {
