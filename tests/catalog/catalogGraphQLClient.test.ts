@@ -199,6 +199,54 @@ describe('CatalogGraphQLClient', () => {
     });
   });
 
+  describe('ArrowsphereIdentifierType catalogTypes field', () => {
+    it('should allow requesting identifiers.arrowsphere.catalogTypes', async () => {
+      const client = new CatalogGraphQLClient()
+        .setUrl(CATALOG_GRAPHQL_URL)
+        .setHeaders({ authorization: 'test' });
+
+      const products: ProductType[] = [
+        {
+          name: 'Office 365',
+          identifiers: {
+            arrowsphere: {
+              sku: 'XSP001',
+              catalogTypes: ['SAAS', 'MICROSOFT_NCE'],
+            },
+          },
+        },
+      ];
+
+      const bodyResponse = {
+        data: {
+          getProducts: products,
+        },
+      };
+
+      nock(CATALOG_GRAPHQL_URL).post(CATALOG_POST_URL).reply(200, bodyResponse);
+
+      const query: CatalogQuery = {
+        getProducts: {
+          __args: {
+            paginate: { page: 1, perPage: 12 },
+            searchBody: { ignoreCatalogPlan: true },
+          },
+          products: {
+            name: true,
+            identifiers: { arrowsphere: { sku: true, catalogTypes: true } },
+          },
+        },
+      };
+
+      const response = await client.findByQuery(query);
+      expect(response).to.eql(bodyResponse.data);
+      expect(
+        (response as typeof bodyResponse.data).getProducts[0].identifiers
+          ?.arrowsphere?.catalogTypes,
+      ).to.eql(['SAAS', 'MICROSOFT_NCE']);
+    });
+  });
+
   describe('should call http client using findByQuery', () => {
     const client = new CatalogGraphQLClient().setUrl(CATALOG_GRAPHQL_URL);
     const preparedQuery: CatalogQuery = {
