@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.425.0] - 2026.11.16
+### Added
+- [licenses] Add `updateSeatSync` action type and `seatSync` field to the `bulkAction` endpoint (`BulkUpdateSeatSyncBody`)
+
 ## [3.424.0] - 2026.11.13
 ### Added
 - [quotes] Add `getQuote` (`GET /quotes/{reference}`) and `listQuotes` (`GET /quotes`) endpoints to `QuotesClient`
