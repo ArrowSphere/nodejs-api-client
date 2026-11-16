@@ -59,6 +59,7 @@ import {
   GetScheduledTasksResult,
   GetScheduleTaskResult,
   BulkUploadChangesBody,
+  BulkUpdateSeatSyncBody,
 } from '../../src';
 import {
   PAYLOAD_GET_SCHEDULED_TASKS,
@@ -1693,6 +1694,21 @@ describe('LicensesClient', () => {
       };
 
       nock(LICENSES_MOCK_URL).post(LICENSE_MOCK_URL_BULK).reply(200, postData);
+
+      const result = await client.bulkAction(postData);
+      expect(result).to.eqls(postData);
+    });
+
+    it('calls the bulk action method with the updateSeatSync type', async () => {
+      const postData: BulkUpdateSeatSyncBody = {
+        [BulkBodyFields.ACTION_TYPE]: ActionTypes.UPDATE_SEAT_SYNC,
+        [BulkBodyFields.LICENSES]: ['XSP56T5434', 'XSP56T5435'],
+        [BulkBodyFields.SEAT_SYNC]: true,
+      };
+
+      nock(LICENSES_MOCK_URL)
+        .post(LICENSE_MOCK_URL_BULK, postData)
+        .reply(200, postData);
 
       const result = await client.bulkAction(postData);
       expect(result).to.eqls(postData);

@@ -903,6 +903,12 @@ export class LicensesClient extends AbstractRestfulClient {
         [BulkBodyFields.FILE_BASE64]: bulkData[BulkBodyFields.FILE_BASE64],
         [BulkBodyFields.FILE_NAME]: bulkData[BulkBodyFields.FILE_NAME],
       };
+    } else if (bulkData.actionType == ActionTypes.UPDATE_SEAT_SYNC) {
+      postData = {
+        [BulkBodyFields.ACTION_TYPE]: bulkData[BulkBodyFields.ACTION_TYPE],
+        [BulkBodyFields.LICENSES]: bulkData[BulkBodyFields.LICENSES],
+        [BulkBodyFields.SEAT_SYNC]: bulkData[BulkBodyFields.SEAT_SYNC],
+      };
     } else {
       throw new Error('actionType does not exist');
     }

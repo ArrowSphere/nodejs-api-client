@@ -4,6 +4,7 @@ export enum ActionTypes {
   SET_RATE = 'setRate',
   AUTO_RENEW = 'autoRenew',
   UPLOAD_CHANGES = 'uploadChanges',
+  UPDATE_SEAT_SYNC = 'updateSeatSync',
 }
 
 export enum AutoRenewStatuses {
@@ -31,6 +32,7 @@ export enum BulkBodyFields {
   SPECIAL_RATE_EFFECTIVE_APPLICATION_DATE = 'specialRateEffectiveApplicationDate',
   FILE_BASE64 = 'fileBase64',
   FILE_NAME = 'fileName',
+  SEAT_SYNC = 'seatSync',
 }
 
 export enum SpecialPriceRateActive {
@@ -48,6 +50,7 @@ export type BulkBodyArgument = {
   [BulkBodyFields.SPECIAL_RATE_EFFECTIVE_APPLICATION_DATE]?: SpecialRateEffectiveApplicationDate;
   [BulkBodyFields.FILE_BASE64]?: string;
   [BulkBodyFields.FILE_NAME]?: string;
+  [BulkBodyFields.SEAT_SYNC]?: boolean;
 };
 
 export type BulkAutoRenewBody = Except<
@@ -67,3 +70,9 @@ export type BulkUploadChangesBody = Except<
   BulkBodyArgument,
   BulkBodyFields.FILE_BASE64 & BulkBodyFields.FILE_NAME
 >;
+
+export type BulkUpdateSeatSyncBody = {
+  [BulkBodyFields.ACTION_TYPE]: ActionTypes.UPDATE_SEAT_SYNC;
+  [BulkBodyFields.LICENSES]: string[];
+  [BulkBodyFields.SEAT_SYNC]: boolean;
+};
