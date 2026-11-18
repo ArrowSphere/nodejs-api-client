@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.427.0] - 2026.11.18
+### Added
+- [graphql-api] Add `promotionId` to quote `ItemData`
+
 ## [3.426.0] - 2026.11.18
 ### Added
 - [catalog] Add `catalogTypes` to `ArrowsphereIdentifierType` (`identifiers.arrowsphere.catalogTypes`)
