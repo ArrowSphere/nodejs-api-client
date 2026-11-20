@@ -3,6 +3,15 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.429.0] - 2026.11.20
+### Added
+- [graphqlApi] Add `lastLoginAt`, `locked`, `canBeDeleted` and `role` to `UserType`, and the `SecurityRole` entity (`SecurityRoleType`, `SecurityRoleSchema`, `SelectDataField.SECURITY_ROLE`)
+- [graphqlApi] Allow selecting `company` (common company fields) in `ContactsSchema`
+- [graphqlApi] Add `typeName` (`Partner`, `EndCustomer` or `ArrowCompany`) to companies
+
+### Changed
+- [graphqlApi] `ContactsType.company` is now a `BaseCompanyType`: graphql-api no longer exposes `__typename` on the contact company, use `typeName` instead
+
 ## [3.428.0] - 2026.11.20
 ### Added
 - [graphql-api] Add `erpSku` to quote `ItemData`
