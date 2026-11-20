@@ -3,6 +3,11 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.430.0] - 2026.11.20
+### Added
+- [Orders] Add `updateStatusOrder` (`PATCH /orders/{orderReference}/status`) to set any status on an order
+- [Orders] Add the missing `Migration cancel failed`, `Validated`, `Sent to end customer` and `Draft` values to `OrderStatusEnum`
+
 ## [3.429.0] - 2026.11.20
 ### Added
 - [graphqlApi] Add `lastLoginAt`, `locked`, `canBeDeleted` and `role` to `UserType`, and the `SecurityRole` entity (`SecurityRoleType`, `SecurityRoleSchema`, `SelectDataField.SECURITY_ROLE`)
