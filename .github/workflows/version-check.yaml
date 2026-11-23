@@ -45,6 +45,13 @@ jobs:
           BASE_PRE="${BASE_VERSION#"$BASE_CORE"}"; BASE_PRE="${BASE_PRE#-}"
           NEW_PRE="${NEW_VERSION#"$NEW_CORE"}";   NEW_PRE="${NEW_PRE#-}"
 
+          # Only final versions can be merged to main (a release is created automatically on merge)
+          if [ "${{ github.base_ref }}" = "main" ] && [ -n "$NEW_PRE" ]; then
+            echo "❌ Pre-release version $NEW_VERSION cannot be merged to main."
+            echo "Set a final version (x.y.z) before merging."
+            exit 1
+          fi
+
           # Same core version: only pre-release transitions are allowed
           if [ "$BASE_CORE" = "$NEW_CORE" ]; then
             if [ -n "$BASE_PRE" ] && [ -z "$NEW_PRE" ]; then
