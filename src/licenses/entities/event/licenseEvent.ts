@@ -13,6 +13,8 @@ export enum LicenseEventActionType {
   RECURRING = 'recurring',
   CONVERSION = 'conversion',
   FRIENDLY_NAME = 'friendlyName',
+  SCHEDULED_TASK_CREATED = 'scheduledTaskCreated',
+  SCHEDULED_TASK_USER_CANCELLED = 'scheduledTaskUserCancelled',
 }
 
 export enum LicenseEventType {
@@ -102,9 +104,19 @@ export interface LicenseEventUser {
   email?: string;
 }
 
+export type LicenseEventParameters = {
+  term?: number | null;
+  periodicity?: number | null;
+  quantity?: number | null;
+  customTermEndDate?: string | null;
+  pricebandVendorSku?: string | null;
+  executionDate?: string | null;
+};
+
 export interface LicenseEventDetails {
   message?: string;
   source?: string | null;
+  parameters?: LicenseEventParameters;
 }
 
 export type LicenseEventImpersonatorType = {
