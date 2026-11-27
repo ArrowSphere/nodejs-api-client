@@ -22,6 +22,10 @@ import { AssetsData, AssetsFindResult } from './assetsFindResult';
 import { ExtraDataResult, ExtraDataType } from './extraDataGetResult';
 import { PriceBandData, PriceBandGetResult } from './priceBandGetResult';
 import { RatesGetData, RatesGetResult } from './ratesGetResult';
+import {
+  LicensePricingRuleData,
+  LicensePricingRuleGetResult,
+} from './licensePricingRuleGetResult';
 import { RelationGetData, RelationGetResult } from './relationGetResult';
 import {
   ConfigFindResult,
@@ -84,6 +88,7 @@ export enum LicenseGetFields {
   COLUMN_VENDOR_CODE_2 = 'vendor_code',
   COLUMN_VENDOR_SKU = 'vendorSku',
   COLUMN_RATES = 'rates',
+  COLUMN_PRICING_RULES = 'pricingRules',
   COLUMN_ORGANIZATION_UNIT_ID = 'organizationUnitId',
   COLUMN_RELATION = 'relation',
   COLUMN_MARKET_SEGMENT = 'marketSegment',
@@ -150,6 +155,7 @@ export type LicenseGetData = {
   [LicenseGetFields.COLUMN_VENDOR_CODE_2]?: string;
   [LicenseGetFields.COLUMN_VENDOR_SKU]?: string;
   [LicenseGetFields.COLUMN_RATES]?: RatesGetData;
+  [LicenseGetFields.COLUMN_PRICING_RULES]?: Array<LicensePricingRuleData>;
   [LicenseGetFields.COLUMN_ORGANIZATION_UNIT_ID]?: number;
   [LicenseGetFields.COLUMN_RELATION]?: RelationGetData[];
   [LicenseGetFields.COLUMN_MARKET_SEGMENT]?: string | null;
@@ -210,6 +216,7 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
   readonly #vendor_code?: string;
   readonly #vendorSku?: string;
   readonly #rates?: RatesGetResult;
+  readonly #pricingRules?: Array<LicensePricingRuleGetResult>;
   readonly #organizationUnitId?: number;
   readonly #relation?: RelationGetResult[];
   readonly #marketSegment?: string | null;
@@ -335,6 +342,12 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
           licenseGetDataInput[LicenseGetFields.COLUMN_RATES] as RatesGetData,
         )
       : undefined;
+    this.#pricingRules = licenseGetDataInput[
+      LicenseGetFields.COLUMN_PRICING_RULES
+    ]?.map(
+      (rule: LicensePricingRuleData): LicensePricingRuleGetResult =>
+        new LicensePricingRuleGetResult(rule),
+    );
     this.#organizationUnitId =
       licenseGetDataInput[LicenseGetFields.COLUMN_ORGANIZATION_UNIT_ID];
     this.#relation = licenseGetDataInput[LicenseGetFields.COLUMN_RELATION]
@@ -555,6 +568,10 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
     return this.#rates;
   }
 
+  get pricingRules(): Array<LicensePricingRuleGetResult> | undefined {
+    return this.#pricingRules;
+  }
+
   get organizationUnitId(): number | undefined {
     return this.#organizationUnitId;
   }
@@ -650,6 +667,10 @@ export class LicenseGetResult extends AbstractEntity<LicenseGetData> {
       [LicenseGetFields.COLUMN_VENDOR_CODE_2]: this.vendor_code,
       [LicenseGetFields.COLUMN_VENDOR_SKU]: this.vendorSku,
       [LicenseGetFields.COLUMN_RATES]: this.rates?.toJSON(),
+      [LicenseGetFields.COLUMN_PRICING_RULES]: this.pricingRules?.map(
+        (rule: LicensePricingRuleGetResult): LicensePricingRuleData =>
+          rule.toJSON(),
+      ),
       [LicenseGetFields.COLUMN_ORGANIZATION_UNIT_ID]: this.organizationUnitId,
       [LicenseGetFields.COLUMN_RELATION]: this.relation?.map(
         (v: RelationGetResult): RelationGetData => v.toJSON(),

@@ -1134,6 +1134,32 @@ describe('LicensesClient', () => {
       const result = await getLicenseClient.getLicense('123456');
       expect(result.data.license.seatSync).to.be.undefined;
     });
+
+    it('exposes pricingRules from the license', async () => {
+      nock(LICENSES_MOCK_URL)
+        .get(LICENSE_MOCK_URL_LICENSE)
+        .reply(200, PAYLOAD_SCHEMA_LICENSE);
+
+      const result = await getLicenseClient.getLicense('123456');
+      const pricingRules = result.data.license.pricingRules;
+      expect(pricingRules).to.have.length(2);
+      expect(pricingRules?.[0].tier).to.equal(2);
+      expect(pricingRules?.[0].type).to.equal('rate');
+      expect(pricingRules?.[0].rateType).to.equal('discount');
+      expect(pricingRules?.[0].value).to.equal(0.05);
+      expect(pricingRules?.[1].tier).to.equal(3);
+      expect(pricingRules?.[1].rateType).to.equal('uplift');
+      expect(pricingRules?.[1].value).to.equal(0.1);
+    });
+
+    it('returns undefined for pricingRules when not present', async () => {
+      nock(LICENSES_MOCK_URL)
+        .get(LICENSE_MOCK_URL_LICENSE)
+        .reply(200, PAYLOAD_SCHEMA_LICENSE_WITHOUT_OPTIONAL_FIELDS);
+
+      const result = await getLicenseClient.getLicense('123456');
+      expect(result.data.license.pricingRules).to.be.undefined;
+    });
   });
 
   describe('updateLicense', () => {

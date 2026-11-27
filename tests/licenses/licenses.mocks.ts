@@ -38,6 +38,10 @@ import {
 import { ExtraDataFields } from '../../src/licenses/entities/getLicense/extraDataGetResult';
 import { CredentialsResultType } from '../../src/licenses/entities/license/credentialsResult';
 import { RatesGetDataFields } from '../../src/licenses/entities/getLicense/ratesGetResult';
+import {
+  LicensePricingRuleFields,
+  LicensePricingRuleTierEnum,
+} from '../../src/licenses/entities/getLicense/licensePricingRuleGetResult';
 import { constants } from 'http2';
 import { PriceBandDataFields } from '../../src/licenses/entities/getLicense/priceBandGetResult';
 import { DynamicAttributesMappingResultData } from '../../src/licenses/entities/license/dynamicMappingResult';
@@ -159,6 +163,22 @@ export const PAYLOAD_SCHEMA_LICENSE: GetData<GetLicenseResultData> = {
         [RatesGetDataFields.COLUMN_TYPE]: RateTypeEnum.DISCOUNT,
         [RatesGetDataFields.COLUMN_LAST_UPDATE]: '2021-01-01',
       },
+      [LicenseGetFields.COLUMN_PRICING_RULES]: [
+        {
+          [LicensePricingRuleFields.COLUMN_TIER]:
+            LicensePricingRuleTierEnum.PARTNER,
+          [LicensePricingRuleFields.COLUMN_TYPE]: 'rate',
+          [LicensePricingRuleFields.COLUMN_RATE_TYPE]: RateTypeEnum.DISCOUNT,
+          [LicensePricingRuleFields.COLUMN_VALUE]: 0.05,
+        },
+        {
+          [LicensePricingRuleFields.COLUMN_TIER]:
+            LicensePricingRuleTierEnum.END_CUSTOMER,
+          [LicensePricingRuleFields.COLUMN_TYPE]: 'rate',
+          [LicensePricingRuleFields.COLUMN_RATE_TYPE]: RateTypeEnum.UPLIFT,
+          [LicensePricingRuleFields.COLUMN_VALUE]: 0.1,
+        },
+      ],
       [LicenseGetFields.COLUMN_RELATION]: [
         {
           [RelationGetDataFields.COLUMN_PARTNER_REF]: 'XSP12345',
